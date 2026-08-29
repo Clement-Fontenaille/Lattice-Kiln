@@ -1,0 +1,37 @@
+# Observability
+
+## TL;DR
+
+The project cannot improve what it cannot reconstruct.
+
+> **Motto:** Record enough to explain the run later.
+
+## Motivation
+
+Project-level learning, system-level tuning, and meta-level evaluation all depend on evidence about how work actually unfolded.
+
+Observability must therefore be introduced before the sophisticated feedback loops exist.
+
+## What should be reconstructable
+
+A future evaluator should be able to understand the original human intent, which processors were invoked, what context they received, what they produced, what tools were used, what effects occurred, what objective signals resulted, and where human corrections entered the process.
+
+The exact storage format can remain simple initially.
+
+## Why this is not just logging
+
+Operational logs answer what happened.
+
+Research-grade observability must also preserve enough structure to relate behavior to hypotheses about the system.
+
+For example, a later experiment may need to compare two context policies or two versions of the orchestrator role.
+
+## Privacy and cost
+
+Full retention of every token forever is unlikely to be desirable.
+
+The project must eventually distinguish short-term forensic detail from long-term summarized evidence.
+
+## Open question
+
+Retention strategy, redaction, summarization, and stable event schemas should emerge from the needs of the first feedback experiments rather than be fully designed in advance.

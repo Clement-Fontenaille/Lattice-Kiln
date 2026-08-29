@@ -1,0 +1,14 @@
+{
+  "title": "AI Development System \u2014 Conceptual Documentation Set",
+  "format": "Markdown",
+  "status": "Conceptual architecture, pre-technical specification",
+  "document_count": 28,
+  "directories": [
+    "00-project",
+    "10-foundations",
+    "20-cognitive-architecture",
+    "30-adaptation-and-evolution",
+    "40-roadmap",
+    "90-notes"
+  ]
+}
