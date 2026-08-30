@@ -1,0 +1,55 @@
+# Review Note: Naming Theme Adoption — Sports/Coaching Vocabulary
+
+## TL;DR
+
+The documentation set adopts a sports/coaching vocabulary for its cognitive-architecture and feedback concepts, replacing flat structural names ("system-level feedback," "meta-level feedback") with terms that carry the right connotations by default. This is a naming decision only — no concept, boundary, or responsibility changes as a result. A separate, explicitly playful `--over-the-top` mode is noted as a future easter egg and is not part of the adopted vocabulary.
+
+> **Motto:** Same concepts, names that carry their own weight.
+
+## Status
+
+Decided. To be propagated across the documentation set in a later editing pass (VS Code), not applied in this note.
+
+## Adopted mapping
+
+| Existing concept | Adopted term | Notes |
+|---|---|---|
+| Orchestrator | **The coach** | Decides strategy; does not execute the work itself. |
+| Processor | **Player** (or specialist/position, when emphasizing role over identity) | Purpose-defined, not permanently identified — a position is filled as needed, not a named career. |
+| Project-level feedback | **The huddle** | Fast, local, adjusts the current game plan. No authority over the playbook or the rulebook. |
+| System-level feedback | **The war room** | Deliberate, cross-project, proposes playbook changes as candidates. No authority over the rulebook. |
+| Meta-level feedback | **The review booth** | Audits the war room's process, not individual tasks or changes. No authority over the rulebook. Explicitly bounded against spawning a booth to review the booth. |
+| Processor/orchestrator/system-level configuration (shared, cross-project) | **The playbook** | What the war room proposes changes to; what the huddle reads from but does not rewrite. |
+| The invariant layer (goals, constraints, resource ceilings — human-authored, outside every loop's authority) | **The rulebook** | Not owned or revisable by coach, players, huddle, war room, or review booth. Amendable only by direct human action, out of band. |
+| The static enforcement gate (from the safety note) | **The referee** | Deterministic, unpersuadable, checks effects/sequences against the rulebook. Not a reasoning role. |
+| The triage/security role (from the safety note) | **The review booth** *(shared term — see open question below)* | Logs, escalates, or halts; never grants an exception the referee didn't already allow. |
+| Decommissioning a role that exceeds its bounds | **Ejection** | Immediate, unilateral, effective now, independent of any later formal review. |
+
+## Rationale
+
+- Each term does real conceptual work rather than just relabeling. Most usefully: "the rulebook" makes the invariant layer's core property — untouchable by any of the system's own adaptive processes — legible without explanation, which none of the earlier structural names achieved on their own.
+- The vocabulary comes with a built-in weight gradient (huddle → war room → review booth feels correctly ordered as fast/local → deliberate/cross-cutting → independent/process-auditing) without needing that gradient to be separately argued for.
+- It avoids two families that were explicitly considered and rejected: evolutionary/biological vocabulary (rejected — carries baggage from contexts it would misrepresent, and that framing has a history of poor outcomes when applied loosely) and MMO/game-progression vocabulary (rejected — recognized as having some appeal, not pursued).
+
+## Open question raised during naming, not yet resolved
+
+The safety-enforcement note (see the invariant-layer note in this series) already uses "triage role" for the role that responds to a tripped enforcement gate — logging, escalating, or halting, but never granting exceptions. That role and the meta-level "review booth" are conceptually distinct (one audits individual flagged effects in real time; the other audits the war room's process over time) but the sports metaphor's natural term for both leans toward "booth." This needs a deliberate distinct name before propagation — reusing "review booth" for both would blur two boundaries this project has been careful to keep separate. Suggest resolving this explicitly during the propagation pass rather than defaulting to reuse.
+
+## Scope of this decision
+
+Naming only. No document's responsibilities, authority boundaries, or open questions change as a result of this note. In particular:
+
+- The huddle/war room/review booth boundary lines are exactly the project-level/system-level/meta-level boundary lines already defined — renamed, not redrawn.
+- The rulebook is exactly the invariant layer already proposed in the safety-enforcement note — renamed, not redefined or newly scoped.
+
+## Where this needs to evolve
+
+- `01-project-level-feedback.md`, `02-system-level-feedback.md`, `03-meta-level-feedback.md` — rename and rewrite in the adopted vocabulary (drafts already produced in this session's discussion, in the plain-conceptual register, available to carry forward).
+- `03-orchestrator.md`, `02-processors.md` — introduce "the coach" and "player/specialist" terminology.
+- The invariant-layer and safety-enforcement note (see prior note in this series) — introduce "the rulebook," "the referee," and resolve the open naming collision above before this term is used there.
+- `02-open-questions-register.md` — add the triage-role vs. review-booth naming collision as a line item.
+- A short glossary or terminology note may be worth adding near the front of the documentation set (e.g. in `00-project` or `90-notes`) once propagation is complete, mapping structural terms to adopted vocabulary for anyone new to the set.
+
+## Noted but explicitly out of scope
+
+An `--over-the-top` mode, in which every agent narrates its behavior entirely in sports-commentary style, was proposed as a deliberate easter egg / launcher flag rather than as the documentation's actual voice. Fun, not adopted for the conceptual documentation itself. Worth remembering if a playful mode is ever built, but should not leak into the serious naming pass.

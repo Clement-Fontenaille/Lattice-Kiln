@@ -28,6 +28,10 @@ Foundational constraints should be rare. Examples include reproducibility, prove
 
 Most other decisions should remain replaceable until experiments justify stronger commitment.
 
+This classification is a discipline for human decision-making. It describes how the project intends to hold itself, and it is revisable by the people applying it.
+
+It should not be confused with the invariant layer, which is a different kind of thing: not a posture toward decisions but a set of constraints the running system is mechanically prevented from crossing. A foundational constraint recorded here can be reconsidered in a later conceptual pass. An invariant cannot be reconsidered by the system at all, and is amended only by direct human action outside every loop.
+
 ## Progress criterion
 
 A milestone is valuable when it reduces uncertainty, increases usable capability, or makes future evaluation more trustworthy.

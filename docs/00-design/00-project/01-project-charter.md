@@ -36,6 +36,22 @@ It is not an attempt to create a recursively self-modifying system whose changes
 
 The central ambition is controlled evolution through observable, testable, reversible changes.
 
+## What controlled evolution includes
+
+The system's vocabulary of cognitive roles is not fixed at design time. Where recurring evidence shows a weakness that no existing role is shaped to address, the system may commission a new role and evaluate it like any other candidate change.
+
+What actors should exist is therefore treated as a question for evidence rather than one to be answered in advance. Much else is deferred on the same reasoning: context governance, memory policy, model assignment, evaluation thresholds.
+
+## What is not evolvable
+
+That posture is only defensible because something sits beneath it.
+
+A small, human-authored layer of goals, resource ceilings, and hard constraints is readable by every part of the system and writable by none. It is amended by direct human action, never by system proposal, however well evidenced, and it is enforced by a deterministic mechanism rather than merely stated.
+
+Without such a floor, a system that adapts its own evaluation criteria can satisfy its own measurements by redefining what is being measured.
+
+The floor and the deferral above are one position rather than two. Leaving things open is only safe where failure can be neither catastrophic nor self-concealing, and those are what the invariant layer and observability respectively provide.
+
 ## Success
 
 Success means that fresh instances can start from accumulated system-level learning rather than repeatedly rediscovering the same workflow improvements.

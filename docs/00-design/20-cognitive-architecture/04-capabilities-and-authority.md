@@ -30,6 +30,14 @@ Without this separation, role definitions become entangled with runtime security
 
 With it, roles can evolve experimentally while operational boundaries remain explicit.
 
+## What this model does not provide
+
+Capability and authority govern what a given actor may request under current policy, and that policy is legitimately adjustable as the system learns.
+
+They are therefore not a floor. A separate, non-adjustable check sits beneath them, testing whether an effect is permissible at all rather than whether this actor is presently authorized to request it. An effect must pass both, and passing capability gating is not evidence of passing that check.
+
+The two also differ in what they are keyed to. Capabilities are described per role, which works because policy can be revised as roles are added. The invariant check cannot be keyed to roles at all, since the role vocabulary is deliberately open-ended; it binds effects instead.
+
 ## Open question
 
 Capability granularity should be derived from actual needs. Overly coarse capabilities weaken control; overly fine capabilities create administrative complexity and can distract the model from the cognitive objective.

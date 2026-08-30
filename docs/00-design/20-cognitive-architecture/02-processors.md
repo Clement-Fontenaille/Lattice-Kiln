@@ -20,7 +20,9 @@ The role may encourage specific reasoning habits without prescribing a universal
 
 Examples may eventually include assessment, investigation, planning, implementation, debugging, criticism, review, context curation, or evaluation.
 
-These examples are not intended to form a fixed taxonomy.
+These examples are not a taxonomy, and no list written now is expected to be complete. The set of roles is itself a subject of system-level feedback: where recurring evidence shows a weakness no existing role is shaped to address, a new role may be commissioned and evaluated like any other candidate change.
+
+The role vocabulary is therefore expected to grow through evidence rather than to be enumerated in advance. Two consequences follow. Roles fixed outside that mechanism — such as those belonging to invariant enforcement — are deliberate exceptions and are specified where the invariant layer is specified, not here. And because the vocabulary is open, operational constraint cannot be expressed in terms of it; that is why the invariant gate binds effects rather than roles.
 
 ## Independence
 

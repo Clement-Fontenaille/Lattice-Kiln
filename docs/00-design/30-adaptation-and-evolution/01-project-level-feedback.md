@@ -18,6 +18,8 @@ Project-level feedback primarily changes project-local knowledge and project-loc
 
 It should not casually rewrite global processor roles or system policies.
 
+This scope is distinct from system-level and meta-level feedback in what it may change and what evidence it requires. It is not necessarily distinct in which processor performs it. The separation between the three levels belongs to invocation — scope, context, and objective — and does not imply three separate kinds of agent.
+
 ## Expected outputs
 
 The loop may produce architectural notes, conventions, dependency knowledge, validated assumptions, project-specific warnings, useful retrieval hints, or summaries of recurring patterns.

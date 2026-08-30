@@ -24,11 +24,23 @@ Objective tests, human acceptance, regression behavior, resource usage, transfer
 
 No single signal is assumed to be sufficient.
 
+## Evaluator independence as a configuration dimension
+
+Independent evaluation loses much of its value when the evaluator and the optimizer share the same underlying model: what results is correlated blind spots rather than genuine independence.
+
+This is not a defect requiring an immediate architectural fix. It is a dimension for experiments to probe once model diversity and evaluation infrastructure actually exist. Which model performs planning, implementation, or evaluation is one more thing feedback can rearrange, informed by evidence about which pairings produce genuinely independent judgment.
+
+It belongs naturally around the system-level tuning milestone rather than earlier, because comparing model assignments requires multiple models to compare.
+
+The exception is any role whose entire purpose is to watch a loop for drift. There, independence is a structural requirement rather than an experimental variable, and it is settled where the invariant layer is settled.
+
 ## Frozen baselines
 
 Candidate changes should be compared against reproducible baselines whenever possible.
 
 This prevents the system from silently redefining its own previous state or moving the measurement target during optimization.
+
+The same reasoning extends past benchmarks. If a baseline must be frozen so that measurement stays meaningful, the goals the measurement serves must be frozen for the same reason and more strongly — a system that can revise what it is for can satisfy any metric by redefinition. That generalization is the invariant layer, which holds goals and hard constraints outside the reach of every feedback loop rather than only outside the reach of a single comparison.
 
 ## Open question
 

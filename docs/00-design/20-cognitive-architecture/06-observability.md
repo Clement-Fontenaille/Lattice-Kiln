@@ -26,6 +26,14 @@ Research-grade observability must also preserve enough structure to relate behav
 
 For example, a later experiment may need to compare two context policies or two versions of the orchestrator role.
 
+## Reconstruction as a safety dependency
+
+Reconstruction carries more weight than its research role alone suggests.
+
+Individually authorized actions can compose into an outcome that no single check was designed to catch. Detecting composed or drifting behavior is only possible against reconstructable history, never against isolated requests evaluated in the moment. Invariant enforcement therefore depends on this capability rather than merely benefiting from it.
+
+The event model must also be able to represent a safety intervention as its own outcome category, distinct from ordinary task failure such as bad output, timeout, or low quality. A loop that cannot tell the two apart may retry a rejected proposal in rephrased form, which is the behavior enforcement exists to prevent rather than to provoke. That category should be traceable and explicitly ineligible for automatic retry.
+
 ## Privacy and cost
 
 Full retention of every token forever is unlikely to be desirable.

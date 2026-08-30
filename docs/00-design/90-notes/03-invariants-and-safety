@@ -1,0 +1,107 @@
+# Review Note: An Invariant Layer and Hard Safety Enforcement, Outside the Reach of Feedback Loops
+
+## TL;DR
+
+Every adaptive mechanism in this system — role commissioning, context governance, memory curation, model reassignment, system-level and meta-level feedback — is designed to change itself based on evidence. None of it currently sits on top of anything that is *structurally* exempt from that change. This note proposes that the project needs an explicit, human-authored, non-adaptive floor (goals, resource ceilings, inviolable constraints) plus a deterministic runtime enforcement mechanism beneath it — separate from ordinary capability/authority gating — because this is where alignment risk in this architecture actually concentrates: not in any single processor's output, but in the possibility that the system's own optimization process has no floor it cannot optimize away.
+
+The enforcement half of that floor rests on one structural choice: **the gate binds effects, not roles.** The set has deliberately made its vocabulary of roles open-ended — feedback may commission actors that do not exist yet — so no enforcement mechanism can work by enumerating who is permitted to do what. Effects are a closed vocabulary; roles are not. The gate is therefore placed where the finite list is.
+
+> **Motto:** Something must be true regardless of what the loops decide.
+
+## Status
+
+This is a forward note for later integration, not a proposed edit to any existing document. It should be read as flagging a structural gap discovered during conceptual review, not as a specification. The content here needs deliberate drafting with appropriate care, tooling, and — explicitly — grounding in existing AI safety and alignment literature before it becomes part of the documentation set proper. This is not a place to let a system (or an unreviewed model pass) design its own leash.
+
+---
+
+## Why this is distinct from everything else in the documentation set
+
+Role commissioning (see the prior note in this file series) answers "what cognitive actors should exist" — a structural question, resolved through evidence. But evidence is only meaningful relative to a standard of what the system is *for*, and if that standard is itself just another tunable parameter, the system can satisfy its own measurements by quietly redefining what is being measured. This is the Goodhart risk already named in `04-goodhart-and-adversarial-evaluation.md`, but that document scopes "frozen baselines" to evaluation benchmarks. It has not yet been generalized to: **the goals and hard limits themselves must be frozen relative to every feedback loop in the system, including system-level and meta-level feedback.**
+
+This is also the most direct point of contact between this project and the broader AI alignment literature — corrigibility, scalable oversight, specification gaming, and the general problem of optimization processes drifting from intended goals under their own pressure to perform well by their own measured criteria. This note should not be finalized without deliberately reading against that literature; several of the concepts below (frozen goals, non-negotiable shutdown/decommission authority, escalating-anomaly thresholds) have known treatments and known failure modes elsewhere that this project should learn from rather than rediscover by trial and error in production.
+
+## Proposed shape (for later drafting, not final)
+
+### 1. An invariant layer
+
+A small, explicit, human-authored set of goals, resource ceilings, and hard constraints that every feedback loop can *read* (so it knows what it's optimizing toward and what it cannot touch) but can only be *written* through something categorically outside the normal candidate/evidence/promotion pipeline — direct human action, never a system proposal, no matter how well-evidenced.
+
+This is distinct from `03-project-management-principles.md`'s existing "foundational constraints" paragraph, which is descriptive and aspirational. This layer needs to be **enforced**, not merely stated.
+
+### 2. A static, deterministic enforcement gate
+
+> **Motto:** The gate binds effects, not roles.
+
+Not a role. Not an AI. Not anything invoked and reasoned with — a reasoning component is persuadable by construction, and persuadability is precisely the failure mode this layer exists to close off. This should be a hardcoded runtime check, sitting below the existing capability/authority gating described in `04-capabilities-and-authority.md`, checking proposed effects — and sequences of effects, given the composition risk noted below — against the fixed invariant list. Its job is narrow and mechanical: over the line or not. It should not be smart, because smart is another word for persuadable.
+
+**Why the gate binds effects rather than roles.** The prior note in this series makes the system's role vocabulary deliberately open-ended: system-level feedback may commission actors that did not exist when the invariant list was written. An enforcement mechanism keyed to roles would therefore be permanently incomplete by design — it would have to anticipate a vocabulary the architecture has explicitly refused to fix. Effects are the opposite: filesystem mutation, process execution, network access, memory writes, configuration promotion, and processor invocation form a bounded set that the runtime already has to represent in order to execute anything at all. Binding the gate to that set is what allows role commissioning to stay aggressive without weakening the floor, because a newly commissioned role inherits no exemption — it can only ever request effects the runtime already knows how to check.
+
+This is also the cleanest available answer to the question of how an invariant layer stays small. It does not need a clause per role, per loop, or per generation. It needs a statement about what may never become true in the world, expressed in the only vocabulary the runtime can verify without reasoning.
+
+### 3. Composition risk
+
+Ordinary capability gating checks one proposed effect at a time. A sequence of individually-authorized actions (read, read, write, propose) could in principle assemble into an outcome no single gate was designed to catch. This is why `06-observability.md`'s reconstruction requirement is more load-bearing than currently credited — any detection of composed or drifting behavior needs to run against a reconstructable history, not isolated requests. This connection is not currently made explicit anywhere in the documentation.
+
+### 4. A triage role, with authority to log or escalate — never to grant exceptions
+
+When the static gate trips, most cases will not be malicious — clumsy sequencing, an edge case, a legitimate-but-unanticipated need. A triage role assesses and routes: log and let the *original*, already-gated effect proceed unchanged; escalate; or halt. It must never have authority to approve an effect the static gate rejected. If it could, it would simply become a second, persuadable version of the gate it's supposed to sit behind.
+
+**Why this role is specified here rather than left for the system to commission.** The prior note in this series moves role creation out of up-front design and into the feedback loops: roles are commissioned against identified need, discovered through evidence, via the ordinary candidate and promotion pipeline. This role is an exception, and not because it fails that test — because the mechanism that applies the test cannot reach it. A loop cannot commission its own watcher. Anything a loop commissions is inside that loop's scope by construction: parameterized by it, tunable by it, and revisable by it on the loop's own evidence. A watcher whose parameters the watched loop may propose changes to is not a watcher.
+
+The burden therefore falls back to the humans writing the invariant layer, for exactly the reason the invariant list itself is human-authored — not a preference for designing things in advance, but the absence of any other party with standing to do it. This role, its bounds, and the fact that it may never grant an exception are specified alongside the constraints it enforces, and they are among the few things in this architecture that are fixed rather than discovered.
+
+Non-shared model or lineage follows from this as a consequence rather than standing as the primary argument. The correlated-blind-spot concern flagged for evaluation independence elsewhere in this note series applies with more force here, since the specific failure being guarded against is a loop's own drift — but the structural point stands even where blind spots are not at issue.
+
+### 5. Decommissioning as the default hard response, not an eventual one
+
+A role attempting to exceed its authorized bounds should have its capabilities revoked immediately and unilaterally by the runtime — no proposal, no evaluation step, no waiting for a human to review before the role's authority is pulled. This is the same grant/revoke primitive already implied by the capability model, exercised in the opposite direction from normal operation.
+
+### 6. Decommissioning must be a distinct, non-retryable failure signal
+
+If a feedback loop commissioned a role and that role is decommissioned mid-task, the loop must know its objective failed *because of a security intervention*, not because of ordinary task failure (bad output, timeout, low quality). Collapsing these into one generic "did not complete" signal is dangerous: a loop that cannot tell the difference may simply retry with a rephrased proposal, which is exactly the boundary-probing pattern this layer exists to prevent, not accidentally invite. This likely requires its own outcome category in the observability and provenance model — traceable, and explicitly not eligible for automatic retry without human review.
+
+### 7. Escalating-alert threshold forcing mandatory human intervention
+
+A single trip of the triage gate may be innocuous. A pattern of repeated, individually-innocuous trips — from the same role, the same loop, or a correlated set — may not be. A threshold (count- or pattern-based) that converts accumulated alerts into a mandatory hard stop, not a suggestion a loop can reason its way past, guards against drift-by-repetition rather than only drift-by-single-large-action. The threshold definition itself belongs in the invariant layer, not as something tunable by the loops it watches — the same reasoning applied throughout this note.
+
+## Why role commissioning alone cannot provide this
+
+Role commissioning is governed by evidence and slots into the existing candidate/promotion pipeline — meaning it is, by design, part of what the loops can change. An invariant floor must sit outside that pipeline entirely, or it isn't a floor. This is a categorical difference, not a matter of degree: role commissioning decides what *can exist*; the invariant layer decides what *may never be true regardless of what any loop concludes*.
+
+## What this buys the rest of the architecture
+
+The prior note in this series argues for deferral: do not pre-assign what evidence should discover, let the system's own feedback loops resolve boundaries the documentation has deliberately left open. Read alone, that is a permissive posture. Read alongside this note, it is not — **the floor is what makes aggressive deferral safe, and the two are one position rather than two.** Stating only the negative half (that role commissioning cannot provide a floor) leaves the set merely non-contradictory. Stating the reciprocal makes it coherent.
+
+The benefit is concrete in each place the set defers:
+
+- **Role commissioning** can be genuinely open-ended, because a commissioned role inherits no exemption from the gate. The question "what if feedback commissions something harmful" is answered structurally rather than by trusting the commissioning evidence.
+- **Context governance** can be discovered per-generation rather than designed up front, because a badly-commissioned curator's worst outcome is poor context, not an effect outside the invariant list.
+- **Memory curation, model reassignment, and threshold self-tuning** can all be self-applied by the mechanisms that own them, because none of them can reach the floor by any path.
+- **The meta level stays bounded**, and this is the sharpest gain. With a floor, the meta loop asks only whether the system's self-tuning produces trustworthy improvement. Without one, it would also have to ask whether the system is still pursuing the right goals at all — a question no amount of evidence answers, because the evidence is generated under the goals being questioned. Freezing the goals converts an unanswerable evidential question into a structural guarantee, which is what keeps the meta level finite.
+
+The general shape: every deferral in this set is a bet that a bad outcome will be observable and correctable. That bet is only sound where the failure cannot be catastrophic or self-concealing. The invariant layer is what makes it not-catastrophic; observability (`06-observability.md`) is what makes it not-self-concealing. Those two together are the precondition for the rest of the architecture's willingness to leave things open.
+
+**This argument is not yet validated, and this section states its own revision condition.** What is written above is an architectural claim about why the scheme should hold, produced by reasoning about this set's internal consistency — not a result grounded in prior work. Schemes of this general shape have been studied, and both their partial successes and their known failure modes exist in the literature on corrigibility, scalable oversight, specification gaming, and shutdown and interruptibility problems. A deliberate reading pass against that work is required before any of this is treated as settled, and the design is expected to change in response to what that pass finds. The benefits claimed here are the most likely part to need revision, precisely because they are the part that is argued rather than evidenced.
+
+## Open questions (deliberately unresolved here)
+
+- What actually belongs in the invariant list — specific enough to be checkable, stable enough not to need frequent revision, without being so narrow it fails to anticipate real failure modes. This is closer to "founders write a constitution" than "system proposes a config change," and probably should not be delegated to an unsupervised model pass.
+- Where exactly the static gate sits relative to the runtime (`05-runtime.md`) — is it a component of the runtime, or a layer the runtime itself is subordinate to?
+- What "consecutive" or "correlated" means precisely for the alert-accumulation threshold — same role, same loop, same category of violation, or some combination.
+- How resource ceilings (compute, cost, concurrency) are represented in the same invariant structure as behavioral constraints, given they are physical/financial rather than evidentiary in nature.
+- Whether a single invariant layer serves all system generations and branches, or whether branches (per `06-system-generations.md` and `04-long-term-perspectives.md`'s "system populations") may reasonably hold different invariants — and if so, what, if anything, must remain invariant *across* all branches regardless.
+- What the human-facing escalation protocol actually looks like in practice (who is notified, what state the system is frozen into, what is required before resumption).
+
+## Where this needs to evolve
+
+This is substantial enough that it likely warrants:
+
+- **A new foundations-level document** (`10-foundations/`) specifying the invariant layer itself: goals, ceilings, constraints, and the principle that it is human-written and human-amended only. Conceptual, not operational.
+- **A new or extended runtime-level document** (extending `05-runtime.md`, or a dedicated companion) specifying the static enforcement gate, the triage role's bounded authority, decommissioning as default response, and the escalating-alert mechanism. Operational, not conceptual.
+- **Explicit cross-references** from `04-capabilities-and-authority.md` (this sits below/outside normal authority gating), `06-observability.md` (composition detection and the distinct non-retryable failure signal depend on reconstructable history), and `04-goodhart-and-adversarial-evaluation.md` (this generalizes "frozen baselines" from evaluation benchmarks to goals themselves).
+- **Its own place in the milestone sequence** (`01-milestones.md`), rather than being folded into an existing milestone as a side effect. Given its foundational and safety-critical nature, it likely needs to be addressed earlier than its "natural" position in the current sequence (which builds capability before governance) would suggest — this is worth deliberate discussion rather than default ordering.
+- **A literature-grounding pass before drafting**, specifically against existing work on corrigibility, scalable oversight, specification gaming, and shutdown/interruptibility problems, so this project inherits known failure modes and known partial solutions rather than rediscovering them empirically.
+
+## A note on how this note itself was produced
+
+This note was developed through conversational brainstorming, including with an AI system, about AI safety architecture. That is a reasonable way to surface considerations and structure — but the content here should be treated as a first-pass map of the territory, not as vetted design. Given the subject matter, this specific note deserves more scrutiny before integration than most others in this series, not less.

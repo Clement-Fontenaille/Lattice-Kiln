@@ -1,0 +1,129 @@
+# Review Note: Emergent Roles, Context Governance, and the Retirement of Symmetry-as-Principle
+
+## TL;DR
+
+Context governance should not be settled by upfront design. It should be resolved the same way every other system-level weakness is resolved: by evidence, through the system's own feedback loops — including the loop's ability to propose *new roles*, not merely tune existing ones. Recursive symmetry is downgraded from a design principle to an observed, opportunistic implementation convenience. Evaluation-model diversity is reframed from a current defect to a future experimental dimension.
+
+> **Motto:** Don't pre-assign what evidence should discover.
+
+## Status
+
+This note records the outcome of a conceptual review pass conducted after the initial documentation set was drafted. It does not replace any existing document. It identifies where existing documents should evolve and why, ahead of a working session where the files themselves will be edited directly.
+
+Three topics were addressed. Two others (memory promotion/authority, and the milestone sequence's own weight) were deliberately deferred to a later pass and are not covered here.
+
+---
+
+## 1. Context Governance
+
+### Concern
+
+`04-context-as-governed-resource.md` correctly identifies context governance as first-class and correctly leaves its implementation boundary open — but the openness was passive. The document poses three candidate shapes (dedicated subsystem, specialized processor role, part of orchestration) without a mechanism for choosing between them. Because nearly every other component's quality (orchestration, processor judgment, memory curation, evaluation) inherits whatever context it was given, this is the most load-bearing unresolved boundary in the set, and it was at risk of being settled by accident at implementation time rather than by design intent or evidence.
+
+### Proposed resolution
+
+Do not settle it at design time at all, even provisionally. Instead, generalize a capability the documentation already gestures at but never states directly: **system-level feedback should be able to propose new processor roles, not only tune existing ones.**
+
+Context curation becomes the first concrete application of this capability rather than a special case requiring its own bespoke resolution. If recurring evidence shows that generalist processors or the orchestrator are assembling context poorly, system-level feedback can commission a context-curator role (or several, for different needs) as a **candidate system change**, evaluated and promoted or discarded through the same experiment/candidate/promotion pipeline already defined for any other system-level change.
+
+This requires no new machinery beyond what is already implied elsewhere in the set:
+- A proposed role is a cognitive act (`02-reasoning-vs-runtime.md`) — cheap, reversible, non-authoritative.
+- Instantiating it with real capabilities is a runtime effect, gated by the existing capability/authority split (`04-capabilities-and-authority.md`).
+- Its justification, evidence, and promotion follow the existing experiment and candidate-system concept (`05-experiments-and-candidate-systems.md`), the same way any other system-level proposal would (`02-system-level-feedback.md`).
+- Its lineage is recorded the same way any other promoted change is recorded (`06-system-generations.md`).
+
+Context governance's implementation boundary is therefore not "chosen" by this documentation set at all — it is left to be discovered per-generation, per-project, or per-hardware-profile, by the same feedback mechanism that governs everything else.
+
+### Implications
+
+- **A naive default is still required on day one.** The system needs *some* unglamorous, possibly poor, context-assembly behavior before there is any baseline against which a proposed context-curator role's benefit can be measured. This resolution defers the *design* of good context governance; it does not defer the need for *a* starting behavior to observe and critique.
+- **Role creation likely deserves a higher evidence bar than role tuning.** Introducing a new kind of agent into the system's vocabulary changes its cognitive shape more significantly than adjusting an existing role's instructions. The threshold for "enough evidence to commission a role" versus "enough evidence to tune a role" is an open question this resolution creates, not one it answers.
+- **This generalizes beyond context.** Once role creation is a legitimate output of system-level feedback, it is available for any recurring weakness the system detects — a diagnostic role for a certain class of test failure, a dependency-analysis specialist, etc. Context governance is simply the first known use case, not a special carve-out.
+- **The charter's framing should be updated.** The project's description of its own adaptability should state explicitly that the system's vocabulary of roles is not fixed at design time — it is one of the things system-level feedback is allowed to evolve.
+
+### Where this needs to evolve
+
+- `04-context-as-governed-resource.md` — rewrite its "Open question" section. Replace the three-way undecided framing with: the boundary is deliberately left to emerge via role commissioning; describe the mechanism and the required naive-default floor.
+- `02-system-level-feedback.md` — explicitly list "propose a new processor role" as a valid category of system-level change, alongside processor definitions, orchestrator instructions, and policy.
+- `02-processors.md` — strengthen the existing "not a fixed taxonomy" language into a direct statement that the role list is expected to grow via this mechanism.
+- `01-project-charter.md` — consider a light addition acknowledging role-vocabulary evolution as part of "controlled evolution," so it's visible at the top level of the documentation, not buried in one subsystem doc.
+- New open question to register in `02-open-questions-register.md`: what evidence threshold distinguishes "commission a new role" from "tune an existing one"?
+
+---
+
+## 2. Independent Evaluation Sharing the Same Model
+
+### Concern
+
+`04-goodhart-and-adversarial-evaluation.md` and `03-research-and-evaluation-agenda.md` flag, as a risk, that adversarial/independent evaluation loses much of its value if the evaluator and the optimizer share the same underlying model — correlated blind spots rather than genuine independence.
+
+### Proposed resolution
+
+This is not a defect requiring an immediate architectural fix. It is a **future experimental dimension**. As the system gains the capability to test multiple system configurations, model assignment per role (which model does planning, which does implementation, which does evaluation) becomes one more thing feedback loops can rearrange, informed by evidence about which pairings produce genuinely independent judgment versus correlated failure. This already has a home in `04-long-term-perspectives.md` ("model specialization") and in the experiment/candidate-system machinery — it does not need a new mechanism, only recognition that it's a hypothesis to test once model diversity and evaluation infrastructure exist, not a gap to patch now.
+
+### Implications
+
+- No urgency to resolve this before other milestones. It naturally belongs around the system-level tuning milestone, once multiple models are actually available to compare.
+- It does raise a genuine measurement question worth registering: how would the system detect that two models are "independent enough" to count as adversarial, rather than merely different but correlated? This is a concrete, falsifiable question in the spirit of `03-research-and-evaluation-agenda.md`, not an immediate design requirement.
+
+### Where this needs to evolve
+
+- `04-goodhart-and-adversarial-evaluation.md` — reframe the "same model" risk from an unresolved defect to an explicit example of a system-configuration dimension that experiments should eventually probe.
+- `02-open-questions-register.md` — add: "What signal distinguishes genuinely independent evaluation from correlated agreement/disagreement between models used for the same role?"
+
+---
+
+## 3. Recursive Symmetry: From Design Principle to Observed Convenience
+
+### Concern
+
+`08-recursive-symmetry-without-dogma.md` already warns against treating the observe→propose→evaluate→persist loop's recurrence across project/system/meta levels as an excuse to force unlike problems into one shape. But the document still treats symmetry as something to *design toward cautiously* — a principle to be applied with restraint — rather than something to notice after the fact and exploit only where convenient. On reflection, this is an artifact of early intuition that overreached: symmetry was elevated to a design principle when it should only ever have been an implementation observation.
+
+### Proposed resolution
+
+Drop recursive symmetry as a design principle almost entirely. Retain it only as: symmetries, where they are actually observed between how different levels operate, may be leveraged to factor implementation effort (shared data models, shared comparison machinery) — nothing more.
+
+Critically, this resolution draws a distinction the original document blurred:
+
+- **Structural symmetry** (the abstract loop shape repeating) is cheap to exploit and low-risk — a shared "candidate change" record type or evaluation-comparison mechanism can reasonably serve project-level, system-level, and meta-level feedback alike.
+- **Role/actor symmetry** (the implicit assumption that a repeating loop shape justifies a *separate kind of agent* per level — a project-evaluator, a system-evaluator, a meta-evaluator, each a distinct species) should generally be avoided. There is no strong reason a single evaluation-capable processor role cannot be invoked at different scopes, with different context and objectives, rather than the role itself multiplying per level.
+
+### Implications
+
+- The three feedback documents (`01-project-level-feedback.md`, `02-system-level-feedback.md`, `03-meta-level-feedback.md`) should remain conceptually distinct — different scope, different evidence thresholds, different promotion criteria — but should not be read as implying three separate kinds of agents. The multiplicity belongs to invocation (scope and objective), not to agent identity.
+- This interacts directly with the role-commissioning idea in Section 1: if new roles can be proposed when evidence justifies them, the default assumption should still be reuse of an existing role at a new scope, with a new role commissioned only when evidence shows an existing role genuinely cannot serve the new scope well — not merely because the loop shape recurred.
+
+### Where this needs to evolve
+
+- `08-recursive-symmetry-without-dogma.md` — rewrite substantially. Reframe from "a design principle to apply without dogma" to "an implementation-efficiency observation with no standing as a design principle." Add the explicit structural-symmetry vs. role-symmetry distinction, since the document currently doesn't separate these and that conflation was the source of the original overreach.
+- `01-project-level-feedback.md`, `02-system-level-feedback.md`, `03-meta-level-feedback.md` — add a short cross-reference note clarifying that these describe distinct scopes and evidence requirements, not necessarily distinct processor identities.
+
+## 4. Addendum: Avoiding the "Tuner of the Tuner" Regress
+
+### Concern
+
+Section 1 raised that new-role creation likely needs a heavier evidence threshold than role tuning. The natural follow-up — who decides that threshold, and who audits that decision, and so on — is the classic infinite-regress trap in self-referential systems: every added oversight parameter seems to demand its own dedicated overseer.
+
+### Resolution
+
+The regress dissolves once two things already present in the documentation are read as directly answering it, rather than as independent concerns:
+
+- Recursion of scope, not recursion of agent. A feedback loop capable of proposing changes to a processor's prompt is equally capable of proposing changes to its own thresholds (e.g., the evidence bar for role creation). This is self-application of an existing mechanism to a new object — not a new dedicated "threshold-tuning observer" role. This follows directly from the role/actor-symmetry conclusion in Section 3: a repeating need for oversight does not justify a new kind of agent per parameter.
+- A bounded meta-level, not an infinite tower. 03-meta-level-feedback.md already states the meta loop is not expected to recursively spawn meta-meta systems. The meta level stays finite by asking one generic question — does the system's self-tuning process, in aggregate, produce trustworthy improvement — rather than a separate meta-question per tunable parameter.
+- Termination requires a non-self-tuned anchor. 04-goodhart-and-adversarial-evaluation.md's frozen baselines serve exactly this role: something in the chain (a fixed benchmark, a human acceptance signal, a preserved prior generation) must sit outside the loop being judged, or the whole tower can quietly move its own goalposts.
+
+No new mechanism is required. This is a synthesis of existing commitments, not new design content.
+
+### Implications
+
+No architectural change. This closes an implicit question before it was ever explicitly registered as open — worth a one-line trace for future auditability, nothing more.
+
+### Where this needs to evolve
+- `02-open-questions-register.md` — add one line under System evolution or Meta-evaluation: "Does tuning self-referential parameters (e.g., role-creation thresholds) require dedicated oversight, or does it fall out of existing self-application + bounded meta-level + frozen baselines? (Resolved: the latter — see `90-notes`.)"
+
+---
+
+## Deferred to a later pass
+
+- Memory promotion authority, contradiction handling, and staleness/retirement (`05-ephemeral-conversation-curated-memory.md`, `01-project-level-feedback.md`).
+- The weight and revisability of the milestone sequence itself (`01-milestones.md`) — to be addressed via explicit milestone-revision principles rather than through this note.
