@@ -8,13 +8,13 @@ _Updated: 2026-08-30_
 
 **Current milestone:** M0 — Characterize the local inference envelope.
 
-**State:** just started. Task breakdown drafted in `M0-inference-envelope.md`. The measurement protocol and harness are the next build step. Two decisions need the operator's input before the sweep can run (see blockers).
+**State:** host inventoried, runtime decided (Ollama of record + llama.cpp spot-checks), protocol written, model matrix pinned to Qwen2.5-Coder 3B/7B/14B on the RTX 2070 SUPER's 8 GB. Bench scripts are the next build step; the sweep is blocked only on installing the two runtimes (an M1 step pulled forward).
 
 ## Milestone board
 
 | Milestone | State | Decomposed |
 |---|---|---|
-| M0 — Local inference envelope | WIP | yes — `M0-inference-envelope.md` |
+| M0 — Local inference envelope | WIP — tasks 1–4 of 8 done | yes — `M0-inference-envelope.md` |
 | M1 — Reproducible baseline environment | TODO | provisional — `M1-baseline-environment.md` |
 | M2 — Observability foundation | TODO | no — decompose when M0 nears completion |
 | M3 — Invariant floor (reduced form for MVP) | TODO | no |
@@ -23,16 +23,14 @@ _Updated: 2026-08-30_
 
 ## Immediate next actions
 
-1. Resolve the two M0 blockers below.
-2. Write the M0 measurement protocol (`experiments/M0-inference-envelope/PROTOCOL.md`).
-3. Build the harness that runs the protocol and emits structured results.
-4. Run the model × quantization × context sweep.
-5. Write the envelope description and the first findings-log entry.
+1. Write the M0 bench scripts — `bench-ollama.ps1` (all matrix cells) and `bench-llamacpp.sh` (7B/14B spot-checks), plus `models.json` and an aggregator.
+2. Install the runtimes: Ollama (native Windows), and a prebuilt CUDA llama.cpp in WSL Ubuntu-22.04. Pull the Qwen2.5-Coder GGUFs.
+3. Run the model × quantization × context sweep.
+4. Write the envelope description and the first findings-log entry.
 
-## Blockers needing operator input
+## Blockers
 
-- **Inference runtime.** Which local runtime to measure against and build M1 on — Ollama, llama.cpp directly, LM Studio, or another. This shapes the harness and the model-switch-cost measurement.
-- **Host and execution target.** GPU model and VRAM, system RAM, and whether inference runs under native Windows or WSL. This sets the model and quantization matrix. The harness can auto-detect some of this, but the matrix needs to be bounded before the sweep.
+- **Runtime install.** Ollama and llama.cpp are not yet on the host. Step 2 above — an M1 install task pulled forward because M0 needs it. Everything else for M0 is unblocked.
 
 ## Recently done
 

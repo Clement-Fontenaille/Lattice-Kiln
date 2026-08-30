@@ -29,43 +29,55 @@ All measurements reconstructable from stored structured results and the harness 
 
 | # | Task | State | Notes |
 |---|---|---|---|
-| 1 | Inventory the host — CPU, RAM, GPU + VRAM, disk, OS/WSL layout | TODO | Harness can capture most of this automatically. |
-| 2 | Choose the inference runtime | BLOCKED | Needs operator input. Candidates: Ollama, llama.cpp, LM Studio. Decision recorded in M1 environment notes, referenced here. |
-| 3 | Fix the candidate model set | TODO | Proposal below. Needs task 1 to bound it. |
-| 4 | Write the measurement protocol | TODO | `PROTOCOL.md` — metrics, method, repetitions, result schema. Runtime-agnostic where possible. |
-| 5 | Build the harness | TODO | Runs the protocol across the matrix, emits one structured record per run. |
-| 6 | Run the sweep | BLOCKED | Depends on tasks 2–5 and operator hardware. |
+| 1 | Inventory the host — CPU, RAM, GPU + VRAM, disk, OS/WSL layout | DONE | `harness/detect-host.ps1` run; `results/host.json` captured. Summary below. |
+| 2 | Choose the inference runtime | DONE | **Both**: Ollama as runtime of record (drives M1 and the assistant), llama.cpp for M0 fidelity spot-checks on the working-default models. |
+| 3 | Fix the candidate model set | DONE | Pinned matrix below, bounded by 8 GB VRAM. |
+| 4 | Write the measurement protocol | DONE | `experiments/M0-inference-envelope/PROTOCOL.md`. |
+| 5 | Build the harness | WIP | Host detection done. `bench-ollama.ps1` and `bench-llamacpp.sh` next. |
+| 6 | Run the sweep | BLOCKED | Needs Ollama + llama.cpp installed (M1 install step), then tasks 5. |
 | 7 | Write the envelope description | TODO | Into this document. |
 | 8 | Findings-log entry | TODO | Verdict against the constrained-intelligence thesis. |
 
-## Candidate model set (proposal, pending task 1)
+## Host summary (2026-08-30)
 
-A small spread across capability and size, weighted toward coding-capable models:
+Full record: `experiments/M0-inference-envelope/results/host.json`.
 
-- one ~3B model (floor case — fast, fits anything);
-- one ~7–8B model (expected working default);
-- one ~13–14B model (stretch for the working default);
-- one larger or mixture-of-experts model if VRAM allows (ceiling case).
+| | |
+|---|---|
+| GPU | NVIDIA RTX 2070 SUPER, **8 GB VRAM**, driver 581.80 (Turing; no FP8) |
+| CPU | AMD FX-8300 — 2012 Piledriver, 4 modules / 8 threads, 3.3 GHz. Weak single-thread. |
+| RAM | 11.9 GB total |
+| Disk | 659 GB free on C: |
+| OS / WSL | Windows 10 19045; WSL2 Ubuntu-22.04 present, stopped |
+| Runtimes | neither Ollama nor llama.cpp installed yet |
+| CUDA toolkit | absent — llama.cpp in WSL should use a prebuilt CUDA binary, not a source build |
 
-Each measured at Q4_K_M and Q8_0 at minimum; add Q5_K_M for the working-default candidates.
+The envelope is tight on two axes at once: 8 GB VRAM caps model size, and the
+FX-8300 makes any CPU offload expensive. The measurements that matter most are
+therefore the partial-offload cases (14B) and the concurrent-load delta.
 
-Concrete model names to be pinned once the runtime and VRAM are known.
+## Pinned model matrix
 
-## Metrics the protocol must cover
+All Qwen2.5-Coder unless noted — it is the coding-capable line with good small
+sizes. Sizes approximate for GGUF.
 
-- Model load time and unload time; combined switch cost.
-- Prefill throughput (tokens/sec) at several context fills — e.g. 512, 4k, 16k, 32k, and the model's stated maximum.
-- Generation throughput (tokens/sec), steady state.
-- Latency to first token.
-- Largest context that loads and runs without spilling past VRAM into unacceptable slowdown.
-- Offload split actually used (layers on GPU vs CPU) at each configuration.
-- Sustained-load behaviour — throughput drift and thermal or memory pressure over a longer run.
-- Concurrent-load delta — the same generation measured with the development environment idle vs active (editor plus language server plus a build running).
+| Slot | Model | Quants | GPU fit (8 GB) | Purpose |
+|---|---|---|---|---|
+| Floor | Qwen2.5-Coder-3B | Q4_K_M (~2.0 GB), Q8_0 (~3.3 GB) | full, large context | fast baseline |
+| Default | Qwen2.5-Coder-7B | Q4_K_M (~4.7 GB), Q5_K_M (~5.4 GB), Q8_0 (~8.1 GB) | Q4/Q5 full; Q8 expected to spill | expected working default |
+| Stretch | Qwen2.5-Coder-14B | Q4_K_M (~9.0 GB) | partial offload — will not fully fit | ceiling: how much does offload cost on this CPU |
+| Ceiling (optional) | Qwen3-30B-A3B (MoE) | Q4_K_M (~18 GB) | out — exceeds RAM+VRAM | record as `skipped: insufficient memory` unless a smaller MoE is substituted |
 
-## Repetition
+Instruct/base: use the instruct-tuned variants throughout.
+Context-fill points per `PROTOCOL.md`: 512 / 4k / 16k / 32k / model max, skipping
+what does not fit and recording the skip.
 
-Each configuration measured enough times to see variance, not once. Exact count set in the protocol against run cost, but no single-run numbers in the final description.
+## Metrics, repetition, result schema
+
+All defined in `experiments/M0-inference-envelope/PROTOCOL.md`. That document is
+the contract; the harness implements it.
 
 ## Log
 
 - 2026-08-30 — milestone decomposed; blockers raised for runtime and host details.
+- 2026-08-30 — runtime decided (Both: Ollama of record + llama.cpp spot-checks). Protocol written. Host-detection script written and run: RTX 2070 SUPER 8 GB / FX-8300 / 11.9 GB RAM. Model matrix pinned to Qwen2.5-Coder 3B/7B/14B. Tasks 1–4 done. Next: bench scripts, then runtime install (M1), then sweep.

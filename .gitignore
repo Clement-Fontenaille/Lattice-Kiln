@@ -24,3 +24,8 @@ TestResults.xml
 
 ### Claude Code ###
 .claude/settings.local.json
+
+### Local model assets ###
+*.gguf
+*.safetensors
+experiments/**/models/

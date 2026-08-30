@@ -1,0 +1,46 @@
+﻿{
+    "schema":  "m0-host/1",
+    "collected":  "2026-08-30T10:53:14.1139845+02:00",
+    "hostname":  "DESKTOP-J6EJPKF",
+    "os":  {
+               "caption":  "Microsoft Windows 10 Professionnel",
+               "version":  "10.0.19045",
+               "build":  "19045"
+           },
+    "cpu":  {
+                "name":  "AMD FX(tm)-8300 Eight-Core Processor           ",
+                "cores":  4,
+                "logical":  8,
+                "max_clock_mhz":  3300
+            },
+    "ram_gb":  11.9,
+    "gpus":  [
+                 {
+                     "source":  "nvidia-smi",
+                     "name":  "NVIDIA GeForce RTX 2070 SUPER",
+                     "vram_mb":  8192,
+                     "driver_version":  "581.80"
+                 }
+             ],
+    "cuda_toolkit":  null,
+    "disk":  {
+                 "drive":  "C",
+                 "free_gb":  659.1,
+                 "used_gb":  271.9
+             },
+    "wsl":  {
+                "present":  true,
+                "raw":  "NAME            STATE           VERSION\n\n* Ubuntu-22.04    Stopped         2"
+            },
+    "runtimes":  {
+                     "ollama":  {
+                                    "present":  false
+                                },
+                     "llama_cli":  {
+                                       "present":  false
+                                   },
+                     "llama_bench":  {
+                                         "present":  false
+                                     }
+                 }
+}
