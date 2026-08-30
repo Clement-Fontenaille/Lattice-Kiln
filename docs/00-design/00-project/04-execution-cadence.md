@@ -38,6 +38,8 @@ Findings flow in one direction, in this order:
 
 The concrete artifact carrying findings is the findings log in the roadmap space. One entry per completed milestone.
 
+Task-level decomposition and execution state are tracked separately, in the `PROGRESS` folder, which changes continuously and is not part of the design set.
+
 ## Scheduled sequence rework
 
 The milestone sequence is reworked in batches, not continuously, so that findings accumulate into a coherent revision rather than causing drift.
