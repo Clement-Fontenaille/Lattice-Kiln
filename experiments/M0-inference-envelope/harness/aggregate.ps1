@@ -110,6 +110,52 @@ if ($switch) {
   W ""
 }
 
+$concurrent = $records | Where-Object { $_.schema -eq 'm0-concurrent/1' -and $_.status -eq 'ok' }
+if ($concurrent) {
+  W "## Concurrent load (inference vs. dev environment)"
+  W ""
+  W "_Host load is a synthetic proxy: N CPU workers + RAM churn standing in for editor + language server + build._"
+  W ""
+  W "| model | quant | fill | condition | gen tok/s (med / min-max) | prefill tok/s (med) | n |"
+  W "|---|---|---:|---|---|---:|---:|"
+  $cRows = @{}
+  foreach ($grp in ($concurrent | Group-Object model, quant, context_fill, condition)) {
+    $g0 = $grp.Group[0]
+    $gn = $grp.Group | ForEach-Object { $_.metrics.gen_tok_s } | Where-Object { $_ -ne $null }
+    $pf = $grp.Group | ForEach-Object { $_.metrics.prefill_tok_s } | Where-Object { $_ -ne $null }
+    $gnMed = Median ([double[]]$gn); $pfMed = Median ([double[]]$pf)
+    $cRows["$($g0.model)|$($g0.quant)|$($g0.context_fill)|$($g0.condition)"] = $gnMed
+    $gnStr = if ($gn) { "{0} / {1}-{2}" -f $gnMed, ([math]::Round(($gn|Measure-Object -Min).Minimum,1)), ([math]::Round(($gn|Measure-Object -Max).Maximum,1)) } else { "-" }
+    W ("| {0} | {1} | {2} | {3} | {4} | {5} | {6} |" -f $g0.model, $g0.quant, $g0.context_fill, $g0.condition, $gnStr, $(if($pfMed){$pfMed}else{'-'}), $grp.Count)
+  }
+  W ""
+  foreach ($k in ($cRows.Keys | Where-Object { $_ -like '*|idle' })) {
+    $ck = $k -replace '\|idle$', '|concurrent'
+    if ($cRows.ContainsKey($ck) -and $cRows[$k]) {
+      $delta = [math]::Round((($cRows[$ck] - $cRows[$k]) / $cRows[$k]) * 100, 1)
+      W ("- **{0}**: idle {1} -> concurrent {2} tok/s  (**{3}%**)" -f ($k -replace '\|idle$',''), $cRows[$k], $cRows[$ck], $delta)
+    }
+  }
+  W ""
+}
+
+$drift = $records | Where-Object { $_.schema -eq 'm0-drift/1' -and $_.status -eq 'ok' }
+if ($drift) {
+  W "## Sustained drift (continuous generation)"
+  W ""
+  foreach ($grp in ($drift | Group-Object model, quant)) {
+    $g0 = $grp.Group[0]
+    $maxT = ($grp.Group | Measure-Object elapsed_s -Maximum).Maximum
+    $first = $grp.Group | Where-Object { $_.elapsed_s -le 60 } | ForEach-Object { $_.metrics.gen_tok_s } | Where-Object { $_ -ne $null }
+    $last  = $grp.Group | Where-Object { $_.elapsed_s -ge ($maxT - 60) } | ForEach-Object { $_.metrics.gen_tok_s } | Where-Object { $_ -ne $null }
+    $fMed = Median ([double[]]$first); $lMed = Median ([double[]]$last)
+    $drop = if ($fMed) { [math]::Round((($lMed - $fMed) / $fMed) * 100, 1) } else { $null }
+    W ("- **{0} {1}**: {2} iterations over {3}s. First-minute median {4} tok/s, last-minute median {5} tok/s  (**{6}%**)." -f `
+       $g0.model, $g0.quant, $grp.Count, $maxT, $fMed, $lMed, $drop)
+  }
+  W ""
+}
+
 if ($bad) {
   W "## Skipped / OOM / error"
   W ""
