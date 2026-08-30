@@ -14,10 +14,13 @@ configured. **Do this with VS Code closed** so Cline does not overwrite them.
 
 ## Baseline choices (differ from Cline defaults)
 
-- **Auto-approval disabled** (`autoApprovalSettings.enabled: false`, all actions
-  false). A human approves every run through the MVP — execution cadence, M3
-  reduced form. Cline's default is `enabled: true` with reads / safe commands /
-  MCP auto-approved.
+- **Auto-approval off** — no action is auto-approved. The template sets
+  `autoApprovalSettings.enabled: false` with every action `false`; Cline may leave
+  the master `enabled` flag `true` if you untick actions individually in the UI,
+  which is equivalent (nothing is auto-approved). Step 50 checks "effective"
+  auto-approval = master flag AND at least one action on. A human approves every
+  run through the MVP — execution cadence, M3 reduced form. Cline's default is
+  `enabled: true` with reads / safe commands / MCP auto-approved.
 - **Telemetry disabled** — the baseline makes no external calls it does not need.
 - **Auto-update disabled** — a baseline is pinned; version bumps are deliberate.
 - Model `qwen2.5-coder:7b-instruct-q4_K_M`, context `16384`, timeout `60000` ms —

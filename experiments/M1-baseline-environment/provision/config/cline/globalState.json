@@ -10,7 +10,7 @@
   "planModeOllamaModelId": "qwen2.5-coder:7b-instruct-q4_K_M",
   "actModeOllamaModelId": "qwen2.5-coder:7b-instruct-q4_K_M",
   "autoApprovalSettings": {
-    "version": 3,
+    "version": 8,
     "enabled": false,
     "favorites": [],
     "maxRequests": 20,

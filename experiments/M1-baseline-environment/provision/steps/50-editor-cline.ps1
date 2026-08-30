@@ -75,9 +75,18 @@ if (Test-OllamaConfigured) {
   try {
     $gs = Get-Content $globalStateJson -Raw | ConvertFrom-Json
     if ($gs.actModeOllamaModelId) { Write-Output ("PASS model: {0}  ctx: {1}  timeout: {2}ms" -f $gs.actModeOllamaModelId, $gs.ollamaApiOptionsCtxNum, $gs.requestTimeoutMs) }
-    if ($gs.autoApprovalSettings.enabled) { Write-Output "WARN Cline auto-approval is ENABLED - the baseline wants a human to approve every run (see config/cline/README.md)" }
-    else { Write-Output "PASS auto-approval disabled" }
+    # Effective auto-approval = master flag AND at least one action enabled.
+    $aa = $gs.autoApprovalSettings
+    $anyAction = $false
+    if ($aa.actions) { $anyAction = @($aa.actions.PSObject.Properties | Where-Object { $_.Value -eq $true }).Count -gt 0 }
+    if ($aa.enabled -and $anyAction) {
+      $on = ($aa.actions.PSObject.Properties | Where-Object { $_.Value -eq $true } | ForEach-Object { $_.Name }) -join ', '
+      Write-Output "WARN Cline auto-approves actions ($on) - the baseline wants a human to approve every run (config/cline/README.md)"
+    } else {
+      Write-Output "PASS auto-approval effectively off (no actions auto-approved)"
+    }
     if ($gs.telemetrySetting -and $gs.telemetrySetting -ne 'disabled') { Write-Output "WARN Cline telemetry is '$($gs.telemetrySetting)' - baseline expects 'disabled'" }
+    else { Write-Output "PASS telemetry disabled" }
   } catch {}
 }
 elseif ((Test-Path $tpl.providers.src) -and (Test-Path $tpl.globalState.src)) {

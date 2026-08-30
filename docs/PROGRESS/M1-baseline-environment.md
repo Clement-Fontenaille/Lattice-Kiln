@@ -2,7 +2,7 @@
 
 **Milestone:** `40-roadmap/01-milestones.md` → Milestone 1
 **Evidence question:** can the baseline be reconstructed from scripts without manual repair, and where does reproducibility actually break?
-**State:** WIP
+**State:** DONE (2026-08-30) — closed on "scripts complete + verified in place + manual surface enumerated". Findings-log entry 2. The definitive clean-machine replay is deferred to the post-MVP rework (no second machine available now).
 
 ## What "done" looks like
 
@@ -51,8 +51,8 @@ decision, it does not re-litigate it.
 | 3 | Script the inference runtime install + model fetch | DONE | `steps/20-llamacpp.sh` wraps the M0 build + GGUF-fetch scripts and verifies pinned digests; `steps/30-ollama.ps1` installs/verifies Ollama + server; `steps/40-models.ps1` ensures the working-default tags (`-FullModelMatrix` for all ~32 GB). |
 | 4 | Script the editor + Cline setup | DONE | `steps/50-editor-cline.ps1` installs/verifies VS Code + Cline, and copies the committed templates `provision/config/cline/{providers,global-settings,globalState}.json` into `%USERPROFILE%\.cline\data\` when Cline is unconfigured (refuses to write under a running VS Code). Templates were captured from a UI-configured instance and curated (host-specific and cruft keys stripped; auto-approval/telemetry/auto-update set to baseline values). See finding 1 + `provision/config/cline/README.md`. |
 | 5 | Write the environment manifest | DONE (v0) | `manifest.json`, schema `m1-manifest/0`. Component list, native/WSL placement, pinned versions, model digests, reconstruction entry point, known manual steps. |
-| 6 | Clean-ish reconstruction test | PARTIAL | `provision.ps1 -VerifyOnly` passes green against the current host (`OK_WITH_WARN`, the warn = the Cline manual step). A genuine clean-machine run is still owed — verify-mode confirms the checker agrees, not that the scripts built it from nothing. |
-| 7 | Findings-log entry | TODO | After a real clean-machine attempt. Running list below. |
+| 6 | Clean-ish reconstruction test | PARTIAL (closed) | `provision.ps1 -VerifyOnly` passes green against the reference host (`overall: OK`, 6/6 steps, zero WARN). A genuine clean-machine run is still owed — no second machine now — and is deferred to the post-MVP rework (`STATUS.md`). Verify-mode confirms the host matches the manifest, not that the scripts built it from nothing. |
+| 7 | Findings-log entry | DONE | `40-roadmap/05-findings-log.md` entry 2. Verdict: **inconclusive** on reconstruction-without-repair (clean run not done), but the manual surface is fully enumerated (6 items) — that enumeration is the bootstrapper backlog. |
 
 ## Findings so far (feed the bootstrapper doc, not just a fix list)
 
