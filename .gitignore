@@ -33,3 +33,6 @@ experiments/**/models/
 ### M0 scratch (WSL build helpers, run logs) ###
 experiments/**/.wsl-scratch/
 experiments/M0-inference-envelope/results/bench-ollama.log
+### Python ###
+__pycache__/
+*.pyc
