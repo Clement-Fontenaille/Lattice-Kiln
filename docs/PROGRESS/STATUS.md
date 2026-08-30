@@ -52,6 +52,13 @@ baseline with a manifest.
   in the design set is allowed to depend on host-specific envelope numbers. See
   `40-roadmap/02-open-questions-register.md` → Bootstrapping, and findings-log
   entry 1.
+- **Editor-agent frontend choice.** M1 names Cline. M1 finding 1: Cline's config
+  is file-based JSON but the schema is undocumented and UI-first, so the baseline
+  needs a one-time manual capture step. Weigh a `config.yaml`-first, documented
+  alternative (e.g. Continue.dev) at the rework. Not an M1 change — Cline stays
+  for the MVP, worked around by capture-and-replay of its settings JSON. The
+  project runs its own orchestrator loop from M5 on, so this frontend is MVP
+  scaffolding, not a long-term dependency.
 
 ## Recently done
 

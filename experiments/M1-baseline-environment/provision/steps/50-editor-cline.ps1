@@ -1,14 +1,24 @@
 <#
   M1 step 50 - VS Code + Cline, pointed at local Ollama.
-  Config is checked in at provision/config/cline-settings.json and copied into
-  place; it is not hand-edited on the host.
+
+  Cline stores provider/model config in JSON under its VS Code globalStorage
+  (providers.json, global-settings.json). Those files are file-based and thus
+  scriptable, but the schema is undocumented and zod-validated on load, and Cline
+  is UI-first for configuration (see docs/PROGRESS/M1-baseline-environment.md
+  finding 1). So: if committed templates exist under provision/config/, copy them
+  into place; otherwise report the exact manual steps as WARN.
 #>
 [CmdletBinding()]
 param([switch] $VerifyOnly)
 $ErrorActionPreference = 'Stop'
 $here = $PSScriptRoot
-$cfgSrc = Join-Path $here '..\config\cline-settings.json'
+$cfgDir = Join-Path $here '..\config'
 $fail = $false
+
+# Cline's VS Code-extension settings dir (empirically confirmed on this host).
+$clineSettingsDir = Join-Path $env:APPDATA 'Code\User\globalStorage\saoudrizwan.claude-dev\settings'
+$providersJson    = Join-Path $clineSettingsDir 'providers.json'
+$globalJson       = Join-Path $clineSettingsDir 'global-settings.json'
 
 # --- VS Code ---
 $code = Get-Command code -ErrorAction SilentlyContinue
@@ -42,14 +52,37 @@ if ($extList -match '(?im)^\s*saoudrizwan\.claude-dev\s*$') {
   }
 }
 
-# --- config reference ---
-if (Test-Path $cfgSrc) {
-  Write-Output "PASS checked-in Cline config present: provision/config/cline-settings.json"
-  Write-Output "WARN Cline settings live in VS Code global state; apply the checked-in values via the Cline settings UI"
-  Write-Output "     (provider: Ollama, base URL http://localhost:11434, model qwen2.5-coder:7b-instruct-q4_K_M)."
-  Write-Output "     Automating that write is an open M1 item - recorded as a manual step."
-} else {
-  Write-Output "WARN no provision/config/cline-settings.json"
+# --- Cline provider/model config ---
+$tplProviders = Join-Path $cfgDir 'providers.json'
+$tplGlobal    = Join-Path $cfgDir 'global-settings.json'
+
+if (Test-Path $providersJson) {
+  Write-Output "PASS Cline providers.json present: $providersJson"
+  $isOllama = $false
+  try { $isOllama = ((Get-Content $providersJson -Raw | ConvertFrom-Json).providers.PSObject.Properties.Name) -contains 'ollama' } catch {}
+  if ($isOllama) { Write-Output "PASS providers.json has an 'ollama' provider" }
+  else { Write-Output "WARN providers.json exists but has no 'ollama' provider - configure it in the Cline UI" }
+}
+elseif ((Test-Path $tplProviders)) {
+  if ($VerifyOnly) {
+    Write-Output "FAIL Cline not configured. template available: provision/config/providers.json -> $providersJson"
+    $fail = $true
+  } else {
+    New-Item -ItemType Directory -Path $clineSettingsDir -Force | Out-Null
+    Copy-Item $tplProviders $providersJson -Force
+    if (Test-Path $tplGlobal) { Copy-Item $tplGlobal $globalJson -Force }
+    Write-Output "DID  copied committed Cline templates into $clineSettingsDir"
+    Write-Output "WARN templates use Cline's undocumented settings schema; if Cline rejects them, delete and reconfigure via the UI, then re-capture."
+  }
+}
+else {
+  Write-Output "WARN Cline is not configured and no template is committed. Manual, one-time:"
+  Write-Output "     1. VS Code -> Cline -> Settings: provider = Ollama, base URL = http://localhost:11434,"
+  Write-Output "        model = qwen2.5-coder:7b-instruct-q4_K_M, auto-approve = off."
+  Write-Output "     2. Copy $providersJson and $globalJson"
+  Write-Output "        into provision/config/ and commit them as templates; future provisions copy them."
+  Write-Output "     Reference values + rationale: provision/config/cline-settings.json"
+  Write-Output "     Empty providers.json shape is { `"version`": 1, `"providers`": {} }."
 }
 
 if ($fail) { exit 1 }

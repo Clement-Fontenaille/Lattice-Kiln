@@ -1,5 +1,8 @@
 {
-  "_note": "Checked-in Cline configuration for the M1 baseline. Cline stores its real settings in VS Code global state; step 50 currently reports these values for manual application via the Cline settings UI. Automating the write is an open M1 item.",
+  "_note": "Reference values (not a load-bearing file). Cline's real config is JSON at %APPDATA%/Code/User/globalStorage/saoudrizwan.claude-dev/settings/{providers.json,global-settings.json} - schema undocumented, UI-first. Once configured via the Cline UI, copy those two files next to this one as providers.json / global-settings.json; step 50 will then copy them into place. See docs/PROGRESS/M1-baseline-environment.md finding 1.",
+  "_cline_settings_dir": "%APPDATA%/Code/User/globalStorage/saoudrizwan.claude-dev/settings",
+  "_providers_json_empty_shape": { "version": 1, "providers": {} },
+  "_path_overrides": ["CLINE_PROVIDER_SETTINGS_PATH", "CLINE_GLOBAL_SETTINGS_PATH", "CLINE_MCP_SETTINGS_PATH", "CLINE_DATA_DIR"],
   "apiProvider": "ollama",
   "ollamaBaseUrl": "http://localhost:11434",
   "ollamaModelId": "qwen2.5-coder:7b-instruct-q4_K_M",

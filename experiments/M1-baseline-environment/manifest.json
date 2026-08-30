@@ -120,10 +120,19 @@
         "provider": "ollama",
         "endpoint": "http://localhost:11434",
         "model": "qwen2.5-coder:7b-instruct-q4_K_M",
-        "config_ref": "provision/config/cline-settings.json"
+        "config_files": [
+          "%APPDATA%/Code/User/globalStorage/saoudrizwan.claude-dev/settings/providers.json",
+          "%APPDATA%/Code/User/globalStorage/saoudrizwan.claude-dev/settings/global-settings.json"
+        ],
+        "config_path_overrides": ["CLINE_PROVIDER_SETTINGS_PATH", "CLINE_GLOBAL_SETTINGS_PATH", "CLINE_DATA_DIR"],
+        "reference_values_ref": "provision/config/cline-settings.json"
       },
-      "observed": { "version": "TODO - capture on next provision run" },
-      "provisioned_by": "provision/steps/50-editor-cline.ps1"
+      "observed": {
+        "version": "4.1.16",
+        "config_state": "not configured (only cline_mcp_settings.json auto-created); no committed templates yet"
+      },
+      "provisioned_by": "provision/steps/50-editor-cline.ps1 - installs the extension; copies provision/config/{providers.json,global-settings.json} into place if committed, else reports the one-time manual capture",
+      "notes": "Config is file-based JSON but the schema is undocumented, zod-validated on load, and UI-first. API keys (if any) go to VS Code SecretStorage, not these files - not an issue for keyless local Ollama. See docs/PROGRESS/M1-baseline-environment.md finding 1."
     }
   ],
   "reconstruction_entry_point": "powershell -ExecutionPolicy Bypass -File experiments/M1-baseline-environment/provision/provision.ps1",
@@ -131,6 +140,7 @@
     "Install the NVIDIA Windows driver with WSL GPU support (operator).",
     "wsl --install -d Ubuntu-24.04 on a machine without WSL (operator).",
     "One `sudo apt-get install` inside WSL for build-essential + nvidia-cuda-toolkit + jq.",
-    "Accept Ollama installer UAC prompt if winget is unavailable."
+    "Accept Ollama installer UAC prompt if winget is unavailable.",
+    "One-time: configure Cline via its VS Code UI (provider Ollama, base URL http://localhost:11434, model qwen2.5-coder:7b-instruct-q4_K_M, auto-approve off), then copy providers.json + global-settings.json into provision/config/ and commit them as templates. Thereafter step 50 copies them automatically."
   ]
 }
