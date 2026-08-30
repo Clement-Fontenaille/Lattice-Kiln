@@ -1,0 +1,29 @@
+{
+  "schema": "m0-models/1",
+  "note": "Tail run: 14B Q4_K_M only, executed after the main sweep was stopped to skip 7B Q8's sub-1-tok/s large-context tail. recorded_repetitions reduced to 3 (documented deviation from PROTOCOL's 5) because 14B is offload-bound on this host and each rep at large context runs minutes. The switch-cost pass in bench-ollama.ps1 is a no-op here (single model); run bench-switch.ps1 separately.",
+  "context_fills": [512, 4096, 16384, 32768],
+  "warmup_repetition": 0,
+  "recorded_repetitions": [1, 2, 3],
+  "models": [
+    {
+      "slot": "stretch",
+      "family": "qwen2.5-coder",
+      "params_b": 14,
+      "stated_max_context": 32768,
+      "expect": "does not fully fit 8 GB at Q4_K_M; partial CPU offload expected",
+      "ollama": {
+        "Q4_K_M": "qwen2.5-coder:14b-instruct-q4_K_M"
+      },
+      "llamacpp_spotcheck": true,
+      "llamacpp_quants": ["Q4_K_M"],
+      "llamacpp_gguf_hint": "Qwen/Qwen2.5-Coder-14B-Instruct-GGUF",
+      "llamacpp_ngl_sweep": [99, 40, 24, 0]
+    }
+  ],
+  "ollama_options": {
+    "temperature": 0,
+    "num_predict": 320,
+    "seed": 1,
+    "keep_alive_bench": "5m"
+  }
+}

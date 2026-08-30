@@ -1,0 +1,17 @@
+{
+  "schema": "m0-run/1",
+  "runtime": "ollama",
+  "runtime_version": "ollama version is 0.33.2",
+  "model": "qwen2.5-coder:7b-instruct-q8_0",
+  "quant": "Q8_0",
+  "context_fill": 16384,
+  "num_ctx": 16384,
+  "repetition": 1,
+  "is_cold": false,
+  "warmup": false,
+  "timestamp": "2026-08-30T00:00:00.0000000+02:00",
+  "host_ref": "b50a3ad701b9fb16ef56ff4a03d3ff88363002a8478a5cd3210dbea96bf298f1",
+  "metrics": { "load_ms": null, "prompt_eval_count": null, "prompt_eval_ms": null, "eval_count": null, "eval_ms": null, "prefill_tok_s": null, "gen_tok_s": null, "gpu_layers": null, "total_layers": null, "size_mb": null, "vram_resident_mb": null },
+  "status": "skipped",
+  "note": "not measured: 7B Q8_0 does not fit 8GB; 512 and 4096 fills already gen ~4 tok/s (offload-bound, out of interactive envelope). Larger fills skipped to save hours of sub-1-tok/s generation."
+}
