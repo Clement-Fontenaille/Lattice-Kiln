@@ -1,0 +1,54 @@
+{
+  "schema": "m0-models/1",
+  "note": "Pinned for the RTX 2070 SUPER (8 GB) host. Context 'max' is capped at 32768 (native) to avoid YaRN scaling effects; 128K is out of scope for M0.",
+  "context_fills": [512, 4096, 16384, 32768],
+  "warmup_repetition": 0,
+  "recorded_repetitions": [1, 2, 3, 4, 5],
+  "models": [
+    {
+      "slot": "floor",
+      "family": "qwen2.5-coder",
+      "params_b": 3,
+      "stated_max_context": 32768,
+      "ollama": {
+        "Q4_K_M": "qwen2.5-coder:3b-instruct-q4_K_M",
+        "Q8_0":   "qwen2.5-coder:3b-instruct-q8_0"
+      },
+      "llamacpp_spotcheck": false
+    },
+    {
+      "slot": "default",
+      "family": "qwen2.5-coder",
+      "params_b": 7,
+      "stated_max_context": 32768,
+      "ollama": {
+        "Q4_K_M": "qwen2.5-coder:7b-instruct-q4_K_M",
+        "Q5_K_M": "qwen2.5-coder:7b-instruct-q5_K_M",
+        "Q8_0":   "qwen2.5-coder:7b-instruct-q8_0"
+      },
+      "llamacpp_spotcheck": true,
+      "llamacpp_quants": ["Q4_K_M", "Q5_K_M"],
+      "llamacpp_gguf_hint": "Qwen/Qwen2.5-Coder-7B-Instruct-GGUF"
+    },
+    {
+      "slot": "stretch",
+      "family": "qwen2.5-coder",
+      "params_b": 14,
+      "stated_max_context": 32768,
+      "expect": "does not fully fit 8 GB at Q4_K_M; partial CPU offload expected",
+      "ollama": {
+        "Q4_K_M": "qwen2.5-coder:14b-instruct-q4_K_M"
+      },
+      "llamacpp_spotcheck": true,
+      "llamacpp_quants": ["Q4_K_M"],
+      "llamacpp_gguf_hint": "Qwen/Qwen2.5-Coder-14B-Instruct-GGUF",
+      "llamacpp_ngl_sweep": [99, 40, 24, 0]
+    }
+  ],
+  "ollama_options": {
+    "temperature": 0,
+    "num_predict": 256,
+    "seed": 1,
+    "keep_alive_bench": "5m"
+  }
+}

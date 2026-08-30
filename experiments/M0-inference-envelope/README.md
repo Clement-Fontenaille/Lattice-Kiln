@@ -8,16 +8,19 @@ Harness for Milestone 0. Measures what this host can actually run, per
 ```
 PROTOCOL.md              the measurement contract
 harness/
-  detect-host.ps1        task 1 - host inventory  -> results/host.json
-  models.json            the pinned model matrix           (pending)
-  bench-ollama.ps1       full matrix via Ollama            (pending)
-  bench-llamacpp.sh      7B/14B spot-checks via llama.cpp  (pending)
-  aggregate.ps1          results/runs/*.json -> results/summary.md   (pending)
+  detect-host.ps1        task 1 - host inventory  -> results/host.json   [run]
+  models.json            the pinned model matrix
+  bench-ollama.ps1       full matrix via Ollama                          [untested]
+  bench-llamacpp.sh      7B/14B spot-checks via llama.cpp (WSL)          [untested]
+  aggregate.ps1          results/runs/*.json -> results/summary.md       [untested]
 results/
   host.json              committed - host of record
   runs/*.json            committed - one record per run
   summary.md             generated aggregate
 ```
+
+The bench scripts parse but have not run against a live runtime. First real
+execution will surface fixes; that is expected.
 
 ## Order of operations
 

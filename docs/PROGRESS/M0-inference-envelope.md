@@ -33,8 +33,8 @@ All measurements reconstructable from stored structured results and the harness 
 | 2 | Choose the inference runtime | DONE | **Both**: Ollama as runtime of record (drives M1 and the assistant), llama.cpp for M0 fidelity spot-checks on the working-default models. |
 | 3 | Fix the candidate model set | DONE | Pinned matrix below, bounded by 8 GB VRAM. |
 | 4 | Write the measurement protocol | DONE | `experiments/M0-inference-envelope/PROTOCOL.md`. |
-| 5 | Build the harness | WIP | Host detection done. `bench-ollama.ps1` and `bench-llamacpp.sh` next. |
-| 6 | Run the sweep | BLOCKED | Needs Ollama + llama.cpp installed (M1 install step), then tasks 5. |
+| 5 | Build the harness | DONE (untested) | `models.json`, `bench-ollama.ps1`, `bench-llamacpp.sh`, `aggregate.ps1`. All parse; none run against a live runtime yet. |
+| 6 | Run the sweep | BLOCKED | Needs Ollama (native) + a prebuilt CUDA llama.cpp (WSL) installed, plus the GGUFs. First run will surface script fixes. |
 | 7 | Write the envelope description | TODO | Into this document. |
 | 8 | Findings-log entry | TODO | Verdict against the constrained-intelligence thesis. |
 
@@ -80,4 +80,5 @@ the contract; the harness implements it.
 ## Log
 
 - 2026-08-30 — milestone decomposed; blockers raised for runtime and host details.
-- 2026-08-30 — runtime decided (Both: Ollama of record + llama.cpp spot-checks). Protocol written. Host-detection script written and run: RTX 2070 SUPER 8 GB / FX-8300 / 11.9 GB RAM. Model matrix pinned to Qwen2.5-Coder 3B/7B/14B. Tasks 1–4 done. Next: bench scripts, then runtime install (M1), then sweep.
+- 2026-08-30 — runtime decided (Both: Ollama of record + llama.cpp spot-checks). Protocol written. Host-detection script written and run: RTX 2070 SUPER 8 GB / FX-8300 / 11.9 GB RAM. Model matrix pinned to Qwen2.5-Coder 3B/7B/14B. Tasks 1–4 done.
+- 2026-08-30 — harness written (tasks 5): `models.json`, `bench-ollama.ps1`, `bench-llamacpp.sh`, `aggregate.ps1`. All parse-clean, none run yet. Sweep now blocked only on installing Ollama + a prebuilt CUDA llama.cpp and pulling the GGUFs.
