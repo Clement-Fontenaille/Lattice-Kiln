@@ -36,17 +36,43 @@ native on Windows; llama.cpp runs in WSL because the host has no native CUDA
 toolchain and no prebuilt Linux CUDA binary exists. M1 records this as a
 decision, it does not re-litigate it.
 
+## Where the work lives
+
+`experiments/M1-baseline-environment/` — `manifest.json` (declarative state),
+`provision/provision.ps1` (orchestrator + run report), `provision/steps/00..50`,
+`provision/config/cline-settings.json`, `run-reports/` (git-ignored).
+
 ## Task breakdown
 
 | # | Task | State | Notes |
 |---|---|---|---|
-| 1 | Native-Windows vs WSL boundary per component | DONE (M0) | Ollama → native Windows. llama.cpp → WSL. VS Code + Cline → native Windows. Editor/LSP/build tools → per project. Record in the manifest. |
-| 2 | Script the OS-level prerequisites | TODO | WSL distro presence, NVIDIA driver + WSL GPU passthrough check, base packages (`jq`, build-essential, `nvidia-cuda-toolkit`). Idempotent; fail loudly on the one privileged step. |
-| 3 | Script the inference runtime install + model fetch | TODO | Ollama install (or verify) + server-up check; llama.cpp build via the M0 script; `ollama pull` the pinned matrix; GGUF fetch. Pinned versions, pinned digests. |
-| 4 | Script the editor + Cline setup | TODO | VS Code + Cline install/verify; config checked in, not hand-edited. Point Cline at the local Ollama endpoint and the working-default model (7B Q4_K_M / Q5_K_M, per M0). |
-| 5 | Write the environment manifest | TODO | One declarative file: component list, native/WSL placement, pinned versions, model digests, reconstruction entry point. Proto-bootstrap artifact. |
-| 6 | Clean-ish reconstruction test | TODO | The evidence question. Run the scripts against as-clean-a-state as practical; record **every** manual repair that proves necessary as a finding. |
-| 7 | Findings-log entry | TODO | Verdict: can the baseline be reconstructed without manual repair, and where does reproducibility break. |
+| 1 | Native-Windows vs WSL boundary per component | DONE | Recorded in `README.md` + `manifest.json`. Ollama native; llama.cpp WSL; VS Code + Cline native. |
+| 2 | Script the OS-level prerequisites | DONE | `steps/00-wsl.ps1` (WSL2 + distro + GPU passthrough), `steps/10-wsl-prereqs.sh` (apt build-essential/jq/nvidia-cuda-toolkit + pip cmake/ninja). Idempotent; the one `sudo` is isolated and reported, never silent. |
+| 3 | Script the inference runtime install + model fetch | DONE | `steps/20-llamacpp.sh` wraps the M0 build + GGUF-fetch scripts and verifies pinned digests; `steps/30-ollama.ps1` installs/verifies Ollama + server; `steps/40-models.ps1` ensures the working-default tags (`-FullModelMatrix` for all ~32 GB). |
+| 4 | Script the editor + Cline setup | PARTIAL | `steps/50-editor-cline.ps1` installs/verifies VS Code + the Cline extension. **The Cline settings write is not scriptable** (see findings) — the provider/model values are checked in at `provision/config/cline-settings.json` and applied by hand; the step reports this as a `WARN` / manual step. |
+| 5 | Write the environment manifest | DONE (v0) | `manifest.json`, schema `m1-manifest/0`. Component list, native/WSL placement, pinned versions, model digests, reconstruction entry point, known manual steps. |
+| 6 | Clean-ish reconstruction test | PARTIAL | `provision.ps1 -VerifyOnly` passes green against the current host (`OK_WITH_WARN`, the warn = the Cline manual step). A genuine clean-machine run is still owed — verify-mode confirms the checker agrees, not that the scripts built it from nothing. |
+| 7 | Findings-log entry | TODO | After a real clean-machine attempt. Running list below. |
+
+## Findings so far (feed the bootstrapper doc, not just a fix list)
+
+1. **Cline configuration is not scriptable on Windows.** The extension installs
+   from the `code` CLI, but its settings (API provider, Ollama base URL, model)
+   live in VS Code global state with no supported file or CLI to write them.
+   Reproducibility breaks at the last step: the tool is installed by script, then
+   configured by hand. Recorded as a `WARN` and a `known_manual_step`.
+2. **Stale WSL distro registration.** The distro registered as `Ubuntu-22.04` is
+   actually Ubuntu 24.04.4. Every `wsl -d` call hard-codes the misleading name;
+   a fresh machine that installs `Ubuntu-24.04` cleanly would not match. The
+   provision scripts and manifest use the registered name and flag the mismatch.
+3. **pip on this WSL is fragile.** `python3-venv` is absent and bare `pip3` hit a
+   broken SSL path; the working invocation is
+   `/usr/bin/python3 -m pip install --user --break-system-packages`. Baked into
+   `steps/10` and the manifest.
+4. **Verify-mode cannot prove reconstruction.** It confirms the environment
+   matches the manifest, not that these scripts produced it. Task 6 still needs a
+   near-clean host (or a fresh WSL distro + a VM/second machine for the Windows
+   side).
 
 ## Notes
 

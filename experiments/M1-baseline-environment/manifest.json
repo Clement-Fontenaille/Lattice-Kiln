@@ -1,0 +1,136 @@
+{
+  "schema": "m1-manifest/0",
+  "note": "Declarative record of the baseline development environment. Proto-bootstrap artifact - kept declarative. Versions are what M1 provisions and pins; 'observed' blocks record the state this manifest was written from. Regenerate the observed blocks with provision/provision.ps1; edit the pinned values deliberately.",
+  "generated": "2026-08-30",
+  "milestone": "M1",
+  "host_scope": {
+    "single_host": true,
+    "reference_host_ref": "b50a3ad701b9fb16ef56ff4a03d3ff88363002a8478a5cd3210dbea96bf298f1",
+    "reference_host_summary": "RTX 2070 SUPER 8GB VRAM / AMD FX-8300 / 11.9GB RAM / Win10 19045 / WSL2 Ubuntu 24.04",
+    "cross_host_replay": "deferred to post-MVP rework - see docs/PROGRESS/STATUS.md"
+  },
+  "components": [
+    {
+      "name": "windows-os",
+      "placement": "native-windows",
+      "pinned": { "version_min": "10.0.19045" },
+      "observed": { "version": "10.0.19045" },
+      "provisioned_by": "operator (not scripted)"
+    },
+    {
+      "name": "wsl",
+      "placement": "native-windows",
+      "pinned": { "version": "WSL2", "distro": "Ubuntu-24.04" },
+      "observed": { "distro_registered_name": "Ubuntu-22.04", "distro_actual": "Ubuntu 24.04.4 LTS", "glibc": "2.39" },
+      "provisioned_by": "operator (wsl --install); provision verifies",
+      "notes": "The registered distro name is stale ('Ubuntu-22.04') but the running system is 24.04. All 'wsl -d' calls use the registered name."
+    },
+    {
+      "name": "nvidia-driver",
+      "placement": "native-windows",
+      "pinned": { "note": "GPU-passthrough-capable driver; exact version tracks the host" },
+      "observed": { "windows_driver": "581.80", "wsl_compute_libs": "580.105.07" },
+      "provisioned_by": "operator; provision verifies nvidia-smi works inside WSL"
+    },
+    {
+      "name": "cuda-toolkit",
+      "placement": "wsl",
+      "pinned": { "package": "nvidia-cuda-toolkit (apt)", "nvcc": "12.0.140" },
+      "observed": { "nvcc": "release 12.0, V12.0.140" },
+      "provisioned_by": "provision/steps/10-wsl-prereqs.sh (one sudo apt-get step)",
+      "notes": "No native CUDA toolkit on Windows. The apt package ships a gcc wrapper that handles the Ubuntu 24.04 gcc-13 default."
+    },
+    {
+      "name": "wsl-build-tools",
+      "placement": "wsl",
+      "pinned": { "cmake": "pip --user", "ninja": "pip --user", "jq": "apt", "build-essential": "apt" },
+      "observed": { "cmake": "4.4.2", "jq": "1.7", "gcc": "13.3.0" },
+      "provisioned_by": "provision/steps/10-wsl-prereqs.sh",
+      "notes": "python3-venv is absent and pip must be invoked as `/usr/bin/python3 -m pip ... --user --break-system-packages` (bare pip3 had a broken SSL path on this host)."
+    },
+    {
+      "name": "ollama",
+      "placement": "native-windows",
+      "role": "runtime-of-record",
+      "pinned": { "version": "0.33.2", "endpoint": "http://localhost:11434" },
+      "observed": { "version": "0.33.2", "install_dir": "%LOCALAPPDATA%\\Programs\\Ollama", "on_path": false },
+      "provisioned_by": "provision/steps/30-ollama.ps1 (winget or installer; verify server up)",
+      "notes": "Per-user install, not on PATH in a fresh shell. Scripts self-locate it under %LOCALAPPDATA%\\Programs\\Ollama."
+    },
+    {
+      "name": "llama-cpp",
+      "placement": "wsl",
+      "role": "fidelity-spot-check",
+      "pinned": {
+        "source": "https://github.com/ggml-org/llama.cpp",
+        "commit": "f1793c1",
+        "cmake_flags": "-DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=75 -DLLAMA_CURL=OFF -DLLAMA_BUILD_TESTS=OFF",
+        "artifacts": ["llama-bench"]
+      },
+      "observed": { "commit": "f1793c1", "cuda_arch": "sm_75", "install": "~/.local/bin + ~/.local/lib" },
+      "provisioned_by": "provision/steps/20-llamacpp.sh -> ../../M0-inference-envelope/setup/build-llamacpp-wsl.sh",
+      "notes": "Current llama.cpp dropped the standalone llama-cli target; the spot-check uses `llama-bench -o json`. sm_75 = Turing / RTX 2070 SUPER."
+    },
+    {
+      "name": "ollama-models",
+      "placement": "native-windows",
+      "pinned": {
+        "matrix_ref": "experiments/M0-inference-envelope/harness/models.json",
+        "working_default": "qwen2.5-coder:7b-instruct-q4_K_M",
+        "working_default_alt": "qwen2.5-coder:7b-instruct-q5_K_M",
+        "full_matrix_pull_gb_approx": 32
+      },
+      "observed": {
+        "pulled": [
+          "qwen2.5-coder:3b-instruct-q4_K_M",
+          "qwen2.5-coder:3b-instruct-q8_0",
+          "qwen2.5-coder:7b-instruct-q4_K_M",
+          "qwen2.5-coder:7b-instruct-q5_K_M",
+          "qwen2.5-coder:7b-instruct-q8_0"
+        ]
+      },
+      "provisioned_by": "provision/steps/40-models.ps1 (staged; full matrix is opt-in)",
+      "envelope_note": "M0: 3B any quant and 7B Q4/Q5 <=16k context are fully GPU-resident and usable (41-73 tok/s). 7B Q8 and 14B do not fit 8GB and are offload-bound (1-5 tok/s). Model switch cost 17-30s."
+    },
+    {
+      "name": "llama-cpp-ggufs",
+      "placement": "wsl",
+      "pinned": {
+        "dir": "~/m0-models",
+        "files": [
+          { "file": "Qwen2.5-Coder-7B-Instruct-Q4_K_M.gguf", "sha256": "1664fccab734674a50763490a8c6931b70e3f2f8ec10031b54806d30e5f956b6" },
+          { "file": "Qwen2.5-Coder-14B-Instruct-Q4_K_M.gguf", "sha256": "2946d28c9e1bb2bcae6d42e8678863a31775df6f740315c7d7e6d6b6411f5937" }
+        ],
+        "source": "https://huggingface.co/bartowski"
+      },
+      "provisioned_by": "provision/steps/20-llamacpp.sh -> ../../M0-inference-envelope/setup/fetch-ggufs-wsl.sh"
+    },
+    {
+      "name": "vscode",
+      "placement": "native-windows",
+      "pinned": { "install": "winget Microsoft.VisualStudioCode" },
+      "observed": { "version": "TODO - capture on next provision run" },
+      "provisioned_by": "provision/steps/50-editor-cline.ps1"
+    },
+    {
+      "name": "cline",
+      "placement": "native-windows",
+      "pinned": {
+        "vscode_extension": "saoudrizwan.claude-dev",
+        "provider": "ollama",
+        "endpoint": "http://localhost:11434",
+        "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+        "config_ref": "provision/config/cline-settings.json"
+      },
+      "observed": { "version": "TODO - capture on next provision run" },
+      "provisioned_by": "provision/steps/50-editor-cline.ps1"
+    }
+  ],
+  "reconstruction_entry_point": "powershell -ExecutionPolicy Bypass -File experiments/M1-baseline-environment/provision/provision.ps1",
+  "known_manual_steps": [
+    "Install the NVIDIA Windows driver with WSL GPU support (operator).",
+    "wsl --install -d Ubuntu-24.04 on a machine without WSL (operator).",
+    "One `sudo apt-get install` inside WSL for build-essential + nvidia-cuda-toolkit + jq.",
+    "Accept Ollama installer UAC prompt if winget is unavailable."
+  ]
+}

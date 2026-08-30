@@ -1,0 +1,13 @@
+{
+  "_note": "Checked-in Cline configuration for the M1 baseline. Cline stores its real settings in VS Code global state; step 50 currently reports these values for manual application via the Cline settings UI. Automating the write is an open M1 item.",
+  "apiProvider": "ollama",
+  "ollamaBaseUrl": "http://localhost:11434",
+  "ollamaModelId": "qwen2.5-coder:7b-instruct-q4_K_M",
+  "alternativeModelId": "qwen2.5-coder:7b-instruct-q5_K_M",
+  "autoApprovalEnabled": false,
+  "rationale": {
+    "model": "M0 findings: 7B Q4_K_M / Q5_K_M are the largest models fully GPU-resident on the 8 GB host, ~44-52 tok/s at <=16k context. 3B is the fast fallback; 14B and 7B Q8 are offload-bound and unusable.",
+    "context": "Keep working context <=16k tokens - the 32k KV cache pushes 7B past 8 GB VRAM and collapses throughput to ~1-5 tok/s.",
+    "autoApproval": "Off for the baseline: a human supervises every run through the MVP (execution cadence, M3 reduced form)."
+  }
+}
