@@ -1,0 +1,25 @@
+﻿{
+    "schema":  "m0-concurrent/1",
+    "runtime":  "ollama",
+    "runtime_version":  "ollama version is 0.33.2",
+    "model":  "qwen2.5-coder:7b-instruct-q5_K_M",
+    "quant":  "Q5_K_M",
+    "context_fill":  4096,
+    "condition":  "concurrent",
+    "repetition":  2,
+    "host_load":  "synthetic: 8 cpu workers + ~150MB/worker",
+    "timestamp":  "2026-08-30T18:33:31.8082256+02:00",
+    "host_ref":  "b50a3ad701b9fb16ef56ff4a03d3ff88363002a8478a5cd3210dbea96bf298f1",
+    "metrics":  {
+                    "load_ms":  15,
+                    "prompt_eval_count":  3169,
+                    "prompt_eval_ms":  2131,
+                    "eval_count":  320,
+                    "eval_ms":  7532,
+                    "prefill_tok_s":  1487.38,
+                    "gen_tok_s":  42.48
+                },
+    "vram_resident_mb":  5190,
+    "status":  "ok",
+    "note":  "concurrent_delta; host load is a synthetic proxy for editor+LSP+build"
+}

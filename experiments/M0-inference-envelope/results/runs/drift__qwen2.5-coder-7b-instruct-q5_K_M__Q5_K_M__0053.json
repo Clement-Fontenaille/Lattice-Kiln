@@ -1,0 +1,23 @@
+﻿{
+    "schema":  "m0-drift/1",
+    "runtime":  "ollama",
+    "runtime_version":  "ollama version is 0.33.2",
+    "model":  "qwen2.5-coder:7b-instruct-q5_K_M",
+    "quant":  "Q5_K_M",
+    "context_fill":  4096,
+    "iteration":  53,
+    "elapsed_s":  557,
+    "timestamp":  "2026-08-30T18:43:46.3439789+02:00",
+    "host_ref":  "b50a3ad701b9fb16ef56ff4a03d3ff88363002a8478a5cd3210dbea96bf298f1",
+    "metrics":  {
+                    "load_ms":  15,
+                    "prompt_eval_count":  3171,
+                    "prompt_eval_ms":  2549,
+                    "eval_count":  320,
+                    "eval_ms":  7730,
+                    "prefill_tok_s":  1243.84,
+                    "gen_tok_s":  41.4
+                },
+    "status":  "ok",
+    "note":  "sustained_drift continuous generation"
+}
