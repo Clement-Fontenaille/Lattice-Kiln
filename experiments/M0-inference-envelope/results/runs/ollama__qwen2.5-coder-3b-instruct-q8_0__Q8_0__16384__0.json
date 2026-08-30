@@ -1,0 +1,29 @@
+﻿{
+    "schema":  "m0-run/1",
+    "runtime":  "ollama",
+    "runtime_version":  "ollama version is 0.33.2",
+    "model":  "qwen2.5-coder:3b-instruct-q8_0",
+    "quant":  "Q8_0",
+    "context_fill":  16384,
+    "num_ctx":  16384,
+    "repetition":  0,
+    "is_cold":  false,
+    "warmup":  true,
+    "timestamp":  "2026-08-30T14:37:28.9701464+02:00",
+    "host_ref":  "b50a3ad701b9fb16ef56ff4a03d3ff88363002a8478a5cd3210dbea96bf298f1",
+    "metrics":  {
+                    "load_ms":  15360,
+                    "prompt_eval_count":  12365,
+                    "prompt_eval_ms":  4885,
+                    "eval_count":  320,
+                    "eval_ms":  5567,
+                    "prefill_tok_s":  2531.15,
+                    "gen_tok_s":  57.48,
+                    "gpu_layers":  null,
+                    "total_layers":  null,
+                    "size_mb":  3889,
+                    "vram_resident_mb":  3889
+                },
+    "status":  "ok",
+    "note":  ""
+}

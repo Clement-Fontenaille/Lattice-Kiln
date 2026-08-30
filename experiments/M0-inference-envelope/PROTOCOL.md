@@ -58,6 +58,22 @@ These numbers are provisional and may be revised in the findings entry.
 
 - Latency and throughput metrics: **5 runs** per cell, report median and
   min–max. Discard the first run of each cell (cache warmup).
+- Each run's prompt carries a unique leading nonce so the runtime's prompt
+  prefix / KV cache misses every time. Without this, Ollama serves a cached
+  prefill on runs 2+, collapsing `prompt_eval_duration` to near zero and making
+  `prefill_tok_s` meaningless.
+
+## Implementation notes (harness vs. this contract)
+
+- `gen_tok_s` is the whole-response average (`eval_count / eval_duration` from
+  Ollama), not a windowed rate with the first 32 tokens dropped — the
+  non-streaming API exposes no per-token timing. The generation prompt requests
+  a long free-form answer and `num_predict` is 320, so the response is
+  comfortably into steady state and the first-32-token transient is a small
+  fraction. llama.cpp's own `prompt eval` / `eval` split is used where available.
+- `ttft_ms` on Ollama is approximated as `load_duration + prompt_eval_duration`
+  from a non-streamed call; a streamed first-chunk timestamp is used only in the
+  llama.cpp path.
 - `sustained_drift` and `concurrent_delta`: **2 runs** each (expensive).
 - Host inventory: once.
 

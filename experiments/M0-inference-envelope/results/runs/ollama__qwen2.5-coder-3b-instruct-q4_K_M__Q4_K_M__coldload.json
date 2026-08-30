@@ -1,0 +1,29 @@
+﻿{
+    "schema":  "m0-run/1",
+    "runtime":  "ollama",
+    "runtime_version":  "ollama version is 0.33.2",
+    "model":  "qwen2.5-coder:3b-instruct-q4_K_M",
+    "quant":  "Q4_K_M",
+    "context_fill":  512,
+    "num_ctx":  1024,
+    "repetition":  0,
+    "is_cold":  true,
+    "warmup":  true,
+    "timestamp":  "2026-08-30T14:18:25.0729569+02:00",
+    "host_ref":  "b50a3ad701b9fb16ef56ff4a03d3ff88363002a8478a5cd3210dbea96bf298f1",
+    "metrics":  {
+                    "load_ms":  18108,
+                    "prompt_eval_count":  485,
+                    "prompt_eval_ms":  595,
+                    "eval_count":  320,
+                    "eval_ms":  4392,
+                    "prefill_tok_s":  814.94,
+                    "gen_tok_s":  72.86,
+                    "gpu_layers":  null,
+                    "total_layers":  null,
+                    "size_mb":  1948,
+                    "vram_resident_mb":  1948
+                },
+    "status":  "ok",
+    "note":  "cold-load probe"
+}

@@ -29,3 +29,7 @@ TestResults.xml
 *.gguf
 *.safetensors
 experiments/**/models/
+
+### M0 scratch (WSL build helpers, run logs) ###
+experiments/**/.wsl-scratch/
+experiments/M0-inference-envelope/results/bench-ollama.log

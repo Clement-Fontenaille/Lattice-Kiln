@@ -47,8 +47,9 @@
   ],
   "ollama_options": {
     "temperature": 0,
-    "num_predict": 256,
+    "num_predict": 320,
     "seed": 1,
-    "keep_alive_bench": "5m"
+    "keep_alive_bench": "5m",
+    "_note": "num_predict 320 (>= protocol's 256 + 32 warmup) so gen_tok_s averages over a steady-state window; the prompt asks for a long free-form essay so generation runs to the cap instead of stopping at EOS."
   }
 }

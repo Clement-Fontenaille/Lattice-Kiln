@@ -66,16 +66,43 @@ function Ensure-Model([string] $Tag) {
   if ((Get-InstalledTags) -contains $Tag) { return }
   if ($SkipPull) { throw "Model '$Tag' not installed and -SkipPull set." }
   Write-Host "  pulling $Tag ..."
-  & ollama pull $Tag
-  if ($LASTEXITCODE -ne 0) { throw "ollama pull $Tag failed." }
+  # 'ollama pull' streams progress on stderr. Under $ErrorActionPreference='Stop'
+  # a merged native stderr line becomes a terminating error (PS 5.1), which would
+  # abort the pull. Relax the preference for the duration of the call and judge
+  # success by exit code + tag presence instead.
+  $prev = $ErrorActionPreference
+  $ErrorActionPreference = 'Continue'
+  try {
+    & ollama pull $Tag 2>&1 | ForEach-Object { Write-Host "    $_" }
+    $code = $LASTEXITCODE
+  } finally { $ErrorActionPreference = $prev }
+  if ($code -ne 0) { throw "ollama pull $Tag failed (exit $code)." }
+  if ((Get-InstalledTags) -notcontains $Tag) { throw "ollama pull ${Tag}: tag absent after pull." }
 }
 
-$fillerUnit = "The system distributes reasoning across short-lived invocations so that no single call must hold the entire problem in working memory. "
-function Get-PromptOfApproxTokens([int] $Tokens) {
+$fillerUnit = "In a constrained local system, an orchestrator decomposes a task, routes each piece to a short-lived processor, gathers evidence, and verifies results before integration. "
+# Prompt shape, and why:
+#  - Nonce FIRST so the runtime's prompt-prefix / KV cache misses on every
+#    repetition. Without it Ollama serves a cached prefill on runs 2+,
+#    collapsing prompt_eval_duration and making prefill_tok_s meaningless.
+#  - The context bulk (repeated $fillerUnit) sets the prefill size to ~$Tokens.
+#  - The trailing task is a fixed long-form writing request DECOUPLED from that
+#    context. A "summarise this" task against degenerate repeated filler makes
+#    the model emit ~15 tokens and stop; this phrasing runs to num_predict
+#    (done_reason=length), so gen_tok_s is a steady-state rate not a ~15-token
+#    average.
+function Get-PromptOfApproxTokens {
+  param([int] $Tokens, [string] $Nonce = '')
   $targetChars = [math]::Max(40, $Tokens * 4)   # ~4 chars/token for Qwen on prose
   $sb = New-Object System.Text.StringBuilder
   while ($sb.Length -lt $targetChars) { [void]$sb.Append($fillerUnit) }
-  "Summarize the following text in one sentence.`n`n" + $sb.ToString().Substring(0, $targetChars)
+  $head = if ($Nonce) { "[run $Nonce]`n`n" } else { "" }
+  $head + "Context (background reading):`n" +
+  $sb.ToString().Substring(0, $targetChars) +
+  "`n`nTask: Using the context above only as loose inspiration, write a long, " +
+  "thorough engineering design note (aim for about 400 words) on how to build a " +
+  "reliable local AI coding assistant on limited hardware. Use several " +
+  "paragraphs with headings. Write the full note now."
 }
 
 function Invoke-Gen {
@@ -163,7 +190,7 @@ foreach ($m in $cfg.models) {
     # cold-load probe: one clean unload -> load
     Unload-Model $tag | Out-Null
     try {
-      $r = Invoke-Gen -Model $tag -Prompt (Get-PromptOfApproxTokens 512) -NumCtx 1024
+      $r = Invoke-Gen -Model $tag -Prompt (Get-PromptOfApproxTokens 512 ([guid]::NewGuid().ToString('N').Substring(0,8))) -NumCtx 1024
       Save-Record (New-Record $tag $quant 512 0 1024 $r (Get-Resident $tag) 'ok' 'cold-load probe' $true $true) `
                   ("ollama__{0}__{1}__coldload.json" -f (Slug $tag), $quant)
       Write-Host ("   cold load_ms={0}" -f [math]::Round($r.load_duration / 1e6))
@@ -183,7 +210,8 @@ foreach ($m in $cfg.models) {
       $reps = @(0) + $cfg.recorded_repetitions
       foreach ($rep in $reps) {
         try {
-          $r = Invoke-Gen -Model $tag -Prompt (Get-PromptOfApproxTokens $fill) -NumCtx $nctx
+          $nonce = [guid]::NewGuid().ToString('N').Substring(0,8)
+          $r = Invoke-Gen -Model $tag -Prompt (Get-PromptOfApproxTokens $fill $nonce) -NumCtx $nctx
           $res = Get-Resident $tag
           Save-Record (New-Record $tag $quant $fill $rep $nctx $r $res 'ok' '' $false ($rep -eq 0)) `
                       ("ollama__{0}__{1}__{2}__{3}.json" -f (Slug $tag), $quant, $fill, $rep)
@@ -217,7 +245,7 @@ if ($chain.Count -ge 2) {
     try {
       Unload-Model $from | Out-Null
       $unloadMs = Unload-Model $to        # target guaranteed absent; wall time of the unload path
-      $r = Invoke-Gen -Model $to -Prompt (Get-PromptOfApproxTokens 512) -NumCtx 1024
+      $r = Invoke-Gen -Model $to -Prompt (Get-PromptOfApproxTokens 512 ([guid]::NewGuid().ToString('N').Substring(0,8))) -NumCtx 1024
       $loadMs = [math]::Round($r.load_duration / 1e6)
       $rec = [ordered]@{
         schema = 'm0-switch/1'; runtime = 'ollama'; runtime_version = $ollamaVersion
