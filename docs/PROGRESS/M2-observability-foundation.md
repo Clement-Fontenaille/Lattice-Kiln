@@ -40,14 +40,22 @@ Storage may stay simple. What must be reconstructable may not.
 
 | # | Task | State | Notes |
 |---|---|---|---|
-| 1 | Write `02-observability-event-model.md` v0 | WIP | Binds to `01-effect-vocabulary.md`. Draft in this batch. |
-| 2 | Decide the record store shape | TODO | JSONL per run vs. one growing log. Illustrative only until M4 forces it. |
-| 3 | Invocation identity + lineage | TODO | Stable id per processor invocation; parent/intent links so per-actor and per-intent histories reconstruct. |
-| 4 | Realized-effect record | TODO | One record per effect the runtime realizes, typed by the effect vocabulary, carrying enough to judge it after the fact. |
-| 5 | Safety-intervention outcome category | TODO | Distinct terminal outcome; carries the gate trip and the decommission signal; marked no-auto-retry. |
-| 6 | Minimal recorder | TODO | Wire into the M4 processor harness. Thin. |
-| 7 | Reconstruction check | TODO | The evidence question. Pick an unplanned question, answer it from records. |
-| 8 | Findings-log entry | TODO | Verdict: is unplanned-question reconstruction actually possible with this model. |
+| 1 | Write `02-observability-event-model.md` v0 | DONE | Binds to `01-effect-vocabulary.md`. Four mandatory event kinds + open contracts. |
+| 2 | Decide the record store shape | DONE | JSONL, one file per run (`runs/<run_id>/events.jsonl` + `run.json`), per-run monotonic `seq` for total order. Illustrative; see `experiments/M2-observability-foundation/README.md`. |
+| 3 | Invocation identity + lineage | DONE | `event_model.RunRecorder.invocation()` — `invocation_id`, `parent_invocation_id`, `intent_ref`, `role`, `model_identity` (incl. `offloaded`). `reconstruct.per_intent()` / `intent_lineage()` walk the tree. Self-tested. |
+| 4 | Realized-effect record | DONE | `.realized_effect()` — typed by the 9-effect vocabulary, `envelope` carries the representable/permitted/attributable/reversible fields, `outcome`. Plus `.proposed_effect()` (kind 4). |
+| 5 | Safety-intervention outcome category | DONE | `.safety_intervention()` — distinct `kind`, `retry_eligible=False` always, `human_review_ref` null until attached. Self-test asserts it is never folded into a generic effect/failure. |
+| 6 | Minimal recorder | DONE (standalone) | `event_model.py`, stdlib only, runs under Windows Python and WSL python3. Loud on write failure (no silent gap). Wiring into a real processor run is an M4 step. |
+| 7 | Reconstruction check | PARTIAL | `selftest.py` builds a synthetic run and answers an unplanned question (gate-refused effects → serving model + offload flag) from stored records alone — passes. The real test is an M4 run; this keeps the model from being untested until then. |
+| 8 | Findings-log entry | TODO (M4) | Verdict waits for the reconstruction check against a real run. |
+
+## State
+
+The event model and recorder are **built and self-tested**. M2's evidence
+question is answered provisionally against a synthetic run; it is formally closed
+at M4 when the recorder is wired into a real processor run and an unplanned
+question is answered from that. Per the execution cadence, observability is
+deliberately ahead of the milestone that consumes it.
 
 ## Carried from M0 (findings-log entry 1)
 
