@@ -27,7 +27,9 @@
         "Q8_0":   "qwen2.5-coder:7b-instruct-q8_0"
       },
       "llamacpp_spotcheck": true,
-      "llamacpp_quants": ["Q4_K_M", "Q5_K_M"],
+      "llamacpp_quants": ["Q4_K_M"],
+      "llamacpp_quants_deferred": ["Q5_K_M"],
+      "llamacpp_quants_note": "Q5_K_M spot-check deferred: 7B fits fully on GPU under Ollama, so one quant is enough to cross-check throughput; the GGUF download budget is spent on 14B instead.",
       "llamacpp_gguf_hint": "Qwen/Qwen2.5-Coder-7B-Instruct-GGUF"
     },
     {
