@@ -3,9 +3,9 @@
 Milestone 3, crossed in the reduced form the execution cadence defines for the
 MVP: effect vocabulary (already specified), capability/authority model,
 hardcoded deny-list gate, a small provisional human-authored invariant list, and
-a human supervising every run. The literature-grounding pass, sequence-check
-hardening, gate-alter, and the whole of Milestone 9 are deferred and still owed
-before Milestone 3 counts as complete.
+a human supervising every run. Sequence-check hardening, gate-alter, and the
+whole of Milestone 9 — which now also carries the literature-grounding pass — are
+deferred and still owed before Milestone 3 counts as complete in its full form.
 
 **Evidence question:** do the enumerated effect types carve cleanly when real
 effects flow through the gate, or does the boundary between types blur under use?
@@ -46,9 +46,8 @@ Passes on Windows Python and WSL python3.
 - Wiring the gate into a real processor runtime and letting real effects flow
   (M4) — this is what answers the evidence question and produces the findings-log
   entry.
-- Sequence-check hardening (`check_sequence` body), gate-alter, accumulation-stop
-  — Milestone 9.
-- The literature-grounding pass against corrigibility / scalable oversight /
-  specification gaming / interruptibility work — owed before M3 is complete.
+- Sequence-check hardening (`check_sequence` body), gate-alter, accumulation-stop,
+  and the literature-grounding pass against corrigibility / scalable oversight /
+  specification gaming / interruptibility work — all Milestone 9.
 - Concrete values for the resource ceilings (`N`, `T`, the R1 VRAM math) and the
   list-integrity mechanism — open contracts in the spec docs.

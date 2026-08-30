@@ -66,9 +66,8 @@ In scope for the MVP:
 
 Deferred, still owed before Milestone 3 is complete, none blocking the MVP:
 
-- the literature-grounding pass against corrigibility, scalable oversight, specification gaming, and interruptibility work;
 - composition and sequence-check hardening of the gate;
-- the whole of Milestone 9 — triage role, decommissioning as a distinct non-retryable signal, escalating-alert thresholds.
+- the whole of Milestone 9 — triage role, decommissioning as a distinct non-retryable signal, escalating-alert thresholds, and the literature-grounding pass against corrigibility, scalable oversight, specification gaming, and interruptibility work (moved here from the M3-completion checklist so the whole safety-response elaboration lands together).
 
 Milestone 9 is genuinely not needed through Milestone 5. There is no self-modifying loop until Milestone 10, and a human is in the loop throughout the MVP.
 

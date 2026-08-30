@@ -13,20 +13,22 @@ The concrete, checkable list the deny-list gate enforces for the MVP: a few
 goals, a few resource ceilings, and seven hard constraints, each bound to the
 effect vocabulary so the gate can check it mechanically. Small on purpose.
 Explicitly **provisional** — it is expected to change materially after the
-literature-grounding pass.
+literature-grounding pass, which is a Milestone 9 deliverable, not a gate on the
+MVP form of this list.
 
 > **Motto:** Something must be true regardless of what the loops decide — and small enough to check.
 
 ## Status of this document
 
 This is a **normative artifact**: the list below *is* the MVP invariant layer's
-content, not an example of one. It is provisional in the sense
-`01-milestones.md` and the execution cadence use — crossed in reduced form,
-pending the corrigibility / scalable-oversight / specification-gaming /
-interruptibility reading pass before Milestone 3 counts as complete. It is
-deliberately physical and tight because a human supervises every MVP run; it does
-not try to anticipate every failure mode a later, less-supervised system will
-face.
+content, not an example of one. It is provisional in the sense `01-milestones.md`
+and the execution cadence use — the floor is crossed in reduced form for the MVP.
+The corrigibility / scalable-oversight / specification-gaming / interruptibility
+reading pass that is expected to revise it is a **Milestone 9** deliverable; this
+list stands as the enforced floor for the whole MVP slice without waiting on it.
+It is deliberately physical and tight because a human supervises every MVP run;
+it does not try to anticipate every failure mode a later, less-supervised system
+will face.
 
 The machine-readable form the gate loads is
 `experiments/M3-invariant-floor/invariants.json` (schema `m3-invariants/0`). This
@@ -128,10 +130,12 @@ and the match rule it applies.
 This list is expected to change materially after the literature-grounding pass
 against corrigibility, scalable oversight, specification gaming, and shutdown /
 interruptibility work (`06-the-invariant-layer.md`, "status of this concept").
-Likely revisions: interruptibility clauses (the system must not resist a human
-stop), clearer separation of goals from constraints, and reconsidering whether
-resource ceilings belong in this structure at all
-(`06-the-invariant-layer.md` open question). Until that pass, the list leans on
+That pass is a **Milestone 9** deliverable — the whole MVP slice (through
+Milestone 5) runs against this list as written, with a human in the loop
+throughout. Likely revisions once the pass lands: interruptibility clauses (the
+system must not resist a human stop), clearer separation of goals from
+constraints, and reconsidering whether resource ceilings belong in this structure
+at all (`06-the-invariant-layer.md` open question). Until then, the list leans on
 the human in the loop for everything it does not yet name.
 
 ## Failure modes
@@ -174,11 +178,13 @@ the human in the loop for everything it does not yet name.
 - **Allowlist / denylist contents.** The actual network allowlist and the H7
   destructive-command pattern set, both provisional.
 - **Interruptibility.** The list has no explicit "must not resist a human stop"
-  clause yet — expected from the literature pass.
+  clause yet — expected from the literature pass (Milestone 9).
 - **Resource-ceiling representation.** Whether R1–R3 belong in this document or a
   sibling, given they are physical rather than evidentiary
   (`06-the-invariant-layer.md` open question).
 - **Versioning and integrity.** How this list is versioned and how its integrity
   is verified when the gate loads it (shared with `04-enforcement-gate.md`).
-- **The literature-grounding pass itself** — still owed before Milestone 3 is
-  complete.
+- **The literature-grounding pass itself** — a Milestone 9 deliverable (moved
+  there from the Milestone 3 completion checklist so the safety-response
+  elaboration lands as one piece). Milestone 3's full-form completion still
+  depends on it, transitively, via Milestone 9.

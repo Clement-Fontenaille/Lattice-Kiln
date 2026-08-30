@@ -59,14 +59,15 @@ The first thing that must exist before any component acts with authority to caus
 Deliverables:
 
 - A first human-authored invariant list: goals, resource ceilings, and hard constraints — specific enough to check, small enough to stay stable.
-- A literature-grounding pass against work on corrigibility, scalable oversight, specification gaming, and shutdown and interruptibility, before that list and its enforcement are treated as settled.
 - The effect vocabulary: the closed set of effect types the runtime can produce, since the gate binds to it.
 - A minimal deterministic enforcement gate that checks proposed effects and effect sequences against the invariant list and refuses those that cross it.
 - The capability and authority model, sitting above the gate.
 
-This milestone is placed early on purpose. The rest of the architecture defers many decisions to evidence, and that deferral is only safe with this floor in place. The elaboration of the safety response — triage, decommissioning signal, escalation thresholds — is deferred to Milestone 9, once there are adaptive loops for it to watch and mature observability for it to run against.
+The literature-grounding pass against work on corrigibility, scalable oversight, specification gaming, and shutdown and interruptibility — before that list and its enforcement are treated as settled — is a deliverable of Milestone 9, not of this milestone. It is grouped with the rest of the safety-response elaboration rather than gating the floor's first form.
 
-For the MVP slice this milestone is crossed in a reduced form — effect vocabulary, capability model, a deny-list gate, a provisional invariant list, and a human supervising every run — with the literature-grounding pass and the sequence-check hardening still owed before it counts as complete. The execution-cadence document details what is in and out.
+This milestone is placed early on purpose. The rest of the architecture defers many decisions to evidence, and that deferral is only safe with this floor in place. The elaboration of the safety response — triage, decommissioning signal, escalation thresholds, and the literature-grounding pass — is deferred to Milestone 9, once there are adaptive loops for it to watch and mature observability for it to run against.
+
+For the MVP slice this milestone is crossed in a reduced form — effect vocabulary, capability model, a deny-list gate, a provisional invariant list, and a human supervising every run — with the sequence-check hardening still owed, and the literature-grounding pass folded into Milestone 9, before it counts as complete. The execution-cadence document details what is in and out.
 
 **Evidence question:** do the enumerated effect types carve cleanly when real effects flow through the gate, or does the boundary between types blur under use?
 
@@ -118,6 +119,7 @@ Deliverables:
 - Decommissioning as an immediate, unilateral runtime action, and as a failure signal distinct from ordinary task failure — not eligible for automatic retry without human review.
 - An escalating-alert threshold that converts accumulated, individually innocuous trips into a mandatory stop no loop can reason past.
 - The triage role fixed outside the feedback loops, since a loop cannot commission its own watcher.
+- The literature-grounding pass against corrigibility, scalable oversight, specification gaming, and shutdown and interruptibility work — moved here from Milestone 3. Milestone 3's provisional invariant list and deny-list gate, and this milestone's safety-response elaboration, are all revised against what that pass finds before the floor is treated as settled.
 
 ## Milestone 10 — System-level candidate tuning
 

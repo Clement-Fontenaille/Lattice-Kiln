@@ -23,10 +23,11 @@ not adjustable by anything inside the system.
 
 v0, the **hardcoded deny-list form** the MVP crosses Milestone 3 with. Single
 effects are checked against the provisional invariant list. Sequence evaluation
-exists only as a wired-in stub. The literature-grounding pass, composition/
-sequence hardening, gate-alter (as opposed to refuse-only), and the accumulation
-threshold are all deferred (`00-design/00-project/04-execution-cadence.md`,
-"Crossing Milestone 3 for the MVP"; Milestone 9).
+exists only as a wired-in stub. Composition / sequence hardening, gate-alter (as
+opposed to refuse-only), the accumulation threshold, and the literature-grounding
+pass are all **Milestone 9** deliverables
+(`00-design/00-project/04-execution-cadence.md`, "Crossing Milestone 3 for the
+MVP"). The MVP gate does not wait on them.
 
 ## Narrowing
 
@@ -155,7 +156,8 @@ call is a defect that hides the missing capability.
   (`07-invariant-enforcement.md`.)
 - **Sequence window and grouping.** The real `check_sequence` logic — what
   counts as a sequence, over what window, grouped how — owned by
-  `07-invariant-enforcement.md`, hardened after the literature pass.
+  `07-invariant-enforcement.md`, hardened at Milestone 9 (after the
+  literature-grounding pass that milestone now carries).
 - **Gate-alter.** The design allows the gate to alter an effect, not only refuse
   it. The MVP is refuse-only; alter needs the triage role (Milestone 9).
 - **Accumulation-stop.** Converting repeated individually-innocuous trips into a

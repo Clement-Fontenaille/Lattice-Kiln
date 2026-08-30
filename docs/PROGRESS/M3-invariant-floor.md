@@ -19,13 +19,16 @@ MVP" fixes the scope. **In scope, and delivered here:**
 
 **Deferred, still owed before Milestone 3 is complete, none blocking the MVP:**
 
-- the literature-grounding pass against corrigibility, scalable oversight,
-  specification gaming, and shutdown / interruptibility work;
 - composition / sequence-check hardening of the gate (`check_sequence` is a
   wired-in stub);
 - gate-alter (refuse-only for the MVP);
 - the whole of Milestone 9 — triage role, decommissioning as a distinct
-  non-retryable signal, escalating-alert thresholds.
+  non-retryable signal, escalating-alert thresholds, **and the
+  literature-grounding pass** against corrigibility, scalable oversight,
+  specification gaming, and shutdown / interruptibility work. The pass moved from
+  the M3-completion checklist into M9 so the safety-response elaboration lands as
+  one piece; the provisional invariant list and deny-list gate stand as the
+  enforced floor for the whole MVP slice without it.
 
 ## Deliverables
 

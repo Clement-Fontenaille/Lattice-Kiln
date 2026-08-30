@@ -110,7 +110,7 @@ Does a single invariant layer serve all system generations and branches, or may 
 
 What does the human-facing escalation protocol look like in practice: who is notified, what state the system is frozen into, and what is required before resumption?
 
-How does this design compare against existing work on corrigibility, scalable oversight, specification gaming, and shutdown and interruptibility? The concept is currently argued from internal consistency rather than grounded in that literature, and is expected to change once it is read against it.
+How does this design compare against existing work on corrigibility, scalable oversight, specification gaming, and shutdown and interruptibility? The concept is currently argued from internal consistency rather than grounded in that literature, and is expected to change once it is read against it. The reading pass is scheduled as a Milestone 9 deliverable (moved there from the Milestone 3 completion checklist).
 
 ## Bootstrapping
 
