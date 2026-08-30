@@ -120,6 +120,14 @@ How portable must a generation be across machines?
 
 How do we preserve the ability to reproduce an older generation after runtimes and model ecosystems have changed?
 
+Hardware is a variable, not a constant. The inference envelope (Milestone 0) and
+the baseline environment (Milestone 1) were both characterised against one host.
+What is the replayable procedure that re-runs environment bootstrapping and
+re-characterises the envelope on a different machine — GPU, VRAM, CPU, RAM, or
+OS/WSL layout changed — and what in the design set is allowed to depend on
+envelope numbers that a new host would move? Raised at M0 close; scheduled for
+the post-MVP (end-of-Milestone-5) sequence rework.
+
 ## Project process
 
 At what point is a conceptual document mature enough to derive technical contracts?

@@ -91,9 +91,13 @@ binding — and sharpens it in three ways the design set should absorb:
   hardware. The **observability event model** (backlog item 1, next) should be
   able to record which model/quant served an invocation and whether it was
   offloaded, since that predicts latency by 10–20×.
-- Milestone sequence: no reordering. M1 (reproducible environment) inherits the
-  `setup/` scripts as its seed. M4/M5 experiments should pin the working default
-  to 7B Q4_K_M or Q5_K_M at ≤16k context.
+- Milestone sequence: no reordering now. M1 (reproducible environment) inherits
+  the `setup/` scripts as its seed. M4/M5 experiments should pin the working
+  default to 7B Q4_K_M or Q5_K_M at ≤16k context. **For the post-MVP
+  (end-of-M5) rework:** treat hardware as a variable — the envelope numbers here
+  are one host's, and there is no replayable procedure yet for re-bootstrapping
+  the environment and re-characterising the envelope on a different machine. See
+  the Bootstrapping section of `02-open-questions-register.md`.
 
 **Runs.** `experiments/M0-inference-envelope/results/` — `host.json`,
 `runs/*.json` (schemas `m0-run/1`, `m0-switch/1`, `m0-concurrent/1`,
