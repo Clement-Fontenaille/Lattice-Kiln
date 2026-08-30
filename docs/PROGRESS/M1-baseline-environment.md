@@ -49,43 +49,52 @@ decision, it does not re-litigate it.
 | 1 | Native-Windows vs WSL boundary per component | DONE | Recorded in `README.md` + `manifest.json`. Ollama native; llama.cpp WSL; VS Code + Cline native. |
 | 2 | Script the OS-level prerequisites | DONE | `steps/00-wsl.ps1` (WSL2 + distro + GPU passthrough), `steps/10-wsl-prereqs.sh` (apt build-essential/jq/nvidia-cuda-toolkit + pip cmake/ninja). Idempotent; the one `sudo` is isolated and reported, never silent. |
 | 3 | Script the inference runtime install + model fetch | DONE | `steps/20-llamacpp.sh` wraps the M0 build + GGUF-fetch scripts and verifies pinned digests; `steps/30-ollama.ps1` installs/verifies Ollama + server; `steps/40-models.ps1` ensures the working-default tags (`-FullModelMatrix` for all ~32 GB). |
-| 4 | Script the editor + Cline setup | PARTIAL | `steps/50-editor-cline.ps1` installs/verifies VS Code + the Cline extension and checks for a configured `providers.json`. Cline config is file-based JSON (`providers.json` / `global-settings.json` under the extension's globalStorage) but the schema is undocumented and UI-first (see finding 1). Path to done: capture those files from a once-configured instance, commit as templates under `provision/config/`, have step 50 copy them. Until then the step reports the exact manual steps as `WARN`. |
+| 4 | Script the editor + Cline setup | DONE | `steps/50-editor-cline.ps1` installs/verifies VS Code + Cline, and copies the committed templates `provision/config/cline/{providers,global-settings,globalState}.json` into `%USERPROFILE%\.cline\data\` when Cline is unconfigured (refuses to write under a running VS Code). Templates were captured from a UI-configured instance and curated (host-specific and cruft keys stripped; auto-approval/telemetry/auto-update set to baseline values). See finding 1 + `provision/config/cline/README.md`. |
 | 5 | Write the environment manifest | DONE (v0) | `manifest.json`, schema `m1-manifest/0`. Component list, native/WSL placement, pinned versions, model digests, reconstruction entry point, known manual steps. |
 | 6 | Clean-ish reconstruction test | PARTIAL | `provision.ps1 -VerifyOnly` passes green against the current host (`OK_WITH_WARN`, the warn = the Cline manual step). A genuine clean-machine run is still owed — verify-mode confirms the checker agrees, not that the scripts built it from nothing. |
 | 7 | Findings-log entry | TODO | After a real clean-machine attempt. Running list below. |
 
 ## Findings so far (feed the bootstrapper doc, not just a fix list)
 
-1. **Cline configuration is file-based but UI-first — scriptable only via an
-   undocumented format.** (Corrected from an earlier, wrong "not scriptable".)
-   Evidence, from `saoudrizwan.claude-dev-4.1.16/next/dist/extension.js` and
-   [docs.cline.bot/getting-started/config](https://docs.cline.bot/getting-started/config):
-   - `contributes.configuration` exposes only `cline.rollout.bundleOverride`, so
-     VS Code `settings.json` / `code --…` cannot set the provider or model.
-   - Cline persists provider/model/global config to plain JSON:
-     `providers.json` (empty shape `{ "version": 1, "providers": {} }`),
-     `global-settings.json`, `cline_mcp_settings.json`. VS Code extension
-     location: `%APPDATA%\Code\User\globalStorage\saoudrizwan.claude-dev\settings\`.
-     Path overrides shipped in the bundle: `CLINE_PROVIDER_SETTINGS_PATH`,
-     `CLINE_GLOBAL_SETTINGS_PATH`, `CLINE_MCP_SETTINGS_PATH`, `CLINE_DATA_DIR`.
-   - Ollama provider fields: `ollamaBaseUrl`, `planModeOllamaModelId` /
-     `actModeOllamaModelId`, `ollamaApiOptionsCtxNum`, `ollamaThink`.
-   - Caveats: the file schemas are undocumented and zod-validated on load (a bad
-     pre-seed is rejected or migrated); API keys go to OS-encrypted VS Code
-     SecretStorage, **not** these files — irrelevant for our keyless local Ollama
-     provider, but the file-only path does not generalize; the files are created
-     on first configure, so pre-seeding before first launch is untested; the docs
-     present the settings UI and `cline config` (CLI) as the configuration
-     methods, not file editing.
-   - Baseline approach: configure Cline once via the UI, commit the resulting
-     `providers.json` + `global-settings.json` as templates under
-     `provision/config/`, and have step 50 copy them into place (or point
-     `CLINE_*_SETTINGS_PATH` at the committed copies). Until a template is
-     captured, step 50 reports the exact manual steps as a `WARN`.
-   - Whether a more config-as-code-friendly agent frontend (e.g. Continue.dev,
-     which is `config.yaml`-first and documented) should replace Cline is a
-     design question for the post-MVP rework, not an M1 change — the milestone
-     names Cline explicitly. Registered in `STATUS.md` → Post-MVP rework backlog.
+1. **Cline configuration is file-based at a documented location; scriptable with
+   one curation step.** (This is the third and settled version — earlier notes
+   wrongly said "not scriptable", then wrongly located the files in VS Code
+   globalStorage.) Evidence: `saoudrizwan.claude-dev-4.1.16` (`next` bundle,
+   confirmed active via `state.vscdb` `cline.rollout.bundle:"next"`),
+   [docs.cline.bot/getting-started/config](https://docs.cline.bot/getting-started/config),
+   and the live files on this host.
+   - `contributes.configuration` exposes only `cline.rollout.bundleOverride` —
+     VS Code `settings.json` / `code --…` cannot configure Cline. That part of
+     the original instinct held.
+   - The `next` bundle stores everything under **`%USERPROFILE%\.cline\data\`**
+     (relocatable via `CLINE_DATA_DIR`), NOT VS Code globalStorage:
+     - `settings/providers.json` — provider registry. Our `ollama` block
+       (`model`, `baseUrl`, `timeout`). Also carries a `sapaicore` entry from a
+       Cline migration — cruft.
+     - `settings/global-settings.json` — `autoUpdateEnabled`, `telemetryOptOut`.
+     - `globalState.json` — the effective settings: `{plan,act}ModeApiProvider`,
+       `{plan,act}ModeOllamaModelId`, `ollamaBaseUrl`, `ollamaApiOptionsCtxNum`
+       (a string, e.g. `"16384"`), `requestTimeoutMs`, `autoApprovalSettings`,
+       `telemetrySetting` — **mixed with host-specific state**: `workspaceRoots`
+       (absolute path + git commit hash), `primaryRootIndex`, a legacy-MCP
+       migration path, `lastShownAnnouncementId`, other-provider cruft.
+   - So it IS scriptable, but a committed template must be **curated**: keep the
+     config keys, strip the host-specific and cruft keys. Done:
+     `provision/config/cline/{providers,global-settings,globalState}.json` +
+     `README.md`. `steps/50` copies them into `~/.cline/data\` when Cline is not
+     yet configured, and **refuses to write while VS Code is running** (Cline
+     would overwrite on next save).
+   - Remaining caveats: no published schema for hand-authoring `globalState.json`
+     (the template is a curated capture, validated only by Cline accepting it on
+     load); API-keyed providers would also need VS Code SecretStorage (a file
+     won't do) — moot for keyless local Ollama.
+   - Cline defaults that the baseline overrides in the template: auto-approval
+     (Cline default `enabled: true` with reads / safe commands / MCP approved →
+     baseline `false`, a human approves every run), telemetry (`enabled` →
+     `disabled`), auto-update (`true` → `false`, a baseline is pinned).
+   - Whether a `config.yaml`-first frontend (e.g. Continue.dev) should replace
+     Cline is a post-MVP rework question, not an M1 change — the milestone names
+     Cline. Registered in `STATUS.md` → Post-MVP rework backlog.
 2. **Stale WSL distro registration.** The distro registered as `Ubuntu-22.04` is
    actually Ubuntu 24.04.4. Every `wsl -d` call hard-codes the misleading name;
    a fresh machine that installs `Ubuntu-24.04` cleanly would not match. The

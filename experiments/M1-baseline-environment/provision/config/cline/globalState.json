@@ -1,0 +1,32 @@
+{
+  "welcomeViewCompleted": true,
+  "__vscodeMigrationVersion": 3,
+  "clineVersion": "4.1.16",
+  "planModeApiProvider": "ollama",
+  "actModeApiProvider": "ollama",
+  "ollamaBaseUrl": "http://localhost:11434",
+  "ollamaApiOptionsCtxNum": "16384",
+  "requestTimeoutMs": 60000,
+  "planModeOllamaModelId": "qwen2.5-coder:7b-instruct-q4_K_M",
+  "actModeOllamaModelId": "qwen2.5-coder:7b-instruct-q4_K_M",
+  "autoApprovalSettings": {
+    "version": 3,
+    "enabled": false,
+    "favorites": [],
+    "maxRequests": 20,
+    "actions": {
+      "readFiles": false,
+      "readFilesExternally": false,
+      "editFiles": false,
+      "editFilesExternally": false,
+      "executeSafeCommands": false,
+      "executeAllCommands": false,
+      "useBrowser": false,
+      "useMcp": false
+    },
+    "enableNotifications": false
+  },
+  "telemetrySetting": "disabled",
+  "globalWorkflowToggles": {},
+  "globalClineRulesToggles": {}
+}

@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "lastUsedProvider": "ollama",
+  "modes": {},
+  "providers": {
+    "ollama": {
+      "settings": {
+        "provider": "ollama",
+        "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+        "baseUrl": "http://localhost:11434",
+        "timeout": 60000
+      },
+      "tokenSource": "manual"
+    }
+  }
+}
