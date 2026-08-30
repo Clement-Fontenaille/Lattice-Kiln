@@ -6,35 +6,46 @@ _Updated: 2026-08-30_
 
 **MVP target:** Milestones 0 through 5 — a local assistant using ephemeral role-specific processors under a language-model orchestrator, on measured hardware, fully observable, on a safety floor.
 
-**Current milestone:** M0 — Characterize the local inference envelope.
+**Current milestone:** M2 — Observability foundation.
 
-**State:** host inventoried, runtime decided (Ollama of record + llama.cpp spot-checks), protocol written, model matrix pinned to Qwen2.5-Coder 3B/7B/14B on the RTX 2070 SUPER's 8 GB, full harness written (parse-clean, untested). The sweep is blocked only on installing the two runtimes and pulling the GGUFs — an M1 step pulled forward.
+**State:** M0 complete — the local inference envelope is measured and written up
+(`M0-inference-envelope.md`), with findings-log entry 1 (verdict: *confirms* the
+constrained-intelligence thesis; the constraint is VRAM-fit as a hard binary with
+a ~10–20× offload cliff, working default = 7B Q4/Q5 at ≤16k context, model-switch
+cost 17–30 s). M2 is being decomposed and its spec doc (`10-technical/02-observability-event-model.md`) drafted next, per the execution-cadence backlog.
 
 ## Milestone board
 
 | Milestone | State | Decomposed |
 |---|---|---|
-| M0 — Local inference envelope | WIP — tasks 1–5 of 8 done | yes — `M0-inference-envelope.md` |
-| M1 — Reproducible baseline environment | TODO | provisional — `M1-baseline-environment.md` |
-| M2 — Observability foundation | TODO | no — decompose when M0 nears completion |
+| M0 — Local inference envelope | **DONE** (2026-08-30) — findings-log entry 1 | yes — `M0-inference-envelope.md` |
+| M1 — Reproducible baseline environment | TODO — `setup/` scripts from M0 are its seed | provisional — `M1-baseline-environment.md` |
+| M2 — Observability foundation | **WIP** — decomposing now | `M2-observability-foundation.md` |
 | M3 — Invariant floor (reduced form for MVP) | TODO | no |
 | M4 — Ephemeral processor experiments | TODO | no |
 | M5 — Intelligent orchestration experiments | TODO | no |
 
 ## Immediate next actions
 
-1. Install Ollama (native Windows) — `winget install Ollama.Ollama` or the installer. Confirm `ollama --version` and that `http://localhost:11434` responds.
-2. Install a prebuilt CUDA llama.cpp inside WSL Ubuntu-22.04 (no source build — host has no CUDA toolkit). Put `llama-cli` / `llama-bench` on PATH; `apt install jq`.
-3. Fetch the Qwen2.5-Coder GGUFs for the llama.cpp spot-check (7B Q4_K_M + Q5_K_M, 14B Q4_K_M) into `experiments/M0-inference-envelope/models/` (git-ignored). Ollama pulls its own on first run.
-4. Run `pwsh experiments/M0-inference-envelope/harness/bench-ollama.ps1`, then `wsl bash .../bench-llamacpp.sh`, then `pwsh .../aggregate.ps1`. Expect first-run script fixes — report errors back.
-5. Write the envelope description (into `M0-inference-envelope.md`) and the first findings-log entry.
+1. Decompose M2 into tasks — `M2-observability-foundation.md`.
+2. Draft `10-technical/02-observability-event-model.md` (v0, many open contracts):
+   pin invocation identity, the realized-effect record, the safety-intervention
+   outcome category, and per-actor / per-intent sequence reconstructability. It
+   binds to the effect vocabulary (`10-technical/01-effect-vocabulary.md`).
+3. Carry forward from M0: the event model should record model/quant per
+   invocation and whether inference was offloaded (predicts latency 10–20×).
 
 ## Blockers
 
-- **Runtime install + model download.** Steps 1–3 above are operator actions on the host. Everything scriptable for M0 is done and committed.
+- None. M0's runtime-install blockers are resolved (Ollama native + llama.cpp
+  built from source in WSL via apt `nvidia-cuda-toolkit`; see
+  `experiments/M0-inference-envelope/setup/README.md`).
 
 ## Recently done
 
+- **M0 executed and closed** — harness bugs fixed on first live run, Ollama
+  matrix swept (staged), llama.cpp cross-check, concurrent/drift passes, envelope
+  description + findings-log entry 1. Commits `b587993`..`6400fa3` and the
+  write-up commit.
 - Conceptual integration pass (review notes 02–03) — committed `b098e91`.
-- Carried notes removed — committed `d80d0e8`.
 - Execution cadence, findings log, technical-spec kickoff, milestone rework — committed `b098e91`.
