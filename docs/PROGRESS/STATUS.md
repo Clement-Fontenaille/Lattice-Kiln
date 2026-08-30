@@ -36,25 +36,22 @@ slice.
 | M2 — Observability foundation | **DONE** (2026-08-30) — findings-log entry 3 | `M2-observability-foundation.md` |
 | M3 — Invariant floor (reduced form for MVP) | **DONE (reduced form)** (2026-08-30) — findings-log entry 4; full form owes M9 items | `M3-invariant-floor.md` |
 | M4 — Ephemeral processor experiments | **DONE** (2026-08-30) — findings-log entry 5 (verdict inconclusive, leaning weakens) | `M4-ephemeral-processors.md` |
-| M5 — Intelligent orchestration experiments | TODO | no |
+| M5 — Intelligent orchestration experiments | **WIP** — specs 08/09 written; orchestrator + 3rd harness arm next | `M5-intelligent-orchestration.md` |
 
 ## Immediate next actions
 
-M5 — Intelligent orchestration experiments, the last MVP milestone.
+M5 specs (`10-technical/08`, `09`) are written and M5 is decomposed. Next:
 
-1. Spec `10-technical/08-orchestrator-contract.md` — what the orchestrator
-   receives (itself under context governance), what it decides, how it mediates
-   discussion, synthesis, stopping rules. (Cadence backlog item 7.)
-2. Spec `10-technical/09-orchestrator-runtime-boundary.md` — the seam flagged as
-   highest value; the reasoning-vs-runtime validation-depth question. (Item 8.)
-3. Build an LLM orchestrator that drives the M4 processor runtime: it chooses the
-   next cognitive operation instead of a fixed planner→implementer→reviewer
-   chain, and — per M4 finding — can route a reviewer's "needs-change" back.
-   Compare against both the M4 fixed chain and the monolith on the same fixture
-   task set (extend it if needed).
-4. Evidence question: does natural-language orchestration beat a fixed workflow
-   while staying understandable, and where does its overhead exceed the benefit?
-   → findings-log entry 6, then the end-of-M5 sequence rework.
+1. Build the orchestrator under `experiments/M5-intelligent-orchestration/` — an
+   LLM loop over the M4 processor runtime (observe → decide next op → spawn
+   processor → integrate → stop), capability set `{6, 4}`, a decision record per
+   step, stopping rules from spec `08`.
+2. Add the `orchestrated` harness arm (third, alongside `monolith` and
+   `ephemeral`); route reviewer `needs-change` back to a fresh implementer.
+3. Run 3 arms × fixture tasks × N; reconstruct the orchestrator's strategy from
+   decision records alone (understandability check).
+4. Findings-log entry 6, then the **end-of-MVP sequence rework** — batch review
+   of findings 1–6.
 
 ## Blockers
 
