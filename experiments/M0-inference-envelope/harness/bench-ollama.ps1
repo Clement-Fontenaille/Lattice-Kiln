@@ -26,6 +26,18 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
+# Ollama is installed per-user on this host and is not on PATH in a fresh shell.
+# Self-locate it before any '& ollama' call below.
+if (-not (Get-Command ollama -ErrorAction SilentlyContinue)) {
+  $ollamaDir = Join-Path $env:LOCALAPPDATA 'Programs\Ollama'
+  if (Test-Path (Join-Path $ollamaDir 'ollama.exe')) {
+    $env:Path = "$ollamaDir;$env:Path"
+  }
+}
+if (-not (Get-Command ollama -ErrorAction SilentlyContinue)) {
+  throw "ollama.exe not found on PATH or at $env:LOCALAPPDATA\Programs\Ollama. Install Ollama or fix PATH."
+}
+
 $runsDir = Join-Path $OutDir 'runs'
 if (-not (Test-Path $runsDir)) { New-Item -ItemType Directory -Path $runsDir -Force | Out-Null }
 

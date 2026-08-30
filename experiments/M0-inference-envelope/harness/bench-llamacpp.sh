@@ -77,7 +77,9 @@ run_cell() {
   local model="$1" params_b="$2" quant="$3" fill="$4" ngl="$5" rep="$6" gguf="$7"
   local log; log="$(mktemp)"
   local prompt; prompt="$(head -c $((fill * 4)) < <(yes "the system distributes reasoning across short lived invocations " ) | tr -d '\n')"
-  if llama-cli -m "$gguf" -ngl "$ngl" -c "$fill" -n "$GEN_N" --no-display-prompt \
+  # -no-cnv: recent llama-cli defaults to interactive conversation mode and would
+  # hang waiting on stdin. Force one-shot completion.
+  if llama-cli -m "$gguf" -ngl "$ngl" -c "$fill" -n "$GEN_N" -no-cnv --no-display-prompt \
        -p "$prompt" > "$log" 2>&1; then
     emit_record "$model" "$quant" "$fill" "$ngl" "$rep" "$log" "ok" ""
   else
