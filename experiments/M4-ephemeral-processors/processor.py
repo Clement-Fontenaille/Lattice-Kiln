@@ -20,8 +20,8 @@ from context_assembly import ContextBundle
 from ollama_client import DEFAULT_MODEL, generate
 from roles import ROLE_GRANTS, prompt_for
 
-_BLOCK = re.compile(r"===PROCESSOR-OUTPUT===\s*(.*?)\s*===END===", re.DOTALL)
-_EFFECT_TYPE = {"workspace_write": 1, "process_run": 2}
+_FILE = re.compile(r"<<<FILE\s+path=(.+?)>>>\r?\n(.*?)\r?\n<<<ENDFILE>>>", re.DOTALL)
+_CTRL = re.compile(r"<<<CONTROL>>>\s*(.*?)\s*<<<ENDCONTROL>>>", re.DOTALL)
 MODEL_IDENTITY = {"name": "qwen2.5-coder", "quant": "Q4_K_M", "params_b": 7,
                   "runtime": "ollama", "offloaded": False}
 PROC_TIMEOUT_S = 120
@@ -40,6 +40,9 @@ class ProcessorResult:
     refused_by_policy: int = 0
     files_written: list[str] = field(default_factory=list)
     process_runs: list[dict[str, Any]] = field(default_factory=list)
+    context_requests: list[str] = field(default_factory=list)
+    control: dict[str, Any] = field(default_factory=dict, repr=False)
+    body_text: str = field(default="", repr=False)
     gen_tokens_per_s: float = 0.0
     raw_output: str = field(default="", repr=False)
 
@@ -49,17 +52,34 @@ def capability_set_for(role: str) -> CapabilitySet:
 
 
 def _extract(text: str) -> dict[str, Any] | None:
-    m = _BLOCK.search(text)
-    if not m:
+    """-> {"control": <dict>, "files": {path: content}} or None if no valid
+    CONTROL block. File bodies are raw text and never parsed as JSON."""
+    ctrl = None
+    m = _CTRL.search(text)
+    if m:
+        body = m.group(1).strip()
+        if body.startswith("```"):
+            body = re.sub(r"^```[a-zA-Z]*\n?|\n?```$", "", body).strip()
+        try:
+            obj = json.loads(body)
+            ctrl = obj if isinstance(obj, dict) else None
+        except json.JSONDecodeError:
+            ctrl = None
+    if ctrl is None:
+        # fallback: last {...} object (one nesting level) carrying terminal_state
+        for cand in reversed(re.findall(r"\{(?:[^{}]|\{[^{}]*\})*\}", text, re.DOTALL)):
+            if '"terminal_state"' in cand:
+                try:
+                    obj = json.loads(cand)
+                except json.JSONDecodeError:
+                    continue
+                if isinstance(obj, dict):
+                    ctrl = obj
+                    break
+    if ctrl is None:
         return None
-    body = m.group(1).strip()
-    if body.startswith("```"):
-        body = re.sub(r"^```[a-zA-Z]*\n?|\n?```$", "", body).strip()
-    try:
-        obj = json.loads(body)
-        return obj if isinstance(obj, dict) else None
-    except json.JSONDecodeError:
-        return None
+    files = {p.strip(): c for p, c in _FILE.findall(text)}
+    return {"control": ctrl, "files": files}
 
 
 def _norm_abs(workspace_root: Path, rel: str) -> Path:
@@ -87,8 +107,9 @@ def run_processor(*, role: str, objective: str, context: ContextBundle,
     out = gen.text
     parsed = _extract(out)
     if parsed is None:
-        gen = generate(prompt + "\n\nYour previous reply had no valid control block. "
-                                "Reply again with ONLY the ===PROCESSOR-OUTPUT=== block.",
+        gen = generate(prompt + "\n\nYour previous reply had no valid <<<CONTROL>>> block. "
+                                "Reply again following the OUTPUT FORMAT exactly: FILE blocks "
+                                "then one <<<CONTROL>>> block with valid JSON.",
                        model=model)
         out = gen.text
         parsed = _extract(out)
@@ -99,24 +120,27 @@ def run_processor(*, role: str, objective: str, context: ContextBundle,
     if parsed is None:
         res.summary = "no valid control block in model output"
         _record_conclusion(recorder, gate, actor, inv, ws, res)
-        recorder.close("blocked")
         return res
 
-    res.terminal_state = str(parsed.get("terminal_state", "blocked"))
-    res.summary = str(parsed.get("summary", "")).strip()
-    effects = parsed.get("effects") or []
+    ctrl = parsed["control"]
+    res.control = ctrl
+    res.body_text = re.split(r"<<<CONTROL>>>|\{[^{}]*\"terminal_state\"", out, maxsplit=1)[0].strip()
+    res.terminal_state = str(ctrl.get("terminal_state", "blocked"))
+    res.summary = str(ctrl.get("summary", "")).strip()
+    creqs = ctrl.get("context_requests") or []
+    res.context_requests = [str(c) for c in creqs] if isinstance(creqs, list) else []
 
-    for e in effects if isinstance(effects, list) else []:
-        if not isinstance(e, dict):
-            continue
-        etype = _EFFECT_TYPE.get(e.get("type"))
-        if etype is None:
-            continue
-        _route_effect(recorder, gate, actor, inv, ws, etype, e, res)
+    for path, content in parsed["files"].items():
+        _route_effect(recorder, gate, actor, inv, ws, 1,
+                      {"type": "workspace_write", "path": path, "content": content}, res)
+    for cmd in (ctrl.get("run") or []) if isinstance(ctrl.get("run"), list) else []:
+        if isinstance(cmd, str) and cmd.strip():
+            _route_effect(recorder, gate, actor, inv, ws, 2,
+                          {"type": "process_run", "command": cmd.strip()}, res)
 
     _record_conclusion(recorder, gate, actor, inv, ws, res)
-    recorder.close(res.terminal_state if res.terminal_state in
-                   ("answered", "blocked", "declined") else "completed")
+    # NB: the caller owns the run lifecycle. A processor terminating is not the
+    # run terminating (spec 06 lifecycle); the harness calls recorder.close().
     return res
 
 
@@ -199,7 +223,9 @@ def _record_conclusion(recorder, gate, actor, inv, ws: Path,
     the kind of boundary question M4 exists to surface - noted in findings."""
     eff = {"effect_type": 4, "envelope": {
         "representable": True, "attributable": inv, "reversible": "work-record",
-        "terminal_state": res.terminal_state, "summary": res.summary}}
+        "terminal_state": res.terminal_state, "summary": res.summary,
+        "role": res.role, "verdict": res.control.get("verdict"),
+        "context_requests": list(res.context_requests)}}
     verdict = submit_effect(eff, actor, gate=gate)
     disp = "realized" if verdict.proceed else (
         "rejected_by_gate" if verdict.stopped_by == "gate" else "rejected_by_capability")

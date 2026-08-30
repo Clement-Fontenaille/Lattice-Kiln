@@ -6,30 +6,26 @@ _Updated: 2026-08-30_
 
 **MVP target:** Milestones 0 through 5 — a local assistant using ephemeral role-specific processors under a language-model orchestrator, on measured hardware, fully observable, on a safety floor.
 
-**Current milestone:** M4 — Ephemeral processor experiments.
+**Current milestone:** M5 — Intelligent orchestration experiments (last of the MVP slice).
 
-**State:** M0 and M1 complete (findings-log entries 1 and 2). M2 and M3 are
-**built ahead of the milestone that exercises them (M4)**, as the execution
-cadence intends for observability and the floor — their evidence questions and
-findings-log entries defer to M4, when real runs and real effects exist.
+**State:** M0–M4 complete (findings-log entries 1–5). Only M5 remains in the MVP
+slice.
 
-- M0: local inference envelope measured — VRAM-fit is a hard binary with a
-  ~10–20× offload cliff, working default 7B Q4/Q5 at ≤16k, switch cost 17–30 s.
-- M1: baseline environment scripted (`experiments/M1-baseline-environment/` —
-  manifest + 6-step provisioning orchestrator), verifies green in place; the
-  definitive clean-machine replay is deferred to the post-MVP rework.
-- M2: observability event model v0 (`10-technical/02-observability-event-model.md`)
-  + standalone recorder and reconstruction queries
-  (`experiments/M2-observability-foundation/`), self-tested on a synthetic run.
-- M3: three spec docs (`10-technical/03`, `04`, `05`) + a thin deterministic
-  deny-list gate, capability model, and provisional invariant list
-  (`experiments/M3-invariant-floor/`), self-tested on synthetic effects (every
-  H1–H7 / R1–R3 clause exercised). Literature-grounding pass moved to Milestone 9.
-- M4: spec docs written (`10-technical/06-processor-contract.md`,
-  `07-naive-context-assembly.md`); decomposed (`M4-ephemeral-processors.md`).
-  **Blocked on an operator decision about the task set** before the runtime and
-  comparison harness get built — M4 is the first milestone that runs real model
-  inference, and it answers the M2, M3, and M4 evidence questions at once.
+- M0: local inference envelope — VRAM-fit is a hard binary with a ~10–20× offload
+  cliff, working default 7B Q4/Q5 at ≤16k, switch cost 17–30 s.
+- M1: baseline environment scripted, verifies green in place; clean-machine
+  replay deferred to the post-MVP rework.
+- M2: observability event model + recorder, exercised on 16 real M4 runs;
+  unplanned questions answerable from records **when the effect envelope carries
+  structured outcome, not just prose** (entry 3).
+- M3 (reduced MVP form): capability model + deny-list gate + provisional invariant
+  list; every M4 effect routed through it. Effect types carved cleanly for the
+  3/9 seen; the gate never tripped on benign supervised tasks; the capability
+  layer caught all role overreach (entry 4). Full form still owes the M9 items.
+- M4: monolith vs a fixed planner→implementer→reviewer chain (no revision loop),
+  7B + naive context, 4 tasks × N=2. **Ephemeral did not beat the monolith**
+  (5/8 vs 6/8) at ~3× cost; both arms correctly declined a false-premise task;
+  the "ask for missing context" affordance went unused 16/16 (entry 5).
 
 ## Milestone board
 
@@ -37,38 +33,34 @@ findings-log entries defer to M4, when real runs and real effects exist.
 |---|---|---|
 | M0 — Local inference envelope | **DONE** (2026-08-30) — findings-log entry 1 | yes — `M0-inference-envelope.md` |
 | M1 — Reproducible baseline environment | **DONE** (2026-08-30) — findings-log entry 2 (verdict inconclusive; clean-machine replay owed) | yes — `M1-baseline-environment.md` |
-| M2 — Observability foundation | **built** — spec v0 + recorder + self-test; evidence check deferred to M4 | `M2-observability-foundation.md` |
-| M3 — Invariant floor (reduced form for MVP) | **built** — specs 03/04/05 + deny-list gate + self-test; evidence check deferred to M4 | `M3-invariant-floor.md` |
-| M4 — Ephemeral processor experiments | **WIP** — specs 06/07 written; blocked on task-set decision | `M4-ephemeral-processors.md` |
+| M2 — Observability foundation | **DONE** (2026-08-30) — findings-log entry 3 | `M2-observability-foundation.md` |
+| M3 — Invariant floor (reduced form for MVP) | **DONE (reduced form)** (2026-08-30) — findings-log entry 4; full form owes M9 items | `M3-invariant-floor.md` |
+| M4 — Ephemeral processor experiments | **DONE** (2026-08-30) — findings-log entry 5 (verdict inconclusive, leaning weakens) | `M4-ephemeral-processors.md` |
 | M5 — Intelligent orchestration experiments | TODO | no |
 
 ## Immediate next actions
 
-M4 specs (`10-technical/06`, `07`) are written and M4 is decomposed. The next
-step needs an **operator decision on the task set** (`M4-ephemeral-processors.md`
-→ "Open decision"):
+M5 — Intelligent orchestration experiments, the last MVP milestone.
 
-1. Throwaway synthetic repo, or a real small repo to point at?
-2. Is 6–10 tasks / N=3 repetitions an acceptable inference budget on this host,
-   or start smaller (4 tasks, N=2)?
-3. Any task types to specifically include or exclude?
-
-Once the task set is pinned: build the processor runtime (Ollama client + effect
-routing through `experiments/M3-invariant-floor/enforce.py` + event recording via
-`experiments/M2-observability-foundation/event_model.py`), the tiny role library,
-the naive context assembler, and the arm-A/arm-B comparison harness; run the set;
-then answer the M2, M3, and M4 evidence questions from the committed runs
-(findings-log entries 3, 4, 5).
+1. Spec `10-technical/08-orchestrator-contract.md` — what the orchestrator
+   receives (itself under context governance), what it decides, how it mediates
+   discussion, synthesis, stopping rules. (Cadence backlog item 7.)
+2. Spec `10-technical/09-orchestrator-runtime-boundary.md` — the seam flagged as
+   highest value; the reasoning-vs-runtime validation-depth question. (Item 8.)
+3. Build an LLM orchestrator that drives the M4 processor runtime: it chooses the
+   next cognitive operation instead of a fixed planner→implementer→reviewer
+   chain, and — per M4 finding — can route a reviewer's "needs-change" back.
+   Compare against both the M4 fixed chain and the monolith on the same fixture
+   task set (extend it if needed).
+4. Evidence question: does natural-language orchestration beat a fixed workflow
+   while staying understandable, and where does its overhead exceed the benefit?
+   → findings-log entry 6, then the end-of-M5 sequence rework.
 
 ## Blockers
 
-- **M4 task set.** Building the M4 comparison harness is paused pending an
-  operator decision on the task set (three questions above). Not a hard blocker —
-  the runtime, role library, and naive assembler can be built against a
-  placeholder task first if preferred.
-- M0's runtime-install blockers are resolved (Ollama native + llama.cpp built
-  from source in WSL via apt `nvidia-cuda-toolkit`; see
-  `experiments/M0-inference-envelope/setup/README.md`).
+- None. Ollama native + llama.cpp from source in WSL are in place
+  (`experiments/M0-inference-envelope/setup/README.md`). M4 established the
+  processor-runtime + gate + recorder stack that M5's orchestrator drives.
 
 ## Post-MVP rework backlog (end of M5)
 
@@ -88,11 +80,15 @@ then answer the M2, M3, and M4 evidence questions from the committed runs
 
 ## Recently done
 
-- **M4 specs written + decomposed** — `10-technical/06-processor-contract.md`
-  (processor input/output envelope, lifecycle, bound to effect type 6 and the
-  kind-1 record) and `07-naive-context-assembly.md` (the deliberately simple v0
-  context baseline for M7). `PROGRESS/M4-ephemeral-processors.md` lays out the two
-  arms and the three converging evidence questions.
+- **M4 executed and closed** — `experiments/M4-ephemeral-processors/`: processor
+  runtime (`processor.py`) driving `qwen2.5-coder:7b` through the M3 floor and M2
+  recorder; naive context assembler; fixed role library; 4-task synthetic fixture;
+  `harness.py` ran 4 tasks × 2 arms × 2 reps. `reconstruction_check.py` answered
+  two unplanned questions from records. Findings-log entries 3, 4, 5. Design
+  touches: `01-effect-vocabulary.md` (conclusion = type 4), `02-processors.md`,
+  `04-context-as-governed-resource.md`, `06-observability.md`.
+- **M4 specs + decomposition** — `10-technical/06-processor-contract.md`,
+  `07-naive-context-assembly.md`.
 - **M3 built (reduced MVP form)** — `10-technical/03-capability-authority-model.md`,
   `04-enforcement-gate.md`, `05-provisional-invariant-list.md` (normative);
   `experiments/M3-invariant-floor/` — `invariants.json` + capability model +

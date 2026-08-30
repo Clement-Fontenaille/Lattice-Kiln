@@ -176,3 +176,179 @@ useful output — it is the concrete input to the bootstrapper.
 `provision/` (orchestrator + six steps + `config/cline/` templates),
 `run-reports/*.json` (schema `m1-provision-run/0`, git-ignored locally; the
 green `-VerifyOnly` run of 2026-08-30 is the reference).
+
+### Entry 3 — Milestone 2: Observability foundation
+
+**Date:** 2026-08-30
+
+**Evidence question:** can a run be reconstructed well enough to answer a question
+we have not thought to ask yet?
+
+**What the evidence said.**
+
+The M2 recorder (`experiments/M2-observability-foundation/event_model.py`, schemas
+`m2-run/0` / `m2-event/0`) was wired into the M4 processor runtime and recorded
+**16 real runs** (4 tasks × 2 arms × 2 repetitions). Reconstruction was then
+tested with questions the schema was not shaped around
+(`experiments/M4-ephemeral-processors/reconstruction_check.py`), answered from
+`events.jsonl` alone:
+
+- **Q1 — did the independent reviewer's verdict agree with the objective
+  outcome?** Answering it joins the reviewer's conclusion record (a type-4
+  realized effect) with the harness root's final objective-check record (a type-2
+  realized effect). Neither record references the other; the join is ad hoc.
+  Answerable — it surfaced 2/8 ephemeral runs where the reviewer approved a run
+  that objectively failed.
+- **Q2 — for every refused proposed effect, which role proposed it, which layer
+  stopped it, and did the run still pass?** Join across `invocation.role` ×
+  `proposed_effect.disposition` × the final check. Answerable — all 17 refusals
+  were capability-layer planner/reviewer overreach; several of those runs still
+  reached their objective.
+
+Per-actor and per-intent lineage reconstructed cleanly (harness root → planner /
+implementer / reviewer as children under one `intent_ref`). The
+safety-intervention category stayed distinct: the plumbing test's synthetic
+`gate_refusal` was recorded as its own kind with `retry_eligible=False`, never
+folded into task failure.
+
+One real gap: the first recorded pass stored the processor's conclusion with only
+a free-text `summary`, so "did the reviewer approve?" degraded to string
+-sniffing. Adding a structured `verdict` to the type-4 effect envelope fixed it.
+
+**Verdict: confirms** — a run is reconstructable well enough to answer questions
+nobody designed the schema for, **provided the effect envelope carries the
+structured result and not just prose**. The reconstruction is exactly as good as
+what the envelope was told to hold.
+
+**Touches.**
+
+- Design: `20-cognitive-architecture/06-observability.md` — the reconstruction
+  requirement holds up in practice; add that the recorded form of an effect must
+  carry its *structured* outcome, since ad-hoc cross-record joins are how
+  unplanned questions get answered.
+- Specification open contracts (`10-technical/02-observability-event-model.md`):
+  **the four-property / envelope carrier** contract is load-bearing — sharpen it,
+  do not close it. **Hypothesis linkage** — Q1/Q2 were answered by hand-written
+  joins; a first-class `experiment_id` / run-tag would have made them one-liners.
+  Still deferred, now with a concrete motivating case.
+- Milestone sequence: no reordering. M2 tasks 7–8 are now closed by this entry.
+
+**Runs.** `experiments/M4-ephemeral-processors/results/results.json` (committed),
+`reconstruction_check.py`, per-run records under
+`experiments/M4-ephemeral-processors/runs/` (schema `m2-run/0`, git-ignored; the
+2026-08-30 N=2 set is the reference). Recorder + synthetic self-test:
+`experiments/M2-observability-foundation/`.
+
+### Entry 4 — Milestone 3: Invariant floor (reduced MVP form)
+
+**Date:** 2026-08-30
+
+**Evidence question:** do the enumerated effect types carve cleanly when real
+effects flow through the gate, or does the boundary between types blur under use?
+
+**What the evidence said.**
+
+Across the same 16 real runs, every effect a processor actually produced mapped
+unambiguously to one of three of the nine types: **workspace mutation (1)**,
+**process execution (2)**, and **work-record mutation (4)** — the latter carrying
+the processor's own conclusion. No effect was ambiguous between types; no needed
+effect was missing from the vocabulary.
+
+- The deny-list **gate never fired** (0 gate refusals in 16 runs). A human
+  supervised benign tasks; nothing crossed a hard constraint.
+- The **capability layer** refused **17 proposed effects** — every one a planner
+  or reviewer instance trying to write a file or run a command outside its
+  type-4-only grant. This confirms the spec-03/04 division of labour in practice:
+  capability (adjustable, role-keyed) sits above the gate and caught all role
+  overreach; the gate (non-adjustable, effect-keyed) was never reached.
+- One boundary question surfaced, as the milestone anticipated: **is a
+  processor's conclusion an effect at all?** M4 modelled it as type 4 so it flows
+  through the same pipeline and lands in the record. Defensible — type 4 already
+  covers "attaching a finding, proposal, or decision" — but it is a choice the
+  vocabulary document did not force.
+
+**Verdict: inconclusive, leaning confirms.** The types carved cleanly for the
+effects actually seen, but (a) only 3 of 9 types were exercised, (b) the gate
+itself saw no real adversarial effect — its deny-list remains only synthetically
+tested — and (c) the one blur was resolved by fiat, not by the boundary being
+self-evident.
+
+**Touches.**
+
+- Design / spec: `10-technical/01-effect-vocabulary.md` — record that a cognitive
+  component's *recorded conclusion* is a type-4 work-record mutation; the open
+  contract "does type 4 stay one type" gains a data point (it held for
+  findings/conclusions here). `20-cognitive-architecture/07-invariant-enforcement.md`
+  — the "gate binds effects, not roles" split worked, but the MVP gave the gate
+  no real test; the composition / sequence-check hardening (now Milestone 9) still
+  owes a run with genuine gate trips.
+- Milestone sequence: no reordering. M3's reduced-form tasks are closed; the
+  deferred items (sequence hardening, gate-alter, accumulation, literature pass)
+  remain with Milestone 9.
+
+**Runs.** As entry 3, plus `experiments/M3-invariant-floor/` (specs + gate +
+selftest) and `reconstruction_check.py` Q2.
+
+### Entry 5 — Milestone 4: Ephemeral processor experiments
+
+**Date:** 2026-08-30
+
+**Evidence question:** do ephemeral roles, fresh context, and independent review
+beat a monolithic agent on a small task set?
+
+**What the evidence said.**
+
+Setup: `qwen2.5-coder:7b-instruct-q4_K_M` (the M0 working default), naive context
+assembly (spec `07`), a **fixed planner → implementer → reviewer chain with no
+revision loop**, versus a single monolithic implementer. 4 synthetic tasks
+(implement-from-stub, bug-fix-behind-a-failing-test, false-premise, context
+-starvation), 2 repetitions, both arms, objective pass/fail per task.
+
+- **Objective pass rate: monolith 6/8, ephemeral 5/8.** An earlier single-rep
+  pass ran 3/4 vs 4/4. Across every pass the ephemeral split **never clearly won**
+  — it matched or trailed.
+- **Cost: ephemeral spent 3× the model calls** (24 vs 8) and **~3× wall-clock**
+  (mean ~23 s vs ~7 s per task).
+- **False-premise task: both arms, every repetition, correctly declined** and left
+  the pre-existing passing tests green. A clean positive for the design claim
+  that the correct response to a task may be *not to execute it*
+  (`20-cognitive-architecture/01-work-intent-and-task-model.md`) — independent of
+  the ephemeral question.
+- **Context starvation** (a helper in a file naive assembly does not surface) hurt
+  both arms (monolith 1/2, ephemeral 0/2). **No processor ever emitted a context
+  request** (0 / 16 runs) — the "ask for missing context" affordance is specified
+  and wired but went entirely unused.
+- **Independent review**: the reviewer's verdict tracked the objective outcome in
+  6/8 ephemeral runs (2 false approvals on the starvation task). But with no
+  revision loop in the reduced MVP form, even a correct "needs-change" changed
+  nothing — review was **recorded, not consumed**.
+
+**Verdict: inconclusive, leaning weakens** (against "ephemeral roles improve
+reasoning quality", `40-roadmap/03-research-and-evaluation-agenda.md`). At this
+scale, with deliberately poor context and a non-looping chain, role separation
+added latency and cost with no measurable quality gain. It does **not** refute the
+hypothesis: N is tiny, variance is high (the trivial task flipped pass/fail
+between runs), context assembly is intentionally weak, and the chain has no
+feedback edge. The likely missing piece is the reviewer→implementer revision loop
+plus better context — not the role split itself.
+
+**Touches.**
+
+- Design: `20-cognitive-architecture/02-processors.md` — record that a
+  *non-looping* planner→implementer→reviewer chain did not beat a monolith on
+  small tasks, and that independent review with no revision loop is inert.
+  `10-foundations/04-context-as-governed-resource.md` — the "processor can request
+  missing context" behaviour needs to be prompted or required, not merely
+  available (0/16 uptake); it also gave the naive baseline a concrete cost
+  (task_4).
+- Specification: feeds the **orchestrator contract** (Milestone 5) — a real
+  orchestrator is where the reviewer's "needs-change" would route back — and
+  **Milestone 7** (naive context measurably cost the starvation task).
+- Milestone sequence: no reordering now. The end-of-Milestone-5 rework should
+  weigh adding a revision loop to the ephemeral arm before re-running this
+  comparison at larger N.
+
+**Runs.** `experiments/M4-ephemeral-processors/` — `fixture/` (task set, schema
+`m4-tasks/0`), `harness.py`, `results/results.json` + `results/summary.md`,
+`reconstruction_check.py`; per-run records under `runs/` (schema `m2-run/0`,
+git-ignored; the 2026-08-30 N=2 set is the reference).

@@ -67,7 +67,7 @@ Outbound network I/O initiated by a cognitive component or by a process it start
 
 Changing the durable representation of work: creating, refining, splitting, merging, deferring, or abandoning a work item, and attaching a finding, proposal, or decision to one.
 
-- Includes: recording that a task rests on a false assumption; splitting one work item into three; marking a decision and its supporting evidence.
+- Includes: recording that a task rests on a false assumption; splitting one work item into three; marking a decision and its supporting evidence. **A cognitive component's own recorded conclusion — a processor stating that it answered, was blocked, or declined, with its reasoning — is a work-record mutation of this type** (M4 finding, findings-log entry 4: this modelling carved cleanly once chosen, but the boundary was not self-evident from the vocabulary alone).
 - Excludes: an intent record's original human-authored content, which is amended only out of band; observations, which are runtime bookkeeping.
 
 ### 5. Memory mutation

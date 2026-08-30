@@ -2,7 +2,7 @@
 
 **Milestone:** `40-roadmap/01-milestones.md` → Milestone 2
 **Evidence question:** can a run be reconstructed well enough to answer a question we have not thought to ask yet?
-**State:** built (spec v0 + recorder + self-test); evidence check deferred to M4
+**State:** COMPLETE (2026-08-30) — findings-log entry 3
 
 ## What "done" looks like
 
@@ -46,8 +46,8 @@ Storage may stay simple. What must be reconstructable may not.
 | 4 | Realized-effect record | DONE | `.realized_effect()` — typed by the 9-effect vocabulary, `envelope` carries the representable/permitted/attributable/reversible fields, `outcome`. Plus `.proposed_effect()` (kind 4). |
 | 5 | Safety-intervention outcome category | DONE | `.safety_intervention()` — distinct `kind`, `retry_eligible=False` always, `human_review_ref` null until attached. Self-test asserts it is never folded into a generic effect/failure. |
 | 6 | Minimal recorder | DONE (standalone) | `event_model.py`, stdlib only, runs under Windows Python and WSL python3. Loud on write failure (no silent gap). Wiring into a real processor run is an M4 step. |
-| 7 | Reconstruction check | PARTIAL | `selftest.py` builds a synthetic run and answers an unplanned question (gate-refused effects → serving model + offload flag) from stored records alone — passes. The real test is an M4 run; this keeps the model from being untested until then. |
-| 8 | Findings-log entry | TODO (M4) | Verdict waits for the reconstruction check against a real run. |
+| 7 | Reconstruction check | DONE | `experiments/M4-ephemeral-processors/reconstruction_check.py` poses two questions the schema was not shaped around (reviewer verdict vs objective outcome; role behind each refused effect) and answers both from `events.jsonl` alone across 16 real M4 runs. |
+| 8 | Findings-log entry | DONE | Entry 3. Verdict **confirms** — with the caveat that reconstruction is only as good as the structured content the effect envelope carries (a free-text-only conclusion broke one query until `verdict` was added). |
 
 ## State
 

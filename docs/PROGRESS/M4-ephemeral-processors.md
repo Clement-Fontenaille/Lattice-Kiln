@@ -3,7 +3,10 @@
 **Milestone:** `40-roadmap/01-milestones.md` → Milestone 4
 **Evidence question:** do ephemeral roles, fresh context, and independent review
 beat a monolithic agent on a small task set?
-**State:** decomposing — specs written, experiment design needs operator input
+**State:** COMPLETE (2026-08-30) — findings-log entries 3 (M2), 4 (M3), 5 (M4).
+Verdict on the M4 question: **inconclusive, leaning weakens** — a non-looping
+planner→implementer→reviewer chain did not beat a monolith (5/8 vs 6/8) at ~3×
+the cost.
 
 ## Why this milestone carries three findings-log entries
 
@@ -49,36 +52,22 @@ it (`03-research-and-evaluation-agenda.md`, evaluation posture).
 |---|---|---|---|
 | 1 | Processor contract spec (`06`) | DONE | v0. Five-part input envelope, output envelope, lifecycle, no-resume. |
 | 2 | Naive context assembly spec (`07`) | DONE | v0. Normative: stays simple, emits a selection trace. M7 replaces (not accretes). |
-| 3 | Decide the task set | **TODO — operator input** | Size, source, and objective-checkability. See "Open decision". |
-| 4 | Processor runtime | TODO | Ollama client (7B Q4/Q5 ≤16k, per M0), effect → `enforce.submit_effect`, event → `event_model.RunRecorder`. Ephemeral: one model context per instance, no carry-over. |
-| 5 | Role library | TODO | `implementer` (also the monolith); `planner`, `reviewer`. Free-text role instructions per `06`. |
-| 6 | Naive context assembler | TODO | Implements `07`: objective + README + tree + hint/substring file inclusion to budget, with trace. Deterministic. |
-| 7 | Comparison harness + run the set | TODO | Arm A vs arm B, N reps. Objective score + reasoning-quality signals. All runs committed. |
-| 8 | M2 reconstruction check | TODO | Unplanned question answered from stored records alone → findings-log entry 3. |
-| 9 | M3 effect-carving check | TODO | Real effect stream through the gate; note any type blur → findings-log entry 4. |
-| 10 | M4 findings-log entry | TODO | Verdict on the ephemeral-vs-monolith hypothesis → entry 5. |
+| 3 | Decide the task set | DONE | Operator: synthetic fixture repo, 4 tasks × N=2. `fixture/` — implement-from-stub, bug-fix, false-premise, context-starvation; `tasks.json` schema `m4-tasks/0`. |
+| 4 | Processor runtime | DONE | `processor.py` — `run_processor()`: one model call, control-block parse, every effect → `enforce.submit_effect`, every event → `RunRecorder`, realize only gate-passed. Conclusion recorded as effect type 4. Caller owns run lifecycle (no processor self-close). |
+| 5 | Role library | DONE | `roles.py` — `implementer` / `planner` / `reviewer`, per-role capability grants, `<<<FILE>>>` + `<<<CONTROL>>>` output protocol (JSON kept free of file bodies after a `"""`-in-JSON parse failure). |
+| 6 | Naive context assembler | DONE | `context_assembly.py` — objective + README + tree + hint/substring inclusion to an 8k-token budget, deterministic, selection trace. |
+| 7 | Comparison harness + run the set | DONE | `harness.py` — arm A vs arm B, 4×2, `results/results.json` + `results/summary.md` committed; per-run records under `runs/`. |
+| 8 | M2 reconstruction check | DONE | `reconstruction_check.py` — two unplanned questions answered from records alone → findings-log entry 3. |
+| 9 | M3 effect-carving check | DONE | Effect stream inspected via the same script (Q2) → findings-log entry 4. 3/9 types, all clean; gate never tripped. |
+| 10 | M4 findings-log entry | DONE | Entry 5 — verdict inconclusive, leaning weakens. |
 
-## Open decision — the task set (needs operator input)
+## Task set (resolved)
 
-The milestone says "a small task set" and "a small set of roles only." Before
-building arm B, the task set has to be pinned. Candidate shape:
-
-- **6–10 tasks**, each a self-contained change in a small throwaway repo (or a
-  fixture repo committed under the experiment dir), each with an **objective
-  pass/fail**: a test that must go green, a lint that must stay clean, a build
-  that must succeed.
-- Mix of: a straightforward implementation, a bug fix behind a failing test, a
-  task with a **false premise** (to see whether either arm correctly `declines`),
-  a small refactor, a task needing a second file the naive assembler will
-  probably miss (to exercise context starvation).
-- Kept deliberately small because the host runs one 7B model at ~40 tok/s and
-  each ephemeral task is 3 model calls vs the monolith's 1.
-
-Operator questions:
-1. Throwaway synthetic repo, or a real small repo you want to point at?
-2. Is 6–10 tasks / N=3 repetitions an acceptable inference budget on this host,
-   or should the first pass be smaller (e.g. 4 tasks, N=2)?
-3. Any task types you specifically want represented or excluded?
+Operator decision: **synthetic fixture repo, 4 tasks × N=2**, build the runtime
+first against a placeholder. Delivered as `experiments/M4-ephemeral-processors/fixture/`
+(`task_1_stringcalc` implement-from-stub, `task_2_median` bug-fix-behind-a-failing
+-test, `task_3_nobug` false-premise, `task_4_starve` context-starvation), scored
+by a stdlib `python test_task.py` check (no pytest dependency on the host).
 
 ## Notes
 

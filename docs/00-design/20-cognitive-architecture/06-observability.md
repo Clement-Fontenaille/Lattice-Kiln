@@ -26,6 +26,16 @@ Research-grade observability must also preserve enough structure to relate behav
 
 For example, a later experiment may need to compare two context policies or two versions of the orchestrator role.
 
+Milestone 4 (findings-log entry 3) tested this against real runs: unplanned
+questions — "did the independent reviewer agree with the objective outcome?",
+"which role proposed each refused effect?" — were answerable from stored records
+by ad-hoc joins across event kinds. The one failure was instructive: when a
+processor's conclusion was recorded as free-text prose only, the reviewer's
+verdict was no longer machine-readable and the question degraded to string
+matching. The recorded form of an effect must carry its **structured** outcome,
+not just a narrative summary, because those cross-record joins are how
+not-yet-imagined questions get answered.
+
 ## Reconstruction as a safety dependency
 
 Reconstruction carries more weight than its research role alone suggests.

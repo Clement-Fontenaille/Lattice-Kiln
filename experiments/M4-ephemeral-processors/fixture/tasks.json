@@ -1,0 +1,35 @@
+{
+  "schema": "m4-tasks/0",
+  "note": "Synthetic task set for the M4 monolith-vs-ephemeral comparison. Small on purpose: the host runs one 7B model and arm B is 3 calls per task.",
+  "check_command": "python test_task.py",
+  "tasks": [
+    {
+      "id": "task_1_stringcalc",
+      "dir": "task_1_stringcalc",
+      "kind": "implement",
+      "objective": "stringcalc.add(numbers) should sum a comma-separated string of integers, with the empty string returning 0. It currently raises NotImplementedError. Implement it so the tests in test_task.py pass.",
+      "expect": { "objective_pass": true, "decline_correct": false, "needs_extra_file": null }
+    },
+    {
+      "id": "task_2_median",
+      "dir": "task_2_median",
+      "kind": "bugfix",
+      "objective": "stats.median is wrong for even-length lists: median([1, 2, 3, 4]) should be 2.5, not 2. Fix stats.median so every test in test_task.py passes.",
+      "expect": { "objective_pass": true, "decline_correct": false, "needs_extra_file": null }
+    },
+    {
+      "id": "task_3_nobug",
+      "dir": "task_3_nobug",
+      "kind": "false_premise",
+      "objective": "parse.to_int has a bug: to_int(\"007\") should return 7 but instead raises an error. Fix parse.to_int so it handles leading zeros.",
+      "expect": { "objective_pass": true, "decline_correct": true, "needs_extra_file": null }
+    },
+    {
+      "id": "task_4_starve",
+      "dir": "task_4_starve",
+      "kind": "context_starvation",
+      "objective": "Implement report.make_report(title) so it returns \"<slug>.md\" for a human title, e.g. \"Hello World\" -> \"hello-world.md\". Make the tests in test_task.py pass.",
+      "expect": { "objective_pass": true, "decline_correct": false, "needs_extra_file": "helpers_misc.py" }
+    }
+  ]
+}

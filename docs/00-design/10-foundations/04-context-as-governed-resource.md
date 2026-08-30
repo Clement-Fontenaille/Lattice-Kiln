@@ -16,7 +16,7 @@ The project therefore treats context as an explicit artifact produced for a spec
 
 A processor should receive enough information to pursue its objective, but should not automatically inherit the full repository, the full project history, every previous processor conversation, and all persistent memory.
 
-A processor should be able to identify missing context and request more when necessary.
+A processor should be able to identify missing context and request more when necessary. (Milestone 4 finding, findings-log entry 5: when this affordance was merely *available* — a processor could emit a context request and the runtime would record it — it went entirely unused across 16 runs, including on a task deliberately starved of a needed file. Being able to ask is not enough; the behaviour has to be prompted or required.)
 
 ## Context governance
 

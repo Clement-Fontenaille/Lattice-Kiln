@@ -3,7 +3,9 @@
 **Milestone:** `40-roadmap/01-milestones.md` → Milestone 3
 **Evidence question:** do the enumerated effect types carve cleanly when real
 effects flow through the gate, or does the boundary between types blur under use?
-**State:** built (reduced MVP form); evidence check deferred to M4
+**State:** reduced MVP form COMPLETE (2026-08-30) — findings-log entry 4. Full
+form still owes the Milestone 9 items (sequence hardening, gate-alter,
+accumulation, literature-grounding pass).
 
 ## What "done" looks like for the MVP slice
 
@@ -51,8 +53,8 @@ MVP" fixes the scope. **In scope, and delivered here:**
 | 6 | Deny-list gate implementation | DONE | `gate.py` — `Gate.check()` (H1–H7, R1–R2), `check_run_bounds()` (R3), `check_sequence()` stub. Loads `invariants.json`; refuses all effects if the list is unreadable or the schema is wrong. |
 | 7 | Enforcement pipeline | DONE | `enforce.py` — `submit_effect()` runs all four layers in order and names the first that stops the effect. |
 | 8 | Self-test on synthetic effects | DONE | `selftest.py` — 35 assertions. Every H/R clause refuses at least once (coverage check); gate is deterministic over 200 calls and role-independent; the sequence stub is verified to be *called* by the pipeline; revoke takes no proposal. Passes on Windows Python and WSL python3. |
-| 9 | Wire the gate into a real run | TODO (M4) | The gate has no real effects flowing through it yet. |
-| 10 | Findings-log entry | TODO (M4) | Verdict on "do the effect types carve cleanly under use?" needs real effects through the gate. |
+| 9 | Wire the gate into a real run | DONE | Every effect in the 16 M4 runs routed through `enforce.submit_effect`. 3 of 9 types exercised (workspace mutation, process execution, work-record mutation), all carved cleanly; the gate never tripped (benign supervised tasks); the capability layer refused 17 planner/reviewer overreach attempts. |
+| 10 | Findings-log entry | DONE | Entry 4. Verdict **inconclusive, leaning confirms** — clean carving for what was seen, but only 3/9 types and zero real gate trips; "is a conclusion an effect" was settled by choosing type 4, not by self-evidence. |
 
 ## State
 
