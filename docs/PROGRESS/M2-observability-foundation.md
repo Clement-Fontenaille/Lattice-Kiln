@@ -2,7 +2,7 @@
 
 **Milestone:** `40-roadmap/01-milestones.md` → Milestone 2
 **Evidence question:** can a run be reconstructed well enough to answer a question we have not thought to ask yet?
-**State:** WIP — decomposing
+**State:** built (spec v0 + recorder + self-test); evidence check deferred to M4
 
 ## What "done" looks like
 

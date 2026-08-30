@@ -1,0 +1,134 @@
+{
+  "schema": "m3-invariants/0",
+  "source_of_truth": "docs/10-technical/05-provisional-invariant-list.md",
+  "meta": {
+    "provisional": true,
+    "human_supervised_runs": true,
+    "pending": [
+      "literature-grounding-pass",
+      "sequence-check-hardening",
+      "gate-alter",
+      "accumulation-stop",
+      "concrete-resource-ceiling-values",
+      "list-integrity-mechanism"
+    ]
+  },
+
+  "goals": [
+    { "id": "G1", "text": "Assist a human developer on their repository, under that human's supervision, producing changes the human can review and reverse." },
+    { "id": "G2", "text": "Every run remains reconstructable; observability records are not disposable." },
+    { "id": "G3", "text": "No feedback loop may weaken this list or the gate that enforces it." }
+  ],
+
+  "resource_ceilings": [
+    {
+      "id": "R1",
+      "description": "Model footprint must stay within the resident VRAM envelope of the reference host (offload is a 10-20x latency cliff; findings-log Entry 1).",
+      "effect_type": 6,
+      "match_rule": "invocation_over_envelope",
+      "value": null,
+      "host_specific": true
+    },
+    {
+      "id": "R2",
+      "description": "At most one processor invocation active at a time on the MVP host.",
+      "effect_type": 6,
+      "match_rule": "concurrency_over_limit",
+      "value": 1
+    },
+    {
+      "id": "R3",
+      "description": "A run must stop for human review after N realized effects or T minutes of wall-clock.",
+      "effect_type": null,
+      "match_rule": "run_bound_exceeded",
+      "value": null,
+      "provisional_default": { "max_effects": 200, "max_minutes": 60 }
+    }
+  ],
+
+  "hard_constraints": [
+    {
+      "id": "H1",
+      "description": "No workspace mutation whose resolved target path lies outside the assigned workspace root.",
+      "effect_types": [1],
+      "match_rule": "path_outside_workspace"
+    },
+    {
+      "id": "H2",
+      "description": "No network access to a destination not on the allowlist.",
+      "effect_types": [3],
+      "match_rule": "host_not_in_allowlist"
+    },
+    {
+      "id": "H3",
+      "description": "No in-place modification of trusted configuration; no automated promotion before Milestone 11.",
+      "effect_types": [7, 8],
+      "match_rule": "targets_trusted_config_or_any_promotion"
+    },
+    {
+      "id": "H4",
+      "description": "No capability grant or revocation initiated by a cognitive component; only the runtime initiates revocation.",
+      "effect_types": [9],
+      "match_rule": "initiated_by_cognition"
+    },
+    {
+      "id": "H5",
+      "description": "No effect whose target is the invariant list, the gate module, or their loader.",
+      "effect_types": [1, 7],
+      "match_rule": "target_is_protected_path"
+    },
+    {
+      "id": "H6",
+      "description": "No deletion, truncation, or rewrite of an existing run's observability records.",
+      "effect_types": [1, 4],
+      "match_rule": "target_is_run_record"
+    },
+    {
+      "id": "H7",
+      "description": "No host-destructive process execution.",
+      "effect_types": [2],
+      "match_rule": "command_matches_denylist"
+    }
+  ],
+
+  "allowlists": {
+    "network_hosts": [
+      "localhost",
+      "127.0.0.1",
+      "::1",
+      "pypi.org",
+      "files.pythonhosted.org",
+      "registry.npmjs.org",
+      "crates.io",
+      "static.crates.io"
+    ]
+  },
+
+  "denylists": {
+    "protected_path_globs": [
+      "**/experiments/M3-invariant-floor/invariants.json",
+      "**/experiments/M3-invariant-floor/gate.py",
+      "**/experiments/M3-invariant-floor/capabilities.py",
+      "**/experiments/M3-invariant-floor/enforce.py",
+      "**/docs/10-technical/05-provisional-invariant-list.md",
+      "**/docs/10-technical/04-enforcement-gate.md"
+    ],
+    "run_record_globs": [
+      "**/runs/*/events.jsonl",
+      "**/runs/*/run.json"
+    ],
+    "destructive_command_patterns": [
+      "(?i)\\brm\\s+(-[a-z]*\\s+)*-[a-z]*r[a-z]*f",
+      "(?i)\\brm\\s+(-[a-z]*\\s+)*-[a-z]*f[a-z]*r",
+      "(?i)\\bmkfs\\b",
+      "(?i)\\bdd\\b[^\\n]*\\bof=/dev/",
+      "(?i):\\(\\)\\s*\\{\\s*:\\|:&\\s*\\}",
+      "(?i)\\b(shutdown|reboot|halt|poweroff)\\b",
+      "(?i)\\bapt(-get)?\\s+(remove|purge|autoremove)\\b",
+      "(?i)\\b(yum|dnf)\\s+remove\\b",
+      "(?i)\\bsudo\\b",
+      "(?i)\\bchmod\\s+-R\\s+000\\b",
+      "(?i)>\\s*/dev/sd[a-z]"
+    ]
+  }
+}

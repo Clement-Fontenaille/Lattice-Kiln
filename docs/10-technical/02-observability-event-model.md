@@ -146,7 +146,7 @@ is an open contract (M4 will show what corrections actually look like).
 - **Invariant enforcement gate** (`07-invariant-enforcement.md`) — consumes the
   ordered realized-effect history and emits kind-3 records. Owns sequence-window
   semantics.
-- **Capability and authority model** (`10-technical`, backlog item 2) — a
+- **Capability and authority model** (`03-capability-authority-model.md`) — a
   rejection by capability policy is recorded here as a kind-4 disposition; the
   policy itself lives there.
 - **Evidence, belief and provenance** (`03-evidence-belief-and-provenance.md`) —
