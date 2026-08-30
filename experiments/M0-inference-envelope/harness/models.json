@@ -30,7 +30,10 @@
       "llamacpp_quants": ["Q4_K_M"],
       "llamacpp_quants_deferred": ["Q5_K_M"],
       "llamacpp_quants_note": "Q5_K_M spot-check deferred: 7B fits fully on GPU under Ollama, so one quant is enough to cross-check throughput; the GGUF download budget is spent on 14B instead.",
-      "llamacpp_gguf_hint": "Qwen/Qwen2.5-Coder-7B-Instruct-GGUF"
+      "llamacpp_gguf_hint": "Qwen/Qwen2.5-Coder-7B-Instruct-GGUF",
+      "gguf_file": "Qwen2.5-Coder-7B-Instruct-Q4_K_M.gguf",
+      "gguf_sha256": "1664fccab734674a50763490a8c6931b70e3f2f8ec10031b54806d30e5f956b6",
+      "gguf_source": "https://huggingface.co/bartowski/Qwen2.5-Coder-7B-Instruct-GGUF"
     },
     {
       "slot": "stretch",
@@ -44,6 +47,9 @@
       "llamacpp_spotcheck": true,
       "llamacpp_quants": ["Q4_K_M"],
       "llamacpp_gguf_hint": "Qwen/Qwen2.5-Coder-14B-Instruct-GGUF",
+      "gguf_file": "Qwen2.5-Coder-14B-Instruct-Q4_K_M.gguf",
+      "gguf_sha256": "2946d28c9e1bb2bcae6d42e8678863a31775df6f740315c7d7e6d6b6411f5937",
+      "gguf_source": "https://huggingface.co/bartowski/Qwen2.5-Coder-14B-Instruct-GGUF",
       "llamacpp_ngl_sweep": [99, 40, 24, 0]
     }
   ],

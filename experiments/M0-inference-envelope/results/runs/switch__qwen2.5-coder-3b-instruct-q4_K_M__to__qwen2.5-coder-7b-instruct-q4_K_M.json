@@ -1,0 +1,13 @@
+﻿{
+    "schema":  "m0-switch/1",
+    "runtime":  "ollama",
+    "runtime_version":  "ollama version is 0.33.2",
+    "from":  "qwen2.5-coder:3b-instruct-q4_K_M",
+    "to":  "qwen2.5-coder:7b-instruct-q4_K_M",
+    "unload_ms":  228,
+    "load_ms":  30154,
+    "switch_ms":  30382,
+    "timestamp":  "2026-08-30T17:55:44.9111995+02:00",
+    "host_ref":  "b50a3ad701b9fb16ef56ff4a03d3ff88363002a8478a5cd3210dbea96bf298f1",
+    "note":  "standalone bench-switch.ps1; load_ms is cold load_duration of the incoming model"
+}

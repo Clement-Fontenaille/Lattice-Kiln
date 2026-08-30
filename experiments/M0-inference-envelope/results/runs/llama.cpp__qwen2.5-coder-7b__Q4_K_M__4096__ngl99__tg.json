@@ -1,0 +1,23 @@
+{
+  "schema": "m0-run/1",
+  "runtime": "llama.cpp",
+  "runtime_version": "llama.cpp f1793c1",
+  "model": "qwen2.5-coder",
+  "quant": "Q4_K_M",
+  "context_fill": 4096,
+  "num_ctx": 4096,
+  "ngl": 99,
+  "is_cold": false,
+  "warmup": false,
+  "timestamp": "2026-08-30T18:04:55+02:00",
+  "host_ref": "b50a3ad701b9fb16ef56ff4a03d3ff88363002a8478a5cd3210dbea96bf298f1",
+  "metrics": {
+    "prefill_tok_s": null,
+    "gen_tok_s": 47.053389,
+    "gpu_layers": 99,
+    "total_layers": null,
+    "vram_resident_mb": 5782
+  },
+  "status": "ok",
+  "note": ""
+}

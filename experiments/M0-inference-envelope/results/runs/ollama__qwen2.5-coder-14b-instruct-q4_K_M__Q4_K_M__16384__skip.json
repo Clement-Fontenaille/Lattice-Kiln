@@ -1,0 +1,17 @@
+{
+  "schema": "m0-run/1",
+  "runtime": "ollama",
+  "runtime_version": "ollama version is 0.33.2",
+  "model": "qwen2.5-coder:14b-instruct-q4_K_M",
+  "quant": "Q4_K_M",
+  "context_fill": 16384,
+  "num_ctx": 16384,
+  "repetition": 1,
+  "is_cold": false,
+  "warmup": false,
+  "timestamp": "2026-08-30T00:00:00.0000000+02:00",
+  "host_ref": "b50a3ad701b9fb16ef56ff4a03d3ff88363002a8478a5cd3210dbea96bf298f1",
+  "metrics": { "load_ms": null, "prompt_eval_count": null, "prompt_eval_ms": null, "eval_count": null, "eval_ms": null, "prefill_tok_s": null, "gen_tok_s": null, "gpu_layers": null, "total_layers": null, "size_mb": null, "vram_resident_mb": null },
+  "status": "skipped",
+  "note": "not measured: 14B Q4_K_M (~9GB) does not fit 8GB; partial CPU offload gives gen 2.3 tok/s at fill 512 and 1.4 tok/s at 4096 - already far below the 15 tok/s floor. Larger fills would run many minutes per rep at sub-1 tok/s for no new envelope information. The llama.cpp -ngl sweep covers the offload-cost curve instead."
+}
