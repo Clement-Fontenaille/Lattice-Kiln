@@ -1,31 +1,35 @@
 # Status
 
-_Updated: 2026-08-30_
+_Updated: 2026-08-31_
 
 ## Where we are
 
 **MVP target:** Milestones 0 through 5 — a local assistant using ephemeral role-specific processors under a language-model orchestrator, on measured hardware, fully observable, on a safety floor.
 
-**Current milestone:** M5 — Intelligent orchestration experiments (last of the MVP slice).
+**MVP slice COMPLETE.** M0–M5 done, findings-log entries 1–6, first sequence
+rework written (`40-roadmap/06-sequence-rework-01.md` — no reordering).
 
-**State:** M0–M4 complete (findings-log entries 1–5). Only M5 remains in the MVP
-slice.
+**Current milestone:** M6 — Persistent work and knowledge (first past the MVP slice; not yet decomposed).
 
-- M0: local inference envelope — VRAM-fit is a hard binary with a ~10–20× offload
-  cliff, working default 7B Q4/Q5 at ≤16k, switch cost 17–30 s.
+**What the MVP established:**
+
+- M0: inference envelope — 7B Q4/Q5 ≤16k, ~40 tok/s; VRAM-fit a hard binary with
+  a ~10–20× offload cliff; per-role model switching not viable.
 - M1: baseline environment scripted, verifies green in place; clean-machine
-  replay deferred to the post-MVP rework.
-- M2: observability event model + recorder, exercised on 16 real M4 runs;
-  unplanned questions answerable from records **when the effect envelope carries
-  structured outcome, not just prose** (entry 3).
-- M3 (reduced MVP form): capability model + deny-list gate + provisional invariant
-  list; every M4 effect routed through it. Effect types carved cleanly for the
-  3/9 seen; the gate never tripped on benign supervised tasks; the capability
-  layer caught all role overreach (entry 4). Full form still owes the M9 items.
-- M4: monolith vs a fixed planner→implementer→reviewer chain (no revision loop),
-  7B + naive context, 4 tasks × N=2. **Ephemeral did not beat the monolith**
-  (5/8 vs 6/8) at ~3× cost; both arms correctly declined a false-premise task;
-  the "ask for missing context" affordance went unused 16/16 (entry 5).
+  replay owed (post-MVP backlog).
+- M2: append-only event model + recorder; 40 real runs reconstructable, including
+  for unplanned questions — **when the effect envelope carries structured
+  outcome, not just prose** (entries 3, 6).
+- M3 (reduced form): deterministic deny-list gate + capability model + provisional
+  invariant list; every real effect routed through it; 3/9 effect types seen, all
+  carved cleanly; gate never tripped on benign supervised work (entry 4). Full
+  form owes the M9 items.
+- M4: processor runtime; a non-looping planner→implementer→reviewer chain **did
+  not beat a monolith** (5/8 vs 6/8) at ~3× cost; independent review with no
+  revision edge was inert (entry 5).
+- M5: LLM orchestrator over that runtime — **7/8 vs monolith 6/8 vs fixed chain
+  5/8**, the +1 entirely from adaptive retry on the hard tasks, at ~5× cost;
+  understandable for acting, weak for stopping (entry 6).
 
 ## Milestone board
 
@@ -36,47 +40,59 @@ slice.
 | M2 — Observability foundation | **DONE** (2026-08-30) — findings-log entry 3 | `M2-observability-foundation.md` |
 | M3 — Invariant floor (reduced form for MVP) | **DONE (reduced form)** (2026-08-30) — findings-log entry 4; full form owes M9 items | `M3-invariant-floor.md` |
 | M4 — Ephemeral processor experiments | **DONE** (2026-08-30) — findings-log entry 5 (verdict inconclusive, leaning weakens) | `M4-ephemeral-processors.md` |
-| M5 — Intelligent orchestration experiments | **WIP** — specs 08/09 written; orchestrator + 3rd harness arm next | `M5-intelligent-orchestration.md` |
+| M5 — Intelligent orchestration experiments | **DONE** (2026-08-31) — findings-log entry 6 (verdict confirms, narrowly) | `M5-intelligent-orchestration.md` |
+| — first sequence rework — | **DONE** (2026-08-31) — no reordering | `40-roadmap/06-sequence-rework-01.md` |
+| M6 — Persistent work and knowledge | TODO | no |
 
 ## Immediate next actions
 
-M5 specs (`10-technical/08`, `09`) are written and M5 is decomposed. Next:
-
-1. Build the orchestrator under `experiments/M5-intelligent-orchestration/` — an
-   LLM loop over the M4 processor runtime (observe → decide next op → spawn
-   processor → integrate → stop), capability set `{6, 4}`, a decision record per
-   step, stopping rules from spec `08`.
-2. Add the `orchestrated` harness arm (third, alongside `monolith` and
-   `ephemeral`); route reviewer `needs-change` back to a fresh implementer.
-3. Run 3 arms × fixture tasks × N; reconstruct the orchestrator's strategy from
-   decision records alone (understandability check).
-4. Findings-log entry 6, then the **end-of-MVP sequence rework** — batch review
-   of findings 1–6.
+MVP slice closed. Next is **M6 — Persistent work and knowledge** (now *current*;
+*current + 1* is M7). Per the cadence: write M6's evidence question, decompose it,
+then spec only what M6 and M7 need. M6 adds durable structure — intent, work,
+observations, evidence, findings, proposals, decisions, artifacts, memory — "only
+as far as necessary to support real use cases". It is the first consumer of the
+"structured outcome, not prose" observability lesson (entries 3, 6) and of the
+`declined` vs `blocked` distinction now in spec `08`.
 
 ## Blockers
 
 - None. Ollama native + llama.cpp from source in WSL are in place
-  (`experiments/M0-inference-envelope/setup/README.md`). M4 established the
-  processor-runtime + gate + recorder stack that M5's orchestrator drives.
+  (`experiments/M0-inference-envelope/setup/README.md`). The M2 recorder, M3
+  floor, M4 processor runtime, and M5 orchestrator are all built and exercised on
+  real runs — M6 builds on that stack.
 
-## Post-MVP rework backlog (end of M5)
+## Post-MVP backlog (consolidated in `40-roadmap/06-sequence-rework-01.md`)
 
-- **Hardware as a variable.** M0 and M1 were characterised against one host.
-  Define the replayable procedure to re-bootstrap the environment and
-  re-characterise the inference envelope on different hardware, and identify what
-  in the design set is allowed to depend on host-specific envelope numbers. See
-  `40-roadmap/02-open-questions-register.md` → Bootstrapping, and findings-log
-  entry 1.
-- **Editor-agent frontend choice.** M1 names Cline. M1 finding 1: Cline's config
-  is file-based JSON but the schema is undocumented and UI-first, so the baseline
-  needs a one-time manual capture step. Weigh a `config.yaml`-first, documented
-  alternative (e.g. Continue.dev) at the rework. Not an M1 change — Cline stays
-  for the MVP, worked around by capture-and-replay of its settings JSON. The
-  project runs its own orchestrator loop from M5 on, so this frontend is MVP
-  scaffolding, not a long-term dependency.
+Scheduled by the milestone that needs each, not a separate track:
+
+- **Hardware as a variable** (findings 1, 2) — replayable re-bootstrap + envelope
+  re-characterisation on different hardware; what may depend on host numbers.
+- **Clean-machine M1 replay** (finding 2) — the definitive from-nothing test, when
+  a second controlled machine is available.
+- **Observability envelope contract** (findings 3, 6) — structured outcome, not
+  free text, on every effect envelope. `10-technical/02` open contracts, via M6.
+- **Orchestrator stopping semantics** (finding 6) — `declined` ≠ `blocked`, stop
+  rationale required; in spec `08`, validate at the M4/M5 re-test inside M7/M8.
+- **Editor-agent frontend choice** (finding 2) — weigh a documented
+  `config.yaml`-first alternative to Cline; owner is the bootstrapper design.
+- **M9 debt** (finding 4) — sequence-check hardening, gate-alter, accumulation
+  threshold, literature-grounding pass — all in Milestone 9 as planned.
+- **M4/M5 re-test at larger N** with the revision loop + non-naive context —
+  folded into M7/M8, not a new milestone.
 
 ## Recently done
 
+- **MVP slice closed (M0–M5)** — first sequence rework written
+  (`40-roadmap/06-sequence-rework-01.md`): no reordering; post-MVP backlog
+  consolidated.
+- **M5 executed and closed** — `experiments/M5-intelligent-orchestration/`:
+  `orchestrator.py` (LLM loop over the M4 runtime, decision record per step),
+  `compare.py` (3 arms), `strategy_check.py`. 24 runs. Orchestrated 7/8 vs
+  monolith 6/8 vs fixed chain 5/8, win = adaptive retry, ~5× cost. Specs
+  `10-technical/08-orchestrator-contract.md`, `09-orchestrator-runtime-boundary.md`.
+  Findings-log entry 6. Design touch: `03-orchestrator.md`; spec `08` gained a
+  required stop-rationale and `declined` ≠ `blocked`. M2 hardened (`close()` no
+  longer re-reads `run.json`; `Run` tolerates a lost header).
 - **M4 executed and closed** — `experiments/M4-ephemeral-processors/`: processor
   runtime (`processor.py`) driving `qwen2.5-coder:7b` through the M3 floor and M2
   recorder; naive context assembler; fixed role library; 4-task synthetic fixture;

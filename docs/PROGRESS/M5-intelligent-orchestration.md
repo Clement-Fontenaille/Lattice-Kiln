@@ -4,7 +4,10 @@
 **Evidence question:** does natural-language orchestration beat a fixed workflow
 while staying understandable, and where does its overhead start to exceed the
 benefit of decomposition?
-**State:** decomposing — specs written
+**State:** COMPLETE (2026-08-31) — findings-log entry 6. Verdict **confirms,
+narrowly**: orchestrated 7/8 vs monolith 6/8 vs fixed chain 5/8, the win entirely
+from adaptive retry, at ~5× cost. MVP slice (M0–M5) closed;
+`40-roadmap/06-sequence-rework-01.md` written.
 
 ## What "done" looks like
 
@@ -43,12 +46,12 @@ scheduled sequence rework** — the batch review of findings-log entries 1–6.
 |---|---|---|---|
 | 1 | Orchestrator contract spec (`08`) | DONE | v0. Loop + decision record + stopping rules; mediation = route-output-as-input for the MVP. |
 | 2 | Orchestrator/runtime boundary spec (`09`) | DONE | v0. Crossings fixed; validation depth = 4 properties + gate, no semantic judgment; call order pinned. |
-| 3 | Orchestrator implementation | TODO | LLM loop over the M4 runtime. Decision record = type-4 effect per step. Stopping: objective met / repetition / R3 budget / no-useful-next-op. |
-| 4 | `orchestrated` harness arm | TODO | Third arm. Reviewer `needs-change` → new implementer invocation carrying the critique, bounded by the step budget. |
-| 5 | Comparison run | TODO | 3 arms × fixture tasks × N. All runs committed. |
-| 6 | Understandability check | TODO | Reconstruct the orchestrator's strategy (what it chose each step and why) from decision records alone. |
-| 7 | Findings-log entry 6 | TODO | Verdict on NL-orchestration vs fixed workflow; where overhead exceeds benefit. |
-| 8 | Trigger end-of-MVP sequence rework | TODO | Batch review of findings 1–6 → milestone-sequence revision (`00-project/04-execution-cadence.md`). |
+| 3 | Orchestrator implementation | DONE | `orchestrator.py` — `run_orchestrated()` loop over the M4 runtime; decision record (type-4) per step routed through the M3 floor; spawns via unmodified `run_processor`; stops on objective-met / repetition / step budget / no-useful-next-op; synthesis record on close. |
+| 4 | `orchestrated` harness arm | DONE | `compare.py` — third arm alongside M4's `monolith` and `ephemeral` (both reused verbatim). The orchestrator spawned a second implementer on tasks the first attempt failed (the M4-finding revision loop). |
+| 5 | Comparison run | DONE | 3 arms × 4 tasks × N=2 = 24 runs. `results/results.json` + `summary.md`. Orchestrated 7/8, monolith 6/8, fixed chain 5/8; ~5× calls, ~4.5× wall for orchestrated. |
+| 6 | Understandability check | DONE | `strategy_check.py` — every run's strategy (op per step + spawn rationale) reconstructs from decision records alone, matching the invocation lineage. Gap: 7/8 stop decisions carried no rationale. |
+| 7 | Findings-log entry 6 | DONE | Verdict **confirms, narrowly**. Overhead exceeds benefit on any task a single pass can solve; the +1/8 win is adaptive retry on the hard tasks. |
+| 8 | End-of-MVP sequence rework | DONE | `40-roadmap/06-sequence-rework-01.md` — no reordering; backlog consolidated; M4/M5 re-test folded into M7/M8. |
 
 ## Carried-in constraints
 

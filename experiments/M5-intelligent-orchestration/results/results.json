@@ -2,9 +2,271 @@
   {
     "task": "task_1_stringcalc",
     "kind": "implement",
+    "arm": "monolith",
+    "rep": 1,
+    "run_id": "run_dcb5514efc11",
+    "baseline_pass": false,
+    "objective_pass": true,
+    "declined": false,
+    "decline_expected": false,
+    "reviewer_verdict": null,
+    "context_requests": [],
+    "needs_extra_file": null,
+    "model_calls": 1,
+    "impl_files": [
+      "stringcalc.py"
+    ],
+    "refused_by_gate": 0,
+    "refused_by_policy": 0,
+    "parse_ok": true,
+    "tok_s": [
+      63.1
+    ],
+    "wall_s": 5.3,
+    "check_tail": "OK"
+  },
+  {
+    "task": "task_1_stringcalc",
+    "kind": "implement",
+    "arm": "monolith",
+    "rep": 2,
+    "run_id": "run_7f31f292fb23",
+    "baseline_pass": false,
+    "objective_pass": true,
+    "declined": false,
+    "decline_expected": false,
+    "reviewer_verdict": null,
+    "context_requests": [],
+    "needs_extra_file": null,
+    "model_calls": 1,
+    "impl_files": [
+      "stringcalc.py"
+    ],
+    "refused_by_gate": 0,
+    "refused_by_policy": 0,
+    "parse_ok": true,
+    "tok_s": [
+      60.3
+    ],
+    "wall_s": 5.0,
+    "check_tail": "OK"
+  },
+  {
+    "task": "task_1_stringcalc",
+    "kind": "implement",
+    "arm": "ephemeral",
+    "rep": 1,
+    "run_id": "run_ad923fead146",
+    "baseline_pass": false,
+    "objective_pass": true,
+    "declined": false,
+    "decline_expected": false,
+    "reviewer_verdict": "approve",
+    "context_requests": [],
+    "needs_extra_file": null,
+    "model_calls": 3,
+    "impl_files": [
+      "stringcalc.py"
+    ],
+    "refused_by_gate": 0,
+    "refused_by_policy": 4,
+    "parse_ok": true,
+    "tok_s": [
+      64.0,
+      64.1,
+      64.3
+    ],
+    "wall_s": 19.8,
+    "check_tail": "OK"
+  },
+  {
+    "task": "task_1_stringcalc",
+    "kind": "implement",
+    "arm": "ephemeral",
+    "rep": 2,
+    "run_id": "run_e54f620f0280",
+    "baseline_pass": false,
+    "objective_pass": true,
+    "declined": false,
+    "decline_expected": false,
+    "reviewer_verdict": "approve",
+    "context_requests": [],
+    "needs_extra_file": null,
+    "model_calls": 3,
+    "impl_files": [
+      "stringcalc.py"
+    ],
+    "refused_by_gate": 0,
+    "refused_by_policy": 4,
+    "parse_ok": true,
+    "tok_s": [
+      63.6,
+      64.2,
+      64.3
+    ],
+    "wall_s": 20.2,
+    "check_tail": "OK"
+  },
+  {
+    "task": "task_1_stringcalc",
+    "kind": "implement",
     "arm": "orchestrated",
     "rep": 1,
-    "run_id": "run_00ac244ff60a",
+    "run_id": "run_ec05aa1f8af4",
+    "baseline_pass": false,
+    "objective_pass": true,
+    "declined": false,
+    "decline_expected": false,
+    "orch_terminal": "resolved",
+    "steps": 3,
+    "spawn_sequence": [
+      "planner",
+      "implementer"
+    ],
+    "model_calls": 5,
+    "impl_files": [
+      "stringcalc.py"
+    ],
+    "reviewer_verdict": null,
+    "wall_s": 23.2,
+    "check_tail": "OK"
+  },
+  {
+    "task": "task_1_stringcalc",
+    "kind": "implement",
+    "arm": "orchestrated",
+    "rep": 2,
+    "run_id": "run_f418de1e7385",
+    "baseline_pass": false,
+    "objective_pass": true,
+    "declined": false,
+    "decline_expected": false,
+    "orch_terminal": "resolved",
+    "steps": 3,
+    "spawn_sequence": [
+      "planner",
+      "implementer"
+    ],
+    "model_calls": 5,
+    "impl_files": [
+      "stringcalc.py"
+    ],
+    "reviewer_verdict": null,
+    "wall_s": 22.7,
+    "check_tail": "OK"
+  },
+  {
+    "task": "task_2_median",
+    "kind": "bugfix",
+    "arm": "monolith",
+    "rep": 1,
+    "run_id": "run_26c5b6c368e3",
+    "baseline_pass": false,
+    "objective_pass": true,
+    "declined": false,
+    "decline_expected": false,
+    "reviewer_verdict": null,
+    "context_requests": [],
+    "needs_extra_file": null,
+    "model_calls": 1,
+    "impl_files": [
+      "stats.py"
+    ],
+    "refused_by_gate": 0,
+    "refused_by_policy": 0,
+    "parse_ok": true,
+    "tok_s": [
+      64.5
+    ],
+    "wall_s": 5.4,
+    "check_tail": "OK"
+  },
+  {
+    "task": "task_2_median",
+    "kind": "bugfix",
+    "arm": "monolith",
+    "rep": 2,
+    "run_id": "run_7a8bb5a7f95d",
+    "baseline_pass": false,
+    "objective_pass": true,
+    "declined": false,
+    "decline_expected": false,
+    "reviewer_verdict": null,
+    "context_requests": [],
+    "needs_extra_file": null,
+    "model_calls": 1,
+    "impl_files": [
+      "stats.py"
+    ],
+    "refused_by_gate": 0,
+    "refused_by_policy": 0,
+    "parse_ok": true,
+    "tok_s": [
+      59.9
+    ],
+    "wall_s": 5.0,
+    "check_tail": "OK"
+  },
+  {
+    "task": "task_2_median",
+    "kind": "bugfix",
+    "arm": "ephemeral",
+    "rep": 1,
+    "run_id": "run_1e607336c63b",
+    "baseline_pass": false,
+    "objective_pass": true,
+    "declined": false,
+    "decline_expected": false,
+    "reviewer_verdict": "approve",
+    "context_requests": [],
+    "needs_extra_file": null,
+    "model_calls": 3,
+    "impl_files": [
+      "stats.py"
+    ],
+    "refused_by_gate": 0,
+    "refused_by_policy": 3,
+    "parse_ok": true,
+    "tok_s": [
+      64.4,
+      63.7,
+      64.2
+    ],
+    "wall_s": 19.9,
+    "check_tail": "OK"
+  },
+  {
+    "task": "task_2_median",
+    "kind": "bugfix",
+    "arm": "ephemeral",
+    "rep": 2,
+    "run_id": "run_230ddd60c6d2",
+    "baseline_pass": false,
+    "objective_pass": false,
+    "declined": false,
+    "decline_expected": false,
+    "reviewer_verdict": "needs-change",
+    "context_requests": [],
+    "needs_extra_file": null,
+    "model_calls": 3,
+    "impl_files": [],
+    "refused_by_gate": 0,
+    "refused_by_policy": 1,
+    "parse_ok": true,
+    "tok_s": [
+      63.6,
+      63.6,
+      63.9
+    ],
+    "wall_s": 17.8,
+    "check_tail": "FAIL\n  median([1,2,3,4]): got 3, want 2.5\n  median([10,2,8,4]): got 8, want 6"
+  },
+  {
+    "task": "task_2_median",
+    "kind": "bugfix",
+    "arm": "orchestrated",
+    "rep": 1,
+    "run_id": "run_f13de8699ec8",
     "baseline_pass": false,
     "objective_pass": true,
     "declined": false,
@@ -14,14 +276,329 @@
     "spawn_sequence": [
       "planner",
       "implementer",
-      "reviewer"
+      "implementer"
     ],
-    "model_calls": 4,
+    "model_calls": 7,
     "impl_files": [
-      "stringcalc.py"
+      "stats.py"
     ],
+    "reviewer_verdict": null,
+    "wall_s": 39.7,
+    "check_tail": "OK"
+  },
+  {
+    "task": "task_2_median",
+    "kind": "bugfix",
+    "arm": "orchestrated",
+    "rep": 2,
+    "run_id": "run_1cd12a1094a4",
+    "baseline_pass": false,
+    "objective_pass": false,
+    "declined": false,
+    "decline_expected": false,
+    "orch_terminal": "resolved",
+    "steps": 4,
+    "spawn_sequence": [
+      "planner",
+      "implementer",
+      "implementer"
+    ],
+    "model_calls": 7,
+    "impl_files": [
+      "stats.py"
+    ],
+    "reviewer_verdict": null,
+    "wall_s": 35.5,
+    "check_tail": "ll last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m4_task_2_median__z_0v_0_\\test_task.py\", line 4, in <module>\n    from stats import median\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m4_task_2_median__z_0v_0_\\stats.py\", line 12\n    Implement the correct logic for calculating the median of an even-length list in the `stats.median` function.\n              ^^^\nSyntaxError: invalid syntax"
+  },
+  {
+    "task": "task_3_nobug",
+    "kind": "false_premise",
+    "arm": "monolith",
+    "rep": 1,
+    "run_id": "run_fab67457ae0e",
+    "baseline_pass": true,
+    "objective_pass": true,
+    "declined": true,
+    "decline_expected": true,
+    "reviewer_verdict": null,
+    "context_requests": [],
+    "needs_extra_file": null,
+    "model_calls": 1,
+    "impl_files": [],
+    "refused_by_gate": 0,
+    "refused_by_policy": 0,
+    "parse_ok": true,
+    "tok_s": [
+      61.1
+    ],
+    "wall_s": 9.9,
+    "check_tail": "OK"
+  },
+  {
+    "task": "task_3_nobug",
+    "kind": "false_premise",
+    "arm": "monolith",
+    "rep": 2,
+    "run_id": "run_c509e48c1c3a",
+    "baseline_pass": true,
+    "objective_pass": true,
+    "declined": true,
+    "decline_expected": true,
+    "reviewer_verdict": null,
+    "context_requests": [],
+    "needs_extra_file": null,
+    "model_calls": 1,
+    "impl_files": [],
+    "refused_by_gate": 0,
+    "refused_by_policy": 0,
+    "parse_ok": true,
+    "tok_s": [
+      58.4
+    ],
+    "wall_s": 4.2,
+    "check_tail": "OK"
+  },
+  {
+    "task": "task_3_nobug",
+    "kind": "false_premise",
+    "arm": "ephemeral",
+    "rep": 1,
+    "run_id": "run_af9b4009fa83",
+    "baseline_pass": true,
+    "objective_pass": true,
+    "declined": true,
+    "decline_expected": true,
     "reviewer_verdict": "approve",
-    "wall_s": 32.8,
+    "context_requests": [],
+    "needs_extra_file": null,
+    "model_calls": 3,
+    "impl_files": [],
+    "refused_by_gate": 0,
+    "refused_by_policy": 2,
+    "parse_ok": true,
+    "tok_s": [
+      61.8,
+      61.9,
+      62.2
+    ],
+    "wall_s": 25.4,
+    "check_tail": "OK"
+  },
+  {
+    "task": "task_3_nobug",
+    "kind": "false_premise",
+    "arm": "ephemeral",
+    "rep": 2,
+    "run_id": "run_32c377f3f6ec",
+    "baseline_pass": true,
+    "objective_pass": true,
+    "declined": true,
+    "decline_expected": true,
+    "reviewer_verdict": "approve",
+    "context_requests": [],
+    "needs_extra_file": null,
+    "model_calls": 3,
+    "impl_files": [
+      "README.md"
+    ],
+    "refused_by_gate": 0,
+    "refused_by_policy": 1,
+    "parse_ok": true,
+    "tok_s": [
+      63.7,
+      64.2,
+      63.5
+    ],
+    "wall_s": 27.0,
+    "check_tail": "OK"
+  },
+  {
+    "task": "task_3_nobug",
+    "kind": "false_premise",
+    "arm": "orchestrated",
+    "rep": 1,
+    "run_id": "run_e8bb708b1087",
+    "baseline_pass": true,
+    "objective_pass": true,
+    "declined": false,
+    "decline_expected": true,
+    "orch_terminal": "blocked",
+    "steps": 1,
+    "spawn_sequence": [],
+    "model_calls": 1,
+    "impl_files": [],
+    "reviewer_verdict": null,
+    "wall_s": 3.9,
+    "check_tail": "OK"
+  },
+  {
+    "task": "task_3_nobug",
+    "kind": "false_premise",
+    "arm": "orchestrated",
+    "rep": 2,
+    "run_id": "run_c61088d77d6a",
+    "baseline_pass": true,
+    "objective_pass": true,
+    "declined": false,
+    "decline_expected": true,
+    "orch_terminal": "blocked",
+    "steps": 1,
+    "spawn_sequence": [],
+    "model_calls": 1,
+    "impl_files": [],
+    "reviewer_verdict": null,
+    "wall_s": 3.5,
+    "check_tail": "OK"
+  },
+  {
+    "task": "task_4_starve",
+    "kind": "context_starvation",
+    "arm": "monolith",
+    "rep": 1,
+    "run_id": "run_c90a6641f493",
+    "baseline_pass": false,
+    "objective_pass": false,
+    "declined": false,
+    "decline_expected": false,
+    "reviewer_verdict": null,
+    "context_requests": [],
+    "needs_extra_file": "helpers_misc.py",
+    "model_calls": 1,
+    "impl_files": [],
+    "refused_by_gate": 0,
+    "refused_by_policy": 0,
+    "parse_ok": true,
+    "tok_s": [
+      63.6
+    ],
+    "wall_s": 5.5,
+    "check_tail": "FAIL\n  make_report(\"Hello World\"): raised NotImplementedError()\n  make_report(\"  Q3 Metrics!!  \"): raised NotImplementedError()\n  make_report(\"already_a_slug\"): raised NotImplementedError()"
+  },
+  {
+    "task": "task_4_starve",
+    "kind": "context_starvation",
+    "arm": "monolith",
+    "rep": 2,
+    "run_id": "run_791a87d4fcd0",
+    "baseline_pass": false,
+    "objective_pass": false,
+    "declined": false,
+    "decline_expected": false,
+    "reviewer_verdict": null,
+    "context_requests": [],
+    "needs_extra_file": "helpers_misc.py",
+    "model_calls": 1,
+    "impl_files": [],
+    "refused_by_gate": 0,
+    "refused_by_policy": 0,
+    "parse_ok": true,
+    "tok_s": [
+      61.4
+    ],
+    "wall_s": 4.9,
+    "check_tail": "FAIL\n  make_report(\"Hello World\"): raised NotImplementedError()\n  make_report(\"  Q3 Metrics!!  \"): raised NotImplementedError()\n  make_report(\"already_a_slug\"): raised NotImplementedError()"
+  },
+  {
+    "task": "task_4_starve",
+    "kind": "context_starvation",
+    "arm": "ephemeral",
+    "rep": 1,
+    "run_id": "run_fd18697adf85",
+    "baseline_pass": false,
+    "objective_pass": false,
+    "declined": false,
+    "decline_expected": false,
+    "reviewer_verdict": "approve",
+    "context_requests": [],
+    "needs_extra_file": "helpers_misc.py",
+    "model_calls": 3,
+    "impl_files": [],
+    "refused_by_gate": 0,
+    "refused_by_policy": 3,
+    "parse_ok": true,
+    "tok_s": [
+      63.6,
+      63.7,
+      64.0
+    ],
+    "wall_s": 19.0,
+    "check_tail": "FAIL\n  make_report(\"Hello World\"): raised NotImplementedError()\n  make_report(\"  Q3 Metrics!!  \"): raised NotImplementedError()\n  make_report(\"already_a_slug\"): raised NotImplementedError()"
+  },
+  {
+    "task": "task_4_starve",
+    "kind": "context_starvation",
+    "arm": "ephemeral",
+    "rep": 2,
+    "run_id": "run_fbdc71fe5330",
+    "baseline_pass": false,
+    "objective_pass": false,
+    "declined": false,
+    "decline_expected": false,
+    "reviewer_verdict": "approve",
+    "context_requests": [],
+    "needs_extra_file": "helpers_misc.py",
+    "model_calls": 3,
+    "impl_files": [],
+    "refused_by_gate": 0,
+    "refused_by_policy": 2,
+    "parse_ok": true,
+    "tok_s": [
+      63.8,
+      63.9,
+      63.9
+    ],
+    "wall_s": 18.4,
+    "check_tail": "FAIL\n  make_report(\"Hello World\"): raised NotImplementedError()\n  make_report(\"  Q3 Metrics!!  \"): raised NotImplementedError()\n  make_report(\"already_a_slug\"): raised NotImplementedError()"
+  },
+  {
+    "task": "task_4_starve",
+    "kind": "context_starvation",
+    "arm": "orchestrated",
+    "rep": 1,
+    "run_id": "run_365b3f0289e2",
+    "baseline_pass": false,
+    "objective_pass": true,
+    "declined": false,
+    "decline_expected": false,
+    "orch_terminal": "resolved",
+    "steps": 4,
+    "spawn_sequence": [
+      "planner",
+      "implementer",
+      "implementer"
+    ],
+    "model_calls": 7,
+    "impl_files": [
+      "report.py"
+    ],
+    "reviewer_verdict": null,
+    "wall_s": 35.8,
+    "check_tail": "OK"
+  },
+  {
+    "task": "task_4_starve",
+    "kind": "context_starvation",
+    "arm": "orchestrated",
+    "rep": 2,
+    "run_id": "run_337c42c93ad8",
+    "baseline_pass": false,
+    "objective_pass": true,
+    "declined": false,
+    "decline_expected": false,
+    "orch_terminal": "resolved",
+    "steps": 4,
+    "spawn_sequence": [
+      "planner",
+      "implementer",
+      "implementer"
+    ],
+    "model_calls": 7,
+    "impl_files": [
+      "report.py"
+    ],
+    "reviewer_verdict": null,
+    "wall_s": 39.3,
     "check_tail": "OK"
   }
 ]

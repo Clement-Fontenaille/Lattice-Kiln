@@ -352,3 +352,72 @@ plus better context — not the role split itself.
 `m4-tasks/0`), `harness.py`, `results/results.json` + `results/summary.md`,
 `reconstruction_check.py`; per-run records under `runs/` (schema `m2-run/0`,
 git-ignored; the 2026-08-30 N=2 set is the reference).
+
+### Entry 6 — Milestone 5: Intelligent orchestration experiments
+
+**Date:** 2026-08-31
+
+**Evidence question:** does natural-language orchestration beat a fixed workflow
+while staying understandable, and where does its overhead start to exceed the
+benefit of decomposition?
+
+**What the evidence said.**
+
+An LLM orchestrator (observe → decide the next operation → spawn a processor via
+the M4 runtime → integrate → stop; capability set `{6, 4}`; a decision record per
+step) was compared against the M4 fixed planner→implementer→reviewer chain and
+the monolith. Same 7B model, same naive context, same 4-task fixture, N=2, 24
+runs.
+
+- **Objective pass: orchestrated 7/8, monolith 6/8, fixed chain 5/8.** Across M4
+  and M5 this is the first arm to beat the monolith.
+- **The win is one task and it has a legible mechanism.** On `task_4_starve`
+  (context starvation — monolith 0/2, fixed chain 0/2) and `task_2_median`, the
+  orchestrator spawned a **second implementer** after the first attempt failed
+  the objective check — the reviewer→implementer revision loop that findings-log
+  entry 5 identified as the missing piece. `task_4` went 0/2 and 0/2 → **2/2**
+  under orchestration.
+- **Cost: ~5× the model calls (40 vs 8) and ~4.5× wall-clock** (25.5 s vs 5.7 s
+  mean). On the three tasks the monolith already one-shots, orchestration added
+  4–6 calls and 15–35 s for no net benefit. **Overhead exceeds benefit on any
+  task a single pass can solve; it pays off only where the simpler arms fail.**
+- **Understandable — with one gap.** `strategy_check.py` reconstructs every run's
+  strategy (which operation each step, and the rationale for every spawn) from
+  the decision records alone, consistent with the invocation lineage. But **7 of
+  8 stop decisions recorded no rationale**: the orchestrator explains why it
+  *acts*, not why it considers the work *done*.
+- **False-premise handling regressed.** The monolith and the fixed chain both
+  explicitly *declined* `task_3_nobug` ("the claimed bug does not exist"). The
+  orchestrator reached the right outcome (stopped, touched nothing, tests stayed
+  green) but via `terminal_state: blocked` ("no useful next step") — with a
+  correct rationale in one rep, none in the other. Its stopping rules do not
+  distinguish "this rests on a false premise" from "I am stuck".
+
+**Verdict: confirms, narrowly** (against "orchestration can compensate for model
+limits" / "natural-language orchestration beats a fixed workflow",
+`40-roadmap/03-research-and-evaluation-agenda.md`). NL orchestration beat both the
+fixed chain and the monolith; the margin is +1/8, within N=8 noise; and the gain
+is entirely explained by adaptive retry on tasks the other arms fail. It stays
+understandable for the acting half of the loop and is weak on the stopping half.
+The overhead is only justified when a single pass would fail.
+
+**Touches.**
+
+- Design: `20-cognitive-architecture/03-orchestrator.md` — record that adaptive
+  retry (routing a failed attempt back to a fresh implementer) is where
+  natural-language orchestration earned its overhead at this scale, and that
+  stopping / `declined` reasoning is the weak spot (the orchestrator conflates
+  "false premise" with "stuck").
+- Specification: `10-technical/08-orchestrator-contract.md` — the decision record
+  MUST carry a rationale for **stop** decisions, not only spawns (open contract →
+  normative); add an explicit `declined` terminal state distinct from `blocked`,
+  each with a required reason. `10-technical/02-observability-event-model.md` —
+  the decision record is another instance of the "structured outcome, not prose"
+  lesson from entry 3.
+- Milestone sequence: this closes the MVP slice (M0–M5). The first scheduled
+  rework follows — `40-roadmap/06-sequence-rework-01.md`.
+
+**Runs.** `experiments/M5-intelligent-orchestration/` — `orchestrator.py`,
+`compare.py`, `strategy_check.py`, `results/results.json` + `results/summary.md`;
+per-run records under `runs/` (schema `m2-run/0`, git-ignored; the 2026-08-31
+three-arm N=2 set is the reference).

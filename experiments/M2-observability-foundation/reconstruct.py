@@ -16,7 +16,12 @@ from typing import Any, Iterable
 class Run:
     def __init__(self, run_dir: str | Path):
         self.dir = Path(run_dir)
-        self.header = json.loads((self.dir / "run.json").read_text(encoding="utf-8"))
+        try:
+            self.header = json.loads((self.dir / "run.json").read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            # a lost/partial header is recoverable - the events are the record
+            self.header = {"run_id": self.dir.name, "meta": {}, "outcome": None,
+                           "header_recovered": True}
         self.events: list[dict[str, Any]] = []
         with open(self.dir / "events.jsonl", encoding="utf-8") as fh:
             for line in fh:

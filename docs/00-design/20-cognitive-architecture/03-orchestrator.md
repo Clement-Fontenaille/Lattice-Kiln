@@ -36,6 +36,29 @@ The orchestrator role is explicitly considered tunable system configuration.
 
 System-level feedback may later refine its instructions, capabilities, context policy, or coordination style.
 
+## First evidence (Milestone 5)
+
+A small experiment (findings-log entry 6) compared an LLM orchestrator against
+the Milestone 4 fixed planner→implementer→reviewer chain and a monolith, on a 7B
+model with naive context. The orchestrator scored 7/8 versus 6/8 (monolith) and
+5/8 (fixed chain) — the first arm to beat the monolith. The gain was entirely
+**adaptive retry**: on the tasks the other arms failed, the orchestrator spawned
+a second implementer after the first attempt missed the objective check. Cost was
+~5× the model calls and ~4.5× the wall-clock, so the overhead only paid off where
+a single pass would have failed.
+
+Two weaknesses showed up. The orchestrator's **stop decisions were
+under-explained** — it recorded why it acted at each step but usually not why it
+judged the work done. And it **conflated "the task rests on a false premise" with
+"I cannot find a next step"**: both resolved to a generic `blocked`, where the
+simpler arms explicitly *declined*. Understandability of the acting half of the
+loop held up; the stopping half did not.
+
 ## Open question
 
 The project has not yet determined whether one orchestrator is sufficient, whether orchestration can be delegated recursively, or whether multiple competing orchestrators should sometimes be compared.
+
+Milestone 5 adds: how should the orchestrator's stopping rules tell a principled
+stop (objective met; task refused on inspection) from an unprincipled one (stuck;
+budget hit), and does that distinction need to be a first-class terminal state
+rather than left to free-text rationale?

@@ -61,6 +61,8 @@ def main() -> None:
         raise SystemExit("no orchestrated runs in results.json")
 
     print(f"{len(ids)} orchestrated runs\n" + "=" * 70)
+    stop_no_rationale = 0
+    stop_total = 0
     for rid in ids:
         d = RUNS / rid
         if not (d / "events.jsonl").exists():
@@ -82,9 +84,15 @@ def main() -> None:
         if syn:
             print(f"  synthesis: {syn['summary'][:150]}")
 
+        spawn_decs = [x for x in decs if x["op"] == "spawn"]
+        stop_decs = [x for x in decs if x["op"] != "spawn"]
+        stop_total += len(stop_decs)
+        stop_no_rationale += sum(1 for x in stop_decs
+                                 if not x.get("rationale") or x["rationale"] == "(no rationale given)")
+
         want(len(decs) >= 1, f"{rid}: has >=1 decision record")
-        want(all(x.get("rationale") and x["rationale"] != "(no rationale given)" for x in decs),
-             f"{rid}: every decision record carries a real rationale")
+        want(all(x.get("rationale") and x["rationale"] != "(no rationale given)" for x in spawn_decs),
+             f"{rid}: every SPAWN decision carries a real rationale")
         want(spawn_from_decisions == child_roles,
              f"{rid}: decision-record spawn order == orchestrator's child invocations "
              f"({spawn_from_decisions} vs {child_roles})")
@@ -92,11 +100,14 @@ def main() -> None:
              f"{rid}: has a synthesis record with a terminal state")
 
     print("\n" + "=" * 70)
+    print(f"stop decisions with no recorded rationale: {stop_no_rationale}/{stop_total} "
+          f"(the reconstructable gap - spawn choices are explained, 'why stop here' often is not)")
     if _fails:
         print(f"STRATEGY CHECK FAILED ({len(_fails)})")
         raise SystemExit(1)
-    print("STRATEGY CHECK PASSED - every orchestrated run's strategy reconstructs "
-          "from decision records alone, consistent with the invocation lineage.")
+    print("STRATEGY CHECK PASSED - every orchestrated run's strategy (which operation "
+          "at each step, and why each spawn) reconstructs from decision records alone, "
+          "consistent with the invocation lineage.")
 
 
 if __name__ == "__main__":

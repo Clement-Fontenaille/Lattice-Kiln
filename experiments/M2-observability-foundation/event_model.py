@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
@@ -66,14 +67,23 @@ class RunRecorder:
         self.events_path = self.dir / "events.jsonl"
         self._seq = 0
         self._fh = open(self.events_path, "a", encoding="utf-8")
-        header = {
+        self._header = {
             "schema": SCHEMA_RUN,
             "run_id": self.run_id,
             "started": _now_iso(),
             "intent_text": intent_text,
             "meta": meta or {},
         }
-        (self.dir / "run.json").write_text(json.dumps(header, indent=2), encoding="utf-8")
+        self._write_header()
+
+    def _write_header(self) -> None:
+        try:
+            self.dir.mkdir(parents=True, exist_ok=True)
+            (self.dir / "run.json").write_text(json.dumps(self._header, indent=2), encoding="utf-8")
+        except OSError as e:
+            # the events.jsonl is the source of truth and is already durable;
+            # a lost header is recoverable (reconstruct.Run synthesises one).
+            print(f"WARN RunRecorder: could not write {self.dir/'run.json'}: {e}", file=sys.stderr)
 
     # -- low level ---------------------------------------------------------
     def _emit(self, kind: str, body: dict[str, Any]) -> dict[str, Any]:
@@ -196,11 +206,13 @@ class RunRecorder:
     def close(self, outcome: str = "completed") -> None:
         if not self._fh.closed:
             self._fh.close()
-        hdr = json.loads((self.dir / "run.json").read_text(encoding="utf-8"))
-        hdr["ended"] = _now_iso()
-        hdr["outcome"] = outcome
-        hdr["event_count"] = self._seq
-        (self.dir / "run.json").write_text(json.dumps(hdr, indent=2), encoding="utf-8")
+        # update the in-memory header and rewrite - no disk round-trip, so a
+        # missing/renamed run.json cannot lose a complete events.jsonl
+        # (M5 surfaced this: close() used to json.loads the file back).
+        self._header["ended"] = _now_iso()
+        self._header["outcome"] = outcome
+        self._header["event_count"] = self._seq
+        self._write_header()
 
     def __enter__(self) -> "RunRecorder":
         return self

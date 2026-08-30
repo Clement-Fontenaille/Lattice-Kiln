@@ -78,9 +78,19 @@ its own performance (higher-level evaluation, Milestone 10+).
 - A **decision record per loop step** (recorded as a type-4 work-record
   mutation): what was observed, which operation was chosen and a one-line
   natural-language rationale, and what the step is expected to produce. This is
-  what makes the strategy reconstructable and is mandatory.
-- A final **synthesis**: the outcome handed back, plus a terminal state —
-  `resolved` / `blocked` / `abandoned`.
+  what makes the strategy reconstructable and is mandatory. **A `stop` decision
+  MUST carry a rationale too** — M5 (findings-log entry 6) found stop decisions
+  were routinely recorded with none, leaving "why the orchestrator judged the
+  work done" unreconstructable.
+- A final **synthesis**: the outcome handed back, plus a terminal state:
+  - `resolved` — the objective was met;
+  - `declined` — the effort should not proceed (false premise, wrong problem,
+    already satisfied); distinct from `blocked` and MUST carry the reason;
+  - `blocked` — could not proceed (stuck, repetition, budget) — an *unprincipled*
+    stop, distinct from `declined`;
+  - `abandoned` — a spawned processor declined and the orchestrator concurred.
+  M5 found the orchestrator collapsing `declined` into `blocked`; keeping them
+  distinct is normative.
 
 ## Authority
 
