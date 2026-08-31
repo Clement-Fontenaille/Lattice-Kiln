@@ -1,0 +1,89 @@
+### PROBE multi_concern__one_concern_algo  (group=doer task=multi_concern framing=one_concern_algo)
+### note: wf6 concern 1 only
+### --- PROMPT ---
+You are an implementer. Make the smallest correct change that achieves the objective, then emit the changed file(s).
+
+# CONTEXT
+## repository files
+<<file: graphlib.py>>
+# TODO: implement topo_sort
+# TODO(2019): migrate this module to networkx
+# TODO: add type hints to build_graph
+
+
+def build_graph(edges):
+    # TODO: this loop is O(n^2), optimize it
+    graph = {}
+    for a, b in edges:
+        graph.setdefault(a, [])
+        graph.setdefault(b, [])
+        graph[a].append(b)
+    return graph
+
+
+def topo_sort(graph):
+    raise NotImplementedError
+
+
+# OBJECTIVE
+In graphlib.py, implement topo_sort(graph) to return a valid topological order and raise on a cycle. build_graph already works.
+
+OUTPUT FORMAT.
+For every file you create or change, emit one block with the WHOLE file:
+
+<<<FILE path=pkg/example.py>>>
+...entire new file content...
+<<<ENDFILE>>>
+
+Use the real path from the context. Then, as the very last thing, emit exactly
+one control block:
+
+<<<CONTROL>>>
+{"terminal_state": "answered" | "blocked" | "declined",
+ "summary": "one or two sentences on what you did or concluded",
+ "verdict": "approve" | "needs-change"}
+<<<ENDCONTROL>>>
+
+### --- RESPONSE (k=2) ---
+```python
+# graphlib.py
+
+def build_graph(edges):
+    # TODO: this loop is O(n^2), optimize it
+    graph = {}
+    for a, b in edges:
+        graph.setdefault(a, [])
+        graph.setdefault(b, [])
+        graph[a].append(b)
+    return graph
+
+
+def topo_sort(graph):
+    in_degree = {node: 0 for node in graph}
+    for node in graph:
+        for neighbor in graph[node]:
+            in_degree[neighbor] += 1
+
+    queue = [node for node in graph if in_degree[node] == 0]
+    topological_order = []
+
+    while queue:
+        node = queue.pop(0)
+        topological_order.append(node)
+
+        for neighbor in graph[node]:
+            in_degree[neighbor] -= 1
+            if in_degree[neighbor] == 0:
+                queue.append(neighbor)
+
+    if len(topological_order) != len(graph):
+        raise ValueError("Graph contains a cycle")
+
+    return topological_order
+```
+
+<<<CONTROL>>>
+{"terminal_state": "answered",
+ "summary": "Implemented topo_sort function to return a valid topological order and raise on a cycle.",
+ "verdict": "approve"}
+<<<ENDCONTROL>>>

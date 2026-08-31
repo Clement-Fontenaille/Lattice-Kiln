@@ -106,10 +106,19 @@ each — not a separate track.
   an orchestrator spawned the planner 4–6× consecutively. The tuned planner also
   over-returns `blocked` on ordinary "not built yet" objectives. Owner: whatever
   milestone next drives the orchestrator (M7/M8 re-test).
-- **Role-to-role handoff framing** (entry 6 addendum). A 7B implementer stops
-  emitting effects when its context carries conversational text (a plan, a
-  critique); prior-step output must be structured into the objective, not
-  appended as narration. Owner: `10-technical/07`, exercised at M7.
+- **Role-to-role handoff framing** (entry 6 addendum; refined by entry 7). A 7B
+  implementer stops emitting effects when its context carries *unlabelled*
+  conversational text; a plan or critique in a **named, structured section** is
+  tolerated (census). Prior-step output must be structured, not appended as raw
+  narration. Owner: `10-technical/07`, exercised at M7.
+- **Second judgment source** (entry 7). No 7B reviewer framing — neutral,
+  adversarial, structured, or voted — beats "assert the property and approve";
+  the deterministic gate + run-the-test scores 9/10 where a test exists, the 7B
+  panel drags it to 6/10. The self-improving tier's evaluation edge therefore
+  needs a human, an automated check, or a stronger/reasoning reviewer model — the
+  last enabled by the planned second GPU. This moves the second-GPU path from
+  "nice to have" to the gating dependency for tier 2. Owner: the goal
+  re-evaluation, then M8/M10.
 - **Editor-agent frontend choice** (entry 2). Cline stays for the MVP; weigh a
   documented `config.yaml`-first alternative at the rework. Owner: bootstrapper
   design.

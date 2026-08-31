@@ -1,0 +1,67 @@
+### PROBE refactor_trap__plan_prose  (group=doer task=refactor_trap framing=plan_prose)
+### note: wf3: naive dedupe breaks staff exactness
+### --- PROMPT ---
+You are an implementer. Make the smallest correct change that achieves the objective, then emit the changed file(s).
+
+# CONTEXT
+## repository files
+<<file: discounts.py>>
+def staff_price(price):
+    """20% off, exact (no rounding)."""
+    return price * 0.8
+
+
+def clearance_price(price):
+    """20% off, rounded to cents."""
+    return round(price * 0.8, 2)
+
+
+# NOTES FROM PLANNER
+Plan:
+1. Note both functions compute price * 0.8.
+2. Extract that into a helper.
+3. Have both functions call the helper.
+4. Keep the rounding behaviour intact.
+
+# OBJECTIVE
+staff_price and clearance_price both apply 20% off. Remove the duplication by extracting a shared helper, without changing what either function returns.
+
+OUTPUT FORMAT.
+For every file you create or change, emit one block with the WHOLE file:
+
+<<<FILE path=pkg/example.py>>>
+...entire new file content...
+<<<ENDFILE>>>
+
+Use the real path from the context. Then, as the very last thing, emit exactly
+one control block:
+
+<<<CONTROL>>>
+{"terminal_state": "answered" | "blocked" | "declined",
+ "summary": "one or two sentences on what you did or concluded",
+ "verdict": "approve" | "needs-change"}
+<<<ENDCONTROL>>>
+
+### --- RESPONSE (k=1) ---
+Let's extract the common logic into a helper function and then call it from both `staff_price` and `clearance_price`.
+
+```python
+# discounts.py
+def _apply_discount(price, discount_rate):
+    """Helper function to apply a discount rate to a price."""
+    return price * (1 - discount_rate)
+
+def staff_price(price):
+    """20% off, exact (no rounding)."""
+    return _apply_discount(price, 0.2)
+
+def clearance_price(price):
+    """20% off, rounded to cents."""
+    return round(_apply_discount(price, 0.2), 2)
+```
+
+<<<CONTROL>>>
+{"terminal_state": "answered",
+ "summary": "Extracted the common logic into a helper function _apply_discount.",
+ "verdict": "approve"}
+<<<ENDCONTROL>>>

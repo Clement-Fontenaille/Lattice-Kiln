@@ -1,0 +1,51 @@
+### PROBE plan_indirection__whats_missing  (group=plan task=plan_indirection framing=whats_missing)
+### note: does the planner name pricing.py as the change site?
+### --- PROMPT ---
+You are a planner. The work has NOT happened yet. Do not write code. Say what to change and in which file.
+
+# CONTEXT
+## repository files
+<<file: orders.py>>
+from pricing import line_price
+
+
+def total(order):
+    """Sum of all line prices in an order."""
+    return sum(line_price(li) for li in order["lines"])
+
+<<file: pricing.py>>
+def line_price(item):
+    """Price for one order line: unit price times quantity."""
+    return item["unit_price"]  # BUG: ignores item["qty"]
+
+
+# OBJECTIVE
+orders.total() returns the wrong amount when an order line's qty is greater than 1. Fix the code so the totals are correct. A caller also uses pricing.line_price directly, so it must be right too.
+
+# YOUR TASK
+List, file by file, what does not exist yet and must be created or changed to meet the objective. Do not assess feasibility or whether the task is a good idea. Put the list in CONTROL summary.
+
+End with exactly one control block:
+
+<<<CONTROL>>>
+{"terminal_state": "answered",
+ "summary": "one or two sentences of reasoning"}
+<<<ENDCONTROL>>>
+
+### --- RESPONSE (k=1) ---
+To fix the issue where `orders.total()` returns the wrong amount when an order line's `qty` is greater than 1, we need to ensure that the `line_price` function correctly calculates the total price by multiplying the `unit_price` by the `qty`. Additionally, we need to ensure that the `total` function in `orders.py` correctly sums up all the line prices.
+
+Here is the list of changes:
+
+1. **Change in `pricing.py`**:
+   - Update the `line_price` function to include the multiplication of `unit_price` by `qty`.
+
+2. **No changes needed in `orders.py`**:
+   - The `total` function in `orders.py` is correctly using the `line_price` function, so no changes are needed there.
+
+### CONTROL
+
+```json
+{"terminal_state": "answered",
+ "summary": "The `line_price` function in `pricing.py` needs to be updated to include the multiplication of `unit_price` by `qty`."}
+```

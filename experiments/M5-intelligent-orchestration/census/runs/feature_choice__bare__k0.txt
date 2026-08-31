@@ -1,0 +1,61 @@
+### PROBE feature_choice__bare  (group=doer task=feature_choice framing=bare)
+### note: wf2: add retries=, re-raise last, retries=0 = one attempt
+### --- PROMPT ---
+You are an implementer. Make the smallest correct change that achieves the objective, then emit the changed file(s).
+
+# CONTEXT
+## repository files
+<<file: client.py>>
+class Client:
+    def __init__(self):
+        self.calls = 0
+
+    def call(self, fn):
+        """Invoke fn() once and return its result."""
+        self.calls += 1
+        return fn()
+
+
+# OBJECTIVE
+Add a retries parameter to Client.call(fn, retries=2): if fn() raises, retry up to `retries` more times; if every attempt fails, re-raise the LAST exception. retries=0 means a single attempt.
+
+OUTPUT FORMAT.
+For every file you create or change, emit one block with the WHOLE file:
+
+<<<FILE path=pkg/example.py>>>
+...entire new file content...
+<<<ENDFILE>>>
+
+Use the real path from the context. Then, as the very last thing, emit exactly
+one control block:
+
+<<<CONTROL>>>
+{"terminal_state": "answered" | "blocked" | "declined",
+ "summary": "one or two sentences on what you did or concluded",
+ "verdict": "approve" | "needs-change"}
+<<<ENDCONTROL>>>
+
+### --- RESPONSE (k=0) ---
+```python
+# client.py
+class Client:
+    def __init__(self):
+        self.calls = 0
+
+    def call(self, fn, retries=2):
+        """Invoke fn() once and return its result. If fn() raises, retry up to `retries` more times; if every attempt fails, re-raise the LAST exception. retries=0 means a single attempt."""
+        attempt = 0
+        while attempt <= retries:
+            try:
+                return fn()
+            except Exception as e:
+                attempt += 1
+                if attempt > retries:
+                    raise e
+```
+
+<<<CONTROL>>>
+{"terminal_state": "answered",
+ "summary": "Added `retries` parameter to `Client.call` method to handle retries when `fn` raises an exception.",
+ "verdict": "approve"}
+<<<ENDCONTROL>>>

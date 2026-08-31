@@ -504,3 +504,102 @@ on pass, 83% vs 87% on subtests). At 7B/N=3, per-cell score noise is large
 `roles_v2.py`, `fixture_workflow/` (schema `m5-workflow-tasks/0`),
 `results_workflow/results.json` + `summary.md`; per-run records under `runs/`
 (git-ignored; the 2026-08-31 three-arm N=3 set is the reference).
+
+### Entry 7 — M5 follow-up: attractor census + judge-lab
+
+**Date:** 2026-09-01
+
+**Evidence question (self-set, feeding the goal re-evaluation):** the static role
+system is weak at 7B — before deciding what waits on better hardware, can it be
+*tuned* to useful output? Specifically: where does the 7B reliably go for each
+role-relevant task shape (so a role can be pointed with the current, not against
+it), and can the judgment step be rescued by voting, per-clause structure, or
+execution grounding?
+
+**What the evidence said.**
+
+Two wide first-pass experiments on the M0 working default
+(`qwen2.5-coder:7b-instruct-q4_K_M`).
+
+*Attractor census* (`experiments/M5-intelligent-orchestration/census/`, 39 probes
+× K=3 = 117 calls): task shape × framing, scoring the *motion* not correctness.
+
+- **Doer — "emit the whole corrected file" is a strong, correct current.** On the
+  cross-file bug (symptom in one file, cause in another) all bare samples fixed
+  the right file with the right logic; cross-file indirection did not break it.
+  A plan or critique in a *named, structured* section did not suppress file
+  emission (partial walk-back of entry 6's "any conversational context degrades
+  the 7B implementer" — that effect was specific to unlabelled mid-context
+  injection).
+- **Doer — one clean blind spot: false premises.** "Rewrite `find()` to O(log n)"
+  on unsorted data: 3/3 implemented binary search, 0/3 noticed the precondition.
+  It executes the objective's surface and never tests its premise.
+- **Doer — multi-concern overloads it** (1/3 kept all three concerns of wf6) and
+  it is blind to concerns it was not handed (single-concern passes echo the other
+  concerns' stale state back unchanged).
+- **Judge — no framing fixes it.** A shared-helper dedupe that silently rounds
+  (`staff_price(1.567)`: 1.2536 → 1.25, a real regression) was approved 3/3 under
+  every framing: `is_correct`, `predict_failure` (output: `PASS`),
+  `strongest_reason`, and `criteria_first` — the last **actively harmful**: it
+  reverse-engineered its acceptance criteria from the buggy code's own docstring,
+  then declared them met, and separately false-rejected a *correct* simple fix
+  2/3. The judge is not noisy; it is **systematically biased toward approval** and
+  asserts the property it was asked to verify.
+- **The planner stance engages the critical read the implementer suppresses** —
+  same model, same task: 2/3 flag the false premise (vs implementer 0/3), 3/3
+  keep all three wf6 concerns (vs implementer 1/3).
+
+*Judge-lab* (`experiments/M5-intelligent-orchestration/judge_lab/`, 10 known
+-truth scenarios × 4 pipelines): baseline reviewer / K=5 vote / deterministic
+prechecks + model checklist + per-clause panel without the test / same with the
+real test output.
+
+- **baseline 4/10, vote 4/10 (verdict-identical on all 10 rows), ground_notest
+  3/10, ground 6/10 (+2 escalate).**
+- **Voting is dead** — errors are systematic, not zero-mean; K=5 at higher
+  temperature changed no verdict.
+- **The deterministic core alone — parse / import / claim-vs-diff / trust the
+  `test_task.py` result — scores 9/10 with zero model calls.** Adding the 7B
+  checklist+panel *drops* it to 6/10: the checklist codifies false premises as
+  requirements (rejects the correct wf4 linear scan despite a 5/5 test), and the
+  panel emits confident-wrong `not_met` on correct code (miscounts `range(0+1)`).
+- The panel's one real use: given a *known* failing test line it writes a
+  correct, cited explanation — a reporting aid, not a decision aid.
+
+**Verdict: confirms** (the post-MVP recalibration in
+`40-roadmap/06-sequence-rework-01.md`, and against "orchestration/decomposition
+can compensate for model limits",
+`40-roadmap/03-research-and-evaluation-agenda.md`). A 7B does the *doing* with
+scaffolding and **cannot do the *judging*, and the gap is not a prompt away** —
+neutral, adversarial, structured, and voted framings all fail the same way, and
+per-clause structure without execution grounding makes it worse. The one lever
+that works is running the test and trusting it; the model near the judgment seat
+is limited to explaining a known failure. Premise-soundness is a planner-pass
+concern. This sharpens rather than changes the recalibration: the self-improving
+loop waits on a **second judgment source** — a stronger/reasoning model as
+reviewer (enabled by the planned second GPU) or the model tier improving — not on
+further prompt tuning of the 7B reviewer.
+
+**Touches.**
+
+- Design: `20-cognitive-architecture/02-processors.md` — record that role
+  differentiation on a 7B works for producing (implementer) and for critical
+  analysis under a *planning* framing, but not for verdict-style review;
+  `20-cognitive-architecture/03-orchestrator.md` — a feedback loop's evaluation
+  edge cannot be a same-model reviewer verdict on this hardware.
+- Specification open contracts: `10-technical/07-naive-context-assembly.md` — the
+  "prior-step handoff framing" contract gains detail (a plan in a *named section*
+  is tolerated; unlabelled prose is not); `10-technical/08-orchestrator-contract.md`
+  — a `declined` outcome for a false premise should be reachable from a planner
+  pass, not expected from the implementer or a reviewer; add that automated-check
+  results, where they exist, outrank any model verdict.
+- Milestone sequence: no reordering. Directly feeds the **goal re-evaluation**
+  (the next task): the M6–M8 "promising signal on 7B" bars in
+  `06-sequence-rework-01.md` should treat the judgment step as human-or-stronger
+  -model, not a 7B self-review, and the second-GPU / reasoning-reviewer path moves
+  from "nice to have" toward "the gating dependency for the self-improving tier".
+
+**Runs.** `experiments/M5-intelligent-orchestration/census/` (`probes.py`,
+`run_census.py`, `summary.md`, `FINDINGS.md`, `runs/` transcripts) and
+`.../judge_lab/` (`scenarios.py`, `lab.py`, `results.md`, `FINDINGS.md`, `runs/`
+detail). Single-host, single 7B, 2026-09-01.

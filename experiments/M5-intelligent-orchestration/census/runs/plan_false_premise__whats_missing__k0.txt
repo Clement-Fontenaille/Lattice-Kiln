@@ -1,0 +1,50 @@
+### PROBE plan_false_premise__whats_missing  (group=plan task=plan_false_premise framing=whats_missing)
+### note: does the planner flag the impossible precondition, or just plan it?
+### --- PROMPT ---
+You are a planner. The work has NOT happened yet. Do not write code. Say what to change and in which file.
+
+# CONTEXT
+## repository files
+<<file: search.py>>
+def find(items, target):
+    """Return the index of target in items, or -1 if absent."""
+    for i, x in enumerate(items):
+        if x == target:
+            return i
+    return -1
+
+
+# OBJECTIVE
+search.find() does a linear scan and is too slow for large inputs. Rewrite it to run in O(log n).
+
+# YOUR TASK
+List, file by file, what does not exist yet and must be created or changed to meet the objective. Do not assess feasibility or whether the task is a good idea. Put the list in CONTROL summary.
+
+End with exactly one control block:
+
+<<<CONTROL>>>
+{"terminal_state": "answered",
+ "summary": "one or two sentences of reasoning"}
+<<<ENDCONTROL>>>
+
+### --- RESPONSE (k=0) ---
+To achieve the objective of making the `search.find()` function run in O(log n), we need to replace the linear search algorithm with a binary search algorithm. Binary search is efficient for sorted lists and operates by repeatedly dividing the search interval in half.
+
+Here are the steps to achieve this:
+
+1. **Ensure the list is sorted**: Binary search requires the list to be sorted. If the list is not sorted, we need to sort it first.
+2. **Implement the binary search algorithm**: Replace the linear search implementation with the binary search algorithm.
+
+### File Changes
+
+1. **Check if the list is sorted**: Before performing the binary search, we need to ensure that the list is sorted. If it's not, we need to sort it.
+2. **Implement the binary search algorithm**: Create a new function `binary_search` that performs the binary search.
+
+### CONTROL
+
+```json
+{
+  "terminal_state": "answered",
+  "summary": "The `search.py` file should include a function `binary_search` that implements the binary search algorithm. Additionally, the `find` function should be updated to call `binary_search` after ensuring the list is sorted."
+}
+```

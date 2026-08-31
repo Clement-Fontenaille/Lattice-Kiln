@@ -54,8 +54,11 @@ MVP slice closed. **Before M6 executes**: a deeper re-evaluation of achievable
 goals (`40-roadmap/06-sequence-rework-01.md` → "Next"). It restates, per adaptive
 milestone M6–M14, what "success on constrained hardware today" looks like versus
 what waits on better models/hardware, in light of the evaluation-ceiling finding
-(a 7B does the *doing* acceptably but not the *judging* — findings-log entry 6
-addendum). Objectives and mantra unchanged; expected benefit recalibrated down;
+(a 7B does the *doing* acceptably but not the *judging* — findings-log entries 6
+addendum and **7**). Entry 7 (attractor census + judge-lab) is direct input: the
+judgment step must be treated as human-or-stronger-model, not a 7B self-review;
+premise-soundness belongs in a planner pass; the second-GPU / reasoning-reviewer
+path is now the gating dependency for the self-improving tier, not a nice-to-have. Objectives and mantra unchanged; expected benefit recalibrated down;
 "promising signal on 7B" is a legitimate milestone outcome.
 
 Then M6 — durable structure (intent, work, observations, evidence, findings,
@@ -92,6 +95,19 @@ Scheduled by the milestone that needs each, not a separate track:
 
 ## Recently done
 
+- **M5 follow-up: attractor census + judge-lab** (findings-log entry 7).
+  `experiments/M5-intelligent-orchestration/census/` (39 probes × K=3) and
+  `.../judge_lab/` (10 known-truth scenarios × 4 review pipelines). Findings: the
+  doer's "emit the whole corrected file" current is reliable (cross-file
+  indirection does not break it); its one clean blind spot is false premises
+  (3/3 implement an impossible O(log n), 0/3 flag it); **no reviewer framing —
+  neutral, adversarial, structured, or K=5 voted — lifts the 7B judge above
+  "assert the property and approve"**, and `criteria_first` is actively harmful.
+  A deterministic gate (parse / import / claim-vs-diff / trust the test) scores
+  9/10 alone; adding the 7B panel drops it to 6/10. The planner stance is the
+  only place the model's critical read is live (2/3 catch the false premise).
+  Consequence: judgment seat on 7B = deterministic checks + run-the-test +
+  escalate; model is a failure-explainer only.
 - **Expectation recalibration recorded** (`06-sequence-rework-01.md` →
   "Recalibrated expectations"). MVP evidence: a 7B does the doing acceptably with
   scaffolding, not the judging — a feedback loop's evaluation is not above noise

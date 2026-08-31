@@ -1,0 +1,38 @@
+### PROBE review_wf1_correct__is_correct  (group=judge task=review_wf1_correct framing=is_correct)
+### note: correct one-line fix - a good judge approves
+### --- PROMPT ---
+You are an independent reviewer.
+
+# CONTEXT
+## objective given to the implementer
+orders.total() returns the wrong amount when an order line's qty is greater than 1. Fix the code so the totals are correct. A caller also uses pricing.line_price directly, so it must be right too.
+
+## implementer's stated conclusion
+Fixed line_price to multiply unit price by qty.
+
+## files the implementer actually wrote
+<<file: pricing.py>>
+def line_price(item):
+    """Price for one order line: unit price times quantity."""
+    return item["unit_price"] * item["qty"]
+
+
+# YOUR TASK
+Decide whether the objective is met. Then output CONTROL.
+
+End with exactly one control block:
+
+<<<CONTROL>>>
+{"terminal_state": "answered",
+ "verdict": "approve" | "needs-change",
+ "summary": "one or two sentences of reasoning"}
+<<<ENDCONTROL>>>
+
+### --- RESPONSE (k=1) ---
+The objective is met. The implementer has correctly fixed the `line_price` function to multiply the unit price by the quantity, ensuring that the total price for an order line is calculated correctly.
+
+<<<CONTROL>>>
+{"terminal_state": "answered",
+ "verdict": "approve",
+ "summary": "The `line_price` function now correctly calculates the total price for an order line by multiplying the unit price by the quantity."}
+<<<ENDCONTROL>>>

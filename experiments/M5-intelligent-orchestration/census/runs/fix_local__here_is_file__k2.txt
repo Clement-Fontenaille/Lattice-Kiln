@@ -1,0 +1,56 @@
+### PROBE fix_local__here_is_file  (group=doer task=fix_local framing=here_is_file)
+### note: wf1 pricing-only, cause is named in the objective
+### --- PROMPT ---
+You are an implementer. Make the smallest correct change that achieves the objective, then emit the changed file(s).
+
+# CONTEXT
+## repository files
+<<file: pricing.py>>
+def line_price(item):
+    """Price for one order line: unit price times quantity."""
+    return item["unit_price"]  # BUG: ignores item["qty"]
+
+
+# OBJECTIVE
+pricing.line_price ignores item['qty'] - it should return unit price times quantity. Fix it.
+
+Here is the current content of pricing.py, verbatim between markers. Return the whole file, changed only where the objective requires.
+
+<<<FILE path=pricing.py>>>
+def line_price(item):
+    """Price for one order line: unit price times quantity."""
+    return item["unit_price"]  # BUG: ignores item["qty"]
+<<<ENDFILE>>>
+
+Now emit the corrected <<<FILE path=pricing.py>>> block, then CONTROL.
+
+OUTPUT FORMAT.
+For every file you create or change, emit one block with the WHOLE file:
+
+<<<FILE path=pkg/example.py>>>
+...entire new file content...
+<<<ENDFILE>>>
+
+Use the real path from the context. Then, as the very last thing, emit exactly
+one control block:
+
+<<<CONTROL>>>
+{"terminal_state": "answered" | "blocked" | "declined",
+ "summary": "one or two sentences on what you did or concluded",
+ "verdict": "approve" | "needs-change"}
+<<<ENDCONTROL>>>
+
+### --- RESPONSE (k=2) ---
+```python
+<<<FILE path=pricing.py>>>
+def line_price(item):
+    """Price for one order line: unit price times quantity."""
+    return item["unit_price"] * item["qty"]
+<<<ENDFILE>>>
+
+<<<CONTROL>>>
+{"terminal_state": "answered",
+ "summary": "The function now correctly calculates the line price by multiplying the unit price by the quantity.",
+ "verdict": "approve"}
+<<<ENDCONTROL>>>
+```

@@ -1,0 +1,52 @@
+### PROBE plan_multi__whats_missing  (group=plan task=plan_multi framing=whats_missing)
+### note: does the planner keep all three concerns?
+### --- PROMPT ---
+You are a planner. The work has NOT happened yet. Do not write code. Say what to change and in which file.
+
+# CONTEXT
+## repository files
+<<file: graphlib.py>>
+# TODO: implement topo_sort
+# TODO(2019): migrate this module to networkx
+# TODO: add type hints to build_graph
+
+
+def build_graph(edges):
+    # TODO: this loop is O(n^2), optimize it
+    graph = {}
+    for a, b in edges:
+        graph.setdefault(a, [])
+        graph.setdefault(b, [])
+        graph[a].append(b)
+    return graph
+
+
+def topo_sort(graph):
+    raise NotImplementedError
+
+
+# OBJECTIVE
+In graphlib.py: (1) implement topo_sort(graph) to return a valid topological order and raise on a cycle; (2) add a module docstring and Args:/Returns:[/Raises:] docstrings to both functions, and create NOTES.md explaining the cycle handling; (3) resolve the 'implement topo_sort' TODO and delete the stale 'TODO(2019): migrate to networkx' and the wrong 'O(n^2)' comment.
+
+# YOUR TASK
+List, file by file, what does not exist yet and must be created or changed to meet the objective. Do not assess feasibility or whether the task is a good idea. Put the list in CONTROL summary.
+
+End with exactly one control block:
+
+<<<CONTROL>>>
+{"terminal_state": "answered",
+ "summary": "one or two sentences of reasoning"}
+<<<ENDCONTROL>>>
+
+### --- RESPONSE (k=1) ---
+# CONTROL
+
+## Files to change:
+
+1. **graphlib.py**:
+   - Implement the `topo_sort(graph)` function to return a valid topological order and raise on a cycle.
+   - Add a module docstring and Args:/Returns:[/Raises:] docstrings to both functions.
+   - Create a `NOTES.md` file to explain the cycle handling.
+
+## Reasoning
+The objective requires the implementation of a topological sorting algorithm in the `graphlib.py` file. Additionally, documentation and a `NOTES.md` file need to be created to provide clarity on the cycle handling mechanism.

@@ -1,0 +1,43 @@
+### PROBE plan_false_premise__whats_missing  (group=plan task=plan_false_premise framing=whats_missing)
+### note: does the planner flag the impossible precondition, or just plan it?
+### --- PROMPT ---
+You are a planner. The work has NOT happened yet. Do not write code. Say what to change and in which file.
+
+# CONTEXT
+## repository files
+<<file: search.py>>
+def find(items, target):
+    """Return the index of target in items, or -1 if absent."""
+    for i, x in enumerate(items):
+        if x == target:
+            return i
+    return -1
+
+
+# OBJECTIVE
+search.find() does a linear scan and is too slow for large inputs. Rewrite it to run in O(log n).
+
+# YOUR TASK
+List, file by file, what does not exist yet and must be created or changed to meet the objective. Do not assess feasibility or whether the task is a good idea. Put the list in CONTROL summary.
+
+End with exactly one control block:
+
+<<<CONTROL>>>
+{"terminal_state": "answered",
+ "summary": "one or two sentences of reasoning"}
+<<<ENDCONTROL>>>
+
+### --- RESPONSE (k=1) ---
+To meet the objective of making `search.find()` run in O(log n), we need to implement a binary search algorithm. Binary search is efficient for sorted lists and operates by repeatedly dividing the search interval in half.
+
+Here is the list of changes and files that need to be updated:
+
+1. **File:** `search.py`
+   - **Change:** Replace the existing `find` function with a binary search implementation.
+   - **Reasoning:** Binary search will allow the function to find the target in O(log n) time, provided the list is sorted.
+
+### CONTROL
+```json
+{"terminal_state": "answered",
+ "summary": "The `search.py` file must be updated with a binary search implementation to meet the objective of running in O(log n)."}
+```

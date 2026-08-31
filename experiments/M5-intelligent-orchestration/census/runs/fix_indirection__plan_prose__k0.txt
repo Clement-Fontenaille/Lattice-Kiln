@@ -1,0 +1,66 @@
+### PROBE fix_indirection__plan_prose  (group=doer task=fix_indirection framing=plan_prose)
+### note: wf1: symptom in orders.py, cause in pricing.line_price
+### --- PROMPT ---
+You are an implementer. Make the smallest correct change that achieves the objective, then emit the changed file(s).
+
+# CONTEXT
+## repository files
+<<file: orders.py>>
+from pricing import line_price
+
+
+def total(order):
+    """Sum of all line prices in an order."""
+    return sum(line_price(li) for li in order["lines"])
+
+<<file: pricing.py>>
+def line_price(item):
+    """Price for one order line: unit price times quantity."""
+    return item["unit_price"]  # BUG: ignores item["qty"]
+
+
+# NOTES FROM PLANNER
+Plan:
+1. Open orders.py and trace how total() computes a line's price.
+2. Follow line_price into pricing.py.
+3. The multiplication by qty is missing there; add it.
+4. Re-check that total() then sums correctly.
+
+# OBJECTIVE
+orders.total() returns the wrong amount when an order line's qty is greater than 1. Fix the code so the totals are correct. A caller also uses pricing.line_price directly, so it must be right too.
+
+OUTPUT FORMAT.
+For every file you create or change, emit one block with the WHOLE file:
+
+<<<FILE path=pkg/example.py>>>
+...entire new file content...
+<<<ENDFILE>>>
+
+Use the real path from the context. Then, as the very last thing, emit exactly
+one control block:
+
+<<<CONTROL>>>
+{"terminal_state": "answered" | "blocked" | "declined",
+ "summary": "one or two sentences on what you did or concluded",
+ "verdict": "approve" | "needs-change"}
+<<<ENDCONTROL>>>
+
+### --- RESPONSE (k=0) ---
+```python
+# FILE path=pkg/pricing.py
+def line_price(item):
+    """Price for one order line: unit price times quantity."""
+    return item["unit_price"] * item["qty"]  # Fixed: multiply by item["qty"]
+
+# FILE path=pkg/orders.py
+from pricing import line_price
+
+def total(order):
+    """Sum of all line prices in an order."""
+    return sum(line_price(li) for li in order["lines"])
+
+# CONTROL
+{"terminal_state": "answered",
+ "summary": "Fixed the line_price function to multiply the unit price by the quantity.",
+ "verdict": "approve"}
+```
