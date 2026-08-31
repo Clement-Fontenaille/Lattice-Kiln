@@ -101,6 +101,15 @@ each — not a separate track.
 - **Orchestrator stopping semantics** (entry 6). `declined` distinct from
   `blocked`, each with a required reason; a rationale required on stop decisions.
   In spec `08` now; validate at the M4/M5 re-test.
+- **Repetition stopping rule + planner over-blocking** (entry 6 addendum). Spec
+  `08` requires a repetition stop; `run_orchestrated` does not implement it, and
+  an orchestrator spawned the planner 4–6× consecutively. The tuned planner also
+  over-returns `blocked` on ordinary "not built yet" objectives. Owner: whatever
+  milestone next drives the orchestrator (M7/M8 re-test).
+- **Role-to-role handoff framing** (entry 6 addendum). A 7B implementer stops
+  emitting effects when its context carries conversational text (a plan, a
+  critique); prior-step output must be structured into the objective, not
+  appended as narration. Owner: `10-technical/07`, exercised at M7.
 - **Editor-agent frontend choice** (entry 2). Cline stays for the MVP; weigh a
   documented `config.yaml`-first alternative at the rework. Owner: bootstrapper
   design.
@@ -112,9 +121,60 @@ each — not a separate track.
 - The MVP definition, the milestone motivations, the invariant layer's content
   and the gate's determinism, the reasoning/runtime split, the just-in-time
   specification rule. None of the findings touched a foundational constraint.
+- The project objectives and mantra. The constrained-intelligence thesis and the
+  local-model end goal stand unchanged.
+
+## Recalibrated expectations (post-MVP)
+
+The MVP evidence did not change the objectives, but it moved the **expected
+benefit** down, and that shift is worth recording so a later reader is not
+surprised by it.
+
+**The finding driving the recalibration.** A constrained local model (7B-class,
+the size that fits the common 8 GB hardware) does the *doing* — implement, fix,
+refactor — acceptably with scaffolding, and role decomposition demonstrably helps
+on multi-file and multi-concern work (findings-log entry 6 addendum). But it does
+not do the *judging* reliably: the reviewer role, even tuned, hallucinates
+acceptance criteria and mis-evaluates correct code. A feedback loop is only
+beneficial if its evaluation is well above noise; on current 7B it is not. This
+is the correlated-blind-spot / Goodhart risk the design already names, now
+observed rather than anticipated.
+
+**Consequence for the goal, not the goal itself.** The deliverable separates into
+two tiers:
+
+1. **A supervised local assistant on 7–8B** — achievable now. Observability, the
+   safety floor, a reproducible environment, ephemeral roles where they help, a
+   human in the evaluation seat. A real, shippable outcome.
+2. **A local self-improving loop** — gated on either a higher hardware tier
+   (14B-class resident, ~16 GB VRAM, where judgment starts becoming viable) or on
+   small models improving into that capability over time. The architecture is
+   model-agnostic by construction so it rides that curve; the scaffolding —
+   observability, safety, orchestration — is the slow, model-independent part and
+   building it now is the bet that pays off when the model catches up.
+
+**"Promising signal on 7B" is a legitimate milestone outcome.** The next phases
+(M6+) are not justified as scaffolding alone. Each should also be a genuine
+attempt to get a real result on 7B, with a bar beyond "the code exists":
+
+- **M6** — a processor that reuses a stored finding/decision from an earlier run
+  measurably beats one starting cold.
+- **M7** — the naive assembler's observed failures (wrong-file writes on wf1, the
+  missed helper on wf4/wf6) are quantifiable, and a less-naive assembler moves
+  the metric.
+- **M8** — second-pass work in the same repository improves without polluting
+  global behaviour, on even a handful of tasks.
+
+A milestone that lands "mechanism sound, no signal yet at 7B" is a weaker but
+still honest finding. The M5 method applies: at 7B / low N, read the transcript
+*mechanism*, not the aggregate score.
 
 ## Next
 
-Milestone 6 — persistent work and knowledge. First milestone past the MVP slice;
-its evidence question is not yet written (it is now *current + 1* and may be
-decomposed).
+**A deeper re-evaluation of achievable goals**, against these rework notes and the
+six MVP findings together, *before* M6 is executed in earnest. It should restate,
+concretely and per adaptive milestone (M6–M14), what "success on constrained
+hardware today" looks like versus what waits on better models or hardware, and
+whether any later milestone's framing needs revising in light of the evaluation
+ceiling. That re-evaluation is the first task of the post-MVP phase; M6's
+evidence question and decomposition follow from it.
