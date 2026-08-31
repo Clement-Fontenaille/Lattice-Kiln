@@ -113,7 +113,10 @@ The loop MUST be able to terminate by at least these
 - **Objective met** — a processor reports success and, where an objective signal
   exists (`09`), it confirms.
 - **Repetition** — the same operation on the same target N times without
-  measurable progress → stop, mark `blocked`.
+  measurable progress → stop, mark `blocked`. *(M5 workflow re-test, findings-log
+  entry 6 addendum: the first implementation omitted this rule and an orchestrator
+  spawned the planner 4–6 times consecutively without progress. It is normative,
+  not optional.)*
 - **Budget** — max loop steps, max total processor invocations, or wall-clock,
   from invariant-list resource ceiling R3. Hitting it is a **stop for human
   review**, not a silent truncation.
@@ -169,3 +172,13 @@ The loop MUST be able to terminate by at least these
   the result is a Milestone 13 question.
 - **No objective signal.** The MVP fixture has a per-task check; most real work
   does not. What the orchestrator's stopping rules do without one is deferred.
+- **Handoff framing** *(M5 workflow re-test)*. A constrained local model treats a
+  prior processor's raw prose (a plan, a critique) passed as free-form side input
+  as a cue to *discuss* rather than *act*, and stops emitting effects. Prior-step
+  output must be folded into the next objective or a structured field, never
+  appended as narration. How the context assembler (`07`) should structure that
+  handoff is open.
+- **Planner terminal state.** The tuned planner over-returned `blocked` on
+  ordinary "add a capability the code does not yet have" objectives. A planner
+  should `block`/`decline` only for a genuine false premise; "not built yet" is
+  the normal case.

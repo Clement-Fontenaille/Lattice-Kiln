@@ -92,7 +92,9 @@ def run_processor(*, role: str, objective: str, context: ContextBundle,
                   interaction_mode: str = "oneshot",
                   extra_input: str | None = None,
                   intent_ref: str | None = None,
-                  model: str = DEFAULT_MODEL) -> ProcessorResult:
+                  model: str = DEFAULT_MODEL,
+                  prompt: str | None = None,
+                  config_ref: str = "m4-baseline") -> ProcessorResult:
     ws = Path(workspace_root).resolve()
     actor = capability_set_for(role)
 
@@ -100,9 +102,10 @@ def run_processor(*, role: str, objective: str, context: ContextBundle,
         role=role, model_identity=dict(MODEL_IDENTITY),
         parent_invocation_id=parent_invocation_id, intent_ref=intent_ref,
         context_ref=f"bundle:{context.token_estimate}tok:{len(context.entries)}src",
-        config_ref="m4-baseline")
+        config_ref=config_ref)
 
-    prompt = prompt_for(role, context.render(), objective, extra=extra_input)
+    if prompt is None:  # callers (e.g. M5 roles_v2) may supply a tuned prompt
+        prompt = prompt_for(role, context.render(), objective, extra=extra_input)
     gen = generate(prompt, model=model)
     out = gen.text
     parsed = _extract(out)

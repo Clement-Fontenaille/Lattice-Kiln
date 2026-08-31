@@ -421,3 +421,86 @@ The overhead is only justified when a single pass would fail.
 `compare.py`, `strategy_check.py`, `results/results.json` + `results/summary.md`;
 per-run records under `runs/` (schema `m2-run/0`, git-ignored; the 2026-08-31
 three-arm N=2 set is the reference).
+
+#### Addendum (2026-08-31) — workflow-suite re-test
+
+The first M5 comparison used four single-concern katas that fit one clean
+context — the monolith's home turf (finding: the earlier caveat that the
+baseline favours the monolith). A follow-up re-test used six **workflow-shaped**
+tasks (cross-file bug, feature-with-a-design-choice, refactor-trap,
+stale-assumption, partial-credit parser, and a multi-concern task = algorithm +
+docstrings + TODO gardening in one file), scored by **subtests passed** plus, for
+the multi-concern task, separate **doc** and **TODO** scores. Arms: monolith, a
+**fixed** planner→(implementer↔reviewer up to 3 rounds) loop, and the
+orchestrator — all on tuned role prompts (`roles_v2.py`), N=3, 54 runs.
+
+Tuning was required first. The untuned fixed sequence lost to the monolith on
+3/5 tasks; diagnosis from the transcripts:
+
+- the implementer **narrated instead of writing** ("Fixed the function by…", no
+  FILE block) whenever its context carried any conversational text — a plan, a
+  critique, a prior summary. The monolith writes reliably because its context is
+  only objective + code. Fix: the fixed flow no longer injects the planner's
+  prose into the implementer; retry hints go into the objective, not a separate
+  "additional input" block.
+- the reviewer **rubber-stamped** empty implementations. Fix: an empty
+  written-file list is now an automatic `needs-change`, plus a deterministic
+  harness guard that forces a retry when no real file was written.
+- the planner wrote **past-tense completion claims** that primed the chain toward
+  false-done, and the 7B ignores "don't use past tense" — so the harness blunts
+  the completion phrasing before it propagates.
+
+**What the tuned re-test showed.** Aggregate: monolith 10/18 objective pass
+(67/87 subtests, 18 calls), fixed 11/18 (76/87, 83 calls), orchestrated 12/18
+(77/93, 129 calls). Cost of decomposition: **4.6× the model calls for the fixed
+loop, 7.2× for the orchestrator**.
+
+Per task the benefit is narrow and concentrated:
+
+- **wf3, wf4, wf5** (single-concern, one clean pass suffices): decomposition is
+  pure overhead — identical scores, 3–8× the calls. Consistent with finding 5.
+- **wf1** (cross-file indirection): the monolith patched the symptom file twice
+  and scored 3.0/5; the review loop caught the wrong-layer fix and both
+  decomposed arms hit 5/5. **Decomposition helps.**
+- **wf6** (multi-concern): the monolith produced **syntactically invalid Python
+  on every run** and scored 2/6 algo, **0/4 docs, 0/3 TODO** — it dropped the
+  secondary concerns entirely while failing the primary one. The fixed loop hit
+  6/6 algo, 2/4 docs, 3/3 TODO; the orchestrator 6/6, 1.5/4, 2.5/3. **This is the
+  clearest positive for decomposition in the whole milestone** and it directly
+  confirms the "a monolith degrades on secondary concerns under load"
+  hypothesis.
+- **wf2** (feature design choice): a regression. The orchestrator scored 0/5 on
+  two of three runs — it spawned the *planner* 4–6 times consecutively without
+  ever reaching an implementer, because (a) the tuned planner over-returns
+  `blocked` on a normal "add a feature that doesn't exist yet" task and (b)
+  `run_orchestrated` does not implement the repetition stopping rule spec `08`
+  requires. The fixed loop also stalled here (3.7/5).
+
+**Revised reading of the M5 verdict.** "Confirms, narrowly" stands, but the shape
+is now clearer: decomposition's benefit is **real, concentrated on multi-file and
+multi-concern work, and invisible-to-negative everywhere else**, at 5–7× the
+cost. The orchestrator's extra flexibility buys a further small gain on the
+hardest task (wf6, 2/3 vs the fixed loop's 1/3) and one real failure mode (wf2).
+Neither the orchestrator nor the fixed loop decisively beats the other (12 vs 11
+on pass, 83% vs 87% on subtests). At 7B/N=3, per-cell score noise is large
+(wf5 monolith: 1/7, 5/7, 7/7 on identical inputs) — the reliable signal is in the
+**transcript mechanisms**, not the score deltas.
+
+**Also touches.**
+
+- `10-technical/08-orchestrator-contract.md` — the **repetition stopping rule**
+  ("same operation N times without progress → stop") is normative but was not
+  implemented; wf2 is the concrete failure. The planner's terminal-state guidance
+  needs "a capability the code does not yet have is the normal case, not a reason
+  to block".
+- `10-technical/07-naive-context-assembly.md` — a 7B implementer is **degraded by
+  any conversational context** (plan, critique). Role-to-role handoff cannot be
+  raw prose; this is a constraint on how the context assembler frames prior-step
+  output.
+- Milestone sequence: still no reordering. `40-roadmap/06-sequence-rework-01.md`
+  decision 2 (fold the M4/M5 re-test into M7/M8) is updated with this first pass.
+
+**Runs.** `experiments/M5-intelligent-orchestration/` — `workflow_suite.py`,
+`roles_v2.py`, `fixture_workflow/` (schema `m5-workflow-tasks/0`),
+`results_workflow/results.json` + `summary.md`; per-run records under `runs/`
+(git-ignored; the 2026-08-31 three-arm N=3 set is the reference).

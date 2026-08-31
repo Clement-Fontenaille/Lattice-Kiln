@@ -16,6 +16,7 @@ from typing import Any
 
 from _bridge import (CapabilitySet, DEFAULT_MODEL, Gate, assemble, generate,
                      run_processor, submit_effect, _extract)
+from roles_v2 import build_prompt
 
 MODEL_IDENTITY = {"name": "qwen2.5-coder", "quant": "Q4_K_M", "params_b": 7,
                   "runtime": "ollama", "offloaded": False}
@@ -172,7 +173,9 @@ def run_orchestrated(*, objective: str, workspace_root: str | Path, recorder, ga
                            recorder=recorder, gate=gate, parent_invocation_id=inv,
                            intent_ref=intent_ref,
                            interaction_mode="review" if role == "reviewer" else "oneshot",
-                           extra_input=extra, model=model)
+                           extra_input=extra, model=model,
+                           prompt=build_prompt(role, bundle.render(), step_obj, extra),
+                           config_ref="m5-roles-v2")
         res.model_calls += 1  # the processor's own model call (retries are rare, ignored)
         step.processor_terminal_state = pr.terminal_state
         step.processor_summary = pr.summary

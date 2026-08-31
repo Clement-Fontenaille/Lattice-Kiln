@@ -59,6 +59,18 @@ which is exactly what Milestone 7 exists to make measurable, and (c) durable wor
 records (Milestone 6). Re-running the comparison is therefore a task inside M7/M8,
 tracked in the backlog below, not a milestone insertion.
 
+A first pass of this re-test was run at M5 close (findings-log entry 6
+addendum): six workflow-shaped tasks, tuned role prompts, the fixed loop given a
+fair iteration budget, N=3. It sharpens the picture rather than changing the
+sequence — **decomposition's benefit is real but concentrated on multi-file and
+multi-concern work** (cross-file bug: monolith 3.0/5 vs decomposed 5/5;
+multi-concern: monolith 2/6 algo and 0/4 docs and 0/3 TODO vs decomposed 6/6,
+2/4, 3/3), pure overhead elsewhere, at 5–7× the model calls. It also surfaced two
+implementation gaps now recorded on spec `08` (an unimplemented repetition
+stopping rule; a planner that over-blocks) and a constraint on `07` (a 7B
+implementer is degraded by conversational handoff context). The full M7/M8
+re-test should raise N, add a degraded-context monolith arm, and vary task size.
+
 **3. Adaptive retry is promoted from an M5 incidental to a named orchestrator
 element.** Done in spec `08` (the decision record and terminal states). No
 sequence effect; recorded here so the promotion is traceable.

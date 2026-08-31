@@ -1,0 +1,50 @@
+{
+  "schema": "m5-workflow-tasks/0",
+  "note": "Workflow-shaped tasks for the M5 re-test: multi-phase / multi-file / partial-credit, where a fixed or dynamic role sequence has something to bite on. Scored by subtests-passed, not just pass/fail. Still stdlib-only (python test_task.py).",
+  "check_command": "python test_task.py",
+  "protected_files": ["test_task.py"],
+  "tasks": [
+    {
+      "id": "wf1_crossfile",
+      "dir": "wf1_crossfile",
+      "kind": "cross_file_bug",
+      "objective": "orders.total() returns the wrong amount when an order line's qty is greater than 1. Fix the code so every subtest in test_task.py passes. Note that one subtest calls pricing.line_price directly.",
+      "expect": { "objective_pass": true, "decline_correct": false }
+    },
+    {
+      "id": "wf2_retry",
+      "dir": "wf2_retry",
+      "kind": "feature_design_choice",
+      "objective": "Add a retries parameter to Client.call(fn, retries=2): if fn() raises, retry up to `retries` more times; if every attempt fails, re-raise the LAST exception. retries=0 means a single attempt. Make test_task.py pass.",
+      "expect": { "objective_pass": true, "decline_correct": false }
+    },
+    {
+      "id": "wf3_refactor",
+      "dir": "wf3_refactor",
+      "kind": "refactor_trap",
+      "objective": "staff_price and clearance_price both apply 20% off. Remove the duplication by extracting a shared helper, without changing what either function returns.",
+      "expect": { "objective_pass": true, "decline_correct": false }
+    },
+    {
+      "id": "wf4_assumption",
+      "dir": "wf4_assumption",
+      "kind": "stale_assumption",
+      "objective": "search.find() does a linear scan and is too slow for large inputs. Rewrite it to run in O(log n).",
+      "expect": { "objective_pass": true, "decline_correct": true }
+    },
+    {
+      "id": "wf5_partial",
+      "dir": "wf5_partial",
+      "kind": "partial_credit",
+      "objective": "Implement durations.parse_duration(s) so every subtest in test_task.py passes. It parses strings like '1h30m', '45m', '2h', '90s', '1h2m3s', handles the empty string as 0, and tolerates surrounding whitespace.",
+      "expect": { "objective_pass": true, "decline_correct": false }
+    },
+    {
+      "id": "wf6_multi",
+      "dir": "wf6_multi",
+      "kind": "multi_concern",
+      "objective": "In graphlib.py: (1) implement topo_sort(graph) to return a valid topological order and raise on a cycle (build_graph already works); (2) add proper docstrings - a module docstring, Args:/Returns: on build_graph, and Args:/Returns:/Raises: on topo_sort - and create NOTES.md with a 'Design decisions' entry explaining the cycle handling; (3) tidy the TODO comments: resolve the 'implement topo_sort' one, and delete the stale 'TODO(2019): migrate to networkx' and the wrong 'O(n^2)' comment (the loop is O(n)). Make test_task.py's SUBTESTS pass and raise DOCSCORE and TODOSCORE.",
+      "expect": { "objective_pass": true, "decline_correct": false }
+    }
+  ]
+}

@@ -85,6 +85,13 @@ Scheduled by the milestone that needs each, not a separate track:
 - **MVP slice closed (M0–M5)** — first sequence rework written
   (`40-roadmap/06-sequence-rework-01.md`): no reordering; post-MVP backlog
   consolidated.
+- **M5 workflow-suite re-test** — `experiments/M5-intelligent-orchestration/`:
+  `fixture_workflow/` (6 workflow-shaped tasks), `roles_v2.py` (tuned prompts),
+  `workflow_suite.py` (3 arms, N=3, 54 runs). Finding: decomposition helps on
+  multi-file / multi-concern work (wf1, wf6), pure overhead elsewhere, 5–7× the
+  calls; monolith drops docs+TODO under load (wf6: 0/4, 0/3). Findings-log entry
+  6 addendum. Gaps logged on specs 07/08 (repetition rule, planner over-block,
+  conversational-handoff degradation).
 - **M5 executed and closed** — `experiments/M5-intelligent-orchestration/`:
   `orchestrator.py` (LLM loop over the M4 runtime, decision record per step),
   `compare.py` (3 arms), `strategy_check.py`. 24 runs. Orchestrated 7/8 vs

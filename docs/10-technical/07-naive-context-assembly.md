@@ -124,3 +124,10 @@ component MUST NOT mutate the workspace and MUST NOT call the model.
   (`04-context-as-governed-resource.md`).
 - **`review` independence cut.** Whether "prior conclusion only" is the right
   isolation for adversarial review (`02-processors.md` open question).
+- **Prior-step handoff framing** *(M5 workflow re-test, findings-log entry 6
+  addendum)*. A 7B implementer that receives another processor's prose (a plan, a
+  critique) as free-form context shifts from producing effects to narrating
+  about them; the same model with only objective + code produces effects
+  reliably. When the assembler folds prior-step output into a processor's
+  context it MUST structure it (into the objective, or a typed field), not append
+  it as narration. The exact structure is unresolved.

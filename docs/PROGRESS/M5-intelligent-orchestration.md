@@ -4,10 +4,39 @@
 **Evidence question:** does natural-language orchestration beat a fixed workflow
 while staying understandable, and where does its overhead start to exceed the
 benefit of decomposition?
-**State:** COMPLETE (2026-08-31) — findings-log entry 6. Verdict **confirms,
-narrowly**: orchestrated 7/8 vs monolith 6/8 vs fixed chain 5/8, the win entirely
-from adaptive retry, at ~5× cost. MVP slice (M0–M5) closed;
-`40-roadmap/06-sequence-rework-01.md` written.
+**State:** COMPLETE (2026-08-31) — findings-log entry 6 + workflow-suite
+addendum. First-pass verdict **confirms, narrowly** (toy tasks: orchestrated 7/8
+vs monolith 6/8 vs fixed 5/8). Workflow re-test (6 workflow-shaped tasks, tuned
+roles, N=3, 54 runs) sharpens it: **decomposition helps on multi-file and
+multi-concern work, is pure overhead elsewhere, at 5–7× the model calls.** MVP
+slice (M0–M5) closed; `40-roadmap/06-sequence-rework-01.md` written.
+
+## Workflow-suite re-test (M5 follow-up, requested during the cost/benefit discussion)
+
+`experiments/M5-intelligent-orchestration/` additions:
+- `fixture_workflow/` — 6 tasks (`m5-workflow-tasks/0`): cross-file bug,
+  feature-design-choice, refactor-trap, stale-assumption, partial-credit parser,
+  multi-concern (algorithm + docstrings + TODO gardening, scored separately).
+- `roles_v2.py` — tuned prompts. Diagnosed failures of the untuned fixed
+  sequence: implementer narrates instead of writing when its context holds any
+  conversational text; reviewer rubber-stamps empty implementations; planner
+  writes past-tense "it's done" claims.
+- `workflow_suite.py` — monolith / fixed (planner → implementer↔reviewer up to 3
+  rounds) / orchestrated. `test_task.py` restored before scoring; deterministic
+  "no file written → force retry" guard; results include a per-task cost/benefit
+  ledger and the wf6 doc/TODO breakdown.
+
+Aggregate: monolith 10/18 pass (77% subtests, 18 calls), fixed 11/18 (87%, 83
+calls), orchestrated 12/18 (83%, 129 calls). wf6 monolith: **invalid Python every
+run, 0/4 docs, 0/3 TODO** — dropped the secondary concerns under load; both
+decomposed arms held all three. wf2 orchestrated: **0/5 on 2/3 runs** — spawned
+the planner 4–6× without reaching an implementer (unimplemented repetition rule +
+over-blocking planner).
+
+Open implementation gaps recorded on the specs: `08` repetition stopping rule
+(normative, unimplemented), `08` planner over-blocks, `07` 7B implementer
+degraded by conversational handoff context. Harness caveat: a check that crashes
+(broken Python) is scored `0/0`, below baseline — should be a distinct outcome.
 
 ## What "done" looks like
 
