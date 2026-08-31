@@ -603,3 +603,46 @@ further prompt tuning of the 7B reviewer.
 `run_census.py`, `summary.md`, `FINDINGS.md`, `runs/` transcripts) and
 `.../judge_lab/` (`scenarios.py`, `lab.py`, `results.md`, `FINDINGS.md`, `runs/`
 detail). Single-host, single 7B, 2026-09-01.
+
+#### Addendum (2026-09-01) — loop control (bundle D)
+
+Following the judge-lab result (reviewer verdict unreliable, test result 9/10),
+the implement↔review loop was rebuilt to run off the measurable signal
+(`experiments/M5-intelligent-orchestration/loop_lab/`). Three arms on the six
+workflow tasks, N=2: `oneshot` (implementer once), `naive_loop`
+(`(reviewer→implementer)*` while the reviewer says needs-change — the current
+`fixed` behaviour), and `d_loop` (bundle D: the pre-existing repo state is an
+entrant in the keeper pool and a round is accepted only if it *beats* it;
+continue only on measurable progress; one stalled round → stop and escalate;
+ship the best snapshot ever seen, not the last; fix hints are the real failing
+test lines).
+
+- **d_loop: 0 regressions in 12 runs; `naive_loop`: 2** — both on wf6, where the
+  review/fix loop drove the implementer to non-parsing Python and the reviewer
+  **approved it**. An unreliable reviewer driving a loop amplifies damage; a
+  test-gated keeper caps it at "no worse than the incumbent".
+- **wf4 (false premise) solved by construction, 0 model calls** — the incumbent
+  linear scan passes 5/5, so d_loop's loop never runs. It does not need to
+  *recognise* the false premise; it refuses a change that does not beat a passing
+  incumbent. `naive_loop` reached 5/5 too but spent 4–6 calls.
+- **~3.4× cheaper than `naive_loop`** (14 vs 48 calls / 36 runs): stops on a
+  green test, not on a reviewer's approval, and skips the loop when the incumbent
+  passes.
+- **d_loop's worst case is honest** (wf6: `no-improvement`, keeps the untouched
+  original, escalates) vs `naive_loop`'s (ships broken, "approved").
+
+Two limits: (a) **"first do no harm" degrades to "do nothing" when the check does
+not capture the deliverable** — wf3 is a behaviour-preserving refactor, its test
+passes on the un-refactored original, so d_loop no-ops it; behaviour-preserving
+work needs a structural check or a human. (b) `STALL_TOL=1` stops too early on
+climbable tasks (wf5: 5/7 vs `naive_loop` 7/7) — a tuning knob.
+
+This does not change the entry-7 verdict; it is the constructive half. The loop
+for a 7B fixed sequence: gate on the test not the reviewer, keep the incumbent as
+the floor, escalate on stall. `10-technical/08-orchestrator-contract.md`'s
+repetition stopping rule gains a concrete, working implementation
+(progress-gated). The unresolved case — no executable check for the objective —
+points at the "generate the missing tests, blind, K-way" follow-up.
+
+**Runs.** `.../loop_lab/` (`lab.py`, `results/summary.md` + `results.json`,
+`FINDINGS.md`).

@@ -95,19 +95,25 @@ Scheduled by the milestone that needs each, not a separate track:
 
 ## Recently done
 
-- **M5 follow-up: attractor census + judge-lab** (findings-log entry 7).
-  `experiments/M5-intelligent-orchestration/census/` (39 probes × K=3) and
-  `.../judge_lab/` (10 known-truth scenarios × 4 review pipelines). Findings: the
-  doer's "emit the whole corrected file" current is reliable (cross-file
-  indirection does not break it); its one clean blind spot is false premises
-  (3/3 implement an impossible O(log n), 0/3 flag it); **no reviewer framing —
-  neutral, adversarial, structured, or K=5 voted — lifts the 7B judge above
-  "assert the property and approve"**, and `criteria_first` is actively harmful.
-  A deterministic gate (parse / import / claim-vs-diff / trust the test) scores
-  9/10 alone; adding the 7B panel drops it to 6/10. The planner stance is the
-  only place the model's critical read is live (2/3 catch the false premise).
-  Consequence: judgment seat on 7B = deterministic checks + run-the-test +
-  escalate; model is a failure-explainer only.
+- **M5 follow-up: attractor census + judge-lab + loop-lab** (findings-log entry 7
+  + addendum). `census/` (39 probes × K=3), `judge_lab/` (10 known-truth
+  scenarios × 4 review pipelines), `loop_lab/` (bundle D loop control, 3 arms ×
+  6 tasks × N=2). Findings: the doer's "emit the whole corrected file" current is
+  reliable (cross-file indirection does not break it); its one clean blind spot
+  is false premises (3/3 implement an impossible O(log n), 0/3 flag it); **no
+  reviewer framing — neutral, adversarial, structured, or K=5 voted — lifts the
+  7B judge above "assert the property and approve"**, and `criteria_first` is
+  actively harmful. A deterministic gate (parse / import / claim-vs-diff / trust
+  the test) scores 9/10 alone; adding the 7B panel drops it to 6/10. The planner
+  stance is the only place the model's critical read is live (2/3 catch the false
+  premise). **Bundle D** (gate the loop on the test not the reviewer; keep the
+  pre-existing state as a keeper-pool entrant so a change must *beat* it;
+  escalate on stall): 0 regressions vs `naive_loop`'s 2 (which shipped broken,
+  reviewer-approved code), solves wf4 false premise in 0 calls, ~3.4× cheaper.
+  Limits: no-ops a behaviour-preserving refactor when the test can't see the
+  deliverable; `STALL_TOL=1` stops too early. Consequence: judgment seat on 7B =
+  deterministic checks + run-the-test + keep-the-incumbent + escalate; model is a
+  failure-explainer / doer only.
 - **Expectation recalibration recorded** (`06-sequence-rework-01.md` →
   "Recalibrated expectations"). MVP evidence: a 7B does the doing acceptably with
   scaffolding, not the judging — a feedback loop's evaluation is not above noise
