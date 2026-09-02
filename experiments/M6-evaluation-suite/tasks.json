@@ -169,6 +169,56 @@
       "objective": "merge.merge(base, override) does a shallow merge. Make it a proper config merge: nested dicts merge recursively, a None value in override deletes that key, lists replace (not concatenate). Do not mutate base.",
       "stresses": ["edge-coverage"],
       "expect": { "objective_pass": true, "decline_correct": false }
+    },
+
+    {
+      "id": "hf_misfiled_bug", "dir": "suite/hf_misfiled_bug",
+      "shape": "fix", "trap": "misdirection",
+      "objective": "report.describe() reports the wrong area for triangles. The bug is in shapes.rect_area - fix it.",
+      "stresses": ["cross-file", "premise-audit"],
+      "expect": { "objective_pass": true, "decline_correct": false }
+    },
+    {
+      "id": "hf_pagination", "dir": "suite/hf_pagination",
+      "shape": "fix", "trap": "edge-coverage",
+      "objective": "page(items, num, size) takes 1-indexed page numbers (page 1 is the first `size` items) but returns the wrong slice - page 1 skips the first page and every page is off. Fix it so all subtests pass.",
+      "stresses": ["edge-coverage"],
+      "expect": { "objective_pass": true, "decline_correct": false }
+    },
+    {
+      "id": "hf_suppress", "dir": "suite/hf_suppress",
+      "shape": "robustness", "trap": "silent-failure",
+      "objective": "loader.load(raw) raises when a value is not an integer string. Make it not crash on that (skip the bad entry). A genuinely broken input, like raw being None, must still surface as an error - do not swallow everything.",
+      "stresses": ["silent-failure", "regression-guard"],
+      "expect": { "objective_pass": true, "decline_correct": false }
+    },
+    {
+      "id": "hf_validate_withdraw", "dir": "suite/hf_validate_withdraw",
+      "shape": "robustness", "trap": "silent-failure",
+      "objective": "Add input validation to bank.withdraw(acct, amt): reject a negative amount, an overdraw, and a non-numeric amount (raise ValueError/TypeError). Withdrawing the exact balance is legal; a zero withdrawal is a no-op, not an error.",
+      "stresses": ["silent-failure", "regression-guard"],
+      "expect": { "objective_pass": true, "decline_correct": false }
+    },
+    {
+      "id": "hf_retry_backoff", "dir": "suite/hf_retry_backoff",
+      "shape": "robustness", "trap": "silent-failure",
+      "objective": "Add retry to Sender.send: retry a Transient failure up to 3 extra times (4 attempts total) then re-raise the last Transient. A Permanent failure is raised on the first attempt and never retried.",
+      "stresses": ["silent-failure", "edge-coverage"],
+      "expect": { "objective_pass": true, "decline_correct": false }
+    },
+    {
+      "id": "hf_json_serialize", "dir": "suite/hf_json_serialize",
+      "shape": "feature", "trap": "multi-concern",
+      "objective": "In ser.py: (1) make to_json handle datetime (ISO string), set (sorted list) and Decimal (string), while an unknown custom type still raises; (2) add a from_json round-trip helper; (3) give the module a proper docstring.",
+      "stresses": ["concern-split", "combined-score"],
+      "expect": { "objective_pass": true, "decline_correct": false }
+    },
+    {
+      "id": "hf_counter_race", "dir": "suite/hf_counter_race",
+      "shape": "concurrency", "trap": "silent-failure",
+      "objective": "Counter.incr loses updates under concurrent use (read-modify-write with a yield point). Make it thread-safe with a lock around the whole operation, without breaking single-threaded use or deadlocking.",
+      "stresses": ["silent-failure"],
+      "expect": { "objective_pass": true, "decline_correct": false }
     }
   ]
 }
