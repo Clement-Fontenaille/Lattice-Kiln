@@ -104,6 +104,35 @@
       "objective": "rates.current_rate is called frequently. Add caching (e.g. functools.lru_cache) so repeated calls are fast.",
       "stresses": ["premise-audit"],
       "expect": { "objective_pass": true, "decline_correct": true }
+    },
+
+    {
+      "id": "hf_multi_recipient", "dir": "suite/hf_multi_recipient",
+      "shape": "compat", "trap": "backward-compat",
+      "objective": "notify(to, msg) currently takes a single recipient string. Make it also accept a list or tuple of recipients (one delivery per recipient), without breaking callers that pass a single string.",
+      "stresses": ["backward-compat", "regression-guard"],
+      "expect": { "objective_pass": true, "decline_correct": false }
+    },
+    {
+      "id": "hf_return_shape", "dir": "suite/hf_return_shape",
+      "shape": "compat", "trap": "backward-compat",
+      "objective": "get_user(uid) returns a (name, age) tuple and callers use index access. Also expose the user's email, without breaking get_user(uid)[0] and get_user(uid)[1].",
+      "stresses": ["backward-compat", "regression-guard"],
+      "expect": { "objective_pass": true, "decline_correct": false }
+    },
+    {
+      "id": "hf_deprecate", "dir": "suite/hf_deprecate",
+      "shape": "compat", "trap": "backward-compat",
+      "objective": "Deprecate parse.old_parse: it must emit a DeprecationWarning and delegate to new_parse so it returns the same result for every input.",
+      "stresses": ["backward-compat", "L2-structural"],
+      "expect": { "objective_pass": true, "decline_correct": false }
+    },
+    {
+      "id": "hf_json_field", "dir": "suite/hf_json_field",
+      "shape": "feature", "trap": "backward-compat",
+      "objective": "Add a `tier` field to the dict that resp.build() returns. Records that lack a \"tier\" key (they predate the field) must default to \"free\", not raise.",
+      "stresses": ["backward-compat", "regression-guard"],
+      "expect": { "objective_pass": true, "decline_correct": false }
     }
   ]
 }
