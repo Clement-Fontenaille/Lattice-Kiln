@@ -1,0 +1,88 @@
+[
+  {
+    "task": "wf6_multi",
+    "kind": "multi_concern",
+    "rep": 1,
+    "run_id": "run_9b68c8a0b530",
+    "terminal": "resolved",
+    "load_bearing": [],
+    "open_items": [],
+    "baseline_sub": 2,
+    "final_sub": 6,
+    "sub_tot": 6,
+    "objective_pass": true,
+    "regressed": false,
+    "decline_expected": false,
+    "doc": [
+      3,
+      4
+    ],
+    "todo": [
+      2,
+      3
+    ],
+    "total_calls": 27,
+    "wall_s": 147.8,
+    "signals": {
+      "premise_unsound": false,
+      "l1_provided_fail": false,
+      "regression": false,
+      "l2_violated": false,
+      "synth_trusted_fail": false,
+      "l2_needs_human": false,
+      "blowout": false,
+      "refactor_unverified": false
+    },
+    "ledger": [
+      {
+        "stage": "S0-premise",
+        "calls": 3,
+        "wall": 9.1,
+        "out": "sound=True type=feature votes=[False, True, True] reason='The objective cannot be satisfied as literally stated due to the missing implementation of topo_sort and the presence of stale TODO comments.'"
+      },
+      {
+        "stage": "S1-testspec",
+        "calls": 1,
+        "wall": 6.3,
+        "out": "12 items 8B/4S"
+      },
+      {
+        "stage": "S2-implspec",
+        "calls": 2,
+        "wall": 11.8,
+        "out": "10/14 steps, overlap=0.60 disagree=False"
+      },
+      {
+        "stage": "S3-alignment",
+        "calls": 1,
+        "wall": 3.1,
+        "out": "advisory: unverified=0 unplanned=0"
+      },
+      {
+        "stage": "S4-synth",
+        "calls": 3,
+        "wall": 33.1,
+        "out": "2/3 valid; checks/suite=1,5,0"
+      },
+      {
+        "stage": "S5-coding",
+        "calls": 12,
+        "wall": 63.7,
+        "out": "incumbent comb=3 | impl_a comb=2(sub2) impl_b comb=11(sub6) agree=False -> winner b sub(6, 6) doc(3, 4) todo(2, 3) diff_lines=55 blowout=False"
+      },
+      {
+        "stage": "S6b-l2",
+        "calls": 5,
+        "wall": 19.6,
+        "out": "pass,pass,pass,pass b_consistent=True"
+      }
+    ],
+    "task_type": "feature",
+    "winner": "b",
+    "impl_agree": false,
+    "synth_detail": "trusted_fail=[] | topo_sort:1/2pass",
+    "new_fails": [],
+    "align_unverified": [],
+    "spec_disagree": false
+  }
+]
