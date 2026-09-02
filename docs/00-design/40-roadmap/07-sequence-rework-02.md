@@ -66,8 +66,13 @@ toy fixture cannot, and does it surface failure modes the MVP fixture missed?
 
 ### M7 — Static supervised workflow
 
-Turn `loop_lab` + `pipeline_lab` into a specified, observable component on the M3
-floor:
+The **leading candidate** from `loop_lab` + `pipeline_lab` is below; M7 keeps the
+strategy space open (see `01-milestones.md` → M7 "Strategies still to explore" —
+fixed blind K-way synthesis, dueling advocates with executable claims,
+cross-model review, task-type-adaptive stage selection, the NL orchestrator
+reconsidered on harder tasks). The M6 suite exists to choose among them at scale.
+
+Leading candidate — a specified, observable component on the M3 floor:
 
 - **spine** = d_loop (test-gated iteration, incumbent-protected keeper,
   escalate-on-stall);

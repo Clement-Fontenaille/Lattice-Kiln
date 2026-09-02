@@ -72,12 +72,15 @@ Remaining M6 work:
 5. M6 findings entry: does the trap-structured suite separate arms a toy fixture
    cannot?
 
-**Then M7** — specify (`10-technical/11-static-workflow.md`) and build the static
-workflow from the `loop_lab`/`pipeline_lab` parts: d_loop spine + premise audit
-(always) + concern-split/combined-score keeper (conjunctive objectives) + "no
-behavioural signal → escalate" (refactors); **drop** the three inert
-super-pipeline stages; **fix** the plan-injection and greenfield-framing
-regressions. Run it on the M6 suite vs monolith and super-pipeline.
+**Then M7** — kept **open on strategy** (`01-milestones.md` → M7). Leading
+candidate from the labs: d_loop spine + premise audit (always) +
+concern-split/combined-score keeper (conjunctive) + "no behavioural signal →
+escalate" (refactors); drop the three inert super-pipeline stages; fix the
+plan-injection / greenfield-framing regressions. Also to test on the M6 suite:
+fixed blind K-way synthesis, dueling advocates with executable claims,
+task-type-adaptive stage selection, cross-model review (needs 2nd GPU), the NL
+orchestrator on the harder tasks. Spec `10-technical/11-static-workflow.md` once
+the suite picks a direction.
 
 ## Blockers
 

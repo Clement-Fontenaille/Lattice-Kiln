@@ -111,18 +111,22 @@ The existing `experiments/M5-intelligent-orchestration/fixture_workflow/` (wf1�
 
 ## Milestone 7 — Static supervised workflow
 
-The M5-follow-up established the near-term deliverable: a **supervised local assistant on 7–8B**, not a self-improving loop. The evidence points at a specific shape — a cheap, reliable spine (test-gated iteration, incumbent-protected keeper, escalate-on-stall) with heavier stages (premise audit, concern-split, structural verification, blind test synthesis) fired **conditionally** by task type, and every stage's influence on the outcome recorded.
+The M5-follow-up established the near-term deliverable: a **supervised local assistant on 7–8B**, not a self-improving loop. It also produced a **leading candidate** for the shape — but the milestone is deliberately kept open about strategy, because the evidence so far is 6 tasks at low N and the M6 suite exists precisely to test these choices at scale.
 
-This milestone turns that from a set of lab scripts (`loop_lab`, `pipeline_lab`) into a specified, observable component on the M3 floor:
+**Leading candidate (from `loop_lab` + `pipeline_lab`, findings-log entry 7):** a cheap reliable spine — test-gated iteration, incumbent-protected keeper, escalate-on-stall — with heavier stages (premise audit, concern-split + combined-score keeper, structural verification) fired **conditionally** by task class, and every stage's influence on the outcome recorded so redundant stages retire on evidence. The always-on super-pipeline was a negative result: worse-or-tied on 5/6 tasks, four stages that moved zero outcomes.
 
-- the flow and the per-stage contract;
-- the conditional-firing rules (which stage runs for which task class), calibrated from the counterfactual-attribution data the labs produce;
-- the escalation payload — a precise, human-answerable question, not a dump;
-- observability: every stage records whether it changed the terminal outcome, so redundant stages can be retired on evidence.
+**Strategies still to explore, not foreclosed:**
 
-It is deliberately **static** — no natural-language orchestrator in the loop (M5 showed the orchestrator's gain was adaptive retry, already captured by the spine, at 5–7× cost). The orchestrator returns as a comparison arm, not the default.
+- **Blind K-way test synthesis, fixed.** It was inert in the super-pipeline only because its suites crashed on an unfinished implementation before emitting a check line. A version that tolerates partial code, or runs after the first coding pass, may be the missing verifier for no-test tasks — the `ground_notest` 3/10 hole.
+- **Dueling advocates with executable claims.** Two context-diverse readers (one sees only the diff, one only the pre-change file + objective) emit *falsifiable* input/output claims; the interpreter, not a third model, adjudicates. Attacks the same no-test hole from the other side.
+- **Cross-model / stronger-model review.** Once a second resident model is available (the planned second GPU), the reviewer is a different model — the one intervention the judge-lab said could lift evaluation above the approval bias. This may change how much verification machinery the static workflow needs.
+- **Task-type-adaptive stage selection.** The premise audit already classifies bugfix / feature / refactor / perf; the conditional-firing rules can be learned from M6 `stresses`-slice data rather than hand-set.
+- **The natural-language orchestrator, reconsidered.** M5 showed its only gain was adaptive retry (already in the spine) at 5–7× cost — on toy tasks. Whether it earns its cost on the harder M6 tasks (multi-file, migration, multi-concern) is an open question the suite can now answer; it returns at minimum as a comparison arm.
+- **Human-in-the-loop shape.** The escalation payload (a precise, human-answerable question rather than a dump) is itself a design surface — how the assistant asks for the one thing it cannot decide.
 
-**Evidence question:** on the M6 suite, does the conditionally-staged static workflow beat both the plain monolith and the always-on super-pipeline on outcome-per-call, and does it degrade safely — no regressions, honest escalation — on the tasks it cannot do?
+This milestone turns the chosen strategy into a specified, observable component on the M3 floor: the flow, the per-stage contract, the firing rules, the escalation payload, and per-stage outcome-influence observability.
+
+**Evidence question:** on the M6 suite, which workflow strategy gives the best outcome-per-call against the plain monolith and the always-on super-pipeline, and does the chosen one degrade safely — no regressions, honest escalation — on the tasks it cannot do?
 
 ## Milestone 8 — Persistent work and knowledge
 
