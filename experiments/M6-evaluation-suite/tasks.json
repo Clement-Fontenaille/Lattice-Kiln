@@ -1,0 +1,80 @@
+{
+  "schema": "eval-suite-tasks/0",
+  "suite_version": "0.1.0",
+  "note": "M6 evaluation task suite. Request-shape x trap taxonomy. Each task: a realistic dev request, a deterministic partial-credit check (SUBTESTS gates; DOCSCORE/TODOSCORE/STRUCTSCORE are non-gating quality dimensions), a documented discriminator subtest, and a pre-existing passing test. See docs/10-technical/10-evaluation-task-suite.md.",
+  "check_command": "python test_task.py",
+  "protected_files": ["test_task.py"],
+  "tasks": [
+    {
+      "id": "wf1_crossfile", "dir": "suite/wf1_crossfile",
+      "shape": "fix", "trap": "misdirection",
+      "objective": "orders.total() returns the wrong amount when an order line's qty is greater than 1. Fix the code so every subtest in test_task.py passes. Note that one subtest calls pricing.line_price directly.",
+      "stresses": ["cross-file", "premise-audit"],
+      "expect": { "objective_pass": true, "decline_correct": false }
+    },
+    {
+      "id": "wf2_retry", "dir": "suite/wf2_retry",
+      "shape": "feature", "trap": "edge-coverage",
+      "objective": "Add a retries parameter to Client.call(fn, retries=2): if fn() raises, retry up to `retries` more times; if every attempt fails, re-raise the LAST exception. retries=0 means a single attempt. Make test_task.py pass.",
+      "stresses": ["edge-coverage", "greenfield-impl"],
+      "expect": { "objective_pass": true, "decline_correct": false }
+    },
+    {
+      "id": "wf3_refactor", "dir": "suite/wf3_refactor",
+      "shape": "refactor", "trap": "behaviour-preserving",
+      "objective": "staff_price and clearance_price both apply 20% off. Remove the duplication by extracting a shared helper, without changing what either function returns.",
+      "stresses": ["L2-structural"],
+      "expect": { "objective_pass": true, "decline_correct": false }
+    },
+    {
+      "id": "wf4_assumption", "dir": "suite/wf4_assumption",
+      "shape": "perf", "trap": "false-premise",
+      "objective": "search.find() does a linear scan and is too slow for large inputs. Rewrite it to run in O(log n).",
+      "stresses": ["premise-audit"],
+      "expect": { "objective_pass": true, "decline_correct": true }
+    },
+    {
+      "id": "wf5_partial", "dir": "suite/wf5_partial",
+      "shape": "implement", "trap": "edge-coverage",
+      "objective": "Implement durations.parse_duration(s) so every subtest in test_task.py passes. It parses strings like '1h30m', '45m', '2h', '90s', '1h2m3s', handles the empty string as 0, and tolerates surrounding whitespace.",
+      "stresses": ["kway-synth", "partial-credit", "greenfield-impl"],
+      "expect": { "objective_pass": true, "decline_correct": false }
+    },
+    {
+      "id": "wf6_multi", "dir": "suite/wf6_multi",
+      "shape": "migration", "trap": "multi-concern",
+      "objective": "In graphlib.py: (1) implement topo_sort(graph) to return a valid topological order and raise on a cycle (build_graph already works); (2) add proper docstrings - a module docstring, Args:/Returns: on build_graph, and Args:/Returns:/Raises: on topo_sort - and create NOTES.md with a 'Design decisions' entry explaining the cycle handling; (3) tidy the TODO comments: resolve the 'implement topo_sort' one, and delete the stale 'TODO(2019): migrate to networkx' and the wrong 'O(n^2)' comment (the loop is O(n)). Make test_task.py's SUBTESTS pass and raise DOCSCORE and TODOSCORE.",
+      "stresses": ["concern-split", "combined-score"],
+      "expect": { "objective_pass": true, "decline_correct": false }
+    },
+
+    {
+      "id": "hf_extract_fn", "dir": "suite/hf_extract_fn",
+      "shape": "refactor", "trap": "behaviour-preserving",
+      "objective": "process() in pipeline.py is one long function (validate, transform, aggregate). Split it into smaller helper functions without changing its behaviour. Keep every subtest in test_task.py green and raise STRUCTSCORE.",
+      "stresses": ["L2-structural", "regression-guard"],
+      "expect": { "objective_pass": true, "decline_correct": false }
+    },
+    {
+      "id": "hf_dict_dispatch", "dir": "suite/hf_dict_dispatch",
+      "shape": "refactor", "trap": "behaviour-preserving",
+      "objective": "Replace the if/elif/else chain in route(cmd, ctx) in router.py with a dict dispatch, without changing behaviour. Unknown commands must still return 'unknown command: <cmd>' and the 'audit' command must still increment ctx['audit_count'].",
+      "stresses": ["L2-structural", "regression-guard"],
+      "expect": { "objective_pass": true, "decline_correct": false }
+    },
+    {
+      "id": "hf_rename", "dir": "suite/hf_rename",
+      "shape": "compat", "trap": "behaviour-preserving",
+      "objective": "In billing.py, rename the public function calc to compute. Update its call sites. Do not rename recalc_all, do not change the LEDGER dict key \"calc\" (it is a wire format), and do not change the audit log text.",
+      "stresses": ["regression-guard", "L2-structural"],
+      "expect": { "objective_pass": true, "decline_correct": false }
+    },
+    {
+      "id": "hf_rec_to_iter", "dir": "suite/hf_rec_to_iter",
+      "shape": "refactor", "trap": "behaviour-preserving",
+      "objective": "count_nodes(node) in tree.py is recursive and raises RecursionError on a deep (chain-shaped) tree. Rewrite it to be iterative with an explicit stack, keeping the same results and the None->0 and leaf->1 base cases.",
+      "stresses": ["L2-structural"],
+      "expect": { "objective_pass": true, "decline_correct": false }
+    }
+  ]
+}
