@@ -83,21 +83,12 @@ def arm_monolith(objective, ws):
     return "done"
 
 
-def _lazy(modpath, fn):
-    def arm(objective, ws):
-        import importlib
-        m = importlib.import_module(modpath)
-        return getattr(m, fn)(objective, ws)
-    return arm
-
-
-ARMS = {
-    "baseline": arm_baseline,
-    "monolith": arm_monolith,
-    # dloop / superpipe expose run_on(objective, ws) adapters (added in M7 work)
-    "dloop": _lazy("loop_lab.adapter", "run_on"),
-    "superpipe": _lazy("pipeline_lab.adapter", "run_on"),
-}
+ARMS = {"baseline": arm_baseline, "monolith": arm_monolith}
+try:
+    from m6_arms import ARMS_EXTRA
+    ARMS.update(ARMS_EXTRA)          # dloop, staged
+except Exception as _e:  # noqa: BLE001
+    print(f"(m6_arms unavailable: {_e!r})", file=sys.stderr)
 
 
 # --------------------------------------------------------------- driver

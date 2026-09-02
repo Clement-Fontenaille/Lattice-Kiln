@@ -1,0 +1,1 @@
+{"schema": "m2-event/0", "run_id": "run_f572fb848b31", "seq": 1, "ts": "2026-09-02T10:04:58.419893+00:00", "kind": "invocation", "invocation_id": "inv_52a24e7a8bb4", "parent_invocation_id": null, "intent_ref": "m6", "role": "m6-dloop", "model_identity": {"name": "harness"}, "context_ref": null, "config_ref": "m6"}

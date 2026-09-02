@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_ddb46b5eecec",
+  "started": "2026-09-02T10:06:38.946180+00:00",
+  "intent_text": "m6",
+  "meta": {
+    "arm": "staged",
+    "suite": "m6"
+  },
+  "ended": "2026-09-02T10:06:47.730969+00:00",
+  "outcome": "completed",
+  "event_count": 1
+}
