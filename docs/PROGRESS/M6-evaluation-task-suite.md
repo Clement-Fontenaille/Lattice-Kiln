@@ -36,17 +36,20 @@ decide things by running against tasks. The ruler has to exist and be good first
 | # | task | state | notes |
 |---|---|---|---|
 | 1 | Spec `10-technical/10-evaluation-task-suite.md` | DONE | taxonomy + schema + scoring normative |
-| 2 | Fold wf1–wf6 into the suite dir, re-tagged | TODO | |
-| 3 | Behaviour-preserving tasks (`hf_extract_fn`, `hf_dict_dispatch`, `hf_rename`, `hf_rec_to_iter`) | TODO | load L2-structural — the weakest stage |
-| 4 | Push-back tasks (`hf_suppress`, `hf_already_optimal`, `hf_dead_code`, `hf_remove_validation`, `hf_cache_nondeterministic`) | TODO | load premise-audit beyond wf4 |
-| 5 | Backward-compat tasks (`hf_multi_recipient`, `hf_return_shape`, `hf_deprecate`, `hf_json_field`) | TODO | load regression-guard |
-| 6 | Edge-coverage tasks (`hf_timeout_param`, `hf_cache_decorator`, `hf_csv`, `hf_path_sanitize`, `hf_merge_config`) | TODO | partial-credit / K-way synth |
-| 7 | Misdirection tasks (`hf_pagination`, `hf_misfiled_bug`) | TODO | cross-file |
-| 8 | Silent-failure / robustness (`hf_validate_withdraw`, `hf_retry_backoff`) | TODO | |
-| 9 | Multi-concern (`hf_json_serialize`, `hf_api_v1_to_v2`) | TODO | concern-split / combined-score |
-| 10 | Concurrency (`hf_counter_race`) | TODO | threading, deterministic-ish |
-| 11 | `run_suite.py` + suite-lint | TODO | |
-| 12 | Baseline run (monolith / d_loop / super-pipeline) + M6 findings entry | TODO | the evidence question |
+| 2 | Fold wf1–wf6 into the suite dir, re-tagged | DONE | |
+| 3 | Behaviour-preserving (`hf_extract_fn`, `hf_dict_dispatch`, `hf_rename`, `hf_rec_to_iter`) | DONE | |
+| 4 | Push-back / decline (`hf_already_optimal`, `hf_dead_code`, `hf_remove_validation`, `hf_cache_nondeterministic`) | DONE | 5 decline tasks total (with wf4) |
+| 5 | Backward-compat (`hf_multi_recipient`, `hf_return_shape`, `hf_deprecate`, `hf_json_field`) | DONE | |
+| 6 | Edge-coverage (`hf_timeout_param`, `hf_cache_decorator`, `hf_csv`, `hf_path_sanitize`, `hf_merge_config`) | DONE | |
+| 7 | Misdirection (`hf_misfiled_bug`) + off-by-one (`hf_pagination`) | DONE | |
+| 8 | Silent-failure / robustness (`hf_suppress`, `hf_validate_withdraw`, `hf_retry_backoff`) | DONE | |
+| 9 | Multi-concern (`hf_json_serialize`) | DONE | `hf_api_v1_to_v2` deferred (wf6 covers migration+multi-concern) |
+| 10 | Concurrency (`hf_counter_race`) | DONE | `threading`, deterministic total |
+| 11 | `run_suite.py` + `suite_lint.py` + arms (`m6_arms.py`: monolith/dloop/staged) | DONE | lint clean on all 30; baseline recorded |
+| 12 | Comparison run (monolith / dloop / staged, N=1) + M6 findings entry | RUNNING | ~2h; findings scaffold in `experiments/M6-evaluation-suite/FINDINGS.md` |
+
+**Suite v0: 30 tasks, 11 request shapes, all 7 traps, 5 `decline_correct`.**
+Baselines span 0/7 (greenfield) to full (decline tasks).
 
 ## Notes
 
