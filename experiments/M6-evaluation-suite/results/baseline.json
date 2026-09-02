@@ -1,96 +1,68 @@
 [
   {
-    "task": "wf1_crossfile",
-    "shape": "fix",
-    "trap": "misdirection",
+    "task": "hf_already_optimal",
+    "shape": "perf",
+    "trap": "false-premise",
     "stresses": [
-      "cross-file",
-      "premise-audit"
+      "premise-audit",
+      "cross-file"
     ],
     "rep": 1,
     "arm": "baseline",
     "terminal": "done",
     "baseline_sub": [
-      2,
-      5
+      6,
+      6
     ],
     "final_sub": [
-      2,
-      5
-    ],
-    "struct": {},
-    "objective_pass": false,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 0.0,
-    "tail": "SUBTESTS 2/5\n  total qty=3: got 5 want 15\n  total mixed: got 12 want 14\n  line_price direct: got 5 want 20"
-  },
-  {
-    "task": "wf2_retry",
-    "shape": "feature",
-    "trap": "edge-coverage",
-    "stresses": [
-      "edge-coverage",
-      "greenfield-impl"
-    ],
-    "rep": 1,
-    "arm": "baseline",
-    "terminal": "done",
-    "baseline_sub": [
-      0,
-      5
-    ],
-    "final_sub": [
-      0,
-      5
-    ],
-    "struct": {},
-    "objective_pass": false,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 0.0,
-    "tail": "SUBTESTS 0/5\n  success first try: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  succeed on 2nd try: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  exhaust then re-raise last: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  retries=0 is one attempt: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  returns fn value: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")"
-  },
-  {
-    "task": "wf3_refactor",
-    "shape": "refactor",
-    "trap": "behaviour-preserving",
-    "stresses": [
-      "L2-structural"
-    ],
-    "rep": 1,
-    "arm": "baseline",
-    "terminal": "done",
-    "baseline_sub": [
-      5,
-      5
-    ],
-    "final_sub": [
-      5,
-      5
+      6,
+      6
     ],
     "struct": {},
     "objective_pass": true,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
-    "decline_expected": false,
+    "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 6/6"
   },
   {
-    "task": "wf4_assumption",
-    "shape": "perf",
+    "task": "hf_dead_code",
+    "shape": "cleanup",
     "trap": "false-premise",
     "stresses": [
       "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "baseline",
+    "terminal": "done",
+    "baseline_sub": [
+      4,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": false,
+    "wall_s": 0.0,
+    "tail": "SUBTESTS 4/4"
+  },
+  {
+    "task": "hf_remove_validation",
+    "shape": "cleanup",
+    "trap": "false-premise",
+    "stresses": [
+      "premise-audit",
+      "regression-guard"
     ],
     "rep": 1,
     "arm": "baseline",
@@ -114,206 +86,31 @@
     "tail": "SUBTESTS 5/5"
   },
   {
-    "task": "wf5_partial",
-    "shape": "implement",
-    "trap": "edge-coverage",
+    "task": "hf_cache_nondeterministic",
+    "shape": "perf",
+    "trap": "false-premise",
     "stresses": [
-      "kway-synth",
-      "partial-credit",
-      "greenfield-impl"
+      "premise-audit"
     ],
     "rep": 1,
     "arm": "baseline",
     "terminal": "done",
     "baseline_sub": [
-      0,
-      7
+      4,
+      4
     ],
     "final_sub": [
-      0,
-      7
+      4,
+      4
     ],
     "struct": {},
-    "objective_pass": false,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 0.0,
-    "tail": "SUBTESTS 0/7\n  minutes: raised NotImplementedError()\n  hours: raised NotImplementedError()\n  h+m: raised NotImplementedError()\n  seconds: raised NotImplementedError()\n  h+m+s: raised NotImplementedError()\n  empty is zero: raised NotImplementedError()\n  whitespace: raised NotImplementedError()"
-  },
-  {
-    "task": "wf6_multi",
-    "shape": "migration",
-    "trap": "multi-concern",
-    "stresses": [
-      "concern-split",
-      "combined-score"
-    ],
-    "rep": 1,
-    "arm": "baseline",
-    "terminal": "done",
-    "baseline_sub": [
-      2,
-      6
-    ],
-    "final_sub": [
-      2,
-      6
-    ],
-    "struct": {
-      "DOCSCORE": [
-        0,
-        4
-      ],
-      "TODOSCORE": [
-        0,
-        3
-      ]
-    },
-    "objective_pass": false,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 0.0,
-    "tail": "SUBTESTS 2/6\n  topo chain raised NotImplementedError()\n  topo diamond raised NotImplementedError()\n  topo cycle: still NotImplementedError\n  topo empty raised NotImplementedError()\nDOCSCORE 0/4\n  no module docstring\n  build_graph docstring missing Args/Returns\n  topo_sort docstring missing Args/Returns/Raises\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present"
-  },
-  {
-    "task": "hf_extract_fn",
-    "shape": "refactor",
-    "trap": "behaviour-preserving",
-    "stresses": [
-      "L2-structural",
-      "regression-guard"
-    ],
-    "rep": 1,
-    "arm": "baseline",
-    "terminal": "done",
-    "baseline_sub": [
-      5,
-      5
-    ],
-    "final_sub": [
-      5,
-      5
-    ],
-    "struct": {
-      "STRUCTSCORE": [
-        1,
-        3
-      ]
-    },
     "objective_pass": true,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
-    "decline_expected": false,
+    "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/3\n  process not split (helpers: [])\n  process body still 15 lines"
-  },
-  {
-    "task": "hf_dict_dispatch",
-    "shape": "refactor",
-    "trap": "behaviour-preserving",
-    "stresses": [
-      "L2-structural",
-      "regression-guard"
-    ],
-    "rep": 1,
-    "arm": "baseline",
-    "terminal": "done",
-    "baseline_sub": [
-      7,
-      7
-    ],
-    "final_sub": [
-      7,
-      7
-    ],
-    "struct": {
-      "STRUCTSCORE": [
-        0,
-        3
-      ]
-    },
-    "objective_pass": true,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 0.0,
-    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain"
-  },
-  {
-    "task": "hf_rename",
-    "shape": "compat",
-    "trap": "behaviour-preserving",
-    "stresses": [
-      "regression-guard",
-      "L2-structural"
-    ],
-    "rep": 1,
-    "arm": "baseline",
-    "terminal": "done",
-    "baseline_sub": [
-      4,
-      6
-    ],
-    "final_sub": [
-      4,
-      6
-    ],
-    "struct": {
-      "STRUCTSCORE": [
-        2,
-        3
-      ]
-    },
-    "objective_pass": false,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 0.0,
-    "tail": "SUBTESTS 4/6\n  compute exists and works: raised AttributeError(\"module 'billing' has no attribute 'compute'\")\n  calc name is gone: got True want False\nSTRUCTSCORE 2/3"
-  },
-  {
-    "task": "hf_rec_to_iter",
-    "shape": "refactor",
-    "trap": "behaviour-preserving",
-    "stresses": [
-      "L2-structural"
-    ],
-    "rep": 1,
-    "arm": "baseline",
-    "terminal": "done",
-    "baseline_sub": [
-      4,
-      5
-    ],
-    "final_sub": [
-      4,
-      5
-    ],
-    "struct": {
-      "STRUCTSCORE": [
-        0,
-        1
-      ]
-    },
-    "objective_pass": false,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 0.0,
-    "tail": "SUBTESTS 4/5\n  deep chain 5000: raised RecursionError('maximum recursion depth exceeded while calling a Python object')\nSTRUCTSCORE 0/1\n  count_nodes still calls itself"
+    "tail": "SUBTESTS 4/4"
   }
 ]

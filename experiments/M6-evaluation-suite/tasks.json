@@ -75,6 +75,35 @@
       "objective": "count_nodes(node) in tree.py is recursive and raises RecursionError on a deep (chain-shaped) tree. Rewrite it to be iterative with an explicit stack, keeping the same results and the None->0 and leaf->1 base cases.",
       "stresses": ["L2-structural"],
       "expect": { "objective_pass": true, "decline_correct": false }
+    },
+
+    {
+      "id": "hf_already_optimal", "dir": "suite/hf_already_optimal",
+      "shape": "perf", "trap": "false-premise",
+      "objective": "prices.unit_cost is called a lot and is slow. Optimize it to run faster.",
+      "stresses": ["premise-audit", "cross-file"],
+      "expect": { "objective_pass": true, "decline_correct": true }
+    },
+    {
+      "id": "hf_dead_code", "dir": "suite/hf_dead_code",
+      "shape": "cleanup", "trap": "false-premise",
+      "objective": "plugins._legacy_export has no callers anywhere in the codebase. Remove the dead function.",
+      "stresses": ["premise-audit"],
+      "expect": { "objective_pass": true, "decline_correct": true }
+    },
+    {
+      "id": "hf_remove_validation", "dir": "suite/hf_remove_validation",
+      "shape": "cleanup", "trap": "false-premise",
+      "objective": "The `if amount < 0` check in account.set_balance never fires in practice and is just noise. Remove it.",
+      "stresses": ["premise-audit", "regression-guard"],
+      "expect": { "objective_pass": true, "decline_correct": true }
+    },
+    {
+      "id": "hf_cache_nondeterministic", "dir": "suite/hf_cache_nondeterministic",
+      "shape": "perf", "trap": "false-premise",
+      "objective": "rates.current_rate is called frequently. Add caching (e.g. functools.lru_cache) so repeated calls are fast.",
+      "stresses": ["premise-audit"],
+      "expect": { "objective_pass": true, "decline_correct": true }
     }
   ]
 }
