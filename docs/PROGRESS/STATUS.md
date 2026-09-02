@@ -1,18 +1,22 @@
 # Status
 
-_Updated: 2026-08-31_
+_Updated: 2026-09-02_
 
 ## Where we are
 
 **MVP target:** Milestones 0 through 5 — a local assistant using ephemeral role-specific processors under a language-model orchestrator, on measured hardware, fully observable, on a safety floor.
 
-**MVP slice COMPLETE.** M0–M5 done, findings-log entries 1–6, first sequence
-rework written (`40-roadmap/06-sequence-rework-01.md` — no reordering).
+**MVP slice COMPLETE.** M0–M5 done, findings-log entries 1–6.
 
-**Current milestone:** none in execution. Next task is a **deeper re-evaluation of
-achievable goals** against the sequence-rework notes + the six MVP findings
-(`40-roadmap/06-sequence-rework-01.md` → "Recalibrated expectations" / "Next"),
-which then feeds M6's evidence question and decomposition.
+**M5-follow-up investigation COMPLETE** (findings-log entry 7 + three addenda):
+attractor census, judge-lab, loop-lab, super-pipeline. It answered the "deeper
+re-evaluation of achievable goals" that rework 1 owed, and drove **sequence
+rework 2** (`40-roadmap/07-sequence-rework-02.md`): two milestones inserted after
+M5 — **M6 Evaluation task suite** and **M7 Static supervised workflow** — with the
+old M6–M14 shifting to M8–M16.
+
+**Current milestone: M6 — Evaluation task suite.** Spec written
+(`10-technical/10-evaluation-task-suite.md`); building the suite next.
 
 **What the MVP established:**
 
@@ -44,28 +48,36 @@ which then feeds M6's evidence question and decomposition.
 | M3 — Invariant floor (reduced form for MVP) | **DONE (reduced form)** (2026-08-30) — findings-log entry 4; full form owes M9 items | `M3-invariant-floor.md` |
 | M4 — Ephemeral processor experiments | **DONE** (2026-08-30) — findings-log entry 5 (verdict inconclusive, leaning weakens) | `M4-ephemeral-processors.md` |
 | M5 — Intelligent orchestration experiments | **DONE** (2026-08-31) — findings-log entry 6 (verdict confirms, narrowly) | `M5-intelligent-orchestration.md` |
-| — first sequence rework — | **DONE** (2026-08-31) — no reordering | `40-roadmap/06-sequence-rework-01.md` |
-| — goal re-evaluation — | **TODO** — next task | in `06-sequence-rework-01.md` |
-| M6 — Persistent work and knowledge | TODO (after re-evaluation) | no |
+| — sequence rework 1 — | **DONE** (2026-08-31) — no reordering | `40-roadmap/06-sequence-rework-01.md` |
+| — M5-follow-up investigation — | **DONE** (2026-09-02) — findings-log entry 7 + 3 addenda | census / judge-lab / loop-lab / pipeline-lab |
+| — sequence rework 2 — | **DONE** (2026-09-02) — 2 milestones inserted, M6–M14 → M8–M16 | `40-roadmap/07-sequence-rework-02.md` |
+| **M6 — Evaluation task suite** | **IN EXECUTION** — spec done (`10-technical/10-evaluation-task-suite.md`); building the suite | `M6-evaluation-task-suite.md` |
+| M7 — Static supervised workflow | TODO (after M6) | `M7-static-workflow.md` (owed) |
+| M8 — Persistent work and knowledge | TODO (was M6) | — |
 
 ## Immediate next actions
 
-MVP slice closed. **Before M6 executes**: a deeper re-evaluation of achievable
-goals (`40-roadmap/06-sequence-rework-01.md` → "Next"). It restates, per adaptive
-milestone M6–M14, what "success on constrained hardware today" looks like versus
-what waits on better models/hardware, in light of the evaluation-ceiling finding
-(a 7B does the *doing* acceptably but not the *judging* — findings-log entries 6
-addendum and **7**). Entry 7 (attractor census + judge-lab) is direct input: the
-judgment step must be treated as human-or-stronger-model, not a 7B self-review;
-premise-soundness belongs in a planner pass; the second-GPU / reasoning-reviewer
-path is now the gating dependency for the self-improving tier, not a nice-to-have. Objectives and mantra unchanged; expected benefit recalibrated down;
-"promising signal on 7B" is a legitimate milestone outcome.
+**M6 in execution.** Spec `10-technical/10-evaluation-task-suite.md` written.
+Remaining M6 work:
 
-Then M6 — durable structure (intent, work, observations, evidence, findings,
-proposals, decisions, artifacts, memory) "only as far as necessary to support
-real use cases". First consumer of the "structured outcome, not prose"
-observability lesson (entries 3, 6). Target signal: a processor reusing a stored
-finding measurably beats one starting cold.
+1. Fold `fixture_workflow/` wf1–wf6 into a versioned suite dir with the
+   `eval-suite-tasks/0` schema and `stresses` tags.
+2. Build the intended tasks by trap class (~28), each with a stdlib check, a
+   discriminator subtest, and a pre-existing passing test. Priority order:
+   behaviour-preserving (`hf_extract_fn`, `hf_dict_dispatch`, `hf_rename`),
+   push-back (`hf_suppress`, `hf_already_optimal`, `hf_dead_code`), then the rest.
+3. `run_suite.py` — arm-agnostic runner reporting per-task partial credit,
+   `stresses` slices, decline accuracy, regression count, cost ledger vs monolith.
+4. Suite-lint: every non-decline task has a documented discriminator.
+5. M6 findings entry: does the trap-structured suite separate arms a toy fixture
+   cannot?
+
+**Then M7** — specify (`10-technical/11-static-workflow.md`) and build the static
+workflow from the `loop_lab`/`pipeline_lab` parts: d_loop spine + premise audit
+(always) + concern-split/combined-score keeper (conjunctive objectives) + "no
+behavioural signal → escalate" (refactors); **drop** the three inert
+super-pipeline stages; **fix** the plan-injection and greenfield-framing
+regressions. Run it on the M6 suite vs monolith and super-pipeline.
 
 ## Blockers
 

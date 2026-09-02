@@ -8,13 +8,16 @@ The milestones are ordered to create evidence before adding abstraction, and to 
 
 ## Status of this sequence
 
-This sequence is provisional and expected to be reworked in batches rather than continuously. The first rework happens after the MVP slice — end of Milestone 5 — produces its findings; a second happens near the literal midpoint of the sequence. Between those points, a finding that seems to demand reordering is recorded in the findings log and left for the batch, unless it invalidates a foundational constraint.
+This sequence is provisional and reworked in batches rather than continuously.
 
-Its near-term entries — roughly through the first adaptive loop — are firm enough to plan against. Its later entries are deliberately loose. They name an intended direction and the question each phase should answer, not a committed design.
+- **Rework 1** ran at the end of the MVP slice (Milestone 5) — `40-roadmap/06-sequence-rework-01.md`. Outcome: no reordering.
+- **Rework 2** ran after the M5-follow-up investigation (attractor census, judge-lab, loop-lab, super-pipeline; findings-log entry 7 and its addenda) — `40-roadmap/07-sequence-rework-02.md`. Outcome: **two milestones inserted after M5** — an evaluation task suite (M6) and a static supervised workflow (M7) — and everything from the old "Persistent work and knowledge" onward shifted down by two. The mapping table is in rework 2. References in earlier documents to "Milestone _n_" for _n_ ≥ 6 mean the pre-rework-2 number unless they post-date 2026-09-02.
+
+Near-term entries — roughly through the first adaptive loop — are firm enough to plan against. Later entries are deliberately loose: they name an intended direction and the question each phase should answer, not a committed design.
 
 The sequence also serves a second purpose. Laying the concepts out in execution order is a test of whether they articulate: whether each one can be built from the evidence and machinery the previous ones produce. Where a milestone cannot be stated without assuming something no earlier milestone delivers, that is a conceptual gap to record rather than an ordering to force.
 
-Milestones 0 through 5 are the MVP slice. Each carries an explicit evidence question, and completing it means answering that question from a reconstructable run — or establishing that it cannot yet be answered, and why. The execution-cadence document describes how those findings feed back. Later milestones will gain evidence questions as they come into focus.
+Milestones 0 through 5 were the MVP slice. Each carried an explicit evidence question, and completing it meant answering that question from a reconstructable run — or establishing that it could not yet be answered, and why. Milestones 6 and 7 continue that discipline. Later milestones will gain evidence questions as they come into focus.
 
 ## Milestone 0 — Characterize the local inference envelope
 
@@ -63,11 +66,11 @@ Deliverables:
 - A minimal deterministic enforcement gate that checks proposed effects and effect sequences against the invariant list and refuses those that cross it.
 - The capability and authority model, sitting above the gate.
 
-The literature-grounding pass against work on corrigibility, scalable oversight, specification gaming, and shutdown and interruptibility — before that list and its enforcement are treated as settled — is a deliverable of Milestone 9, not of this milestone. It is grouped with the rest of the safety-response elaboration rather than gating the floor's first form.
+The literature-grounding pass against work on corrigibility, scalable oversight, specification gaming, and shutdown and interruptibility — before that list and its enforcement are treated as settled — is a deliverable of Milestone 11, not of this milestone. It is grouped with the rest of the safety-response elaboration rather than gating the floor's first form.
 
-This milestone is placed early on purpose. The rest of the architecture defers many decisions to evidence, and that deferral is only safe with this floor in place. The elaboration of the safety response — triage, decommissioning signal, escalation thresholds, and the literature-grounding pass — is deferred to Milestone 9, once there are adaptive loops for it to watch and mature observability for it to run against.
+This milestone is placed early on purpose. The rest of the architecture defers many decisions to evidence, and that deferral is only safe with this floor in place. The elaboration of the safety response — triage, decommissioning signal, escalation thresholds, and the literature-grounding pass — is deferred to Milestone 11, once there are adaptive loops for it to watch and mature observability for it to run against.
 
-For the MVP slice this milestone is crossed in a reduced form — effect vocabulary, capability model, a deny-list gate, a provisional invariant list, and a human supervising every run — with the sequence-check hardening still owed, and the literature-grounding pass folded into Milestone 9, before it counts as complete. The execution-cadence document details what is in and out.
+For the MVP slice this milestone was crossed in a reduced form — effect vocabulary, capability model, a deny-list gate, a provisional invariant list, and a human supervising every run — with the sequence-check hardening still owed, and the literature-grounding pass folded into Milestone 11, before it counts as complete. The execution-cadence document details what is in and out.
 
 **Evidence question:** do the enumerated effect types carve cleanly when real effects flow through the gate, or does the boundary between types blur under use?
 
@@ -89,27 +92,59 @@ The main objective is not autonomy. It is to study whether natural-language coor
 
 **Evidence question:** does natural-language orchestration beat a fixed workflow while staying understandable, and where does its overhead start to exceed the benefit of decomposition?
 
-## Milestone 6 — Persistent work and knowledge
+A follow-up investigation (findings-log entry 7) established: a 7B does the *doing* with scaffolding but not the *judging*, no reviewer framing lifts it above an approval bias, execution grounding is the only reliable verification lever, and a cheap test-gated loop with an incumbent-protected keeper already captures most of the achievable value. That investigation is what motivated Milestones 6 and 7.
+
+## Milestone 6 — Evaluation task suite
+
+Everything downstream — the static workflow (M7) and every adaptive loop after it — is judged by running it against tasks. The MVP used a 4-then-6-task fixture that was too small and too synthetic to separate arms at N ≤ 3, and it missed whole classes of common request.
+
+This milestone builds a proper suite and the conceptual treatment behind it:
+
+- A **taxonomy of dev-request shapes** (fix, feature, refactor, perf, migration, robustness, API/contract change, dependency, cleanup) crossed with a **trap taxonomy** (misdirection, backward-compat, behaviour-preserving, edge coverage, false premise / push-back, silent-failure).
+- **20–30 tasks**, each: a realistic request; a deterministic partial-credit check (behavioural subtests, plus structural scores where behaviour under-determines the deliverable); an explicit *correct vs plausible-wrong* discriminator the check enforces; a `stresses:` tag naming which pipeline capability it exercises; a `decline_correct` flag where pushing back is the right move.
+- Each task ships a **pre-existing passing test** alongside the new ones, so the regression guard is exercised across the suite.
+- A **conceptual document** — how the project evaluates — so later milestones consume one shared method instead of each reinventing it. This addresses the gap that the MVP's evaluation was ad hoc per experiment.
+
+The existing `experiments/M5-intelligent-orchestration/fixture_workflow/` (wf1–wf6) is folded in as the seed; the full spec is `10-technical/10-evaluation-task-suite.md`.
+
+**Evidence question:** does a trap-structured task suite separate pipeline variants that a toy fixture cannot, and does it surface failure modes the MVP fixture missed?
+
+## Milestone 7 — Static supervised workflow
+
+The M5-follow-up established the near-term deliverable: a **supervised local assistant on 7–8B**, not a self-improving loop. The evidence points at a specific shape — a cheap, reliable spine (test-gated iteration, incumbent-protected keeper, escalate-on-stall) with heavier stages (premise audit, concern-split, structural verification, blind test synthesis) fired **conditionally** by task type, and every stage's influence on the outcome recorded.
+
+This milestone turns that from a set of lab scripts (`loop_lab`, `pipeline_lab`) into a specified, observable component on the M3 floor:
+
+- the flow and the per-stage contract;
+- the conditional-firing rules (which stage runs for which task class), calibrated from the counterfactual-attribution data the labs produce;
+- the escalation payload — a precise, human-answerable question, not a dump;
+- observability: every stage records whether it changed the terminal outcome, so redundant stages can be retired on evidence.
+
+It is deliberately **static** — no natural-language orchestrator in the loop (M5 showed the orchestrator's gain was adaptive retry, already captured by the spine, at 5–7× cost). The orchestrator returns as a comparison arm, not the default.
+
+**Evidence question:** on the M6 suite, does the conditionally-staged static workflow beat both the plain monolith and the always-on super-pipeline on outcome-per-call, and does it degrade safely — no regressions, honest escalation — on the tasks it cannot do?
+
+## Milestone 8 — Persistent work and knowledge
 
 Add enough durable structure for ephemeral processors to cooperate across time.
 
 Intent, work, observations, evidence, findings, proposals, decisions, artifacts, and memory should be represented only as far as necessary to support real use cases.
 
-## Milestone 7 — Context governance measurement
+## Milestone 9 — Context governance measurement
 
 The goal is not to design good context governance. It is to establish the naive default from Milestone 4 as a measurable baseline, and to develop metrics for context quality that are independent of final task success.
 
 Without those metrics, a later decision to commission a context-curator role cannot be made on evidence. This milestone produces the evidence base; it does not pick the mechanism.
 
-## Milestone 8 — Project-level adaptation
+## Milestone 10 — Project-level adaptation
 
 Use observed project work to improve project-local knowledge.
 
 The key test is whether later work in the same repository improves without polluting global system behavior.
 
-This is a scope of feedback, not a new kind of agent. The same holds for Milestones 10 and 12: the levels differ in scope, evidence, and promotion criteria — not necessarily in which processor performs them.
+This is a scope of feedback, not a new kind of agent. The same holds for Milestones 12 and 14: the levels differ in scope, evidence, and promotion criteria — not necessarily in which processor performs them.
 
-## Milestone 9 — Safety response mechanisms
+## Milestone 11 — Safety response mechanisms
 
 The elaboration of the floor from Milestone 3, required before any loop can modify the system itself.
 
@@ -121,7 +156,7 @@ Deliverables:
 - The triage role fixed outside the feedback loops, since a loop cannot commission its own watcher.
 - The literature-grounding pass against corrigibility, scalable oversight, specification gaming, and shutdown and interruptibility work — moved here from Milestone 3. Milestone 3's provisional invariant list and deny-list gate, and this milestone's safety-response elaboration, are all revised against what that pass finds before the floor is treated as settled.
 
-## Milestone 10 — System-level candidate tuning
+## Milestone 12 — System-level candidate tuning
 
 Use recurring evidence across tasks or projects to propose changes to processors, orchestration, context policy, and evaluation behavior.
 
@@ -131,13 +166,13 @@ Role commissioning likely carries a higher evidence bar than role tuning; establ
 
 Changes remain candidates until independently evaluated.
 
-## Milestone 11 — Reproducible generations and promotion
+## Milestone 13 — Reproducible generations and promotion
 
 Define trusted system generations, lineage, candidate variants, promotion, rejection, rollback, and bootstrap reconstruction.
 
 At this point the system itself becomes an experimental artifact.
 
-## Milestone 12 — Meta-evaluation
+## Milestone 14 — Meta-evaluation
 
 Introduce explicit evaluation of the improvement process.
 
@@ -145,7 +180,7 @@ Measure whether benchmarks, promotion criteria, and feedback mechanisms actually
 
 This level is bounded by construction: it asks one generic question about whether self-tuning produces trustworthy improvement, not a meta-question per parameter, and it terminates on the invariant layer and frozen baselines as non-self-tuned anchors.
 
-## Milestone 13 — Cross-generation comparison
+## Milestone 15 — Cross-generation comparison
 
 Compare models, strategies, and system generations under controlled conditions.
 
@@ -153,7 +188,7 @@ Per-role model assignment — which model plans, which implements, which evaluat
 
 Use this milestone to decide whether the project is producing cumulative system capability rather than merely increasing architectural complexity.
 
-## Milestone 14 — Bootstrap generation closure
+## Milestone 16 — Bootstrap generation closure
 
 Promoted system generations should produce reproducible bootstrap artifacts.
 

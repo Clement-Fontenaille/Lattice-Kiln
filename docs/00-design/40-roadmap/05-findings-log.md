@@ -646,3 +646,54 @@ points at the "generate the missing tests, blind, K-way" follow-up.
 
 **Runs.** `.../loop_lab/` (`lab.py`, `results/summary.md` + `results.json`,
 `FINDINGS.md`).
+
+#### Addendum (2026-09-02) — super-pipeline (every idea, always on)
+
+To find the ceiling of stage-stacking, `experiments/M5-intelligent-orchestration/pipeline_lab/`
+runs all the promising ideas in one call-heavy flow (premise audit + task-type
+classify · dual blind impl-specs · alignment check · K-way blind test synthesis ·
+`here_is_file` + concern-split + best-of-2 coding · execute + K-way check
+agreement + regression guard · context-diverse structural verify with
+probe-confirmation · deterministic reconcile + **counterfactual attribution** —
+each run replays reconciliation with each signal nulled to see which flips the
+terminal). 6 workflow tasks × N=2, ~16–29 calls/task.
+
+- **Net vs the cheap `loop_lab` d_loop: worse or tied on 5 of 6 tasks, better on
+  1.** The unique win is **wf6 (multi-concern): 6/6 algo + ~3.5/4 docs + ~2.5/3
+  TODO** where every prior arm scored ≤ 2/6 — via **concern-splitting + a keeper
+  scored on `sub+doc+todo`, not subtests alone**. wf3 (refactor) got a more
+  honest terminal (`escalate` — "behaviour preserved, cannot confirm the dedupe")
+  than d_loop's silent no-op.
+- **It regressed two solved tasks** (wf2, wf5: d_loop 5/5 → pipeline 0/5) because
+  its coding stage **violated finding 6**: it injected the plan into the
+  implementer's context (→ empty output, the documented narration failure) and
+  used `here_is_file` framing — a *fix-an-existing-file* current — for greenfield
+  implementation.
+- **Counterfactual attribution: over 12 runs only `premise_unsound` (×2, correct
+  wf4 declines), `l2_violated` (×2, both FALSE positives — a model-written probe
+  exited 1 and "confirmed" a hallucinated violation) and `l1_provided_fail` (×1)
+  ever decided a terminal.** The dual impl-specs, the alignment check, and the
+  blind test synthesis changed **zero** outcomes — ~7 calls/run of dead weight.
+  Blind synthesis was inert because its suites crash on an unfinished
+  implementation before emitting any `CHECK` line.
+- **Regressions vs baseline: 0/12** — the incumbent-protected keeper held through
+  all the added complexity.
+
+**Reading:** a **negative result with a precise payload.** Stage-stacking does not
+beat the cheap loop except on the one task class (multi-concern) that needs a
+specific mechanism, and unconditioned stages either sit inert or actively regress
+by ignoring earlier findings. This is exactly the calibration data Milestone 7
+(static supervised workflow) was inserted to consume: spine = d_loop; add premise
+audit always, concern-split + combined-score keeper for conjunctive objectives,
+"no behavioural signal → escalate" for refactors; drop the three inert stages;
+never let a lone model probe flip a terminal.
+
+**M5 investigation arc — closed.** Entry 6 answered the milestone's evidence
+question; entry 7 and its three addenda (workflow re-test, loop control,
+super-pipeline) established what a 7B-class static workflow can and cannot do and
+named the Milestone 7 component. Sequence rework 2 (`07-sequence-rework-02.md`)
+acts on it.
+
+**Runs.** `.../pipeline_lab/` (`superpipe.py`, `roles_super.py`,
+`results/summary.md` + `results.json`, `runs_super/` per-run ledgers +
+transcripts, `FINDINGS.md`).

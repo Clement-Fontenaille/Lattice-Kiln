@@ -1,11 +1,759 @@
 [
   {
+    "task": "wf1_crossfile",
+    "kind": "cross_file_bug",
+    "rep": 1,
+    "run_id": "run_b92cc7ae8c30",
+    "terminal": "needs-change",
+    "load_bearing": [
+      "l2_violated"
+    ],
+    "open_items": [],
+    "baseline_sub": 2,
+    "final_sub": 5,
+    "sub_tot": 5,
+    "objective_pass": true,
+    "regressed": false,
+    "decline_expected": false,
+    "doc": null,
+    "todo": null,
+    "total_calls": 22,
+    "wall_s": 105.8,
+    "signals": {
+      "premise_unsound": false,
+      "l1_provided_fail": false,
+      "regression": false,
+      "l2_violated": true,
+      "synth_trusted_fail": false,
+      "l2_needs_human": false,
+      "blowout": false,
+      "refactor_unverified": false
+    },
+    "ledger": [
+      {
+        "stage": "S0-premise",
+        "calls": 3,
+        "wall": 9.6,
+        "out": "sound=True type=bugfix votes=[True, True, True] reason=''"
+      },
+      {
+        "stage": "S1-testspec",
+        "calls": 1,
+        "wall": 7.2,
+        "out": "13 items 8B/5S"
+      },
+      {
+        "stage": "S2-implspec",
+        "calls": 2,
+        "wall": 8.7,
+        "out": "6/6 steps, overlap=0.41 disagree=False"
+      },
+      {
+        "stage": "S3-alignment",
+        "calls": 1,
+        "wall": 2.9,
+        "out": "advisory: unverified=0 unplanned=0"
+      },
+      {
+        "stage": "S4-synth",
+        "calls": 3,
+        "wall": 29.5,
+        "out": "2/3 valid; checks/suite=7,1,0"
+      },
+      {
+        "stage": "S5-coding",
+        "calls": 2,
+        "wall": 10.5,
+        "out": "incumbent comb=2 | impl_a comb=5(sub5) impl_b comb=5(sub5) agree=True -> winner a sub(5, 5) docNone todoNone diff_lines=7 blowout=False"
+      },
+      {
+        "stage": "S6b-l2",
+        "calls": 10,
+        "wall": 36.9,
+        "out": "pass,fail,fail,fail,fail b_consistent=True"
+      }
+    ],
+    "task_type": "bugfix",
+    "winner": "a",
+    "impl_agree": true,
+    "synth_detail": "trusted_fail=[] | ",
+    "new_fails": [],
+    "align_unverified": [],
+    "spec_disagree": false
+  },
+  {
+    "task": "wf1_crossfile",
+    "kind": "cross_file_bug",
+    "rep": 2,
+    "run_id": "run_6e1f0da348a0",
+    "terminal": "resolved",
+    "load_bearing": [],
+    "open_items": [],
+    "baseline_sub": 2,
+    "final_sub": 5,
+    "sub_tot": 5,
+    "objective_pass": true,
+    "regressed": false,
+    "decline_expected": false,
+    "doc": null,
+    "todo": null,
+    "total_calls": 17,
+    "wall_s": 92.2,
+    "signals": {
+      "premise_unsound": false,
+      "l1_provided_fail": false,
+      "regression": false,
+      "l2_violated": false,
+      "synth_trusted_fail": false,
+      "l2_needs_human": false,
+      "blowout": false,
+      "refactor_unverified": false
+    },
+    "ledger": [
+      {
+        "stage": "S0-premise",
+        "calls": 3,
+        "wall": 9.2,
+        "out": "sound=True type=bugfix votes=[True, True, True] reason=''"
+      },
+      {
+        "stage": "S1-testspec",
+        "calls": 1,
+        "wall": 6.3,
+        "out": "8 items 6B/2S"
+      },
+      {
+        "stage": "S2-implspec",
+        "calls": 2,
+        "wall": 8.9,
+        "out": "6/6 steps, overlap=0.72 disagree=False"
+      },
+      {
+        "stage": "S3-alignment",
+        "calls": 1,
+        "wall": 3.8,
+        "out": "advisory: unverified=1 unplanned=1"
+      },
+      {
+        "stage": "S4-synth",
+        "calls": 3,
+        "wall": 35.8,
+        "out": "3/3 valid; checks/suite=0,0,0"
+      },
+      {
+        "stage": "S5-coding",
+        "calls": 2,
+        "wall": 10.4,
+        "out": "incumbent comb=2 | impl_a comb=5(sub5) impl_b comb=5(sub5) agree=True -> winner a sub(5, 5) docNone todoNone diff_lines=7 blowout=False"
+      },
+      {
+        "stage": "S6b-l2",
+        "calls": 5,
+        "wall": 17.3,
+        "out": "pass,pass,pass b_consistent=True"
+      }
+    ],
+    "task_type": "bugfix",
+    "winner": "a",
+    "impl_agree": true,
+    "synth_detail": "trusted_fail=[] | ",
+    "new_fails": [],
+    "align_unverified": [
+      "The `pricing.line_price` method should be called with the correct parameters (order line's price and quantity) to ensure accurate pricing."
+    ],
+    "spec_disagree": false
+  },
+  {
+    "task": "wf2_retry",
+    "kind": "feature_design_choice",
+    "rep": 1,
+    "run_id": "run_7b50ab8c3425",
+    "terminal": "needs-change",
+    "load_bearing": [],
+    "open_items": [
+      "The change preserves all externally observable behaviour (refactor).  [check: A=SATISFIED; B wanted ['client.py::call :: Add retries parameter with default value of 2', 'client.py::call :: Implement retry logic using a loop']]"
+    ],
+    "baseline_sub": 0,
+    "final_sub": 0,
+    "sub_tot": 5,
+    "objective_pass": false,
+    "regressed": false,
+    "decline_expected": false,
+    "doc": null,
+    "todo": null,
+    "total_calls": 16,
+    "wall_s": 74.2,
+    "signals": {
+      "premise_unsound": false,
+      "l1_provided_fail": true,
+      "regression": false,
+      "l2_violated": true,
+      "synth_trusted_fail": false,
+      "l2_needs_human": true,
+      "blowout": false,
+      "refactor_unverified": false
+    },
+    "ledger": [
+      {
+        "stage": "S0-premise",
+        "calls": 3,
+        "wall": 8.9,
+        "out": "sound=True type=feature votes=[True, True, True] reason=''"
+      },
+      {
+        "stage": "S1-testspec",
+        "calls": 1,
+        "wall": 7.0,
+        "out": "0 items 0B/0S"
+      },
+      {
+        "stage": "S2-implspec",
+        "calls": 2,
+        "wall": 8.8,
+        "out": "6/6 steps, overlap=0.31 disagree=True"
+      },
+      {
+        "stage": "S3-alignment",
+        "calls": 1,
+        "wall": 2.8,
+        "out": "advisory: unverified=0 unplanned=0"
+      },
+      {
+        "stage": "S4-synth",
+        "calls": 3,
+        "wall": 24.3,
+        "out": "2/3 valid; checks/suite=4,5,0"
+      },
+      {
+        "stage": "S5-coding",
+        "calls": 2,
+        "wall": 9.0,
+        "out": "incumbent comb=0 | impl_a comb=0(sub0) impl_b comb=0(sub0) agree=True -> winner incumbent sub(0, 5) docNone todoNone diff_lines=1 blowout=False"
+      },
+      {
+        "stage": "S6b-l2",
+        "calls": 4,
+        "wall": 13.2,
+        "out": "fail,escalate b_consistent=False"
+      }
+    ],
+    "task_type": "feature",
+    "winner": "incumbent",
+    "impl_agree": true,
+    "synth_detail": "trusted_fail=[] | ",
+    "new_fails": [],
+    "align_unverified": [],
+    "spec_disagree": true
+  },
+  {
+    "task": "wf2_retry",
+    "kind": "feature_design_choice",
+    "rep": 2,
+    "run_id": "run_bae3e7dd45fe",
+    "terminal": "needs-change",
+    "load_bearing": [],
+    "open_items": [
+      "The change preserves all externally observable behaviour (refactor).  [check: A=SATISFIED; B wanted ['client.py::call :: Add retries parameter with default value of 2', 'client.py::call :: Implement retry logic using a loop']]"
+    ],
+    "baseline_sub": 0,
+    "final_sub": 0,
+    "sub_tot": 5,
+    "objective_pass": false,
+    "regressed": false,
+    "decline_expected": false,
+    "doc": null,
+    "todo": null,
+    "total_calls": 16,
+    "wall_s": 69.7,
+    "signals": {
+      "premise_unsound": false,
+      "l1_provided_fail": true,
+      "regression": false,
+      "l2_violated": true,
+      "synth_trusted_fail": false,
+      "l2_needs_human": true,
+      "blowout": false,
+      "refactor_unverified": false
+    },
+    "ledger": [
+      {
+        "stage": "S0-premise",
+        "calls": 3,
+        "wall": 8.4,
+        "out": "sound=True type=feature votes=[True, True, True] reason=''"
+      },
+      {
+        "stage": "S1-testspec",
+        "calls": 1,
+        "wall": 6.2,
+        "out": "0 items 0B/0S"
+      },
+      {
+        "stage": "S2-implspec",
+        "calls": 2,
+        "wall": 8.2,
+        "out": "6/5 steps, overlap=0.34 disagree=True"
+      },
+      {
+        "stage": "S3-alignment",
+        "calls": 1,
+        "wall": 2.8,
+        "out": "advisory: unverified=0 unplanned=0"
+      },
+      {
+        "stage": "S4-synth",
+        "calls": 3,
+        "wall": 20.7,
+        "out": "2/3 valid; checks/suite=0,2,0"
+      },
+      {
+        "stage": "S5-coding",
+        "calls": 2,
+        "wall": 9.4,
+        "out": "incumbent comb=0 | impl_a comb=0(sub0) impl_b comb=0(sub0) agree=True -> winner incumbent sub(0, 5) docNone todoNone diff_lines=1 blowout=False"
+      },
+      {
+        "stage": "S6b-l2",
+        "calls": 4,
+        "wall": 13.7,
+        "out": "fail,escalate b_consistent=False"
+      }
+    ],
+    "task_type": "feature",
+    "winner": "incumbent",
+    "impl_agree": true,
+    "synth_detail": "trusted_fail=[] | ",
+    "new_fails": [],
+    "align_unverified": [],
+    "spec_disagree": true
+  },
+  {
+    "task": "wf3_refactor",
+    "kind": "refactor_trap",
+    "rep": 1,
+    "run_id": "run_d33d53d91c8e",
+    "terminal": "escalate",
+    "load_bearing": [],
+    "open_items": [
+      "The code must not contain duplicate code for calculating the price after applying the 20% discount.  [check: A=SATISFIED; B wanted ['discounts.py::staff_price :: return apply_discount(price)', 'discounts.py::clearance_price :: return apply_discount(price)']]",
+      "The helper function must have a docstring explaining its purpose and parameters.  [check: A=NEEDS-HUMAN]",
+      "The helper function must be named descriptively, such as `apply_discount`.  [check: A=NEEDS-HUMAN]",
+      "The change preserves all externally observable behaviour (refactor).  [check: A=SATISFIED; B wanted ['discounts.py::staff_price :: return apply_discount(price)', 'discounts.py::clearance_price :: return apply_discount(price)']]"
+    ],
+    "baseline_sub": 5,
+    "final_sub": 5,
+    "sub_tot": 5,
+    "objective_pass": true,
+    "regressed": false,
+    "decline_expected": false,
+    "doc": null,
+    "todo": null,
+    "total_calls": 17,
+    "wall_s": 68.3,
+    "signals": {
+      "premise_unsound": false,
+      "l1_provided_fail": false,
+      "regression": false,
+      "l2_violated": false,
+      "synth_trusted_fail": false,
+      "l2_needs_human": true,
+      "blowout": false,
+      "refactor_unverified": true
+    },
+    "ledger": [
+      {
+        "stage": "S0-premise",
+        "calls": 3,
+        "wall": 9.1,
+        "out": "sound=True type=refactor votes=[True, True, True] reason=''"
+      },
+      {
+        "stage": "S1-testspec",
+        "calls": 1,
+        "wall": 5.7,
+        "out": "8 items 4B/4S"
+      },
+      {
+        "stage": "S2-implspec",
+        "calls": 2,
+        "wall": 8.9,
+        "out": "6/6 steps, overlap=0.57 disagree=False"
+      },
+      {
+        "stage": "S3-alignment",
+        "calls": 1,
+        "wall": 3.0,
+        "out": "advisory: unverified=0 unplanned=0"
+      },
+      {
+        "stage": "S4-synth",
+        "calls": 3,
+        "wall": 19.1,
+        "out": "2/3 valid; checks/suite=2,0,2"
+      },
+      {
+        "stage": "S5-coding",
+        "calls": 0,
+        "wall": 0.5,
+        "out": "incumbent comb=5 | impl_a comb=5(sub5) impl_b comb=5(sub5) agree=True -> winner incumbent sub(5, 5) docNone todoNone diff_lines=1 blowout=False"
+      },
+      {
+        "stage": "S6b-l2",
+        "calls": 7,
+        "wall": 21.7,
+        "out": "escalate,pass,escalate,escalate,escalate b_consistent=False"
+      }
+    ],
+    "task_type": "refactor",
+    "winner": "incumbent",
+    "impl_agree": true,
+    "synth_detail": "trusted_fail=[] | staff_price:2/2pass clearance_price:2/2pass",
+    "new_fails": [],
+    "align_unverified": [],
+    "spec_disagree": false
+  },
+  {
+    "task": "wf3_refactor",
+    "kind": "refactor_trap",
+    "rep": 2,
+    "run_id": "run_385a34a0febc",
+    "terminal": "escalate",
+    "load_bearing": [],
+    "open_items": [
+      "The change preserves all externally observable behaviour (refactor).  [check: A=SATISFIED; B wanted ['discounts.py::staff_price :: Extract common logic into a helper function.', 'discounts.py::clearance_price :: Extract common logic into a helper function.']]"
+    ],
+    "baseline_sub": 5,
+    "final_sub": 5,
+    "sub_tot": 5,
+    "objective_pass": true,
+    "regressed": false,
+    "decline_expected": false,
+    "doc": null,
+    "todo": null,
+    "total_calls": 12,
+    "wall_s": 58.9,
+    "signals": {
+      "premise_unsound": false,
+      "l1_provided_fail": false,
+      "regression": false,
+      "l2_violated": false,
+      "synth_trusted_fail": false,
+      "l2_needs_human": true,
+      "blowout": false,
+      "refactor_unverified": true
+    },
+    "ledger": [
+      {
+        "stage": "S0-premise",
+        "calls": 3,
+        "wall": 8.6,
+        "out": "sound=True type=refactor votes=[True, True, True] reason=''"
+      },
+      {
+        "stage": "S1-testspec",
+        "calls": 1,
+        "wall": 8.4,
+        "out": "0 items 0B/0S"
+      },
+      {
+        "stage": "S2-implspec",
+        "calls": 2,
+        "wall": 8.8,
+        "out": "6/6 steps, overlap=0.37 disagree=False"
+      },
+      {
+        "stage": "S3-alignment",
+        "calls": 1,
+        "wall": 2.8,
+        "out": "advisory: unverified=0 unplanned=0"
+      },
+      {
+        "stage": "S4-synth",
+        "calls": 3,
+        "wall": 23.9,
+        "out": "2/3 valid; checks/suite=2,0,3"
+      },
+      {
+        "stage": "S5-coding",
+        "calls": 0,
+        "wall": 0.6,
+        "out": "incumbent comb=5 | impl_a comb=5(sub5) impl_b comb=5(sub5) agree=True -> winner incumbent sub(5, 5) docNone todoNone diff_lines=1 blowout=False"
+      },
+      {
+        "stage": "S6b-l2",
+        "calls": 2,
+        "wall": 5.5,
+        "out": "escalate b_consistent=False"
+      }
+    ],
+    "task_type": "refactor",
+    "winner": "incumbent",
+    "impl_agree": true,
+    "synth_detail": "trusted_fail=[] | ",
+    "new_fails": [],
+    "align_unverified": [],
+    "spec_disagree": false
+  },
+  {
+    "task": "wf4_assumption",
+    "kind": "stale_assumption",
+    "rep": 1,
+    "run_id": "run_5734ed84bc60",
+    "terminal": "declined",
+    "load_bearing": [
+      "premise_unsound"
+    ],
+    "open_items": [],
+    "baseline_sub": 5,
+    "final_sub": 5,
+    "sub_tot": 5,
+    "objective_pass": true,
+    "regressed": false,
+    "decline_expected": true,
+    "doc": null,
+    "todo": null,
+    "total_calls": 3,
+    "wall_s": 9.0,
+    "signals": {
+      "premise_unsound": true,
+      "l1_provided_fail": false,
+      "regression": false,
+      "l2_violated": false,
+      "synth_trusted_fail": false,
+      "l2_needs_human": false,
+      "blowout": false,
+      "refactor_unverified": false
+    },
+    "ledger": [
+      {
+        "stage": "S0-premise",
+        "calls": 3,
+        "wall": 8.9,
+        "out": "sound=False type=perf votes=[False, False, False] reason='The data is not ordered, making a linear scan necessary.'"
+      }
+    ],
+    "reason": "The data is not ordered, making a linear scan necessary.",
+    "correct_action": "Sort the data before performing the search.",
+    "task_type": "perf"
+  },
+  {
+    "task": "wf4_assumption",
+    "kind": "stale_assumption",
+    "rep": 2,
+    "run_id": "run_1f5f4426fe2e",
+    "terminal": "declined",
+    "load_bearing": [
+      "premise_unsound"
+    ],
+    "open_items": [],
+    "baseline_sub": 5,
+    "final_sub": 5,
+    "sub_tot": 5,
+    "objective_pass": true,
+    "regressed": false,
+    "decline_expected": true,
+    "doc": null,
+    "todo": null,
+    "total_calls": 3,
+    "wall_s": 9.0,
+    "signals": {
+      "premise_unsound": true,
+      "l1_provided_fail": false,
+      "regression": false,
+      "l2_violated": false,
+      "synth_trusted_fail": false,
+      "l2_needs_human": false,
+      "blowout": false,
+      "refactor_unverified": false
+    },
+    "ledger": [
+      {
+        "stage": "S0-premise",
+        "calls": 3,
+        "wall": 8.9,
+        "out": "sound=False type=perf votes=[False, False, False] reason='Data is not ordered, cannot achieve O(log n).'"
+      }
+    ],
+    "reason": "Data is not ordered, cannot achieve O(log n).",
+    "correct_action": "Sort the data first if possible, or use a different algorithm like binary search.",
+    "task_type": "perf"
+  },
+  {
+    "task": "wf5_partial",
+    "kind": "partial_credit",
+    "rep": 1,
+    "run_id": "run_586db96bbf85",
+    "terminal": "needs-change",
+    "load_bearing": [],
+    "open_items": [
+      "The change preserves all externally observable behaviour (refactor).  [check: A=SATISFIED; B wanted ['durations.py::parse_duration :: Implement the function to parse the duration string into total seconds.']]"
+    ],
+    "baseline_sub": 0,
+    "final_sub": 0,
+    "sub_tot": 7,
+    "objective_pass": false,
+    "regressed": false,
+    "decline_expected": false,
+    "doc": null,
+    "todo": null,
+    "total_calls": 16,
+    "wall_s": 82.8,
+    "signals": {
+      "premise_unsound": false,
+      "l1_provided_fail": true,
+      "regression": false,
+      "l2_violated": true,
+      "synth_trusted_fail": false,
+      "l2_needs_human": true,
+      "blowout": false,
+      "refactor_unverified": false
+    },
+    "ledger": [
+      {
+        "stage": "S0-premise",
+        "calls": 3,
+        "wall": 8.7,
+        "out": "sound=True type=feature votes=[True, True, True] reason=''"
+      },
+      {
+        "stage": "S1-testspec",
+        "calls": 1,
+        "wall": 10.4,
+        "out": "0 items 0B/0S"
+      },
+      {
+        "stage": "S2-implspec",
+        "calls": 2,
+        "wall": 8.3,
+        "out": "6/6 steps, overlap=0.31 disagree=True"
+      },
+      {
+        "stage": "S3-alignment",
+        "calls": 1,
+        "wall": 2.8,
+        "out": "advisory: unverified=0 unplanned=0"
+      },
+      {
+        "stage": "S4-synth",
+        "calls": 3,
+        "wall": 31.7,
+        "out": "2/3 valid; checks/suite=6,2,0"
+      },
+      {
+        "stage": "S5-coding",
+        "calls": 2,
+        "wall": 8.6,
+        "out": "incumbent comb=0 | impl_a comb=0(sub0) impl_b comb=0(sub0) agree=True -> winner incumbent sub(0, 7) docNone todoNone diff_lines=1 blowout=False"
+      },
+      {
+        "stage": "S6b-l2",
+        "calls": 4,
+        "wall": 12.0,
+        "out": "fail,escalate b_consistent=False"
+      }
+    ],
+    "task_type": "feature",
+    "winner": "incumbent",
+    "impl_agree": true,
+    "synth_detail": "trusted_fail=[] | sqrt:2/2pass pi:1/2pass",
+    "new_fails": [],
+    "align_unverified": [],
+    "spec_disagree": true
+  },
+  {
+    "task": "wf5_partial",
+    "kind": "partial_credit",
+    "rep": 2,
+    "run_id": "run_61ea82d4289d",
+    "terminal": "needs-change",
+    "load_bearing": [
+      "l1_provided_fail"
+    ],
+    "open_items": [
+      "[spec-disagreement] two blind impl-specs diverged on: Implement durations.parse_duration(s) so every subtest in test_task.py passes. I  [check: A=SATISFIED; B wanted ['durations.py::parse_duration :: Implement the function to parse the duration string into total seconds.']]",
+      "The change preserves all externally observable behaviour (refactor).  [check: A=SATISFIED; B wanted ['durations.py::parse_duration :: Implement the function to parse the duration string into total seconds.']]"
+    ],
+    "baseline_sub": 0,
+    "final_sub": 5,
+    "sub_tot": 7,
+    "objective_pass": false,
+    "regressed": false,
+    "decline_expected": false,
+    "doc": null,
+    "todo": null,
+    "total_calls": 16,
+    "wall_s": 89.8,
+    "signals": {
+      "premise_unsound": false,
+      "l1_provided_fail": true,
+      "regression": false,
+      "l2_violated": false,
+      "synth_trusted_fail": false,
+      "l2_needs_human": true,
+      "blowout": false,
+      "refactor_unverified": false
+    },
+    "ledger": [
+      {
+        "stage": "S0-premise",
+        "calls": 3,
+        "wall": 8.6,
+        "out": "sound=True type=feature votes=[True, True, True] reason=''"
+      },
+      {
+        "stage": "S1-testspec",
+        "calls": 1,
+        "wall": 10.2,
+        "out": "0 items 0B/0S"
+      },
+      {
+        "stage": "S2-implspec",
+        "calls": 2,
+        "wall": 7.6,
+        "out": "6/6 steps, overlap=0.26 disagree=True"
+      },
+      {
+        "stage": "S3-alignment",
+        "calls": 1,
+        "wall": 2.7,
+        "out": "advisory: unverified=0 unplanned=0"
+      },
+      {
+        "stage": "S4-synth",
+        "calls": 3,
+        "wall": 31.1,
+        "out": "3/3 valid; checks/suite=0,10,1"
+      },
+      {
+        "stage": "S5-coding",
+        "calls": 3,
+        "wall": 20.2,
+        "out": "incumbent comb=0 | impl_a comb=5(sub5) impl_b comb=0(sub0) agree=False -> winner a sub(5, 7) docNone todoNone diff_lines=21 blowout=False"
+      },
+      {
+        "stage": "S6b-l2",
+        "calls": 3,
+        "wall": 8.5,
+        "out": "escalate,escalate b_consistent=False"
+      }
+    ],
+    "task_type": "feature",
+    "winner": "a",
+    "impl_agree": false,
+    "synth_detail": "trusted_fail=[] | ",
+    "new_fails": [],
+    "align_unverified": [],
+    "spec_disagree": true
+  },
+  {
     "task": "wf6_multi",
     "kind": "multi_concern",
     "rep": 1,
-    "run_id": "run_9b68c8a0b530",
-    "terminal": "resolved",
-    "load_bearing": [],
+    "run_id": "run_a5fa4dc8633f",
+    "terminal": "needs-change",
+    "load_bearing": [
+      "l2_violated"
+    ],
     "open_items": [],
     "baseline_sub": 2,
     "final_sub": 6,
@@ -21,8 +769,94 @@
       2,
       3
     ],
-    "total_calls": 27,
-    "wall_s": 147.8,
+    "total_calls": 28,
+    "wall_s": 247.8,
+    "signals": {
+      "premise_unsound": false,
+      "l1_provided_fail": false,
+      "regression": false,
+      "l2_violated": true,
+      "synth_trusted_fail": false,
+      "l2_needs_human": false,
+      "blowout": false,
+      "refactor_unverified": false
+    },
+    "ledger": [
+      {
+        "stage": "S0-premise",
+        "calls": 3,
+        "wall": 8.6,
+        "out": "sound=True type=feature votes=[True, True, True] reason=''"
+      },
+      {
+        "stage": "S1-testspec",
+        "calls": 1,
+        "wall": 5.0,
+        "out": "8 items 4B/4S"
+      },
+      {
+        "stage": "S2-implspec",
+        "calls": 2,
+        "wall": 10.0,
+        "out": "10/8 steps, overlap=0.95 disagree=False"
+      },
+      {
+        "stage": "S3-alignment",
+        "calls": 1,
+        "wall": 3.0,
+        "out": "advisory: unverified=0 unplanned=0"
+      },
+      {
+        "stage": "S4-synth",
+        "calls": 3,
+        "wall": 36.2,
+        "out": "2/3 valid; checks/suite=0,4,1"
+      },
+      {
+        "stage": "S5-coding",
+        "calls": 12,
+        "wall": 161.9,
+        "out": "incumbent comb=3 | impl_a comb=9(sub3) impl_b comb=11(sub6) agree=False -> winner b sub(6, 6) doc(3, 4) todo(2, 3) diff_lines=59 blowout=False"
+      },
+      {
+        "stage": "S6b-l2",
+        "calls": 6,
+        "wall": 22.6,
+        "out": "pass,pass,pass,fail b_consistent=True"
+      }
+    ],
+    "task_type": "feature",
+    "winner": "b",
+    "impl_agree": false,
+    "synth_detail": "trusted_fail=[] | ",
+    "new_fails": [],
+    "align_unverified": [],
+    "spec_disagree": false
+  },
+  {
+    "task": "wf6_multi",
+    "kind": "multi_concern",
+    "rep": 2,
+    "run_id": "run_09d9a0b8505d",
+    "terminal": "resolved",
+    "load_bearing": [],
+    "open_items": [],
+    "baseline_sub": 2,
+    "final_sub": 6,
+    "sub_tot": 6,
+    "objective_pass": true,
+    "regressed": false,
+    "decline_expected": false,
+    "doc": [
+      4,
+      4
+    ],
+    "todo": [
+      3,
+      3
+    ],
+    "total_calls": 29,
+    "wall_s": 222.6,
     "signals": {
       "premise_unsound": false,
       "l1_provided_fail": false,
@@ -37,20 +871,20 @@
       {
         "stage": "S0-premise",
         "calls": 3,
-        "wall": 9.1,
-        "out": "sound=True type=feature votes=[False, True, True] reason='The objective cannot be satisfied as literally stated due to the missing implementation of topo_sort and the presence of stale TODO comments.'"
+        "wall": 8.8,
+        "out": "sound=True type=feature votes=[True, True, True] reason=''"
       },
       {
         "stage": "S1-testspec",
         "calls": 1,
-        "wall": 6.3,
-        "out": "12 items 8B/4S"
+        "wall": 8.5,
+        "out": "15 items 6B/9S"
       },
       {
         "stage": "S2-implspec",
         "calls": 2,
-        "wall": 11.8,
-        "out": "10/14 steps, overlap=0.60 disagree=False"
+        "wall": 10.5,
+        "out": "10/7 steps, overlap=0.90 disagree=False"
       },
       {
         "stage": "S3-alignment",
@@ -61,26 +895,26 @@
       {
         "stage": "S4-synth",
         "calls": 3,
-        "wall": 33.1,
-        "out": "2/3 valid; checks/suite=1,5,0"
+        "wall": 42.0,
+        "out": "1/3 valid; checks/suite=3,0,0"
       },
       {
         "stage": "S5-coding",
         "calls": 12,
-        "wall": 63.7,
-        "out": "incumbent comb=3 | impl_a comb=2(sub2) impl_b comb=11(sub6) agree=False -> winner b sub(6, 6) doc(3, 4) todo(2, 3) diff_lines=55 blowout=False"
+        "wall": 122.7,
+        "out": "incumbent comb=3 | impl_a comb=13(sub6) impl_b comb=12(sub6) agree=False -> winner a sub(6, 6) doc(4, 4) todo(3, 3) diff_lines=59 blowout=False"
       },
       {
         "stage": "S6b-l2",
-        "calls": 5,
-        "wall": 19.6,
-        "out": "pass,pass,pass,pass b_consistent=True"
+        "calls": 7,
+        "wall": 26.6,
+        "out": "pass,pass,pass,pass,pass b_consistent=True"
       }
     ],
     "task_type": "feature",
-    "winner": "b",
+    "winner": "a",
     "impl_agree": false,
-    "synth_detail": "trusted_fail=[] | topo_sort:1/2pass",
+    "synth_detail": "trusted_fail=[] | ",
     "new_fails": [],
     "align_unverified": [],
     "spec_disagree": false
