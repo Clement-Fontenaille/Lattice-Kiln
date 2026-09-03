@@ -5,7 +5,14 @@ rework 2, `40-roadmap/07-sequence-rework-02.md`)
 **Evidence question:** does a trap-structured task suite separate pipeline
 variants that a toy fixture cannot, and does it surface failure modes the MVP
 fixture missed?
-**State:** IN EXECUTION (from 2026-09-02).
+**State:** COMPLETE (2026-09-03) — findings-log entry 8, verdict **confirms**.
+30-task suite, 3-arm comparison (monolith 18/30 with 7 regressions + 4 crashes;
+**dloop 24/30, 0 regressions, 5/5 declines**; staged 19/30 — worse than plain
+dloop because premise-audit-as-gate over-declines ~20%). The suite separates
+arms the 6-task fixture put within noise, and surfaced four new failure modes
+(monolith ~30% regression/crash rate; premise-audit false-decline; concern-split
+cost/benefit; STRUCTSCORE+regression-guard separating clean-refactor / broke-it /
+didn't-do-it). `experiments/M6-evaluation-suite/FINDINGS.md`.
 
 ## Why this milestone exists
 
@@ -46,7 +53,7 @@ decide things by running against tasks. The ruler has to exist and be good first
 | 9 | Multi-concern (`hf_json_serialize`) | DONE | `hf_api_v1_to_v2` deferred (wf6 covers migration+multi-concern) |
 | 10 | Concurrency (`hf_counter_race`) | DONE | `threading`, deterministic total |
 | 11 | `run_suite.py` + `suite_lint.py` + arms (`m6_arms.py`: monolith/dloop/staged) | DONE | lint clean on all 30; baseline recorded |
-| 12 | Comparison run (monolith / dloop / staged, N=1) + M6 findings entry | RUNNING | ~2h; findings scaffold in `experiments/M6-evaluation-suite/FINDINGS.md` |
+| 12 | Comparison run (monolith / dloop / staged, N=1) + M6 findings entry | DONE | findings-log entry 8; `FINDINGS.md` |
 
 **Suite v0: 30 tasks, 11 request shapes, all 7 traps, 5 `decline_correct`.**
 Baselines span 0/7 (greenfield) to full (decline tasks).

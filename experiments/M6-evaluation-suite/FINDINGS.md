@@ -38,28 +38,71 @@ Baselines (pristine score) span the full range:
   signal → escalate". *Not* the always-on super-pipeline (data already in
   `pipeline_lab` / findings-log entry 7 addendum).
 
-## Results
+## Results (3-arm comparison, N=1, 2026-09-02)
 
-_Comparison run (`monolith` → `dloop` → `staged`, N=1) in progress. Results:
-`results/{monolith,dloop,staged}.{md,json}`._
+| arm | objective pass | regressions | check crashes | decline accuracy | total wall |
+|---|---|---|---|---|---|
+| monolith | 18/30 | **7** | **4** | **0/5** | 260 s |
+| **dloop** | **24/30** | **0** | **0** | **5/5** | 406 s |
+| staged | 19/30 | 0 | 0 | 5/5 | 710 s |
 
-<!-- FILL: aggregate table (pass / regressions / decline accuracy / calls per arm),
-     stresses-slice deltas, per-trap separation, failure modes the suite surfaced
-     that wf1-6 alone did not. -->
+Where the 6-task toy fixture put the arms within noise (M5: 10 / 11 / 12), the
+30-task suite is decisive.
 
-## Early signal (from smokes)
+### 1. The monolith regresses or crashes ~1 task in 3
 
-- The suite **already caught a keeper bug**: `hf_extract_fn` under `staged`
-  shipped `SUBTESTS 4/5 + STRUCTSCORE 3/3` because the combined score rose —
-  i.e. it did the refactor but fell into the exact dropped-`try/except` trap the
-  task was built for, and the combined-score keeper let the subtest regression
-  through. Fixed (keeper now vetoes any subtest regression). A toy fixture
-  without a structural dimension + regression guard would not have exposed this.
-- **Decline separation works**: `staged`'s premise audit declined wf4 and
-  `hf_dead_code` (decline accuracy 2/2 on the smoke); `dloop` and `monolith`
-  cannot decline and score these as "resolved, repo untouched" — a visible arm
-  difference the MVP fixture (one decline task, wf4) could barely show.
-- **Behaviour-preserving separation works**: `dloop` escalates `hf_extract_fn`
-  ("did nothing, flag it"); `staged` resolves it (`STRUCTSCORE 3/3`, no
-  regression) — the loop_lab wf3 "no-op a refactor" limitation, now visible on a
-  second task.
+7 regressions + 4 check-crashes in 30. It "fixes" one thing and breaks another:
+`hf_dead_code` 4/4 → 1/4 (removed the live function), `hf_dict_dispatch` 7/7 →
+crash, `hf_misfiled_bug` 3/4 → crash (rewrote `rect_area`), `hf_pagination` /
+`hf_timeout_param` → crash, `hf_extract_fn` 5/5 → 3/5 (dropped the `try/except`),
+`hf_cache_decorator` (corruption). The MVP fixture showed this on **one** task
+(wf6). The strongest single argument for the incumbent-protected keeper.
+
+### 2. `dloop` — the cheap loop — wins outright
+
+24/30, **zero regressions, zero crashes, 5/5 declines**, at 1–4 calls/task. The
+incumbent-in-keeper-pool + test-gated progress captures nearly all the achievable
+value. Its 6 non-passes: 4 honest `escalate`s (`hf_dict_dispatch`,
+`hf_rec_to_iter`, `hf_misfiled_bug` cross-file, `hf_multi_recipient`,
+`wf6_multi`), 2 partial (`hf_timeout_param` 5/6, `wf2_retry` 3/5).
+
+### 3. `staged` (the M7 leading candidate) is a **regression vs plain `dloop`**
+
+19/30 vs 24/30. Cause: the **premise audit as a hard decline gate over-declines**.
+It declined 11 tasks; only 5 were correct. False declines of real work:
+`hf_csv`, `hf_json_field`, `hf_json_serialize`, `hf_merge_config`,
+`hf_path_sanitize`, `hf_suppress` — all legitimate tasks the K=3 audit majority
+-voted "unsound". This is the census finding's other half: the planner/analyst
+stance catches false premises **and** false-positives them; as a hard gate it
+throws away ~20 % of the suite.
+
+**M7 consequence:** premise audit must be **advisory** (surface for human) or
+gated on *unanimous* unsound + a recognised impossibility pattern — never a
+unilateral hard decline.
+
+### 4. Concern-split earns its cost, narrowly
+
+`staged` got `wf6_multi` 2/6 → **6/6 SUBTESTS + TODOSCORE 3/3** (DOCSCORE still
+0/4) — the concern-split lever, where `dloop` escalates and the monolith no-ops.
+But it cost **252 s** for that one task, and only 2 suite tasks are genuine
+multi-concern. Conditional firing, not always-on.
+
+### 5. `stresses` slices separate capability, not just aggregate
+
+| slice | monolith | dloop | staged | reads as |
+|---|---|---|---|---|
+| cross-file | 0.47 | 0.92 | 0.92 | the retry-with-failing-lines rescues indirection the monolith botches |
+| edge-coverage | 0.66 | 0.93 | 0.65 | dloop's iteration lands the edges; staged's over-decline tanks it |
+| partial-credit | 0.74 | 1.00 | 0.54 | same |
+| L2-structural (SUBTESTS) | 0.77 | 0.97 | 0.97 | the keeper protects behaviour during a refactor; the monolith doesn't |
+| silent-failure | 1.00 | 1.00 | 0.94 | "add a guard" tasks — the 7B does these fine in any arm |
+
+## Verdict
+
+**The evidence question is answered: yes.** A trap-structured 30-task suite
+separates arms a 6-task fixture cannot, and it surfaced four failure modes the
+fixture missed: the monolith's ~30 % regression/crash rate, premise-audit-as-gate
+false-declining ~20 % of legit work, the concern-split cost/benefit ratio, and
+`STRUCTSCORE` + regression-guard distinguishing clean-refactor / broke-it /
+didn't-do-it. `dloop` is confirmed as the M7 spine; `staged` as built is not an
+improvement and tells M7 exactly what to change.

@@ -1,6 +1,6 @@
 # Status
 
-_Updated: 2026-09-02_
+_Updated: 2026-09-03_
 
 ## Where we are
 
@@ -15,8 +15,15 @@ rework 2** (`40-roadmap/07-sequence-rework-02.md`): two milestones inserted afte
 M5 — **M6 Evaluation task suite** and **M7 Static supervised workflow** — with the
 old M6–M14 shifting to M8–M16.
 
-**Current milestone: M6 — Evaluation task suite.** Spec written
-(`10-technical/10-evaluation-task-suite.md`); building the suite next.
+**M6 — Evaluation task suite COMPLETE** (2026-09-03, findings-log entry 8,
+verdict confirms). 30-task trap-structured suite; 3-arm comparison decisive where
+the 6-task fixture was within noise: **dloop 24/30, 0 regressions, 5/5 declines**;
+monolith 18/30 with **7 regressions + 4 crashes**; staged (M7 candidate) 19/30 —
+*worse* than plain dloop because premise-audit-as-gate over-declines ~20%.
+
+**Current milestone: M7 — Static supervised workflow.** Kept open on strategy
+(`01-milestones.md` → M7). dloop confirmed as the spine; premise audit must be
+advisory not a gate; concern-split fires conditionally.
 
 **What the MVP established:**
 
@@ -51,36 +58,31 @@ old M6–M14 shifting to M8–M16.
 | — sequence rework 1 — | **DONE** (2026-08-31) — no reordering | `40-roadmap/06-sequence-rework-01.md` |
 | — M5-follow-up investigation — | **DONE** (2026-09-02) — findings-log entry 7 + 3 addenda | census / judge-lab / loop-lab / pipeline-lab |
 | — sequence rework 2 — | **DONE** (2026-09-02) — 2 milestones inserted, M6–M14 → M8–M16 | `40-roadmap/07-sequence-rework-02.md` |
-| **M6 — Evaluation task suite** | **IN EXECUTION** — spec done (`10-technical/10-evaluation-task-suite.md`); building the suite | `M6-evaluation-task-suite.md` |
-| M7 — Static supervised workflow | TODO (after M6) | `M7-static-workflow.md` (owed) |
+| M6 — Evaluation task suite | **DONE** (2026-09-03) — findings-log entry 8 (verdict confirms); 30 tasks, dloop 24/30 vs monolith 18/30 (+7 regr) | `M6-evaluation-task-suite.md` |
+| **M7 — Static supervised workflow** | **IN EXECUTION** — kept open on strategy; dloop is the spine | `M7-static-workflow.md` (owed) |
 | M8 — Persistent work and knowledge | TODO (was M6) | — |
 
 ## Immediate next actions
 
-**M6 in execution.** Spec `10-technical/10-evaluation-task-suite.md` written.
-Remaining M6 work:
+**M7 — Static supervised workflow.** Kept **open on strategy** (`01-milestones.md`
+→ M7). M6 settled the spine and two calibration facts:
 
-1. Fold `fixture_workflow/` wf1–wf6 into a versioned suite dir with the
-   `eval-suite-tasks/0` schema and `stresses` tags.
-2. Build the intended tasks by trap class (~28), each with a stdlib check, a
-   discriminator subtest, and a pre-existing passing test. Priority order:
-   behaviour-preserving (`hf_extract_fn`, `hf_dict_dispatch`, `hf_rename`),
-   push-back (`hf_suppress`, `hf_already_optimal`, `hf_dead_code`), then the rest.
-3. `run_suite.py` — arm-agnostic runner reporting per-task partial credit,
-   `stresses` slices, decline accuracy, regression count, cost ledger vs monolith.
-4. Suite-lint: every non-decline task has a documented discriminator.
-5. M6 findings entry: does the trap-structured suite separate arms a toy fixture
-   cannot?
+- **spine = dloop** (24/30, 0 regressions, 5/5 declines at 1–4 calls/task);
+- **premise audit must be advisory, not a hard decline gate** — as a gate it
+  false-declined ~20% of the M6 suite (`hf_csv`, `hf_json_field`, …);
+- **concern-split fires conditionally** on genuine multi-concern objectives — it
+  took `wf6` 2/6 → 6/6 but cost 252 s and helps ~2 suite tasks.
 
-**Then M7** — kept **open on strategy** (`01-milestones.md` → M7). Leading
-candidate from the labs: d_loop spine + premise audit (always) +
-concern-split/combined-score keeper (conjunctive) + "no behavioural signal →
-escalate" (refactors); drop the three inert super-pipeline stages; fix the
-plan-injection / greenfield-framing regressions. Also to test on the M6 suite:
+M7 work: (1) spec `10-technical/11-static-workflow.md`; (2) build the workflow
+from the `loop_lab` / `m6_arms` parts with premise-audit-as-advisory and
+conditional concern-split, plus the `pipeline_lab` fixes (no plan in the
+implementer context; plain framing for greenfield); (3) run it on the M6 suite
+vs `monolith` / `dloop` / `staged`; (4) findings entry.
+
+Also to test on the suite as alternative strategies (M7 stays open):
 fixed blind K-way synthesis, dueling advocates with executable claims,
 task-type-adaptive stage selection, cross-model review (needs 2nd GPU), the NL
-orchestrator on the harder tasks. Spec `10-technical/11-static-workflow.md` once
-the suite picks a direction.
+orchestrator on the harder tasks.
 
 ## Blockers
 
