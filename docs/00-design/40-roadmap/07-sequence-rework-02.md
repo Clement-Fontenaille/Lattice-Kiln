@@ -1,5 +1,17 @@
 # Sequence Rework 2 — after the M5-follow-up investigation
 
+> **Numbering banner.** This is a dated decision record. The numbering it
+> *establishes* — the mapping table below — is the current one and is now frozen:
+> milestone numbers became **stable identifiers** on 2026-09-05 and are never
+> reordered again. See [`01-MILESTONES/README.md`](01-MILESTONES/README.md).
+>
+> The instruction below that earlier documents' numbers "mean the pre-rework-2
+> number unless dated after 2026-09-02" **no longer applies to the live sets**.
+> Every reference in the design set, the specification set, and `STATUS.md` was
+> corrected on 2026-09-05. It still applies to `50-findings/`,
+> `50-PROGRESS/archives/`, and to rework 1 — all of which are append-only or
+> historical by rule.
+
 ## TL;DR
 
 The second milestone-sequence rework, run against findings-log **entry 7** and its
@@ -67,7 +79,7 @@ toy fixture cannot, and does it surface failure modes the MVP fixture missed?
 ### M7 — Static supervised workflow
 
 The **leading candidate** from `loop_lab` + `pipeline_lab` is below; M7 keeps the
-strategy space open (see `01-milestones.md` → M7 "Strategies still to explore" —
+strategy space open (see `01-MILESTONES/07-static-supervised-workflow.md` → "Strategies still to explore" —
 fixed blind K-way synthesis, dueling advocates with executable claims,
 cross-model review, task-type-adaptive stage selection, the NL orchestrator
 reconsidered on harder tasks). The M6 suite exists to choose among them at scale.
@@ -110,13 +122,13 @@ outcome-per-call, and does it degrade safely on the tasks it cannot do?
 | M14 | M16 | Bootstrap generation closure |
 
 Earlier documents' references to "Milestone _n_" for _n_ ≥ 6 mean the
-pre-rework-2 number unless dated after 2026-09-02. `01-milestones.md` internal
+pre-rework-2 number unless dated after 2026-09-02. `01-MILESTONES/` internal
 cross-references (M3 → the safety/literature pass at M11; the scope-of-feedback
 note at M10/M12/M14) are updated in place.
 
 ## What did not change
 
-- The project objectives and mantra; the constrained-intelligence thesis; the
+- The project objectives; the constrained-intelligence thesis; the
   local-model end goal.
 - The invariant floor's content, the gate's determinism, the reasoning/runtime
   split, the just-in-time specification rule.

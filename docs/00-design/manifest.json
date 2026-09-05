@@ -1,5 +1,5 @@
 {
-  "title": "AI Development System \u2014 Conceptual Documentation Set",
+  "title": "AI Development System — Conceptual Documentation Set",
   "format": "Markdown",
   "status": "Conceptual architecture, pre-technical specification",
   "directories": [
@@ -8,6 +8,7 @@
     "20-cognitive-architecture",
     "30-adaptation-and-evolution",
     "40-roadmap",
+    "50-findings",
     "90-notes"
   ]
 }

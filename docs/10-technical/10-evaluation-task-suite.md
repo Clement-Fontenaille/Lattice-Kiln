@@ -1,6 +1,6 @@
 # Evaluation Task Suite (v0)
 
-**Traces to:** `00-design/40-roadmap/01-milestones.md` (Milestone 6),
+**Traces to:** `00-design/40-roadmap/01-MILESTONES/completed/06-evaluation-task-suite.md` (M6),
 `00-design/40-roadmap/03-research-and-evaluation-agenda.md`,
 `00-design/40-roadmap/07-sequence-rework-02.md`,
 `00-design/00-project/04-execution-cadence.md` (findings need a ruler);
@@ -279,6 +279,17 @@ Grouped by trap; each row is `id — the ask — the trap — the discriminator`
   duplication, naming) are defined per task in v0. A shared rubric is deferred.
 - **Non-Python / multi-file-repo tasks.** Out for v0 (stdlib-Python,
   small-repo). The taxonomy is language-agnostic; the fixtures are not yet.
+- **Name the population** *(`00-design/10-foundations/07`)*. The attribution rule
+  binds a failure to the assembly **within the population that assembly claims to
+  serve**, which creates an obligation to name that population. This suite does
+  not. It scores the assembly minus the operator — fixed objectives, no operator
+  variance — and does not say so. What population do these tasks represent, and
+  what does the suite's score mean for anyone outside it?
+- **The agenda's two hypotheses are not in the scoring model**
+  *(`00-design/40-roadmap/03-research-and-evaluation-agenda.md`)*.
+  Decomposition-as-grain-matching and accessibility-without-weakness were added to
+  the agenda and neither is measurable from a suite run. E2 and E5 are the intended
+  tests; whether they need suite support, or run beside it, is unresolved.
 - **Live-difficulty calibration.** Whether task difficulty should track model
   capability over time (so the suite stays discriminating as models improve) —
   deferred to Milestone 14/15.
@@ -290,7 +301,7 @@ Grouped by trap; each row is `id — the ask — the trap — the discriminator`
 
 - **Observability** (`02-observability-event-model.md`) — a suite run is a set of
   reconstructable runs; the runner reuses the recorder.
-- **Static supervised workflow** (Milestone 7, `11-static-workflow.md`) — the
+- **Static supervised workflow** (M7, `11-static-workflow.md`) — the
   first consumer; its evidence question is stated against this suite.
 - **Research & evaluation agenda** (`40-roadmap/03`) — the hypotheses this suite
   is built to test are listed there; each task's `stresses` tag links to one.

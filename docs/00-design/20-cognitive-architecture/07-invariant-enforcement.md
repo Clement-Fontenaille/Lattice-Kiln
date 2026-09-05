@@ -12,7 +12,7 @@ This document is bounded on purpose.
 
 The structural claims below — where the gate sits, what it binds, what the triage role may and may not do, and how a decommission is signalled — follow from the invariant layer's definition and are stable enough to record now.
 
-The operational specifics are not recorded here: the escalation protocol, threshold definitions, the representation of the failure signal, and what human intervention actually looks like in practice. Those are precisely where existing work on corrigibility, scalable oversight, and interruptibility has both results and known failure modes, and this project should inherit them rather than rediscover them empirically. They remain deferred until that reading pass — scheduled as a Milestone 9 deliverable — is done.
+The operational specifics are not recorded here: the escalation protocol, threshold definitions, the representation of the failure signal, and what human intervention actually looks like in practice. Those are precisely where existing work on corrigibility, scalable oversight, and interruptibility has both results and known failure modes, and this project should inherit them rather than rediscover them empirically. They remain deferred until that reading pass — scheduled as a Milestone 11 deliverable — is done.
 
 ## The gate is not a role
 

@@ -12,6 +12,42 @@ Each document opens with a **Traces to** line naming the design documents it spe
 
 Where a specification narrows a design concept — picking one interpretation among several the design document left open — it says so explicitly under a **Narrowing** note, so the discarded options remain visible.
 
+## Authority and revision
+
+Every document in this set is authoritative. Normative language binds any
+conforming implementation regardless of when the document was written or whether a
+milestone has exercised it.
+
+There are no tiers and no draft status. A maturity tier would make the
+most-exercised contracts the hardest to overturn — the ones where being wrong costs
+most — which inverts the intent.
+
+A specification is revised on findings — not on preference, and not because a
+document feels dated.
+
+No point is exempt. A finding may revise any part of the set it bears on, technical
+contract through foundational concept. Where it bears on a concept, the design
+document is updated first and the specification follows
+(`00-design/00-project/04-execution-cadence.md` → the feedback flow).
+
+### A contract written ahead
+
+Writing a contract before its milestone costs it no authority. The reason to write
+early is that a later finding needs something to contradict.
+
+The evidence behind a contract remains visible regardless. A contract exercised by
+three milestones has three findings behind it; one written ahead has none.
+Overturning the first means accounting for that evidence. This is recoverable from
+the findings, not a status assigned to the document.
+
+### Exercised by
+
+Where a milestone has exercised a contract, the document records it below **Traces
+to**: *Exercised by: findings 3, 6.*
+
+Provenance, not status. Its absence means no milestone has run against the
+document, not that it binds less.
+
 ## Document structure
 
 A mature specification document provides, in roughly this order:

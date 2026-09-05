@@ -1,5 +1,16 @@
 # Sequence Rework 1 — after the MVP slice (end of Milestone 5)
 
+> **Numbering banner.** This is a dated decision record and keeps the milestone
+> numbering that was in force when it was written — **before rework 2**. Read
+> every "Milestone _n_" here for _n_ ≥ 6 through the mapping table in
+> [`01-MILESTONES/README.md`](01-MILESTONES/README.md). In particular: "M6" here
+> is persistent work and knowledge (now M8), "M7" is context governance
+> measurement (now M9), and "Milestone 9" is safety response (now M11).
+>
+> Numbers are now stable identifiers and no future document will need a banner
+> like this one. The live backlog is [`00-backlog.md`](00-backlog.md); the items
+> below are preserved as the record of what was carried forward at the time.
+
 ## TL;DR
 
 The first scheduled milestone-sequence rework, run against findings-log entries
@@ -16,7 +27,7 @@ cost. The adjustments are to framing and backlog, not order.
 The execution cadence schedules the first sequence rework here, so findings
 accumulate into one coherent revision rather than causing drift
 (`00-project/04-execution-cadence.md`). This document is that revision. It does
-not restate the findings — see `05-findings-log.md` entries 1–6.
+not restate the findings — see `../50-findings/` entries 1–6.
 
 ## What the MVP established
 
@@ -130,7 +141,7 @@ each — not a separate track.
 - The MVP definition, the milestone motivations, the invariant layer's content
   and the gate's determinism, the reasoning/runtime split, the just-in-time
   specification rule. None of the findings touched a foundational constraint.
-- The project objectives and mantra. The constrained-intelligence thesis and the
+- The project objectives. The constrained-intelligence thesis and the
   local-model end goal stand unchanged.
 
 ## Recalibrated expectations (post-MVP)

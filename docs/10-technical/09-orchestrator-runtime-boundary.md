@@ -4,7 +4,7 @@
 `00-design/20-cognitive-architecture/05-runtime.md`,
 `00-design/20-cognitive-architecture/03-orchestrator.md`,
 `00-design/90-notes/01-next-conceptual-pass.md`,
-`00-design/40-roadmap/01-milestones.md` (Milestone 5);
+`00-design/40-roadmap/01-MILESTONES/completed/05-intelligent-orchestration.md` (M5);
 binds to `10-technical/06-processor-contract.md`,
 `10-technical/08-orchestrator-contract.md`,
 `10-technical/01-effect-vocabulary.md`,

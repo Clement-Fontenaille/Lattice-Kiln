@@ -4,7 +4,7 @@
 `00-design/20-cognitive-architecture/01-work-intent-and-task-model.md`,
 `00-design/10-foundations/02-reasoning-vs-runtime.md`,
 `00-design/10-foundations/04-context-as-governed-resource.md`,
-`00-design/40-roadmap/01-milestones.md` (Milestone 5);
+`00-design/40-roadmap/01-MILESTONES/completed/05-intelligent-orchestration.md` (M5);
 binds to `10-technical/06-processor-contract.md`,
 `10-technical/01-effect-vocabulary.md` (effect type 6),
 `10-technical/03-capability-authority-model.md`,
@@ -51,7 +51,7 @@ Own the strategy of one cognitive effort from a single originating intent: decid
 what to do next, delegate it, integrate what comes back, and decide when the
 effort is done. It does not realize effects (the runtime), does not decide
 whether an effect is permissible (`04-enforcement-gate.md`), and does not judge
-its own performance (higher-level evaluation, Milestone 10+).
+its own performance (higher-level evaluation, Milestone 12+).
 
 ## Inputs
 
@@ -162,14 +162,14 @@ The loop MUST be able to terminate by at least these
 - **Recursion.** May orchestration be delegated to a sub-orchestrator
   (`03-orchestrator.md` open question)? Out for the MVP — one orchestrator.
 - **Competing orchestrators.** Comparing two orchestrators on the same effort —
-  Milestone 13.
+  Milestone 15.
 - **Processor-to-processor debate.** Free-form challenge and re-investigation
   among processors, versus the MVP's route-output-as-input. Deferred.
 - **Orchestrator context budget.** The MVP uses "intent + running summary + naive
-  bundle"; Milestone 7 measures context quality and may change it.
+  bundle"; Milestone 9 measures context quality and may change it.
 - **Orchestrator model.** The MVP uses the one resident 7B (M0: no per-role model
   switching on the reference host). Whether a stronger orchestrator model changes
-  the result is a Milestone 13 question.
+  the result is a Milestone 15 question.
 - **No objective signal.** The MVP fixture has a per-task check; most real work
   does not. What the orchestrator's stopping rules do without one is deferred.
 - **Handoff framing** *(M5 workflow re-test)*. A constrained local model treats a

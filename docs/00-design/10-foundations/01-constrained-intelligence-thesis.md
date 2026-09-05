@@ -24,10 +24,24 @@ The hypothesis is empirical. It should eventually be tested against simpler appr
 
 ## Expected consequence
 
-Model quality remains important, but model size should not be the only or primary optimization axis.
+Model quality remains important, but model size should not be the only or primary optimization axis. A system with better context discipline and better verification may outperform a larger but poorly orchestrated one on practical development work.
 
-A system with better context discipline and better verification may outperform a larger but poorly orchestrated system on practical development work.
+Early results suggest the advantage may lie as much in damage avoided as in work completed. Two readings fit: scaffolding substitutes for capacity, or it bounds what capacity can spoil. They differ in whether the benefit survives a rise in model capability, which is not yet known.
+
+Any comparison here is assembly against assembly. A scaffolded small model set against a bare large one measures two configurations, not scaffolding against size (`07-the-integrated-system-and-its-operator.md`).
+
+## Where the overhead exceeds the benefit
+
+Two things constrain the process, and neither is a property of the model. Both are for the architecture to address.
+
+**When to decompose.** Splitting is paid for whether or not it helps, so deciding when to split determines whether the approach pays at all rather than merely tuning it. It cannot be settled by classifying tasks in advance: judging what needs splitting is a judgement about the whole, which is the kind the constraint makes unreliable.
+
+**How the composite is evaluated.** A decomposed process yields parts, each checkable against its own criterion. Whether the parts together are what was asked for is not checkable the same way, and that gap does not narrow as the pieces get smaller. Work is lost either because parts fail to reassemble or because they reassemble into something else — with every part having passed.
+
+Evidence for both is in findings entries 5 and 8, and in entry 9 (§4) for the external work on decomposition depth and its failure modes.
 
 ## Open question
 
-We do not yet know where orchestration overhead exceeds the benefits of decomposition. Measuring that boundary is part of the project.
+The shape is known; the position is not, and position is what a firing rule needs.
+
+What makes a direct attempt count as failed, cheaply enough that the check costs less than the decomposition it triggers. And how a composite outcome is evaluated, which is what bounds how far decomposition can usefully be pushed.

@@ -1,0 +1,101 @@
+# Backlog
+
+_Updated: 2026-09-05 — structure and maintenance rules: [`README.md`](README.md)._
+
+> **Motto:** Every phase should make the next design decision easier.
+
+## P0 — Ongoing spec / architectural rework
+
+**Every row here blocks P1.** A gap that blocks nothing is written into the
+document it concerns as an open contract, not parked here
+([`README.md`](README.md) → what an item carries).
+
+| Item | Target | Source | Blocks |
+|---|---|---|---|
+| Static workflow contract | `10-technical/11-static-workflow.md` — **owed** | [M7](01-MILESTONES/07-static-supervised-workflow.md) | P1 step 2 onward |
+| Two-mode interaction requirement | [`08-orchestrator-contract.md`](../../10-technical/08-orchestrator-contract.md), spec 11 | [`10-foundations/07`](../10-foundations/07-the-integrated-system-and-its-operator.md) | P1 step 2 — an input to spec 11, not a follow-up edit |
+| Decomposition has no specification counterpart | new, or within spec 11 | [`20-cognitive-architecture/08`](../20-cognitive-architecture/08-decomposition.md) | P1 step 2 — concern-split is a decomposition |
+| Structured role-to-role handoff | open contract on [`07`](../../10-technical/07-naive-context-assembly.md) and [`08`](../../10-technical/08-orchestrator-contract.md) — close it | findings 6, 7 | P1 step 3 |
+
+## P1 — Work in progress
+
+**[M7 — Static supervised workflow](01-MILESTONES/07-static-supervised-workflow.md)**
+
+1. **Decision pending — scope.** Back half only, or back half plus front half. The
+   front half depends on [M9](01-MILESTONES/09-context-governance-measurement.md);
+   the back half has no open dependency. *Proposed: back half now, front half
+   recorded as an open contract.*
+2. **Specify** — P0 row 1, scoped by the decision above.
+3. **Build** — after the spec. Needs the handoff-framing row in P0.
+4. **Run against the M6 suite** — needs E0 (P2) for the comparison to be
+   interpretable.
+5. **Findings entry.**
+
+## P2 — Short term work to address next
+
+- **E0 — suite construct validation.**
+  [`08-next-experiments.md`](08-next-experiments.md) → E0. Blocks interpretation of
+  P1 step 4. Possibly answerable from runs already recorded.
+- **Next milestone after M7 — ordering decision pending.**
+  - [M9 — Context governance measurement](01-MILESTONES/09-context-governance-measurement.md)
+    — prerequisite if M7 takes the front half; also carries the P0 context rows.
+  - [M8 — Persistent work and knowledge](01-MILESTONES/08-persistent-work-and-knowledge.md)
+    — the inherited order.
+- **M4/M5 re-test at larger N.** Depends on M8 (durable work records) and M9
+  (non-naive assembler). Not a milestone; a task inside whichever lands.
+
+## P3 — Unscheduled / Notes
+
+### Milestones not yet scheduled
+
+| | Dependency |
+|---|---|
+| [M3 — Invariant floor](01-MILESTONES/03-invariant-floor.md) | **open.** Its remaining items are owned by M11. |
+| [M10 — Project-level adaptation](01-MILESTONES/10-project-level-adaptation.md) | — |
+| [M11 — Safety response](01-MILESTONES/11-safety-response.md) | Gates M12. Closes M3. |
+| [M12 — System-level candidate tuning](01-MILESTONES/12-system-level-candidate-tuning.md) | M11, and a second judgment source. |
+| [M13 — Reproducible generations](01-MILESTONES/13-reproducible-generations-and-promotion.md) | Relaxes invariant H3. |
+| [M14 — Meta-evaluation](01-MILESTONES/14-meta-evaluation.md) | — |
+| [M15 — Cross-generation comparison](01-MILESTONES/15-cross-generation-comparison.md) | A second resident model. |
+| [M16 — Bootstrap generation closure](01-MILESTONES/16-bootstrap-generation-closure.md) | — |
+
+### Blocked externally
+
+- **A second judgment source.** Needs a stronger or independent reviewer model —
+  the planned second GPU. Gates M12 onward.
+- **Clean-machine M1 replay.** Needs a second controlled machine.
+- **External signal** — [`70-THINKING/01-use-cases.md`](../../70-THINKING/01-use-cases.md)
+  §2 is empty. Needs users. `10-foundations/07`'s population obligation is
+  uncheckable without it.
+
+### Unscheduled
+
+- **Hardware as a variable.** A replayable re-bootstrap and envelope
+  re-characterisation, plus a statement of what in the design set depends on
+  host-specific numbers. Owner: the bootstrapper design, at the latest M16.
+- **Editor-agent frontend choice.** Owner: the bootstrapper design.
+- **Experiments E1–E5 and E-corpus.**
+  [`08-next-experiments.md`](08-next-experiments.md). E4 gated on E0.
+- **Repetition stop unimplemented.** [`08-orchestrator-contract.md`](../../10-technical/08-orchestrator-contract.md)
+  requires it; `run_orchestrated` does not implement it. A defect against a
+  written contract, not an open question — owner is whatever milestone next drives
+  the orchestrator.
+- **`Exercised by` lines absent across [`10-technical/`](../../10-technical/README.md).**
+  Mechanical rollout of a 2026-09-05 convention; recoverable from the findings
+  entries.
+- **Prose discipline predates the set it governs.**
+  [`02-documentation-philosophy.md`](../00-project/02-documentation-philosophy.md)
+  → prose discipline was added 2026-09-05. Documents written before it have not
+  been read against it. Debt created by that change, recorded here because a design
+  document has no open-contract section to hold it.
+- **Naming theme decided and never applied.** `00-design/90-notes/04-naming-theme`
+  (no file extension) is marked **Decided** with propagation owed. Zero occurrences
+  in the set across the whole MVP. Needs applying or downgrading to *considered,
+  not adopted* — a standing decision nothing honours misleads a cold reader.
+- **No repository README.** Nothing at the repo root states what this is or where
+  to start. First file anyone opens.
+- **Praxis thread open.** [`70-THINKING/04-praxis.md`](../../70-THINKING/04-praxis.md).
+  Two execution gates — *spec in shape*, *finding is critical* — rest on positions
+  it has not taken. Both currently operate on human judgment, which holds while a
+  human runs every session and does not hold at
+  [M12](01-MILESTONES/12-system-level-candidate-tuning.md).

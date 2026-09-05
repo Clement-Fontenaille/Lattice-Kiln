@@ -4,7 +4,7 @@
 `00-design/20-cognitive-architecture/01-work-intent-and-task-model.md`,
 `00-design/20-cognitive-architecture/04-capabilities-and-authority.md`,
 `00-design/10-foundations/05-ephemeral-conversation-curated-memory.md`,
-`00-design/40-roadmap/01-milestones.md` (Milestone 4);
+`00-design/40-roadmap/01-MILESTONES/completed/04-ephemeral-processors.md` (M4);
 binds to `10-technical/01-effect-vocabulary.md` (effect type 6),
 `10-technical/03-capability-authority-model.md`,
 `10-technical/02-observability-event-model.md`,
@@ -152,7 +152,7 @@ M4, the orchestrator from M5 on.
   structure the evaluation actually needs.
 - **Role-definition source.** M4 draws role instructions from a tiny fixed
   library. Authoring per-invocation vs. a governed library is system-level
-  feedback's concern (Milestone 10).
+  feedback's concern (Milestone 12).
 - **Independence cut for `review`.** Is "prior conclusion only" the right amount
   of isolation, or too little / too much (`02-processors.md` open question)?
 - **`terminal_state` granularity.** Whether `answered / blocked / declined` needs

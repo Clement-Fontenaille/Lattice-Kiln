@@ -3,7 +3,7 @@
 **Traces to:** `00-design/20-cognitive-architecture/06-observability.md`,
 `00-design/10-foundations/03-evidence-belief-and-provenance.md`,
 `00-design/20-cognitive-architecture/07-invariant-enforcement.md`,
-`00-design/40-roadmap/01-milestones.md` (Milestone 2);
+`00-design/40-roadmap/01-MILESTONES/completed/02-observability-foundation.md` (M2);
 binds to `10-technical/01-effect-vocabulary.md`.
 
 ## TL;DR
@@ -197,6 +197,17 @@ only supports one-effect-at-a-time review.
   experiment-registry join, or something richer? Deferred to M4/M5, where the
   first real comparison (two context policies, two orchestrator versions) forces
   a concrete shape.
+- **Structured outcome on the effect envelope** *(findings 3, 6)*. Reconstruction
+  answered questions never designed into the schema **only where the envelope
+  carried structured outcome rather than prose** — cross-record joins are the
+  mechanism, and a free-text outcome field cannot be joined on. Does the envelope
+  gain a required `verdict` and `terminal_reason`, are they per-effect-type, and
+  what is the closed set of values? Re-derived independently at M2 and M5.
+- **Source, as an axis across the four record types** *(`00-design/10-foundations/03`)*.
+  A human's contribution enters the record as an observation, and what it carries
+  need not be. The model has no source axis. Is source a field on every record, a
+  property of the actor, or a distinct record kind — and how does it interact with
+  findings, which the same document now states may be **negative**?
 - **Objective signals.** Build/test/lint results and other objective outcomes are
   named in `06-observability.md` as reconstructable. Are they realized-effect
   results (type 2, process execution) or their own record kind?

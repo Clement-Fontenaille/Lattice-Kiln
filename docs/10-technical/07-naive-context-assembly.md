@@ -3,7 +3,8 @@
 **Traces to:** `00-design/10-foundations/04-context-as-governed-resource.md`
 ("a naive default is still required"),
 `00-design/10-foundations/05-ephemeral-conversation-curated-memory.md`,
-`00-design/40-roadmap/01-milestones.md` (Milestones 4 and 7);
+`00-design/40-roadmap/01-MILESTONES/completed/04-ephemeral-processors.md` (M4),
+`00-design/40-roadmap/01-MILESTONES/09-context-governance-measurement.md` (M9);
 binds to `10-technical/06-processor-contract.md`,
 `10-technical/02-observability-event-model.md`.
 
@@ -20,7 +21,7 @@ measurable baseline, not to be good.
 
 v0 for Milestone 4. The concrete algorithm below is illustrative, but two
 properties are **normative**: it MUST stay simple (no embeddings, no model calls,
-no history) and it MUST emit a selection trace. Milestone 7 measures context
+no history) and it MUST emit a selection trace. Milestone 9 measures context
 quality against this baseline and may *replace* the algorithm — never accrete
 onto it.
 
@@ -30,7 +31,7 @@ onto it.
 context-assembly behavior on day one" and explicitly defers the real design. This
 document fixes that day-one behavior and commits to its replacement. It does
 **not** define context governance, retrieval quality, the request/response loop,
-or the context-quality metric (Milestone 7).
+or the context-quality metric (Milestone 9).
 
 ## Responsibility
 
@@ -74,7 +75,7 @@ only the naive baseline.
 - A **token estimate** for the whole bundle, which MUST be `<= token_budget`.
 - A **selection trace** (mandatory): which terms were extracted, which files
   matched and with what score, which matched files were dropped for budget, and
-  where truncation happened. Milestone 7 measures against this trace.
+  where truncation happened. Milestone 9 measures against this trace.
 
 ## Determinism (normative)
 
@@ -93,7 +94,7 @@ component MUST NOT mutate the workspace and MUST NOT call the model.
 - **Budget overshoot.** A bundle over `token_budget` would push the processor to
   CPU offload (M0 cliff) — a defect. MUST truncate and record.
 - **Silent drop.** A file that matched the naive rule but was dropped for budget
-  with no trace entry defeats the Milestone 7 measurement — a defect.
+  with no trace entry defeats the Milestone 9 measurement — a defect.
 - **Empty bundle.** Even with no term matches, the bundle still carries objective
   + README + tree. A genuinely empty bundle is a defect.
 - **Nondeterminism.** Any run-to-run variation for identical inputs is a defect.
@@ -109,7 +110,7 @@ component MUST NOT mutate the workspace and MUST NOT call the model.
   `context_bundle`.
 - **Observability** (`02-observability-event-model.md`) — the selection trace is
   part of the run record; `context_ref` resolves to the bundle content.
-- **Milestone 7** — the consumer of the baseline measurement. This document
+- **Milestone 9** — the consumer of the baseline measurement. This document
   deliberately does not define the quality metric.
 
 ## Open contracts
@@ -118,7 +119,14 @@ component MUST NOT mutate the workspace and MUST NOT call the model.
   inference envelope once hardware is a variable (post-MVP rework).
 - **Ranking rule for step 3.** Substring count vs. path proximity vs.
   filename-exact-match priority — v0 picks one; M7 evidence may replace it.
-- **Context-quality metric.** Owned by Milestone 7; explicitly not here.
+- **Context-quality metric.** Owned by Milestone 9; explicitly not here.
+- **Cost as relation and redundancy, not volume** *(`00-design/10-foundations/04`)*.
+  Two positions the foundation now holds and this document does not implement:
+  *too much is a relation, not a property* — a bundle is too large **for a given
+  processor and objective**, not in itself — and *what makes context costly is
+  redundancy, not volume*. v0 truncates by token count, which is the volume
+  reading of both. What replaces a flat budget, and can redundancy be detected
+  cheaply enough to assemble against? Feeds the M9 metric.
 - **Request/response loop.** When naive one-shot assembly gains the ability to
   answer a processor's mid-run request for more context
   (`04-context-as-governed-resource.md`).

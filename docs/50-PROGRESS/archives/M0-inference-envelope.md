@@ -36,7 +36,7 @@ All measurements reconstructable from stored structured results and the harness 
 | 5 | Build the harness | DONE | `models.json`, `bench-ollama.ps1`, `bench-load-extra.ps1`, `bench-switch.ps1`, `bench-llamacpp.sh`, `aggregate.ps1`. First live run surfaced three measurement bugs (prefill cache contamination, EOS-truncated generation window, `ollama pull` abort) — all fixed. |
 | 6 | Run the sweep | DONE | Ollama matrix run staged; 7B Q8 and 14B large-context cells recorded as `skipped` (offload-bound, sub-5 tok/s — see below). llama.cpp cross-check on 7B Q4 validates Ollama; 14B llama.cpp abandoned as intractable to benchmark. `results/summary.md` regenerated. |
 | 7 | Write the envelope description | DONE | Below. |
-| 8 | Findings-log entry | DONE | `40-roadmap/05-findings-log.md` entry 1 — verdict: **confirms** (constraint is binding and cliff-shaped). |
+| 8 | Findings-log entry | DONE | `00-design/50-findings/` entry 1 — verdict: **confirms** (constraint is binding and cliff-shaped). |
 
 ## Setup and reproduction
 

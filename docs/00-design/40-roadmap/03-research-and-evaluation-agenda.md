@@ -10,7 +10,7 @@ The project should maintain a small set of explicit hypotheses that experiments 
 
 We expect that a constrained model surrounded by good decomposition, context selection, verification, and memory can outperform the same model used as a monolithic coding agent.
 
-This must eventually be tested directly.
+**Partially tested.** Scaffolded arms have beaten a monolith (findings entries 6, 8). What is not settled is the form of the advantage: a substantial part of the gap is damage the weaker arm caused rather than work it failed to do. Two readings remain open — scaffolding substitutes for capacity, or scaffolding bounds what capacity can spoil — and they differ in whether the benefit survives a rise in model capability.
 
 ## Core hypothesis: ephemeral roles improve reasoning quality
 
@@ -18,11 +18,27 @@ We expect that fresh role-specific invocations reduce context pollution and crea
 
 The competing possibility is that orchestration overhead and lost conversational continuity outweigh the benefit.
 
+**Weakened** (findings entry 5): a fixed chain lost to a single pass at roughly three times the cost, and independent review with no revision path was inert. The hypothesis survives only in the conditional form — roles help where the work exceeds what one invocation can hold — which makes it a special case of the decomposition hypothesis below.
+
 ## Core hypothesis: curated memory beats conversational accumulation
 
 We expect that promoting selected knowledge into persistent project memory produces more stable performance than carrying long conversations forward.
 
 The main risk is that the memory curation mechanism becomes a new source of omissions and false certainty.
+
+## Core hypothesis: decomposition pays where and only where the work exceeds what the assembly can hold
+
+The candidate account in `20-cognitive-architecture/08` proposes that what varies with capability is the granularity at which relevant context can be accounted for, and that decomposition is grain-matching.
+
+It is currently a lens rather than a theory: assembled to explain observations already held, and yet to make a prediction that could fail. **The named falsifier** is whether the same information at a coarser grain outperforms it at a finer one with quantity held constant. If those come out equal, the account reduces to *relevant context beats maximal context* and should be retired to it.
+
+The competing risk is that the account addresses the cheaper half. If the binding cost is recombination rather than splitting, a grain-matching rule improves what was never the constraint.
+
+## Core hypothesis: an assembly can be made accessible without being made weaker
+
+We expect that the same assembly can be brought within reach of a less practised operator without lowering what it achieves for a practised one — that accessibility and capability are not traded against each other.
+
+The competing failure mode is stratification: gains that concentrate where practice already exists, so the measured average improves while the spread widens. The test is therefore dispersion across the served population rather than a mean (`10-foundations/07`).
 
 ## Core hypothesis: adversarial evaluation reduces self-confirming failure
 

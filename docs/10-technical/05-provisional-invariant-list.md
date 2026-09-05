@@ -2,8 +2,8 @@
 
 **Traces to:** `00-design/10-foundations/06-the-invariant-layer.md`,
 `00-design/20-cognitive-architecture/07-invariant-enforcement.md`,
-`00-design/40-roadmap/01-milestones.md` (Milestone 3),
-`00-design/40-roadmap/05-findings-log.md` (Entry 1);
+`00-design/40-roadmap/01-MILESTONES/03-invariant-floor.md` (M3),
+`00-design/50-findings/` (Entry 1);
 binds to `10-technical/01-effect-vocabulary.md`,
 `10-technical/04-enforcement-gate.md`.
 
@@ -13,7 +13,7 @@ The concrete, checkable list the deny-list gate enforces for the MVP: a few
 goals, a few resource ceilings, and seven hard constraints, each bound to the
 effect vocabulary so the gate can check it mechanically. Small on purpose.
 Explicitly **provisional** — it is expected to change materially after the
-literature-grounding pass, which is a Milestone 9 deliverable, not a gate on the
+literature-grounding pass, which is a Milestone 11 deliverable, not a gate on the
 MVP form of this list.
 
 > **Motto:** Something must be true regardless of what the loops decide — and small enough to check.
@@ -21,10 +21,10 @@ MVP form of this list.
 ## Status of this document
 
 This is a **normative artifact**: the list below *is* the MVP invariant layer's
-content, not an example of one. It is provisional in the sense `01-milestones.md`
+content, not an example of one. It is provisional in the sense `01-MILESTONES/03-invariant-floor.md`
 and the execution cadence use — the floor is crossed in reduced form for the MVP.
 The corrigibility / scalable-oversight / specification-gaming / interruptibility
-reading pass that is expected to revise it is a **Milestone 9** deliverable; this
+reading pass that is expected to revise it is a **Milestone 11** deliverable; this
 list stands as the enforced floor for the whole MVP slice without waiting on it.
 It is deliberately physical and tight because a human supervises every MVP run;
 it does not try to anticipate every failure mode a later, less-supervised system
@@ -95,7 +95,7 @@ and the match rule it applies.
   targeting the trusted running configuration directly is refused. For the MVP
   there is no promotion pipeline, so **every** promotion effect (type 8) is
   refused — no candidate reaches a trusted generation without a human, before
-  Milestone 11.
+  Milestone 13.
   Match rules: `targets_trusted_config` (type 7), `any` (type 8).
 
 - **H4 — No cognition-initiated capability change.**
@@ -130,7 +130,7 @@ and the match rule it applies.
 This list is expected to change materially after the literature-grounding pass
 against corrigibility, scalable oversight, specification gaming, and shutdown /
 interruptibility work (`06-the-invariant-layer.md`, "status of this concept").
-That pass is a **Milestone 9** deliverable — the whole MVP slice (through
+That pass is a **Milestone 11** deliverable — the whole MVP slice (through
 Milestone 5) runs against this list as written, with a human in the loop
 throughout. Likely revisions once the pass lands: interruptibility clauses (the
 system must not resist a human stop), clearer separation of goals from
@@ -178,13 +178,13 @@ the human in the loop for everything it does not yet name.
 - **Allowlist / denylist contents.** The actual network allowlist and the H7
   destructive-command pattern set, both provisional.
 - **Interruptibility.** The list has no explicit "must not resist a human stop"
-  clause yet — expected from the literature pass (Milestone 9).
+  clause yet — expected from the literature pass (Milestone 11).
 - **Resource-ceiling representation.** Whether R1–R3 belong in this document or a
   sibling, given they are physical rather than evidentiary
   (`06-the-invariant-layer.md` open question).
 - **Versioning and integrity.** How this list is versioned and how its integrity
   is verified when the gate loads it (shared with `04-enforcement-gate.md`).
-- **The literature-grounding pass itself** — a Milestone 9 deliverable (moved
+- **The literature-grounding pass itself** — a Milestone 11 deliverable (moved
   there from the Milestone 3 completion checklist so the safety-response
   elaboration lands as one piece). Milestone 3's full-form completion still
-  depends on it, transitively, via Milestone 9.
+  depends on it, transitively, via Milestone 11.

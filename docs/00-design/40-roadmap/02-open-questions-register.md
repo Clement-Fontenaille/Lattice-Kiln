@@ -36,6 +36,26 @@ Can orchestration itself be delegated?
 
 What practical stopping rules prevent useless reasoning loops without reintroducing a rigid workflow?
 
+## Decomposition
+
+What makes a direct attempt count as *failed*, cheaply enough that the check costs less than the decomposition it triggers?
+
+How is a composite outcome evaluated? Parts can each be checked against their own criterion while nothing checks whether they are together what was asked. This is what bounds how far decomposition can usefully be pushed.
+
+Are decomposition and recombination governed by one quantity or two? The candidate account (`20-cognitive-architecture/08`) assumes one; the observed concentration of cost in aggregation is the reason to doubt it.
+
+Where should the decision to split live? The orchestrator is the obvious owner, but a rule this consequential held by a component that is itself tunable system configuration deserves examination rather than assumption.
+
+What prediction would let the granularity account fail? Until one exists it is a lens, and the architecture is relying on a sketch.
+
+## Memory and authorship
+
+Is source — human-authored against system-generated — carried adequately by the existing provenance structure, or does it need representation of its own?
+
+What does enforcement mean for a property not amenable to deterministic refusal? Authorship preservation cannot be gated the way an effect can, yet stating it in prose alone makes it a preference.
+
+What should the system do differently on each side of that distinction, once it can see it?
+
 ## Runtime boundary
 
 Which low-risk effects can be executed directly?
@@ -62,11 +82,19 @@ Can a context curator become a bottleneck or a source of systematic blindness?
 
 How should processors request missing context?
 
-How do we evaluate context quality independently from final task success?
+How do we evaluate context quality independently from final task success? This is now also a prerequisite rather than a later measurement: a convergence or planning artifact authored before implementation is assembled context, and nothing evaluates it if task success is the only signal.
+
+If what makes context costly is redundancy rather than volume (`10-foundations/04`), how is redundancy detected — against what the assembly already holds, not against the material itself?
 
 ## Evaluation
 
 Which metrics correlate with meaningful developer value?
+
+How is operator performance measured without collapsing into self-report? Perceived ease is disqualified as evidence, including this project's assessment of its own tooling.
+
+Does spread across the served population measure accessibility, or is it merely the first available proxy? What would distinguish a genuinely accessible assembly from one tested against too narrow a sample of operators?
+
+Does restraint — keeping changes within mandate, leaving the operator able to question the work — come from the model or from the harness around it? The answer decides how much of that requirement has to be built rather than inherited.
 
 How much human evaluation is required?
 
@@ -110,7 +138,7 @@ Does a single invariant layer serve all system generations and branches, or may 
 
 What does the human-facing escalation protocol look like in practice: who is notified, what state the system is frozen into, and what is required before resumption?
 
-How does this design compare against existing work on corrigibility, scalable oversight, specification gaming, and shutdown and interruptibility? The concept is currently argued from internal consistency rather than grounded in that literature, and is expected to change once it is read against it. The reading pass is scheduled as a Milestone 9 deliverable (moved there from the Milestone 3 completion checklist).
+How does this design compare against existing work on corrigibility, scalable oversight, specification gaming, and shutdown and interruptibility? The concept is currently argued from internal consistency rather than grounded in that literature, and is expected to change once it is read against it. The reading pass is scheduled as a Milestone 11 deliverable (moved there from the Milestone 3 completion checklist).
 
 ## Bootstrapping
 

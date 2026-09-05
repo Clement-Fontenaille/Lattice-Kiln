@@ -20,7 +20,9 @@ The `20-cognitive-architecture` space describes the major conceptual actors and 
 
 The `30-adaptation-and-evolution` space describes the feedback, evaluation, experimentation, generation, and bootstrap concepts.
 
-The `40-roadmap` space describes sequencing, milestones, and the questions that must be answered empirically.
+The `40-roadmap` space describes sequencing, milestones, and the questions that must be answered empirically. Milestones live one per file in `01-MILESTONES/`, where a milestone's number is a **stable identifier rather than a position in a queue**. What order they are worked in — and what has been changed upstream but not yet carried downstream — lives in `00-backlog.md`, in four priority bands. `40-roadmap/README.md` describes how that space is maintained.
+
+The `50-findings` space is the append-only empirical record: one entry per completed milestone, stating what its evidence question answered. Entries are cited by number and are never rewritten.
 
 The `90-notes` space contains working conventions for future conceptual passes.
 

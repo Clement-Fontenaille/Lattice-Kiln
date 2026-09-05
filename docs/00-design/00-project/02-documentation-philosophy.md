@@ -34,6 +34,18 @@ A concept is ready to cross into technical design when its responsibility, input
 
 Even then, the technical specification should remain traceable back to the conceptual motivation that justified it.
 
+## Prose discipline
+
+Design and specification documents are authoritative. They are read to determine what is required and what is claimed.
+
+State the claim, its basis, and its consequence. Emphasis and figurative phrasing are available where something must stand out; used as the default register they stop marking anything.
+
+This is not a matter of taste. Authority in this set is grounded in auditable argumentation — each step checkable against a finding, a design position, or a prior contract. Extended phrasing obscures which sentences carry the argument and which are ornament, and an argument whose steps cannot be located cannot be audited.
+
+The same applies to a document's scope. A document argues its own subject; borrowing weight from an adjacent one blurs which set a claim belongs to and puts its correctness beyond the reach of the people reviewing that document.
+
+The `Motto` line is the exception, and the reason the convention exists. It carries vision or intent in compressed form, in a designated place where it cannot be mistaken for a step in the argument. Ornament in the body obscures the reasoning; ornament in a slot reserved for it does not. Use one wherever it earns its line.
+
 ## Revision policy
 
 Conceptual documents are living artifacts.

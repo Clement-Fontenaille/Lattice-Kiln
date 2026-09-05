@@ -3,7 +3,7 @@
 **Traces to:** `00-design/20-cognitive-architecture/04-capabilities-and-authority.md`,
 `00-design/20-cognitive-architecture/07-invariant-enforcement.md`,
 `00-design/20-cognitive-architecture/05-runtime.md`,
-`00-design/40-roadmap/01-milestones.md` (Milestone 3);
+`00-design/40-roadmap/01-MILESTONES/03-invariant-floor.md` (M3);
 binds to `10-technical/01-effect-vocabulary.md`.
 
 ## TL;DR
@@ -23,7 +23,7 @@ are authored by the human operator in runtime seed configuration, fixed per role
 for the duration of a run, and not proposable by any cognitive component. The
 dynamic side — in-system granting, policy that changes as the system learns —
 is named as an open contract and deferred until there is a feedback loop that
-would exercise it (Milestone 10).
+would exercise it (Milestone 12).
 
 ## Responsibility
 
@@ -146,7 +146,7 @@ Rules:
 ## Open contracts
 
 - **Grant authority once loops exist.** Who may issue a type-9 grant when
-  system-level feedback (Milestone 10) can commission roles? For the MVP the
+  system-level feedback (Milestone 12) can commission roles? For the MVP the
   answer is "only the human, out of band"; that will not hold later.
 - **Constraint language.** The illustrative constraint keys need a real,
   checkable grammar (path globs, command matching semantics, destination

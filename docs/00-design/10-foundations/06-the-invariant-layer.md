@@ -66,7 +66,7 @@ The gain is sharpest at the meta level. With a floor, the meta loop asks only wh
 
 The argument above is architectural. It reasons from this set's internal consistency and is not grounded in prior work.
 
-Schemes of this general shape have been studied, and both their partial successes and their known failure modes exist in the literature on corrigibility, scalable oversight, specification gaming, and shutdown and interruptibility problems. A deliberate reading pass against that work is required before this concept is treated as settled, and the design is expected to change in response to what that pass finds. That pass is scheduled as a Milestone 9 deliverable — grouped with the rest of the safety-response elaboration rather than gating the floor's first, provisional form.
+Schemes of this general shape have been studied, and both their partial successes and their known failure modes exist in the literature on corrigibility, scalable oversight, specification gaming, and shutdown and interruptibility problems. A deliberate reading pass against that work is required before this concept is treated as settled, and the design is expected to change in response to what that pass finds. That pass is scheduled as a Milestone 11 deliverable — grouped with the rest of the safety-response elaboration rather than gating the floor's first, provisional form.
 
 The claimed benefits are the most likely part to need revision, because they are the part that is argued rather than evidenced.
 

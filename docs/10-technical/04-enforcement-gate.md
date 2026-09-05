@@ -3,7 +3,7 @@
 **Traces to:** `00-design/10-foundations/06-the-invariant-layer.md`,
 `00-design/20-cognitive-architecture/07-invariant-enforcement.md`,
 `00-design/20-cognitive-architecture/05-runtime.md`,
-`00-design/40-roadmap/01-milestones.md` (Milestone 3);
+`00-design/40-roadmap/01-MILESTONES/03-invariant-floor.md` (M3);
 binds to `10-technical/01-effect-vocabulary.md`,
 `10-technical/05-provisional-invariant-list.md`,
 `10-technical/03-capability-authority-model.md`,
@@ -25,7 +25,7 @@ v0, the **hardcoded deny-list form** the MVP crosses Milestone 3 with. Single
 effects are checked against the provisional invariant list. Sequence evaluation
 exists only as a wired-in stub. Composition / sequence hardening, gate-alter (as
 opposed to refuse-only), the accumulation threshold, and the literature-grounding
-pass are all **Milestone 9** deliverables
+pass are all **Milestone 11** deliverables
 (`00-design/00-project/04-execution-cadence.md`, "Crossing Milestone 3 for the
 MVP"). The MVP gate does not wait on them.
 
@@ -44,8 +44,8 @@ that to a **deny-list** for the MVP. This document fixes that form:
   (`07-invariant-enforcement.md`). A **role-keyed** gate — the role vocabulary is
   deliberately open; the gate binds effects.
 - Discarded for the MVP only: **gate-alter** (refuse-only here; alter is a design
-  concept that needs the triage role, Milestone 9), and **accumulation-stop**
-  (needs the threshold, Milestone 9).
+  concept that needs the triage role, Milestone 11), and **accumulation-stop**
+  (needs the threshold, Milestone 11).
 
 ## Responsibility
 
@@ -53,7 +53,7 @@ Decide, deterministically and independently of who proposed it, whether a
 proposed effect is **permissible at all** against the provisional invariant list,
 and refuse those that cross it. It does not decide authority
 (`03-capability-authority-model.md`), does not realize or reverse effects (the
-runtime), and does not route or triage a refusal (Milestone 9).
+runtime), and does not route or triage a refusal (Milestone 11).
 
 ## Position and order
 
@@ -118,7 +118,7 @@ call is a defect that hides the missing capability.
 - Nothing inside the system may modify the gate's logic or its invariant list.
   Amendment of the list is direct human action, out of band
   (`06-the-invariant-layer.md`).
-- The triage role (Milestone 9), when it exists, may route a tripped gate but
+- The triage role (Milestone 11), when it exists, may route a tripped gate but
   **may never grant an effect the gate refused**.
 
 ## Failure modes
@@ -156,13 +156,13 @@ call is a defect that hides the missing capability.
   (`07-invariant-enforcement.md`.)
 - **Sequence window and grouping.** The real `check_sequence` logic — what
   counts as a sequence, over what window, grouped how — owned by
-  `07-invariant-enforcement.md`, hardened at Milestone 9 (after the
+  `07-invariant-enforcement.md`, hardened at Milestone 11 (after the
   literature-grounding pass that milestone now carries).
 - **Gate-alter.** The design allows the gate to alter an effect, not only refuse
-  it. The MVP is refuse-only; alter needs the triage role (Milestone 9).
+  it. The MVP is refuse-only; alter needs the triage role (Milestone 11).
 - **Accumulation-stop.** Converting repeated individually-innocuous trips into a
   mandatory stop — threshold definition and "consecutive / correlated" semantics
-  are Milestone 9.
+  are Milestone 11.
 - **List integrity mechanism.** How the invariant list's integrity is verified at
   load (hash pinned where? checked by what?) so a silent edit cannot widen the
   gate.
