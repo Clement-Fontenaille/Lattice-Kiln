@@ -12,7 +12,7 @@ The set is deliberately modular. Each important converged idea has its own docum
 
 ## How to use this set
 
-The `00-project` space defines what the project is, what success means, and how conceptual decisions should be managed.
+The `00-project` space defines what the project is, what success means, and how conceptual decisions should be managed. `05-vocabulary.md` fixes shared definitions the set uses without defining — starting with **harness**.
 
 The `10-foundations` space captures the principles that constrain later architectural choices without prescribing implementation.
 
