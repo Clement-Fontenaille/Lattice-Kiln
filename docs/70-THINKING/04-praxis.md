@@ -3,9 +3,11 @@
 **State:** OPEN
 **Opened:** 2026-09-05
 **Updated:** 2026-09-05 — added a survey of what "praxis" actually means
-(Aristotle / Marx / Freire / Arendt / the Praxis Framework) and a first
-assessment of it as a project mantra. Verdict: keep as a lens, do not adopt as
-mantra. See the two sections before "What would make this thread land."
+(Aristotle / Marx / Freire / Arendt / the Praxis Framework) and an assessment of
+it as a project mantra. Working verdict: keep as a lens, do not adopt as mantra.
+The case against is **locked as ten numbered objections (O1–O10)** in "Why it
+fails as a mantra", each meant to be argued individually; O1 is load-bearing, the
+rest are independent. A short "still to check" list follows them.
 **Origin:** the specification-cadence change of 2026-09-05. The rule changed from
 *write contracts just in time* to *write contracts ahead; gate execution instead*.
 The rule is now in `00-project/04-execution-cadence.md`. The position behind it is
@@ -217,63 +219,117 @@ explicitly rejected.
   is Aristotle's praxis/poiesis line and Arendt's warning about the poiesis
   substitution, arrived at independently.
 
-### Why it fails as a mantra
+### Why it fails as a mantra — the locked objections
 
-- **It blesses the property the project treats as a defect.** Praxis is governed
-  by *phronesis* — judgment that by definition cannot be reduced to rules. The
-  project's central architectural move is the opposite: resolve judgment into
-  measured, deterministic system behaviour, because a small model cannot hold an
-  uncodified judging seat (findings entry 7; `10-foundations/06`). Item 2 of this
-  very thread flags "in shape" as "the least determinate thing in the system" and
-  treats that as a problem to fix. A praxis mantra would rename it a virtue. This
-  is the sharpest conflict and it is not superficial.
-- **It carries freight the prose discipline just forbade.**
-  `00-project/02-documentation-philosophy.md` now requires claims to stand on
-  located, checkable steps and warns against "borrowing weight from an adjacent"
-  subject. "Praxis" borrows a century of philosophy of history — Marx, Gramsci's
-  "philosophy of praxis," critical pedagogy. A mantra that invites readers to
-  import connotations the design set never sanctioned is the exact failure that
-  document exists to prevent.
-- **The name is taken.** The Praxis Framework is a specific P3M methodology. A
-  project whose PM philosophy is "praxis" invites confusion with a method it does
-  not use.
-- **It is too general to encode the actual rule.** The cadence change is not
-  "unite theory and practice." It is a specific ordering and coupling — *write
-  the contract ahead; halt execution when a finding invalidates one*. "Praxis"
-  names the family, not the rule, and mantras are quoted without their
-  qualifications.
-- **The thread's own framing says no.** "What this is not" states this thread is
-  not a replacement for the removed mantra. Promoting "praxis" to mantra
-  contradicts that unless the thread is deliberately reopened on the question —
-  which would need its own justification.
+Stated 2026-09-05 as discrete claims, each meant to be attacked on its own. The
+user has counter-arguments to each; these are the fixed targets for that. **O1 is
+load-bearing; the rest are independent and any subset could fall without saving
+the others.** Where an objection also names a conflict with a standing commitment,
+that is marked `⚔`.
 
-### The category caveat
+**O1 — `⚔` It blesses the property the project treats as a defect.** Praxis is
+governed by *phronesis*: judgment that by definition cannot be reduced to rules.
+The project's central architectural move runs the other way — resolve judgment
+into measured, deterministic system behaviour, because a small model cannot hold
+an uncodified judging seat (findings entry 7; `10-foundations/06`; `03` §4's
+"make the practice mechanical, not advice"). Item 2 of this thread already flags
+"in shape" as "the least determinate thing in the system" and wants it fixed. A
+praxis mantra renames that a virtue. *Conflicts with:* determinism in judgment
+seats, and the mechanise-the-practice programme.
+
+**O2 — `⚔` It carries freight the prose discipline just forbade.**
+`00-project/02` now requires claims to rest on located, checkable steps and warns
+against borrowing weight from an adjacent subject. "Praxis" imports a century of
+philosophy of history — Marx, Gramsci's "philosophy of praxis," critical
+pedagogy, critical theory. A mantra that invites readers to bring connotations
+the design set never sanctioned is the exact failure `02` exists to prevent.
+*Conflicts with:* prose discipline / authority-by-auditable-argument.
+
+**O3 — The name is already taken, in this exact domain.** The Praxis Framework
+(Dooley; APMG; CC-licensed) is a specific, established P3M methodology. A project
+whose PM philosophy is "praxis" invites confusion with a method it does not use
+and has not evaluated.
+
+**O4 — It is too general to encode the actual rule.** The cadence change is not
+"unite theory and practice." It is a specific ordering and coupling: *write the
+contract ahead; halt execution when a finding invalidates one.* "Praxis" names
+the genus (theory/practice unity), not this species, and mantras get quoted
+without their qualifications.
+
+**O5 — `⚔` The cadence change is an asymmetry; praxis asserts a symmetry.**
+Marx's praxis insists neither theory nor practice is prior. The 2026-09-05 change
+is explicitly a priority claim — theory-leading, with a practice-triggered halt.
+Adopting "praxis" papers over the very asymmetry this thread exists to justify,
+and hands a future reader a term with which to argue the cadence back toward
+balance. *Conflicts with:* the specific direction of `00-project/04`.
+
+**O6 — Praxis presupposes a continuous acting subject; the architecture denies
+its components one.** In Marx (self-creation through labour), Freire
+(*conscientização*), and Arendt (the "who" disclosed in action), the actor is
+*changed by* the doing. The project's actors are ephemeral processors and a
+supervised loop with deliberately no persistent self (`10-foundations/05`:
+conversation is working memory, knowledge is a published result). The mantra
+would name a mode of being the system is built not to have. The human operator
+has continuity — but a project mantra describes the system's method, not the
+operator's growth.
+
+**O7 — `⚔` Praxis resists measurement by design; the project is
+measurement-first.** Aristotle ranks *theoria* above praxis precisely because
+praxis handles the "variable, contingent" and does not yield stable, benchmarkable
+knowledge. Six milestones of apparatus (the M6 suite, rungs of lift, deterministic
+checks, the findings log) exist to make claims commensurable and reproducible. A
+mantra that valorises the un-measurable contingent is at odds with the instrument.
+*Conflicts with:* the whole evaluation programme.
+
+**O8 — `⚔` It fails the operator plainness test.** `10-foundations/07` makes the
+operator's performance the optimisation target and "ease of use not a side
+quest," with the instruction "do not let the least expert user hit the floor." A
+mantra should be sayable to that user. "Praxis" needs a philosophy lecture before
+it means anything. *Conflicts with:* the operator-first commitment and, again,
+the prose discipline.
+
+**O9 — It is a scope-creep magnet.** "Praxis" has been stretched across pedagogy,
+politics, ethics, professional practice, theology and P3M. As *the* mantra it
+invites every future contributor to read their field's "praxis" into the project.
+`03` §6 already flags this risk for the milder case of adopting "context
+engineering"; "praxis" is that risk larger.
+
+**O10 — The thread's own framing says no, and a better native candidate exists.**
+"What this is not" states this thread is not a replacement for the removed mantra.
+And if the project wants a phrase for the theory↔practice relation, it already
+generated one: **auditable argumentation** (`00-project/02`; item 6 above flags it
+as plausibly the root position) — native, plain, freight-free. Naming "praxis"
+the mantra would bury it.
+
+### The category caveat (context for O4, O6)
 
 The project's loop is closer to **hypothesis → experiment → finding** (empirical
-science) than to **reflection → action → transformation** (praxis, which is
-intrinsically directed at changing a world and has an acting subject who is
-changed in the doing). The resemblance to Marx's and Freire's dialectic is real
-but partial. Adopting the word risks asserting the whole analogy when only part
-of it holds.
+science) than to **reflection → action → transformation** (praxis — intrinsically
+directed at changing a world, with an actor changed in the doing). The
+resemblance to Marx's and Freire's dialectic is real but partial; the word
+asserts the whole analogy when only part holds.
 
-## Where it conflicts with the current approach
+### Where praxis *supports* the current approach
 
-Collected so the frictions are visible even if the lens is kept.
+One place, and it is genuine: the **promising / forgiving** reading of "write the
+contract ahead" + reversibility (`00-project/03`, `01-use-cases.md` P8). Arendt's
+two remedies for the frailty of acting under uncertainty are, structurally, what
+the cadence change does. This is worth keeping as vocabulary regardless of the
+mantra decision. Everywhere else, praxis either restates what the project already
+does in heavier words or pulls toward the uncodified-judgment position the project
+has evidence against.
 
-| current commitment | where praxis pulls against it |
-|---|---|
-| **Determinism in judgment seats** (`10-foundations/06`, findings entry 7) | phronesis is uncodifiable judgment by definition; praxis would legitimise the indeterminate gate this thread's item 2 wants to fix |
-| **Prose discipline / auditable argumentation** (`00-project/02`) | "praxis" imports unstated philosophical commitments; authority is meant to rest on located steps, not on a term's pedigree |
-| **The deliverable is insight; comparison is the product** (`01-use-cases.md` P1) | Marxian/Freirean praxis is directed at *transforming the world*, not at producing a findings log; the telos differs |
-| **Convergence before implementation, cheap and reversible** (`01-use-cases.md` P8; `00-project/03`) | *compatible*, and the better framing: Arendt's promising + forgiving. This row is where praxis helps rather than conflicts |
-| **The cadence rule is specific** (write ahead; gate on invalidation) | "praxis" names the genus (theory/practice unity), not this species; it under-describes the rule |
-| **`03-how-the-field-frames-it` §4 — resolve field discipline into system behaviour, not human advice** | praxis locates competence in the practitioner's cultivated judgment — the opposite direction from "make the practice mechanical" |
+### Still to check (issues not yet worked)
 
-The one place praxis clearly *supports* the current approach is the
-promising/forgiving reading of "contract ahead + reversibility." Everywhere else
-it either restates what the project already does in heavier vocabulary, or
-actively pulls toward the uncodified-judgment position the project has evidence
-against.
+- Whether O7 holds against Aristotle's *own* view that praxis has its own rigour
+  (deliberation, `NE` VI) rather than being simply "un-measurable" — the
+  objection may be too strong.
+- Whether "philosophy of praxis" as Gramsci used it (a euphemism under censorship)
+  weakens O2's "critical-theory freight" claim or strengthens it.
+- Whether any of O3/O9 (naming) actually bites, given the project is not
+  publishing or marketing and the collision is with an obscure framework.
+- Whether O6 is answered by locating praxis in the operator rather than the
+  system — i.e. the mantra describes what the human does with the tool.
 
 ## What would make this thread land
 
