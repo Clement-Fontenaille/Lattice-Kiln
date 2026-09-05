@@ -19,6 +19,11 @@ places before being caught.
 Treat every figure here as **directional and unverified**. Per-claim reliability
 is marked. Reading the primaries is owed work, not a formality.
 
+> **A verification pass ran 2026-09-05** with working retrieval — see the
+> **Addendum** at the end of this entry, and
+> `70-THINKING/05-primary-source-verification.md`. Most of this entry verified;
+> the corrections it did surface are listed there.
+
 ---
 
 ## 1. Outcomes vary far more between operators than on average
@@ -214,3 +219,46 @@ concerns other people's tools, other people's codebases, and mostly other people
 models. It is background against which this project's own findings are read — not
 a substitute for them, and not transferable to this project's configuration
 without argument.
+
+---
+
+## Addendum — verification pass, 2026-09-05
+
+Run with working retrieval; full record in
+`70-THINKING/05-primary-source-verification.md`. Appended, not merged into the
+sections above, per the append-only rule.
+
+**Verified against primary or ≥2 independent sources — reliability marks may
+rise accordingly:** §1 Faros (epics/dev +66%, incidents/PR +242.7%, unreviewed
++31.3%, bugs/dev +54% — all exact), CircleCI (+59% YoY is the *overall* average,
+not feature-branch; median-team main-branch −7%), LinearB (merge 32.7% vs 84.5%
+exact; elite "≈2×" is raw, nets to ≈+10% org after review cost). §2 METR (all
+figures confirmed; abstract carries no CI). §3 ETH — authors, dates, task/repo
+counts, 641-word average, LLM-generated −0.5%/−2% at +20–23% cost, **and the
+redundancy correction (strip docs first → generated files +2.7% and beat
+developer-written)** all confirmed. §6 Sourcegraph 100K-vs-5K exact. §7 AGENTS.md
+60k+ projects under the LF Agentic AI Foundation; TodoWrite→Tasks API at Claude
+Code v2.1.16, off-by-default on Sonnet 5 / Opus 4.8 from v2.1.233.
+
+**Corrections owed:**
+
+- **§3.** Benchmark is **CTXbench**, not "AGENTbench". Developer-written gain is
+  **+2.4%, p≈0.21 (not significant)**, not "~4%" (that is secondary coverage).
+  The "obedience trap" label and the "ICLR 2026 workshop" venue are **unsourced**
+  — no version of the paper states either; do not rest "peer-reviewed venue" on
+  the latter. Reasoning-token increase is +10–22% (GPT models), not +14–22%.
+- **§4.** "Tangential success" is **not in the ADaPT paper** — it is informal
+  secondary writing (a dev.to synthesis). ADaPT's actual named limitation is
+  that the executor model **cannot reliably judge its own success** (>30-point
+  overestimation on WebShop), which is the more useful finding for
+  `10-foundations/01` and should replace the tangential-success line here.
+  ARIES's **4.12×** is one synthetic task (sorting64; sorting128 was 2.6×), not
+  a depth-response curve; the aggregation-is-binding mechanism does hold.
+- **§5.** *Comprehension debt* — attribute to **Addy Osmani / O'Reilly Radar**,
+  not Agoda (no Agoda origin found; the term's coverage also re-conflates the
+  METR −19%).
+
+**Not re-checked** (OQ-1 stays open only for these): compaction-threshold table,
+Cline memory-bank quotes, Aider repo-map internals, the "5 of 6 trials"
+decomposition claim (source not locatable), and the `00-standing-position.md`
+corpus figures (GitBugs / validity corpus / Debian BTS).

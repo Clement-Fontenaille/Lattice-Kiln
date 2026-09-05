@@ -76,4 +76,5 @@ visible.
 | 9 | *field entry* — external evidence the design set rests on | 2026-09-05 | — (re-verify by 2027-03-05) | [`09-field-evidence-2026-09.md`](09-field-evidence-2026-09.md) |
 
 Entry 6 carries one addendum (workflow-suite re-test). Entry 7 carries two
-(loop control; super-pipeline).
+(loop control; super-pipeline). Entry 9 carries one (primary-source verification
+pass, 2026-09-05).

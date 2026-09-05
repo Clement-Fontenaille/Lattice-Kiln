@@ -798,6 +798,14 @@ precisely because no vendor can author it for them.
 - **OQ-1 — Re-verify the primaries.** Everything above is search-mediated. Before
   any of it is cited in `00-design/`, read arXiv:2602.11988, the Böckeler article,
   the Faros/LinearB reports, and the vendor docs directly.
+  **Pass run 2026-09-05 — see [`05-primary-source-verification.md`](05-primary-source-verification.md).**
+  Most of this document verified against primaries and holds. Corrections that
+  bear on §5 and §5b: "tangential success" is **not** an ADaPT finding (it is a
+  blog synthesis); the ETH benchmark is **CTXbench** not "AGENTbench"; the
+  human-written context-file effect is **+2.4%, not significant**, not "+4%";
+  ARIES's 4.12× is one synthetic task, not a depth trend; "obedience trap" and
+  the "ICLR 2026 workshop" are unsourced. §5's LinearB/METR attribution is
+  correct here but was **not** propagated to `01-use-cases.md` §3.
 - **OQ-2 — Does the ETH result hold at 7B?** Their local arm was Qwen3-30B-Coder.
   If context files hurt *more* at smaller sizes, that is a granularity result and
   it is directly measurable on the M6 suite with the existing CLAUDE.md-style
