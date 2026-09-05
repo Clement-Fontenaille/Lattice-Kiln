@@ -35,11 +35,19 @@ not authorship" correction, which is genuinely in the paper.
 The residual problems are of one kind: **attribution slippage**. Blog
 syntheses got cited as if they were papers; one benchmark is misnamed; one
 internal cross-reference went stale; two figures were taken from secondary
-coverage rather than the primary; one venue detail cannot be found anywhere and
-may be invented.
+coverage rather than the primary.
 
 None of it overturns a design position. Two items (A, D) should be corrected
 before the next citation; the rest are annotations.
+
+**Second pass (2026-09-05, same day).** On re-checking: the "ICLR 2026 workshop"
+venue flagged below as unfindable **is real** (MemAgents workshop, 27 Apr 2026) —
+that flag is retracted (see F). "Tangential success" was confirmed to be an
+**uncited** blog coinage (the dev.to author claims it as his own framing, cites
+nothing). The "5 of 6 trials" decomposition claim (`03` §5b item 4) was chased to
+a plausible candidate (VAT right-sizing pilot, arXiv:2608.23395) and it is **not**
+the source — that study varies decomposition manually and reports no such
+behaviour. Item 4 stays unsourced; recommend striking it.
 
 ---
 
@@ -125,8 +133,8 @@ the softer secondary number.
 | reasoning tokens +14–22% | paper: **+10–22%, GPT models** | low end slightly off |
 | tool-use "1.6–2.5× baseline" | paper: `uv` 1.6× *when mentioned*, repo-specific tools 2.5× *when mentioned* | roughly — these are specific tools, doc generalises |
 | "2–4 extra steps" | not found | unverified |
-| term "obedience trap" | **not in the paper** (checked twice) | see E |
-| "presented at ICLR 2026 workshop on memory for LLM-based agentic systems" | **not in the paper, not in any secondary source found** | see F |
+| term "obedience trap" | **not in the paper** (checked twice) — project/coverage coinage | see E |
+| "presented at ICLR 2026 workshop on memory for LLM-based agentic systems" | **correct** — MemAgents workshop, 27 Apr 2026 | see F (flag retracted) |
 
 ---
 
@@ -159,16 +167,15 @@ project's own (or drop the quotation framing).
 
 ---
 
-## F. `ICLR 2026 workshop` — cannot be found; possibly invented
+## F. `ICLR 2026 workshop` — **retracted; the docs were right**
 
-`03` §5 and `50-findings/09` §3 lean on the ETH paper having a peer-reviewed
-venue: *"Presented at the ICLR 2026 workshop on memory for LLM-based agentic
-systems."* No version of the paper states this, and no secondary source mentions
-it. It is an arXiv preprint (v2 dated June 2026). ICLR 2026 exists and
-memory-for-agents workshops exist, so someone may have connected them — but on
-current evidence this is **unsupported** and entry 9's "peer-reviewed venue"
-reliability note should not depend on it. (The contamination-resistant benchmark
-design is the better reason to credit the paper.)
+An earlier version of this section flagged the venue claim as unfindable. That
+was a miss on the first search pass. **The claim is correct.** The paper was
+presented at the **MemAgents ICLR 2026 workshop** (Workshop on Memory for
+LLM-Based Agentic Systems) on **27 April 2026**
+(`sites.google.com/view/memagent-iclr26`). `03` §5 and `50-findings/09` §3 stand
+as written on the venue, and "peer-reviewed venue" is defensible for a workshop
+paper.
 
 ---
 
@@ -317,7 +324,10 @@ exactly unless noted.
 - Aider repo-map internals (PageRank over the dependency graph, `--map-tokens`).
 - "In one study they fused stages, dropped others, and replaced a classification
   stage with a fixed threshold in 5 of 6 trials" (`03` §5b, under F) — **source
-  not locatable** from the description; treat as unverified until re-sourced.
+  not locatable.** Chased the nearest candidate (VAT decomposition right-sizing
+  pilot, arXiv:2608.23395) and ruled it out — that study varies decomposition
+  manually and reports no emergent stage-fusing. Recommend **striking item 4**
+  unless the user can name the source.
 - GitBugs / the validity corpus / Debian BTS figures in `00-standing-position.md`
   E-corpus.
 
@@ -325,21 +335,52 @@ exactly unless noted.
 
 ## Recommendation
 
-1. **Correct now** (they are cited or about to be): A (drop "tangential success"
-   as an ADaPT finding, everywhere; add ADaPT's real limitation to entry 9 §4
-   and cog-arch/08), and D (`01-use-cases.md` §3 LinearB → METR).
-2. **Correct on next edit**: B (CTXbench), C (+2.4% not +4%), G (ARIES one-task),
-   H (comprehension-debt attribution). E and F are annotations — mark "obedience
-   trap" as the project's label; stop leaning on "ICLR 2026 workshop".
-3. **Update `50-findings/09`**: its per-claim reliability marks can now move.
-   METR, Faros, CircleCI, CodeRabbit, the 33k-PR and 1.02M-PR studies, AGENTS.md
-   adoption, TodoWrite/Tasks — all verified against primary or multiple
-   independent sources this pass. The re-verify-by date (2027-03-05) can stand;
-   the "no primary read directly" standing caveat should be narrowed to the
-   items still in the "not re-checked" list above.
-4. **Keep OQ-1 open** only for the "not re-checked" list.
+**All corrections below applied to the design and thinking sets on 2026-09-05**
+(the user authorised propagation). This section records what was done.
+
+1. **A — "tangential success".** Reclassified everywhere from "ADaPT's
+   documented, evaluated failure mode" to *a concern raised in informal writing,
+   with no evaluation behind it*. The concept is kept (it motivates real
+   structure in `02`); only its evidentiary status changed. ADaPT's *actual*
+   limitation — models cannot reliably judge their own success — added to entry 9
+   §4 and to `20-cognitive-architecture/08` open questions.
+2. **B — CTXbench**, not "AGENTbench": corrected in `03` (×4) and entry 9 §3.
+3. **C — developer-written effect** is **+2.4%, p≈0.21 (not significant)**, not
+   "+4%": corrected in `03` and entry 9 §3.
+4. **D — `01-use-cases.md` §3**: perception gap re-attributed from "LinearB,
+   ~8.1M PRs" to **METR** (RCT, 16 devs, early-2025 tooling); LinearB kept for
+   merge-rate / size / pickup only.
+5. **E — "obedience trap"**: marked as coverage/project coinage, not the paper's
+   term.
+6. **F — ICLR 2026 workshop: NOT an error.** The paper was at the MemAgents ICLR
+   2026 workshop (27 Apr 2026). `03` and entry 9 stand; my earlier flag is
+   retracted.
+7. **G — ARIES 4.12×**: reworded to "one synthetic task (sorting64); the
+   aggregation-is-binding mechanism holds" in `03`, `02` (×3),
+   `00-standing-position.md`, entry 9 §4.
+8. **H — comprehension debt**: re-attributed from Agoda to **Addy Osmani /
+   O'Reilly Radar** in `03` and entry 9 §5.
+9. **Item 4 of `03` §5b** ("5 of 6 trials" stage-fusing) marked **unsourced**
+   pending a citation.
+10. **Entry 9 reliability marks** raised where this pass verified against primary
+    or ≥2 independent sources (METR, Faros, CircleCI, LinearB, CodeRabbit, the
+    33k- and 1.02M-PR studies, ETH incl. the redundancy correction, Sourcegraph,
+    AGENTS.md adoption, TodoWrite/Tasks). Standing caveat narrowed to the
+    "not re-checked" list.
+
+## Which arguments this voids
+
+Traced in `06-what-the-external-evidence-carries.md` → "Arguments that lose
+support". Short version: **no design-set argument collapses.** One THINKING
+argument is demoted — `02`'s "ADaPT's failure catalogue contains two modes this
+account was missing" was an appeal to *evaluated prior art*; with "tangential
+success" removed it becomes the project's *own reasoning* plus one narrow-domain
+result (ARIES). The conclusions it fed (the integrated-system ceiling, the
+objective-preservation operation, the depth-bound contribution) survive on that
+weaker footing, and each is now marked accordingly.
 
 ## Output
 
-_On close: fold the corrections into `03`, `01`, `09`, and
-`20-cognitive-architecture/08`; narrow entry 9's standing caveat._
+Corrections folded in 2026-09-05. Companion analysis of what the evidence
+actually carries: `06-what-the-external-evidence-carries.md`. OQ-1 remains open
+only for the "not re-checked" list.

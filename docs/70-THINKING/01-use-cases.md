@@ -146,15 +146,19 @@ rhetoric. Headlines:
   happen, cross-model plan review.
 - **P3 is confirmed at industry scale.** Completed epics/dev +66 %, production
   incidents per PR **+242.7 %**, unreviewed PRs to main +31.3 % (Faros);
-  main-branch throughput *falling* while feature-branch throughput rises 59 %
-  (CircleCI).
+  median-team main-branch throughput *falling* while overall throughput rises
+  59 % YoY (CircleCI).
 - **Context files do not work.** ETH Zurich, controlled: no success improvement,
   >20 % added cost. ~~And the sign flips on authorship.~~ **Corrected
   2026-09-04:** the operative variable is **redundancy, not authorship** — strip
   the redundant material and machine-generated files *beat* human-written ones.
   What survives: non-additive content is **actively costly**, not neutral.
-- **Challenge to §1:** developers *feel* 20 % faster and are *19 % slower*
-  (LinearB, ~8.1M PRs). Bears directly on OQ-3 and the 15× expectation.
+- **Challenge to §1:** developers *feel* ~20 % faster and are *~19 % slower*
+  — **METR** (RCT, 16 devs, 246 tasks, early-2025 tooling; forecast −24 % →
+  self-estimate −20 % → measured +19 % time). *(Corrected 2026-09-05: the first
+  draft credited this to LinearB, ~8.1M PRs — that conflated two studies, see
+  `03` §5. LinearB's separate contribution is the merge-rate / PR-size / pickup
+  spread.)* Bears directly on OQ-3 and the 15× expectation.
 
 ---
 

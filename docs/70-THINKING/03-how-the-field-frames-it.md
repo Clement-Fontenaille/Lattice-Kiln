@@ -142,25 +142,31 @@ The strongest material in the survey is where measurement contradicts practice.
 
 Gloaguen, Mündler, Müller, Raychev & Vechev — ETH Zurich SRI Lab with
 LogicStar.ai, *"Evaluating AGENTS.md: Are Repository-Level Context Files Helpful
-for Coding Agents?"*, arXiv:2602.11988, Feb 2026. SWE-bench Lite (300 tasks) plus
-**AGENTbench** (138 tasks from niche repos, built to dodge contamination), across
-Claude Code/Sonnet 4.5, Codex/GPT-5.2 and GPT-5.1-mini, Qwen Code/Qwen3-30B-Coder;
-three arms — none, auto-generated per vendor recommendation, developer-written.
+for Coding Agents?"*, arXiv:2602.11988, Feb 2026 (v2 Jun 2026). SWE-bench Lite
+(300 tasks) plus **CTXbench** (138 tasks from niche repos, built to dodge
+contamination), across Claude Code/Sonnet 4.5, Codex/GPT-5.2 and GPT-5.1-mini,
+Qwen Code/Qwen3-30B-Coder; three arms — none, auto-generated per vendor
+recommendation, developer-written.
 
-Presented at the ICLR 2026 workshop on memory for LLM-based agentic systems.
-438 tasks total; AGENTbench's 12 repos were chosen *because* they already carry
-developer-written context files. Average context file: **641 words**.
+Presented at the MemAgents ICLR 2026 workshop (memory for LLM-based agentic
+systems), 27 Apr 2026. 438 tasks total; CTXbench's 12 repos were chosen *because*
+they already carry developer-written context files. Average context file:
+**641 words** (range 24–2003).
 
 - **No improvement in task success. Inference cost up >20%.**
 - LLM-generated files **reduced** success in 5 of 8 settings (−0.5 % SWE-bench
-  Lite, −2 % AGENTbench; +20–23 % cost).
-- **Human-written files: +4 %** (+19 % cost), AGENTbench only.
-- Agents follow context-file instructions at **1.6–2.5× baseline tool-usage
-  rates** — the weak effect is *not* agents ignoring the files. Whether human- or
-  machine-written, they spend 14–22 % more reasoning tokens and 2–4 extra steps.
-- Mechanism: unnecessary requirements make the task harder. Dubbed **"the
-  obedience trap."** Authors' own recommendation: context files should state
-  **only minimal requirements**.
+  Lite, −2 % CTXbench; +20–23 % cost).
+- **Human-written files: +2.4 %** — *marginal, p ≈ 0.21, not significant* —
+  (+19 % cost), CTXbench only. (Secondary coverage widely rounds this to "+4 %";
+  the primary does not support that.)
+- Agents follow context-file instructions at higher tool-use rates (e.g. `uv`
+  1.6× when it is mentioned, repo-specific tools 2.5×) — the weak effect is *not*
+  agents ignoring the files. They spend ~10–22 % more reasoning tokens (GPT
+  models) on them.
+- Mechanism: unnecessary requirements make the task harder. This document has
+  been calling that **"the obedience trap"** — the label is ours / secondary
+  coverage's, not the paper's. Authors' own recommendation: context files should
+  state **only minimal requirements**.
 
 **Correction (2026-09-04) — the authorship reading was wrong, and it had already
 propagated.**
@@ -187,10 +193,11 @@ proxy. This is the finding that was missing, and it inverts the interpretation.
    special, only that the system can tell whether anything was added.
 
 **Standing caveats:** small effects, one benchmark for the human-written arm, the
-SRI Lab's own framing ("no improvement") is more conservative than secondary
-coverage's ("+4 % for human-written"), and a v2 revision (June 2026) may differ
-from v1. **All of the above is still search-mediated — the paper has not been
-read directly.** See OQ-1.
+SRI Lab's own framing ("no improvement") is the conservative one and the one to
+use, and a v2 revision (June 2026) exists. **Verified against the paper 2026-09-05**
+(`05-primary-source-verification.md`): authors, dates, task/repo counts, the
+641-word average, the LLM-generated deltas, and the redundancy correction all
+check out; the benchmark name and the "+4 %" figure did not, and are fixed above.
 
 ### Less context, better results (vendor benchmark — Sourcegraph)
 
@@ -438,8 +445,9 @@ from operational pain rather than a 30-task suite.
 **Half two — preserve human comprehension.** HumanLayer's *"turn the lights back
 on"*: keep humans reading code, invest heavily upfront in shared understanding
 (product review, architecture, program design, vertical slices), use AI to
-compress the review cycle rather than remove it. Agoda's **"comprehension debt"**
-names the failure: developers understand less of their own codebase over time as
+compress the review cycle rather than remove it. **"Comprehension debt"** (Addy
+Osmani / O'Reilly Radar — the first draft credited Agoda; not confirmed) names
+the failure: developers understand less of their own codebase over time as
 AI-written code accumulates.
 
 **Two readings of that account worth carrying forward** (interpretation, not
@@ -637,24 +645,35 @@ scaling to 2.8 on depth-3 ones. Reported gains up to +28.3 % (ALFWorld), +27 %
 (WebShop), +33 % (TextCraft). Explicitly framed as adapting to *both task
 complexity and LLM capability* — the two-variable form `02` Consequence 1 needs.
 
-**Its documented failure modes are the important part**, and two of them are
-absent from `02`:
+**Failure modes beyond over-decomposition** — with sources corrected 2026-09-05
+(`05-primary-source-verification.md`), because the first draft mis-sourced two of
+these:
 
-1. **Over-decomposition** — overhead. Already held.
-2. **Tangential success — "arguably the most insidious."** The agent completes
-   decomposed sub-tasks with high fidelity and the completion is *irrelevant to
-   the original goal*, because each sub-task acquires its own optimisation target:
-   *"do this sub-task well"* rather than *"move toward the goal."* **New to this
-   project.** Decomposition does not merely cost overhead; it can dissolve the
-   objective.
-3. **Aggregation cost at depth** — ARIES reports up to **4.12×** performance
-   deterioration as depth rises, concluding that aggregation reliability is the
-   binding constraint: *if merging sub-task outputs is error-prone, deeper
-   decomposition actively hurts.* **Also new, and it may be the more important
-   of the two.**
-4. **Agents under-split when left to choose.** In one study they fused stages,
-   dropped others, and replaced a classification stage with a fixed threshold in
-   5 of 6 trials.
+1. **Over-decomposition** — overhead. Already held. This one *is* in ADaPT.
+2. **ADaPT's actual named limitation: the executor cannot reliably tell whether
+   it succeeded.** ADaPT decides whether to decompose from the executor LLM's
+   own success heuristic, and that heuristic *inflates* success — over-30-point
+   overestimation on WebShop; the paper recommends external verifiers. This is
+   the real finding, it was missed in the first pass, and it is the more useful
+   one: it is `10-foundations/01`'s open question (*what makes a direct attempt
+   count as failed*) and dloop's `STALL_TOL` problem, stated by the paper that
+   the "decompose on failure" rule comes from.
+3. **Tangential success** — sub-tasks completed with high fidelity, result
+   *irrelevant to the original goal*, each having acquired a local optimisation
+   target. **This is not from ADaPT or any paper** — it is a coinage from an
+   uncited practitioner blog. Kept here as a *plausible concern*, not as
+   evaluated prior art. `02` builds real structure on it (objective preservation
+   as a distinct operation); that structure now rests on argument, not on a
+   citation.
+4. **Aggregation cost at depth** — ARIES (arXiv:2502.21208, thought-graph
+   puzzles) reports deterioration reaching **4.12× on one synthetic task**
+   (sorting64; 2.6× on sorting128), with the aggregation transformation
+   accounting for 86 % / 68 % of policy-agent errors. The *mechanism* —
+   error-prone recombination makes deeper decomposition actively hurt — is the
+   transferable part; the multiplier is one data point in a distant domain.
+5. **Agents under-split when left to choose** — *source not located* (`03` first
+   draft said "in one study … 5 of 6 trials"; the nearest candidate was ruled
+   out on 2026-09-05). Treat as unsupported until re-sourced.
 
 **Notably, F is not in any product surveyed.** Every shipped mechanism is reactive
 context-budget management with thresholds tuned to the *window*; ADaPT tunes to
@@ -798,14 +817,17 @@ precisely because no vendor can author it for them.
 - **OQ-1 — Re-verify the primaries.** Everything above is search-mediated. Before
   any of it is cited in `00-design/`, read arXiv:2602.11988, the Böckeler article,
   the Faros/LinearB reports, and the vendor docs directly.
-  **Pass run 2026-09-05 — see [`05-primary-source-verification.md`](05-primary-source-verification.md).**
-  Most of this document verified against primaries and holds. Corrections that
-  bear on §5 and §5b: "tangential success" is **not** an ADaPT finding (it is a
-  blog synthesis); the ETH benchmark is **CTXbench** not "AGENTbench"; the
-  human-written context-file effect is **+2.4%, not significant**, not "+4%";
-  ARIES's 4.12× is one synthetic task, not a depth trend; "obedience trap" and
-  the "ICLR 2026 workshop" are unsourced. §5's LinearB/METR attribution is
-  correct here but was **not** propagated to `01-use-cases.md` §3.
+  **Pass run 2026-09-05 — see [`05-primary-source-verification.md`](05-primary-source-verification.md);
+  corrections applied inline that day.** Most of this document verified against
+  primaries and holds. What changed: §5 ETH benchmark **CTXbench** (was
+  "AGENTbench"), human-written effect **+2.4% n.s.** (was "+4%"), "obedience
+  trap" marked as our label; §5b "tangential success" reclassified from an ADaPT
+  finding to an uncited blog concern, ADaPT's real limitation (executor can't
+  self-assess success) added, ARIES 4.12× marked as one synthetic task, item 5
+  marked unsourced; comprehension-debt attribution softened. The "ICLR 2026
+  workshop" claim is **correct** (MemAgents workshop) — a first-pass flag on it
+  was withdrawn. §5's LinearB→METR correction was also propagated to
+  `01-use-cases.md` §3.
 - **OQ-2 — Does the ETH result hold at 7B?** Their local arm was Qwen3-30B-Coder.
   If context files hurt *more* at smaller sizes, that is a granularity result and
   it is directly measurable on the M6 suite with the existing CLAUDE.md-style

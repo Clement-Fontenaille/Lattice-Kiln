@@ -350,9 +350,11 @@ HPC-domain agentic benchmark with deterministic ground truth.
 
 Real, unresolved, **not yet actionable** — recorded so they are not rediscovered.
 
-- **Aggregation above the ceiling** (U6). ARIES reports up to 4.12× deterioration
-  with depth; aggregation is coarse-grained by construction. No experiment
-  designed. A ladder measuring only decomposition measures the easy half.
+- **Aggregation above the ceiling** (U6). ARIES reports 4.12× deterioration on
+  one synthetic task, aggregation-dominated (distant domain — mechanism transfers,
+  multiplier does not); aggregation is coarse-grained by construction. No
+  experiment designed. A ladder measuring only decomposition measures the easy
+  half.
 - **P8's loop does not close** (`01` OQ-10). Convergence quality cannot be
   evaluated without M9-style context-quality metrics. So M7's front half would
   ship unmeasured — the exact criticism this project levels at the field.

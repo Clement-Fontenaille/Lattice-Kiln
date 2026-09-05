@@ -49,19 +49,21 @@ stop choosing and start qualifying. Two terms, always named:
 | **integrated system ceiling** | the grain at which the *whole configuration* — decomposer, executors, aggregator — still **preserves and achieves the original objective** |
 | **lift** | `effective − bare`, in rungs. The project's output quantity. |
 
-**The third term was added (2026-09-04) because tangential success requires it.**
-Driving every sub-task below the *executor's* ceiling does not bound the system,
-because the system can complete each piece perfectly and deliver something
-irrelevant to what was asked. The failure is not located in any executor. It is a
-property of the configuration, and it needs its own name.
+**The third term was added (2026-09-04) because the objective-dissolution failure
+requires it.** Driving every sub-task below the *executor's* ceiling does not
+bound the system, because the system can complete each piece perfectly and
+deliver something irrelevant to what was asked. The failure is not located in any
+executor. It is a property of the configuration, and it needs its own name.
+(This failure is a hypothesis, argued not evidenced — see the prior-art section
+and `05-primary-source-verification.md`.)
 
 **And it is bounded by aggregation, not by execution.** Recombination is a
 coarse-grained operation by construction — it requires holding what all the
 pieces were *for* — so the integrated system ceiling sits at the aggregator's
 limit however finely the executors are fed. Improving executors cannot raise it.
-ARIES's up-to-4.12× deterioration at depth is this ceiling being crossed: more
-depth means more aggregation transformations, each with its own failure
-probability.
+ARIES's deterioration at depth — 4.12× on one synthetic task — is this ceiling
+being crossed: more depth means more aggregation transformations, each with its
+own failure probability.
 
 Practical consequence: **decomposition has negative returns before the executors
 start failing.** The binding constraint arrives earlier than an
@@ -137,7 +139,9 @@ task complexity and model capability*, which is the two-variable form this
 section needs. The stopping rule above is therefore **confirmed prior art, not a
 new idea** — and that is good news, because it has been evaluated.
 
-Its failure catalogue contains two modes this document did not anticipate:
+Two failure modes this document did not originally anticipate — **provenance
+corrected 2026-09-05** (`05-primary-source-verification.md`); neither is from the
+ADaPT paper, which was the first draft's claim:
 
 - **Tangential success.** Sub-tasks are completed with high fidelity and the
   result is *irrelevant to the original goal*, because each sub-task acquires its
@@ -146,9 +150,14 @@ Its failure catalogue contains two modes this document did not anticipate:
   objective.** Nothing in "decompose until it fits under the ceiling" protects
   against this, and it is the failure that a ceiling-matching rule would produce
   *most* readily, since matching the grain says nothing about preserving intent.
-- **Aggregation is the binding constraint.** ARIES reports up to **4.12×**
-  deterioration as depth rises, concluding that *if merging sub-task outputs is
-  error-prone, deeper decomposition actively hurts.*
+  **This is the project's own reasoning, not an evaluated result** — the term
+  comes from an uncited practitioner blog. It is a hypothesis the instrument
+  should be built to detect, not a finding it can assume.
+- **Aggregation is a binding constraint.** ARIES (thought-graph puzzles, distant
+  domain) reports deterioration reaching **4.12× on one synthetic sorting task**,
+  with recombination accounting for the majority of policy-agent errors —
+  *if merging sub-task outputs is error-prone, deeper decomposition actively
+  hurts.* The mechanism transfers; the multiplier is one data point.
 
 **The second one bites hardest, and it sharpens the Principia point.** Splitting
 is cheap; *recombining* is not — and aggregation is a **coarse-grained operation
@@ -1160,11 +1169,15 @@ the ceiling probe rather than chosen. Decompose as-needed, stop where measuremen
 says recombination becomes unreliable.
 
 **Why it is a real contribution rather than a restatement:** over-decomposition is
-a documented, quantified failure (4.12×) whose current mitigation is *"set a max
-depth and check whether decomposition adds value"* — i.e. a magic number and an
-unspecified check. A calibrated bound converts both into measurements. The
-hypothesis is that **initial calibration plus an evidence-based feedback loop
-addresses over-decomposition**, and it is genuinely open whether it does.
+a documented failure (ARIES: 4.12× on one synthetic task, aggregation-dominated;
+ADaPT: `max_depth` is hand-set) whose current mitigation is *"set a max depth and
+check whether decomposition adds value"* — i.e. a magic number and an unspecified
+check. A calibrated bound converts both into measurements. The hypothesis is that
+**initial calibration plus an evidence-based feedback loop addresses
+over-decomposition**, and it is genuinely open whether it does. Note the
+motivating evidence is thin — one narrow-domain multiplier plus a mechanism
+argument — so the contribution stands on the *method* being sound, not on the
+failure being well quantified.
 
 **What it depends on, in order:**
 
@@ -1683,8 +1696,9 @@ that is itself unresolved** rather than merely deferred.
 
 - The **standing assumption**: the ceiling does not decompose into separable
   operations; treat it as unitary unless the literature (OQ-B) says otherwise.
-- The **tangential-success** and **aggregation** failure modes, and the
-  integrated system ceiling they required.
+- The **objective-dissolution** ("tangential success") and **aggregation**
+  failure modes, and the integrated system ceiling they required — with the
+  first now held as argument, not as evaluated prior art (2026-09-05).
 - The **circularity warning**: never report a dimensionality estimate from a
   self-generated population without saying so.
 

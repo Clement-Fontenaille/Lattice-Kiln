@@ -100,3 +100,10 @@ reason to doubt it.
 Where the decision to split should live. The orchestrator is the obvious owner,
 but a rule this consequential being held by a component that is itself tunable
 system configuration deserves examination rather than assumption.
+
+What counts as the *failure* that triggers a split. The external work says depth
+is best left to emerge from failed attempts (entry 9, §4) — but the same work
+reports that a model judging whether its own attempt succeeded is unreliable and
+biased toward "done." So the trigger cannot be the executor's self-report, and
+what replaces it is unspecified. This is the same gap `10-foundations/01` names
+from the other side.

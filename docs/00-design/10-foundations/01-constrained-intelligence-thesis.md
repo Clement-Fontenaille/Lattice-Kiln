@@ -44,4 +44,4 @@ Evidence for both is in findings entries 5 and 8, and in entry 9 (§4) for the e
 
 The shape is known; the position is not, and position is what a firing rule needs.
 
-What makes a direct attempt count as failed, cheaply enough that the check costs less than the decomposition it triggers. And how a composite outcome is evaluated, which is what bounds how far decomposition can usefully be pushed.
+What makes a direct attempt count as failed, cheaply enough that the check costs less than the decomposition it triggers — the external work that supplies the "decompose on failure" rule names this exact question as unsolved, because a model judging its own success is unreliable and optimistic (entry 9, §4). And how a composite outcome is evaluated, which is what bounds how far decomposition can usefully be pushed.
