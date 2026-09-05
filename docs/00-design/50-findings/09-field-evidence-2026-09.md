@@ -17,7 +17,7 @@ inverted (propagated to six places before being caught), and its benchmark name
 and human-written figure were wrong (caught 2026-09-05).
 
 > **Verification pass, 2026-09-05** (working retrieval;
-> `70-THINKING/05-primary-source-verification.md`). §§1–7 were checked against
+> `70-THINKING/06-primary-source-verification.md`). §§1–7 were checked against
 > primary sources or ≥2 independent ones and **substantially hold**; the section
 > texts above now carry the corrections inline, and the **Addendum** at the end
 > lists them. What remains unverified: the compaction-threshold and vendor-quote
@@ -241,7 +241,7 @@ without argument.
 ## Addendum — verification pass, 2026-09-05
 
 Run with working retrieval; full record in
-`70-THINKING/05-primary-source-verification.md`. The section texts above were
+`70-THINKING/06-primary-source-verification.md`. The section texts above were
 corrected inline the same day (the user authorised it); this addendum is the
 change log.
 

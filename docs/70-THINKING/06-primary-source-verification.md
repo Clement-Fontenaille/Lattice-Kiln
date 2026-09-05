@@ -370,7 +370,7 @@ exactly unless noted.
 
 ## Which arguments this voids
 
-Traced in `06-what-the-external-evidence-carries.md` → "Arguments that lose
+Traced in `05-what-the-external-evidence-carries.md` → "Arguments that lose
 support". Short version: **no design-set argument collapses.** One THINKING
 argument is demoted — `02`'s "ADaPT's failure catalogue contains two modes this
 account was missing" was an appeal to *evaluated prior art*; with "tangential
@@ -382,5 +382,5 @@ weaker footing, and each is now marked accordingly.
 ## Output
 
 Corrections folded in 2026-09-05. Companion analysis of what the evidence
-actually carries: `06-what-the-external-evidence-carries.md`. OQ-1 remains open
+actually carries: `05-what-the-external-evidence-carries.md`. OQ-1 remains open
 only for the "not re-checked" list.

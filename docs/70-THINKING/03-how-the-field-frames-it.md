@@ -195,7 +195,7 @@ proxy. This is the finding that was missing, and it inverts the interpretation.
 **Standing caveats:** small effects, one benchmark for the human-written arm, the
 SRI Lab's own framing ("no improvement") is the conservative one and the one to
 use, and a v2 revision (June 2026) exists. **Verified against the paper 2026-09-05**
-(`05-primary-source-verification.md`): authors, dates, task/repo counts, the
+(`06-primary-source-verification.md`): authors, dates, task/repo counts, the
 641-word average, the LLM-generated deltas, and the redundancy correction all
 check out; the benchmark name and the "+4 %" figure did not, and are fixed above.
 
@@ -646,7 +646,7 @@ scaling to 2.8 on depth-3 ones. Reported gains up to +28.3 % (ALFWorld), +27 %
 complexity and LLM capability* — the two-variable form `02` Consequence 1 needs.
 
 **Failure modes beyond over-decomposition** — with sources corrected 2026-09-05
-(`05-primary-source-verification.md`), because the first draft mis-sourced two of
+(`06-primary-source-verification.md`), because the first draft mis-sourced two of
 these:
 
 1. **Over-decomposition** — overhead. Already held. This one *is* in ADaPT.
@@ -817,7 +817,7 @@ precisely because no vendor can author it for them.
 - **OQ-1 — Re-verify the primaries.** Everything above is search-mediated. Before
   any of it is cited in `00-design/`, read arXiv:2602.11988, the Böckeler article,
   the Faros/LinearB reports, and the vendor docs directly.
-  **Pass run 2026-09-05 — see [`05-primary-source-verification.md`](05-primary-source-verification.md);
+  **Pass run 2026-09-05 — see [`06-primary-source-verification.md`](06-primary-source-verification.md);
   corrections applied inline that day.** Most of this document verified against
   primaries and holds. What changed: §5 ETH benchmark **CTXbench** (was
   "AGENTbench"), human-written effect **+2.4% n.s.** (was "+4%"), "obedience

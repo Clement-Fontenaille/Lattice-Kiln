@@ -55,7 +55,7 @@ bound the system, because the system can complete each piece perfectly and
 deliver something irrelevant to what was asked. The failure is not located in any
 executor. It is a property of the configuration, and it needs its own name.
 (This failure is a hypothesis, argued not evidenced — see the prior-art section
-and `05-primary-source-verification.md`.)
+and `06-primary-source-verification.md`.)
 
 **And it is bounded by aggregation, not by execution.** Recombination is a
 coarse-grained operation by construction — it requires holding what all the
@@ -140,7 +140,7 @@ section needs. The stopping rule above is therefore **confirmed prior art, not a
 new idea** — and that is good news, because it has been evaluated.
 
 Two failure modes this document did not originally anticipate — **provenance
-corrected 2026-09-05** (`05-primary-source-verification.md`); neither is from the
+corrected 2026-09-05** (`06-primary-source-verification.md`); neither is from the
 ADaPT paper, which was the first draft's claim:
 
 - **Tangential success.** Sub-tasks are completed with high fidelity and the

@@ -5,7 +5,7 @@
 **Serves:** `00-design/50-findings/09-field-evidence-2026-09.md` (the field
 entry), `03-how-the-field-frames-it.md`, and any design document that cites one
 of these studies.
-**Companion to:** `05-primary-source-verification.md` (which checked whether the
+**Companion to:** `06-primary-source-verification.md` (which checked whether the
 citations are *accurate*). This document asks the next question — **what each
 study can actually bear**, and whether the thing the project wants from it is the
 study's central result or a by-product.
