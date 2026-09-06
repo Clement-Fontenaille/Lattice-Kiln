@@ -2,11 +2,13 @@
 
 *The collect phase produced eight review sheets (`01`–`08`). This file is where
 they are taken up against each other, and against the project's own questions,
-finding by finding. Nothing here is settled. Entries are of three kinds: a
-**finding** is a conclusion drawn from the sheets when they are cross-examined; a
-**qualifier** bounds how far a sheet or a finding can be carried; a **candidate
-argument** is a project-originated hypothesis parked here to be tested against the
-literature in a later pass.*
+finding by finding. Nothing here is settled. Entries are of three kinds. A
+**finding** is a conclusion that carries forward — something the project will act
+on — whether it comes straight from cross-examining the sheets or is a
+methodological consequence the sheets' own evidence does not directly establish. A
+**qualifier** carries nothing on its own; it only bounds how far a sheet or a
+finding can be taken. A **candidate argument** is a project-originated hypothesis
+parked here to be tested against the literature in a later pass.*
 
 ## Findings
 
@@ -113,8 +115,9 @@ side (`07`) or the shed-accumulating-history side (`08`).
 
 ### F4 — An observed-length-vs-accuracy curve carries a reverse-causation confound; the project must not repeat it
 
-Not a result from any sheet — a methodological caution drawn from how sheet `08`
-measures its central curve. Sheet `08` plots accuracy against chain length. Any
+Not established by any sheet's own evidence, but it carries: a methodological
+consequence of how sheet `08` measures its central curve. Sheet `08` plots
+accuracy against chain length. Any
 such curve, whichever the x-axis (tokens or steps), is exposed to a confound the
 paper does not name: within a single problem, the attempts that came out long are
 disproportionately the attempts where the model was already failing —
