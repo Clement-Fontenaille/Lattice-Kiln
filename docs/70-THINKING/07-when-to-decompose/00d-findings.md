@@ -42,6 +42,43 @@ decay shape holds for task families where sub-tasks differ qualitatively from th
 parent — long-horizon work, tool use, code, tasks that exceed a context window —
 is untested. Topic 15 is where that trend gets assessed properly.
 
+### F2 — Correct decomposition carries a "shortcut tax," and its size at constrained scale is unmeasured
+
+Sheet `07` (Madhwal et al.) classifies its cross-regime disagreements into
+Helped (Direct wrong, decomposed right), Hurt (Direct right, decomposed wrong),
+and Both-wrong. For the two frontier models the split is roughly 16 / 16 / 67
+percent of the inconsistent cases. The stated mechanism for the Hurt bucket is
+the *shortcut hypothesis*: the Direct answer was right because the model
+pattern-matched the question to an answer without holding the intermediate
+facts, and forcing execution of the verified plan exposes that gap and produces
+a wrong answer.
+
+The mechanism is not in principle capability-specific — a weaker model also
+answers some questions by shortcut — but the paper reports the Helped / Hurt /
+Both breakdown *only for the frontier models*. For the sub-70B models it reports
+only net accuracy deltas of about +25, with no bucket decomposition and no
+matched-question analysis of what a weaker model did on the items where
+decomposition hurt a stronger one.
+
+So the net lift at constrained scale is an average over a helped set and a hurt
+set of unknown relative sizes. Decomposition may carry a subtractive component
+at every capability level; this paper establishes the mechanism and its frontier
+magnitude, not its magnitude where the project operates.
+
+Consequence for [[A1]]: a fresh-context decomposition design inherits this tax on
+exactly the question class where a monolithic call would have shortcut to the
+right answer. Whether the working-memory benefit is worth a measurable accuracy
+cost on that subset is the question the [[A1]] assessment pass has to price, and
+the number it needs is not in this paper.
+
+What would close the gap: a Helped / Hurt / Both breakdown at 8B–70B, and a
+matched-question comparison of what weaker models do on the frontier Hurt items.
+
+Scope: closed-book factual multi-hop QA, where the shortcut being exposed is that
+"the parent question is more trained-on than its parts." For task families where
+decomposition genuinely lowers difficulty rather than relocating a knowledge
+lookup, the mechanism may not apply.
+
 ## Candidate arguments (unassessed)
 
 ### A1 — Fresh-context decomposition as the space-reusing form of divide-and-conquer
@@ -86,6 +123,9 @@ error.
   magnitude those papers put on it.
 - Whether the literature contains competing arguments, for or against
   fresh-context decomposition, that did not originate with the project.
+- The size of the shortcut tax from [[F2]] at 8B–70B scale — the accuracy cost
+  this design pays on the question class a monolithic call would have shortcut,
+  set against the working-memory benefit.
 
 ---
 
