@@ -40,7 +40,10 @@ Scope: the capability-decay evidence is from closed-book factual multi-hop QA
 (sheet `07`) and from math and logic reasoning (sheet `08`). Whether the same
 decay shape holds for task families where sub-tasks differ qualitatively from the
 parent — long-horizon work, tool use, code, tasks that exceed a context window —
-is untested. Topic 15 is where that trend gets assessed properly.
+is untested. Topic 15 is where that trend gets assessed properly. Sheet `08`'s
+contribution here is further limited by [[F5]]: it measures chain-of-thought
+length, not new-prompt-per-step decomposition, so it corroborates the direction
+only by analogy.
 
 ### F2 — Correct decomposition carries a "shortcut tax," and its size at constrained scale is unmeasured
 
@@ -129,6 +132,32 @@ against outcome in its own evaluation, depth must be *set* — assigned,
 controlled, commanded — rather than *observed* after the fact. An observed-length
 curve cannot support a causal claim about depth. This constrains how [[I1]] and
 any depth-tuning evaluation are designed.
+
+### F5 — Sheet 08's evidence is chain-of-thought management; transfer to explicit decomposition is conjectural
+
+Sheet `08` studies the length of a chain of thought inside one model generation.
+In its real-model leg, "steps" are newline-separated lines, and how many there are
+is induced by few-shot exemplars written at three step granularities — a
+writing-style intervention, closer in kind to "proceed step by step" than to task
+decomposition. Its synthetic leg gives a step real structural content (a control
+token, a fixed operator budget per step) but still inside one context, one set of
+weights, with no new prompt issued per step and no recombination stage. Its theory
+assumes every step conditions on the full prior history.
+
+Explicit task decomposition is a different operation: the orchestrator issues a
+*new prompt* per sub-task, often in a fresh context, and a recombination step
+follows. None of the three legs models that. The mechanism sheet `08` argues —
+compounding per-step reliability against a saturating benefit — is stated
+abstractly enough to invite the extrapolation, and the paper claims in one
+sentence that least-to-most and divide-and-conquer "fall in our analysis," but it
+never tests an explicit-decomposition scheme.
+
+Consequence: sheet `08` is load-bearing for the how-deep-a-single-chain question
+and for the two scaling directions as directions. Its transfer to
+new-prompt-per-step decomposition is a conjecture this review carries as such, not
+a result. This qualifies the weight sheet `08` lends [[F1]] — it corroborates
+"optimal chain length falls with capability," which is adjacent to, not identical
+with, "decomposition lift falls with capability."
 
 ## Candidate arguments (unassessed)
 
