@@ -169,6 +169,60 @@ directions are exactly its inputs); and prompting practice in general.
 Scope: the directions transfer, the numbers do not, and the last three points are
 proof-of-concept strength.
 
+### F7 — Cost belongs in the dependent variable
+
+Sheet `04` (Liu et al.) reports every result as a pair: the task metric and cost,
+where cost is average tokens per instance and average API calls per instance.
+Once cost sits on the same plot as accuracy, "decomposition helps" stops being a
+claim and becomes a question of where on a performance–cost frontier to sit. The
+measured spread is 1–20× on the same task, large enough that a design not
+measuring it is working blind.
+
+Carry-forward: the project measures cost alongside outcome for every decomposition
+choice, never accuracy alone. Sheet `04`'s cost is token and call count; the
+project's cost also includes peak context (the axis [[A1]] is about) and, for any
+escalating loop, tail cost — sheet `04` measures only the mean, and its worst case
+(K=3 escalations, each possibly multi-call) is unbounded.
+
+### F8 — No dominant decomposition strategy; the winner is task-conditional
+
+Sheet `04` compares six prompt-level decomposition strategies (IO, CoT, P&S,
+ReAct, P&E, P&E-DAG) across four task families. None wins everywhere: math and
+reasoning favour CoT and linear plan-execute, code favours the acting-interleaved
+strategy, divergent writing and comprehension favour the DAG. The interaction
+survives a metric change — from five heterogeneous objective scores to a single
+0–10 judge scale on MT-bench — which is what makes it a mechanism-level result
+rather than a benchmark artefact.
+
+Caveats: the specific mapping (CoT→math, ReAct→code, DAG→divergent) is one model
+(GPT-4o-mini) over six specific prompt implementations — their ReAct has no tools
+or code execution, so "ReAct is best for code" is a claim about a toolless
+reasoning-acting prompt. The *existence* of a strategy×task interaction is the
+finding; the mapping is magnitude. Whether the conditioning itself shifts with
+model capability is untested — single base model, which ties back to [[F1]].
+
+### F9 — Decompose by nature of work before decomposing by size
+
+An inference across sheets `04` and `08`, not a claim either paper makes.
+
+Sheet `08`'s efficiency result holds only over work-conserving decompositions
+where each step does homogeneous, subdividable work. Sheet `04`'s task-conditional
+strategy selection ([[F8]]) needs a sub-task with a definite character — it cannot
+pick one strategy for a piece that is half code and half prose. A raw high-level
+task usually mixes heterogeneous work: some retrieval, some deduction, some
+synthesis.
+
+So the first cut should be by *kind of work*, not by size. Separating the
+retrieval part from the reasoning part from the composition part yields sub-tasks
+that are each internally homogeneous — and only then does "split into smaller
+pieces of the same kind" enter sheet `08`'s efficient regime, and only then does
+per-sub-task strategy selection have a well-defined answer.
+
+What a pass would need to check: whether decomposing by nature of work actually
+produces homogeneous sub-tasks in practice, and whether the predicted efficiency
+gain shows up rather than being eaten by the extra coordination of a
+mixed-strategy pipeline.
+
 ## Qualifiers
 
 ### F5 — Do not lend sheet 08's results to decomposition findings
