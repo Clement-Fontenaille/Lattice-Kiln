@@ -2,10 +2,11 @@
 
 *The collect phase produced eight review sheets (`01`–`08`). This file is where
 they are taken up against each other, and against the project's own questions,
-finding by finding. Nothing here is settled. Entries are of two kinds: a
+finding by finding. Nothing here is settled. Entries are of three kinds: a
 **finding** is a conclusion drawn from the sheets when they are cross-examined; a
-**candidate argument** is a project-originated hypothesis parked here to be tested
-against the literature in a later pass.*
+**qualifier** bounds how far a sheet or a finding can be carried; a **candidate
+argument** is a project-originated hypothesis parked here to be tested against the
+literature in a later pass.*
 
 ## Findings
 
@@ -133,32 +134,6 @@ controlled, commanded — rather than *observed* after the fact. An observed-len
 curve cannot support a causal claim about depth. This constrains how [[I1]] and
 any depth-tuning evaluation are designed.
 
-### F5 — Sheet 08's evidence is chain-of-thought management; transfer to explicit decomposition is conjectural
-
-Sheet `08` studies the length of a chain of thought inside one model generation.
-In its real-model leg, "steps" are newline-separated lines, and how many there are
-is induced by few-shot exemplars written at three step granularities — a
-writing-style intervention, closer in kind to "proceed step by step" than to task
-decomposition. Its synthetic leg gives a step real structural content (a control
-token, a fixed operator budget per step) but still inside one context, one set of
-weights, with no new prompt issued per step and no recombination stage. Its theory
-assumes every step conditions on the full prior history.
-
-Explicit task decomposition is a different operation: the orchestrator issues a
-*new prompt* per sub-task, often in a fresh context, and a recombination step
-follows. None of the three legs models that. The mechanism sheet `08` argues —
-compounding per-step reliability against a saturating benefit — is stated
-abstractly enough to invite the extrapolation, and the paper claims in one
-sentence that least-to-most and divide-and-conquer "fall in our analysis," but it
-never tests an explicit-decomposition scheme.
-
-Consequence: sheet `08` is load-bearing for the how-deep-a-single-chain question
-and for the two scaling directions as directions. Its transfer to
-new-prompt-per-step decomposition is a conjecture this review carries as such, not
-a result. This qualifies the weight sheet `08` lends [[F1]] — it corroborates
-"optimal chain length falls with capability," which is adjacent to, not identical
-with, "decomposition lift falls with capability."
-
 ### F6 — What sheet 08 carries in practice is a prompt-writing guideline
 
 Read as chain-of-thought management inside one generation (per [[F5]]), sheet `08`
@@ -190,6 +165,42 @@ directions are exactly its inputs); and prompting practice in general.
 
 Scope: the directions transfer, the numbers do not, and the last three points are
 proof-of-concept strength.
+
+## Qualifiers
+
+### F5 — Do not lend sheet 08's results to decomposition findings
+
+Sheet `08` studies the length of a chain of thought inside one model generation.
+In its real-model leg, "steps" are newline-separated lines, and how many there are
+is induced by few-shot exemplars written at three step granularities — a
+writing-style intervention, closer in kind to "proceed step by step" than to task
+decomposition. Its synthetic leg gives a step real structural content (a control
+token, a fixed operator budget per step) but still inside one context, one set of
+weights, with no new prompt issued per step and no recombination stage. Its theory
+assumes every step conditions on the full prior history.
+
+Explicit task decomposition is a different operation: the orchestrator issues a
+*new prompt* per sub-task, often in a fresh context, and a recombination step
+follows. None of sheet `08`'s three legs models that. Its mechanism — compounding
+per-step reliability against a saturating benefit — is stated abstractly enough to
+invite the extrapolation, and the paper claims in one sentence that least-to-most
+and divide-and-conquer "fall in our analysis," but it never tests an
+explicit-decomposition scheme.
+
+What this qualifier guards:
+
+- [[F1]] leans on sheet `08` as a second, independent construction of the
+  capability-decay direction. With this qualifier, sheet `08` corroborates
+  "optimal *chain length* falls with capability" — adjacent to, not identical
+  with, "decomposition lift falls with capability." The direction survives; the
+  identification is by analogy.
+- [[F2]] is derived from sheet `07`'s explicit regimes and does not depend on
+  sheet `08`. The temptation this blocks is *stacking* sheet `08`'s
+  "over-decomposition hurts" on top of F2 as if the two were one reinforcing
+  result. They are about different things: F2 is knowledge exposure under a
+  correct plan; sheet `08` is per-step error accumulation in one narrated chain.
+- [[F6]] is already scoped to chain-of-thought management and needs no further
+  guard.
 
 ## Candidate arguments (unassessed)
 
