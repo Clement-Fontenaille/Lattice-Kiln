@@ -79,6 +79,34 @@ Scope: closed-book factual multi-hop QA, where the shortcut being exposed is tha
 decomposition genuinely lowers difficulty rather than relocating a knowledge
 lookup, the mechanism may not apply.
 
+### F3 — Sheets 07 and 08 bracket the fresh-context question without resolving it
+
+Sheet `07` (Madhwal et al.) runs a step-wise regime in which each hop is issued in
+a fresh context holding only the substituted sub-question — no parent question, no
+sibling answers. That regime underperforms the full-context regime at frontier
+scale. It is empirical evidence, in a closed-book QA setting with no
+context-budget pressure, that stripping context from a sub-call costs accuracy.
+
+Sheet `08` (Wu et al.) derives its benefit term — sub-answers get easier as the
+chain is split more finely — under a model in which every step conditions on the
+full accumulating history of prior steps. An isolated sub-agent call carries no
+such history. The paper models neither the cost of dropping it nor the benefit,
+and the sign is genuinely ambiguous: losing the history could make sub-answers
+harder, which moves the optimum shallower, or it could shed an accumulating
+burden the chain pays and a fresh call does not, which moves the optimum deeper
+and makes the benefit larger than the chain shows.
+
+So the two sheets bracket the question rather than answer it. Sheet `07` has
+evidence that context-stripping hurt; sheet `08` has a mechanism whose benefit
+term may be understated for a fresh-context design. Neither setting matches a
+sensible fresh-context sub-call: `07` stripped everything and had no memory
+pressure, `08` never modelled isolation at all.
+
+What the [[A1]] pass must resolve: for the project's task families and its actual
+context-budget pressure, does a fresh-context sub-call that passes down the goal
+and a relevant summary — not a bare hop — land on the lost-disambiguating-context
+side (`07`) or the shed-accumulating-history side (`08`).
+
 ## Candidate arguments (unassessed)
 
 ### A1 — Fresh-context decomposition as the space-reusing form of divide-and-conquer
@@ -126,6 +154,8 @@ error.
 - The size of the shortcut tax from [[F2]] at 8B–70B scale — the accuracy cost
   this design pays on the question class a monolithic call would have shortcut,
   set against the working-memory benefit.
+- Which side of [[F3]] a fresh-context sub-call lands on — lost disambiguating
+  context, or shed accumulating-history burden — for the project's tasks.
 
 ---
 
