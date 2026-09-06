@@ -47,3 +47,38 @@ equivalence-preserving reasoning.
   observed-length curves.
 
 **Would graduate to** `00-design/40-roadmap/03-research-and-evaluation-agenda.md`.
+
+---
+
+## I2 — Probe the executor's ceiling with an over-capable decomposer
+
+**Provenance.** From `07-when-to-decompose/` sheet `04`, Takeaway III: scaling the
+execution model moves accuracy far more than scaling the decomposition model, and
+the execution-only scaling curve nearly coincides with the scale-both curve on its
+3×3 grid. Read as: executor capability caps the achievable accuracy, and a better
+plan cannot lift you past it.
+
+**The idea.** Hold the executor fixed. Give it plans of increasing quality — from
+the target decomposer, from a much stronger model, up to a hand-written or oracle
+plan. If accuracy stops moving as plan quality rises, the executor is
+capability-limited on this task and the plan is not the bottleneck; the plateau is
+an estimate of the executor's ceiling. If accuracy keeps rising with plan quality,
+the plan is the bottleneck and there is headroom a better decomposer would buy.
+
+**Why it is worth doing.** It turns "is this task executor-limited or
+plan-limited?" into a per-task-family measurement. That informs where to spend
+model budget, and it gives a per-task ceiling a harness could compare its own
+output against.
+
+**Open before it is worth committing.**
+
+- Sheet `04`'s evidence for the premise is thin: one dataset (MATH), one approach
+  (P&E DAG), one model family (Qwen2.5), a 3-point grid. The premise needs to hold
+  more broadly before the probe means anything.
+- What "plan quality" is varied along, and whether an oracle or hand plan is
+  constructible for the task families of interest.
+- Whether a stronger decomposer's plan is even executable by the weaker executor,
+  or encodes steps it cannot perform — which would read as a ceiling but is a
+  mismatch.
+
+**Would graduate to** `00-design/40-roadmap/03-research-and-evaluation-agenda.md`.
