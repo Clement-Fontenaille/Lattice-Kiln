@@ -2,9 +2,45 @@
 
 *The collect phase produced eight review sheets (`01`–`08`). This file is where
 they are taken up against each other, and against the project's own questions,
-finding by finding. Nothing here is settled. Each entry is marked either as a
-**candidate argument** still to be tested against the literature, or, once a pass
-has been done, as **assessed** with the evidence for and against recorded.*
+finding by finding. Nothing here is settled. Entries are of two kinds: a
+**finding** is a conclusion drawn from the sheets when they are cross-examined; a
+**candidate argument** is a project-originated hypothesis parked here to be tested
+against the literature in a later pass.*
+
+## Findings
+
+### F1 — Decomposition buys two things, and only one of them decays with model capability
+
+Sheet `07` (Madhwal et al.) shows that a correct, hand-verified decomposition is
+worth roughly +25 accuracy points at 8B–72B and flattens to slightly negative at
+frontier scale, with the stated mechanism that a capable model has internalised
+the reasoning chains, so the external scaffold becomes first redundant and then
+interfering. Sheet `08` (Wu et al.) reports the same directional shape from the
+chain-of-thought-length side: the optimal number of steps falls as capability
+rises.
+
+The distinction this forces:
+
+- **Accuracy lift** from decomposition decays as the base model improves, and can
+  invert. A design that leans on decomposition *to be more correct* is leaning on
+  a gap that is closing.
+- **Working-memory and context discipline** do not decay. A larger, better model
+  still has a finite context window, still accumulates state across a long task,
+  and still benefits from each sub-call carrying a bounded working set. This is
+  the value [[A1]] is about.
+
+Consequence for the project: if decomposition is used for context management
+rather than for accuracy, the frontier-capability trend is much less threatening.
+That has to be a deliberate, recorded design choice rather than an unexamined
+assumption, because a decomposition built for the accuracy reason and one built
+for the context reason are not necessarily the same shape, and the first one has
+an expiry date.
+
+Scope: the capability-decay evidence is from closed-book factual multi-hop QA
+(sheet `07`) and from math and logic reasoning (sheet `08`). Whether the same
+decay shape holds for task families where sub-tasks differ qualitatively from the
+parent — long-horizon work, tool use, code, tasks that exceed a context window —
+is untested. Topic 15 is where that trend gets assessed properly.
 
 ## Candidate arguments (unassessed)
 

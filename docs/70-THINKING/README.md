@@ -52,6 +52,9 @@ become design at all.
 ## Structure
 
 - `NN-<topic>.md` — one document per thread.
+- `ideas.md` — a running register of unvetted ideas thrown off by the threads
+  (experiments, methods, design moves). An idea that matures graduates out to a
+  committed surface and its entry records where it went.
 - `NN-<topic>/` — a folder, where a thread is a structured literature review.
   Files 07–15 are the nine-topic review and take this form. Each folder holds
   `00a-instructions.md` (insulation rule, Subject, Task), `00b-template.md` (the
