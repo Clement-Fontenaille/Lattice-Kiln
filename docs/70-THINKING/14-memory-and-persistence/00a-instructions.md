@@ -60,41 +60,8 @@ framing. Record one line per pick saying why it was chosen.
 
 ### Step 3 — review each of the four
 
-Primary sources only: read the actual paper; do not rely on summaries or
-secondary coverage. Write in **full sentences**, close to what the paper reports,
-**away from editorialising**. This is the **collect** phase — do not draw
-conclusions across the four papers; that comes afterward, finding by finding.
-
-The format below is **proposed, not required**. Some papers carry more material
-than others; explore each as far as it deserves.
-
-- **Name** — and **keywords** (the reviewer's own, not the paper's), **year**,
-  **venue**.
-- **Approach** — what they did.
-- **Model(s) targeted** and **benchmarks used**.
-- **Author incentive** — affiliation, funding, product or position stake.
-- **Measurement methodology** — brushed, not exhaustive: the dependent variable,
-  what is controlled, N, how significance is treated.
-- **Key findings** — including **the authors' own reading** of them.
-- **Open questions the paper itself raises** — its stated limitations and
-  future-work, in its own framing.
-- **Appreciation** — the reviewer's assessment, keeping **MECHANISM separate from
-  MAGNITUDE**: which findings transfer as an argument, which are numbers valid
-  only inside the paper's own setup.
-- **How it could serve a harness-design effort / limitations / major concerns** —
-  stem the discussion, do not resolve it.
-- **Five citations** worth chasing for the next round.
-
----
-
-## 1. Inventory
-
-_Step 1 output goes here — cite line, full abstract, flag + reason, per paper._
-
-## 2. Selected for review
-
-_Step 2 output goes here — four picks, one line each on why._
-
-## 3. Reviews
-
-_Step 3 output goes here — one entry per selected paper._
+Each of the four picks gets its own sheet in this folder: `01-<slug>.md` …
+`04-<slug>.md`. The sheet format lives in `00b-template.md` (shared, identical
+across all nine topics), and it opens with a one-line **density** flag. The
+inventory and the four picks are recorded in `00c-inventory.md`; the cross-paper
+discussion, when it happens, goes in `00d-findings.md`.

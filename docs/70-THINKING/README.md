@@ -52,6 +52,13 @@ become design at all.
 ## Structure
 
 - `NN-<topic>.md` — one document per thread.
+- `NN-<topic>/` — a folder, where a thread is a structured literature review.
+  Files 07–15 are the nine-topic review and take this form. Each folder holds
+  `00a-instructions.md` (insulation rule, Subject, Task), `00b-template.md` (the
+  per-paper review sheet format — identical across all nine, opens with a density
+  flag), `00c-inventory.md` (Step 1 inventory + Step 2 selection), `00d-findings.md`
+  (cross-paper discussion, written only after the collect phase), and one
+  `NN-<slug>.md` sheet per reviewed paper.
 
 Each thread carries a **state** (`OPEN`, `CONVERGED`, `ABANDONED`) and, when it
 closes, a line naming where its output went. Closed threads are retained, not
