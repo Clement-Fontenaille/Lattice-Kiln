@@ -159,6 +159,38 @@ a result. This qualifies the weight sheet `08` lends [[F1]] — it corroborates
 "optimal chain length falls with capability," which is adjacent to, not identical
 with, "decomposition lift falls with capability."
 
+### F6 — What sheet 08 carries in practice is a prompt-writing guideline
+
+Read as chain-of-thought management inside one generation (per [[F5]]), sheet `08`
+yields a set of guidelines rather than a decomposition result:
+
+- There is an interior optimum for how much step-by-step working to elicit. Both
+  "answer directly" and "narrate every micro-step" lose accuracy, not only
+  tokens. Maximal granularity is not a safe default.
+- Dial the elicited working *down* as the base model gets stronger. Scaffolding
+  tuned on a weak model actively hurts a strong one, and the penalty grows with
+  capability, so this is not a set-once choice — it comes down on model upgrades.
+- Dial it *up* for harder items. A fixed instruction across a task mix is wrong
+  for most of the mix; conditioning on difficulty, or letting the model
+  self-pace, beats one template.
+- Prefer steps that each do a real chunk of work over many trivial ones.
+  Tentative — synthetic and theory only — but the direction is "do not
+  over-atomize."
+- Padding is pure cost. Instructions or exemplars that produce restatement and
+  hedging add length with none of the benefit.
+- If several candidates are sampled: length-filtered voting (bin by length, keep
+  the low-answer-entropy bins, vote within) is worth trying. One-dataset
+  proof of concept, not adopt-on-sight.
+- Do not assume RL lengthens reasoning. Outcome-reward fine-tuning tends to
+  shorten chains as accuracy improves.
+
+Applications: a static prompt or context template; a dynamic prompt-tuning
+mechanism that adapts per request or per model (the capability and difficulty
+directions are exactly its inputs); and prompting practice in general.
+
+Scope: the directions transfer, the numbers do not, and the last three points are
+proof-of-concept strength.
+
 ## Candidate arguments (unassessed)
 
 ### A1 — Fresh-context decomposition as the space-reusing form of divide-and-conquer
