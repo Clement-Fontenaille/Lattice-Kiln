@@ -10,6 +10,8 @@ on it.
 ---
 
 ## 1. Select-Then-Decompose
+**Review status:** reviewed -> sheet `04` (round 1). Cross-paper discussion: done - F7-F12, partial F1, F9 (with `08`); feeds A1, I1, I2.
+
 
 **Cite:** Shuodi Liu, Yingzhuo Liu, Zi Wang, Yusheng Wang, Huijia Wu, Liuyu Xiang, Zhaofeng He. "Select-Then-Decompose: From Empirical Analysis to Adaptive Selection Strategy for Task Decomposition in Large Language Models." 2025. Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing (EMNLP 2025), main track. DOI: 10.18653/v1/2025.emnlp-main.278. https://aclanthology.org/2025.emnlp-main.278/
 
@@ -21,6 +23,8 @@ on it.
 ---
 
 ## 2. ADaPT
+**Review status:** reviewed -> sheet `05` (round 2). Cross-paper discussion: pending.
+
 
 **Cite:** Archiki Prasad, Alexander Koller, Mareike Hartmann, Peter Clark, Ashish Sabharwal, Mohit Bansal, Tushar Khot. "ADaPT: As-Needed Decomposition and Planning with Language Models." 2024. Findings of the Association for Computational Linguistics: NAACL 2024. DOI: 10.18653/v1/2024.findings-naacl.264. arXiv:2311.05772. https://aclanthology.org/2024.findings-naacl.264/
 
@@ -103,6 +107,8 @@ on it.
 ---
 
 ## 9. Divide-or-Conquer? Which Part Should You Distill Your LLM?
+**Review status:** selected round 3 -> reading booth 10.
+
 
 **Cite:** Zhuofeng Wu, He Bai, Aonan Zhang, Jiatao Gu, VG Vinod Vydiswaran, Navdeep Jaitly, Yizhe Zhang. "Divide-or-Conquer? Which Part Should You Distill Your LLM?" 2024. Findings of the Association for Computational Linguistics: EMNLP 2024. DOI: 10.18653/v1/2024.findings-emnlp.145. arXiv:2402.15000. https://aclanthology.org/2024.findings-emnlp.145/
 
@@ -113,6 +119,8 @@ on it.
 ---
 
 ## 10. Chain of Agents
+**Review status:** selected round 3 -> reading booth 11.
+
 
 **Cite:** Yusen Zhang, Ruoxi Sun, Yanfei Chen, Tomas Pfister, Rui Zhang, Sercan Ö. Arık. "Chain of Agents: Large Language Models Collaborating on Long-Context Tasks." 2024. Advances in Neural Information Processing Systems 37 (NeurIPS 2024). arXiv:2406.02818. https://openreview.net/forum?id=LuCLf4BJsr
 
@@ -123,6 +131,8 @@ on it.
 ---
 
 ## 11. Measuring and Narrowing the Compositionality Gap (self-ask)
+**Review status:** selected round 3 -> reading booth 09.
+
 
 **Cite:** Ofir Press, Muru Zhang, Sewon Min, Ludwig Schmidt, Noah A. Smith, Mike Lewis. "Measuring and Narrowing the Compositionality Gap in Language Models." 2023. Findings of the Association for Computational Linguistics: EMNLP 2023. DOI: 10.18653/v1/2023.findings-emnlp.378. arXiv:2210.03350. https://aclanthology.org/2023.findings-emnlp.378/
 
@@ -183,6 +193,8 @@ on it.
 ---
 
 ## 17. To CoT or not to CoT?
+**Review status:** reviewed -> sheet `01` (round 1). Cross-paper discussion: pending.
+
 
 **Cite:** Zayne Sprague, Fangcong Yin, Juan Diego Rodriguez, Dongwei Jiang, Manya Wadhwa, Prasann Singhal, Xinyu Zhao, Xi Ye, Kyle Mahowald, Greg Durrett. "To CoT or not to CoT? Chain-of-thought helps mainly on math and symbolic reasoning." 2025. International Conference on Learning Representations (ICLR 2025). arXiv:2409.12183. https://openreview.net/forum?id=w6nlcS8Kkn
 
@@ -203,6 +215,8 @@ on it.
 ---
 
 ## 19. Why Do Multi-Agent LLM Systems Fail?
+**Review status:** selected round 3 -> reading booth 12.
+
 
 **Cite:** Mert Cemri, Melissa Z. Pan, Shuyi Yang, Lakshya A. Agrawal, Bhavya Chopra, Rishabh Tiwari, Kurt Keutzer, Aditya Parameswaran, Dan Klein, Kannan Ramchandran, Matei Zaharia, Joseph E. Gonzalez, Ion Stoica. "Why Do Multi-Agent LLM Systems Fail?" 2025. Advances in Neural Information Processing Systems 38 (NeurIPS 2025). arXiv:2503.13657. https://neurips.cc/virtual/2025/poster/121528
 
@@ -294,6 +308,8 @@ on it.
 ---
 
 ## 29. When More is Less: Understanding Chain-of-Thought Length in LLMs
+**Review status:** reviewed -> sheet `08` (round 2). Cross-paper discussion: done - F1, F3, F4, F6, F9 (with `04`); qualifier F5.
+
 
 **Cite:** Yuyang Wu, Yifei Wang, Ziyu Ye, Tianqi Du, Stefanie Jegelka, Yisen Wang. "When More is Less: Understanding Chain-of-Thought Length in LLMs." 2025. arXiv:2502.07266 (preprint; venue unconfirmed). https://arxiv.org/abs/2502.07266
 
@@ -380,6 +396,8 @@ on it.
 ---
 
 ## 37. Decomposed Prompting Does Not Fix Knowledge Gaps, But Helps Models Say "I Don't Know"
+**Review status:** reviewed -> sheet `07` (round 2). Cross-paper discussion: done - F1, F2, F3.
+
 **Cite:** Dhruv Madhwal, Lyuxin David Zhang, Dan Roth, Tomer Wolfson, Vivek Gupta. "Decomposed Prompting Does Not Fix Knowledge Gaps, But Helps Models Say "I Don't Know"." 2026. Findings of ACL 2026. arXiv:2602.04853. https://arxiv.org/abs/2602.04853
 **Abstract (verbatim, arXiv):**
 > Large language models often struggle to recognize their knowledge limits in closed-book question answering, leading to confident hallucinations. While decomposed prompting is typically used to improve accuracy, we investigate its impact on reliability. We evaluate three task-equivalent prompting regimes: Direct, Assistive, and Incremental, across different model scales and multi-hop QA benchmarks. We find that although accuracy gains from decomposition diminish in frontier models, disagreements between prompting regimes remain highly indicative of potential errors. Because factual knowledge is typically stable while hallucinations are stochastic, cross-regime agreement provides a precise signal of internal uncertainty. We leverage this signal to implement a training-free abstention policy that requires no retrieval or fine-tuning. Our results show that disagreement-based abstention outperforms standard uncertainty baselines as an error detector, improving both F1 and AUROC across settings. This demonstrates that decomposition-based prompting can serve as a practical diagnostic probe for model reliability in closed-book QA.
@@ -420,6 +438,8 @@ on it.
 ---
 
 ## 42. The Expressive Power of Transformers with Chain of Thought
+**Review status:** reviewed -> sheet `06` (round 2). Cross-paper discussion: pending - spawned candidate argument A1.
+
 **Cite:** William Merrill, Ashish Sabharwal. "The Expressive Power of Transformers with Chain of Thought." 2023. ICLR 2024. arXiv:2310.07923. https://arxiv.org/abs/2310.07923
 **Abstract (verbatim, arXiv):**
 > Recent theoretical work has identified surprisingly simple reasoning problems, such as checking if two nodes in a graph are connected or simulating finite-state machines, that are provably unsolvable by standard transformers that answer immediately after reading their input. However, in practice, transformers' reasoning can be improved by allowing them to use a "chain of thought" or "scratchpad", i.e., generate and condition on a sequence of intermediate tokens before answering. Motivated by this, we ask: Does such intermediate generation fundamentally extend the computational power of a decoder-only transformer? We show that the answer is yes, but the amount of increase depends crucially on the amount of intermediate generation. For instance, we find that transformer decoders with a logarithmic number of decoding steps (w.r.t. the input length) push the limits of standard transformers only slightly, while a linear number of decoding steps, assuming projected pre-norm (a slight generalization of standard pre-norm), adds a clear new ability (under standard complexity conjectures): recognizing all regular languages. Our results also imply that linear steps keep transformer decoders within context-sensitive languages, and polynomial steps with generalized pre-norm make them recognize exactly the class of polynomial-time solvable problems -- the first exact characterization of a type of transformers in terms of standard complexity classes. Together, this provides a nuanced framework for understanding how the length of a transformer's chain of thought or scratchpad impacts its reasoning power.
@@ -566,6 +586,8 @@ on it.
 ---
 
 ## 60. Test-time Scaling of LLMs: A Survey from A Subproblem Structure Perspective
+**Review status:** reviewed -> sheet `02` (round 1). Cross-paper discussion: pending.
+
 **Cite:** Zhuoyi Yang, Xu Guo, Tong Zhang, Huijuan Xu, Boyang Li. "Test-time Scaling of LLMs: A Survey from A Subproblem Structure Perspective." 2025. preprint. arXiv:2511.14772. https://arxiv.org/abs/2511.14772
 **Abstract (verbatim, arXiv):**
 > With this paper, we survey techniques for improving the predictive accuracy of pretrained large language models by allocating additional compute at inference time. In categorizing test-time scaling methods, we place special emphasis on how a problem is decomposed into subproblems and on the topological organization of these subproblems whether sequential, parallel, or tree-structured. This perspective allows us to unify diverse approaches such as Chain-of-Thought, Branch-Solve-Merge, and Tree-of-Thought under a common lens. We further synthesize existing analyses of these techniques, highlighting their respective strengths and weaknesses, and conclude by outlining promising directions for future research
@@ -574,6 +596,8 @@ on it.
 ---
 
 ## 61. Large Language Models for Planning: A Comprehensive and Systematic Survey
+**Review status:** reviewed -> sheet `03` (round 1). Cross-paper discussion: pending.
+
 **Cite:** Pengfei Cao, Tianyi Men, Wencan Liu, Jingwen Zhang, Xuzhao Li, Xixun Lin, Dianbo Sui, Yanan Cao, Kang Liu, Jun Zhao. "Large Language Models for Planning: A Comprehensive and Systematic Survey." 2025. preprint. arXiv:2505.19683. https://arxiv.org/abs/2505.19683
 **Abstract (verbatim, arXiv):**
 > Planning represents a fundamental capability of intelligent agents, requiring comprehensive environmental understanding, rigorous logical reasoning, and effective sequential decision-making. While Large Language Models (LLMs) have demonstrated remarkable performance on certain planning tasks, their broader application in this domain warrants systematic investigation. This paper presents a comprehensive review of LLM-based planning. Specifically, this survey is structured as follows: First, we establish the theoretical foundations by introducing essential definitions and categories about automated planning. Next, we provide a detailed taxonomy and analysis of contemporary LLM-based planning methodologies, categorizing them into three principal approaches: 1) External Module Augmented Methods that combine LLMs with additional components for planning, 2) Finetuning-based Methods that involve using trajectory data and feedback signals to adjust LLMs in order to improve their planning abilities, and 3) Searching-based Methods that break down complex tasks into simpler components, navigate the planning space, or enhance decoding strategies to find the best solutions. Subsequently, we systematically summarize existing evaluation frameworks, including benchmark datasets, evaluation metrics and performance comparisons between representative planning methods. Finally, we discuss the underlying mechanisms enabling LLM-based planning and outline promising research directions for this rapidly evolving field. We hope this survey will serve as a valuable resource to inspire innovation and drive progress in this field.
@@ -646,6 +670,36 @@ round-1 sheets flagged for chasing (ADaPT was named by both `03` and `04`).
    follows an inverted-U in CoT length; the optimal length grows with task
    difficulty and shrinks with model capability. The most central inventory item
    on the how-deep axis — admitted with its status noted.
+
+### Round 3
+
+Chosen to fill the two axes eight sheets left at zero coverage: **recombination**
+(how sub-results are put back together, flagged as under-addressed by nearly every
+sheet) and **coordination / sub-agent cost** (the Subject names deep sub-agent
+hierarchies; no sheet touches them).
+
+9. **`09` — Measuring and Narrowing the Compositionality Gap (Press et al.,
+   Findings of EMNLP 2023).** Inventory entry 11. Defines and measures the
+   *compositionality gap*: how often a model answers every sub-question correctly
+   yet fails to compose the final answer. The recombination-failure measurement
+   the set is missing. Older model cohort (GPT-3 family) — read for the construct,
+   not the magnitudes.
+10. **`10` — Divide-or-Conquer? Which Part Should You Distill Your LLM? (Wu et
+    al., Findings of EMNLP 2024).** Inventory entry 9. Splits reasoning into a
+    decomposition phase and a solving phase, distils each separately, and measures
+    reasoning outcome *and* inference cost. Directly on the cheap-planner /
+    strong-executor question ([[F1]] territory, sheet `04` Takeaway III) and on
+    [[F9]].
+11. **`11` — Chain of Agents (Zhang et al., NeurIPS 2024).** Inventory entry 10.
+    Segments a long input across sequential worker agents, then a manager agent
+    synthesises their contributions — sub-agent decomposition with an explicit
+    recombination stage and a per-agent bounded context, which is close to the
+    [[A1]] shape.
+12. **`12` — Why Do Multi-Agent LLM Systems Fail? (Cemri et al., NeurIPS 2025).**
+    Inventory entry 19, flagged ADJACENT. A failure taxonomy (MAST, 14 modes in 3
+    categories) built from 1,600+ annotated multi-agent traces. The analysis-kind
+    pick — where sub-agent decomposition breaks, and how coordination cost shows
+    up as failure.
 
 ## 3. Labels (second pass)
 
