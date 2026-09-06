@@ -107,6 +107,29 @@ context-budget pressure, does a fresh-context sub-call that passes down the goal
 and a relevant summary — not a bare hop — land on the lost-disambiguating-context
 side (`07`) or the shed-accumulating-history side (`08`).
 
+### F4 — An observed-length-vs-accuracy curve carries a reverse-causation confound; the project must not repeat it
+
+Not a result from any sheet — a methodological caution drawn from how sheet `08`
+measures its central curve. Sheet `08` plots accuracy against chain length. Any
+such curve, whichever the x-axis (tokens or steps), is exposed to a confound the
+paper does not name: within a single problem, the attempts that came out long are
+disproportionately the attempts where the model was already failing —
+backtracking, restarting, second-guessing — so length and error share an upstream
+cause. Part of any observed "longer is worse" is then "the model was lost, which
+made the output both long and wrong," not "depth caused the error."
+
+Sheet `08`'s within-question design (vary length for a fixed question) removes the
+across-question version of this — long questions being harder questions — but not
+the within-question version, which operates across attempts at the same question.
+Its synthetic leg does avoid the trap: there, depth is *commanded* by a control
+token, not read off the output. The exposed claim is the observational one.
+
+Carry-forward for the project: when the project measures decomposition depth
+against outcome in its own evaluation, depth must be *set* — assigned,
+controlled, commanded — rather than *observed* after the fact. An observed-length
+curve cannot support a causal claim about depth. This constrains how [[I1]] and
+any depth-tuning evaluation are designed.
+
 ## Candidate arguments (unassessed)
 
 ### A1 — Fresh-context decomposition as the space-reusing form of divide-and-conquer

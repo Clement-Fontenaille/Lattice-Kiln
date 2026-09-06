@@ -42,5 +42,8 @@ equivalence-preserving reasoning.
   anything.
 - Whether the result is stable across reruns, given the no-variance problem sheet
   `07` had.
+- Each shape must be *commanded*, not sampled and binned after the fact — see
+  `07-when-to-decompose/00d-findings.md` F4 on the reverse-causation confound in
+  observed-length curves.
 
 **Would graduate to** `00-design/40-roadmap/03-research-and-evaluation-agenda.md`.
