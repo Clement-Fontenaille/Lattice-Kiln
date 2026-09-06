@@ -617,6 +617,36 @@ Subject's framing. Each has its own sheet in this folder.
    analysis; the closest to the Subject, included as the on-target anchor of the
    spread.
 
+### Round 2
+
+Chosen to fill what round 1 left thin: the **how-deep** half of the title, the
+**failure-triggered** split rule, a **formal** account of what steps buy, and a
+**skeptical** frontier-model read. Drawn from the inventory and from citations the
+round-1 sheets flagged for chasing (ADaPT was named by both `03` and `04`).
+
+5. **`05` — ADaPT: As-Needed Decomposition and Planning (Prasad et al., Findings
+   of NAACL 2024).** Inventory entry 2. Recursive decomposition triggered only
+   when the executor *fails* a sub-task; depth emerges from task complexity and
+   executor capability. The method anchor — the conditional-split rule round 1
+   never reviewed. Cited as a next-read by `03` and `04`.
+6. **`06` — The Expressive Power of Transformers with Chain of Thought (Merrill &
+   Sabharwal, ICLR 2024).** Inventory entry 42. Complexity-theory: how a decoder's
+   expressive power scales with the *number* of intermediate steps (log ≈ little;
+   linear → regular languages; polynomial → P). The formal how-deep ceiling, and
+   a proof rather than a benchmark — maximum spread. Round 1 leaned on this class
+   of result without checking it.
+7. **`07` — Decomposed Prompting Does Not Fix Knowledge Gaps, But Helps Models Say
+   "I Don't Know" (Madhwal et al., Findings of ACL 2026).** Inventory entry 37.
+   Controlled three-regime comparison: decomposition's accuracy gain *diminishes*
+   in frontier models, but cross-regime disagreement is a precise uncertainty
+   signal usable for training-free abstention. The strongest "decomposition does
+   not do what you think" claim in the set; spread on claim, complements `01`.
+8. **`08` — When More is Less: Understanding Chain-of-Thought Length in LLMs (Wu
+   et al., preprint).** Inventory entry 29, flagged PREPRINT. Task accuracy
+   follows an inverted-U in CoT length; the optimal length grows with task
+   difficulty and shrinks with model capability. The most central inventory item
+   on the how-deep axis — admitted with its status noted.
+
 ## 3. Labels (second pass)
 
 Richer than the inventory's inline flag: each line adds a *kind* and a one-line
