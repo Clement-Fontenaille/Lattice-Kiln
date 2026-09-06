@@ -48,6 +48,11 @@ contribution here is further limited by [[F5]]: it measures chain-of-thought
 length, not new-prompt-per-step decomposition, so it corroborates the direction
 only by analogy.
 
+Sheet `04` (Liu et al.) corroborates the base fact — decomposition buys accuracy
+over a direct call (IO 48.6 → ~69 averaged across five benchmarks) and the
+winning shape is task-conditional — but it runs on one base model, so it neither
+supports nor contradicts the capability-decay direction.
+
 ### F2 — Correct decomposition carries a "shortcut tax," and its size at constrained scale is unmeasured
 
 Sheet `07` (Madhwal et al.) classifies its cross-regime disagreements into
@@ -223,6 +228,48 @@ produces homogeneous sub-tasks in practice, and whether the predicted efficiency
 gain shows up rather than being eaten by the extra coordination of a
 mixed-strategy pipeline.
 
+### F10 — Sheet 04's demonstrated value is cost, not accuracy
+
+The paper frames S&D as "consistently on the Pareto frontier" and reports it
+beating individual approaches. The accuracy margins carrying that claim (GSM8K
++0.39 over CoT, MATH +0.30 over P&E) are read off single-run appendix tables, are
+smaller than the replicated error bars elsewhere in the paper, and get no
+significance test. The cost differences are order-of-magnitude and survive.
+
+So the defensible S&D result is that routing among decomposition strategies buys
+large cost savings at roughly comparable accuracy. On the accuracy axis a
+well-articulated fixed pairing — ReAct plus CoT, say — would plausibly look just
+as good. Any use of this paper should carry the cost claim and drop the accuracy
+claim.
+
+### F11 — A verifier-gated cheap-first selector under-escalates for tasks that genuinely need structure
+
+Sheet `04`'s selector ends up choosing implicit (cheap) approaches about 85% of
+the time, and its escalation ladder's first fallback after a low-confidence answer
+is *less* decomposition, not more. On Trivia Creative Writing — the one benchmark
+where cheap and expensive approaches genuinely diverge — S&D systematically
+under-buys structure and loses 5–8 points, and the failure analysis the paper
+promises for that case is absent.
+
+Carry-forward: a cheap-first, confidence-gated router has a characteristic failure
+mode — it will not escalate enough for the minority of tasks that actually need
+the expensive shape, because the same weak self-confidence signal that gates
+escalation is unreliable exactly there. A design using this pattern needs a
+second, independent trigger for "this task needs structure" that does not depend
+on the verifier's confidence.
+
+### F12 — Routing is a distinct cost from having the pool
+
+Sheet `04`'s sharpest ablation: keep the same six approaches, the same escalation
+ladder, and the same verifier, but randomise the *initial* choice instead of
+selecting it. Token cost rises ~229% (roughly triples) and accuracy still falls.
+Having the options is not the value; choosing well among them is, and choosing
+badly is expensive because it drives the escalation loop.
+
+Consequence for [[A1]]: a fresh-context decomposition design needs a router too,
+and this sizes what a bad one costs — the working-memory benefit has to clear not
+just the decomposition tax ([[F2]]) but the routing overhead as well.
+
 ## Qualifiers
 
 ### F5 — Do not lend sheet 08's results to decomposition findings
@@ -308,6 +355,12 @@ error.
   set against the working-memory benefit.
 - Which side of [[F3]] a fresh-context sub-call lands on — lost disambiguating
   context, or shed accumulating-history burden — for the project's tasks.
+- The routing overhead from [[F12]] — a fresh-context design needs a router, and a
+  bad one roughly triples cost; the working-memory benefit must clear that too.
+- Sheet `04`'s cost axis is token and call count, not peak working memory, so it
+  bears on A1 only indirectly; its escalation ladder defaulting to *less*
+  decomposition is another weak data point that over-decomposition is a real
+  failure direction.
 
 ---
 

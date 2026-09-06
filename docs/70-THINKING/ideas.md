@@ -48,26 +48,36 @@ equivalence-preserving reasoning.
 
 **Would graduate to** `00-design/40-roadmap/03-research-and-evaluation-agenda.md`.
 
+Partial prior instance: `07-when-to-decompose/` sheet `04` §3.1 runs six shapes
+over the same tasks and measures accuracy *and* cost. It is not a full I1 — the
+shapes are different prompting strategies, not semantically-equivalent
+decompositions of one plan; it is one model; and the headline numbers are
+single-run. But it shows the "run every shape, plot the spread" design is
+tractable.
+
 ---
 
-## I2 — Probe the executor's ceiling with an over-capable decomposer
+## I2 — Probe which bottleneck binds with a plan-quality sweep
 
-**Provenance.** From `07-when-to-decompose/` sheet `04`, Takeaway III: scaling the
-execution model moves accuracy far more than scaling the decomposition model, and
-the execution-only scaling curve nearly coincides with the scale-both curve on its
-3×3 grid. Read as: executor capability caps the achievable accuracy, and a better
-plan cannot lift you past it.
+**Provenance.** From `07-when-to-decompose/` sheet `04`, Takeaway III, read
+narrowly. On its 3×3 Qwen grid (MATH and P&E-DAG only), the executor-scaling slope
+is steeper than the decomposer-scaling slope, and at the smallest (1.5B) executor
+a better plan barely helps — but at 7B and 14B executors a 14B planner still beats
+a 7B planner substantially. So plan quality and executor capability are
+*separable* bottlenecks, and which one binds depends on the configuration. The
+strong reading — "executor caps the ceiling, a better plan never helps" — is not
+supported by the grid.
 
 **The idea.** Hold the executor fixed. Give it plans of increasing quality — from
 the target decomposer, from a much stronger model, up to a hand-written or oracle
-plan. If accuracy stops moving as plan quality rises, the executor is
-capability-limited on this task and the plan is not the bottleneck; the plateau is
-an estimate of the executor's ceiling. If accuracy keeps rising with plan quality,
-the plan is the bottleneck and there is headroom a better decomposer would buy.
+plan. If accuracy stops moving as plan quality rises, the plan is not the
+bottleneck on this task and the plateau is an estimate of what this executor can
+do here. If accuracy keeps rising, the plan is the bottleneck and there is
+headroom a better decomposer would buy.
 
 **Why it is worth doing.** It turns "is this task executor-limited or
-plan-limited?" into a per-task-family measurement. That informs where to spend
-model budget, and it gives a per-task ceiling a harness could compare its own
+plan-limited?" into a per-task-family measurement, which informs where to spend
+model budget and gives a per-task reference value a harness could compare its own
 output against.
 
 **Open before it is worth committing.**
