@@ -68,8 +68,8 @@ magnitude, not its magnitude where the project operates.
 Consequence for [[A1]]: a fresh-context decomposition design inherits this tax on
 exactly the question class where a monolithic call would have shortcut to the
 right answer. Whether the working-memory benefit is worth a measurable accuracy
-cost on that subset is the question the [[A1]] assessment pass has to price, and
-the number it needs is not in this paper.
+cost on that subset is the open question, and this paper gives the mechanism but
+not the magnitude at constrained scale.
 
 What would close the gap: a Helped / Hurt / Both breakdown at 8B–70B, and a
 matched-question comparison of what weaker models do on the frontier Hurt items.
