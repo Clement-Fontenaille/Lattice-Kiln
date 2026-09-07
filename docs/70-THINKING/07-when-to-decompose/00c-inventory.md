@@ -636,7 +636,7 @@ on it.
 ---
 
 ## 63. Agentless: Demystifying LLM-based Software Engineering Agents
-**Review status:** reviewed -> sheet 19-agentless.md (round 5). Cross-paper discussion: pending.
+**Review status:** reviewed -> sheet `19` (round 5). Cross-paper discussion: done - F46-F51.
 
 
 **Cite:** Chunqiu Steven Xia, Yinlin Deng, Soren Dunn, Lingming Zhang. "Agentless: Demystifying LLM-based Software Engineering Agents." 2024. arXiv:2407.01489 (preprint). https://arxiv.org/abs/2407.01489
@@ -649,7 +649,7 @@ on it.
 ---
 
 ## 64. When Does Divide and Conquer Work for Long Context LLM? A Noise Decomposition Framework
-**Review status:** reviewed -> sheet 17-divide-conquer-noise.md (round 5). Cross-paper discussion: pending.
+**Review status:** reviewed -> sheet `17` (round 5). Cross-paper discussion: done - F33-F39; qualifier F36; expands F21; seeds I10.
 
 
 **Cite:** Zhen Xu, Shang Zhu, Jue Wang, Junlin Wang, Ben Athiwaratkun, Chi Wang, James Zou, Ce Zhang. "When Does Divide and Conquer Work for Long Context LLM? A Noise Decomposition Framework." 2026. ICLR 2026. arXiv:2506.16411. https://arxiv.org/abs/2506.16411
@@ -673,7 +673,7 @@ on it.
 ---
 
 ## 66. Probabilistic Soundness Guarantees in LLM Reasoning Chains (ARES)
-**Review status:** reviewed -> sheet 18-ares-soundness.md (round 5). Cross-paper discussion: pending.
+**Review status:** reviewed -> sheet `18` (round 5). Cross-paper discussion: done - F40-F45.
 
 
 **Cite:** Weiqiu You, Anton Xue, Shreya Havaldar, Delip Rao, Helen Jin, Chris Callison-Burch, Eric Wong. "Probabilistic Soundness Guarantees in LLM Reasoning Chains." 2025. EMNLP 2025. arXiv:2507.12948. https://arxiv.org/abs/2507.12948
@@ -719,7 +719,7 @@ on it.
 ---
 
 ## 70. Beyond the Answer Key: Robustness Evaluation of Large Language Models for Step-Level Mathematical Verification
-**Review status:** reviewed -> sheet 20-verifier-robustness.md (round 5). Cross-paper discussion: pending.
+**Review status:** reviewed -> sheet `20` (round 5). Cross-paper discussion: done - F52-F60.
 
 
 **Cite:** Fateme Mazdarani, Carlos Toxtli. "Beyond the Answer Key: Robustness Evaluation of Large Language Models for Step-Level Mathematical Verification." 2026. IEEE ICMLA 2026. arXiv:2608.28725. https://arxiv.org/abs/2608.28725
