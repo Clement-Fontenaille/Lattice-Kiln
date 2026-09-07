@@ -36,6 +36,8 @@ on it.
 ---
 
 ## 3. Decomposed Prompting (DecomP)
+**Review status:** selected round 4 -> reading booth 16.
+
 
 **Cite:** Tushar Khot, Harsh Trivedi, Matthew Finlayson, Yao Fu, Kyle Richardson, Peter Clark, Ashish Sabharwal. "Decomposed Prompting: A Modular Approach for Solving Complex Tasks." 2023. International Conference on Learning Representations (ICLR 2023). arXiv:2210.02406. https://openreview.net/forum?id=_nGgzQjzaRy
 
@@ -173,6 +175,8 @@ on it.
 ---
 
 ## 15. TaskBench
+**Review status:** selected round 4 -> reading booth 15.
+
 
 **Cite:** Yongliang Shen, Kaitao Song, Xu Tan, Wenqi Zhang, Kan Ren, Siyu Yuan, Weiming Lu, Dongsheng Li, Yueting Zhuang. "TaskBench: Benchmarking Large Language Models for Task Automation." 2024. Advances in Neural Information Processing Systems 37 (NeurIPS 2024), Datasets and Benchmarks Track. arXiv:2311.18760. https://proceedings.neurips.cc/paper_files/paper/2024/hash/085185ea97db31ae6dcac7497616fd3e-Abstract-Datasets_and_Benchmarks_Track.html
 
@@ -299,6 +303,8 @@ on it.
 <!-- second gather round, 2026-09-06: widened to skeptic/boundary vocabulary (over-decomposition, CoT length, error compounding, aggregation depth). Preprints admitted for this slice, flagged. -->
 
 ## 28. Faith and Fate: Limits of Transformers on Compositionality
+**Review status:** selected round 4 -> reading booth 13.
+
 
 **Cite:** Nouha Dziri, Ximing Lu, Melanie Sclar, Xiang Lorraine Li, Liwei Jiang, Bill Yuchen Lin, Peter West, Chandra Bhagavatula, Ronan Le Bras, Jena D. Hwang, Soumya Sanyal, Xiang Ren, Allyson Ettinger, Zaid Harchaoui, Yejin Choi. "Faith and Fate: Limits of Transformers on Compositionality." 2023. Advances in Neural Information Processing Systems 36 (NeurIPS 2023). arXiv:2305.18654. https://proceedings.neurips.cc/paper_files/paper/2023/hash/deb3c28192f979302c157cb653c15e90-Abstract-Conference.html
 
@@ -536,6 +542,8 @@ on it.
 ---
 
 ## 54. Cumulative Reasoning with Large Language Models
+**Review status:** selected round 4 -> reading booth 14.
+
 **Cite:** Yifan Zhang, Jingqin Yang, Yang Yuan, Andrew Chi-Chih Yao. "Cumulative Reasoning with Large Language Models." 2023. TMLR. arXiv:2308.04371. https://arxiv.org/abs/2308.04371
 **Abstract (verbatim, arXiv):**
 > Recent advancements in large language models (LLMs) have shown remarkable progress, yet their ability to solve complex problems remains limited. In this work, we introduce Cumulative Reasoning (CR), a structured framework that enhances LLM problem-solving by emulating human-like iterative and cumulative thought processes. CR orchestrates LLMs in three distinct roles: Proposer, Verifier(s), and Reporter, to systematically decompose tasks, generate and validate intermediate reasoning steps, and compose them into a solution by building a dynamic Directed Acyclic Graph (DAG) of verified propositions. This approach substantially enhances problem-solving capabilities. We demonstrate CR's advantage through several complex reasoning tasks: it outperforms existing methods in logical inference tasks with up to a 9.3% improvement, achieving 98.04% accuracy on the curated FOLIO wiki dataset. In the Game of 24, it achieves 98% accuracy, marking a 24% improvement over previous methods. In solving MATH problems, CR achieves a 4.2% increase from previous methods and a 43% relative improvement in the most challenging level 5 problems. When incorporating a code environment with CR, we further harness LLMs' reasoning capabilities and outperform the Program of Thought (PoT) method by 38.8%.
@@ -700,6 +708,32 @@ hierarchies; no sheet touches them).
     categories) built from 1,600+ annotated multi-agent traces. The analysis-kind
     pick — where sub-agent decomposition breaks, and how coordination cost shows
     up as failure.
+
+### Round 4
+
+Chosen against the gaps F13-F23 leave open: recombination as a first-class problem
+with a verifier, an instrument for decomposition quality, the empirical grounding
+two sheets already lean on, and the canonical method never read.
+
+13. **`13` - Faith and Fate: Limits of Transformers on Compositionality (Dziri et
+    al., NeurIPS 2023).** Inventory entry 28, flagged ADJACENT. The empirical
+    bridge sheets `05` and `06` both cite: transformers reportedly solve
+    compositional tasks by "linearised subgraph matching," and accuracy decays
+    with the depth of the computation graph. Grounds the compounding-error
+    mechanism ([[F16]], [[F20]]) and the "why decompose at all" premise.
+14. **`14` - Cumulative Reasoning with Large Language Models (Zhang et al., TMLR).**
+    Inventory entry 54. Proposer / Verifier / Reporter over a DAG of
+    verifier-passed propositions - filtered recombination as a built method, the
+    constructive side of [[F13]] and [[F17]].
+15. **`15` - TaskBench: Benchmarking LLMs for Task Automation (Shen et al., NeurIPS
+    2024 Datasets & Benchmarks).** Inventory entry 15. Scores task decomposition
+    as one of three explicit stages via a Tool Graph and Edge F1 - the instrument
+    for decomposition quality that [[F17]] and sheet `03` say the field lacks.
+16. **`16` - Decomposed Prompting: A Modular Approach for Solving Complex Tasks
+    (Khot et al., ICLR 2023).** Inventory entry 3, a 2023 anchor. The canonical
+    modular recursive decomposition, named as a next-read by sheets `01`, `04`,
+    `09`, `11` and as ADaPT's direct predecessor. Recurses on hard sub-tasks and
+    on input length - direct prior art for [[A1]].
 
 ## 3. Labels (second pass)
 
