@@ -46,6 +46,8 @@ Zhangyue Yin, Qiushi Sun, Qipeng Guo, Jiawen Wu, Xipeng Qiu, Xuanjing Huang. *Do
 
 **Flag.** RELATED - Self-knowledge of the boundary of one's own knowledge - the 'is this beyond me' judgement - with the SelfAware benchmark of unanswerable questions.
 
+**Review status.** selected round 2 -> reading booth 08.
+
 ### 6. The Internal State of an LLM Knows When It's Lying
 
 Amos Azaria, Tom Mitchell. *The Internal State of an LLM Knows When It's Lying.* 2023. Findings of EMNLP 2023 (per ACL Anthology; not in arXiv metadata). arXiv:2304.13734 (2304.13734v2). https://arxiv.org/abs/2304.13734
@@ -94,6 +96,8 @@ Miao Xiong, Zhiyuan Hu, Xinyang Lu, Yifei Li, Jie Fu, Junxian He, Bryan Hooi. *C
 
 **Flag.** RELATED - Empirical evaluation of black-box confidence-elicitation methods (prompting, sampling, aggregation); finds LLMs are overconfident when verbalising and elicitation only partly fixes it.
 
+**Review status.** selected round 2 -> reading booth 05.
+
 ### 12. Are You Sure? Challenging LLMs Leads to Performance Drops in The FlipFlop Experiment
 
 Philippe Laban, Lidiya Murakhovs'ka, Caiming Xiong, Chien-Sheng Wu. *Are You Sure? Challenging LLMs Leads to Performance Drops in The FlipFlop Experiment.* 2023. Preprint (no venue in arXiv metadata). arXiv:2311.08596 (2311.08596v2). https://arxiv.org/abs/2311.08596
@@ -125,6 +129,8 @@ Hui Huang, Yingqi Qu, Jing Liu, Muyun Yang, Bing Xu, Tiejun Zhao, Wenpeng Lu. *S
 **Abstract (verbatim).** The proliferation of open-source Large Language Models (LLMs) underscores the pressing need for evaluation methods. Existing works primarily rely on external evaluators, focusing on training and prompting strategies. However, a crucial aspect, model-aware glass-box features, is overlooked. In this study, we explore the utility of glass-box features under the scenario of self-evaluation, namely applying an LLM to evaluate its own output. We investigate various glass-box feature groups and discovered that the softmax distribution serves as a reliable quality indicator for self-evaluation. Experimental results on public benchmarks validate the feasibility of self-evaluation of LLMs using glass-box features.
 
 **Flag.** RELATED - Self-evaluation of an LLM's own output using glass-box features (softmax distribution) as a quality indicator - the internal self-signal for 'is this good enough'.
+
+**Review status.** selected round 2 -> reading booth 07.
 
 ### 16. Calibrating the Confidence of Large Language Models by Eliciting Fidelity
 
@@ -183,6 +189,8 @@ Jiayi Ye, Yanbo Wang, Yue Huang, Dongping Chen, Qihui Zhang, Nuno Moniz, Tian Ga
 **Abstract (verbatim).** LLM-as-a-Judge has been widely utilized as an evaluation method in various benchmarks and served as supervised rewards in model training. However, despite their excellence in many domains, potential issues are under-explored, undermining their reliability and the scope of their utility. Therefore, we identify 12 key potential biases and propose a new automated bias quantification framework-CALM-which systematically quantifies and analyzes each type of bias in LLM-as-a-Judge by using automated and principle-guided modification. Our experiments cover multiple popular language models, and the results indicate that while advanced models have achieved commendable overall performance, significant biases persist in certain specific tasks. Empirical results suggest that there remains room for improvement in the reliability of LLM-as-a-Judge. Moreover, we also discuss the explicit and implicit influence of these biases and give some suggestions for the reliable application of LLM-as-a-Judge. Our work highlights the need for stakeholders to address these issues and remind users to exercise caution in LLM-as-a-Judge applications.
 
 **Flag.** RELATED - CALM framework quantifying 12 biases in LLM-as-a-Judge; bears on using a model to judge output, including its own (position, verbosity, self-preference, etc.).
+
+**Review status.** selected round 2 -> reading booth 06.
 
 ### 23. Stop Overthinking: A Survey on Efficient Reasoning for Large Language Models
 
@@ -289,4 +297,31 @@ round per the topic scope rule._
   other three do not touch.
 
 **Review status.** Booths 01-04 fired 2026-09-07 (all four at once); all four read, sheets imported, cross-paper discussion pending.
+
+### Round 2 (selected 2026-09-07)
+
+Spread across sub-areas round 1 did not touch: black-box confidence elicitation,
+model-as-judge bias, the white-box (internal) self-signal, and the
+self-knowledge boundary.
+
+- **Booth 05 - Xiong et al., "Can LLMs Express Their Uncertainty? An Empirical
+  Evaluation of Confidence Elicitation in LLMs" (ICLR 2024).** The canonical
+  empirical benchmark of black-box confidence: a grid of prompting × sampling ×
+  aggregation strategies scored on calibration and failure detection. Picked for
+  the measured version of "the model's own report" signal.
+- **Booth 06 - "Justice or Prejudice? Quantifying Biases in LLM-as-a-Judge"
+  (ICLR 2025).** The Subject names the reliability of a model as a judge of its
+  own output; round 1 did not cover it. CALM framework, 12 named biases,
+  perturbation that isolates each while holding quality constant - including
+  self-preference.
+- **Booth 07 - "Self-Evaluation of Large Language Model based on Glass-box
+  Features" (Findings of EMNLP 2024).** The white-box self-signal: softmax /
+  entropy features of the model's own generation as a quality indicator, distinct
+  in kind from verbalised confidence and from an external judge.
+- **Booth 08 - Yin et al., "Do Large Language Models Know What They Don't Know?"
+  (Findings of ACL 2023).** The self-knowledge boundary - the SelfAware benchmark
+  of unanswerable questions plus an automated unanswerability metric. The "is this
+  beyond me" judgement in isolation.
+
+**Review status.** Booths 05-08 fired 2026-09-07 (all four at once).
 
