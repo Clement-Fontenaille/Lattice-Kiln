@@ -936,10 +936,14 @@ Sheet `19` (Agentless): each localization rung consumes a different
 mechanically-derived *view* of the codebase, chosen for the decision that rung
 makes — the repo tree (names only) to pick candidate files, then skeletons
 (signatures, no bodies) to pick elements, then the full source of only the
-selected elements to pick lines. The evidence that the *representation* is the
-lever and not the *amount*: the skeleton drops most of the bytes and recalls
-*better* than the whole file (58.3% versus 53.7%), because the removed function
-bodies were noise for the "which element" decision and were confusing the model.
+selected elements to pick lines. A *projection*, in this sense, is the operation
+of extracting a partial view of an artifact that surfaces its internal structure
+— the tree exposes the file-and-folder structure, the skeleton exposes the
+class-and-function structure — rather than serving a smaller slice of the same
+content. The evidence that the *representation* is the lever and not the *amount*:
+the skeleton drops most of the bytes and recalls *better* than the whole file
+(58.3% versus 53.7%), because the removed function bodies were noise for the
+"which element" decision and were confusing the model.
 
 Two properties make this safe. The projections come from mechanical parsing
 (`tree` output, an AST walk that keeps headers and drops bodies), so they cost no
