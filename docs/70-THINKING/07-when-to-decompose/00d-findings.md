@@ -796,7 +796,10 @@ uncertain validity is stored or carried forward:
 - any artifact carried across a long task.
 
 Caveat: the weight is only as trustworthy as whatever produces it — see [[F41]]
-and the C3 caution on certified-looking scores from uncertified verifiers.
+and the C3 caution on certified-looking scores from uncertified verifiers. And the
+ARES mechanism is defined on a linear chain; extending confidence-weighted premise
+selection to a DAG, where "prior" is only a partial order, is unaddressed — a
+limitation this shares with [[F28]].
 
 ### F41 — A verification mechanism amplifies a competent checker and cannot rescue an incompetent one; with a weak checker it can degenerate silently
 
@@ -819,6 +822,41 @@ Extends [[F17]] (self-evaluation is the load-bearing weakness) and [[F23]]
 (coordination tax grows as the model weakens); [[F11]] is the selector-level
 instance. Sheet `20` measures how large the base-checker bias actually is for LLM
 step-verifiers.
+
+### F42 — A step verifier over a reasoning chain propagates trust; it cannot establish it
+
+Sheet `18` (ARES): base claims — the given context, question, and rules — are
+assumed sound (the prior `p_i` is hand-set to 0.95, and the *recommended* setting
+is `p = 1`, include every base claim always). ARES scores only whether each
+*derived* claim follows from what precedes it. Groundedness with respect to
+context — one of the three error types the paper itself names — is assumed away by
+construction, and there is no bootstrapping step: the first premise is the given
+context, taken on faith.
+
+Consequence: this class of method is a trust-propagation engine. It cannot check
+anything against the real world, only against premises it was handed. In a harness
+the given context is exactly where errors enter — a retrieved document, a tool's
+output, another agent's result — and whatever validates that first premise is a
+separate, harder problem the method does not touch. Sharpens [[F27]]: the
+accept/reject port needs a filler for the *grounding* judgment (is this input
+true?), which is a different capability from the *inference* judgment (does this
+step follow?), and an execution result or a symbolic check can fill the first
+where an LLM verifier cannot.
+
+### F43 — Verification budget should scale with the verifier's own uncertainty, with memoisation on repeated premise–hypothesis pairs
+
+Sheet `18` (ARES): the Monte-Carlo sampling branches only where the entailment
+model is uncertain — a confident verifier collapses to about one call per step,
+an uncertain one pays more — and identical premise–hypothesis pairs are memoised,
+so realised cost is 0.03–0.31× the theoretical worst case (17–265 calls per step
+at the paper's settings, 1–80 realised). The expensive case is exactly the case
+that warrants the expense.
+
+Consequence: a directly implementable pattern for any per-step or per-sub-result
+check in a harness — spend proportional to disagreement, cache repeated
+sub-judgments. It also supplies the degenerate-mode diagnostic [[F41]] asks for:
+a realised-sample ratio pinned near its floor means the verifier is confident
+everywhere, which is either a genuinely easy chain or the silent collapse.
 
 ### Papers the gathered findings keep pointing at
 
