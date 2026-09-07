@@ -46,7 +46,7 @@ Zhangyue Yin, Qiushi Sun, Qipeng Guo, Jiawen Wu, Xipeng Qiu, Xuanjing Huang. *Do
 
 **Flag.** RELATED - Self-knowledge of the boundary of one's own knowledge - the 'is this beyond me' judgement - with the SelfAware benchmark of unanswerable questions.
 
-**Review status.** selected round 2 -> reading booth 08.
+**Review status.** reviewed -> sheet 08-selfaware.md (round 2). Cross-paper discussion: pending.
 
 ### 6. The Internal State of an LLM Knows When It's Lying
 
@@ -96,7 +96,7 @@ Miao Xiong, Zhiyuan Hu, Xinyang Lu, Yifei Li, Jie Fu, Junxian He, Bryan Hooi. *C
 
 **Flag.** RELATED - Empirical evaluation of black-box confidence-elicitation methods (prompting, sampling, aggregation); finds LLMs are overconfident when verbalising and elicitation only partly fixes it.
 
-**Review status.** selected round 2 -> reading booth 05.
+**Review status.** reviewed -> sheet 05-express-uncertainty.md (round 2). Cross-paper discussion: pending.
 
 ### 12. Are You Sure? Challenging LLMs Leads to Performance Drops in The FlipFlop Experiment
 
@@ -130,7 +130,7 @@ Hui Huang, Yingqi Qu, Jing Liu, Muyun Yang, Bing Xu, Tiejun Zhao, Wenpeng Lu. *S
 
 **Flag.** RELATED - Self-evaluation of an LLM's own output using glass-box features (softmax distribution) as a quality indicator - the internal self-signal for 'is this good enough'.
 
-**Review status.** selected round 2 -> reading booth 07.
+**Review status.** reviewed -> sheet 07-glass-box-selfeval.md (round 2). Cross-paper discussion: pending.
 
 ### 16. Calibrating the Confidence of Large Language Models by Eliciting Fidelity
 
@@ -190,7 +190,7 @@ Jiayi Ye, Yanbo Wang, Yue Huang, Dongping Chen, Qihui Zhang, Nuno Moniz, Tian Ga
 
 **Flag.** RELATED - CALM framework quantifying 12 biases in LLM-as-a-Judge; bears on using a model to judge output, including its own (position, verbosity, self-preference, etc.).
 
-**Review status.** selected round 2 -> reading booth 06.
+**Review status.** reviewed -> sheet 06-judge-biases.md (round 2). Cross-paper discussion: pending.
 
 ### 23. Stop Overthinking: A Survey on Efficient Reasoning for Large Language Models
 
@@ -323,5 +323,5 @@ self-knowledge boundary.
   of unanswerable questions plus an automated unanswerability metric. The "is this
   beyond me" judgement in isolation.
 
-**Review status.** Booths 05-08 fired 2026-09-07 (all four at once).
+**Review status.** Booths 05-08 fired 2026-09-07; all four read, sheets imported, cross-paper discussion pending.
 
