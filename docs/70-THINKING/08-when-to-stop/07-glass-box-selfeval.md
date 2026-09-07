@@ -4,6 +4,8 @@
 
 **Density: MEDIUM** — the paper is a four-page Findings short paper with almost no padding, and essentially every paragraph carries either a feature definition or a result, but the amount of that signal which bears on the Subject is thin: it establishes one narrow correlational fact (a softmax-dispersion statistic tracks a GPT-4 quality score on 80-question chat benchmarks) and never tests calibration, abstention, stopping, or behaviour under confident error.
 
+## Name, keywords, year, venue
+
 **Self-Evaluation of Large Language Model based on Glass-box Features.** Hui Huang, Yingqi Qu, Jing Liu, Muyun Yang, Bing Xu, Tiejun Zhao, Wenpeng Lu.
 
 - **Year:** arXiv v1 March 2024, v2 September 2024. Published 2024.
