@@ -431,6 +431,15 @@ form of addressability, not the requirement. This escape still fails when the
 answer is a genuine composition of all parts rather than a selection among
 alternatives or an assembly of separately-addressable pieces.
 
+*Addressability is not a size limit.* A long artifact — a big diff — written to
+disk is still sound if it can be consumed piece by piece: grepped, or validated
+in sections. And that validation pass is itself a divide-and-conquer
+decomposition whose output is a collection of boolean traces, one per piece, with
+recombination being `grep FALSE` — a linear deterministic scan. So "retrieve from
+an addressable store" and "a cheap per-candidate check" are the same principle
+applied at different points, and it recurses: a validation over a large artifact
+escapes the aggregator collapse the same way the original decomposition does.
+
 **Validity criterion for the argument.** It holds only if, at fixed decomposition
 depth, aggregation-attributed loss grows superlinearly with the number of parts
 when the merge holds all partial results in context, stays linear or better when
