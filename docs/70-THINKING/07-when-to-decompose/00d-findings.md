@@ -270,6 +270,215 @@ Consequence for [[A1]]: a fresh-context decomposition design needs a router too,
 and this sizes what a bad one costs — the working-memory benefit has to clear not
 just the decomposition tax ([[F2]]) but the routing overhead as well.
 
+### F13 — Recombination is a distinct, large, and largely unmeasured failure mode
+
+Convergent across method, survey, and failure-analysis sheets. Sheet `09`
+(compositionality gap): about a third of its questions are ones where the model
+demonstrably holds both facts and still produces the wrong composed answer —
+splitting and executing correctly does not deliver the answer. Sheet `11` (Chain
+of Agents): a dedicated recombiner agent is worth 5–10 points, and feeding it
+*more* material (all intermediate states rather than one) makes it *worse*
+through conflict between them. Sheet `12` (MAS failures): the verification /
+acceptance category is ~24% of failure instances and is "the residue no model
+choice removes." Sheets `02` and `03` both name recombination the thinnest-covered
+part of the field. Sheet `05` (ADaPT) treats its And/Or logic plus propagated
+state as plumbing, which the reviewer flags as arguably a finding.
+
+Consequence: a design that treats assembly as bookkeeping is budgeting for the
+wrong thing. The join step needs its own architecture and its own error budget.
+Magnitudes are all cohort-bound (sheet `09` is GPT-3-era); the *structure* — that
+the residual after perfect sub-task execution is real and large — is what
+transfers.
+
+### F14 — A demarcated sub-task boundary is a generic interposition point
+
+Sheet `09`: once a sub-question is a marked span rather than a phrase in a chain
+of thought, anything can answer it — a tool, a cache, a different model, a human,
+a verifier — with no prompt change, no finetuning, no query language. "Formatting
+is doing the work that training used to do." Sheet `01`'s plan/execute split and
+its "where a real solver exists, prefer it" is the same move at the execution
+boundary. Sheet `03`'s LLM-Modulo pattern (generate approximate, external verifier
+certifies, reprompt on failure) is its verifier instance.
+
+Consequence: making sub-task boundaries explicit and machine-readable buys both
+generalisation to inputs unlike the examples (sheet `09`'s untemplated-dataset
+margin) and a substitution point for tools, verifiers, and routing. Caveats: sheet
+`09` only ever substitutes at a leaf, one hop deep, never recursively; and
+inserting a substituted answer "as if the model produced it," with no provenance
+and no adjudication, is itself a failure mode.
+
+### F15 — Structured intermediate output is a correctness property once composition is automated
+
+Sheet `09`: 40% of chain-of-thought final answers on the untemplated set were
+unusable as *outputs* despite sometimes containing the right answer, and were
+scored wrong. Structure does two jobs — shaping the reasoning and making the
+result machine-readable — and the second is not cosmetic once a later step
+consumes the first. Sheet `12`'s handoff failures (state crossing an agent
+boundary and not arriving usable) are the multi-agent version.
+
+Caveat (sheet `09`'s own): formatting benefits are the first thing to evaporate
+when models are trained to emit structure natively, so this is a property to
+design for, not a permanent source of advantage.
+
+### F16 — Serial-versus-parallel is a first-class distinction that most decomposition taxonomies miss
+
+Sheet `06`: if the binding constraint on a task is serial depth, adding serial
+stages helps and adding parallel width does not — a distinction "invisible in most
+decomposition taxonomies, which count sub-tasks without asking whether they are
+serially dependent." A step budget can be positive yet worthless (the logarithmic
+regime is the formal instance of over-decomposition that costs coordination and
+adds no capability). Sheet `02`: the sequential / parallel / tree axis is really
+"when commitment happens and whether it can be undone," and the shared word
+"tree" hides two structurally different systems (path-finding, where children
+compete and one path is the answer, versus HTN-style, where leaves are
+complementary and all are combined). Sheet `11`: parallel-independent
+partitioning loses to sequential state-passing when sub-results are
+interdependent — often below the do-nothing baseline — because "communication is
+the active ingredient."
+
+Consequence: the split decision must ask whether the sub-tasks are serially
+dependent, not only how many there are. Independent-parallel decomposition is
+safe only when the sub-tasks are genuinely independent; where they are not, it
+destroys the dependency the task needs.
+
+### F17 — Self-evaluation is the load-bearing weakness of failure-triggered and verifier-gated decomposition
+
+Sheet `05` (ADaPT): the entire recursion is gated on the executor's own "task
+completed / task failed," which is inflated by more than 30 points where success
+is graded rather than binary, and the failure is silent — the loop terminates
+believing it succeeded. The reviewer's summary: "everything upstream of the
+boolean is portable; the boolean is not." Sheet `12`: verifiers do superficial
+work despite being prompted otherwise (compile checks, leftover-TODO scans); a
+chess program passes review and is unplayable. Sheet `02`: a generator scoring
+its own intermediate states carries self-preference bias, and a separate
+evaluator removes only that bias — the mitigation is to delay aggressive pruning
+until evidence accumulates. This is the same signal type as [[F11]]'s verifier
+and [[F2]]'s shortcut self-report.
+
+Consequence: any decomposition control loop gated on the model's own judgment of
+its own output inherits this. The project needs an external signal — a test,
+execution, a rule, an independent model — or must treat the self-report as
+advisory, not as control flow. (The internal-readout version of this question is
+its own review topic, not folded in here.)
+
+### F18 — Planning and execution are separable capabilities that compress differently and want different model budgets
+
+Sheet `10` (Divide-or-Conquer): the decomposer distils into a 7–13B student that
+matches or beats its teacher and transfers across domains and solvers; the solver
+does not — it collapses and does not generalise. Proposed mechanism: planning is
+abstract and low-information-density, execution is knowledge-bound. Sheet `01`:
+producing a plan is cheap and buys little on its own; the accuracy lives in
+execution, and a deterministic tool does execution better than token generation.
+Sheet `05` (ADaPT §6.4): planner and executor can be different models — an
+expensive planner invoked rarely on failure plus a cheap executor doing the
+volume. Sheet `03`: ADAPT's principle of choosing the decomposition strategy from
+the executor's capability.
+
+Consequences and caveats: (a) the "cheap planner is fine" reading cuts awkwardly —
+sheet `10` shows the value of a better plan *declines* as the executor
+strengthens (a frontier executor barely moves across three very different
+decomposers), so the appeal of a specialist planner is strongest exactly in the
+constrained-executor regime the project operates in; (b) sheet `10`'s asymmetry
+may be partly positional — a strong solver sits between every plan defect and the
+metric and absorbs it, while nothing absorbs a solver defect — not purely
+intrinsic compressibility; (c) sheet `10` also finds that specialising a model
+for planning *degrades* its solving by 15–22 points, so the two roles cannot be
+collapsed back into one finetuned model — an argument for structural separation.
+
+### F19 — Upfront versus feedback-revised decomposition is tied to an environmental property
+
+Sheet `03`: "global" decomposition (whole plan up front) is suited to *fully
+observable* environments; "iteration" decomposition is revised against feedback
+during execution. This is sharper than "flat vs hierarchical" because it ties the
+choice to whether the environment can be observed. Sheet `05` (ADaPT): rejects
+long upfront plans in *unexplored* environments — a ten-step plan rests on
+assumptions that cascade into error — and short plans are viable *because*
+recursion can split again later. Sheet `10`: static (upfront) beats dynamic
+(iterative), but only in a setting engineered to have no step dependence (QA where
+each sub-question barely depends on the previous answer); the reviewer is explicit
+this should not be carried into a setting with genuine step dependence.
+
+Consequence: the upfront-versus-iterative choice should be made from whether the
+environment is observable and whether sub-results feed each other — not by
+default. Upfront plans are epistemically unsound wherever the planner cannot yet
+know what it is committing to.
+
+### F20 — Fixed upfront decomposition can convert a recoverable trajectory into an unrecoverable one
+
+Sheet `05` (ADaPT), the most reusable negative result in that paper:
+Plan-and-Execute does not merely fail to help — it commits to a step the executor
+cannot perform and leaves no path back, scoring *below* plain iterative execution
+on one benchmark (17.0 vs 32.0). Sheet `11`: the chain is a single point of
+failure with no redundancy — a worker that drops a fact several hops from the end
+has silently destroyed it — and the paper argues *against* the redundancy that
+would catch it. Sheet `12`: conversation-history loss and conversation reset are
+named failure modes.
+
+Consequence: a decomposition without a recovery path — re-plan, backtrack,
+cross-check — inherits brittleness that grows with depth. Direct bearing on
+[[A1]]: fresh-context sub-calls with a summarised handoff are exactly the
+low-redundancy shape sheet `11` warns about, so the A1 pass must weigh whether
+the design needs a recovery path built in.
+
+### F21 — Depth used should be an outcome, and the gap between budget and realized depth is diagnostic
+
+Sheet `05` (ADaPT): the realized maximum depth (`k_max`) rises 1.9 → 2.8 tracking
+true task complexity, against a fixed budget (`d_max`), and the pair is a
+ready-made runtime telemetry signal — how hard the task turned out to be, and how
+close the run came to the ceiling. Sheet `06`: depth should track the *serial*
+structure of the problem. Sheet `10`: a cap of three sub-questions beat two and
+four — both over- and under-splitting cost accuracy, an interior optimum showing
+up in an explicit-decomposition setting this time (compare [[F1]] / [[F6]]).
+
+Consequence: a harness should carry a depth *budget* and observe a *realized*
+depth, and instrument the gap. This is the complement to [[F4]]: you set the
+budget, you measure what the run actually used.
+
+### F22 — Coordination cost is nearly always asserted and nearly never measured
+
+Sheet `11`: cost is treated analytically only (attention-FLOP asymptotics), with
+no measured tokens, dollars, latency, or API calls anywhere, and the method is
+strictly sequential so its latency cannot be parallelised away — "CoA is
+cost-effective" needs the number supplied from elsewhere. Sheet `03`: no token,
+latency, or dollar column in the whole survey. Sheet `02`: names cost a concern,
+quantifies nothing. Sheet `12`: the only cost figure is the annotator's API bill;
+"failure counts are not a cost model." Sheet `05` (ADaPT) reports average call
+counts but never a worst case or a variance, and Or-branching can fan out.
+
+Consequence: corroborates [[F7]] from the gap side — the field has a systematic
+hole exactly where the project's premise (constrained working memory, entropy
+reduction as the product) most needs data. The project has to measure this
+itself, which is what [[I1]] is for. Tail cost specifically is never bounded:
+average per-instance cost is reported, the fan-out / repeated-escalation worst
+case is not.
+
+### F23 — Weak executors need decomposition more and gain more from it — and the coordination tax also grows as the executor weakens
+
+Sheet `10`: weaker solvers gain more from a better decomposer; a strong solver
+can partly decompose for itself. Sheet `05` (ADaPT): a deliberately weak executor
+goes from 3.3% to 41.7%, the largest relative move in the paper. Sheet `12`: a
+weak open model's context-loss and conversation-reset counts are an order of
+magnitude above a stronger open model's — "weak models fail at the handoff
+specifically," so coordination overhead is not a fixed tax but scales with agent
+weakness.
+
+Consequence: for a project committed to constrained models, decomposition's
+benefit is largest exactly in its regime — but so is the handoff-failure rate.
+Both sides of the ledger grow as the model gets weaker. This is the
+coordination-cost mirror of [[F1]]'s "accuracy lift decays with capability."
+
+### Papers the gathered findings keep pointing at
+
+Not read in full; flagged by two or more sheets as the load-bearing reference:
+
+- **Faith and Fate** (Dziri et al., NeurIPS 2023) — cited by sheets `05` and `06`
+  as the empirical bridge between the formal serial-depth story and observed
+  behaviour ("performance decays with the depth of the computation graph";
+  transformers do "linearised subgraph matching," not systematic composition).
+- **Feng et al. 2023** (circuit-complexity account of why CoT works) — cited by
+  sheets `06` and `10` as the theoretical grounding for why splitting the
+  computation helps at all.
+
 ## Qualifiers
 
 ### F5 — Do not lend sheet 08's results to decomposition findings

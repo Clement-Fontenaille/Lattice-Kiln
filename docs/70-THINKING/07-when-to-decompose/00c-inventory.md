@@ -23,7 +23,7 @@ on it.
 ---
 
 ## 2. ADaPT
-**Review status:** reviewed -> sheet `05` (round 2). Cross-paper discussion: pending.
+**Review status:** reviewed -> sheet `05` (round 2). Cross-paper discussion: done - F17, F18, F19, F20, F21, F23.
 
 
 **Cite:** Archiki Prasad, Alexander Koller, Mareike Hartmann, Peter Clark, Ashish Sabharwal, Mohit Bansal, Tushar Khot. "ADaPT: As-Needed Decomposition and Planning with Language Models." 2024. Findings of the Association for Computational Linguistics: NAACL 2024. DOI: 10.18653/v1/2024.findings-naacl.264. arXiv:2311.05772. https://aclanthology.org/2024.findings-naacl.264/
@@ -107,7 +107,7 @@ on it.
 ---
 
 ## 9. Divide-or-Conquer? Which Part Should You Distill Your LLM?
-**Review status:** reviewed -> sheet `10` (round 3). Cross-paper discussion: pending.
+**Review status:** reviewed -> sheet `10` (round 3). Cross-paper discussion: done - F18, F19, F21, F23.
 
 
 **Cite:** Zhuofeng Wu, He Bai, Aonan Zhang, Jiatao Gu, VG Vinod Vydiswaran, Navdeep Jaitly, Yizhe Zhang. "Divide-or-Conquer? Which Part Should You Distill Your LLM?" 2024. Findings of the Association for Computational Linguistics: EMNLP 2024. DOI: 10.18653/v1/2024.findings-emnlp.145. arXiv:2402.15000. https://aclanthology.org/2024.findings-emnlp.145/
@@ -119,7 +119,7 @@ on it.
 ---
 
 ## 10. Chain of Agents
-**Review status:** reviewed -> sheet `11` (round 3). Cross-paper discussion: pending.
+**Review status:** reviewed -> sheet `11` (round 3). Cross-paper discussion: done - F13, F16, F20, F22.
 
 
 **Cite:** Yusen Zhang, Ruoxi Sun, Yanfei Chen, Tomas Pfister, Rui Zhang, Sercan Ö. Arık. "Chain of Agents: Large Language Models Collaborating on Long-Context Tasks." 2024. Advances in Neural Information Processing Systems 37 (NeurIPS 2024). arXiv:2406.02818. https://openreview.net/forum?id=LuCLf4BJsr
@@ -131,7 +131,7 @@ on it.
 ---
 
 ## 11. Measuring and Narrowing the Compositionality Gap (self-ask)
-**Review status:** reviewed -> sheet `09` (round 3). Cross-paper discussion: pending.
+**Review status:** reviewed -> sheet `09` (round 3). Cross-paper discussion: done - F13, F14, F15.
 
 
 **Cite:** Ofir Press, Muru Zhang, Sewon Min, Ludwig Schmidt, Noah A. Smith, Mike Lewis. "Measuring and Narrowing the Compositionality Gap in Language Models." 2023. Findings of the Association for Computational Linguistics: EMNLP 2023. DOI: 10.18653/v1/2023.findings-emnlp.378. arXiv:2210.03350. https://aclanthology.org/2023.findings-emnlp.378/
@@ -193,7 +193,7 @@ on it.
 ---
 
 ## 17. To CoT or not to CoT?
-**Review status:** reviewed -> sheet `01` (round 1). Cross-paper discussion: pending.
+**Review status:** reviewed -> sheet `01` (round 1). Cross-paper discussion: done - F14, F16, F18.
 
 
 **Cite:** Zayne Sprague, Fangcong Yin, Juan Diego Rodriguez, Dongwei Jiang, Manya Wadhwa, Prasann Singhal, Xinyu Zhao, Xi Ye, Kyle Mahowald, Greg Durrett. "To CoT or not to CoT? Chain-of-thought helps mainly on math and symbolic reasoning." 2025. International Conference on Learning Representations (ICLR 2025). arXiv:2409.12183. https://openreview.net/forum?id=w6nlcS8Kkn
@@ -215,7 +215,7 @@ on it.
 ---
 
 ## 19. Why Do Multi-Agent LLM Systems Fail?
-**Review status:** reviewed -> sheet `12` (round 3). Cross-paper discussion: pending.
+**Review status:** reviewed -> sheet `12` (round 3). Cross-paper discussion: done - F13, F15, F17, F20, F22, F23.
 
 
 **Cite:** Mert Cemri, Melissa Z. Pan, Shuyi Yang, Lakshya A. Agrawal, Bhavya Chopra, Rishabh Tiwari, Kurt Keutzer, Aditya Parameswaran, Dan Klein, Kannan Ramchandran, Matei Zaharia, Joseph E. Gonzalez, Ion Stoica. "Why Do Multi-Agent LLM Systems Fail?" 2025. Advances in Neural Information Processing Systems 38 (NeurIPS 2025). arXiv:2503.13657. https://neurips.cc/virtual/2025/poster/121528
@@ -438,7 +438,7 @@ on it.
 ---
 
 ## 42. The Expressive Power of Transformers with Chain of Thought
-**Review status:** reviewed -> sheet `06` (round 2). Cross-paper discussion: pending - spawned candidate argument A1.
+**Review status:** reviewed -> sheet `06` (round 2). Cross-paper discussion: done - F16, F21; spawned candidate argument A1.
 
 **Cite:** William Merrill, Ashish Sabharwal. "The Expressive Power of Transformers with Chain of Thought." 2023. ICLR 2024. arXiv:2310.07923. https://arxiv.org/abs/2310.07923
 **Abstract (verbatim, arXiv):**
@@ -586,7 +586,7 @@ on it.
 ---
 
 ## 60. Test-time Scaling of LLMs: A Survey from A Subproblem Structure Perspective
-**Review status:** reviewed -> sheet `02` (round 1). Cross-paper discussion: pending.
+**Review status:** reviewed -> sheet `02` (round 1). Cross-paper discussion: done - F13, F16, F17, F22.
 
 **Cite:** Zhuoyi Yang, Xu Guo, Tong Zhang, Huijuan Xu, Boyang Li. "Test-time Scaling of LLMs: A Survey from A Subproblem Structure Perspective." 2025. preprint. arXiv:2511.14772. https://arxiv.org/abs/2511.14772
 **Abstract (verbatim, arXiv):**
@@ -596,7 +596,7 @@ on it.
 ---
 
 ## 61. Large Language Models for Planning: A Comprehensive and Systematic Survey
-**Review status:** reviewed -> sheet `03` (round 1). Cross-paper discussion: pending.
+**Review status:** reviewed -> sheet `03` (round 1). Cross-paper discussion: done - F13, F14, F18, F19, F22.
 
 **Cite:** Pengfei Cao, Tianyi Men, Wencan Liu, Jingwen Zhang, Xuzhao Li, Xixun Lin, Dianbo Sui, Yanan Cao, Kang Liu, Jun Zhao. "Large Language Models for Planning: A Comprehensive and Systematic Survey." 2025. preprint. arXiv:2505.19683. https://arxiv.org/abs/2505.19683
 **Abstract (verbatim, arXiv):**
