@@ -622,6 +622,14 @@ Consequence: extends [[F14]] (the boundary as an interposition point) and [[F18]
 deterministic is itself an answer to [[F17]] — the loop, the state, and the
 termination decision are code, not model self-report.
 
+Second worked instance — sheet `19` (Agentless): the entire selection and
+validation stage is deterministic machinery around model-produced candidates — a
+sentinel-string test protocol (`Issue reproduced` / `Issue resolved` / `Other
+issues`), an execute-on-the-original filter, a regression-tests-first ordering
+with an explicit fallback, and AST-normalised majority voting. Same principle
+(model proposes, code selects and sequences), at the recombination end rather
+than the planning loop, and it is the mechanism [[F48]] and [[I10]] rest on.
+
 ### F32 — Sheets 10 and 16 disagree on whether the decomposer can be a small model
 
 Sheet `10` (Divide-or-Conquer): the decomposer *distils* into a 7–13B student that
@@ -1218,6 +1226,65 @@ process either. For a harness, an outcome gate and a process gate built on the
 same model are correlated failures, not independent checks; a symbolic or
 executable outcome check is the way to get one that is genuinely independent
 ([[F27]], [[F42]]).
+
+### F61 — Justify a stage by showing that removing it is worse on both recall and cost
+
+Sheet `19` (Agentless): the "direct from file level" ablation deletes the
+element-selection rung and goes straight from files to edit locations. It scores
+47.0% ground-truth recall at $0.18, against 50.7% at $0.06 for the hierarchical
+path that keeps the rung — the extra stage is cheaper *and* more accurate,
+because it shrinks the context the next stage pays for.
+
+Consequence: the test for any proposed extra stage in a decomposition is whether
+removing it loses on *both* axes — recall (does the answer still survive the
+stage) and cost. A stage that only improves recall at higher cost is a Pareto
+trade to argue explicitly; a stage that improves neither is pure overhead. This
+is the ablation discipline behind [[F46]] (the negative coordination tax) and
+[[F21]]'s "does this rung earn its place", stated as a demand rather than an
+observation.
+
+### F62 — "No recovery path" is viable when wide sampling plus an external selector substitutes for it
+
+Sheet `19` (Agentless) has no loop, no re-plan, no backtrack: a localisation miss
+is terminal, and only ~50% of problems still carry the ground-truth location by
+the final narrowing rung — yet it is a strong, cheap baseline. This sits in
+tension with [[F24]] (at depth the lever is the recovery rate `c`) and [[F20]]
+(a decomposition without a recovery path inherits brittleness that grows with
+depth).
+
+Resolution: Agentless does not *recover* a bad trajectory, it *avoids committing*
+to one — four independent location framings × ten patches, then execution-grounded
+selection among the forty ([[F51]], [[F48]]). Breadth plus a cheap external
+selector substitutes for a recovery path, and it works here because the pipeline
+is shallow (three forward stages, no depth) and the selector has a real signal
+(tests). Where the pipeline is deep, or the selector's signal is weak or absent,
+the F24/F20 argument reasserts and a recovery path is needed. The design choice
+is wide-and-shallow with execution-grounded selection versus narrow-and-deep with
+a recovery loop — not "recovery is always required".
+
+### F63 — "Fixed pipeline matches agents" rests on an unfair comparison and an inference-only cost, and its stability across capability is untested
+
+Sheet `19` (Agentless): the headline that a fixed pipeline matches or beats
+autonomous agents on SWE-bench comes from a comparison that is unfair in both
+directions and is not disentangled. Agentless spends its budget on 40 parallel
+samples plus repository test execution; the agent baselines spend theirs on
+sequential tool-mediated exploration — equal dollars buy very different things.
+And the $0.70 figure is LLM inference only: it omits the test-execution compute,
+the one cost axis where a sample-and-execute design should be *worse* than a
+talkative agent.
+
+Double caveat, then the open question. (i) The comparison establishes only the
+narrow claim — a fixed heavy-sampling pipeline with execution-grounded selection
+is a strong, cheap baseline the agent literature had not been measuring against —
+not "agents are unnecessary". (ii) The cost accounting is not whole-system. And
+beyond both: everything here is one model (GPT-4o). Whether "fixed pipeline beats
+agents" is stable across capability is untested and genuinely open — a weaker
+executor may need the agent's iterative search to compensate for a worse single
+attempt, while a stronger one may need neither scaffold. That interacts with
+[[F1]] (decomposition's accuracy lift decays with capability), [[F23]] (weak
+executors need decomposition more), and [[F50]] (the fixed pipeline fails where
+evidence must be explored for); which trend dominates as the model changes is the
+interesting question the paper cannot answer.
 
 ### Papers the gathered findings keep pointing at
 
