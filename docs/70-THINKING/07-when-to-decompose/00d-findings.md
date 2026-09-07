@@ -1314,9 +1314,15 @@ the task is solved — see [[I11]].
 
 - **Faith and Fate** (Dziri et al., NeurIPS 2023) — flagged by sheets `05` and
   `06`, now read in full as sheet `13`; it feeds [[F24]], [[F25]], and [[F16]].
-- **Feng et al. 2023** (circuit-complexity account of why CoT works) — still not
-  read; cited by sheets `06` and `10` as the theoretical grounding for why
-  splitting the computation helps at all.
+- **Feng et al. 2023** (circuit-complexity account of why CoT works) — cited by
+  sheets `06` and `10` as the theoretical grounding for why splitting a
+  computation helps; now read in full as sheet `21`. It confirms the serial-depth
+  mechanism (a fixed-depth model cannot do in one shot what a chain of small
+  steps can, conditional on TC⁰ ≠ NC¹) and directly answers the first item on
+  [[A1]]'s checklist: the theory licenses a claim about serial depth and model
+  size, **not** about working memory — and its constructions keep the whole
+  transcript in attention, the reverse of A1's space-reuse premise. Cross-paper
+  discussion pending.
 
 ## Qualifiers
 
