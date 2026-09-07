@@ -1,8 +1,8 @@
 # Cross-paper discussion — findings
 
-*The collect phase produced eight review sheets (`01`–`08`). This file is where
-they are taken up against each other, and against the project's own questions,
-finding by finding. Nothing here is settled. Entries are of three kinds. A
+*The collect phase produced twenty review sheets (`01`–`20`), over five reading
+rounds. This file is where they are taken up against each other, and against the
+project's own questions, finding by finding. Nothing here is settled. Entries are of three kinds. A
 **finding** is a conclusion that carries forward — something the project will act
 on — whether it comes straight from cross-examining the sheets or is a
 methodological consequence the sheets' own evidence does not directly establish. A
@@ -612,6 +612,80 @@ orchestrator sits in — a light "name the sub-goals" planner (small model may
 suffice) or a "run the control program" planner (may need the capable model),
 with direct cost consequences either way.
 
+### F33 — What sheet 17 carries: any decomposition that keeps per-unit loss bounded beats a monolith at sufficient scale, and the scheme does not matter
+
+Sheet `17` (Xu et al., *Noise Decomposition Framework*) builds an exact
+telescoping identity `ρ_sys = ρ_task · ρ_agg · ρ_model` (fidelities multiply;
+losses `ℒ = −log ρ` add) and a Proposition 3.1 that a chunk-and-aggregate
+pipeline eventually beats a single long-context model. The demonstration holds —
+a weak chunked pipeline matches or beats a strong single-shot model at 128K on
+several tasks — and so does the direction of the conclusion. What the paper does
+**not** deliver is why or where to act: the three factors are not separately
+measurable (`ρ_task` and `ρ_agg` are ratios against uncomputable optima `a*`,
+`h*`), no crossover length `T₀` is ever computed or tied to a measurable
+quantity, and the proposition is purely existential and asymptotic.
+
+The transferable content, stated without the unmeasurable apparatus: **if a
+decomposition's total loss grows linearly in problem size — bounded, roughly
+constant per-unit loss — then past some input length it outperforms a monolithic
+call whose loss grows faster.** This is scheme-agnostic. It does not privilege
+chunk-and-aggregate; any decomposition that exposes the same linear error bound
+qualifies. The bounded-per-unit-loss premise is the one the project already holds
+via [[F24]] (a per-step `ε`) and [[A1]] (peak working set tracks depth, not total
+material), and sheet `17`'s own model term `ℒ_model = O(n) = O(T)` is that
+premise restated as a sum of bounded per-chunk losses.
+
+Scope: the *asymptotic guarantee* does not stand — see qualifier [[F36]]. What
+stands is the empirical demonstration, at the lengths tested, on tasks where the
+monolith actually degrades. And per [[F35]], the linear bound is a property of the
+*worker* side; the aggregator side is where sheet `17` assumes `O(T)` in one
+sentence and where the loss is most likely to grow faster (see [[I10]]).
+
+### F34 — Sheet 17's three-factor split is a reasoning vocabulary, not a measurement; the usable output is a cheap regime triage
+
+None of task noise, aggregator noise, or model noise can be measured on its own —
+two of the three are defined against ideal per-chunk artifacts and an ideal
+merger that cannot be computed for any real task. So the framework is an
+accounting scheme for reasoning about a pipeline, not an estimator of one.
+
+What *is* implementable is the regime classification, read off a cheap chunk-size
+sweep (hold the input fixed, vary chunk size, look at the curve shape):
+
+- **Flat curve** — splitting neither helps nor hurts; split only to buy cost or
+  latency.
+- **Interior optimum** — worker loss dominates; split and tune the chunk size to
+  the peak.
+- **Low and flat** — the return schema is the ceiling; a better worker, a better
+  aggregator, and more compute all buy nothing (see [[F35]]).
+
+Consequence: this gives [[F8]] ("no dominant strategy; it is task-conditional") a
+concrete diagnostic procedure. Caveat: the regimes are assigned by comparing
+curve *shapes* across tasks that use different metrics with different scales, and
+no sample sizes or dispersion are reported for any of the underlying curves.
+
+### F35 — When the sub-task return schema cannot carry the task's cross-unit dependencies, decomposition saturates below the achievable score regardless of model quality
+
+Sheet `17`'s task-noise-dominated regime (the "Silo Effect"): performance
+"saturates below the optimal performance regardless of model quality," and the
+aggregator's only escape is to "reintroduce nearly the entire input" — i.e. undo
+the decomposition. The binding quantity, `ρ_task`, is a property of the **sub-task
+return contract**, not of the task: the paper's own example is "return the 2nd
+smallest number in your chunk" (which structurally cannot carry the global
+answer) versus "return the two smallest per chunk" (which can), on the identical
+task with the identical chunking. Information the schema does not encode is gone
+before the aggregator runs, and no merger recovers it.
+
+Consequence: concrete support for `02-capability-as-granularity.md`'s claim that
+the decomposition interface sets the ceiling and binds *before* the executors
+start failing. The schema has to be built from the task's dependency structure —
+which is the capability [[F26]] identifies as the expensive one that fails first
+on weak models. Reinforces [[F15]] (structured intermediate output is a
+correctness property once a later step consumes it) and is the single-level
+long-context instance of [[F16]] (independent-parallel splitting destroys a
+dependency the task needs). It is also the seed of [[I10]]: the aggregator
+re-reading the whole input to fill the schema's gaps is the merge step
+re-entering the regime the split was meant to escape.
+
 ### Papers the gathered findings keep pointing at
 
 - **Faith and Fate** (Dziri et al., NeurIPS 2023) — flagged by sheets `05` and
@@ -655,6 +729,19 @@ What this qualifier guards:
   correct plan; sheet `08` is per-step error accumulation in one narrated chain.
 - [[F6]] is already scoped to chain-of-thought management and needs no further
   guard.
+
+### F36 — Sheet 17's "weak chunked beats strong single-shot" headline is bounded to the regime where the monolith degrades
+
+A scope bound on [[F33]], carrying nothing on its own. The headline comparison is
+demonstrated only where the single strong model is in a length-degradation regime
+that the strongest model tested (GPT-4o) never enters on the retrieval task — it
+holds a perfect score across the whole 1K–128K sweep. The crossover needs the
+monolith to collapse with length; on a task a capable model handles whole,
+splitting on length has no case. Do not carry the headline into a regime with
+capable models on tasks within their grain. Superlinear collapse itself is
+asserted from eyeballed curves — no growth exponent, no test against a linear
+null — so the mechanism behind the headline is thinly evidenced even where the
+empirical gap is real.
 
 ## Candidate arguments (unassessed)
 
