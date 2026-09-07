@@ -1104,13 +1104,28 @@ question, or a vote over it, entrenches bias), and each question's reliability
 has to be measured on its own ([[F54]] first paragraph) before its verdict is
 given weight in an aggregate.
 
+### F60 — Detecting that a trace is wrong and locating where it went wrong are separate capabilities, and locating is far weaker
+
+Sheet `20`: Q2 (is the whole trace valid) and Q3 (index of the first invalid
+step) dissociate sharply — on perturbed traces one model runs Q2 at ~54% and Q3
+at ~20%, the ordering Q2 > Q3 holds across all three models, and Q3 sits at or
+below random selection over a short trace. A verifier can often tell *that*
+something is wrong while being unable to tell *where*.
+
+Consequence: "the harness has an error detector" and "the harness can point at
+the failing step" are different claims with different reliability, and a design
+must not infer the second from the first. This is the sheet-20 instance of
+[[F26]] (naming sub-tasks versus wiring them dissociate) applied to verification,
+and it is the premise [[F55]] builds on — a repair loop that needs a target is
+gated by the weaker of the two.
+
 ### F55 — Localisation quality bounds repair quality; a near-chance localiser caps the recovery rate
 
-Sheet `20`: Q3 (first-invalid-step) runs at or below chance on perturbed traces,
-and the authors state the consequence for verifier-guided inference directly — a
-verifier that flags a trace as wrong but points at the wrong step sends the
-generator to revise a part of the reasoning that was fine and leaves the real
-error in place.
+Sheet `20`: Q3 (first-invalid-step) runs at or below chance on perturbed traces
+([[F60]]), and the authors state the consequence for verifier-guided inference
+directly — a verifier that flags a trace as wrong but points at the wrong step
+sends the generator to revise a part of the reasoning that was fine and leaves the
+real error in place.
 
 Consequence for the [[F24]] `c/(c+ε)` picture: you cannot raise `c` — the rate of
 re-entering a valid state after leaving one — with a localiser that cannot find
