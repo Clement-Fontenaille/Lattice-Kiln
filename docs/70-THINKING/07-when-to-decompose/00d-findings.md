@@ -1090,6 +1090,21 @@ verifier's outcome judgment is coloured by how the process looks. This is the
 sheet-20 instance of [[F26]]'s dissociation (naming versus structuring) and bears
 on [[F44]] (what the verifier is shown).
 
+Second consequence, the constructive one. Q1/Q2/Q3 hold the *context* constant —
+the same trace — and vary only the *instruction*, and still get answers that are
+distinct, differently reliable, and not independent. So varying the question a
+judge is asked is a decorrelation axis in its own right, separate from varying
+the input: a board of judges given the same context but different instructions
+returns genuinely different verdicts, and the prompt a judge runs on is a
+first-class determinant of its answer, not a wording detail. This is a cleaner
+demonstration of the mechanism behind `02-capability-as-granularity.md`'s
+partial-views proposal (which varies context *and* question) — here the input is
+fixed and question-variation alone produces the spread. Caveats: distinctness is
+not improvement (Q3 was near chance, and [[F53]]/[[F56]] show a badly posed
+question, or a vote over it, entrenches bias), and each question's reliability
+has to be measured on its own ([[F54]] first paragraph) before its verdict is
+given weight in an aggregate.
+
 ### F55 — Localisation quality bounds repair quality; a near-chance localiser caps the recovery rate
 
 Sheet `20`: Q3 (first-invalid-step) runs at or below chance on perturbed traces,
