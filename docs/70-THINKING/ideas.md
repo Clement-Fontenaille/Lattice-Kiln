@@ -276,56 +276,58 @@ unitary unless the literature establishes otherwise"). I7 is the explicit reques
 to *test* that refusal rather than honour it, so the tension is deliberate and
 must be named wherever I7 is cited.
 
-**Discussion (open, will iterate).** Whether "metacognition" is one axis or
-several is itself unsettled — confidence calibration and error localisation may
-not co-vary, and the probe design has to allow for more than one factor.
-Building the dissociation probe at all depends on the undefined capability-model
-placeholder ([[I6]], [[I8]] share it); φ from `02` is the leading candidate and
-is treated as dubious.
+**Discussion — confront the literature and its blind spot (will iterate).**
+Whether "metacognition" is one axis or several is unsettled: confidence
+calibration and error localisation need not co-vary, so the probe design has to
+allow more than one factor, and the claim survives in multi-factor form. The work
+that bears on I7 is self-correction and self-verification — F17 in
+`07-when-to-decompose/00d-findings.md`, the result line that LLMs cannot
+self-correct reasoning without external feedback, self-critique being neutral or
+harmful without an oracle. Its blind spot is that it varies *whether* an
+undifferentiated "review your answer" move is applied, never *which* metacognitive
+skill is invoked — so it cannot observe dissociation even if dissociation is
+real. That is the same design gap `02` names in the judge-lab, where every
+intervention varied stance and none varied granularity. Confronting each paper on
+this point is the next step. Building the dissociation probe also depends on the
+undefined capability-model placeholder ([[I6]], [[I8]] share it); φ from `02` is
+the leading candidate and is treated as dubious.
 
 **Would graduate to** the `02` psychometric programme as an added metacognitive
-axis, then a foundations or cognitive-architecture design document once the
-dissociation is demonstrated.
+axis (or several), then a foundations or cognitive-architecture design document
+once the dissociation is demonstrated.
 
 ---
 
-## I8 — Situation-matched activation of a metacognitive skill
+## I8 — Potential usage of φ: read what a situation demands, then act on it
 
-**Provenance.** Split from [[I7]] on 2026-09-07. This is the "resonate / activate"
-half of the original combined entry — the feedback-loop principle, kept separate
-because it is a distinct claim from "the skills are ordinary".
+**Provenance.** Split from the original combined I7 on 2026-09-07, then
+rearticulated the same day to stand on its own. This is not the metacognition
+claim and does not depend on it — it is about what a recoverable capability model
+would be *for*.
 
-**The claim, in questionable form.** Given a probe that reports which
-metacognitive skill a situation calls for, a targeted prompt can activate that
-skill in that situation where it would otherwise stay dormant, and activating the
-*situation-matched* skill at the right moment improves the outcome beyond a
-generic strong prompt. The loop is: probe the situation, identify the skill
-needed, inject a prompt that activates it, observe where it leads, repeat.
+**The claim, in questionable form.** If φ (or any probe-able capability model) can
+be queried about a concrete situation, then a system can read which capability
+that situation demands and act on the reading — pick or generate a prompt that
+activates the needed skill, route to a processor sized for it, or decide whether
+to decompose — and acting on the reading beats a fixed policy that never consults
+φ.
 
-**Validity criterion for the argument.** It holds only if (a) a prompt targeting
-metacognitive skill X moves X-dependent outcomes beyond a generic strong prompt,
-and (b) the situation-to-skill mapping is identifiable ahead of the outcome, not
-only in hindsight.
+**Validity criterion for the argument.** It holds only if (a) φ is recoverable
+and cheap to query per situation; (b) the reading is actionable — at least one
+lever (prompt choice, routing, decompose-or-not) has an effect on the outcome
+that the reading predicts; and (c) acting on the reading beats the best fixed
+policy that ignores it.
 
-**Falsifier.** Targeted metacognitive prompts match generic prompts on the
-outcomes they are meant to move; or the probe cannot pick the skill that helps
-better than choosing at random.
+**Falsifier.** Acting on the φ reading does no better than a fixed best-guess
+policy; or no available lever's effect is predicted by the reading; or φ does not
+compress enough to be queried cheaply — the "risk that would end this" in `02`.
 
-**Discussion — confront the literature and its blind spot (premises P4/P5, will
-iterate).** The body to confront directly is the self-correction and
-self-verification literature: F17 in `07-when-to-decompose/00d-findings.md`, the
-result line that LLMs cannot self-correct reasoning without external feedback,
-and the broader finding that self-critique is often neutral or harmful without an
-oracle. Its blind spot is that it varies *whether* an undifferentiated "review
-your answer" move is applied, not *which* metacognitive skill is invoked nor
-whether it is the one the situation needs. That is structurally the same gap
-`02-capability-as-granularity.md` names in the judge-lab — every intervention
-varied stance, none varied granularity — and the same "a null on the generic
-form does not generalise to the targeted form" move as the partial-views
-argument. So F17 may be a null on the generic move, not a verdict on
-situation-matched activation. This is the blind spot to challenge, and it is why
-I8 is worth pursuing even though the generic version failed. The exact
-confrontation with each paper is still to be written.
+**Relation to other entries.** [[I6]] is one instance of I8: the lever there is
+the decompose-or-not decision and the reading is a task-level complexity
+estimate. Situation-matched activation of a metacognitive skill is another
+instance — I8 applied to a metacognitive axis, which additionally needs [[I7]] to
+hold and must confront the self-correction blind spot noted under I7. I8 itself
+needs neither I6 nor I7.
 
 **Sub-claims that need their own inquiry.**
 
@@ -344,10 +346,8 @@ confrontation with each paper is still to be written.
   model runs it, and the instantiation is found by experiment — consistent with
   F18's planning/execution budget asymmetry.
 
-**Rests on, unproven.** The undefined capability-model placeholder that can be
-probed per skill (shared with [[I6]] and [[I7]]; φ the candidate, dubious); and
-[[I7]] holding — if metacognitive skills do not dissociate, "which skill the
-situation needs" is not a well-posed query.
+**Rests on, unproven.** φ being recoverable and cheap to query — `02`'s central
+open risk. Independent of [[I7]].
 
 **Would graduate to** `00-design/40-roadmap/03-research-and-evaluation-agenda.md`
-as a probe-activate-measure experiment.
+as a probe-then-act experiment.
