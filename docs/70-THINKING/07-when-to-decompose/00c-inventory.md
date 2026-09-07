@@ -622,6 +622,228 @@ on it.
 > verbatim abstracts were unaffected.
 
 
+<!-- sixth gather round, 2026-09-07: targeted at narrowing ideas I1-I5 and deepening findings F13-F32 (cost, error recovery, verifier reliability, plan-structure metrics, HTN aggregation, code-domain decomposition, frontier-model decomposition). Preprints admitted and flagged. -->
+
+## 62. AI Agents That Matter
+
+**Cite:** Sayash Kapoor, Benedikt Stroebl, Zachary S. Siegel, Nitya Nadgir, Arvind Narayanan. "AI Agents That Matter." 2024. arXiv:2407.01502 (preprint; widely cited). https://arxiv.org/abs/2407.01502
+
+**Targets:** F22 / I1 - cost as a co-equal metric to accuracy; argues SOTA agents are needlessly complex because benchmarks ignore cost; implements a joint cost-accuracy optimisation. Flagged by sheet 12 as its inherited premise.
+
+**Abstract (verbatim, arXiv):**
+> AI agents are an exciting new research direction, and agent development is driven by benchmarks. Our analysis of current agent benchmarks and evaluation practices reveals several shortcomings that hinder their usefulness in real-world applications. First, there is a narrow focus on accuracy without attention to other metrics. As a result, SOTA agents are needlessly complex and costly, and the community has reached mistaken conclusions about the sources of accuracy gains. Our focus on cost in addition to accuracy motivates the new goal of jointly optimizing the two metrics. We design and implement one such optimization, showing its potential to greatly reduce cost while maintaining accuracy. Second, the benchmarking needs of model and downstream developers have been conflated, making it hard to identify which agent would be best suited for a particular application. Third, many agent benchmarks have inadequate holdout sets, and sometimes none at all. This has led to agents that are fragile because they take shortcuts and overfit to the benchmark in various ways. We prescribe a principled framework for avoiding overfitting. Finally, there is a lack of standardization in evaluation practices, leading to a pervasive lack of reproducibility.
+
+---
+
+## 63. Agentless: Demystifying LLM-based Software Engineering Agents
+
+**Cite:** Chunqiu Steven Xia, Yinlin Deng, Soren Dunn, Lingming Zhang. "Agentless: Demystifying LLM-based Software Engineering Agents." 2024. arXiv:2407.01489 (preprint). https://arxiv.org/abs/2407.01489
+
+**Targets:** F22 / F9 / code domain - a fixed 3-phase localise/repair/validate pipeline (no autonomous planning) beats complex agents on SWE-bench Lite at $0.70; the do-less baseline for decomposition-in-software. Flagged by sheet 12.
+
+**Abstract (verbatim, arXiv):**
+> Recent advancements in large language models (LLMs) have significantly advanced the automation of software development tasks, including code synthesis, program repair, and test generation. More recently, researchers and industry practitioners have developed various autonomous LLM agents to perform end-to-end software development tasks. These agents are equipped with the ability to use tools, run commands, observe feedback from the environment, and plan for future actions. However, the complexity of these agent-based approaches, together with the limited abilities of current LLMs, raises the following question: Do we really have to employ complex autonomous software agents? To attempt to answer this question, we build Agentless -- an agentless approach to automatically solve software development problems. Compared to the verbose and complex setup of agent-based approaches, Agentless employs a simplistic three-phase process of localization, repair, and patch validation, without letting the LLM decide future actions or operate with complex tools. Our results on the popular SWE-bench Lite benchmark show that surprisingly the simplistic Agentless is able to achieve both the highest performance (32.00%, 96 correct fixes) and low cost ($0.70) compared with all existing open-source software agents! Furthermore, we manually classified the problems in SWE-bench Lite and found problems with exact ground truth patch or insufficient/misleading issue descriptions. As such, we construct SWE-bench Lite-S by excluding such problematic issues to perform more rigorous evaluation and comparison.
+
+---
+
+## 64. When Does Divide and Conquer Work for Long Context LLM? A Noise Decomposition Framework
+
+**Cite:** Zhen Xu, Shang Zhu, Jue Wang, Junlin Wang, Ben Athiwaratkun, Chi Wang, James Zou, Ce Zhang. "When Does Divide and Conquer Work for Long Context LLM? A Noise Decomposition Framework." 2026. ICLR 2026. arXiv:2506.16411. https://arxiv.org/abs/2506.16411
+
+**Targets:** A1 / F16 / F13 / I3 - a theory that splits long-context failure into cross-chunk dependence (task noise), length-induced confusion (model noise), and imperfect integration (aggregator noise); derives when chunk-and-aggregate lets a weaker model beat a stronger single-shot one.
+
+**Abstract (verbatim, arXiv):**
+> We investigate the challenge of applying Large Language Models (LLMs) to long texts. We propose a theoretical framework that distinguishes the failure modes of long context tasks into three categories: cross-chunk dependence (task noise), confusion that grows with context size (model noise), and the imperfect integration of partial results (aggregator noise). Under this view, we analyze when it is effective to use multi-agent chunking, i.e., dividing a lengthy sequence into smaller chunks and aggregating the processed results of each chunk. Our experiments on tasks such as retrieval, question answering, and summarization confirm both the theoretical analysis and the conditions that favor multi-agent chunking. By exploring the accelerated decay of model fidelity with input length, we also explain why, for large inputs, a weaker model configured with chunk-based processing can surpass a more advanced model like GPT4o applied in a single shot. Overall, we present a principled understanding framework and our results highlight a direct pathway to handling long contexts in LLMs with carefully managed chunking and aggregator strategies.
+
+---
+
+## 65. Question Decomposition Improves the Faithfulness of Model-Generated Reasoning
+
+**Cite:** Ansh Radhakrishnan, Karina Nguyen, Anna Chen, Carol Chen, Carson Denison, Danny Hernandez, Esin Durmus, Evan Hubinger, et al. (Anthropic). "Question Decomposition Improves the Faithfulness of Model-Generated Reasoning." 2023. arXiv:2307.11768 (preprint). https://arxiv.org/abs/2307.11768
+
+**Targets:** F25 / F30 / F5 - answering sub-questions in SEPARATE contexts markedly improves the faithfulness of stated reasoning over CoT while keeping some of the gain; a direct argument that execution-across-contexts is a different thing from one narrated stream. Named in sheet 07's citation list.
+
+**Abstract (verbatim, arXiv):**
+> As large language models (LLMs) perform more difficult tasks, it becomes harder to verify the correctness and safety of their behavior. One approach to help with this issue is to prompt LLMs to externalize their reasoning, e.g., by having them generate step-by-step reasoning as they answer a question (Chain-of-Thought; CoT). The reasoning may enable us to check the process that models use to perform tasks. However, this approach relies on the stated reasoning faithfully reflecting the model's actual reasoning, which is not always the case. To improve over the faithfulness of CoT reasoning, we have models generate reasoning by decomposing questions into subquestions. Decomposition-based methods achieve strong performance on question-answering tasks, sometimes approaching that of CoT while improving the faithfulness of the model's stated reasoning on several recently-proposed metrics. By forcing the model to answer simpler subquestions in separate contexts, we greatly increase the faithfulness of model-generated reasoning over CoT, while still achieving some of the performance gains of CoT.
+
+---
+
+## 66. Probabilistic Soundness Guarantees in LLM Reasoning Chains (ARES)
+
+**Cite:** Weiqiu You, Anton Xue, Shreya Havaldar, Delip Rao, Helen Jin, Chris Callison-Burch, Eric Wong. "Probabilistic Soundness Guarantees in LLM Reasoning Chains." 2025. EMNLP 2025. arXiv:2507.12948. https://arxiv.org/abs/2507.12948
+
+**Targets:** F24 / I3 - scores each reasoning step using only previously-VERIFIED premises, giving a graded per-step soundness score with statistical guarantees rather than a brittle binary; excels specifically at detecting propagated errors on long chains.
+
+**Abstract (verbatim, arXiv):**
+> In reasoning chains generated by large language models (LLMs), initial errors often propagate and undermine the reliability of the final conclusion. Current LLM-based error detection methods often fail to detect propagated errors because earlier errors can corrupt judgments of downstream reasoning. To better detect such errors, we introduce Autoregressive Reasoning Entailment Stability (ARES), a probabilistic framework that evaluates each reasoning step based solely on previously-verified premises. This inductive method yields a nuanced score for each step and provides certified statistical guarantees of its soundness, rather than a brittle binary label. ARES achieves state-of-the-art performance across four benchmarks (72.1% Macro-F1, +8.2 points) and demonstrates superior robustness on very long synthetic reasoning chains, where it excels at detecting propagated errors (90.3% F1, +27.6 points).
+
+---
+
+## 67. Branch-Solve-Merge Improves Large Language Model Evaluation and Generation
+
+**Cite:** Swarnadeep Saha, Omer Levy, Asli Celikyilmaz, Mohit Bansal, Jason Weston, Xian Li. "Branch-Solve-Merge Improves Large Language Model Evaluation and Generation." 2024. NAACL 2024. arXiv:2310.15123. https://arxiv.org/abs/2310.15123
+
+**Targets:** F16 - genuine parallel decomposition (branch into different sub-tasks, solve independently, merge), as opposed to sample-and-vote; the merge step is explicit. Named in sheet 02's citation list as the parallel exemplar.
+
+**Abstract (verbatim, arXiv):**
+> Large Language Models (LLMs) are frequently used for multi-faceted language generation and evaluation tasks that involve satisfying intricate user constraints or taking into account multiple aspects and criteria. However, their performance can fall short, due to the model's lack of coherence and inability to plan and decompose the problem. We propose Branch-Solve-Merge (BSM), a Large Language Model program (Schlag et al., 2023) for tackling such challenging natural language tasks. It consists of branch, solve, and merge modules that are parameterized with specific prompts to the base LLM. These three modules plan a decomposition of the task into multiple parallel sub-tasks, independently solve them, and fuse the solutions to the sub-tasks. We apply our method to the tasks of LLM response evaluation and constrained text generation and evaluate its effectiveness with multiple LLMs, including Vicuna, LLaMA-2-chat, and GPT-4. BSM improves the evaluation correctness and consistency for each LLM by enhancing human-LLM agreement by up to 26%, reducing length and pairwise position biases by up to 50%, and allowing LLaMA2-chat to match or outperform GPT-4 on most domains. On a constraint story generation task, BSM improves the coherence of stories while also improving constraint satisfaction by 12%.
+
+---
+
+## 68. BeamAggR: Beam Aggregation Reasoning over Multi-source Knowledge for Multi-hop Question Answering
+
+**Cite:** Zheng Chu, Jingchang Chen, Qianglong Chen, Haotian Wang, Kun Zhu, Xiyuan Du, Weijiang Yu, Ming Liu, et al. "BeamAggR: Beam Aggregation Reasoning over Multi-source Knowledge for Multi-hop Question Answering." 2024. ACL 2024. arXiv:2406.19820. https://arxiv.org/abs/2406.19820
+
+**Targets:** F16 - the HTN-style (aggregate-all-leaves) tree that sheet 02 said the field lacks: parse the question into a tree of atom + composite questions, reason bottom-up, and at composite nodes combine beam candidates by probabilistic aggregation.
+
+**Abstract (verbatim, arXiv):**
+> Large language models (LLMs) have demonstrated strong reasoning capabilities. Nevertheless, they still suffer from factual errors when tackling knowledge-intensive tasks. Retrieval-augmented reasoning represents a promising approach. However, significant challenges still persist, including inaccurate and insufficient retrieval for complex questions, as well as difficulty in integrating multi-source knowledge. To address this, we propose Beam Aggregation Reasoning, BeamAggR, a reasoning framework for knowledge-intensive multi-hop QA. BeamAggR explores and prioritizes promising answers at each hop of question. Concretely, we parse the complex questions into trees, which include atom and composite questions, followed by bottom-up reasoning. For atomic questions, the LLM conducts reasoning on multi-source knowledge to get answer candidates. For composite questions, the LLM combines beam candidates, explores multiple reasoning paths through probabilistic aggregation, and prioritizes the most promising trajectory. Extensive experiments on four open-domain multi-hop reasoning datasets show that our method significantly outperforms SOTA methods by 8.5%. Furthermore, our analysis reveals that BeamAggR elicits better knowledge collaboration and answer aggregation.
+
+---
+
+## 69. MASAI: Modular Architecture for Software-engineering AI Agents
+
+**Cite:** Daman Arora, Atharv Sonwane, Nalin Wadhwa, Abhav Mehrotra, Saiteja Utpala, Ramakrishna Bairi, Aditya Kanade, Nagarajan Natarajan. "MASAI: Modular Architecture for Software-engineering AI Agents." 2024. NeurIPS 2024. arXiv:2406.11638. https://arxiv.org/abs/2406.11638
+
+**Targets:** F9 / F18 / code domain - decomposition by software-engineering sub-problem (localise / fix / rank ...) with a dedicated sub-agent per stage, each with its own strategy and context; explicitly motivated by avoiding long trajectories that inflate cost.
+
+**Abstract (verbatim, arXiv):**
+> A common method to solve complex problems in software engineering, is to divide the problem into multiple sub-problems. Inspired by this, we propose a Modular Architecture for Software-engineering AI (MASAI) agents, where different LLM-powered sub-agents are instantiated with well-defined objectives and strategies tuned to achieve those objectives. Our modular architecture offers several advantages: (1) employing and tuning different problem-solving strategies across sub-agents, (2) enabling sub-agents to gather information from different sources scattered throughout a repository, and (3) avoiding unnecessarily long trajectories which inflate costs and add extraneous context. MASAI enabled us to achieve the highest performance (28.33% resolution rate) on the popular and highly challenging SWE-bench Lite dataset consisting of 300 GitHub issues from 11 Python repositories. We conduct a comprehensive evaluation of MASAI relative to other agentic methods and analyze the effects of our design decisions and their contribution to the success of MASAI.
+
+---
+
+## 70. Beyond the Answer Key: Robustness Evaluation of Large Language Models for Step-Level Mathematical Verification
+
+**Cite:** Fateme Mazdarani, Carlos Toxtli. "Beyond the Answer Key: Robustness Evaluation of Large Language Models for Step-Level Mathematical Verification." 2026. IEEE ICMLA 2026. arXiv:2608.28725. https://arxiv.org/abs/2608.28725
+
+**Targets:** F27 / F17 - measures the LLM-as-verifier directly: models that grade canonical solution traces well collapse on perturbed-but-equivalent traces (false-rejection 75.6-85.3%). Evaluator robustness must be measured separately from solver accuracy. Echoes sheet 07's invariance failure.
+
+**Abstract (verbatim, arXiv):**
+> Large language models (LLMs) are increasingly used as graders, verifiers, and process auditors, but most mathematical evaluations still emphasize final-answer accuracy. This can obscure whether a model can verify a non-canonical but valid solution trace. We introduce a controlled linear-equation benchmark for evaluating LLMs in the evaluator role. Each instance asks the model to judge final-answer correctness, step-level trace correctness, and the first incorrect step. Our evaluation of state-of-the-art open LLMs reveals a significant robustness gap: models that accurately evaluate canonical solutions often fail when presented with perturbed but logically equivalent variants. Across GPT-OSS 20B, Qwen3-14B, and Phi-4-Reasoning, base models perform well on canonical traces but degrade substantially on perturbed traces, especially for error localization. On valid perturbed traces, base-model false-rejection rates reach 75.6-85.3%, showing strong sensitivity to canonical solution form. Supervised fine-tuning, distillation, and test-time compute improve robustness in some settings, but gains are model dependent and can trade off against canonical performance. The results show that reliable process-level verification remains challenging, and evaluator robustness should be measured separately from solver accuracy, even in a simple algebraic domain with exact ground truth.
+
+---
+
+## 71. TinyV: Reducing False Negatives in Verification Improves RL for LLM Reasoning
+
+**Cite:** Zhangchen Xu, Yuetai Li, Fengqing Jiang, Bhaskar Ramasubramanian, Luyao Niu, Bill Yuchen Lin, Radha Poovendran. "TinyV: Reducing False Negatives in Verification Improves RL for LLM Reasoning." 2025. arXiv:2505.14625 (preprint). https://arxiv.org/abs/2505.14625
+
+**Targets:** F27 - quantifies verifier unreliability from the other side: over 38% of correct model outputs in a 'verified' math dataset are wrongly rejected; false negatives starve training of gradient signal. A concrete false-reject magnitude for the accept/reject port.
+
+**Abstract (verbatim, arXiv):**
+> Reinforcement Learning (RL) has become a powerful tool for enhancing the reasoning abilities of large language models (LLMs) by optimizing their policies with reward signals. Yet, RL's success relies on the reliability of rewards, which are provided by verifiers. In this paper, we expose and analyze a widespread problem--false negatives--where verifiers wrongly reject correct model outputs. Our in-depth study of the Big-Math-RL-Verified dataset reveals that over 38% of model-generated responses suffer from false negatives, where the verifier fails to recognize correct answers. We show, both empirically and theoretically, that these false negatives severely impair RL training by depriving the model of informative gradient signals and slowing convergence. To mitigate this, we propose tinyV, a lightweight LLM-based verifier that augments existing rule-based methods, which dynamically identifies potential false negatives and recovers valid responses to produce more accurate reward estimates. Across multiple math-reasoning benchmarks, integrating TinyV boosts pass rates by up to 10% and accelerates convergence relative to the baseline.
+
+---
+
+## 72. CoRefine: Confidence-Guided Self-Refinement for Adaptive Test-Time Compute
+
+**Cite:** Chen Jin, Ryutaro Tanno, Tom Diethe, Philip Teare. "CoRefine: Confidence-Guided Self-Refinement for Adaptive Test-Time Compute." 2026. arXiv:2602.08948 (preprint). https://arxiv.org/abs/2602.08948
+
+**Targets:** F24 / I3 - a tiny frozen-LLM controller reads full-trace confidence to decide halt / re-examine / switch approach; 92.6% precision when it confidently halts, and it is pitched as a modular recovery primitive for 'agentic settings with imperfect verifiers'.
+
+**Abstract (verbatim, arXiv):**
+> Large Language Models (LLMs) often rely on test-time scaling via parallel decoding (for example, 512 samples) to boost reasoning accuracy, but this incurs substantial compute. We introduce CoRefine, a confidence-guided self-refinement method that achieves competitive accuracy using a fraction of the tokens via a lightweight 211k-parameter Conv1D controller atop a frozen LLM. The controller consumes full-trace confidence to decide whether to halt, re-examine, or try a different approach, enabling targeted self-correction with an average of 2.7 refinement steps per problem and roughly 190-fold token reduction relative to 512-sample baselines. Across diverse reasoning benchmarks and three open-source models, the controller achieves 92.6 percent precision when it confidently halts, indicating that confidence dynamics reliably signal correctness without ground-truth verification. We extend this to CoRefine-Tree, a hybrid sequential-parallel variant that adaptively balances exploration and exploitation, with easy serving integration and verifier compatibility. By treating confidence as a control signal rather than a correctness guarantee, CoRefine provides a modular primitive for scalable reasoning and agentic settings with imperfect verifiers.
+
+---
+
+## 73. Adaptive Stopping for Multi-Turn LLM Reasoning (MiCP)
+
+**Cite:** Xiaofan Zhou, Huy Nguyen, Bo Yu, Chenxi Liu, Lu Cheng. "Adaptive Stopping for Multi-Turn LLM Reasoning." 2026. arXiv:2604.01413 (preprint). https://arxiv.org/abs/2604.01413
+
+**Targets:** F21 - a conformal-prediction framework that allocates a distinct error budget per turn so the loop can stop early with an overall coverage guarantee; a formal alternative to heuristic stopping rules and fixed turn budgets.
+
+**Abstract (verbatim, arXiv):**
+> Large Language Models (LLMs) increasingly rely on multi-turn reasoning and interaction, such as adaptive retrieval-augmented generation (RAG) and ReAct-style agents, to answer difficult questions. These methods improve accuracy by iteratively retrieving information, reasoning, or acting, but introduce a key challenge: When should the model stop? Existing approaches rely on heuristic stopping rules or fixed turn budgets and provide no formal guarantees that the final prediction still contains the correct answer. This limitation is particularly problematic in high-stakes domains such as finance and healthcare, where unnecessary turns increase cost and latency, while stopping too early risks incorrect decisions. Conformal prediction (CP) provides formal coverage guarantees, but existing LLM-CP methods only apply to a single model output and cannot handle multi-turn pipelines with adaptive stopping. To address this gap, we propose Multi-Turn Language Models with Conformal Prediction (MiCP), the first CP framework for multi-turn reasoning. MiCP allocates different error budgets across turns, enabling the model to stop early while maintaining an overall coverage guarantee. We demonstrate MiCP on adaptive RAG and ReAct, where it achieves the target coverage on both single-hop and multi-hop question answering benchmarks while reducing the number of turns, inference cost, and prediction set size.
+
+---
+
+## 74. Composition Collapse: Stable Factual Knowledge Does Not Imply Compositional Reasoning
+
+**Cite:** Zhe Yu, Wenpeng Xing, Yunzhao Wei, Jie Chen, Hongzhi Wang, Xuyang Teng, Meng Han. "Composition Collapse: Stable Factual Knowledge Does Not Imply Compositional Reasoning." 2026. arXiv:2605.26789 (preprint). https://arxiv.org/abs/2605.26789
+
+**Targets:** F13 / F25 - recipes with indistinguishable atomic knowledge differ by 40+ points on composition, and aggregate metrics hide it; a 'double-gate' protocol conditions on stable atomic access and finds much of the residual failure is generation-time computation constraint, not permanent inability.
+
+**Abstract (verbatim, arXiv):**
+> Post-training is routinely evaluated through aggregate benchmark scores that treat multi-hop reasoning as a single capability -- as if a model that answers more questions correctly must be better at assembling facts. We show that this assumption can be misleading: recipes with statistically indistinguishable atomic knowledge produce composition behaviour separated by over 40 percentage points, a phenomenon we call composition collapse: the systematic failure to assemble stably-known facts into chains, invisible to aggregate metrics. We introduce a double-gate protocol that changes the estimand from an aggregate compositionality gap to residual composition failure conditioned on stable atomic access, decomposing post-training gains into three independent channels: atomic stability, residual composition, and critical depth. On a benchmark of temporal factual chains spanning depths 2--11 across four post-training recipes, this decomposition reveals that post-training objectives shift composition capability in directions that aggregate metrics mask, and suggests that claims about multi-hop reasoning improvement should be accompanied by atomic-gate-controlled composition metrics. Diagnostic probes further show that a substantial share of measured composition failure reflects generation-time computation constraints rather than permanent inability to compose.
+
+---
+
+## 75. Multi-Hop Knowledge Composition is Bound by Pretraining Exposure
+
+**Cite:** Yannis Karmim, Luis Marti, Djame Seddah, Valentin Barriere. "Multi-Hop Knowledge Composition is Bound by Pretraining Exposure." 2026. arXiv:2606.09338 (preprint). https://arxiv.org/abs/2606.09338
+
+**Targets:** F13 / F25 - a controlled follow-up to the compositionality gap: composition failure persists at 97% 1-hop accuracy, and data augmentation transfers composition only to individuals that appeared in compositional pretraining contexts - never to a held-out population.
+
+**Abstract (verbatim, arXiv):**
+> Large Language Models fail at implicit multi-hop reasoning: a model answers "When was X born?" and "Who is Y's closest friend?" correctly but fails on "When was Y's closest friend born?" in a single forward pass, even when both facts are perfectly memorized and individually retrievable. We study this failure in a controlled natural language setting with a strict separation between individuals exposed to compositional contexts during pretraining and those that never appear in any such context. We confirm that compositional failure persists even at 97% 1-hop accuracy, establishing the gap as a pretraining failure rather than a knowledge absence. We propose and test nine data-centric augmentation formats and find that compositional pretraining transfers to unseen questions for exposed individuals, but never to individuals absent from compositional pretraining, suggesting that exposure to compositional contexts during pretraining is a necessary condition for implicit multi-hop reasoning.
+
+---
+
+## 76. Hallucination Cascade: Analyzing Error Propagation in Multi-Agent LLM Systems
+
+**Cite:** Saeid Jamshidi, Arghavan Moradi Dakhel, Kawser Wazed Nafi, Foutse Khomh. "Hallucination Cascade: Analyzing Error Propagation in Multi-Agent LLM Systems." 2026. arXiv:2606.07937 (preprint). https://arxiv.org/abs/2606.07937
+
+**Targets:** F24 - tracks claim-level factual inconsistency across sequential agent hops: 500 cascades, 3-agent chains show net ATTENUATION of hallucination (0.422 -> 0.272) at a small cost in factual accuracy - a measured recovery-vs-preservation trade-off, i.e. an empirical read on c and epsilon.
+
+**Abstract (verbatim, arXiv):**
+> Large Language Models (LLMs) generate fluent text but remain vulnerable to hallucinations, producing unsupported, inconsistent, and factually incorrect claims. Most prior work treats hallucination as a static property of isolated outputs. In multi-agent LLM systems, however, responses are exchanged across agents, revised through sequential stages, and reused as context for later reasoning. Hallucination, therefore, becomes a dynamic process shaped by interaction history, cascade depth, and model heterogeneity. This paper analyzes hallucination dynamics in multi-agent LLM cascades by tracking claim-level factual inconsistencies across sequential agent interactions. We conduct 500 cascade experiments across 10 knowledge domains using GPT-5.3, DeepSeek-V3, and LLaMA-3-70B-Instruct, yielding 1,250 evaluated responses. Results show that deeper cascades reduce the normalized hallucination score from 0.422 at the first agent to 0.272 at the final agent in 3-agent chains, with an amplification factor of 0.644, indicating net attenuation. This reduction is accompanied by a decline in factual accuracy from 0.789 to 0.769, revealing a trade-off between hallucination suppression and factual preservation. Transition-level analysis shows that each agent-to-agent refinement reduces hallucination by an average of 0.072, with small but consistent losses in factual consistency and response quality.
+
+---
+
+## 77. Token Economics for LLM Agents: A Dual-View Study from Computing and Economics
+
+**Cite:** Yuxi Chen, Junming Chen, Chenyu He, Yiwei Li, Yicheng Ji, Yifan Wu, Dingyu Yang, Lansong Diao, et al. "Token Economics for LLM Agents: A Dual-View Study from Computing and Economics." 2026. arXiv:2605.09104 (survey preprint). https://arxiv.org/abs/2605.09104
+
+**Targets:** F22 / I1 (survey) - a four-level taxonomy (single agent / multi-agent / ecosystem / security) of the output-quality-vs-token-cost trade-off; the closest thing to a systematic map of what is known about the cost side.
+
+**Abstract (verbatim, arXiv):**
+> As LLM agents evolve, tokens have emerged as the core economic primitives of Agentic AI. However, their exponential consumption introduces severe computational, collaborative, and security bottlenecks. Current surveys remain fragmented across system optimization, architecture design, and trust, lacking a unified framework to evaluate the fundamental trade-off between output quality and economic cost. To bridge this gap, this survey presents the first comprehensive survey of Token Economics. By unifying computer science and economics, we conceptualize tokens as production factors, exchange mediums, and units of account. We synthesize existing literature across a four-dimensional taxonomy: (1) Micro-level (Single Agent): Optimizing budget-constrained factor substitution via neoclassical firm theory. (2) Meso-level (Multi-Agent Systems): Minimizing collaboration friction using transaction cost and principal-agent theories. (3) Macro-level (Agent Ecosystems): Addressing congestion externalities and pricing via mechanism design. (4) Security: Internalizing adversarial threats as endogenous economic constraints. Finally, we outline frontier directions, including differentiable token budgets and dynamic markets.
+
+---
+
+## 78. Cut the Crap: An Economical Communication Pipeline for LLM-based Multi-Agent Systems (AgentPrune)
+
+**Cite:** Guibin Zhang, Yanwei Yue, Zhixun Li, Sukwon Yun, Guancheng Wan, Kun Wang, Dawei Cheng, Jeffrey Xu Yu, et al. "Cut the Crap: An Economical Communication Pipeline for LLM-based Multi-Agent Systems." 2024. arXiv:2410.02506 (preprint). https://arxiv.org/abs/2410.02506
+
+**Targets:** F22 - names and measures 'communication redundancy' in multi-agent pipelines and prunes it: comparable results at $5.6 vs $43.7, with 28-73% token reduction. A concrete decomposition-coordination cost number and a lever on it.
+
+**Abstract (verbatim, arXiv):**
+> Recent advancements in large language model (LLM)-powered agents have shown that collective intelligence can significantly outperform individual capabilities, largely attributed to the meticulously designed inter-agent communication topologies. Though impressive in performance, existing multi-agent pipelines inherently introduce substantial token overhead, as well as increased economic costs, which pose challenges for their large-scale deployments. In response to this challenge, we propose an economical, simple, and robust multi-agent communication framework, termed AgentPrune, which can seamlessly integrate into mainstream multi-agent systems and prunes redundant or even malicious communication messages. Technically, AgentPrune is the first to identify and formally define the communication redundancy issue present in current LLM-based multi-agent pipelines, and efficiently performs one-shot pruning on the spatial-temporal message-passing graph, yielding a token-economic and high-performing communication topology. Extensive experiments across six benchmarks demonstrate that AgentPrune (I) achieves comparable results as state-of-the-art topologies at merely $5.6 cost compared to their $43.7, (II) integrates seamlessly into existing multi-agent frameworks with 28.1%-72.8% token reduction, and (III) successfully defends against two types of agent-based adversarial attacks with 3.5%-10.8% performance boost.
+
+---
+
+## 79. D-CORE: Incentivizing Task Decomposition in Large Reasoning Models for Complex Tool Use
+
+**Cite:** Bowen Xu, Shaoyu Wu, Hao Jiang, Kai Liu, Xin Chen, Lulu Hu, Bin Yang. "D-CORE: Incentivizing Task Decomposition in Large Reasoning Models for Complex Tool Use." 2026. arXiv:2602.02160 (preprint). https://arxiv.org/abs/2602.02160
+
+**Targets:** F1 / F30 - claims current large reasoning models LACK sub-task decomposition in complex tool use ('Lazy Reasoning') and have to be trained back into it; the counter-signal to 'decomposition benefit just decays with capability'.
+
+**Abstract (verbatim, arXiv):**
+> Effective tool use and reasoning are essential capabilities for large reasoning models (LRMs) to address complex real-world problems. Through empirical analysis, we identify that current LRMs lack the capability of sub-task decomposition in complex tool use scenarios, leading to Lazy Reasoning. To address this, we propose a two-stage training framework D-CORE (Decomposing tasks and Composing Reasoning processes) that first incentivize the LRMs' task decomposition reasoning capability via self-distillation, followed by diversity-aware reinforcement learning (RL) to restore LRMs' reflective reasoning capability. D-CORE achieves robust tool-use improvements across diverse benchmarks and model scales. Experiments on BFCLv3 demonstrate superiority of our method: D-CORE-8B reaches 77.7% accuracy, surpassing the best-performing 8B model by 5.7%. Meanwhile, D-CORE-14B establishes a new state-of-the-art at 79.3%, outperforming 70B models despite being 5x smaller.
+
+---
+
+## 80. PLANET: A Collection of Benchmarks for Evaluating LLMs' Planning Capabilities
+
+**Cite:** Haoming Li, Zhaoliang Chen, Jonathan Zhang, Fei Liu. "PLANET: A Collection of Benchmarks for Evaluating LLMs' Planning Capabilities." 2025. arXiv:2504.14773 (preprint). https://arxiv.org/abs/2504.14773
+
+**Targets:** F26 / I4 - a survey/audit of planning benchmarks across embodied, web, scheduling, games, and everyday automation; maps which testbeds exist and where the gaps are for evaluating a plan/decomposition rather than an outcome.
+
+**Abstract (verbatim, arXiv):**
+> Planning is central to agents and agentic AI. The ability to plan, e.g., creating travel itineraries within a budget, holds immense potential in both scientific and commercial contexts. Moreover, optimal plans tend to require fewer resources compared to ad-hoc methods. To date, a comprehensive understanding of existing planning benchmarks appears to be lacking. Without it, comparing planning algorithms' performance across domains or selecting suitable algorithms for new scenarios remains challenging. In this paper, we examine a range of planning benchmarks to identify commonly used testbeds for algorithm development and highlight potential gaps. These benchmarks are categorized into embodied environments, web navigation, scheduling, games and puzzles, and everyday task automation. Our study recommends the most appropriate benchmarks for various algorithms and offers insights to guide future benchmark development.
+
+---
+
+## 81. AgentForge: Execution-Grounded Multi-Agent LLM Framework for Autonomous Software Engineering
+
+**Cite:** Rajesh Kumar, Waqar Ali, Junaid Ahmed, Najma Imtiaz Ali, Shaban Usman. "AgentForge: Execution-Grounded Multi-Agent LLM Framework for Autonomous Software Engineering." 2026. arXiv:2604.13120 (preprint). https://arxiv.org/abs/2604.13120
+
+**Targets:** F17 / F27 / F9 / code domain - makes sandboxed execution a precondition for propagating any sub-result ('execution-grounded verification'); ablations claim execution feedback and role decomposition each independently drive the gain. Preprint, unproven venue.
+
+**Abstract (verbatim, arXiv):**
+> Large language models generate plausible code but cannot verify correctness. Existing multi-agent systems simulate execution or leave verification optional. We introduce execution-grounded verification as a first-class principle: every code change must survive sandboxed execution before propagation. We instantiate this principle in AGENTFORGE, a multi-agent framework where Planner, Coder, Tester, Debugger, and Critic agents coordinate through shared memory and a mandatory Docker sandbox. We formalize software engineering with LLMs as an iterative decision process over repository states, where execution feedback provides a stronger supervision signal than next-token likelihood. AGENTFORGE achieves 40.0% resolution on SWE-BENCH Lite, outperforming single-agent baselines by 26-28 points. Ablations confirm that execution feedback and role decomposition each independently drive performance.
+
+---
+
 ## 2. Selected for review
 
 Four picks, chosen for **spread across approach and claim**, not proximity to the
