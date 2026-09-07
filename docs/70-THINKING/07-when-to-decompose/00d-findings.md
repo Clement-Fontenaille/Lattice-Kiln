@@ -909,6 +909,88 @@ per-dataset cutoff. So a certified-looking per-step score can be a precise avera
 of a biased signal, and the certificate invites trust the mechanism has not
 earned — see [[F41]], and sheet `20` measures how large that bias is.
 
+### F46 — In a hierarchy of successive context reductions, the coordination tax is negative
+
+Sheet `19` (Agentless): the two stage-isolating ablations both find the extra
+stage is cheaper *and* more accurate. Skeletons (signatures, bodies removed)
+versus whole files: 58.3% versus 53.7% localization recall at $0.02 versus $0.15
+— a 7.5× cost difference *and* a recall gain. Hierarchical (file → element → edit
+location) versus skipping the element rung (file → edit location directly): 50.7%
+at $0.06 versus 47.0% at $0.18. The mechanism is that each stage exists to shrink
+the bill of the stage after it, so a well-chosen intermediate stage lowers total
+cost while improving the downstream decision.
+
+Consequence: a counterexample to the assumption behind [[F22]] (coordination cost
+asserted, never measured) and [[F10]] (S&D's value is cost) that splitting always
+adds calls and tokens. Scope — it holds specifically when the stages are
+*successive reductions of one artifact toward a single decision*, each a cheap
+deterministic projection ([[F47]]). It does not carry to decompositions where
+sub-tasks are independent units of work whose results must be merged; there the
+merge is the tax ([[F13]], [[I10]]). And the $0.70 is inference-only — the
+negative tax is measured on LLM calls, not on the test-execution compute the
+pipeline also spends ([[F49]] scope).
+
+### F47 — To shrink what a step sees, build a deterministic projection tailored to that step's decision, not a smaller slice of the same view
+
+Sheet `19` (Agentless): each localization rung consumes a different
+mechanically-derived *view* of the codebase, chosen for the decision that rung
+makes — the repo tree (names only) to pick candidate files, then skeletons
+(signatures, no bodies) to pick elements, then the full source of only the
+selected elements to pick lines. The evidence that the *representation* is the
+lever and not the *amount*: the skeleton drops most of the bytes and recalls
+*better* than the whole file (58.3% versus 53.7%), because the removed function
+bodies were noise for the "which element" decision and were confusing the model.
+
+Two properties make this safe. The projections come from mechanical parsing
+(`tree` output, an AST walk that keeps headers and drops bodies), so they cost no
+model call and cannot hallucinate — a parser cannot invent a file or misrepresent
+a signature, so the map is faithful to the territory, only coarser. And each
+projection is matched to one decision, so content a later rung needs can be
+dropped now without loss, because the later rung gets its own finer projection.
+
+Consequence: when a harness needs to reduce what a step sees, the move is not to
+truncate but to build a parser-derived projection of the artifact for that step's
+question, preferring projections a parser can guarantee over model-written
+summaries (which cost a call each and can omit or invent). Extends [[F14]] toward
+the input side: what a step is *shown* is as much a design object as what does the
+step.
+
+### F48 — Deterministic selection among candidates is a distinct, large loss channel, capped by the quality of its evidence
+
+Sheet `19` (Agentless), the negative-sign result. If any of the 40 sampled
+patches counted as a success the pipeline would solve 42.0%; its fixed selection
+rule identifies the right patch only 32.0% of the time. Ten points — a fifth of
+achievable performance — are lost purely in selection, with no model call
+involved in that loss. The cap is the selection evidence: the LLM-written
+reproduction tests reproduce the bug on 213/300 problems but verify a *fix* on
+only 94, so for two-thirds of problems the selector chooses on regression tests
+alone. Performance plateaus at about 40 samples because majority voting cannot
+overturn a winning vote — more generation does not help once selection is the
+bottleneck.
+
+Consequence: selection is not free bookkeeping downstream of generation. It is a
+first-class component with its own error budget ([[F13]], [[F27]]), and here it
+is *the* binding constraint. Where the selection evidence is weak, the fix is
+better evidence (or a better-posed sub-task contract, [[F35]]), not more
+candidates.
+
+### F49 — Instrument the generation ceiling separately from the pipeline result
+
+Sheet `19` (Agentless), the positive-sign result and its measurement discipline.
+Reporting "42.0% if any sampled patch counted" alongside "32.0% selected" is what
+makes [[F48]] visible: it localizes whether a failure sits in generation or in
+selection, two components with different fixes, and it shows the generator here is
+well ahead of the end-to-end score. Without the any-candidate number that gap is
+invisible and effort goes to the wrong stage.
+
+Consequence: a decomposition harness should measure, per task family, whether
+*any* sampled sub-result, candidate, or trajectory would have succeeded,
+separately from whether the pipeline's own selection or recombination succeeded.
+The floor is the generator's ceiling; the gap above it is the
+selection/recombination loss ([[F48]], [[F13]], [[I10]]). Complements [[F7]] and
+the per-stage cost/recall accounting sheet `19` also demonstrates (localization is
+only 21% of the $0.70; generation and validation are 77%).
+
 ### Papers the gathered findings keep pointing at
 
 - **Faith and Fate** (Dziri et al., NeurIPS 2023) — flagged by sheets `05` and
