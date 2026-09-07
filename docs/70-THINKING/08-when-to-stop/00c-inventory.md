@@ -20,7 +20,7 @@ Ryo Kamoi, Yusen Zhang, Nan Zhang, Jiawei Han, Rui Zhang. *When Can LLMs Actuall
 
 **Flag.** RELATED - Anchor-grade critical survey of self-correction. Defines three distinct research questions, shows many prior positive results rest on oracle feedback or unfair evaluation. Sets the frame for the whole self-evaluation span.
 
-**Review status.** selected round 1 -> reading booth 01.
+**Review status.** reviewed -> sheet 01-self-correction-survey.md (round 1). Cross-paper discussion: pending.
 
 ### 3. Language Models (Mostly) Know What They Know
 
@@ -150,7 +150,7 @@ Yasin Abbasi Yadkori, Ilja Kuzborskij, András György, Csaba Szepesvári. *To B
 
 **Flag.** RELATED - Information-theoretic separation of epistemic and aleatoric uncertainty via iterative prompting; detects when only epistemic uncertainty is high, i.e. when the output should not be trusted.
 
-**Review status.** selected round 1 -> reading booth 02.
+**Review status.** reviewed -> sheet 02-believe-or-not.md (round 1). Cross-paper discussion: pending.
 
 ### 19. Semantic Entropy Probes: Robust and Cheap Hallucination Detection in LLMs
 
@@ -192,7 +192,7 @@ Yang Sui, Yu-Neng Chuang, Guanchu Wang, Jiamu Zhang, Tianyi Zhang, Jiayi Yuan, H
 
 **Flag.** RELATED - Survey of efficient reasoning - when to stop thinking (reasoning length), including trajectory-signal and confidence-based early exit. Overlaps the exhausted-budget / no-progress signals in the Subject.
 
-**Review status.** selected round 1 -> reading booth 04.
+**Review status.** reviewed -> sheet 04-stop-overthinking.md (round 1). Cross-paper discussion: pending.
 
 ### 24. AbstentionBench: Reasoning LLMs Fail on Unanswerable Questions
 
@@ -202,7 +202,7 @@ Polina Kirichenko, Mark Ibrahim, Kamalika Chaudhuri, Samuel J. Bell. *Abstention
 
 **Flag.** RELATED - AbstentionBench: 20-dataset benchmark for abstention on unanswerable / underspecified / false-premise questions. Finds abstention unsolved, scale does not help, and reasoning fine-tuning degrades it by ~24%.
 
-**Review status.** selected round 1 -> reading booth 03.
+**Review status.** reviewed -> sheet 03-abstentionbench.md (round 1). Cross-paper discussion: pending.
 
 ### 25. Answering the Unanswerable Is to Err Knowingly: Analyzing and Mitigating Abstention Failures in Large Reasoning Models
 
@@ -288,5 +288,5 @@ round per the topic scope rule._
   exit, confidence- and trajectory-based halting. Picked to cover a sub-area the
   other three do not touch.
 
-**Review status.** Booths 01-04 fired 2026-09-07 (all four at once).
+**Review status.** Booths 01-04 fired 2026-09-07 (all four at once); all four read, sheets imported, cross-paper discussion pending.
 
