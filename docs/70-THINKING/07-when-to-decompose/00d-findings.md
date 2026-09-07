@@ -10,6 +10,29 @@ methodological consequence the sheets' own evidence does not directly establish.
 finding can be taken. A **candidate argument** is a project-originated hypothesis
 parked here to be tested against the literature in a later pass.*
 
+## Reading guide
+
+*The findings are in discovery order. They group into these threads; a finding
+can sit in more than one, and the explicit `[[F..]]` links carry the detail.*
+
+- **Capability-decay axis** — the right answer depends on where the model sits on
+  the capability scale: F1, F2, F18, F23, F63.
+- **Deciding the split, and when** — F8, F9, F16, F19, F20, F50, F61, F62.
+- **Depth and granularity have an interior optimum** — F21, F29, F30 (and F1 / F6
+  for the chain-of-thought version).
+- **Recombination is the hard, under-measured part** — F13, F22, F27, F28, F35;
+  see also [[I10]], [[I11]].
+- **Self-evaluation and verification are the load-bearing weak link** — F11, F17
+  (umbrella), F24, F25, F41, F42, F44, F45, F52–F60. [[F27]] is the hinge between
+  this thread and the recombination thread: the accept/reject port belongs to
+  both.
+- **Interposition points and substitution** — F14, F15, F27, F31, F47.
+- **Methodological commitments** *(instructions this review produced for the
+  project, not claims about the literature)* — F4 (set decomposition depth, do
+  not read it off the output), F7 and F64 (cost, and per-stage recall, belong in
+  the dependent variable), F49 (instrument the generation ceiling separately from
+  the pipeline result), F58 (keep mechanism separate from magnitude).
+
 ## Findings
 
 ### F1 — Decomposition buys two things, and only one of them decays with model capability
@@ -360,6 +383,12 @@ its own output inherits this. The project needs an external signal — a test,
 execution, a rule, an independent model — or must treat the self-report as
 advisory, not as control flow. (The internal-readout version of this question is
 its own review topic, not folded in here.)
+
+F17 is the umbrella for this thread; the measured specifics are [[F41]] (a weak
+checker cannot be rescued by aggregation and degrades silently), [[F42]] (trust
+propagation is not trust establishment), [[F52]] (evaluator robustness is a
+capability distinct from solver accuracy), [[F56]] (K-vote over a biased checker
+amplifies the bias) and [[F60]] (localisation is harder than detection).
 
 ### F18 — Planning and execution are separable capabilities that compress differently and want different model budgets
 
@@ -1405,29 +1434,69 @@ context can make a choice that is locally sound and globally wrong, and the
 summary step can drop the information that would let a later stage catch the
 error.
 
-**What a pass needs to check.**
+**What a pass needs to check — walked 2026-09-08 against the finished review.**
+Status tags: **ANSWERED** (the review settles it), **PARTIAL** (some evidence,
+not decisive), **OPEN** (the review does not reach it; the project must measure
+it itself).
 
-- Whether the Merrill & Sabharwal result actually licenses a claim about working
-  memory, or only a claim about model size. Sheet `06` notes that their space
-  bound *grows* with the step count rather than shrinking.
-- Whether any reviewed paper treats peak working memory or context size as a
-  dependent variable, rather than reporting only token counts or accuracy.
-- Whether the recombination failure mode named above is the same one that sheets
-  `01`, `03`, `04`, `07` and `08` each raise from their own angle, and if so what
-  magnitude those papers put on it.
-- Whether the literature contains competing arguments, for or against
-  fresh-context decomposition, that did not originate with the project.
-- The size of the shortcut tax from [[F2]] at 8B–70B scale — the accuracy cost
-  this design pays on the question class a monolithic call would have shortcut,
-  set against the working-memory benefit.
-- Which side of [[F3]] a fresh-context sub-call lands on — lost disambiguating
-  context, or shed accumulating-history burden — for the project's tasks.
-- The routing overhead from [[F12]] — a fresh-context design needs a router, and a
-  bad one roughly triples cost; the working-memory benefit must clear that too.
-- Sheet `04`'s cost axis is token and call count, not peak working memory, so it
-  bears on A1 only indirectly; its escalation ladder defaulting to *less*
-  decomposition is another weak data point that over-decomposition is a real
-  failure direction.
+- *Whether the Merrill & Sabharwal result licenses a claim about working memory,
+  or only about model size.* — **ANSWERED, and negative for A1.** Sheet `21`
+  (Feng et al. 2023) with sheet `06`: the chain-of-thought expressivity theory is
+  about **serial depth and model size**, conditional on TC⁰ ≠ NC¹, and it proves
+  nothing about working memory. Feng's constructions in fact keep the entire
+  transcript visible to attention — the opposite of space reuse. So A1's
+  working-set-tracks-depth premise is a *design choice the project would impose*,
+  not a consequence of the theory. What the theory does give A1: stepwise
+  decomposition provably adds capability (serial depth), and each step's
+  computation can be bounded.
+- *Whether any reviewed paper treats peak working memory or context size as a
+  dependent variable.* — **ANSWERED, negative.** None does. The corpus reports
+  tokens, calls, accuracy and dollar cost ([[F7]], [[F22]]); sheet `17` models
+  fidelity against input length, not working set. [[F22]] documents the gap as
+  field-wide. The project must instrument this itself (part of what [[I1]] is
+  for).
+- *Whether the recombination failure mode is the one sheets `01`/`03`/`04`/`07`/
+  `08` raise, and its magnitude.* — **ANSWERED for existence, OPEN for
+  magnitude.** It converges: [[F13]] (a distinct, large, unmeasured failure mode,
+  convergent across sheets `09`/`11`/`12`/`02`/`03`/`05`), [[F35]] (the
+  return-schema ceiling), [[F20]] (a fixed split can make a recoverable
+  trajectory unrecoverable), [[I10]] (the aggregator's own superlinear collapse).
+  Magnitude at constrained scale is unmeasured — [[F13]] says the structure
+  transfers, the cohort-bound numbers do not; [[F22]] says coordination cost is
+  asserted, never measured.
+- *Whether the literature has competing arguments for or against fresh-context
+  decomposition, not from the project.* — **PARTIAL.** Support: [[F29]] (sheet
+  `16`'s input-length recursion is the space-reuse structure with a concrete
+  termination rule) and [[F30]] (modularity is a *precondition* for recursion,
+  not an optimisation — the same procedure unrolled into one stream fails).
+  Against: [[F3]] brackets it — sheet `07` has evidence that stripping context
+  from a sub-call hurt, while sheet `08`'s benefit term may be understated for a
+  fresh-context design; neither resolves it. No decisive counter-argument was
+  found; [[F2]] and [[F20]] are costs to weigh, not counter-arguments.
+- *The size of the shortcut tax from [[F2]] at 8B–70B.* — **OPEN.** [[F2]] itself
+  says the mechanism and its frontier magnitude are established but the
+  constrained-scale magnitude is not; it needs a Helped / Hurt / Both breakdown
+  at 8B–70B that sheet `07` does not provide.
+- *Which side of [[F3]] a fresh-context sub-call lands on for the project's
+  tasks.* — **OPEN by construction.** [[F3]] defines this as the thing the A1
+  pass must resolve against the project's own task families and context-budget
+  pressure; no sheet answers it.
+- *The routing overhead from [[F12]].* — **ANSWERED (sized once).** [[F12]]: a bad
+  initial router roughly triples token cost (~229%) and still loses accuracy;
+  [[F11]]: a cheap-first confidence-gated router under-escalates for the minority
+  of tasks that need structure. A fresh-context design needs a router, and the
+  working-memory benefit must clear this cost.
+- *Sheet `04`'s cost-axis caveat.* — **ANSWERED (a standing note).** Sheet `04`'s
+  cost is tokens and calls, not peak working memory, so it bears on A1 only
+  indirectly; its escalation ladder defaulting to *less* decomposition is a weak
+  data point that over-decomposition is a real failure direction, now reinforced
+  by [[F21]]'s U-shape across three independent granularity axes.
+
+**Net.** Four items answered, one answered-for-existence-open-for-magnitude, one
+partial, two open. The two open items ([[F2]] tax at 8B–70B; which side of
+[[F3]]) are project measurements, not literature gaps. The one structural
+correction: A1's working-memory premise is not underwritten by the CoT
+expressivity theory and must stand on its own as a design commitment.
 
 ---
 
