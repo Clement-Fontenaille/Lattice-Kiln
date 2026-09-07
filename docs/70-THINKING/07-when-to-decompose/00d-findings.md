@@ -773,6 +773,53 @@ than volume. Consequence: a recombination or reasoning step should be fed each
 piece of information once; overlapping sub-task inputs "for safety" is a cost, not
 a hedge.
 
+### F40 — For an intermediate result of uncertain validity, carry it forward weighted by confidence rather than making a premature binary accept/reject
+
+Sheet `18` (ARES): the mechanism against error propagation is not a hard filter
+that deletes suspect claims but a *soft* one — an earlier claim is retained in
+the premise pool of every later step with probability equal to its own entailment
+score. Hard filtering is brittle: one false rejection destroys a chain that was
+recoverable (the mirror of [[F20]]). No filtering pollutes: a wrong item is
+carried with an implicit accept stamp ([[F27]]'s laundered failure). The weighted
+carry is the middle path, and it requires the item to carry a soundness or
+confidence field.
+
+Scope — this is broader than decomposition. It applies wherever an item of
+uncertain validity is stored or carried forward:
+
+- decomposition sub-results ([[I10]]);
+- the provenance graph and descendant invalidation ([[I5]] — extend "provenance
+  as a required field" to "provenance plus a soundness weight");
+- the memory / knowledge layer (the open-questions register's *Memory* section on
+  contradictory memories and revise-versus-append): a doubtful entry is weighted
+  down, not deleted, and its weight propagates to anything derived from it;
+- any artifact carried across a long task.
+
+Caveat: the weight is only as trustworthy as whatever produces it — see [[F41]]
+and the C3 caution on certified-looking scores from uncertified verifiers.
+
+### F41 — A verification mechanism amplifies a competent checker and cannot rescue an incompetent one; with a weak checker it can degenerate silently
+
+Sheet `18` (ARES) states it outright: "ARES can only improve upon entailment
+models that can already do correct entailment." With a weak backbone the
+per-claim retention probabilities all rise toward 1, the premise pool stops
+filtering, and the method silently becomes the no-filtering baseline (Entail-Prev)
+at many times the cost. No deployment diagnostic is proposed for this collapse,
+though the realised-sample-count ratio — very low means the verifier is confident
+everywhere — would serve as one.
+
+Consequence for evidence-based feedback loops: the loop's reliability is bounded
+by the checker's *base* competence on the actual judgment. Layering a clever
+aggregation on top — ARES-style marginalisation, K-vote, multi-round debate — buys
+cost and no signal when the underlying checker cannot do the base judgment, and
+can degrade without announcing it. Before building a retroaction loop on a
+verification signal: establish the checker's base competence on the real judgment
+(not a proxy), and instrument a runtime diagnostic for the degenerate mode.
+Extends [[F17]] (self-evaluation is the load-bearing weakness) and [[F23]]
+(coordination tax grows as the model weakens); [[F11]] is the selector-level
+instance. Sheet `20` measures how large the base-checker bias actually is for LLM
+step-verifiers.
+
 ### Papers the gathered findings keep pointing at
 
 - **Faith and Fate** (Dziri et al., NeurIPS 2023) — flagged by sheets `05` and
