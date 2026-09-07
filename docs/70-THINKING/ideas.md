@@ -195,3 +195,111 @@ is fixed.
 
 **Would graduate to** a foundations or cognitive-architecture design document
 once the decomposition representation is being specified.
+
+---
+
+## I6 — Upfront conditional decomposition via a task-level complexity evaluator
+
+**Provenance.** Discussion 2026-09-07, a follow-up on
+`02-capability-as-granularity.md` in light of the `07-when-to-decompose/` survey.
+The survey contrasts ADaPT's failure-triggered decomposition with findings F17
+(self-evaluation is the load-bearing weakness of failure-triggered
+decomposition), F19 (upfront versus feedback-revised decomposition is tied to
+observability) and F20 (fixed upfront decomposition can make a recoverable
+trajectory unrecoverable). An earlier `context ÷ steps` phrasing was reframed: it
+is a way to think about task-level granularity, not the evaluator's output.
+
+**The claim, in questionable form.** If context is aggregated to what a task
+actually requires, then a task-level complexity evaluator can decide *before
+execution* whether the task's sub-problems fit a given model's capability, and a
+decomposition strategy can be conditioned on that decision without ever running
+the task and observing a failure.
+
+**Validity criterion for the argument.** It holds only if such an evaluator
+exists whose output — computed from the aggregated context alone, cheaply, and
+without above-ceiling authorship per task — orders tasks by sub-problem fit
+better than a plain difficulty predictor on a held-out set. The recombination
+step has to be one of the sub-problems it fit-checks, because that is the piece
+most likely to exceed the ceiling and the one a planner most readily leaves off
+the list.
+
+**Falsifier.** No candidate evaluator separates "decomposes successfully at depth
+d" from "fails at depth d" better than a difficulty baseline, across the M6 suite
+or an equivalent task population.
+
+**Rests on, and each part is unproven.**
+
+- Conjecture 2: the evaluator is buildable at all. This carries the weight, and
+  its honest form needs an output type — a scalar on a stated scale, or a binary
+  "fits under the ceiling".
+- That "required context" is estimable without having already solved the task.
+  Defensible only in the weaker form that the aggregated context is a *sufficient
+  statistic* for the complexity estimate.
+- A capability model that can be queried per sub-problem. Left as an undefined
+  placeholder for now; φ from `02` is the leading candidate and is treated as
+  dubious. Shared with [[I7]].
+
+**Relation to existing entries.** Complementary to [[I2]]: I2 probes
+plan-quality versus executor-capability after the fact, while I6 asks whether the
+fit can be called ahead of time. Shares [[I1]]'s need for a reference set that
+admits alternative valid decompositions.
+
+**Would graduate to** a refinement block in `02-capability-as-granularity.md`,
+then — if the evaluator survives a first test —
+`00-design/40-roadmap/03-research-and-evaluation-agenda.md`.
+
+---
+
+## I7 — Metacognitive skills as ordinary, probe-able, prompt-activated skills
+
+**Provenance.** Same discussion, 2026-09-07. Raised as the principle underneath
+the whole feedback-loop idea: if a capability model can be probed per skill, the
+same probe could identify which *metacognitive* skill a situation calls for, and
+a prompt could switch it on.
+
+**The claim, in questionable form.** Skills such as confidence estimation,
+stuck-detection, decompose-or-not, verify-this-step and revise-versus-commit sit
+on the same capability scale as object-level skills — each has a ceiling, each
+can be probed for, and each can be raised or activated by a targeted prompt.
+Therefore a capability model can be queried for which metacognitive skill a
+situation needs, that skill can be activated deliberately, and the loop can be
+observed.
+
+**Validity criterion for the argument.** It holds only if (a) metacognitive
+performance *dissociates* from object-level performance under probing — it is a
+separate axis with independent variance, not a re-reading of general capability —
+and (b) a prompt targeting metacognitive skill X improves X-dependent outcomes
+beyond a generic strong prompt.
+
+**Falsifier.** Probing shows metacognitive scores are a monotone function of
+object-level scores with no independent variance; or targeted metacognitive
+prompts match generic prompts on the outcomes they are meant to move. For
+error-detection specifically, F17 in `07-when-to-decompose/00d-findings.md` is a
+standing partial falsifier already on the table, together with the result line
+that LLMs cannot self-correct reasoning without external feedback.
+
+**Sub-claims that need their own inquiry.**
+
+- *A good prompt raises the ceiling for a skill.* Partly established: prompting
+  technique produces large measurable performance differences, and for
+  chain-of-thought there is an expressivity result (`07-when-to-decompose/` sheet
+  `06`, Merrill & Sabharwal) that it expands the class of functions a transformer
+  can compute. Not established: that an arbitrary good prompt raises a *ceiling*
+  rather than eliciting capacity the model already had. That distinction is
+  load-bearing here.
+- *The targeted model can write the good prompt itself.* Open, and the risk is
+  circular — a model that cannot perform a skill may be unable to judge which
+  prompt would elicit it. Existing automatic-prompting results mostly use capable
+  generators, and prompt quality tracks generator capability. The natural split
+  is that an advanced model authors the processor instantiation, the constrained
+  model runs it, and the instantiation is found by experiment — consistent with
+  F18's planning/execution budget asymmetry.
+
+**Rests on, unproven.** Separability of the ceiling into named operations, which
+`02-capability-as-granularity.md` currently declines to assume ("treat it as
+unitary unless the literature establishes otherwise"). I7 is the explicit request
+to *test* that refusal rather than honour it, so the tension is deliberate and
+must be named wherever I7 is cited.
+
+**Would graduate to** a foundations or cognitive-architecture design document,
+and only after the dissociation named in the validity criterion is demonstrated.
