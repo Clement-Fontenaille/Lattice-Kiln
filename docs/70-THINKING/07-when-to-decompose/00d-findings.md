@@ -1104,13 +1104,15 @@ question, or a vote over it, entrenches bias), and each question's reliability
 has to be measured on its own ([[F54]] first paragraph) before its verdict is
 given weight in an aggregate.
 
-### F60 — Detecting that a trace is wrong and locating where it went wrong are separate capabilities, and locating is far weaker
+### F60 — Detecting that a trace is wrong and locating where it went wrong are separate capabilities, and localisation is hard
 
 Sheet `20`: Q2 (is the whole trace valid) and Q3 (index of the first invalid
 step) dissociate sharply — on perturbed traces one model runs Q2 at ~54% and Q3
 at ~20%, the ordering Q2 > Q3 holds across all three models, and Q3 sits at or
 below random selection over a short trace. A verifier can often tell *that*
-something is wrong while being unable to tell *where*.
+something is wrong while being unable to tell *where*. Localisation is hard:
+naming the first broken step is a much weaker skill than judging the trace valid
+or invalid, and it is the skill that fails first and fails worst.
 
 Consequence: "the harness has an error detector" and "the harness can point at
 the failing step" are different claims with different reliability, and a design
