@@ -1121,6 +1121,13 @@ must not infer the second from the first. This is the sheet-20 instance of
 and it is the premise [[F55]] builds on — a repair loop that needs a target is
 gated by the weaker of the two.
 
+Design consequence: because localisation is the weak skill, a harness should
+*obtain* the location rather than ask the model to infer it — a failing test, a
+stack trace, an assertion, an execution log pins the failing step for free. This
+is [[F50]] ("stack trace → highway to fix") stated from the verifier side: prefer
+the get-a-trace route to any known bug, and treat model-produced localisation as
+advisory, not as the signal a repair loop steers on.
+
 ### F55 — Localisation quality bounds repair quality; a near-chance localiser caps the recovery rate
 
 Sheet `20`: Q3 (first-invalid-step) runs at or below chance on perturbed traces
