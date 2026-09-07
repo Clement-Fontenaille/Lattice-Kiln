@@ -1022,6 +1022,145 @@ context assembly (can the right context be assembled without exploring?) and to
 [[I6]] (a plan-time complexity evaluator needs the guiding evidence to be
 present).
 
+### F51 — Sampling diversity at the splitting stage beat the same budget spent at the execution stage
+
+Sheet `19` (Agentless), Table 3. Four independently sampled edit-location sets ×
+10 patches each (96 fixes, $0.29) beat one location set × 40 patches (88 fixes,
+$0.22) and beat the four sets merged into one then × 40 (85 fixes, $0.24). The
+four location sets are genuinely different framings of the sub-problem — they
+localise different ground-truth locations and hand repair different surrounding
+context — so at ~50% localisation recall, hedging the budget across framings
+beats deepening one framing. Merging the sets first re-inflates the repair
+context (342 vs ~165 lines) and loses on both axes ([[F39]], [[F47]]).
+
+Consequence: when the split itself is uncertain, spend redundancy on *how the
+sub-problem is framed*, not on *how one fixed framing is executed*. A wider, more
+diverse candidate pool also gives the selector more to work with ([[F48]]).
+Complements [[I1]] (enumerate shapes and measure the spread) and [[A1]].
+
+### F52 — Evaluator robustness is a capability distinct from solver accuracy and must be measured on its own axis
+
+Sheet `20` (Mazdarani & Toxtli): the same model that grades *canonical* worked
+solutions at 92–98% Q2 accuracy grades *valid but non-canonical* derivations at
+14–24%. Grading familiar solutions well says nothing about gating reliably,
+because the model is partly calibrated to solution *form* rather than to
+step-level validity. The authors' framing: a verifier is a separate capability
+from a solver and needs its own benchmark.
+
+Consequence: this is the measured, non-hypothetical version of the [[F45]]
+caution about uncertified entailment models. A harness that uses a model to gate
+steps and validates that gate only through end-to-end task success will not see
+this failure, because the gate's characteristic error is to reject work that was
+correct — which surfaces as retries, wasted budget, or a suppressed valid path,
+not as a wrong final answer. Extends [[F17]] and [[F41]]: the checker's base
+competence must be measured directly, on the real judgment.
+
+### F53 — LLM step-verifiers fail toward rejection, not toward noise; so a degenerated rejector looks excellent on an invalid-heavy test set
+
+Sheet `20`: under perturbation the three models do not become uniformly noisy —
+they shift hard toward rejection. False rejection of valid non-canonical traces
+reaches 75.6 / 83.9 / 85.3%, while false acceptance of genuinely invalid traces
+stays between 8.6 and 31.9%. A verifier that has drifted toward rejecting nearly
+everything will therefore *look* excellent on any evaluation set dominated by
+genuinely invalid traces, and aggregate Q2 accuracy understates how broken it is.
+
+Consequence — a concrete methodology requirement, and the mirror of [[F49]]: any
+harness-side verifier evaluation must deliberately hold valid, non-standard work
+in the test set and measure false rejection *separately* from false acceptance,
+or it will certify a rejector as a verifier. Directional failure also means the
+two error rates cannot be collapsed into one number.
+
+### F54 — Outcome, process and localisation judgments have unequal reliability in the same model at once, and they are not independent
+
+Sheet `20` splits one verification objective into three sub-judgments: Q1 does the
+final answer satisfy the equation (outcome), Q2 is the whole trace valid
+(process), Q3 index of the first invalid step (localisation). On perturbed traces
+one model answers Q1 at ~76%, Q2 at ~54%, Q3 at ~20% — the degradation is
+strictly ordered Q1 < Q2 < Q3 across all three models, and Q3 sits at or below
+picking a step index at random. And the parts are not independent: on T3 traces
+(invalid step, final answer reverted to correct) Q1 accuracy *falls* from ~97–99%
+to ~57–68%, because an unfamiliar-looking derivation makes the model suspicious
+and that suspicion leaks into its answer-only judgment.
+
+Consequence: a harness that collapses accept/reject into one bit inherits the
+reliability of whichever sub-judgment it implicitly leans on, and if it routes on
+*where* the error is it is depending on the least reliable one. "Is the answer
+right?" cannot be treated as independent of "is the reasoning right?" — the
+verifier's outcome judgment is coloured by how the process looks. This is the
+sheet-20 instance of [[F26]]'s dissociation (naming versus structuring) and bears
+on [[F44]] (what the verifier is shown).
+
+### F55 — Localisation quality bounds repair quality; a near-chance localiser caps the recovery rate
+
+Sheet `20`: Q3 (first-invalid-step) runs at or below chance on perturbed traces,
+and the authors state the consequence for verifier-guided inference directly — a
+verifier that flags a trace as wrong but points at the wrong step sends the
+generator to revise a part of the reasoning that was fine and leaves the real
+error in place.
+
+Consequence for the [[F24]] `c/(c+ε)` picture: you cannot raise `c` — the rate of
+re-entering a valid state after leaving one — with a localiser that cannot find
+where the valid state was left. A detect → localise → regenerate loop driven by a
+near-chance localiser does not converge and can *lower* quality by editing correct
+steps, which is worse than a monolithic retry. So "add a verifier and a repair
+step to raise `c`" is bounded by the verifier's *localisation* accuracy, not its
+*detection* accuracy — and localisation is the sub-judgment that degrades first
+and hardest ([[F54]]). Sharpens [[F41]] and the ARES open-loop point in [[F27]].
+
+### F56 — Majority-vote test-time compute over a systematically biased verifier amplifies the bias
+
+Sheet `20`: majority voting reduces variance, not bias. On base models, applying
+seven-sample majority-vote TTC to the verifier *halves* perturbed Q1 (76.3% →
+32.0% for one model) and drives canonical-T3 Q1 as low as 6.9%. Voting entrenches
+a consistently-applied wrong heuristic instead of averaging it away; it becomes
+useful only *after* an adaptation that fixes the bias.
+
+Consequence — this qualifies one specific decision pattern: adding self-consistency
+or K-vote to a gate without first establishing that the gate's errors are *noise*
+rather than *bias* buys confidence in the wrong verdict. It is the measured
+version of the judge-lab K=5 null in `02-capability-as-granularity.md` and a
+direct caution for any evidence-based feedback loop ([[F41]], [[F52]]).
+
+### F57 — Fine-tuning a verifier can collapse it into a constant accept-or-reject policy
+
+Sheet `20`: one FT+TTC configuration collapsed a model to T1 accuracy 100%, T2
+and T3 accuracy *exactly* 0%, Q1 pinned at 66.67% — the signature of a model that
+answers "valid, no error" on every input, scoring perfectly on the third of the
+set that is genuinely valid and zero on the two-thirds that carry a real error.
+
+When it happens: fine-tuning a verifier has two degenerate attractors —
+always-accept and always-reject — and training falls into whichever one scores
+well on the signal it is given. The risk is highest with a class-imbalanced
+training set, an outcome-only reward (agreement on the final answer rather than on
+the process labels), or supervised fine-tuning on accept/reject labels without a
+matched set of hard negatives — invalid traces that look valid. In the paper,
+distilling richer reasoning rationales filtered to preserve the gold process
+labels (GED-FT) avoided the collapse for the same model where plain outcome-label
+SFT did not.
+
+Consequence: a tuned verifier must be checked for both degenerate modes, on a
+class-balanced set, with false rejection and false acceptance reported separately
+([[F53]]); and process-label supervision is safer than outcome-label supervision
+for this component. Method-level caution for [[F41]] and [[F27]].
+
+### F58 — Scope bound on the sheet-20 findings: a clean existence proof, not a measurement of magnitude
+
+Sheet `20`'s domain is single-variable linear equations `ax + b = cx + d` with
+six synthetic perturbation families, three screened open-weight models, and
+single-run adaptation results. The specific numbers (75–85% false rejection,
+near-chance localisation) are facts about that setting and do not travel.
+Perturbation is also confounded with trace length: the two obligation-generating
+families add a substitution-and-verification tail, so "unfamiliar transformation"
+and "longer trace" cannot be separated from the reported aggregates.
+
+What *does* carry, and is why the related findings point here: the *mechanism* —
+an LLM verifier's accept/reject decision is partly a function of the derivation's
+surface form rather than its logical validity, and the resulting error is
+directional (rejection, not noise). Gold labels come from a deterministic
+exact-arithmetic checker, so label noise is not a plausible alternative
+explanation for the T1 failures. Treat [[F52]]–[[F57]] as mechanism established,
+magnitude unmeasured outside this domain.
+
 ### Papers the gathered findings keep pointing at
 
 - **Faith and Fate** (Dziri et al., NeurIPS 2023) — flagged by sheets `05` and
