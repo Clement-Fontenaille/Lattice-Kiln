@@ -420,19 +420,36 @@ cross-check — inherits brittleness that grows with depth. Direct bearing on
 low-redundancy shape sheet `11` warns about, so the A1 pass must weigh whether
 the design needs a recovery path built in.
 
-### F21 — Depth used should be an outcome, and the gap between budget and realized depth is diagnostic
+### F21 — Depth used should be an outcome; and the granularity-vs-score curve has a single interior optimum in every setting it has been measured in
 
 Sheet `05` (ADaPT): the realized maximum depth (`k_max`) rises 1.9 → 2.8 tracking
 true task complexity, against a fixed budget (`d_max`), and the pair is a
 ready-made runtime telemetry signal — how hard the task turned out to be, and how
 close the run came to the ceiling. Sheet `06`: depth should track the *serial*
-structure of the problem. Sheet `10`: a cap of three sub-questions beat two and
-four — both over- and under-splitting cost accuracy, an interior optimum showing
-up in an explicit-decomposition setting this time (compare [[F1]] / [[F6]]).
+structure of the problem.
 
-Consequence: a harness should carry a depth *budget* and observe a *realized*
-depth, and instrument the gap. This is the complement to [[F4]]: you set the
-budget, you measure what the run actually used.
+The interior optimum — too little granularity and too much both cost accuracy,
+not only tokens — is now robust across three unrelated granularity axes:
+
+- **Step granularity inside one stream** — sheets `08` (F1 / F6): both "answer
+  directly" and "narrate every micro-step" lose accuracy.
+- **Sub-question count in explicit decomposition** — sheet `10`: a cap of three
+  beat two and four.
+- **Chunk size in context-separated parallel D&C** — sheet `17`'s
+  model-noise-dominated regime ([[F34]]): accuracy improves as chunks shrink,
+  then degrades again once chunks are too small.
+
+Three different mechanisms and settings, the same U-shape — a mechanism-level
+regularity rather than a benchmark artefact.
+
+Consequence: a harness should carry a granularity/depth *budget* and observe a
+*realized* value, and instrument the gap — the complement to [[F4]] (you set the
+budget, you measure what the run actually used). And because the curve is
+single-optimum, locating the optimum is cheap: sheet `17` §5.5 samples 3–5
+instances per candidate value rather than the whole dataset (cost `m·|C|`, not
+`|D|·|C|`), with `m = 5` usually recovering the exhaustive optimum's score.
+Proof-of-concept strength — one paper, and it degrades exactly where the curve is
+flat near the top, i.e. noise the size of the effect.
 
 ### F22 — Coordination cost is nearly always asserted and nearly never measured
 
