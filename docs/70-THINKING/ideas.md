@@ -481,3 +481,49 @@ the aggregator, specifically, is the binding stage.
 as the aggregator-collapse sweep, plus a design note that decompositions whose
 recombination retrieves from an addressable store of sub-results are preferred
 over those whose recombination holds every partial result in one context.
+
+---
+
+## I11 — Retrospective ground truth: reconstruct what the context should have been from the eventual solution, and grade the context manager on it
+
+**Provenance.** Cross-paper discussion 2026-09-08 of `07-when-to-decompose/`
+sheet `19` (Agentless) and finding F64. Agentless's per-stage "Contains GT"
+recall needs the developer's actual edit locations — unavailable at assembly time
+but recoverable once the task is solved.
+
+**The idea.** When a task finishes — or whenever the real answer eventually
+surfaces (a merged fix, an accepted patch, a verified solution) — reconstruct
+from that evidence what the load-bearing context actually was: which files,
+functions, facts, and prior results the solution depended on. Then score each
+stage of the context-assembly / decomposition pipeline against it
+retrospectively: did stage `k` still contain everything the solution needed? The
+per-stage recall curve becomes a feedback signal for the context manager that
+needs no oracle at assembly time and does not collapse into end-to-end task
+success.
+
+**Why it is worth doing.** It is a concrete answer to the open question "how do
+we evaluate context quality independently from final task success" (open-questions
+register, *Context governance*): the evaluation is delayed, not absent. It gives
+the context manager a gradient — which stage dropped what — instead of one
+pass/fail, and it reuses F64's three-column instrument with a ground truth that
+arrives late rather than never.
+
+**Open before it is worth committing.**
+
+- Reconstructing "what the solution depended on" is itself a judgement. A diff
+  edits lines, but the reasoning may have depended on more (or less). Needs a
+  defined extraction — e.g. the union of symbols the final solution edits and
+  reads, or a stronger dependency trace.
+- It only produces a signal for tasks that get solved (or where the real answer
+  eventually appears). Unsolved tasks give nothing — a survivorship filter on the
+  feedback.
+- Alternative-valid-solution problem (F64's caveat, [[F26]]): the reconstructed
+  ground truth is one solution's footprint; a different valid solution would have
+  needed different context, so a stage that kept *that* context scores as a miss.
+- Latency: the signal arrives after the task, sometimes long after, so it tunes
+  the context manager on a lag.
+
+**Would graduate to**
+`00-design/40-roadmap/03-research-and-evaluation-agenda.md` as a context-manager
+evaluation method, and it answers a live entry in the open-questions register's
+*Context governance* section.

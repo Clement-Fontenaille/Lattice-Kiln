@@ -1286,6 +1286,30 @@ executors need decomposition more), and [[F50]] (the fixed pipeline fails where
 evidence must be explored for); which trend dominates as the model changes is the
 interesting question the paper cannot answer.
 
+### F64 — A per-stage recall / size / cost table is a reusable instrument for any staged decomposition
+
+Sheet `19` (Agentless) reports three numbers per localisation rung: **Contains
+GT** (fraction of problems whose ground-truth edit location still survives the
+set the rung produces — a recall measure), **avg lines** (the size of that set —
+the context bill handed to the next stage), and **avg $** (the stage's inference
+cost). Read together the three columns show where a stage is a good trade
+(skeleton rung: 698 versus 3,424 lines for a 23-point recall drop at $0.02) and
+where it is not.
+
+Consequence: this generalises past program repair. Any staged decomposition can
+produce it — pick a recall proxy (does the reference answer, location, or plan
+survive this stage), measure the size of what the stage emits, measure the
+stage's cost. It extends [[F7]] (cost belongs in the dependent variable) by
+making the dependent variable *per stage* and adding the recall column, so a
+final failure attributes to the stage that dropped the answer and the bill to the
+stage that inflated the context. It is the measurement substrate [[F46]] (the
+negative coordination tax) and [[F49]] (instrument the generation ceiling
+separately) both rely on. Caveats: recall is scored against one reference, so a
+stage that drops it but keeps an equally valid alternative reads as a loss when
+it is not (the [[F26]] exact-match limitation); and the recall column needs a
+ground truth, which is often unavailable at assembly time but recoverable once
+the task is solved — see [[I11]].
+
 ### Papers the gathered findings keep pointing at
 
 - **Faith and Fate** (Dziri et al., NeurIPS 2023) — flagged by sheets `05` and
