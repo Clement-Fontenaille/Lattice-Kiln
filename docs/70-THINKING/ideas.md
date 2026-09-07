@@ -92,3 +92,106 @@ output against.
   mismatch.
 
 **Would graduate to** `00-design/40-roadmap/03-research-and-evaluation-agenda.md`.
+
+---
+
+## I3 — Measure per-step error and recovery rates, and test the `c/(c+ε)` ceiling
+
+**Provenance.** `07-when-to-decompose/` finding F24, from sheet `13` (Faith and
+Fate). Accuracy at composition depth is governed by the ratio of per-step
+recovery rate `c` to per-step error rate `ε`, not by `ε` alone. The paper's
+propositions assume `ε` constant and errors independent, are never fitted to its
+own runs, and — being about any noisy composition of fallible steps — indict a
+decomposition harness as much as a monolith *unless* the harness genuinely raises
+`c`. Whether it does is the central untested claim.
+
+**The idea.** Instrument a decomposition run on the project's own task families so
+every sub-step is graded against a reference (F25's node taxonomy: fully correct /
+local error / propagation error / restoration error). From that, estimate `ε` and
+`c` per step, and check whether `c/(c+ε)` predicts observed accuracy as depth
+grows. Then add a recovery mechanism — a verifier, a re-entry step, a
+cross-check — and measure whether it moves `c` and whether accuracy at depth
+tracks the predicted new ceiling.
+
+**Why it is worth doing.** It converts F24 from a borrowed stylised model into a
+measured property of the project's setting, and it directly tests the only
+defence a decomposition harness has against the compounding-error argument.
+
+**Open before it is worth committing.**
+
+- It needs a process-level scorer — the harness's steps have to be alignable to a
+  reference decomposition (the F28 provenance idea, [[I5]], is what makes this
+  cheap).
+- `ε` almost certainly is not constant across depth (context accumulates), so the
+  test is really whether the ratio form holds approximately, not exactly.
+- Restoration errors (F25) mean outcome-level grading is biased; the scorer must
+  read the working, not just the answer.
+
+**Would graduate to** `00-design/40-roadmap/03-research-and-evaluation-agenda.md`.
+
+---
+
+## I4 — Structure-score the project's own decomposition plans (node vs edge F1)
+
+**Provenance.** `07-when-to-decompose/` finding F26, from sheet `15` (TaskBench).
+Producing a list of sub-tasks and producing the correct dependency structure over
+them are separable capabilities that dissociate sharply (node-F1 70–80 with
+edge-F1 3–13), and the structure half fails first on weaker models.
+
+**The idea.** Have the project's decomposer emit plans as `{nodes, edges}`, and
+score the node set and the edge set separately against a reference, without
+executing anything. This says, cheaply and per task family, whether the
+decomposer's weakness is *naming* the sub-tasks or *wiring* them — which decides
+whether to invest in the decomposer at all, and whether the harness can trust the
+model to state dependencies for scheduling and argument threading.
+
+**Why it is worth doing.** It is the cheapest available diagnostic on the
+decomposer, needs no execution, and targets the capability F26 says breaks first
+at constrained model size — the project's regime.
+
+**Open before it is worth committing.**
+
+- Exact-endpoint edge matching penalises correct-but-different plans; the project
+  needs a reference that admits alternative valid decompositions, or a metric
+  that is not all-or-nothing per edge (TaskBench has neither).
+- Where the reference plans come from without a hand-verification bottleneck
+  (same problem as [[I1]]).
+- Whether a flat node/edge graph is the right representation for the project's
+  tasks, or whether depth/recursion has to be in the representation from the
+  start.
+
+**Would graduate to** `00-design/40-roadmap/03-research-and-evaluation-agenda.md`.
+
+---
+
+## I5 — Provenance-required sub-results with descendant invalidation
+
+**Provenance.** `07-when-to-decompose/` finding F28, from sheet `14` (Cumulative
+Reasoning), plus the open question it leaves. Requiring each sub-result to declare
+what it was derived from yields an auditable dependency graph by construction; but
+CR only ever *adds* to that graph and never revisits an accepted node found wrong
+later — which is exactly the case a harness that accumulates has to handle.
+
+**The idea (a design move, not an experiment).** Make provenance a required field
+of every sub-result: it names its parent sub-results (and any external inputs).
+The dependency graph is then free, non-duplication is checkable, and — the part CR
+does not build — when a node is later found wrong, its transitive descendants are
+identifiable and can be flagged stale, recomputed, or surfaced for review rather
+than silently carried into the answer (F27's "laundered failure").
+
+**Why it is worth doing.** It is the enabler for [[I3]] (steps become alignable to
+a reference), it gives F13/F20's recombination-and-recovery problem a concrete
+substrate, and it is cheap to specify now, before a decomposition representation
+is fixed.
+
+**Open before it is worth committing.**
+
+- Provenance is only as expressive as the step schema (F28); a sub-step whose
+  natural form is not "derived from these parents" gets nothing.
+- Invalidation needs a trigger — what declares a previously-accepted node wrong,
+  and does that signal come from a later step, a verifier, or the final check.
+- Cost of re-running descendants versus accepting a stale-but-flagged answer is
+  unquantified.
+
+**Would graduate to** a foundations or cognitive-architecture design document
+once the decomposition representation is being specified.
