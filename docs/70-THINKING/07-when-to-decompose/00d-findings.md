@@ -686,6 +686,76 @@ dependency the task needs). It is also the seed of [[I10]]: the aggregator
 re-reading the whole input to fill the schema's gaps is the merge step
 re-entering the regime the split was meant to escape.
 
+Diagnostic direction: when recombination looks unreliable, suspect the sub-task
+return contract before the aggregator. Sheet `17`'s planner-generated aggregator
+prompt wins (§5.4) mainly by rewriting what each *worker* returns so the merge
+becomes well-posed — the "two smallest per chunk" fix is applied at the worker
+prompt, not at the merge step.
+
+### F37 — The onset of a model's length-induced collapse is a per-model property, varies by an order of magnitude, and measuring it has precedent
+
+Sheet `17` Key finding 1 (Table 2): on retrieval, GPT-4o holds a perfect score
+across the whole 1K–128K sweep; GPT-4o-mini holds to 32K then falls (0.86 at 64K,
+0.60 at 128K); Llama-3.1-70B holds to 32K then collapses (0.91 at 64K, 0.15 at
+128K); Llama-3.2-3B degrades from 16K and is at 0.01 by 64K. The length at which
+single-shot fidelity begins to fall is a property of the model, not of the task,
+and the spread across models is roughly an order of magnitude.
+
+Consequence: a fixed chunk size, context budget, or decomposition depth cannot be
+set once and reused across models — the threshold that determines whether a unit
+still fits under the model's grain has to be measured per model. This is a direct,
+measurable input to task-granularity decisions
+(`02-capability-as-granularity.md`) and to context management in general: "how
+much context before this model degrades" is model-specific telemetry, not a
+constant. Studying this curve is itself a strong argument for granularity as the
+governing variable.
+
+Methodology precedent: this is not something the project would need to invent.
+Sheet `17` leans on RULER (Hsieh et al. 2024) for its degradation premise and
+cross-checks against "effective context length" in Appendix L; the
+needle-in-haystack and effective-context-length benchmark family already measures
+this curve per model. What sheet `17` adds (Appendix L) is that a single
+"effective context" scalar does not predict behaviour across task types — the
+curve has to be measured per model *and* per task family.
+
+### F38 — Selective retrieval and exhaustive chunked decomposition are not interchangeable; retrieval fails when the needed information is diffuse rather than locatable
+
+Sheet `17` Appendix J: BM25/embedding retrieval beats single-shot on the
+retrieval task (Llama-70B KV 0.15 → 0.81 BM25) but *degrades* the synthesis tasks
+(QA-IB 0.56 → 0.14 BM25 / 0.38 embedding; Sum and Char also down). The authors'
+reading: retrieval works when the answer sits in a locatable span and fails when
+the relevant information is spread thinly across the input, whereas
+chunk-and-aggregate processes the whole text in bounded pieces.
+
+How established: one appendix experiment, one model, one length (128K), no sample
+sizes or dispersion — the same reporting weakness as the rest of the paper. The
+*direction* is a large effect and has independent support in the
+retrieval-augmented-generation literature, where RAG is known to struggle with
+global and aggregation questions (the stated motivation for graph- and
+summary-indexed RAG variants). The *mechanism* ("diffuse versus locatable") is
+the authors' interpretation, not independently tested here.
+
+Consequence: for context assembly, "retrieve the relevant subset" and "process
+everything in bounded pieces" are different tools with different failure modes,
+and selection loses when relevance is not concentrated. This bears on [[I10]]:
+the property that keeps recombination cheap is that sub-results are individually
+*locatable* — addressable in a structured store — rather than diffuse.
+
+### F39 — Overlapping or redundant context degrades the step that consumes it
+
+Sheet `17` Key finding 7 (Appendix I): 1K of overlap between chunks on Llama-70B
+at 128K drops QA-IB from 0.63 to 0.54 — a 9-point loss from redundancy alone,
+while KV, Sum and Char are essentially unchanged. The authors flag that larger
+overlap could hurt more, by feeding the aggregator redundant or conflicting
+copies of the same content.
+
+Weak in isolation — one model, one overlap size, one length, no dispersion — but
+the amplitude is not trivial, and the direction is consistent with
+`10-foundations/04`'s claim that what makes context costly is redundancy rather
+than volume. Consequence: a recombination or reasoning step should be fed each
+piece of information once; overlapping sub-task inputs "for safety" is a cost, not
+a hedge.
+
 ### Papers the gathered findings keep pointing at
 
 - **Faith and Fate** (Dziri et al., NeurIPS 2023) — flagged by sheets `05` and

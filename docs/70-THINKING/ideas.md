@@ -401,7 +401,7 @@ failures better than chance, using features computable in advance.
 
 ---
 
-## I10 — Execution-grounded selection escapes the aggregator's superlinear collapse; model-driven composition does not
+## I10 — Addressable sub-results escape the aggregator's superlinear collapse; model-driven composition does not
 
 **Provenance.** Cross-paper discussion 2026-09-07 of `07-when-to-decompose/`
 sheets `17` (divide-conquer-noise), `18` (ARES), `19` (Agentless), `20`
@@ -411,53 +411,64 @@ re-aggregation is hard — a coarse working set that holds the whole objective, 
 merge input that grows with the number of parts, the same attention-dispersion
 degradation as a monolith — are exactly the reasons to expect `ℒ_agg` to grow
 *superlinearly*. Agentless is the counterexample that isolates the escape
-condition.
+condition. The escape condition was relaxed in the same discussion: the binding
+requirement is not a pass/fail oracle per candidate but that sub-results are
+*queryable* — see F38 (retrieval works when information is locatable, fails when
+it is diffuse).
 
 **The claim, in questionable form.** The superlinear degradation the
 divide-and-conquer literature attributes to a single long-context model reappears
 in the recombination step whenever that step is a model reasoning over many long
-partial results — so the crossover ("splitting wins on length") fails from the
-aggregation end too, not only the monolith end. It is avoided, and the D&C-side
-linear loss bound is preserved, only when recombination is (a) deterministic —
-hard-coded selection or combination logic, with no model holding the whole
-objective in context — and (b) grounded in a cheap external check that returns a
-ground-truth signal per candidate. This escape applies only when sub-results are
-*alternatives to select among* or *independently checkable pieces*, not parts
-that must be woven into one artifact.
+partial results all held in context at once — so the crossover ("splitting wins
+on length") fails from the aggregation end too, not only the monolith end. It is
+avoided, and the D&C-side linear loss bound is preserved, when recombination does
+**not** need every partial result in context simultaneously — either because the
+merge is deterministic selection or combination logic, or because the sub-results
+are individually addressable in a structured store (named, on disk, in a sound
+file hierarchy) so the merge *retrieves* what each step needs. A cheap
+per-candidate external check — an executable test, a verifier — is one strong
+form of addressability, not the requirement. This escape still fails when the
+answer is a genuine composition of all parts rather than a selection among
+alternatives or an assembly of separately-addressable pieces.
 
 **Validity criterion for the argument.** It holds only if, at fixed decomposition
 depth, aggregation-attributed loss grows superlinearly with the number of parts
-for a model-driven flat aggregator, stays linear or better for a deterministic
-execution-grounded selector and for hierarchical merging, and the difference
-disappears when the merge is genuine composition rather than selection.
+when the merge holds all partial results in context, stays linear or better when
+the merge is deterministic or retrieves from an addressable store or merges
+hierarchically, and the difference disappears when the answer is genuine
+composition rather than selection or assembly.
 
-**Falsifier.** A model-driven flat aggregator whose loss stays linear in the
-number of parts across a real length sweep; or a deterministic execution-grounded
-selector that degrades superlinearly anyway; or the selection-versus-composition
-distinction making no measurable difference to aggregation loss growth.
+**Falsifier.** A hold-everything-in-context aggregator whose loss stays linear in
+the number of parts across a real length sweep; or an addressable-store /
+deterministic / hierarchical merge that degrades superlinearly anyway; or the
+composition-versus-selection distinction making no measurable difference to
+aggregation loss growth.
 
 **For experimental validation.**
 
 - Hold decomposition depth and task fixed. Measure system score — and, where an
   oracle merge is approximable, aggregation-attributed loss — as a function of the
-  number of parts `n`, for three aggregators: model-driven flat, deterministic
-  execution-grounded selection, recursive hierarchical merge. Test whether only
-  the first is superlinear.
-- Vary the merge type — selection among alternatives versus composition of parts
-  — holding domain checkability fixed. Test whether the escape vanishes under
-  genuine composition.
+  number of parts `n`, for four aggregators: all-partial-results-in-context,
+  deterministic selection, retrieval from an addressable store (sub-results on
+  disk in a named hierarchy), recursive hierarchical merge. Test whether only the
+  first is superlinear.
+- Vary the answer type — selection among alternatives, assembly of addressable
+  pieces, genuine composition of all parts — holding the store structure fixed.
+  Test whether the escape vanishes for genuine composition.
 - Run the same decomposition on a task with an executable check (code) and on one
   without (prose synthesis). Compare aggregation loss growth.
 
 **Relation to other entries.** Extends candidate finding C3 from sheet `17`
-(the flat aggregator re-enters the long-context regime as `n` grows). Connects to
-F13 (recombination is a distinct large unmeasured failure mode), F27 (the
-accept/reject port; a wrong accepted step is a laundered failure), F31 (a
-deterministic controller between planner and executor is a harness architecture),
-and F10 (S&D's demonstrated value is cost, not accuracy). Sharpens [[I6]]: it
-names a condition under which the aggregator, specifically, is the binding stage.
+(the flat aggregator re-enters the long-context regime as `n` grows) and rests on
+F38 (locatable versus diffuse sub-results). Connects to F13 (recombination is a
+distinct large unmeasured failure mode), F27 (the accept/reject port; a wrong
+accepted step is a laundered failure), F31 (a deterministic controller between
+planner and executor is a harness architecture), F28 (provenance as a required
+field makes sub-results addressable by construction), and F10 (S&D's demonstrated
+value is cost, not accuracy). Sharpens [[I6]]: it names a condition under which
+the aggregator, specifically, is the binding stage.
 
 **Would graduate to** `00-design/40-roadmap/03-research-and-evaluation-agenda.md`
 as the aggregator-collapse sweep, plus a design note that decompositions whose
-recombination is selection-plus-executable-check are preferred over those whose
-recombination is model-driven composition.
+recombination retrieves from an addressable store of sub-results are preferred
+over those whose recombination holds every partial result in one context.
