@@ -467,17 +467,158 @@ benefit is largest exactly in its regime — but so is the handoff-failure rate.
 Both sides of the ledger grow as the model gets weaker. This is the
 coordination-cost mirror of [[F1]]'s "accuracy lift decays with capability."
 
+### F24 — At depth, the lever is the error *recovery* rate, not the error rate
+
+Sheet `13` (Faith and Fate), Prop. 4.2: accuracy at composition depth is governed
+by `c / (c + ε)` — the ratio of per-step recovery rate to per-step error rate —
+not by `ε` alone. Lowering `ε` (a better model) gives diminishing returns at
+depth; raising `c` (error detection, correction, re-entry into a valid state
+after leaving one) moves the ceiling itself. Sheet `14` (Cumulative Reasoning) is
+the constructive instance of raising `c` — verification converts an accuracy
+problem into a search problem, and `p1·p2` with retries beats a single shot at
+`p` when each stage is independently checkable.
+
+Consequence: a decomposition harness's whole defence against the compounding-error
+indictment is that it raises `c`. That is an empirical claim, and no reviewed
+paper tests it — sheet `13`'s propositions assume `ε` constant and per-step errors
+independent, are never fitted to its own runs, and, being about any noisy
+composition of fallible steps, indict decomposition harnesses as much as
+monolithic generation *unless* the recovery is real. `c` and `ε` are quantities
+the project could measure per step; sheet `13` flags this as possible and never
+does it.
+
+### F25 — Outcome-correct does not imply process-correct; a loop that reads only the final answer reads a biased signal
+
+Sheet `13`: 82% of *correct* final answers on one multiplication setting sat atop
+an incorrect computation graph. Sheet `16` (Decomposed Prompting): a headline
+"+14/+17 reasoning gain" was largely a weak-baseline extraction artefact — "a
+large reasoning gap can be an extraction gap." Sheet `09` (F15) is the
+parseability version.
+
+Consequence: any decomposition telemetry that scores itself on final answers
+overestimates how well its sub-steps are working, and does so *more* on tasks
+where input–output pairs are common in pretraining. Sheet `13`'s per-node
+taxonomy — fully correct / local error / propagation error / restoration error —
+is directly reusable as instrumentation if the harness's steps can be aligned to
+a reference graph. Verification of the project's own decomposition claims has to
+be process-level, not outcome-level.
+
+### F26 — Producing a list of sub-tasks is cheap; producing the correct dependency structure over them is the expensive capability, and it fails first on weak models
+
+Sheet `15` (TaskBench): models score 70–80 on node-F1 (right sub-tasks) while
+scoring 3–13 on edge-F1 (right wiring, both endpoints exact) — the two dissociate,
+and the dependency-structure half fails hardest on smaller models. The
+withhold-edges ablation confirms the direction: dependency edges are what make a
+task genuinely multi-step rather than a list of unrelated errands. Sheet `16`'s
+abstraction-barrier result (a recursive procedure unrolled into one flat chain
+fails) is the same point from the other side.
+
+Consequence: this is the concrete, measurable version of [[F16]]. A harness should
+not read "the model produced a plan with plausible steps" as evidence the plan is
+executable; if it relies on the model to also state dependencies (for scheduling,
+parallelism, argument threading), that is the part that breaks. Instrument: emit
+the plan as `{nodes, edges}` and score node set and edge set separately against a
+reference, without executing anything. Caveats: exact-endpoint matching penalises
+correct-but-different plans, hardest on the decomposition metric; and TaskBench's
+references are correct-by-construction, never checked for whether a different
+valid decomposition exists (~12% error survives into the released data).
+
+### F27 — The accept/reject port is a first-class object, and the reliability of what fills it is the whole question
+
+Sheet `14` (Cumulative Reasoning): giving rejection authority to a *separate* call
+— one that sees the candidate step and not the generator's momentum — carries the
+method's entire measured advantage (the single ablation). The port is fungible:
+the same socket takes an LLM verifier or a Python interpreter, and the symbolic
+one is both cheaper and more reliable, which is where the paper's strongest
+results come from. But the LLM verifier's reliability is never measured, the
+theory simply assumes it near-perfect, and a wrong *accepted* step is worse than
+a visible failure — it is a laundered failure that now carries an accept stamp and
+gets reused by everything downstream (the DAG amplifies exactly this).
+
+Consequence: sharpens [[F17]] into a design object. If the project builds a gate,
+its contract needs deciding — does rejection carry a reason back to the proposer,
+is it final or a revision request, who pays for the retry — and one bit is
+impoverished. The accept/reject port is the right place to spend engineering
+effort, and a symbolic filler beats an LLM one wherever correctness is locally
+decidable.
+
+### F28 — Provenance as a required output field gives you the dependency graph and invalidation for free
+
+Sheet `14`: constraining each sub-result to declare what it was derived from (in
+CR, one proposition from two named premises) means the dependency DAG is built by
+construction rather than reconstructed, non-duplication is checkable, and a node
+later found wrong has identifiable descendants. Cost: the split is only as
+expressive as the step schema — a task whose natural sub-steps do not fit the
+schema gets nothing.
+
+Open question sheet `14` leaves, and the one that matters for [[A1]]: CR only ever
+*adds* to the graph and never revisits an accepted node. What happens when a node
+accepted early is discovered wrong later is unaddressed — the obvious next
+question for anything that accumulates.
+
+### F29 — Input-length recursion converts a competence question into a size question
+
+Sheet `16` (Decomposed Prompting): recursion on *input length* — apply the same
+task to smaller inputs, recombine, terminate at a base case chosen as the size
+where the model is already reliable — is structurally distinct from recursion on
+difficulty. The argument is structural, not empirical: as long as recombination is
+cheap and the base case is reliable, accuracy stops being a function of input
+length.
+
+Direct support for [[A1]]: this is the space-reuse structure with a concrete
+termination rule (the base case is a *reliability* threshold, not an arbitrary
+depth cap), and A1's fresh-context-per-sub-call is the mechanism that keeps every
+recursion level's working set down at base-case size.
+
+### F30 — Modularity is a precondition for recursive decomposition, not an optimisation
+
+Sheet `16`: the *same* recursive procedure written as one unrolled chain **fails**
+where the modular version (decomposer + handlers + controller) succeeds — a linear
+chain has no abstraction barrier, so a recursive procedure written into one must
+inline every level. This is the sharpest reason [[F5]] holds: "state the
+decomposition inside one stream" and "execute it across calls with a controller"
+are different capabilities, and only the second supports recursion at all. Sheet
+`13` is consistent — being *given* a perfect topological linearisation of the
+correct graph did not lift the depth limit, because it was still one stream.
+
+### F31 — A deterministic controller between planner and executor is a harness architecture; the handler-behind-an-interface is the substitution point
+
+Sheet `16`: three roles, only two of them models — a decomposer that plans the
+next step, a handler library that does the steps, and a **symbolic controller**
+that owns the loop, holds the state (`#1`, `#2`, … addressable references), routes
+each sub-question to the named handler, and stops on a sentinel. A handler
+addressed by name and consuming a natural-language sub-question can be a prompt, a
+nested decomposed program, a symbolic function, or a different (smaller) model —
+swapped without touching the caller (demonstrated four ways). The named sub-task
+tag doubles as a routing key and as a contract about what the call is for.
+
+Consequence: extends [[F14]] (the boundary as an interposition point) and [[F18]]
+(heterogeneous models by role) into a concrete template, and the controller being
+deterministic is itself an answer to [[F17]] — the loop, the state, and the
+termination decision are code, not model self-report.
+
+### F32 — Sheets 10 and 16 disagree on whether the decomposer can be a small model
+
+Sheet `10` (Divide-or-Conquer): the decomposer *distils* into a 7–13B student that
+matches its teacher and transfers. Sheet `16` (Decomposed Prompting), footnote 8:
+the decomposer *cannot* be a small model. The settings differ — sheet `10`'s
+decomposer emits at most three sub-questions for a QA or math problem; sheet
+`16`'s emits a routed prompting-program with addressable references and recursion
+control over a handler library. Different jobs, plausibly a real capability
+threshold between them.
+
+What the [[A1]] / [[F18]] assessment must establish: which regime the project's
+orchestrator sits in — a light "name the sub-goals" planner (small model may
+suffice) or a "run the control program" planner (may need the capable model),
+with direct cost consequences either way.
+
 ### Papers the gathered findings keep pointing at
 
-Not read in full; flagged by two or more sheets as the load-bearing reference:
-
-- **Faith and Fate** (Dziri et al., NeurIPS 2023) — cited by sheets `05` and `06`
-  as the empirical bridge between the formal serial-depth story and observed
-  behaviour ("performance decays with the depth of the computation graph";
-  transformers do "linearised subgraph matching," not systematic composition).
-- **Feng et al. 2023** (circuit-complexity account of why CoT works) — cited by
-  sheets `06` and `10` as the theoretical grounding for why splitting the
-  computation helps at all.
+- **Faith and Fate** (Dziri et al., NeurIPS 2023) — flagged by sheets `05` and
+  `06`, now read in full as sheet `13`; it feeds [[F24]], [[F25]], and [[F16]].
+- **Feng et al. 2023** (circuit-complexity account of why CoT works) — still not
+  read; cited by sheets `06` and `10` as the theoretical grounding for why
+  splitting the computation helps at all.
 
 ## Qualifiers
 
