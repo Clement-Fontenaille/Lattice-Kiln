@@ -636,6 +636,8 @@ on it.
 ---
 
 ## 63. Agentless: Demystifying LLM-based Software Engineering Agents
+**Review status:** selected round 5 -> reading booth 19.
+
 
 **Cite:** Chunqiu Steven Xia, Yinlin Deng, Soren Dunn, Lingming Zhang. "Agentless: Demystifying LLM-based Software Engineering Agents." 2024. arXiv:2407.01489 (preprint). https://arxiv.org/abs/2407.01489
 
@@ -647,6 +649,8 @@ on it.
 ---
 
 ## 64. When Does Divide and Conquer Work for Long Context LLM? A Noise Decomposition Framework
+**Review status:** selected round 5 -> reading booth 17.
+
 
 **Cite:** Zhen Xu, Shang Zhu, Jue Wang, Junlin Wang, Ben Athiwaratkun, Chi Wang, James Zou, Ce Zhang. "When Does Divide and Conquer Work for Long Context LLM? A Noise Decomposition Framework." 2026. ICLR 2026. arXiv:2506.16411. https://arxiv.org/abs/2506.16411
 
@@ -669,6 +673,8 @@ on it.
 ---
 
 ## 66. Probabilistic Soundness Guarantees in LLM Reasoning Chains (ARES)
+**Review status:** selected round 5 -> reading booth 18.
+
 
 **Cite:** Weiqiu You, Anton Xue, Shreya Havaldar, Delip Rao, Helen Jin, Chris Callison-Burch, Eric Wong. "Probabilistic Soundness Guarantees in LLM Reasoning Chains." 2025. EMNLP 2025. arXiv:2507.12948. https://arxiv.org/abs/2507.12948
 
@@ -713,6 +719,8 @@ on it.
 ---
 
 ## 70. Beyond the Answer Key: Robustness Evaluation of Large Language Models for Step-Level Mathematical Verification
+**Review status:** selected round 5 -> reading booth 20.
+
 
 **Cite:** Fateme Mazdarani, Carlos Toxtli. "Beyond the Answer Key: Robustness Evaluation of Large Language Models for Step-Level Mathematical Verification." 2026. IEEE ICMLA 2026. arXiv:2608.28725. https://arxiv.org/abs/2608.28725
 
@@ -957,6 +965,33 @@ two sheets already lean on, and the canonical method never read.
     `09`, `11` and as ADaPT's direct predecessor. Recurses on hard sub-tasks and
     on input length - direct prior art for [[A1]].
 
+### Round 5 (probably the last for now)
+
+Chosen to close the highest-value gaps the F13-F32 findings leave: A1's aggregator
+term, the recovery instrument F24 needs, the "do less" counter-case plus the code
+domain, and the accept/reject port's reliability.
+
+17. **`17` - When Does Divide and Conquer Work for Long Context LLM? A Noise
+    Decomposition Framework (Xu et al., ICLR 2026).** Entry 64. A theory that
+    splits failure into task / model / *aggregator* noise and derives when
+    chunk-and-aggregate beats a strong single shot - the recombination-cost term
+    [[A1]] and every recombination finding ([[F13]]) have lacked.
+18. **`18` - Probabilistic Soundness Guarantees in LLM Reasoning Chains / ARES
+    (You et al., EMNLP 2025).** Entry 66. Per-step soundness scored from only
+    previously-verified premises, with statistical guarantees, strong on
+    *propagated* errors - the concrete instrument for [[F24]] / [[I3]] (measuring
+    and raising the recovery rate).
+19. **`19` - Agentless: Demystifying LLM-based Software Engineering Agents (Xia et
+    al., 2024).** Entry 63. A fixed three-phase pipeline with no autonomous
+    planning beats decomposed SE agents at ~1/60th the cost - the sharpest "maybe
+    do not decompose" case, in the project's own domain, on the cost axis
+    ([[F22]], [[F1]], [[F10]]).
+20. **`20` - Beyond the Answer Key: Robustness Evaluation of LLMs for Step-Level
+    Mathematical Verification (Mazdarani & Toxtli, ICMLA 2026).** Entry 70.
+    Measures the LLM-as-verifier directly: 75-85% false-rejection on
+    equivalent-but-perturbed traces. The accept/reject port's reliability
+    ([[F27]], [[F17]]), and a hard echo of sheet `07`'s invariance failure.
+
 ## 3. Labels (second pass)
 
 Richer than the inventory's inline flag: each line adds a *kind* and a one-line
@@ -1026,3 +1061,26 @@ gather round) appended here.
 59 (Huang et al., Understanding the Planning of LLM Agents) | RELATED | survey | First systematic taxonomy of LLM-agent planning; Task Decomposition is the lead category, split into decomposition-first vs interleaved.
 60 (Test-time Scaling survey) | RELATED | survey | Organises test-time-scaling methods by how a problem decomposes into subproblems and their topology; unifies CoT, Branch-Solve-Merge, Tree-of-Thought under one lens.
 61 (LLMs for Planning survey) | ADJACENT | survey | Comprehensive LLM-planning survey; decomposition is one component of a three-branch taxonomy cut by what the method changes.
+
+Sixth-round entries (62-81), labelled 2026-09-07:
+
+62 (AI Agents That Matter) | ADJACENT | analysis | Agent-benchmarking critique centred on cost vs accuracy; bears on decomposition's cost axis but is about evaluation practice, not the split decision.
+63 (Agentless) | RELATED | analysis | A deliberately un-decomposed fixed localise/repair/validate pipeline that beats decomposed SE agents at ~1/60th the cost; the strongest "do less" counter-case for the split decision.
+64 (Divide-and-Conquer Noise Decomposition) | RELATED | theory | Formal split of long-context failure into task / model / aggregator noise; derives when chunk-and-aggregate lets a weak model beat a strong single-shot one - directly the does-splitting-pay question, with an aggregator-error term.
+65 (Question Decomposition Improves Faithfulness) | RELATED | analysis | Answering sub-questions in SEPARATE contexts vs one CoT stream; execution-across-contexts as a distinct intervention with a measured faithfulness payoff.
+66 (ARES / Probabilistic Soundness) | RELATED | method | Per-step soundness scoring from only previously-verified premises, with statistical guarantees; the recovery/verification instrument the compounding-error findings call for.
+67 (Branch-Solve-Merge) | RELATED | method | Explicit parallel decompose into different sub-tasks, independent solve, explicit merge - genuine parallel decomposition as opposed to sample-and-vote.
+68 (BeamAggR) | RELATED | method | Atom/composite question tree, bottom-up probabilistic aggregation at composite nodes - the HTN-style aggregate-all-leaves tree.
+69 (MASAI) | RELATED | method | Decomposition by software-engineering sub-problem with a dedicated per-stage sub-agent; a code-domain instance of nature-of-work decomposition.
+70 (Beyond the Answer Key) | RELATED | measurement | Measures the LLM-as-verifier on step-level traces: models that grade canonical solutions well collapse on equivalent perturbed ones (75-85% false-reject); the accept/reject port's reliability, quantified.
+71 (TinyV) | ADJACENT | analysis | Verifier false-negative rate (>38%) and its effect on RL reward signal; bears on the accept/reject port but framed for RL training, not decomposition control flow.
+72 (CoRefine) | RELATED | method | A small controller reading full-trace confidence to decide halt / re-examine / switch approach; a recovery primitive explicitly for imperfect-verifier settings.
+73 (MiCP / Adaptive Stopping) | RELATED | method | Conformal per-turn error budgets for when to stop a multi-turn loop, with an overall coverage guarantee - the depth/stop axis with a formal guarantee.
+74 (Composition Collapse) | RELATED | analysis | Conditional composition failure invisible to aggregate metrics; a double-gate protocol isolating residual recombination failure from atomic knowledge.
+75 (Multi-Hop Composition Bound by Pretraining Exposure) | RELATED | analysis | Controlled compositionality-gap follow-up; composition failure persists at 97% 1-hop accuracy, and transfers only to pretraining-exposed entities.
+76 (Hallucination Cascade) | ADJACENT | analysis | Claim-level error dynamics across sequential agents - net attenuation at a small accuracy cost; a measured recovery/preservation trade-off, but in a refine-chain, not a task decomposition.
+77 (Token Economics survey) | ADJACENT | survey | Maps the quality-vs-token-cost trade-off across single-agent / multi-agent / ecosystem levels; the cost axis broadly, not the split decision.
+78 (AgentPrune / Cut the Crap) | RELATED | method | Defines and prunes inter-agent communication redundancy: comparable results at $5.6 vs $43.7; a concrete coordination-cost number and a lever on it.
+79 (D-CORE) | RELATED | method | Trains sub-task decomposition back into large reasoning models that have stopped doing it ("Lazy Reasoning"); the counter-signal to decomposition-benefit-decays-with-capability.
+80 (PLANET) | ADJACENT | survey | Audit of planning benchmarks and their gaps; instrumentation context for evaluating plans rather than a decomposition study.
+81 (AgentForge) | ADJACENT | method | Execution-grounded verification plus role decomposition in an SE multi-agent system; on-topic, but a thin preprint with an unproven venue.
