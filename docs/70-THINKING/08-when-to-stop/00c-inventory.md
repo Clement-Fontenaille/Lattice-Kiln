@@ -20,6 +20,8 @@ Ryo Kamoi, Yusen Zhang, Nan Zhang, Jiawei Han, Rui Zhang. *When Can LLMs Actuall
 
 **Flag.** RELATED - Anchor-grade critical survey of self-correction. Defines three distinct research questions, shows many prior positive results rest on oracle feedback or unfair evaluation. Sets the frame for the whole self-evaluation span.
 
+**Review status.** selected round 1 -> reading booth 01.
+
 ### 3. Language Models (Mostly) Know What They Know
 
 Saurav Kadavath, Tom Conerly, Amanda Askell, Tom Henighan, Dawn Drain, Ethan Perez, Nicholas Schiefer, Zac Hatfield-Dodds et al.. *Language Models (Mostly) Know What They Know.* 2022. arXiv 2022 (Anthropic; no peer-reviewed venue) - anchor. arXiv:2207.05221 (2207.05221v4). https://arxiv.org/abs/2207.05221
@@ -148,6 +150,8 @@ Yasin Abbasi Yadkori, Ilja Kuzborskij, András György, Csaba Szepesvári. *To B
 
 **Flag.** RELATED - Information-theoretic separation of epistemic and aleatoric uncertainty via iterative prompting; detects when only epistemic uncertainty is high, i.e. when the output should not be trusted.
 
+**Review status.** selected round 1 -> reading booth 02.
+
 ### 19. Semantic Entropy Probes: Robust and Cheap Hallucination Detection in LLMs
 
 Jannik Kossen, Jiatong Han, Muhammed Razzak, Lisa Schut, Shreshth Malik, Yarin Gal. *Semantic Entropy Probes: Robust and Cheap Hallucination Detection in LLMs.* 2024. NeurIPS 2024 (per venue listing; not in arXiv metadata). arXiv:2406.15927 (2406.15927v1). https://arxiv.org/abs/2406.15927
@@ -188,6 +192,8 @@ Yang Sui, Yu-Neng Chuang, Guanchu Wang, Jiamu Zhang, Tianyi Zhang, Jiayi Yuan, H
 
 **Flag.** RELATED - Survey of efficient reasoning - when to stop thinking (reasoning length), including trajectory-signal and confidence-based early exit. Overlaps the exhausted-budget / no-progress signals in the Subject.
 
+**Review status.** selected round 1 -> reading booth 04.
+
 ### 24. AbstentionBench: Reasoning LLMs Fail on Unanswerable Questions
 
 Polina Kirichenko, Mark Ibrahim, Kamalika Chaudhuri, Samuel J. Bell. *AbstentionBench: Reasoning LLMs Fail on Unanswerable Questions.* 2025. NeurIPS 2025 (per venue listing; not in arXiv metadata). arXiv:2506.09038 (2506.09038v1). https://arxiv.org/abs/2506.09038
@@ -195,6 +201,8 @@ Polina Kirichenko, Mark Ibrahim, Kamalika Chaudhuri, Samuel J. Bell. *Abstention
 **Abstract (verbatim).** For Large Language Models (LLMs) to be reliably deployed in both everyday and high-stakes domains, knowing when not to answer is equally critical as answering correctly. Real-world user queries, which can be underspecified, ill-posed, or fundamentally unanswerable, require LLMs to reason about uncertainty and selectively abstain -- i.e., refuse to answer definitively. However, abstention remains understudied, without a systematic evaluation framework for modern LLMs. In this work, we introduce AbstentionBench, a large-scale benchmark for holistically evaluating abstention across 20 diverse datasets, including questions with unknown answers, underspecification, false premises, subjective interpretations, and outdated information. Evaluating 20 frontier LLMs reveals abstention is an unsolved problem, and one where scaling models is of little use. While recent reasoning LLMs have shown impressive results in complex problem solving, surprisingly, we find that reasoning fine-tuning degrades abstention (by $24\%$ on average), even for math and science domains on which reasoning models are explicitly trained. We find that while a carefully crafted system prompt can boost abstention in practice, it does not resolve models' fundamental inability to reason about uncertainty. We release AbstentionBench to foster research into advancing LLM reliability.
 
 **Flag.** RELATED - AbstentionBench: 20-dataset benchmark for abstention on unanswerable / underspecified / false-premise questions. Finds abstention unsolved, scale does not help, and reasoning fine-tuning degrades it by ~24%.
+
+**Review status.** selected round 1 -> reading booth 03.
 
 ### 25. Answering the Unanswerable Is to Err Knowingly: Analyzing and Mitigating Abstention Failures in Large Reasoning Models
 
@@ -254,5 +262,31 @@ Sebastian Farquhar, Jannik Kossen, Lorenz Kuhn, Yarin Gal. *Detecting hallucinat
 
 ## 2. Selected for review
 
-_Step 2 output - four picks, one line each on why. Select for spread, not fit._
+_Step 2 output - four picks, one line each on why. Select for spread, not fit.
+Selected 2026-09-07. All four are peer-reviewed; the dedicated agentic-loop
+stopping literature is 2026 preprints (entries 27-30) and is left out of this
+round per the topic scope rule._
+
+- **Round 1, booth 01 - Kamoi et al., "When Can LLMs Actually Correct Their Own
+  Mistakes? A Critical Survey of Self-Correction" (TACL 2024).** A skeptical
+  meta-analysis: it re-frames the whole self-judged stop-or-repeat question,
+  separates the research questions prior work conflated, and argues intrinsic
+  self-correction from prompted LLMs essentially never works. Picked as the
+  frame-setting critical view.
+- **Round 1, booth 02 - "To Believe or Not to Believe Your LLM" (NeurIPS 2024).**
+  A method/theory paper: an information-theoretic metric from iterative prompting
+  that separates epistemic from aleatoric uncertainty and flags when an output
+  should not be trusted. Picked for a principled mechanism, distinct in kind from
+  the surveys and benchmarks.
+- **Round 1, booth 03 - "AbstentionBench: Reasoning LLMs Fail on Unanswerable
+  Questions" (NeurIPS 2025).** A large frontier benchmark for the decline / abandon
+  / hand-off end of the Subject, with a sharp negative result: scaling does not
+  help and reasoning fine-tuning degrades abstention by ~24%.
+- **Round 1, booth 04 - "Stop Overthinking: A Survey on Efficient Reasoning for
+  Large Language Models" (TMLR 2025).** The one peer-reviewed entry covering
+  stopping criteria for iterative generation - reasoning-length control, early
+  exit, confidence- and trajectory-based halting. Picked to cover a sub-area the
+  other three do not touch.
+
+**Review status.** Booths 01-04 fired 2026-09-07 (all four at once).
 
