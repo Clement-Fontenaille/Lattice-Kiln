@@ -237,7 +237,7 @@ or an equivalent task population.
   statistic* for the complexity estimate.
 - A capability model that can be queried per sub-problem. Left as an undefined
   placeholder for now; φ from `02` is the leading candidate and is treated as
-  dubious. Shared with [[I7]].
+  dubious. Shared with [[I7]] and [[I8]].
 
 **Relation to existing entries.** Complementary to [[I2]]: I2 probes
 plan-quality versus executor-capability after the fact, while I6 asks whether the
@@ -250,33 +250,82 @@ then — if the evaluator survives a first test —
 
 ---
 
-## I7 — Metacognitive skills as ordinary, probe-able, prompt-activated skills
+## I7 — Metacognitive skills are ordinary skills
 
-**Provenance.** Same discussion, 2026-09-07. Raised as the principle underneath
-the whole feedback-loop idea: if a capability model can be probed per skill, the
-same probe could identify which *metacognitive* skill a situation calls for, and
-a prompt could switch it on.
+**Provenance.** Discussion 2026-09-07, a follow-up on
+`02-capability-as-granularity.md` from the `07-when-to-decompose/` survey. Split
+the same day: the activation and feedback-loop half moved to [[I8]], leaving I7
+as the claim about the *nature* of the skills only.
 
 **The claim, in questionable form.** Skills such as confidence estimation,
 stuck-detection, decompose-or-not, verify-this-step and revise-versus-commit sit
 on the same capability scale as object-level skills — each has a ceiling, each
-can be probed for, and each can be raised or activated by a targeted prompt.
-Therefore a capability model can be queried for which metacognitive skill a
-situation needs, that skill can be activated deliberately, and the loop can be
-observed.
+varies with capability, each can be probed for, and metacognitive performance
+carries variance of its own rather than tracking general capability.
 
-**Validity criterion for the argument.** It holds only if (a) metacognitive
-performance *dissociates* from object-level performance under probing — it is a
-separate axis with independent variance, not a re-reading of general capability —
-and (b) a prompt targeting metacognitive skill X improves X-dependent outcomes
-beyond a generic strong prompt.
+**Validity criterion for the argument.** It holds only if metacognitive
+performance *dissociates* from object-level performance under probing — a
+separate axis with independent variance, not a re-reading of general capability.
 
 **Falsifier.** Probing shows metacognitive scores are a monotone function of
-object-level scores with no independent variance; or targeted metacognitive
-prompts match generic prompts on the outcomes they are meant to move. For
-error-detection specifically, F17 in `07-when-to-decompose/00d-findings.md` is a
-standing partial falsifier already on the table, together with the result line
-that LLMs cannot self-correct reasoning without external feedback.
+object-level scores with no independent variance.
+
+**Rests on, unproven.** Separability of the ceiling into named operations, which
+`02-capability-as-granularity.md` currently declines to assume ("treat it as
+unitary unless the literature establishes otherwise"). I7 is the explicit request
+to *test* that refusal rather than honour it, so the tension is deliberate and
+must be named wherever I7 is cited.
+
+**Discussion (open, will iterate).** Whether "metacognition" is one axis or
+several is itself unsettled — confidence calibration and error localisation may
+not co-vary, and the probe design has to allow for more than one factor.
+Building the dissociation probe at all depends on the undefined capability-model
+placeholder ([[I6]], [[I8]] share it); φ from `02` is the leading candidate and
+is treated as dubious.
+
+**Would graduate to** the `02` psychometric programme as an added metacognitive
+axis, then a foundations or cognitive-architecture design document once the
+dissociation is demonstrated.
+
+---
+
+## I8 — Situation-matched activation of a metacognitive skill
+
+**Provenance.** Split from [[I7]] on 2026-09-07. This is the "resonate / activate"
+half of the original combined entry — the feedback-loop principle, kept separate
+because it is a distinct claim from "the skills are ordinary".
+
+**The claim, in questionable form.** Given a probe that reports which
+metacognitive skill a situation calls for, a targeted prompt can activate that
+skill in that situation where it would otherwise stay dormant, and activating the
+*situation-matched* skill at the right moment improves the outcome beyond a
+generic strong prompt. The loop is: probe the situation, identify the skill
+needed, inject a prompt that activates it, observe where it leads, repeat.
+
+**Validity criterion for the argument.** It holds only if (a) a prompt targeting
+metacognitive skill X moves X-dependent outcomes beyond a generic strong prompt,
+and (b) the situation-to-skill mapping is identifiable ahead of the outcome, not
+only in hindsight.
+
+**Falsifier.** Targeted metacognitive prompts match generic prompts on the
+outcomes they are meant to move; or the probe cannot pick the skill that helps
+better than choosing at random.
+
+**Discussion — confront the literature and its blind spot (premises P4/P5, will
+iterate).** The body to confront directly is the self-correction and
+self-verification literature: F17 in `07-when-to-decompose/00d-findings.md`, the
+result line that LLMs cannot self-correct reasoning without external feedback,
+and the broader finding that self-critique is often neutral or harmful without an
+oracle. Its blind spot is that it varies *whether* an undifferentiated "review
+your answer" move is applied, not *which* metacognitive skill is invoked nor
+whether it is the one the situation needs. That is structurally the same gap
+`02-capability-as-granularity.md` names in the judge-lab — every intervention
+varied stance, none varied granularity — and the same "a null on the generic
+form does not generalise to the targeted form" move as the partial-views
+argument. So F17 may be a null on the generic move, not a verdict on
+situation-matched activation. This is the blind spot to challenge, and it is why
+I8 is worth pursuing even though the generic version failed. The exact
+confrontation with each paper is still to be written.
 
 **Sub-claims that need their own inquiry.**
 
@@ -287,19 +336,18 @@ that LLMs cannot self-correct reasoning without external feedback.
   can compute. Not established: that an arbitrary good prompt raises a *ceiling*
   rather than eliciting capacity the model already had. That distinction is
   load-bearing here.
-- *The targeted model can write the good prompt itself.* Open, and the risk is
-  circular — a model that cannot perform a skill may be unable to judge which
+- *The targeted model can write the activating prompt itself.* Open, and the risk
+  is circular — a model that cannot perform a skill may be unable to judge which
   prompt would elicit it. Existing automatic-prompting results mostly use capable
   generators, and prompt quality tracks generator capability. The natural split
   is that an advanced model authors the processor instantiation, the constrained
   model runs it, and the instantiation is found by experiment — consistent with
   F18's planning/execution budget asymmetry.
 
-**Rests on, unproven.** Separability of the ceiling into named operations, which
-`02-capability-as-granularity.md` currently declines to assume ("treat it as
-unitary unless the literature establishes otherwise"). I7 is the explicit request
-to *test* that refusal rather than honour it, so the tension is deliberate and
-must be named wherever I7 is cited.
+**Rests on, unproven.** The undefined capability-model placeholder that can be
+probed per skill (shared with [[I6]] and [[I7]]; φ the candidate, dubious); and
+[[I7]] holding — if metacognitive skills do not dissociate, "which skill the
+situation needs" is not a well-posed query.
 
-**Would graduate to** a foundations or cognitive-architecture design document,
-and only after the dissociation named in the validity criterion is demonstrated.
+**Would graduate to** `00-design/40-roadmap/03-research-and-evaluation-agenda.md`
+as a probe-activate-measure experiment.
