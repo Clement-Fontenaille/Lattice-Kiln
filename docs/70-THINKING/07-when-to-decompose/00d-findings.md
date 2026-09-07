@@ -995,6 +995,33 @@ selection/recombination loss ([[F48]], [[F13]], [[I10]]). Complements [[F7]] and
 the per-stage cost/recall accounting sheet `19` also demonstrates (localization is
 only 21% of the $0.70; generation and validation are 77%).
 
+### F50 — A fixed decomposition works when the information that guides the split is present in the input; it fails when the split depends on what only exploration reveals
+
+Sheet `19` (Agentless) §6.2: Agentless is "comparably" as good as closed-source
+interactive agents when the issue states the location in natural language, in a
+stack trace, or via searchable keywords; on problems with **no location clue**,
+"the closed-source agent tools perform better... they are able to use complex code
+search tools." When the issue text carries the pointer — a stack trace is the
+strongest case, it names the file and often the line — one hard-coded narrowing
+pass lands on the fix. When the evidence has to be *discovered* by exploring the
+repository, a fixed forward sweep has nothing to iterate with, and
+explore-and-revise wins.
+
+Consequence: the decide-whether-to-split and decide-the-shape question has a
+concrete input — does the task carry, in its own statement, the information needed
+to author the decomposition? If yes, a fixed pipeline is not merely adequate but
+cheaper and more legible (no long trajectory to reconstruct). If no — the
+decomposition is itself a search problem — a fixed sweep systematically
+underperforms an explore-and-revise loop on exactly those cases, and has no
+recovery path when the fixed split misses ([[F20]]). This is the operational form
+of [[F19]] (upfront versus feedback-revised is tied to observability):
+"observable" here means the guiding evidence is present in the input. It also
+bounds [[F46]] — the negative coordination tax holds when the narrowing has
+evidence to narrow *on*. The principle generalises past code: it applies to
+context assembly (can the right context be assembled without exploring?) and to
+[[I6]] (a plan-time complexity evaluator needs the guiding evidence to be
+present).
+
 ### Papers the gathered findings keep pointing at
 
 - **Faith and Fate** (Dziri et al., NeurIPS 2023) — flagged by sheets `05` and
