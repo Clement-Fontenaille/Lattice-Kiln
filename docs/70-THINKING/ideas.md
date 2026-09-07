@@ -331,13 +331,15 @@ needs neither I6 nor I7.
 
 **Sub-claims that need their own inquiry.**
 
-- *A good prompt raises the ceiling for a skill.* Partly established: prompting
-  technique produces large measurable performance differences, and for
-  chain-of-thought there is an expressivity result (`07-when-to-decompose/` sheet
-  `06`, Merrill & Sabharwal) that it expands the class of functions a transformer
-  can compute. Not established: that an arbitrary good prompt raises a *ceiling*
-  rather than eliciting capacity the model already had. That distinction is
-  load-bearing here.
+- *A good prompt raises the ceiling for a skill.* Qualify the layer (see `02`'s
+  bare / effective / integrated-system naming). At the **processor / effective**
+  layer this is established — prompting technique produces large measurable
+  performance differences under a fixed model, and drawing out latent model
+  capacity *is* raising the effective ceiling. What is open is whether a prompt
+  moves the **model / bare** ceiling — changes what the model can compute at all.
+  For chain-of-thought there is an expressivity result (`07-when-to-decompose/`
+  sheet `06`, Merrill & Sabharwal) that it does, in that one case; how far the
+  bare ceiling moves for skills without such a result is unknown.
 - *The targeted model can write the activating prompt itself.* Open, and the risk
   is circular — a model that cannot perform a skill may be unable to judge which
   prompt would elicit it. Existing automatic-prompting results mostly use capable
