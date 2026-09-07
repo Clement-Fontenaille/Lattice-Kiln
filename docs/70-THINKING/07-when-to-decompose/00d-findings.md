@@ -1084,11 +1084,10 @@ and that suspicion leaks into its answer-only judgment.
 
 Consequence: a harness that collapses accept/reject into one bit inherits the
 reliability of whichever sub-judgment it implicitly leans on, and if it routes on
-*where* the error is it is depending on the least reliable one. "Is the answer
-right?" cannot be treated as independent of "is the reasoning right?" — the
-verifier's outcome judgment is coloured by how the process looks. This is the
-sheet-20 instance of [[F26]]'s dissociation (naming versus structuring) and bears
-on [[F44]] (what the verifier is shown).
+*where* the error is it is depending on the least reliable one. The non-
+independence of the outcome judgment and the process judgment is pulled out
+separately as [[F59]]. This is the sheet-20 instance of [[F26]]'s dissociation
+(naming versus structuring) and bears on [[F44]] (what the verifier is shown).
 
 Second consequence, the constructive one. Q1/Q2/Q3 hold the *context* constant —
 the same trace — and vary only the *instruction*, and still get answers that are
@@ -1173,8 +1172,28 @@ an LLM verifier's accept/reject decision is partly a function of the derivation'
 surface form rather than its logical validity, and the resulting error is
 directional (rejection, not noise). Gold labels come from a deterministic
 exact-arithmetic checker, so label noise is not a plausible alternative
-explanation for the T1 failures. Treat [[F52]]–[[F57]] as mechanism established,
-magnitude unmeasured outside this domain.
+explanation for the T1 failures. Treat [[F52]]–[[F57]] and [[F59]] as mechanism
+established, magnitude unmeasured outside this domain.
+
+### F59 — An LLM verifier's outcome judgment and its process judgment are not separable
+
+Sheet `20`, the T3 condition: the trace contains a genuinely invalid step, but
+its final answer has been reverted to the correct value. Base-model Q1 accuracy
+on T3 — a pure "does the final answer satisfy the equation" question — falls from
+~97–99% on canonical traces to ~57–68% on perturbed ones, even though the final
+answer is correct by construction in every T3 case. The model asked *only* about
+the answer still lowers its verdict because the derivation looked unfamiliar and
+that made it suspicious.
+
+Consequence: you cannot get an independent outcome check out of an LLM by
+narrowing the prompt to the outcome — the verifier carries process-suspicion into
+its answer judgment whether or not you ask for it. This is the complement of
+[[F25]] (a correct answer can sit on wrong reasoning): F25 says the outcome does
+not certify the process; F59 says an LLM's outcome verdict is not clean of the
+process either. For a harness, an outcome gate and a process gate built on the
+same model are correlated failures, not independent checks; a symbolic or
+executable outcome check is the way to get one that is genuinely independent
+([[F27]], [[F42]]).
 
 ### Papers the gathered findings keep pointing at
 
