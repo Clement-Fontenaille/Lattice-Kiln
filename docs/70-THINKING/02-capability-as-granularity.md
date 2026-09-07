@@ -36,17 +36,19 @@ This is the thesis' central open question (`10-foundations/01` — *"where does
 orchestration overhead exceed the benefit of decomposition?"*) restated in a form
 that can be measured.
 
-### Naming convention: always qualify which ceiling
+### Naming convention: qualify which ceiling
 
 Whether "the ceiling" belongs to the model or to the model-plus-assembly is a
 **definitional choice, not an empirical question** — and the useful move is to
-stop choosing and start qualifying. Two terms, always named:
+stop choosing and start qualifying. The terms, named whenever the layer is not
+clear from context:
 
 | term | meaning |
 |---|---|
-| **bare ceiling** | the model alone, naive context assembly, no scaffolding |
-| **effective ceiling** | the model under a **named** scaffold — always stated with which one |
-| **integrated system ceiling** | the grain at which the *whole configuration* — decomposer, executors, aggregator — still **preserves and achieves the original objective** |
+| **bare ceiling** | the model alone, naive context assembly, no scaffolding (the *model* layer) |
+| **effective ceiling** | the model under a **named** scaffold — always stated with which one (the *processor* layer) |
+| **integrated system ceiling** | the grain at which the *whole configuration* — decomposer, executors, aggregator — still **preserves and achieves the original objective** (the *system* layer) |
+| **system+user ceiling** | the integrated system with the human operator in the loop — the grain the operator-plus-system pair can still reach together |
 | **lift** | `effective − bare`, in rungs. The project's output quantity. |
 
 **The third term was added (2026-09-04) because the objective-dissolution failure
@@ -72,6 +74,17 @@ executor-ceiling-matching rule would predict, and from a different direction.
 "The ceiling" unqualified is henceforth a mistake. A bare ceiling is a property
 of a model; an effective ceiling is a property of a *configuration*, and there
 are as many of them as there are scaffolds.
+
+**Refinement (2026-09-07) — "always" was overstated, and there is a fourth
+rung.** The rule is not a mechanical qualifier on every use. "Ceiling" does not
+name the same layer from one context to the next — model / bare, processor /
+effective, system / integrated, and system+user — so when a passage discusses a
+capability limit and does not make the layer clear, state which one is meant;
+where it is obvious from context, an unqualified "the ceiling" is fine.
+Consequence for a claim such as *a good prompt raises the ceiling*: it is
+established at the processor / effective layer, where eliciting latent model
+capacity is exactly what raising that ceiling means, and separately open at the
+model / bare layer (`70-THINKING/ideas.md` I8).
 
 This dissolves OQ-2 rather than answering it, and it sharpens everything
 downstream: *authoring a decomposition requires operating above the target's

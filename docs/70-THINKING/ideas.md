@@ -392,7 +392,9 @@ all. Mirrors `02-capability-as-granularity.md`'s "the risk that would end this"
 and its construct-validation apparatus (internal consistency, factor loading,
 convergent / discriminant validity, Q-matrix identifiability).
 
-**Would graduate to** `00-design/40-roadmap/03-research-and-evaluation-agenda.md`
-as the first φ experiment — `02` already names the cheap version: does any
-candidate φ separate the M6 suite's passes from its failures better than chance,
-using features computable in advance.
+**Status.** The open-question form is recorded in
+`00-design/40-roadmap/02-open-questions-register.md` under *Capability model (φ)*
+(2026-09-07). The experiment form is what would still graduate to
+`00-design/40-roadmap/03-research-and-evaluation-agenda.md` — `02` already names
+the cheap version: does any candidate φ separate the M6 suite's passes from its
+failures better than chance, using features computable in advance.

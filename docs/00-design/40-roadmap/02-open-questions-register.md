@@ -48,6 +48,12 @@ Where should the decision to split live? The orchestrator is the obvious owner, 
 
 What prediction would let the granularity account fail? Until one exists it is a lens, and the architecture is relying on a sketch.
 
+## Capability model (φ)
+
+What information can be extracted about a given model state using a constructed capability projection φ? Before φ can guide decomposition or processor selection, three things must hold in order: it predicts outcomes it was not fit on; it represents the task population it was built from rather than the taxonomy of whichever model generated that population; and it carries to adjacent model states outside its construction set.
+
+Does any candidate φ separate known passes from known failures better than task difficulty alone, using features computable before the task is run? A negative here closes the granularity programme's predictive ambition before the ladder work starts. Origin: `70-THINKING/ideas.md` I9, itself the prior under I6 (upfront complexity evaluator) and I8 (acting on a φ reading).
+
 ## Memory and authorship
 
 Is source — human-authored against system-generated — carried adequately by the existing provenance structure, or does it need representation of its own?
