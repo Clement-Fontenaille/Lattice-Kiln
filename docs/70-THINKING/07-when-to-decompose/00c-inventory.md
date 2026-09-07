@@ -107,7 +107,7 @@ on it.
 ---
 
 ## 9. Divide-or-Conquer? Which Part Should You Distill Your LLM?
-**Review status:** selected round 3 -> reading booth 10.
+**Review status:** reviewed -> sheet `10` (round 3). Cross-paper discussion: pending.
 
 
 **Cite:** Zhuofeng Wu, He Bai, Aonan Zhang, Jiatao Gu, VG Vinod Vydiswaran, Navdeep Jaitly, Yizhe Zhang. "Divide-or-Conquer? Which Part Should You Distill Your LLM?" 2024. Findings of the Association for Computational Linguistics: EMNLP 2024. DOI: 10.18653/v1/2024.findings-emnlp.145. arXiv:2402.15000. https://aclanthology.org/2024.findings-emnlp.145/
@@ -119,7 +119,7 @@ on it.
 ---
 
 ## 10. Chain of Agents
-**Review status:** selected round 3 -> reading booth 11.
+**Review status:** reviewed -> sheet `11` (round 3). Cross-paper discussion: pending.
 
 
 **Cite:** Yusen Zhang, Ruoxi Sun, Yanfei Chen, Tomas Pfister, Rui Zhang, Sercan Ö. Arık. "Chain of Agents: Large Language Models Collaborating on Long-Context Tasks." 2024. Advances in Neural Information Processing Systems 37 (NeurIPS 2024). arXiv:2406.02818. https://openreview.net/forum?id=LuCLf4BJsr
@@ -131,7 +131,7 @@ on it.
 ---
 
 ## 11. Measuring and Narrowing the Compositionality Gap (self-ask)
-**Review status:** selected round 3 -> reading booth 09.
+**Review status:** reviewed -> sheet `09` (round 3). Cross-paper discussion: pending.
 
 
 **Cite:** Ofir Press, Muru Zhang, Sewon Min, Ludwig Schmidt, Noah A. Smith, Mike Lewis. "Measuring and Narrowing the Compositionality Gap in Language Models." 2023. Findings of the Association for Computational Linguistics: EMNLP 2023. DOI: 10.18653/v1/2023.findings-emnlp.378. arXiv:2210.03350. https://aclanthology.org/2023.findings-emnlp.378/
@@ -215,7 +215,7 @@ on it.
 ---
 
 ## 19. Why Do Multi-Agent LLM Systems Fail?
-**Review status:** selected round 3 -> reading booth 12.
+**Review status:** reviewed -> sheet `12` (round 3). Cross-paper discussion: pending.
 
 
 **Cite:** Mert Cemri, Melissa Z. Pan, Shuyi Yang, Lakshya A. Agrawal, Bhavya Chopra, Rishabh Tiwari, Kurt Keutzer, Aditya Parameswaran, Dan Klein, Kannan Ramchandran, Matei Zaharia, Joseph E. Gonzalez, Ion Stoica. "Why Do Multi-Agent LLM Systems Fail?" 2025. Advances in Neural Information Processing Systems 38 (NeurIPS 2025). arXiv:2503.13657. https://neurips.cc/virtual/2025/poster/121528
