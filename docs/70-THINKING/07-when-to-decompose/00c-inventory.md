@@ -36,7 +36,7 @@ on it.
 ---
 
 ## 3. Decomposed Prompting (DecomP)
-**Review status:** selected round 4 -> reading booth 16.
+**Review status:** reviewed -> sheet `16` (round 4). Cross-paper discussion: pending.
 
 
 **Cite:** Tushar Khot, Harsh Trivedi, Matthew Finlayson, Yao Fu, Kyle Richardson, Peter Clark, Ashish Sabharwal. "Decomposed Prompting: A Modular Approach for Solving Complex Tasks." 2023. International Conference on Learning Representations (ICLR 2023). arXiv:2210.02406. https://openreview.net/forum?id=_nGgzQjzaRy
@@ -175,7 +175,7 @@ on it.
 ---
 
 ## 15. TaskBench
-**Review status:** selected round 4 -> reading booth 15.
+**Review status:** reviewed -> sheet `15` (round 4). Cross-paper discussion: pending.
 
 
 **Cite:** Yongliang Shen, Kaitao Song, Xu Tan, Wenqi Zhang, Kan Ren, Siyu Yuan, Weiming Lu, Dongsheng Li, Yueting Zhuang. "TaskBench: Benchmarking Large Language Models for Task Automation." 2024. Advances in Neural Information Processing Systems 37 (NeurIPS 2024), Datasets and Benchmarks Track. arXiv:2311.18760. https://proceedings.neurips.cc/paper_files/paper/2024/hash/085185ea97db31ae6dcac7497616fd3e-Abstract-Datasets_and_Benchmarks_Track.html
@@ -303,7 +303,7 @@ on it.
 <!-- second gather round, 2026-09-06: widened to skeptic/boundary vocabulary (over-decomposition, CoT length, error compounding, aggregation depth). Preprints admitted for this slice, flagged. -->
 
 ## 28. Faith and Fate: Limits of Transformers on Compositionality
-**Review status:** selected round 4 -> reading booth 13.
+**Review status:** reviewed -> sheet `13` (round 4). Cross-paper discussion: pending.
 
 
 **Cite:** Nouha Dziri, Ximing Lu, Melanie Sclar, Xiang Lorraine Li, Liwei Jiang, Bill Yuchen Lin, Peter West, Chandra Bhagavatula, Ronan Le Bras, Jena D. Hwang, Soumya Sanyal, Xiang Ren, Allyson Ettinger, Zaid Harchaoui, Yejin Choi. "Faith and Fate: Limits of Transformers on Compositionality." 2023. Advances in Neural Information Processing Systems 36 (NeurIPS 2023). arXiv:2305.18654. https://proceedings.neurips.cc/paper_files/paper/2023/hash/deb3c28192f979302c157cb653c15e90-Abstract-Conference.html
@@ -542,7 +542,7 @@ on it.
 ---
 
 ## 54. Cumulative Reasoning with Large Language Models
-**Review status:** selected round 4 -> reading booth 14.
+**Review status:** reviewed -> sheet `14` (round 4). Cross-paper discussion: pending.
 
 **Cite:** Yifan Zhang, Jingqin Yang, Yang Yuan, Andrew Chi-Chih Yao. "Cumulative Reasoning with Large Language Models." 2023. TMLR. arXiv:2308.04371. https://arxiv.org/abs/2308.04371
 **Abstract (verbatim, arXiv):**
