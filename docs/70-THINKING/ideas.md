@@ -3,12 +3,34 @@
 *A running register of unvetted ideas thrown off by the THINKING work:
 experiments to run, methods to try, design moves to consider. Low ceremony. Each
 entry carries its provenance and what is open before it would be worth
-committing. When an idea matures it graduates to where committed things live —
-the research-and-evaluation agenda, the open-questions register, or a design
-document — and its entry here records where it went.*
+committing.*
 
 *This is not a design surface. Nothing here constrains anything, and an idea
 sitting here is not a plan to act on it.*
+
+## What an idea is aiming to become
+
+Every entry is trying to graduate into one of these. Its "Would graduate to"
+line names which, and where it went.
+
+1. **Load-bearing design.** An architectural commitment. It leaves THINKING for a
+   foundations, cognitive-architecture, or technical-spec document.
+2. **Documented design principle.** A recorded heuristic with high potential
+   against a core problem — either about the targeted activities (what the system
+   does for its user) or about the system itself.
+3. **Research perspective.** It opens a strong solution to a hard problem, and
+   the test that would confirm it fits a manageable budget. It leaves for the
+   research-and-evaluation agenda.
+4. **Standing evaluation instrument.** A metric or probe the project keeps
+   running, not a one-off experiment.
+5. **Invariant or enforcement constraint.** A hard rule the enforcement gate
+   checks, not a design choice that can be tuned away.
+6. **Catch-all.** Anything important that needs explicit attention and does not
+   fit the first five.
+
+Findings (`00d-findings.md` in each topic folder) are a different thing: a
+reference consulted while unfolding implementation, not a pipeline toward
+graduation.
 
 ---
 
