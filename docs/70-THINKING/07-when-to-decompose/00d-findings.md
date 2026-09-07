@@ -559,6 +559,14 @@ impoverished. The accept/reject port is the right place to spend engineering
 effort, and a symbolic filler beats an LLM one wherever correctness is locally
 decidable.
 
+Sheets `18` and `20` extend this port in four directions: [[F42]] — the port
+needs a *grounding* check (is this input true?), a different capability from the
+*inference* check (does this step follow?), and trust propagation cannot supply
+it; [[F44]] — the port's input contract, what the verifier is allowed to see, is
+itself a parameter; [[F41]] — a weak filler degrades silently, with no built-in
+diagnostic; [[F45]] — a certified-looking score can be a precise average of a
+biased signal.
+
 ### F28 — Provenance as a required output field gives you the dependency graph and invalidation for free
 
 Sheet `14`: constraining each sub-result to declare what it was derived from (in
@@ -857,6 +865,49 @@ check in a harness — spend proportional to disagreement, cache repeated
 sub-judgments. It also supplies the degenerate-mode diagnostic [[F41]] asks for:
 a realised-sample ratio pinned near its floor means the verifier is confident
 everywhere, which is either a genuinely easy chain or the silent collapse.
+
+### F44 — What a validation call is allowed to see is a design parameter, and the usual default is the worst setting
+
+Sheet `18` (ARES): a verifier's premise pool is an attack surface. Judging step
+`k` with steps `1…k-1` all in context makes every earlier error an assumed-true
+premise, so a whole-chain LLM judge can ratify a later step *because* a corrupted
+earlier step supports it. The paper's Robust / Causal / Sufficient checklist names
+the trade: showing everything is Sufficient but not Robust; showing only base
+claims is Robust but not Sufficient; a whole-chain judge additionally fails Causal
+(later steps sway the verdict on earlier ones).
+
+Consequence: for every validation point in a harness — a reasoning step, a
+sub-agent result, a candidate patch — the contents of the verifier's context is a
+deliberate knob with a range of settings (everything so far / base inputs only /
+parent goal plus this step / a weighted subsample / the step alone), each with
+predictable consequences, and the common default of showing the verifier the
+whole trace is the worst of them. Extends [[F27]] (the accept/reject port as a
+design object) and [[F14]] (the boundary as an interposition point): the
+interposition point has an input contract, and it should be set, not inherited.
+
+### F45 — ARES's transferable result is the confidence-weighted premise subsample; its "certified" framing is a sampling-error bound, not a soundness guarantee
+
+Sheet `18` (ARES): the mechanism worth keeping is how it fills the [[F44]] knob.
+When scoring step `k`, each earlier claim is included in the premise pool with
+probability equal to its own entailment score, and the step's score is averaged
+over many such subsamples. An unsound earlier step is therefore mostly *absent*
+from the premises of every later step, so a later step that secretly depends on it
+scores low. This is Robust and Sufficient at once — a clean answer to the
+premise-pool question, and it recurses cleanly because the retention probability
+*is* the score.
+
+The caution is on the framing. Theorem 3.1 certifies only that the Monte-Carlo
+estimate is within `ε` of the exact average, with probability `1 − δ`; it holds
+"for any entailment model," including a worthless one. What it does *not* touch is
+whether the averaged score tracks correctness — that depends entirely on the
+entailment model being able to do entailment at all ("ARES can only improve upon
+entailment models that can already do correct entailment") and being calibrated,
+where its "probability" comes from a hand-written Likert-to-number table that is
+asserted, never validated. No ranking-quality metric (AUROC, reliability diagram)
+is reported; every number thresholds the score back to binary with a fitted
+per-dataset cutoff. So a certified-looking per-step score can be a precise average
+of a biased signal, and the certificate invites trust the mechanism has not
+earned — see [[F41]], and sheet `20` measures how large that bias is.
 
 ### Papers the gathered findings keep pointing at
 
