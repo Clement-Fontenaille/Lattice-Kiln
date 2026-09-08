@@ -20,22 +20,23 @@ The set is deliberately modular. Each important converged idea has its own docum
 > We confront that, and the evidence, and each other.\
 > We experiment again.\
 >
-> We weigh each piece. We sort it. We keep where it came from.\
+> We recurse. We review. We index. We select.\
+> Each piece weighed, sorted, its origin kept.\
 > This is information, not data.\
 > Nothing is only gathered; everything is placed.\
-> And at each step we mark how it felt to do it.\
-> The feeling is design input.\
 >
 > The doing feeds the theory.\
 > The theory shapes the next attempt.\
-> It builds, step on step.\
+> It builds, step on step,\
+> toward the change we will eventually make.\
 >
 > Entropy reduction is the product.\
 > The context is assembled the slow way, on purpose.\
 >
-> Every hunch, every failure, every experiment, every design\
-> articulates into one thing:\
-> the context of the change we will eventually make.\
+> The method mirrors the mechanism.\
+> We almost missed that. We only named it now.\
+> Notice the symmetry. Do not build for it —\
+> not until you can leverage it.\
 >
 > There is no floor — only the ceiling, read from below,\
 > from the place where space begins.\
