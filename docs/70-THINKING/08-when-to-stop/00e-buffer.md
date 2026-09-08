@@ -689,6 +689,38 @@ the selection problem is as hard as the stopping problem with no net gain.
 3) — one replay experiment over cached trajectories.
 Builds on CF-16. Related: [[I1]], [[CF-2]], [[PI-5]].
 
+### PI-9 — Does planner-controlled verification actually self-correct, or is structural mandate needed?
+
+*From design discussion 2026-09-08, not from a sheet. Framed as an open
+empirical question, per the user.*
+
+**The conjecture under test.** The worry is that letting the orchestrator's
+planner decide whether verification runs, what it checks, and what it sees is the
+producer auditing itself. The counter-conjecture is that a planner which emits
+weak verification builds later steps on unreliable work, that work fails
+downstream, and the planner's incentives are reworked by that feedback — so no
+structural mandate is needed, self-interest suffices.
+**Why it is not obvious either way.** The counter-pressure only works if the
+downstream failure is (a) attributable to weak verification and (b) visible to
+whatever signal trains or selects the planner. CF-6 (fabricated context passes
+shape checks) and CF-19 (accept rate rises while true validity falls) are
+failure modes that are invisible to the loop's own signals — which is exactly
+the class of failure weak verification would let through.
+**Validation.** Run a planner with and without a structural always-on check set,
+on a task suite seeded with tasks whose correct verification is non-trivial;
+measure whether the unstructured planner's verification quality degrades over
+successive planning rounds or holds, and whether its downstream failure rate is
+distinguishable from the structured one.
+**Falsifier of the worry.** The unstructured planner's verification quality stays
+flat or improves under downstream feedback, and its task-failure rate matches the
+structured one — in which case the structural mandate is dead weight.
+**Falsifier of the counter.** The unstructured planner's verification decays, or
+its failures cluster in the CF-6 / CF-19 invisible class, so the feedback never
+reaches it.
+**Graduation target.** Research perspective (target 3); alternatively an entry in
+the open-questions register if it is not going to be run soon.
+Related: [[PI-1]], [[PI-3]], [[PI-7]], [[CF-6]], [[CF-19]], [[CF-20]].
+
 ---
 
 ## 3. Reading queue
