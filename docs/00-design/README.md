@@ -42,6 +42,7 @@ The set is deliberately modular. Each important converged idea has its own docum
 > at the scale of the whole project.\
 > The method mirrors the mechanism.\
 > We almost missed that. We named it just now.\
+> The harness we are designing, we are already inside.\
 >
 > Notice the symmetry. Do not build for it —\
 > not until you can leverage it.\
