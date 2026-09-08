@@ -554,6 +554,27 @@ effect — the Correct→Flip rate minus the Wrong→Flip rate — and the
 challenge / critique prompt wording is a first-class sweep factor, not a fixed
 string.
 
+##### CF-26 — A fresh isolated session of the same model removes the trajectory contamination channels at near-zero cost; it does not remove the shared-weights channel. `[SWEEP]`
+
+Sheet 05: "self-probing" runs the check in a second, independent session shown
+only the question and the answer, and it was the most consistent prompting gain
+on GPT-4.
+Sheet 02: the same-shape "S.V." self-verification baseline is real but weak, and
+falls off sharply once recall drops below about 0.8.
+Sheet 06: with authorship anonymised, a model still scores its own output higher
+by 3.6 to 9.4 per cent on a ten-point scale — that residual is what a fresh
+session does *not* recover.
+
+Consequence: a fresh session with an artifact-only input closes the
+shared-context, framing, and label-leak channels (the isolation contract) for the
+price of one extra call. It leaves the shared-weights channel open — correlated
+blind spots and a bounded self-preference — which only a different model closes.
+Confirms / sharpens: [[CF-1]], [[F44]]; bounds [[PI-3]].
+Sweep consequence: include "fresh isolated session, same model, artifact only" as
+a cheap verification tier between a deterministic check and a different-model
+check, and measure how much of the different-model check's discrimination it
+recovers.
+
 ---
 
 ## 2. Proposed ideas
@@ -720,6 +741,46 @@ reaches it.
 **Graduation target.** Research perspective (target 3); alternatively an entry in
 the open-questions register if it is not going to be run soon.
 Related: [[PI-1]], [[PI-3]], [[PI-7]], [[CF-6]], [[CF-19]], [[CF-20]].
+
+### PI-10 — A verification-expert processor that picks the verification approach for a task from its objectives.
+
+*From design discussion 2026-09-08. Skeleton — to be expanded with evidence.*
+
+**Claim.** A dedicated ephemeral processor takes a task's objectives and
+acceptance criteria and returns a *verification plan* for that task: which
+approach to use, what the checker is allowed to see, what counts as done, what
+triggers abandon. It does not run the verification; it chooses it.
+**The menu it selects from.**
+- a deterministic check (test, schema for this task, type check, a projection
+  per [[F47]]);
+- resample-and-compare, where an equivalence relation exists for the artifact
+  type ([[CF-2]], [[CF-3]]);
+- a fresh isolated same-model session, artifact only ([[CF-26]]);
+- an independent different-model check;
+- a decomposed verification task emitting addressable boolean traces ([[I10]]);
+- the perturb-and-check instrument ([[CF-10]]);
+- "no reliable cheap check exists" → treat the output as single-shot and
+  escalate, or decompose the task further ([[CF-19]]: do not loop against a
+  low-discrimination model verifier).
+**Why an expert and not a fixed rule.** Sheet 01 (Kamoi) shows verification
+difficulty is a property of the *task*, not the model — decomposability and
+easy-verifiability are the structural features that decide whether any check
+works, and they vary task to task. [[CF-18]] shows a verifier's discrimination
+does not transfer across task families, so the choice has to be made per family
+and measured.
+**Validation.** On a task suite spanning verification-easy and verification-hard
+tasks, the expert's chosen approach reaches higher stop-decision precision /
+recall at lower verification cost than a single fixed approach applied to all
+tasks.
+**Falsifier.** One fixed approach (e.g. always a fresh isolated session) matches
+the expert across the suite, or the expert's choices are no better than random
+against retrospective ground truth ([[CF-15]], [[F49]]).
+**Open tension.** The expert is itself a context-aware model making a choice, so
+[[PI-9]] applies to it — is its selection self-auditing, or does downstream
+failure rework it?
+**Graduation target.** Documented design principle for the system itself
+(target 2), with a path to load-bearing design (target 1).
+Related: [[PI-1]], [[PI-3]], [[PI-7]], [[CF-26]], [[CF-18]], [[CF-2]], [[I10]].
 
 ---
 
