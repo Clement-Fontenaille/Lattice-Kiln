@@ -656,10 +656,20 @@ Three regimes appear.
   reliable cases are external tools — interpreter, proof assistant, symbolic
   checker — none of which read how the work was produced.
 
-**Two axes the sheets conflate.** *Information* symmetry — does the validator
-have the same knowledge and tools the work had — is a fairness requirement (sheet
-01) and should be straight. *Process* continuity — does it see the trajectory —
-is the thing that should be broken. Straight on the first, cut on the second.
+**Two axes that get conflated — and no evidence separating them.** *Task*
+information (the spec, the inputs, the tools the work had) versus *process*
+information (the trajectory, how the work went). The three regimes above are all
+about process continuity, and the evidence says cut it. Whether *task*-info
+symmetry between work and validation matters is **not measured by any sheet**.
+The only nearby thing is sheet 01's "information symmetry", which is an
+experiment-validity rule (to test unaided self-correction the two stages need
+equal information, or you measure the information not the correction) that sheet
+01 itself says does not transfer to deployment. Open question, not a finding.
+
+**Internal tension.** Cutting process continuity — the isolation contract,
+[[CF-27]] — *is* an information asymmetry: the validation then knows less than
+the work did. So any "keep information symmetric" claim can at most be about task
+info, and even that is an argument, not a result.
 
 Confirms / sharpens: [[CF-27]], [[CF-28]], topic-07 [[F44]]; grounds [[PI-3]],
 [[PI-10]], and [[PI-12]]'s one-way-dataflow constraint.
