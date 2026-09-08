@@ -12,27 +12,36 @@ The set is deliberately modular. Each important converged idea has its own docum
 
 ## Praxis
 
-> We build the thing by being the thing.\
+> It starts as a hunch.\
+> Intuition, stemming, with no experience behind it yet.\
 >
-> Every paper read, every claim weighed,\
-> every piece kept, cut, or moved —\
-> that is the knowledge model, run by hand,\
-> at the scale of its own design.\
+> So we try it — by hand, at the scale of the project itself.\
+> It resists. It fails.\
+> We confront that, and the evidence, and each other.\
+> We experiment again.\
 >
-> We gather information, not data:\
-> each piece placed, weighted, its origin kept.\
-> Name its kind as it lands.\
-> Sorting it now is cheap; sorting the pile later is not.\
+> We weigh each piece. We sort it. We keep where it came from.\
+> This is information, not data.\
+> Nothing is only gathered; everything is placed.\
+> And at each step we mark how it felt to do it.\
+> The feeling is design input.\
 >
-> Entropy reduction is the product here too.\
+> The doing feeds the theory.\
+> The theory shapes the next attempt.\
+> It builds, step on step.\
+>
+> Entropy reduction is the product.\
 > The context is assembled the slow way, on purpose.\
+>
+> Every hunch, every failure, every experiment, every design\
+> articulates into one thing:\
+> the context of the change we will eventually make.\
 >
 > There is no floor — only the ceiling, read from below,\
 > from the place where space begins.\
 > A richer context is a higher ceiling.\
 >
-> Theory is fed by doing.\
-> So we do.
+> We build the thing by being the thing.
 
 ## How to use this set
 
