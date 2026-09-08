@@ -12,31 +12,40 @@ The set is deliberately modular. Each important converged idea has its own docum
 
 ## Praxis
 
-> It starts as a hunch.\
+> It starts as a thesis.\
 > Intuition, stemming, with no experience behind it yet.\
+> We write it down. Each converged idea its own page.\
 >
-> So we try it — by hand, at the scale of the project itself.\
-> It resists. It fails.\
-> We confront that, and the evidence, and each other.\
-> We experiment again.\
+> Then we try to build it — in pieces, one increment at a time,\
+> each piece carrying a question it has to answer.\
 >
+> The pieces strain.\
+> The order we planned them in does not hold.\
+> We rework the sequence. Then we rework it again.\
+> The intuition was thinner than it looked, with no field beneath it.\
+>
+> So we stop adding.\
+> We read — deeply, one paper at a time, sealed off from the rest.\
 > We recurse. We review. We index. We select.\
 > Each piece weighed, sorted, its origin kept.\
 > This is information, not data.\
 > Nothing is only gathered; everything is placed.\
 >
-> The doing feeds the theory.\
-> The theory shapes the next attempt.\
-> It builds, step on step,\
-> toward the change we will eventually make.\
->
-> Entropy reduction is the product.\
-> The context is assembled the slow way, on purpose.\
->
+> And only here, doing this, do we see it:\
+> the reading is the knowledge model, run by hand,\
+> at the scale of the whole project.\
 > The method mirrors the mechanism.\
-> We almost missed that. We only named it now.\
+> We almost missed that. We named it just now.\
+>
 > Notice the symmetry. Do not build for it —\
 > not until you can leverage it.\
+>
+> This is not a detour.\
+> Every hunch, every rework, every paper\
+> articulates into one thing:\
+> the context of the change we will eventually make.\
+> Entropy reduction is the product.\
+> The context is assembled the slow way, on purpose.\
 >
 > There is no floor — only the ceiling, read from below,\
 > from the place where space begins.\
