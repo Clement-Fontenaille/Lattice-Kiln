@@ -594,6 +594,39 @@ Sweep consequence: for every verification arm, record which channels it leaves
 open, and — where feasible — measure the arm's discrimination with a channel held
 open versus closed.
 
+##### CF-28 — What a check is allowed to see is a design space, not a single minimal rule; ARES demonstrated a cheap concurrent ensemble strategy for it. `[SWEEP]`
+
+The isolation contract ("artifact bytes plus spec, nothing else") is one point in
+that space. Topic-07 [[F44]] states the axis; topic-07 sheet 18 (ARES,
+[[F45]]) fills in a different, cheap, concurrent point.
+
+The known points:
+- **Full context** — everything before the step. [[F44]] calls this the worst
+  option (corruption propagates through the premise).
+- **Minimal fixed** — artifact plus spec, one context. Requires you to know in
+  advance what the check needs.
+- **Projection** — one deterministically-extracted partial view ([[F47]]).
+- **Stochastic soundness-weighted ensemble (ARES)** — the check does not get one
+  context. Each earlier step is carried into a step's premise pool with a
+  probability equal to how well it itself entailed — a doubtful step is
+  statistically excluded from every downstream premise pool in proportion to how
+  doubtful it looks. The score is the average over many such sampled premise
+  sets, and the samples are embarrassingly parallel. A cheap operating point
+  exists (ARES `eps = 0.4`: 17 samples, ~15× cheaper, small accuracy loss).
+
+Consequence: the ensemble point has a property the minimal-fixed point lacks — it
+is robust to *not knowing* which earlier context is load-bearing versus
+corrupting, because a claim only lifts the score if it consistently supports the
+step across subsets. It is resample-over-*contexts*, the complement of [[CF-2]]'s
+resample-over-outputs, and a structured form of [[CF-10]]'s perturb-and-check.
+Caveat from the sheet: ARES's own recommended config keeps *all* base claims
+(`p = 1`) and only samples over derived steps; the cost floor is still 1–80
+entailment calls per step, and its formalism is linear-chain only (no DAG / merge).
+Confirms / sharpens: [[F44]], [[F45]], [[F42]]; extends [[PI-3]], [[PI-10]].
+Sweep consequence: add "stochastic soundness-weighted premise ensemble" as a
+verification-context arm distinct from minimal-fixed and full-context, and price
+it at its cheap operating point, not its headline one.
+
 ---
 
 ## 2. Proposed ideas
@@ -795,8 +828,10 @@ triggers abandon. It does not run the verification; it chooses it.
 - *What runs it*: a deterministic tool (no model) / a fresh isolated same-model
   session, artifact only ([[CF-26]]) / a different model / a trained verifier
   model.
-- *What it sees*: the task spec yes, the production trajectory no; the whole
-  artifact, or a projection ([[F47]]), or decomposed steps.
+- *What it sees* ([[CF-28]] is the design space): minimal-fixed (artifact plus
+  spec), a projection ([[F47]]), decomposed per-sub-question slices, or a
+  stochastic soundness-weighted premise ensemble (ARES). The production
+  trajectory is out in every case.
 
 **Also selects channel exposure.** Every strategy leaves some of the [[CF-27]]
 contamination channels open. The expert picks a strategy whose open channels the
