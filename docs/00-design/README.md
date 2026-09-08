@@ -10,6 +10,30 @@ The set is deliberately modular. Each important converged idea has its own docum
 
 > **Motto:** Stable enough to reason from; provisional enough to revise.
 
+## Praxis
+
+> We build the thing by being the thing.\
+>
+> Every paper read, every claim weighed,\
+> every piece kept, cut, or moved —\
+> that is the knowledge model, run by hand,\
+> at the scale of its own design.\
+>
+> We gather information, not data:\
+> each piece placed, weighted, its origin kept.\
+> Name its kind as it lands.\
+> Sorting it now is cheap; sorting the pile later is not.\
+>
+> Entropy reduction is the product here too.\
+> The context is assembled the slow way, on purpose.\
+>
+> There is no floor — only the ceiling, read from below,\
+> from the place where space begins.\
+> A richer context is a higher ceiling.\
+>
+> Theory is fed by doing.\
+> So we do.
+
 ## How to use this set
 
 The `00-project` space defines what the project is, what success means, and how conceptual decisions should be managed. `05-vocabulary.md` fixes shared definitions the set uses without defining — starting with **harness**.
