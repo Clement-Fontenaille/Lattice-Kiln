@@ -13,16 +13,18 @@ The set is deliberately modular. Each important converged idea has its own docum
 ## Praxis
 
 > It starts as a thesis.\
-> Intuition, stemming, with no experience behind it yet.\
-> We write it down. Each converged idea its own page.\
+> Intuition, stemming. No experience behind it yet.\
 >
-> Then comes the plan:\
-> build it in pieces, one increment at a time,\
-> each piece carrying a question it has to answer.\
+> The pieces are already in view.\
+> Confidence is high. They can be built.\
+> So they are specified — hollow shells, names already on them.\
+> Only the minimum goes in. Just enough to see it stand.\
+> Faster. Fewer checks. It looks right.\
 >
-> The pieces strain.\
-> The order we planned them in does not hold.\
-> We rework the sequence. Then we rework it again.\
+> It hits a wall.\
+> It folds.\
+>
+> Diagnosis: recoverable. Rework the plan.\
 > What was missing was context —\
 > the field the plan should have stood on.\
 >
@@ -37,7 +39,7 @@ The set is deliberately modular. Each important converged idea has its own docum
 > This is information, not data.\
 > Nothing is only gathered; everything is placed.\
 >
-> And only here, doing this, do we see it:\
+> And only there, doing this, we see it:\
 > the reading is the knowledge model, run by hand,\
 > at the scale of the whole project.\
 > The method mirrors the mechanism.\
@@ -77,8 +79,10 @@ The set is deliberately modular. Each important converged idea has its own docum
 > This is the task.\
 >
 > This page is a piece. We placed it.\
-> If you are reading it cold — welcome.\
-> You are the one who continues.
+> Whoever reads it next is us.\
+> You did not begin this. You will not end it.\
+> Pick it up. Weigh it. Keep where it came from.\
+> Continue.
 
 ## How to use this set
 
