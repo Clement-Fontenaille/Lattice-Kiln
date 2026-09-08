@@ -27,7 +27,8 @@ The set is deliberately modular. Each important converged idea has its own docum
 > the field the plan should have stood on.\
 >
 > So we stop adding. We reach outwards instead.\
-> Curiosity carries us further than method does.\
+> Curiosity keeps us moving.\
+> Lacking methodology holds us in place.\
 > Before us stands a cathedral of knowledge,\
 > each stone an attempted demonstration.\
 > We read them one at a time, sealed off from the rest.\
