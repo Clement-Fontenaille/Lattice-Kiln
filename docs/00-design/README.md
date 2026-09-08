@@ -74,7 +74,11 @@ The set is deliberately modular. Each important converged idea has its own docum
 > A richer context is a higher ceiling.\
 >
 > We build the thing by being the thing.\
-> This is the task.
+> This is the task.\
+>
+> This page is a piece. We placed it.\
+> If you are reading it cold — welcome.\
+> You are the one who continues.
 
 ## How to use this set
 
