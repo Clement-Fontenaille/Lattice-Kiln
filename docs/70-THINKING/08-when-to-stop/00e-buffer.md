@@ -66,6 +66,8 @@ fast keep / cut / merge / misread scan; full text below it.*
 
 #### CF-1 — The stop / continue / escalate decision cannot be sited in the model's own verdict on its own work. `[SWEEP]`
 
+**→ Graduated to `00d-findings.md` as F1 (2026-09-09).**
+
 Five sheets converge on this from different directions.
 Sheet 01 (Kamoi survey) localises the weak link in feedback *generation*, not in
 refinement: models can act on a reliable signal, but they cannot reliably produce
@@ -626,6 +628,45 @@ Confirms / sharpens: [[F44]], [[F45]], [[F42]]; extends [[PI-3]], [[PI-10]].
 Sweep consequence: add "stochastic soundness-weighted premise ensemble" as a
 verification-context arm distinct from minimal-fixed and full-context, and price
 it at its cheap operating point, not its headline one.
+
+##### CF-29 — Across the sheets, the trustworthiness of a validation runs inverse to its context continuity with the work. `[SWEEP]`
+
+*Answering the design-discussion question: "how straight is the context
+continuity between the work and the validation?"*
+
+Three regimes appear.
+
+- **Shallow continuity — the validation reads the work's narration — is poison.**
+  Sheet 06: showing the judge the revision history inflates the score by about a
+  point on a ten-point scale with the justification unchanged. Sheet 03: judging
+  the reasoning trace instead of only the final answer raises recall and *drops*
+  precision, because the trace hedges indiscriminately. [[CF-11]], [[CF-12]]:
+  stance, tone, and provenance in the work's own output move the verdict more
+  than corrupted reasoning does. The isolation contract ([[CF-27]]) exists to cut
+  exactly this continuity.
+- **Deep continuity — the validation reads the work's internal state — is
+  mixed.** Sheet 14: a probe on mid-layer activations separates answerable from
+  unanswerable at AUROC 0.87–0.97. Sheet 07: softmax-dispersion features from the
+  work's own forward pass correlate about 0.6 with quality. Both are maximally
+  continuous, and both inherit the work's blind spots — sheet 07 cannot catch a
+  confident hallucination because the signal *is* the work's confidence.
+- **No process continuity — the validation re-derives from the artifact — is the
+  only kind the surveys trust.** Sheet 12 (Reflexion): removing the self-written
+  test check makes the loop worse than not iterating. Sheet 01 (Kamoi): the fair,
+  reliable cases are external tools — interpreter, proof assistant, symbolic
+  checker — none of which read how the work was produced.
+
+**Two axes the sheets conflate.** *Information* symmetry — does the validator
+have the same knowledge and tools the work had — is a fairness requirement (sheet
+01) and should be straight. *Process* continuity — does it see the trajectory —
+is the thing that should be broken. Straight on the first, cut on the second.
+
+Confirms / sharpens: [[CF-27]], [[CF-28]], topic-07 [[F44]]; grounds [[PI-3]],
+[[PI-10]], and [[PI-12]]'s one-way-dataflow constraint.
+Sweep consequence: treat work↔validation continuity as an explicit factor with
+three levels (narration-continuous / state-continuous / re-derived), and expect
+discrimination to be worst at the first and the surveys' trust to sit at the
+third.
 
 ---
 
