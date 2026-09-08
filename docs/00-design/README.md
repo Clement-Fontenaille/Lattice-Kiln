@@ -42,6 +42,17 @@ The set is deliberately modular. Each important converged idea has its own docum
 > at the scale of the whole project.\
 > The method mirrors the mechanism.\
 > We almost missed that. We named it just now.\
+>
+> The papers keep saying the same thing:\
+> a mind alone cannot tell if its work is done,\
+> cannot tell when to stop,\
+> cannot tell what it does not know.\
+> That is not the model's failure alone.\
+> In the moment, it is ours.\
+>
+> So we hold ourselves to the discipline we design for it:\
+> write it down, weigh it, keep where it came from,\
+> let the correction do the work.\
 > The harness we are designing, we are already inside.\
 >
 > Notice the symmetry. Do not build for it —\
