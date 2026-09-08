@@ -522,16 +522,44 @@ by rounds 1–2).**
 - **#26 "Self-Reflection in LLM Agents"** (FLLM 2024) — self-reflection improves
   re-answering, but the wrong-answer trigger is an oracle.
 
-### Search gaps I would still like covered
+### Gap-closing candidates found by search (this pass)
 
-The inventory is now strong on loop-stopping mechanisms (#28, #29, #30) and on
-the self-evaluation / confidence side. Two angles are still thin, and one search
-round each would likely close them:
+Two targeted searches were run for the angles the inventory was thin on. All the
+hits are 2026 preprints, so they sit under the same central-preprint exception as
+booths 09–11. Not yet inventoried with verbatim abstracts; that is the next
+mechanical step if you want any of them read.
 
-1. **Value-of-computation / anytime framing of the stop decision.** Decision-
-   theoretic "is another step worth its cost" work, as opposed to
-   threshold-on-a-signal work.
-2. **Runtime repeated-action and no-progress detection as its own method.**
-   Inventory #29 is static analysis; the trajectory-signal side of the Subject
-   (no state change, repeated actions) has no dedicated runtime-detection entry
-   yet.
+**Value-of-computation / decision-theoretic stopping.**
+
+- **"Knowing When to Quit: A Principled Framework for Dynamic Abstention in LLM
+  Reasoning"** (arXiv:2604.18419). Halt generation when a value-function estimate
+  of the current state falls below an abstention-reward threshold. This is the
+  "is another step worth its cost" framing directly. Strong booth candidate.
+- **"Agentic Abstention: Do Agents Know When to Stop Instead of Act?"**
+  (arXiv:2606.28733). An abstention benchmark for *agents* rather than for
+  single-turn QA — the closest thing to sheet 03's setting moved into a loop.
+- **"Doomed from the Start: Early Abort of LLM Agent Episodes via a
+  Recall-Controlled Probe Cascade"** (arXiv:2607.06503). A cascade of cheap
+  probes that aborts an episode early, with recall control on the abort decision.
+  The abandon end of the Subject.
+- **Meta-Reasoner** (arXiv:2502.19918). Summarise progress into a report each
+  step, then a contextual bandit picks the guidance strategy or discards the
+  avenue. Sheet 04 named this as the nearest thing in the literature to a
+  *learned* progress judge; worth its own booth.
+
+**Runtime stall / repeated-action detection as its own method.**
+
+- **"Early Diagnosis of Wasted Computation in Multi-Agent LLM Systems via
+  Failure-Aware Observability"** (arXiv:2606.01365). Cheap trace signals for
+  stalled trajectories during execution, with selective LLM-as-judge validation
+  rather than always-on cost.
+- **"When Agentic Executions Fail: Detecting and Localizing Runtime Faults from
+  Telemetry"** (arXiv:2608.14680). Runtime fault detection and localisation from
+  trajectory telemetry.
+- **"MIRAGE-Bench: LLM Agent is Hallucinating and Where to Find Them"**
+  (arXiv:2507.21017). An agent-hallucination benchmark — the assumption-filling
+  failure of CF-6 in an agentic setting.
+
+Still uncovered after this pass: nothing glaring. The economic / anytime framing
+now has entries; the runtime-signal side now has entries. A third search would be
+into diminishing returns for this topic.

@@ -323,5 +323,61 @@ self-knowledge boundary.
   of unanswerable questions plus an automated unanswerability metric. The "is this
   beyond me" judgement in isolation.
 
-**Review status.** Booths 05-08 fired 2026-09-07; all four read, sheets imported, cross-paper discussion pending.
+**Review status.** Booths 05-08 fired 2026-09-07; all four read, sheets imported. Cross-paper discussion for sheets 01-08 done 2026-09-08 -> `00e-buffer.md` (candidate findings CF-1..CF-15, proposed ideas PI-1..PI-6).
+
+### Rounds 3 and 4 (selected 2026-09-08)
+
+The user authorised two more rounds. The peer-reviewed corpus does not cover the
+agentic-loop stopping decision itself; the dedicated papers are 2026 preprints
+(inventory #25, #27, #28, #29, #30). Following the topic-07 precedent for central
+preprints, rounds 3 and 4 read those alongside the peer-reviewed anchors they
+build on. Spread over the two rounds: loop-stopping mechanisms, the
+loop-non-termination failure mode, the canonical self-reflection loop, the
+white-box self-knowledge anchor, a peer-reviewed large-reasoning-model abstention
+paper, the sycophancy-under-challenge effect, and a large-scale judge-reliability
+audit.
+
+- **Round 3, booth 09 - "Semantic Early-Stopping for Iterative LLM Agent Loops"**
+  (#28, arXiv:2606.27009). Embedding-convergence plus quality-plateau stop rule
+  with a termination proof; the "which round is best" reframe.
+- **Round 3, booth 10 - "Verify, Repair, Repeat, or Stop?" (VRR-Stop)**
+  (#30, arXiv:2607.17641). Four-parameter noise model separating verifier
+  false-accept / false-reject from repair damage; stop on the sign of the true
+  marginal gain.
+- **Round 3, booth 11 - "When Agents Do Not Stop: Uncovering Infinite Agentic
+  Loops"** (#29, arXiv:2607.01641). Static analysis of unbounded feedback paths;
+  the non-termination failure characterised directly.
+- **Round 3, booth 12 - Shinn et al., "Reflexion"** (#8, arXiv:2303.11366,
+  NeurIPS 2023). The canonical self-reflection-gated retry loop; peer-reviewed;
+  untouched by rounds 1-2.
+- **Round 4, booth 13 - Kadavath et al., "Language Models (Mostly) Know What
+  They Know"** (#3, arXiv:2207.05221, 2022 anchor). P(True) and P(IK); the
+  white-box counterweight to the "self-report is useless" convergence.
+- **Round 4, booth 14 - Liu et al., "Answering the Unanswerable Is to Err
+  Knowingly"** (#25, arXiv:2508.18760, AAAI 2026). Large reasoning models have an
+  internal sense of solvability but do not express abstention.
+- **Round 4, booth 15 - Laban et al., "Are You Sure? The FlipFlop Experiment"**
+  (#12, arXiv:2311.08596). Challenged with "Are you sure?", models flip ~46% and
+  lose ~17% accuracy; sycophancy corrupting the confirm-or-revise judgement.
+- **Round 4, booth 16 - Norman et al., "Reliability without Validity"**
+  (#27, arXiv:2606.19544). 21 judges, ~541k judgments; kappa deflation; the
+  consistency-versus-bias paradox; a Minimum Viable Validation Protocol.
+
+**Review status.** Booths 09-12 (round 3) built and fired 2026-09-08. Booths
+13-16 (round 4) built 2026-09-08; firing held until round 3 lands, to stay under
+the session rate limit. Cross-paper discussion for rounds 3-4: pending.
+
+### Gap-closing candidates from search (2026-09-08)
+
+Two targeted searches for angles the inventory was thin on. All 2026 preprints;
+verbatim abstracts not yet captured. Staged in `00e-buffer.md` section 3.
+
+- Value-of-computation stopping: "Knowing When to Quit" (arXiv:2604.18419);
+  "Agentic Abstention: Do Agents Know When to Stop Instead of Act?"
+  (arXiv:2606.28733); "Doomed from the Start" early-abort probe cascade
+  (arXiv:2607.06503); Meta-Reasoner (arXiv:2502.19918).
+- Runtime stall / repeated-action detection: "Early Diagnosis of Wasted
+  Computation ... via Failure-Aware Observability" (arXiv:2606.01365); "When
+  Agentic Executions Fail ... Runtime Faults from Telemetry" (arXiv:2608.14680);
+  "MIRAGE-Bench" agent hallucination (arXiv:2507.21017).
 
