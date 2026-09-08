@@ -382,3 +382,36 @@ verbatim abstracts not yet captured. Staged in `00e-buffer.md` section 3.
   Agentic Executions Fail ... Runtime Faults from Telemetry" (arXiv:2608.14680);
   "MIRAGE-Bench" agent hallucination (arXiv:2507.21017).
 
+### Round 5 (selected 2026-09-09)
+
+Narrow pass targeting the gap the rounds 1-4 sheets all flag in their limitations
+— single-turn, not measured in a trajectory — plus the decision-theoretic
+framing none of the 16 carry, plus the semantic-entropy anchor.
+
+- **Booth 17 — "Knowing When to Quit: A Principled Framework for Dynamic
+  Abstention in LLM Reasoning"** (arXiv:2604.18419, preprint). Halt when a
+  value-function estimate falls below an abstention-reward threshold — "is the
+  next step worth its cost".
+- **Booth 18 — "Agentic Abstention: Do Agents Know When to Stop Instead of
+  Act?"** (arXiv:2606.28733, preprint). Abstention measured in a multi-step
+  agentic setting.
+- **Booth 19 — "Meta-Reasoner: Dynamic Guidance for Optimized Inference-time
+  Reasoning"** (arXiv:2502.19918, preprint). A contextual bandit over per-step
+  progress reports — the nearest thing to a learned progress judge (sheet 04
+  named it).
+- **Booth 20 — Kuhn, Gal, Farquhar, "Semantic Uncertainty" (ICLR 2023,
+  arXiv:2302.09664)** as primary, with a note on the Nature 2024 follow-up
+  (inventory #31, abstract still to capture).
+
+**Review status.** Booths 17-20 fired 2026-09-09. Reading; sheets and cross-paper
+pass pending.
+
+## Findings graduated (running)
+
+- **F1** <- CF-1 (self-report cannot site the stop decision).
+- **F2** <- CF-29 (validation trust runs inverse to work-context continuity).
+- **F3** <- CF-30 (draft-independent vs draft-dependent check resources).
+- **F4** <- CF-2 (resample-agreement; stability not correctness folded in).
+- **F5** <- CF-4 (verifiable-reward optimisation erodes willingness to decline).
+- CF-3 cut (fold the stability caveat inline, no indirection).
+
