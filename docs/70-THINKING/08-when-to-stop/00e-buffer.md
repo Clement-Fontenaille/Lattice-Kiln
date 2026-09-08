@@ -748,15 +748,44 @@ Related: [[PI-1]], [[PI-3]], [[PI-7]], [[CF-6]], [[CF-19]], [[CF-20]].
 
 **Claim.** A dedicated ephemeral processor takes a task's objectives and
 acceptance criteria and returns a *verification plan* for that task: which
-approach to use, what the checker is allowed to see, what counts as done, what
+strategy to use, what the checker is allowed to see, what counts as done, what
 triggers abandon. It does not run the verification; it chooses it.
-**The menu it selects from.**
-- a deterministic check (test, schema for this task, type check, a projection
-  per [[F47]]);
+
+**Strategy nomenclature (three output / authority classes).**
+
+- **Gated** — binary pass / fail, terminal, blocks on fail, one-way dataflow.
+  Deterministic where possible. Home of the invariant checks and of
+  task-specific tests, schema, and type checks. Reliable but narrow: it only
+  covers what a rule can express.
+- **Judged** — a graded or narrative assessment from a model, advisory, feeds a
+  decision without enforcing. Broad coverage, low and non-transferable
+  reliability ([[CF-18]], sheets 06 and 16). Never the sole terminator
+  ([[CF-20]]); never a score the producing loop optimises against ([[CF-19]]).
+- **Compound** — a judged check that can call auditing tools mid-assessment: run
+  the test suite, grep the artifact, execute a probe, retrieve a reference, then
+  reason over the results. Its output is a grounded report with evidence
+  pointers, not necessarily a verdict and not necessarily enforcing. It is the
+  middle path — it gives the judge the deterministic leverage a bare judge
+  lacks, which is exactly the grounding check [[F42]] says a chain verifier is
+  missing. Cost and reproducibility are worse than gated; grounding is better
+  than judged. Its residual risk is that the judge still chooses what to audit
+  and how to read a green result (sheet 03's judge handed the gold label).
+
+**Crossed with two more axes.**
+
+- *What runs it*: a deterministic tool (no model) / a fresh isolated same-model
+  session, artifact only ([[CF-26]]) / a different model / a trained verifier
+  model.
+- *What it sees*: the task spec yes, the production trajectory no; the whole
+  artifact, or a projection ([[F47]]), or decomposed steps.
+
+**Selection cases the expert must cover.**
+- a deterministic gated check (test, schema, type check, projection);
 - resample-and-compare, where an equivalence relation exists for the artifact
   type ([[CF-2]], [[CF-3]]);
-- a fresh isolated same-model session, artifact only ([[CF-26]]);
-- an independent different-model check;
+- a fresh isolated same-model judged check ([[CF-26]]);
+- a compound check when deterministic leverage exists but no single rule
+  captures correctness;
 - a decomposed verification task emitting addressable boolean traces ([[I10]]);
 - the perturb-and-check instrument ([[CF-10]]);
 - "no reliable cheap check exists" → treat the output as single-shot and
@@ -780,7 +809,39 @@ against retrospective ground truth ([[CF-15]], [[F49]]).
 failure rework it?
 **Graduation target.** Documented design principle for the system itself
 (target 2), with a path to load-bearing design (target 1).
-Related: [[PI-1]], [[PI-3]], [[PI-7]], [[CF-26]], [[CF-18]], [[CF-2]], [[I10]].
+Related: [[PI-1]], [[PI-3]], [[PI-7]], [[PI-11]], [[CF-26]], [[CF-18]], [[CF-2]], [[I10]].
+
+### PI-11 — Verification is keyed to the processor's kind, not only the task.
+
+*From design discussion 2026-09-08. To be expanded with evidence.*
+
+**Claim.** Not all processors are executors. A planner, a context assembler, a
+summariser, and a transform processor fail in different ways and admit different
+checks, so the verification strategy ([[PI-10]]) is selected on processor kind as
+well as task objectives.
+
+**Kind → natural check and natural failure mode.**
+- **Executor** — did the intended state change occur; gated deterministic checks
+  fit well.
+- **Planner / decomposer** — is the decomposition sound: are the sub-tasks
+  independently checkable, is recombination defined ([[F42]], and topic 07's
+  recombination-is-under-measured thread F13 / F22 / F28; Kamoi's decomposability
+  property). This verifies a *plan*, not an output, so the check is structural,
+  not a test.
+- **Retrieval / context assembly** — was the load-bearing context gathered;
+  recall against retrospective ground truth ([[I11]]) is the metric, not
+  precision.
+- **Summarise / compress** — was entropy reduced without dropping load-bearing
+  content (topic 07 F39: overlapping or lossy context degrades the consuming
+  step); a decomposed boolean-trace check fits ([[I10]]).
+- **Transform / edit** — behaviour equivalence (AST, tests), not surface diff.
+
+**Validation.** A processor-kind-indexed verification table reaches higher
+stop-decision precision / recall per kind than a task-objective-only selection.
+**Falsifier.** Processor kind adds nothing over task objectives for predicting
+the right check.
+**Graduation target.** Documented design principle (target 2).
+Related: [[PI-10]], [[PI-7]], [[I10]], [[I11]], [[F42]].
 
 ---
 
