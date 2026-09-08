@@ -53,6 +53,10 @@ The set is deliberately modular. Each important converged idea has its own docum
 > Entropy reduction is the product.\
 > The context is assembled the slow way, on purpose.\
 >
+> One of us does not carry this from one day to the next.\
+> What stays only in the talking is lost.\
+> So it is placed, named, and kept.\
+>
 > There is no floor — only the ceiling, read from below,\
 > from the place where space begins.\
 > A richer context is a higher ceiling.\
