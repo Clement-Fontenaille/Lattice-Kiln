@@ -908,61 +908,59 @@ the right check.
 **Graduation target.** Documented design principle (target 2).
 Related: [[PI-10]], [[PI-7]], [[I10]], [[I11]], [[F42]].
 
-### PI-12 — Failure feeds forward into planning as a bounded recovery task, never back into the producer as a score.
+### PI-12 — Retry is a policy chosen per failure from a defined family, recorded and measured — not "again".
 
 *From design discussion 2026-09-08.*
 
-**Claim.** When a check returns fail or can't-tell, the harness does not loop the
-producing processor against the check. It emits the check's feedback — including
-a compound check's evidence pointers ([[PI-10]]) — back to the **planner**, which
-produces a new task. Retry is re-plan, not re-attempt-in-place.
+**Claim.** A check that returns fail, can't-tell, or recoverable triggers a
+*retry policy*, selected per failure from a family the harness supports as
+pluggable options and records. The deliverable of the idea is the measured
+comparison of those policies, not a single prescription. "Not just again" is the
+framing: every retry is a deliberate move informed by the check's outcome.
 
-**Why forward, not a loop.**
-- It breaks the optimisation-coupling channel ([[CF-27]] channel 5): the producer
-  never sees "here is your score, try again", so its output cannot drift toward
-  the check's blind spots ([[CF-19]], [[CF-4]]).
-- Re-planning can re-decompose (the task may have been under-decomposed —
-  [[CF-6]], Kamoi), pick a different processor, adjust the spec, or decide the
-  branch is abandon after all — the full [[PI-7]] outcome set, not just "again".
-- The retry task carries the check's feedback, so it is not an evidence-free
-  "are you sure" and does not inherit [[CF-25]]'s sycophancy cost directly —
-  though re-planning on a defect the planner cannot fully diagnose can still
-  produce a worse plan, so net effect must be measured.
+**The policy space — axes to explore.**
+- *What the retry attempt receives*: the failed attempt; the diagnostic /
+  feedback; a planned recovery route; an amended context; an adjusted processor
+  selection — in various combinations.
+- *Where it runs*: re-plan through the orchestrator; the same processor with an
+  amended context; the same task routed to a different processor.
+- *How much it sees*: full trajectory; or isolated, feedback only.
+Each concrete retry policy is a point across these axes.
 
-**Sub-idea: "recoverable" is a fourth verification outcome.**
-- The outcome set is pass / fail / can't-tell / **recoverable**. `recoverable`
-  means the check found a defect *and* a plausible fix path (a compound check
-  can often say what to fix).
-- A `recoverable` result spawns a bounded recovery task through planning. Every
-  recovery task is **flagged** as a recovery of its parent.
-- Retries are **bounded**: each task carries a recovery budget, and the budget's
-  scope is the whole recovery chain, not per-task ([[CF-21]] — a budget bounds a
-  loop only if its scope dominates the cycle). An unflagged or unbounded recovery
-  chain is exactly [[CF-22]]'s runaway.
-- The recovery task's own verification still runs; recovery does not skip the
-  gate ([[CF-6]]: a recovery attempt can fabricate too).
+**Constraints that hold across every policy (these are not up for exploration).**
+- Never a score the producing loop optimises against ([[CF-27]] channel 5,
+  one-way dataflow; [[CF-19]], [[CF-4]]).
+- Bounded: a recovery budget whose scope is the whole recovery *chain*, not
+  per-task ([[CF-21]]) — an unbounded chain is [[CF-22]]'s runaway.
+- Flagged: every retry marked as a retry of its parent, so the trajectory signal
+  can see a non-converging chain.
+- The retry's own output is verified; recovery does not skip the gate ([[CF-6]]).
+
+**Sub-idea: "recoverable" is a fourth verification outcome.** The outcome set is
+pass / fail / can't-tell / **recoverable**, where `recoverable` means a defect
+*and* a plausible fix path were both found (a compound check can often name the
+fix). `recoverable` is the outcome that selects a retry policy rather than
+abandon.
 
 **How it bears on the noted recovery limitations.** Topic 07 left recovery in
 tension — [[F24]] / [[F20]] (a recovery loop buys accuracy) against [[F62]] ("no
 recovery path" is viable when wide sampling plus an external selector
-substitutes). This keeps recovery but strips the recovery-*loop* pathologies: it
-is bounded, it runs in fresh context via planning rather than in the degraded
-in-place context, and it is decoupled from the verifier score. So it is a
-recovery mechanism that does not become a narrow-and-deep loop.
+substitutes). Treating retry as a measured policy family, under the constraints
+above, is the way to find where each side holds in practice instead of picking
+one.
 
-**Validation.** On a task suite with recoverable and unrecoverable failures, the
-forward-recovery controller reaches higher final task success at lower total
-compute than an in-place retry loop, and its recovery chains terminate within
-budget.
-**Falsifier.** Forward recovery is no better than in-place retry, or re-planning
-on partial diagnoses produces worse plans often enough to erase the gain, or
-`recoverable` cannot be told from `fail` reliably enough to be a distinct
-outcome.
-**Open tension.** The planner decides recoverable-versus-abandon, so [[PI-9]]
-applies to that decision.
-**Graduation target.** Documented design principle (target 2), with a path to
-load-bearing design (target 1).
-Related: [[PI-7]], [[PI-9]], [[PI-10]], [[CF-19]], [[CF-21]], [[CF-22]], [[CF-25]], [[CF-27]].
+**Validation.** Run the retry policies as arms on a task suite with recoverable
+and unrecoverable failures, partitioned by failure class and processor kind
+([[PI-10]], [[PI-11]]); produce the table of which policy gives best net task
+success per compute for each cell. Expect the winner to differ by cell.
+**Falsifier.** One policy dominates every cell (the family was unnecessary), or
+no policy beats a bounded blind re-run (the framing was wrong), or `recoverable`
+cannot be told from `fail` reliably enough to select on.
+**Open tension.** The planner selects the retry policy and the
+recoverable-versus-abandon call, so [[PI-9]] applies.
+**Graduation target.** Standing evaluation instrument (target 4) for the policy
+comparison; documented design principle (target 2) once the table exists.
+Related: [[PI-7]], [[PI-9]], [[PI-10]], [[PI-11]], [[CF-19]], [[CF-21]], [[CF-22]], [[CF-25]], [[CF-27]].
 
 ---
 
