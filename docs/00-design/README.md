@@ -57,7 +57,8 @@ The set is deliberately modular. Each important converged idea has its own docum
 > from the place where space begins.\
 > A richer context is a higher ceiling.\
 >
-> We build the thing by being the thing.
+> We build the thing by being the thing.\
+> This is the task.
 
 ## How to use this set
 
