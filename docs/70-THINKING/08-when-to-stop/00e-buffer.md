@@ -575,6 +575,25 @@ a cheap verification tier between a deterministic check and a different-model
 check, and measure how much of the different-model check's discrimination it
 recovers.
 
+##### CF-27 — A check is contaminated by the thing it checks through five identifiable channels, each closed by a different move. `[SWEEP]`
+
+Synthesised from sheets 03, 05, 06 and topic-07 [[F44]]. Reusable as an analytic
+instrument: for any verification design, enumerate which of the five it leaves
+open.
+
+| Channel | Mechanism | Closed by |
+|---|---|---|
+| 1. Shared context / session | the check sees the producer's reasoning and self-justification and anchors on the narration, not the artifact (sheet 06 revision framing; sheet 03 hedged trace raises recall, drops precision) | isolation contract: artifact + spec only |
+| 2. Artifact framing | tone, "after careful review…", confidence language — moves the verdict more than corrupted reasoning does (sheet 06) | isolation contract: strip / normalise register |
+| 3. Ground-truth leak | a reference value passed "for context" that deployment would not have (sheet 03's judge given the gold label) | isolation contract: no reference answer in the check input |
+| 4. Shared weights | the same model rates its own output higher with authorship hidden (sheet 06, 3.6–9.4% on a 10-pt scale) and shares its blind spots — the errors the producer cannot see, the checker cannot see | a different model; a fresh session does **not** close this ([[CF-26]]) |
+| 5. Optimisation coupling | the producing loop retries until the check passes; output drifts toward the check's blind spots; accept rate rises while true validity falls ([[CF-19]], [[CF-4]]) | one-way dataflow: check results are terminal (pass / fail / can't-tell → stop / abandon / escalate), never a score fed back as a gradient |
+
+Confirms / sharpens: [[CF-1]], [[CF-19]], [[F44]]; grounds [[PI-3]], [[PI-10]], [[PI-11]].
+Sweep consequence: for every verification arm, record which channels it leaves
+open, and — where feasible — measure the arm's discrimination with a channel held
+open versus closed.
+
 ---
 
 ## 2. Proposed ideas
@@ -779,6 +798,11 @@ triggers abandon. It does not run the verification; it chooses it.
 - *What it sees*: the task spec yes, the production trajectory no; the whole
   artifact, or a projection ([[F47]]), or decomposed steps.
 
+**Also selects channel exposure.** Every strategy leaves some of the [[CF-27]]
+contamination channels open. The expert picks a strategy whose open channels the
+task tolerates, and records which are open, so a downstream reader knows what the
+"pass" is worth.
+
 **Selection cases the expert must cover.**
 - a deterministic gated check (test, schema, type check, projection);
 - resample-and-compare, where an equivalence relation exists for the artifact
@@ -835,6 +859,12 @@ well as task objectives.
   content (topic 07 F39: overlapping or lossy context degrades the consuming
   step); a decomposed boolean-trace check fits ([[I10]]).
 - **Transform / edit** — behaviour equivalence (AST, tests), not surface diff.
+
+**Kinds are differentially exposed to the [[CF-27]] channels.** A planner checked
+by the same model in shared context carries channels 1 and 4 heavily, because a
+plan has no artifact to isolate from its rationale. A deterministic executor
+check carries none. The verification-expert should weight channel exposure by
+kind, not only by task.
 
 **Validation.** A processor-kind-indexed verification table reaches higher
 stop-decision precision / recall per kind than a task-objective-only selection.
