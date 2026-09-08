@@ -363,9 +363,10 @@ audit.
   (#27, arXiv:2606.19544). 21 judges, ~541k judgments; kappa deflation; the
   consistency-versus-bias paradox; a Minimum Viable Validation Protocol.
 
-**Review status.** Booths 09-12 (round 3) fired 2026-09-08, all four read, sheets
-`09`-`12` imported (no rate limit hit). Booths 13-16 (round 4) fired 2026-09-08
-once round 3 landed. Cross-paper discussion for rounds 3-4: pending.
+**Review status.** Booths 09-16 (rounds 3-4) all read and imported as sheets
+`09`-`16` on 2026-09-08 (booth 14 resumed once from a session rate limit).
+Cross-paper discussion for rounds 3-4 done 2026-09-08 -> `00e-buffer.md`
+(candidate findings CF-16..CF-25, proposed ideas PI-7, PI-8).
 
 ### Gap-closing candidates from search (2026-09-08)
 

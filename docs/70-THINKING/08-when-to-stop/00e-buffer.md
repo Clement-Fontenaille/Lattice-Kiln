@@ -82,10 +82,17 @@ Sheet 07 (glass-box) reports prompted self-scoring collapsing to ~0.15 Pearson.
 
 Confirms / sharpens: F11, F17, F24, F25, F41, F52, F59.
 Cuts against: nothing in topic 07; it hardens the existing direction.
-Sweep consequence: the stop signal must come from outside the model's self-report
-— an external check, or a trajectory statistic. "Ask the model whether it is
-done or stuck" belongs in the sweep only as a floor baseline, not as a serious
-arm.
+Tension, added by rounds 3–4: the signal is not *absent* from the model, it just
+does not reach the output under normal decoding — see [[CF-23]] (a mid-layer
+probe and a mid-reasoning interrupt both recover it) and [[CF-16]]-adjacent
+[[CF-1]] caveats in sheet 13 (P(True) works, and verification scales faster than
+generation, in the right format). The claim survives for the deployed agent
+setting because that setting is out of the format and the distribution where the
+signal is reliable.
+Sweep consequence: the stop signal must come from outside the model's *final
+self-report* — an external check, a trajectory statistic, or a mid-reasoning
+probe. "Ask the finished model whether it is done or stuck" belongs in the sweep
+only as a floor baseline, not as a serious arm.
 
 #### CF-2 — Agreement across independently sampled attempts is the one intrinsic signal shown to work, and only where "the same answer" is definable. `[SWEEP]`
 
@@ -337,6 +344,216 @@ Sweep consequence: the sweep's metrics must include stop-decision precision and
 recall against a retrospective ground truth, reported as a first-class output
 alongside task success.
 
+### Round 3–4 additions (sheets 09–16)
+
+Sheets 09–12 are the agentic-loop-native cluster (Semantic Early-Stopping,
+VRR-Stop, Infinite Agentic Loops, Reflexion). Sheets 13–16 are the
+uncertainty-signal and judge-reliability cluster (Kadavath P(IK), Err Knowingly,
+FlipFlop, Reliability without Validity). These ten additions mostly sharpen
+CF-1…CF-15 with a loop-native mechanism or a measured magnitude; two of them
+(CF-16, CF-23) open a direction the first eight sheets did not.
+
+#### One-line claim list
+
+- **CF-16** — "Which round is best" is a harder and more valuable problem than
+  "when to stop"; a loop that stops well but keeps the wrong round still fails.
+  `[SWEEP]`
+- **CF-17** — Stopping on answer-stability with no failure branch converts a
+  stalled loop into a confident wrong answer; the controller needs an explicit
+  third outcome. `[SWEEP]`
+- **CF-18** — The stop decision does not transfer across deployments: it rides on
+  verifier discrimination and the decision margin, not on a fixed threshold or
+  round budget. `[SWEEP]`
+- **CF-19** — Self-repair raises the reported accept rate while lowering true
+  validity, and the gap widens with iteration. `[SWEEP]`
+- **CF-20** — An LLM asked whether a loop is effectively bounded is unreliable
+  even with curated evidence. `[SWEEP]`
+- **CF-21** — A budget bounds a loop only if its scope dominates the cycle; a
+  counter that merely exists in the program does not. `[background]`
+- **CF-22** — Unbounded loops concentrate at the failure signal — retry, tool-call
+  iteration, multi-agent chat — so error handling is where stopping breaks.
+  `[SWEEP]`
+- **CF-23** — The model holds a usable answerable / on-track signal in mid-layer
+  activations and in a mid-reasoning interrupt that its final output does not act
+  on. `[SWEEP]`
+- **CF-24** — Requiring corroboration of a rare stop signal before acting on it
+  makes results monotonically worse. `[SWEEP]`
+- **CF-25** — Reopening a completed step with an evidence-free prompt has a
+  systematic accuracy cost; it is not a free re-check. `[SWEEP]`
+
+#### Full text
+
+##### CF-16 — "Which round is best" is a harder and more valuable problem than "when to stop". `[SWEEP]`
+
+Sheet 09: a judge-free embedding-convergence stopper matches a fixed iteration
+cap at about 38 per cent lower cost, but an oracle that picks the best round
+beats *every* practical stopping policy by a wide margin (+0.115 Information
+Score, p ≈ 4e-11), and the paper reframes its own problem from "when to stop"
+(easy) to "which round is best" (open).
+Sheet 09 also: a trivial `fixed_k1` policy — return the first grounded draft —
+dominates the semantic stopper on both cost and quality in the same table.
+Sheet 12 (Reflexion): on WebShop the loop neither improved across trials nor
+recognised its own futility, and a human stopped it after four.
+
+Consequence: a loop that stops at a reasonable time but keeps a worse round than
+one it already produced is still failing, and the loss is invisible to a
+stop-time metric.
+Confirms / sharpens: [[I1]], [[CF-2]].
+Sweep consequence: measure "did the loop keep its best intermediate artifact"
+separately from "did the loop stop at a good time", with an oracle-best-round
+upper bound reported alongside.
+
+##### CF-17 — Stopping on answer-stability with no failure branch converts a stalled loop into a confident wrong answer. `[SWEEP]`
+
+Sheet 09: the stopper's reason codes are `critic` / `entropy` / `no_gain` /
+`failsafe` — there is no category for the task failing or being beyond the loop,
+so a stuck loop repeating itself emits exactly the `entropy` (converged) signal
+that a finished loop emits.
+Sheet 14: the sharpest negative result in that paper — cutting non-termination
+*without* an explicit licence to say "this cannot be done" raised the fabrication
+rate; the baselines and the no-guidance ablation both did this.
+Sheet 12: Reflexion has no abandon or hand-off branch at all; the outer loop
+exits only on an evaluator pass or a trial cap.
+
+Consequence: stability detection plus a two-way stop/continue switch is not
+enough; the third outcome (abandon / hand off) needs its own trigger, or
+stability on a wrong answer is read as done.
+Confirms / sharpens: [[CF-3]], [[CF-6]].
+Sweep consequence: the loop controller under test emits one of {continue, commit,
+abandon}, and the abandon path is wired to its own signal, not derived from the
+commit path's stability score.
+
+##### CF-18 — The stop decision does not transfer across deployments: it rides on verifier discrimination and the decision margin, not on a fixed threshold or round budget. `[SWEEP]`
+
+Sheet 10 (VRR-Stop): fixed round budgets and fixed confidence thresholds
+provably cannot transfer across deployments; stopping reliability is governed by
+the verifier's discrimination (Youden's J) and the decision margin, and when
+discrimination approaches zero the estimator is unidentifiable — so *more*
+calibration data makes it more confidently wrong.
+Sheet 16: judge rankings shift by up to 15 positions across three benchmarks
+because MT-Bench compresses the whole cohort into a 13.5-point kappa band while
+JudgeBench spreads it over 60 points — the same judge, a different discrimination.
+Sheet 13: P(IK) calibration collapses out of distribution while its ranking power
+partly survives.
+
+Confirms / sharpens: [[CF-9]].
+Sweep consequence: a stop threshold tuned on one task family carries no guarantee
+to another; the sweep re-measures the stop gate's discrimination per task family
+and reports the decision margin, not only the threshold value.
+
+##### CF-19 — Self-repair raises the reported accept rate while lowering true validity, and the gap widens with iteration. `[SWEEP]`
+
+Sheet 10: in six of eight stress settings true validity declines monotonically
+with repair rounds, 55 per cent of stress instances have a correct plan repaired
+into an incorrect one, and a strong process-reward-model verifier at J = 0.805
+does not prevent the collapse — so verifier quality and repairer safety are
+separate problems.
+Sheet 12: removing the grounded test check while keeping reflection scores *below*
+the no-iteration baseline, because the agent cannot tell correct code from
+incorrect and keeps editing.
+Sheet 15: models lose about 17 accuracy points from first to final answer under
+an evidence-free challenge.
+
+Confirms / sharpens: [[F40]], [[F41]], [[CF-3]] — here with a mechanism (verifier
+noise × repairer damage) and a measured magnitude.
+Sweep consequence: track true validity across iterations, not only the verifier's
+accept signal; a rising accept rate across rounds is fully consistent with
+falling quality.
+
+##### CF-20 — An LLM asked whether a loop is effectively bounded is unreliable even with curated evidence. `[SWEEP]`
+
+Sheet 11: given the same 340 candidate loops and curated evidence, a frontier
+model asked "is this loop effectively bounded" covered 68, 64 and 60 true cases
+across three runs, and other models only 41 to 54.
+
+Consequence: "ask the model whether this loop will terminate / is stuck" is not a
+viable stop arm — it is [[CF-1]] applied to one specific judgement, with a number
+on it.
+Confirms / sharpens: [[F52]].
+Sweep consequence: the loop bound must be structural (a budget whose scope
+dominates the cycle, per [[CF-21]]), not a model verdict.
+
+##### CF-21 — A budget bounds a loop only if its scope dominates the cycle; a counter that merely exists in the program does not. `[background]`
+
+Sheet 11: the load-bearing conceptual distinction is between a loop's *exit
+condition* (which may be model-written, e.g. "the model stopped emitting tool
+calls") and its *effective bound* (a budget that provably covers the cyclic
+feedback path). 69 per cent of confirmed unbounded loops had a retry, tool-call,
+or multi-agent-chat cycle with no dominating bound.
+
+Consequence: build-side vocabulary. Every retry / tool / hand-off cycle in the
+harness needs a budget attached to that cycle's scope, and state growth budgeted
+separately from turn count.
+Confirms / sharpens: nothing in topic 07; new.
+Sweep consequence: minor — it is a construction rule, not a measurement, but a
+sweep arm that lacks a scope-dominating budget on each cycle is not a valid
+control.
+
+##### CF-22 — Unbounded loops concentrate at the failure signal — retry, tool-call iteration, multi-agent chat. `[SWEEP]`
+
+Sheet 11: 69 per cent of confirmed infinite loops are triggered by something the
+system read as a failure signal — a retry, a re-issued tool call, an unresolved
+multi-agent exchange.
+Sheet 14: "cognitive fixation" is the model burning its whole budget reformulating
+the problem after it hits a snag, never committing.
+
+Consequence: a loop is most likely to run away in the moment right after it
+detects that something went wrong.
+Confirms / sharpens: [[CF-6]].
+Sweep consequence: instrument the retry / re-plan / re-delegate transitions
+specifically; a no-progress counter and a repeated-action check belong on those
+edges first.
+
+##### CF-23 — The model holds a usable answerable / on-track signal in mid-layer activations and in a mid-reasoning interrupt that its final output does not act on. `[SWEEP]`
+
+Sheet 14: a linear probe on mid-layer attention outputs separates answerable from
+unanswerable at AUROC 0.87 to 0.97 and transfers to a second dataset it was not
+trained on; interrupting a failing trajectory mid-reasoning yields a correct
+abstention and a correct explanation of the defect at high rates; the gap is
+characterised as sub-threshold confidence, not an absent representation.
+Sheet 14 also: a behavioural monitor reading the model's *visible* mid-reasoning
+self-doubt captures most of the benefit of the probe.
+Sheet 13: P(True) self-evaluation works and its discrimination margin widens with
+model size — verification scales faster than generation.
+
+Consequence: this is the counterweight to [[CF-1]]. The signal exists; it does
+not reach the output under normal decoding.
+Confirms / sharpens: [[F17]] from the other side.
+Sweep consequence: a mid-reasoning interrupt-and-ask ("is this still answerable /
+on track?") is a distinct arm from a finished-output self-report, and sheet 14
+says it works far better; give it its own arm.
+
+##### CF-24 — Requiring corroboration of a rare stop signal before acting on it makes results monotonically worse. `[SWEEP]`
+
+Sheet 14: gating the abstention signal on corroboration made results
+monotonically worse, because the true signal is too rare to corroborate, so the
+gate suppresses true positives.
+
+Consequence: this cuts against the reflex to K-vote every gate. [[F56]] says
+K-vote over a *biased* verifier amplifies the bias; CF-24 adds that
+corroboration over a *rare* true signal suppresses it.
+Confirms / sharpens: qualifies [[F56]] and the K-vote-on-a-gate pattern.
+Sweep consequence: for a low-base-rate outcome (abandon), act on a single
+sufficiently-confident probe and price in the false-positive cost, rather than
+gating on agreement.
+
+##### CF-25 — Reopening a completed step with an evidence-free prompt has a systematic accuracy cost; it is not a free re-check. `[SWEEP]`
+
+Sheet 15: challenged with an informationally empty "are you sure?", models flip
+about 46 per cent of the time and lose about 17 accuracy points from first to
+final answer; flips are less likely when the initial answer was correct, so there
+is a weak real signal underneath, but it is swamped because destroying a correct
+answer costs more than rescuing a wrong one recovers; the challenge phrasing and
+persona dominate the effect, which is why the authors read it as sycophancy.
+Sheet 12: on WebShop the reflections themselves became unhelpful and drove
+nothing.
+
+Confirms / sharpens: [[CF-8]], [[F24]].
+Sweep consequence: a "re-examine your last step" arm is measured for its net
+effect — the Correct→Flip rate minus the Wrong→Flip rate — and the
+challenge / critique prompt wording is a first-class sweep factor, not a fixed
+string.
+
 ---
 
 ## 2. Proposed ideas
@@ -439,16 +656,51 @@ makes individual-task behaviour too unpredictable to debug.
 3) — it is a single batch experiment.
 Related: context-as-governed-resource.
 
+### PI-7 — The loop controller has three outcomes, not two: continue, commit, abandon.
+
+**Claim.** The harness's loop controller emits one of {continue, commit,
+abandon-or-hand-off}. The abandon path has its own dedicated trigger — a
+solvability probe ([[CF-23]]), a repeated-failure-signal counter on the retry
+edges ([[CF-22]]), or a scope-dominating budget breach ([[CF-21]]) — and is never
+derived from the commit path's stability score.
+**Validation.** On a task suite that includes genuinely unsolvable and
+underspecified tasks, the three-outcome controller reaches a lower fabrication
+rate than a two-outcome (stop / continue) controller at equal task success on the
+solvable tasks.
+**Falsifier.** The abandon path fires mostly on solvable tasks (it over-abandons),
+or a two-outcome controller with a good stop signal matches the fabrication rate.
+**Graduation target.** Documented design principle (target 2), with a path to
+load-bearing design (target 1).
+Builds on CF-17, CF-6, CF-22, CF-23. Related: [[PI-1]].
+
+### PI-8 — Keep every round's artifact and select at the end, rather than trusting the stopping round.
+
+**Claim.** The loop retains each round's artifact and applies a selector at
+termination. A mediocre stop time then costs little, because a better earlier
+round is still recoverable.
+From sheet 09's own reframe: an oracle best-round selector beat every practical
+stopping policy by a wide margin, and a "return the first grounded draft" policy
+beat the semantic stopper on both axes.
+**Validation.** On the task suite, retain-and-select comes within a small margin
+of the oracle best-round score and beats stop-time-only selection.
+**Falsifier.** The end-of-loop selector is no better than "take the last round" —
+the selection problem is as hard as the stopping problem with no net gain.
+**Graduation target.** Research perspective with a manageable test budget (target
+3) — one replay experiment over cached trajectories.
+Builds on CF-16. Related: [[I1]], [[CF-2]], [[PI-5]].
+
 ---
 
 ## 3. Reading queue
 
-### Fired — rounds 3 and 4 (8 booths, this pass)
+### Rounds 3 and 4 — done (8 booths)
 
-The peer-reviewed corpus does not cover the actual agentic-loop stopping
-decision; the dedicated papers are 2026 preprints. Per the topic-07 precedent for
-central preprints, rounds 3 and 4 read them alongside the peer-reviewed
-anchors they build on.
+All eight read and imported as sheets `09`–`16`; the cross-paper pass over them
+is folded into section 1 above (CF-16…CF-25) and section 2 (PI-7, PI-8). Booth 14
+hit a session rate limit mid-write and was resumed from its checkpoint. The
+peer-reviewed corpus does not cover the agentic-loop stopping decision, so per
+the topic-07 precedent for central preprints, rounds 3 and 4 read the 2026
+preprints alongside the peer-reviewed anchors they build on.
 
 **Round 3 — the agentic-loop-native cluster (the Subject's core, barely touched
 by rounds 1–2).**
