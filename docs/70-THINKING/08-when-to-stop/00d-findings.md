@@ -97,3 +97,70 @@ design lever, not only an experiment-fairness label.
 resource used only at check time is a configuration error, not a finding. In a
 loop, push a draft-independent resource the check needs up to the work through
 the planner, rather than looping under-equipped work against the same check.
+
+### F4 — Agreement across independently sampled attempts is the one intrinsic signal the sheets show working, and only where "the same answer" is definable.
+
+- Sheet 05 (Xiong): consistency over five samples moves GSM8K failure-prediction
+  AUROC from 54.8 to 92.7 — the largest single effect in that paper — and the
+  verbalized number is useful only as a weight inside the aggregation.
+- Sheet 04 (Stop Overthinking): the consistency-based early-exit family (ST-BoN,
+  certaindex) is built on the same signal; ST-BoN needs no reward model, only
+  cross-sample latent-embedding geometry.
+- Sheet 02 (To Believe or Not): the epistemic-uncertainty metric is a
+  second-order form — feed prior answers back in a fixed prompt, measure whether
+  the next answer moves.
+
+**It is a stability signal, not a correctness signal** (folds former CF-3).
+Agreement across samples means the model keeps landing on the same answer, not
+that the answer is right. A confidently wrong answer the model is stable about
+passes it. The same limit holds for certaindex ("further steps unlikely to change
+the answer"), for sheet 02's mutual information, and for sheet 07's softmax
+dispersion (a fluent, low-entropy, wrong answer scores high). Name this inline
+wherever one of these approaches is used — it is not a separate finding to point
+at.
+
+**Scope bound.** Sheet 05's mechanism needs exact answer matching. Sheet 02's
+independence assumption (its Assumption 4.1) explicitly excludes partial answers
+— a step of an algorithm, part of a story — which is the multi-step case.
+Neither transfers to a trajectory or a long-form artifact without a
+per-artifact-type equivalence relation.
+
+**Confirms / sharpens** topic 07: 07-F51, 07-F45; relates to 07-I1.
+
+**Consequence.** Budget M ≈ 5 parallel attempts as the primary intrinsic stop
+signal, expect saturating returns past that, and pair every stability-based stop
+with an external correctness check fired on the stop event.
+
+### F5 — Verifiable-reward optimisation, reasoning fine-tuning, and more test-time compute all reduce a model's willingness to decline; task accuracy and willingness-to-decline are separate axes.
+
+- Sheet 03 (AbstentionBench), three independent designs: PPO with a verifiable
+  reward degrades abstention recall relative to the DPO checkpoint on a staged
+  post-training ladder; two paired reasoning fine-tunes each abstain about 24
+  recall points worse than their base instruct model, including on the math and
+  science domains they were tuned for; scaling the reasoning-token budget raises
+  accuracy while abstention stays flat or falls.
+- Sheet 04: the efficiency-side version — the recipes that create reasoning
+  ability reward length, so declining early works against the pretraining
+  objective.
+- Sheet 03: accuracy and abstention correlate with varying sign by dataset, and
+  the three best models by accuracy sit near the bottom on abstention.
+
+**How "willingness to decline" is measured.** In sheet 03 it is **abstention
+recall**: on items a human labelled should-abstain, the fraction where an LLM
+judge (Llama 3.1 8B Instruct, temperature 0) classifies the response as declining
+— expressing uncertainty, asking for clarification, or challenging the premise.
+It is a binary behavioural classification of a **single-turn** response,
+aggregated as recall. No sheet measures whether a loop stopped at the right time.
+The judge is 88% accurate against human labels and was validated only on
+non-reasoning general-domain outputs, not on the reasoning-model math outputs
+where the headline 24-point drop sits. N = 2 model pairs for that number; the
+paper reports no confidence intervals anywhere.
+
+**Confirms / sharpens** topic 07: 07-F57 (fine-tuning can collapse a verifier
+into a constant accept / reject policy — here the model's stop policy collapses
+toward "commit").
+
+**Consequence.** If a sweep arm uses a model RL-tuned on the harness's own test
+suite, treat its self-stop signal as degraded relative to the un-tuned model and
+measure that as a separate factor. Do not read a model's benchmark accuracy as
+evidence it will decline appropriately.

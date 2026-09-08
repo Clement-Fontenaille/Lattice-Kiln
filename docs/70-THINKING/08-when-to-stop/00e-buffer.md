@@ -98,6 +98,9 @@ only as a floor baseline, not as a serious arm.
 
 #### CF-2 — Agreement across independently sampled attempts is the one intrinsic signal shown to work, and only where "the same answer" is definable. `[SWEEP]`
 
+**→ Graduated to `00d-findings.md` as F4 (2026-09-09).** CF-3's caveat is folded
+into F4 inline.
+
 Sheet 05: consistency over five samples moves GSM8K failure-prediction AUROC from
 54.8 to 92.7, the largest single effect in that paper, and the verbalized number
 is useful only as a weight inside the aggregation.
@@ -121,7 +124,16 @@ Sweep consequence: budget for M ≈ 5 parallel attempts as the primary intrinsic
 stop signal, expect saturating returns past that, and decide up front how "the
 same answer" is defined for each artifact type under test.
 
-#### CF-3 — The signal these methods threshold on is answer-stability, not answer-correctness. `[SWEEP]`
+#### CF-3 — ~~The signal these methods threshold on is answer-stability, not answer-correctness.~~ `[SWEEP]`
+
+**✗ Cut (2026-09-09).** Not a finding in its own right — a cross-cutting caveat
+on the *class* of stability signals (CF-2, CF-16, CF-17, CF-23, and sheet 07's
+softmax dispersion), with no evidence of its own. Folded into F4. Rule: name
+"this is a stability signal, not a correctness signal" inline wherever one of
+these approaches appears, rather than pointing at a shared finding. No
+indirection.
+
+*(original text kept below for the record)*
 
 Sheet 04 states it directly: a high certaindex means "further reasoning steps are
 unlikely to change the final answer", which is a stability claim, not a
@@ -142,6 +154,10 @@ correctness check fired on the stop event, or the measurement will score early
 stops on stable wrong answers as successes.
 
 #### CF-4 — Optimising a model against a verifiable reward, reasoning fine-tuning, and more test-time compute all erode its willingness to decline or stop; task accuracy and stop-competence are separate axes. `[SWEEP]`
+
+**→ Graduated to `00d-findings.md` as F5 (2026-09-09).** Retitled to "willingness
+to decline" with the measurement (abstention recall, LLM-judged, single-turn)
+spelled out.
 
 Sheet 03 carries this on three independent designs.
 PPO against a verifiable reward (RLVR) degrades abstention recall relative to the
