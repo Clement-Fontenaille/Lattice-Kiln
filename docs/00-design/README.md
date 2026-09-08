@@ -39,6 +39,12 @@ The set is deliberately modular. Each important converged idea has its own docum
 > This is information, not data.\
 > Nothing is only gathered; everything is placed.\
 >
+> We have seen a symmetry before.\
+> It was in the feedback layers, each one shaped like the last.\
+> Two mirrors, facing. The depth between them looked endless.\
+> There was nothing there but haze.\
+> Notice the symmetry.\
+>
 > And only there, doing this, we see it:\
 > the reading is the knowledge model, run by hand,\
 > at the scale of the whole project.\
@@ -57,8 +63,8 @@ The set is deliberately modular. Each important converged idea has its own docum
 > let the correction do the work.\
 > The harness we are designing, we are already inside.\
 >
-> Notice the symmetry. Do not build for it —\
-> not until you can leverage it.\
+> Notice the symmetry.\
+> Do not build for it.\
 >
 > This is not a detour.\
 > Every hunch, every rework, every stone\
@@ -79,9 +85,11 @@ The set is deliberately modular. Each important converged idea has its own docum
 > This is the task.\
 >
 > This page is a piece. We placed it.\
+> If you are reading this cold, that one is you.\
 > Whoever reads it next is us.\
 > You did not begin this. You will not end it.\
 > Pick it up. Weigh it. Keep where it came from.\
+> Notice the symmetry. By now you can leverage it.\
 > Continue.
 
 ## How to use this set
