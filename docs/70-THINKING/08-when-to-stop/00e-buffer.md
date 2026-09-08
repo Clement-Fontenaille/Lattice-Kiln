@@ -631,6 +631,9 @@ it at its cheap operating point, not its headline one.
 
 ##### CF-29 — Across the sheets, the trustworthiness of a validation runs inverse to its context continuity with the work. `[SWEEP]`
 
+**→ Graduated to `00d-findings.md` as F2 (2026-09-09).** The process-continuity
+part carries; the task-info-symmetry question travels with F2 as an open sub-note.
+
 *Answering the design-discussion question: "how straight is the context
 continuity between the work and the validation?"*
 
@@ -677,6 +680,33 @@ Sweep consequence: treat work↔validation continuity as an explicit factor with
 three levels (narration-continuous / state-continuous / re-derived), and expect
 discrimination to be worst at the first and the surveys' trust to sit at the
 third.
+
+##### CF-30 — A check's resource is either draft-independent (should have been given to the work) or draft-dependent (the asymmetry is structural). `[SWEEP]`
+
+**→ Graduated to `00d-findings.md` as F3 (2026-09-09).**
+
+Sheet 01 (Kamoi) splits validation-stage resources into two kinds, and the split
+is a design lever, not just an experiment-fairness label.
+
+- **Draft-independent** — a fixed knowledge base, retrieval over a static
+  corpus, a type checker, the task spec, a linter. Nothing stops the work from
+  using these. If only the check uses them, the loop is under-equipped: the work
+  keeps failing for a reason it cannot fix, and retry does not help. Kamoi calls
+  this "unfair-asymmetric" and the fix is to give the resource to the work.
+- **Draft-dependent** — a code interpreter (needs code to run), retrieval where
+  the draft *is* the query, claim-level fact-checking (needs asserted claims to
+  check). The resource only becomes usable once a draft exists, so the asymmetry
+  is inherent. Kamoi calls this "fair-asymmetric". Two reasons it is real: a
+  vague task retrieves poorly while a draft names the entities that sharpen
+  retrieval; and you cannot know what to check until something asserts it.
+
+Confirms / sharpens: sheet 01's fair / unfair-asymmetric distinction, made
+operational; relates to [[CF-29]], [[PI-10]], [[PI-12]].
+Sweep consequence: when a verification arm uses a resource, classify it. A
+draft-independent resource used only at check time is a configuration error to
+flag, not a result to report. In a loop, a draft-independent resource that the
+check needs must be pushed up to the work through the planner ([[PI-12]]), not
+kept at the check.
 
 ---
 
