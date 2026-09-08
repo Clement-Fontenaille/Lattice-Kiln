@@ -403,8 +403,12 @@ framing none of the 16 carry, plus the semantic-entropy anchor.
   arXiv:2302.09664)** as primary, with a note on the Nature 2024 follow-up
   (inventory #31, abstract still to capture).
 
-**Review status.** Booths 17-20 fired 2026-09-09. Reading; sheets and cross-paper
-pass pending.
+**Review status.** Booths 17-20 read and imported as sheets `17`-`20` on
+2026-09-09 (no rate limits). Booth 17's paper is ICML 2026 (PMLR 306), not a
+preprint — brief was out of date. Farquhar Nature 2024 abstract captured via
+booth 20 into inventory entry 31. Round-5 cross-paper pass done 2026-09-09 ->
+`00e-buffer.md` (CF-31..CF-35; CF-34 recommended merge into F4; F4 updated with
+semantic-entropy evidence).
 
 ## Findings graduated (running)
 

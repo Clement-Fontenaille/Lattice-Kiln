@@ -109,15 +109,30 @@ the planner, rather than looping under-equipped work against the same check.
 - Sheet 02 (To Believe or Not): the epistemic-uncertainty metric is a
   second-order form — feed prior answers back in a fixed prompt, measure whether
   the next answer moves.
+- Sheet 20 (semantic entropy, Kuhn / Farquhar) is the canonical, best-evidenced
+  instance: sample ~10 generations, cluster by meaning (bidirectional
+  entailment), take entropy over the meaning-clusters. Over 30 model-task pairs
+  it reaches 0.790 AUROC for flagging wrong answers, against 0.698 for `p(True)`
+  and 0.687 for a supervised probe. The model fragments its samples across more
+  meanings when it is about to be wrong (3.89 vs 1.89 clusters on TriviaQA).
 
 **It is a stability signal, not a correctness signal** (folds former CF-3).
 Agreement across samples means the model keeps landing on the same answer, not
-that the answer is right. A confidently wrong answer the model is stable about
-passes it. The same limit holds for certaindex ("further steps unlikely to change
-the answer"), for sheet 02's mutual information, and for sheet 07's softmax
-dispersion (a fluent, low-entropy, wrong answer scores high). Name this inline
-wherever one of these approaches is used — it is not a separate finding to point
-at.
+that the answer is right. Sheet 20 states this most sharply: semantic entropy
+detects "confabulations" — answers that are wrong *and arbitrary* — and is
+explicitly no help against systematic error, absorbed misconceptions,
+reward-seeking, or the case where every sample agrees on the same wrong answer.
+The same limit holds for certaindex ("further steps unlikely to change the
+answer"), for sheet 02's mutual information, and for sheet 07's softmax
+dispersion. It also degrades where output quality degrades (sheet 20: at
+temperature 1.5 the entailment classifier drops to 61% and the method loses to a
+simpler baseline). Name this inline wherever one of these approaches is used — it
+is not a separate finding to point at.
+
+**The constructive alternative** is a forward one: estimate P(the attempt ends
+well) rather than "does the answer look stable". Sheet 17 (Knowing When to Quit,
+ICML 2026) does this with a hidden-state probe thresholded at a fallback utility,
+and it beats every baseline on selective accuracy — see candidate CF-33.
 
 **Scope bound.** Sheet 05's mechanism needs exact answer matching. Sheet 02's
 independence assumption (its Assumption 4.1) explicitly excludes partial answers

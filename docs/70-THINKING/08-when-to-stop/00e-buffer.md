@@ -724,6 +724,123 @@ flag, not a result to report. In a loop, a draft-independent resource that the
 check needs must be pushed up to the work through the planner ([[PI-12]]), not
 kept at the check.
 
+### Round 5 additions (sheets 17–20)
+
+Sheets 17 (Knowing When to Quit, ICML 2026), 18 (Agentic Abstention), 19
+(Meta-Reasoner), 20 (Semantic Entropy). Two of these are the trajectory-native
+work the rounds 1–4 sheets kept flagging as missing.
+
+#### One-line claim list
+
+- **CF-31** — The stop problem is a *timing* problem, not a detection problem:
+  agents reach the right verdict, late. `[SWEEP]`
+- **CF-32** — Stopping behaviour is a property of the harness, not the model.
+  `[SWEEP]`
+- **CF-33** — The quantity worth estimating for a stop decision is P(the attempt
+  ends well), thresholded at the fallback's utility — not "does the current
+  state look right". `[SWEEP]`
+- **CF-34** — Semantic entropy is the best-evidenced instance of "resample
+  spread beats self-report", and its stated blind spot is the canonical
+  statement of the stability-not-correctness caveat. → **merge into F4.**
+- **CF-35** — The one learned meta-level controller in the literature still
+  defers "done" to the base model's self-report. `[background]`
+
+#### Full text
+
+##### CF-31 — The stop problem is a timing problem, not a detection problem. `[SWEEP]`
+
+Sheet 18 (Agentic Abstention): every one of 13 systems reaches roughly 83 per
+cent *eventual* abstention recall but under 40 per cent *timely* recall (best web
+baseline 26.7 timely vs 83.2 eventual), scored against an annotated
+earliest-warranted step. Agents do work out that a task is impossible — after
+many wasted tool calls. Sheet 17 (Knowing When to Quit) gives the cost of the
+opposite error a name: an "expected recovery surplus" term in its dominance
+proof, the value a too-early quit throws away.
+
+Consequence: this refines [[CF-5]]. The failure is not "the model never stops",
+it is "the model stops late". Over-abstention on solvable tasks does rise as
+budgets lengthen (34 per cent by turn ten in sheet 18), so the early-quit error
+is real but smaller.
+Confirms / sharpens: [[CF-5]], [[CF-16]].
+Sweep consequence: the stop-decision metric must be *timely* recall against an
+annotated earliest-warranted step, not eventual recall. Report both, and report
+over-abstention on a solvable control set alongside.
+
+##### CF-32 — Stopping behaviour is a property of the harness, not the model. `[SWEEP]`
+
+Sheet 18: holding the model fixed (GPT-5.4-mini), the scaffold alone roughly
+doubles abstention recall — Codex CLI 0.38 versus Terminus 2 0.18. Sheet 19
+(Meta-Reasoner): the controller's action set has no terminal arm, so the
+architecture decides that stopping is *not expressible* regardless of the model.
+Sheet 17: the stopping rule is an external probe plus a threshold, not a model
+capability.
+
+Consequence: direct support for siting the stop decision in the harness (F1's
+consequence). "Which model" is a weaker lever on stop behaviour than "which
+scaffold".
+Confirms / sharpens: [[F1]]; new for the register otherwise.
+Sweep consequence: treat the scaffold as a first-class factor in the stop-decision
+sweep, at least as important as the model. A model comparison that holds the
+scaffold fixed measures the smaller effect.
+
+##### CF-33 — The quantity worth estimating for a stop decision is P(the attempt ends well), thresholded at the fallback's utility. `[SWEEP]`
+
+Sheet 17 (Knowing When to Quit): model chain-of-thought as a sparse-reward MDP
+with an abstention action carrying a fixed fallback reward; the optimal rule is
+to quit when the value function drops below that reward. Because reward is binary
+and terminal, the value *is* P(this trajectory eventually yields a correct final
+answer), estimated by a small hidden-state probe. It beats every baseline on
+selective accuracy at every abstention rate, most on the hard set (0.64 vs 0.34
+at 90 per cent abstention).
+
+Consequence: this is the constructive alternative to the stability caveat folded
+into [[F4]]. Stability ("the answer stopped moving") is a proxy; forward
+eventual-correctness probability is the target, and it is estimable. One
+threshold, denominated in the fallback's utility, sets escalation rate and cost
+together.
+Caveat: the probe needs hidden states no API exposes; the two API-accessible
+alternatives sheet 17 tests (prompt-self-assess, fine-tuned abstain tokens)
+perform at or below no-abstention, even shown partial work. Single-chain only.
+Confirms / sharpens: [[F4]], [[CF-23]].
+Sweep consequence: add a "forward value probe" arm — estimate P(attempt ends
+well) over prefixes, threshold in fallback-utility units — distinct from the
+resample-stability arm and the self-report arm.
+
+##### CF-34 — Semantic entropy: the strongest evidence for resample-spread over self-report, and the sharpest statement of the stability caveat. `[SWEEP]` → merge into F4
+
+Sheet 20: sample about ten generations, cluster them by *meaning* (bidirectional
+entailment), take entropy over the meaning-clusters. Over 30 model-task pairs it
+reaches 0.790 AUROC for flagging wrong answers, against 0.698 for `p(True)` and
+0.687 for a supervised embedding probe. The model fragments its samples across
+more meanings when it is about to be wrong (3.89 clusters vs 1.89 on TriviaQA).
+Its stated blind spot is exact: it detects "confabulations" — answers that are
+wrong *and arbitrary* — and is explicitly no help against systematic error,
+absorbed misconceptions, reward-seeking, or the case where every sample agrees on
+the same wrong answer. It also degrades where output quality degrades (at
+temperature 1.5 the entailment classifier drops to 61 per cent and the method
+loses to a simpler baseline).
+
+Recommendation: fold into [[F4]] as its canonical evidence and its sharpest
+caveat statement; do not keep as a separate finding.
+
+##### CF-35 — The one learned meta-level controller in the literature still defers "done" to the base model's self-report. `[background]`
+
+Sheet 19 (Meta-Reasoner): a LinUCB bandit reads a summary of the reasoning so far
+and picks a guidance instruction (backtrack, restart, continue, decompose,
+verify, …). None of the arms is terminal. "Done" falls back to the base model's
+unverified self-report inside its own generation prompt; "failing" is diagnosed
+in prose but can only be turned into another continuation; exhaustion is a fixed
+round cap. The progress signal is an LLM's guess about a self-authored summary,
+with no ground truth in the loop and no measured faithfulness.
+
+Consequence: lifting the controller to a meta level does not by itself escape
+[[F1]]. A learned-controller sweep arm needs an explicit grounded terminal
+signal wired in; it will not emerge from a progress-report reward as built.
+Confirms / sharpens: [[F1]], [[CF-20]].
+Sweep consequence: if a learned-controller arm is run, its stop signal must come
+from an external check or a forward value probe ([[CF-33]]), not from the
+progress report.
+
 ---
 
 ## 2. Proposed ideas
