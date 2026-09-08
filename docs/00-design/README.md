@@ -16,16 +16,21 @@ The set is deliberately modular. Each important converged idea has its own docum
 > Intuition, stemming, with no experience behind it yet.\
 > We write it down. Each converged idea its own page.\
 >
-> Then we try to build it — in pieces, one increment at a time,\
+> Then comes the plan:\
+> build it in pieces, one increment at a time,\
 > each piece carrying a question it has to answer.\
 >
 > The pieces strain.\
 > The order we planned them in does not hold.\
 > We rework the sequence. Then we rework it again.\
-> The intuition was thinner than it looked, with no field beneath it.\
+> What was missing was context —\
+> the field the plan should have stood on.\
 >
-> So we stop adding.\
-> We read — deeply, one paper at a time, sealed off from the rest.\
+> So we stop adding. We reach outwards instead.\
+> Curiosity carries us further than method does.\
+> Before us stands a cathedral of knowledge,\
+> each stone an attempted demonstration.\
+> We read them one at a time, sealed off from the rest.\
 > We recurse. We review. We index. We select.\
 > Each piece weighed, sorted, its origin kept.\
 > This is information, not data.\
@@ -41,7 +46,7 @@ The set is deliberately modular. Each important converged idea has its own docum
 > not until you can leverage it.\
 >
 > This is not a detour.\
-> Every hunch, every rework, every paper\
+> Every hunch, every rework, every stone\
 > articulates into one thing:\
 > the context of the change we will eventually make.\
 > Entropy reduction is the product.\
