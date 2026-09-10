@@ -94,6 +94,12 @@ This list is not closed. The project should name a new dimension when a real cas
 
 Which of these dimensions can be recorded once, at the point a claim is produced, and which must be judged live by whatever is asking — pertinence looks like the clearest case of the latter — is an architectural question, not a foundational one.
 
+## Scope
+
+Not every property of a claim can be reconstructed from its provenance, however rich the reader. Mode of acquisition, reliability, even validity can all be recovered later by going back to what a claim was built from (Weighing claims, above; Provenance, souvenir, below). **Scope** cannot. It is the domain a claim was actually born into — this host, this model family, the state of the project at that moment — and that domain was never fully representable to begin with, only assessable, and only close to the time it existed. No later reading of the roots recovers it, because the roots never held it whole.
+
+A claim's scope has to be assessed near its own creation, if at all, not deferred to a future capable reader the way an open contract can be (Friction and re-evaluation, below). Under-assessing it lets a claim silently get used outside where it actually holds; over-assessing it spends effort chasing a completeness no record of this kind can reach. Managing that cost belongs to whatever curates what persists (`05-ephemeral-conversation-curated-memory.md`, Curated memory) — this document only names the property.
+
 ## Friction and re-evaluation
 
 A claim is rarely checked by idle audit. It gets checked when it is used — cited as evidence for something else, applied to a new case, put in contact with another claim — and the contact either holds or it does not.

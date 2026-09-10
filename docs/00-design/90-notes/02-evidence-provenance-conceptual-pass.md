@@ -404,63 +404,6 @@ explicit no-hierarchy statement.
 
 ---
 
-## Unchecked justifications
-
-Findings above are grounded in something read or directly checked. The items below are
-not — they are attempted arguments this pass relied on without independently verifying
-them, and the next pass on `03` should treat them as open rather than settled.
-
-- **"Nothing in a weighing comparison could have separated the ETH readings" (F9).**
-  Verified: both readings trace to the same paper. Not verified: the stronger claim
-  that source/reliability/mode being tied is *sufficient* to make a case friction in
-  general, rather than a description that happens to fit this one case.
-
-- **The DAG argument (F8) has never been exercised on real data.** It follows
-  validly from `03`'s own Evidence definition, but no provenance store exists yet to
-  confirm the graph actually behaves this way — no cycles, clean convergence and
-  divergence — once real recording starts.
-
-- **The "noticing the symmetry" reconstruction (F12, and the earlier reasoned-observation
-  material) is retrospective.** I do not have the original reasoning session that
-  produced that claim — only my own memory file's summary of it. Describing it as "the
-  demonstration step connected X with Y" is my reconstruction of how it was likely
-  formed, not a verified account.
-
-- **Whether "noticing the symmetry" is actually still unchecked, or checked-but-not-yet-
-  architected, is unresolved and this pass did not distinguish the two.** The project's
-  restraint principle ("notice the symmetry, do not build for it") could mean "this is
-  not yet known to be true" (an epistemic caution, matching how F12 used it) or "this is
-  believed true but building on it now would be premature" (an architectural caution,
-  a different claim entirely). `03` currently reads it as the former without checking
-  which the project actually means.
-
-  **Addendum (2026-09-10) — addressed, not resolved.** `03` no longer claims to know
-  which reading is correct; the ambiguity is now held explicitly as a qualification /
-  open contract rather than asserted as settled. Which reading is actually true is
-  still unknown — that has not changed — but the document no longer overclaims it.
-
-- **Thinking (F14) and the claim that it "needs no new machinery" are entirely
-  untested.** There is no implemented provenance graph to walk, so nothing about fixed
-  points, termination, or whether the walk stays cheap has been exercised — this is
-  Reasoned mode only, one step removed from being an attempted argument about attempted
-  arguments.
-
-  **Addendum (2026-09-10) — this was wrong, not merely untested.** F16 found that
-  Thinking's walk, as originally written, could not resolve a stall on its own;
-  Feedback had to be added as new material connecting to doing. "No new machinery" held
-  for the walk's internal mechanics, not for what happens once the walk runs out of what
-  it already has.
-
-- **Nearly every concept added in this pass — mode of acquisition beyond the initial
-  hand-tagging trial, weighing claims, friction, demonstration step, thinking — is
-  illustrated by the same single case: the ETH/OQ-7 correction.** That case is real and
-  well-checked, but reusing one example to validate many different concepts shows they
-  are mutually consistent with that case, not that any of them generalizes. A second,
-  independent worked example is the most direct way to test that before this document
-  is treated as settled.
-
----
-
 ## F19 — The model's own weights are a fourth location for knowledge: a world model, distinct in kind from `03`'s substrate
 
 **Claim.** Alongside the external world (`02`), the knowledge base (`03`), and
@@ -608,3 +551,180 @@ unresolved") both already anticipated this, unnamed.
 memory; narrowed Open question (contradiction before promotion vs. after). `03`:
 added a cross-reference in Provenance stating that not every attempted argument a
 walk forms reaches the graph.
+
+---
+
+## F25 — Curated memory rebuilt to match Collapsing's rigor
+
+**Claim.** `05`'s Curated memory section, unlike its direct complement Collapsing
+(F24), still used pre-session vocabulary and gave no real criterion for what is worth
+persisting. Rebuilt to state precisely: curated memory is what survives Collapsing — a
+claim checked, held as a demonstration step, and judged worth a souvenir (`03`) rather
+than left to disappear with the episode that produced it. Its forward-looking question
+("will this matter to a comparison that has not happened yet") is distinct from
+Pertinence (`03`, Weighing claims), which only asks whether a claim matters to the
+comparison in front of it now — a question Weighing claims cannot run before the next
+claim arrives.
+
+**Mode: Reasoned**, prompted directly by the user's observation ("the curated memory
+section feels weak"), diagnosed by comparing it against how much more developed
+Collapsing already was.
+
+**Grounds.** `03`'s own existing definitions (Pertinence, souvenir, demonstration
+step) applied by contrast; `05`'s own pre-existing "revise its conclusion" language,
+already the basis for Collapsing.
+
+**Changed.** `05`: Curated memory section rewritten.
+
+---
+
+## F26 — "Confidence" dropped for "reliability"
+
+**Claim.** Keeping the word "confidence" in the preservation list, even while
+explaining that it maps to Reliability, perpetuates exactly the translation gap that
+produced the apparent friction it came from. Using "reliability" directly removes the
+gap instead of documenting it.
+
+**Mode: Reasoned**, direct instruction from the user.
+
+**Grounds.** The gallicism clarification given earlier in this same pass: "confidence"
+in `05`'s original text was intended as trustworthiness/reliability, a French usage,
+not a distinct scalar concept.
+
+**Changed.** `05`: "confidence" replaced with "reliability" in the preservation list.
+
+---
+
+## F27 — "Evidence" dropped from the preservation list as redundant with Provenance
+
+**Claim.** Listing "evidence" alongside "provenance" as two peer items to preserve is
+a category error: Evidence is one of the claim types Provenance already connects, and
+Evidence's own definition in `03` requires it to retain provenance to count as
+evidence at all. What might have motivated separating them — raw content versus
+connective structure — is already `03`'s raw/souvenir distinction, not a separate
+axis.
+
+**Mode: Reasoned**, direct correction from the user, confirmed against `03`'s own
+Evidence and Provenance definitions before being applied.
+
+**Grounds.** `03`'s pre-existing Evidence definition ("Evidence should retain enough
+provenance...") and Provenance's connects-list, which already includes findings and
+other claim types as node kinds.
+
+**Changed.** `05`: "evidence" dropped from the preservation list; an explanatory
+clause was added and then removed again per a direct instruction to keep it tight —
+net change is the reduced three-item list (scope, provenance, reliability).
+
+---
+
+## F28 — Scope named precisely, then relocated from `05` to `03` as a general claim-property
+
+**Claim.** Scope is the domain a claim was actually born into — the host, the model
+family, the project's state at that moment — and unlike everything else in `03`, it
+cannot be reconstructed later from provenance, however capable the reader, because the
+birth-context was never fully representable to begin with, only assessable near the
+time it existed. This is categorically different from souvenir's premise (full
+re-derivability from intact roots) and from Weighing claims' three dimensions (each
+fully assessable in principle). As a general property of claims rather than a
+curation-specific detail, it belongs in `03`; `05` keeps only the cost-management
+question it actually owns — how much assessment effort an inherently incomplete
+judgment is worth.
+
+**Mode: Reasoned** throughout — first characterized directly by the user in
+discussion, then relocated on the user's explicit direction ("rephrase in a
+foundational direction").
+
+**Grounds.** None external — an argued epistemological distinction, checked for
+consistency against `03`'s existing souvenir and Weighing-claims premises, both of
+which explicitly assume a reconstructability Scope explicitly denies.
+
+**Changed.** `03`: added §Scope, between Weighing claims and Friction and
+re-evaluation. `05`: Curated memory's scope material rewritten to reference `03`'s
+definition and focus only on cost management; Open question updated to reflect scope
+now having a home.
+
+---
+
+## F29 — Expected consequence rewritten: Collapsing's real payoff is cheap scope-assessment; independent reassessment is Convergence/Friction by name
+
+**Claim.** `05`'s original Expected consequence ("fresh instances begin from curated
+knowledge... supports constrained context and independent reassessment") had become
+true by construction once Collapsing and Curated memory were precisely defined, and
+stopped adding information. The consequence actually worth stating: Collapsing keeps
+the expensive, necessarily-imperfect work of scope-assessment rare, because most of a
+reasoning episode's churn never reaches curated memory at all. And "independent
+reassessment," when a fresh instance actually re-derives rather than trusts what it
+inherits, is precisely Convergence (agreement, corroborating) or Friction
+(disagreement, forcing re-evaluation) — not a separate, vaguer benefit.
+
+**Mode: Reasoned**, prompted by the user flagging the section as obsolete and asking
+whether to drop or replace it.
+
+**Grounds.** `03`'s own Scope, Convergence, and Friction definitions, applied to
+explain what Collapsing and Curated memory actually buy, not newly derived for this
+finding.
+
+**Changed.** `05`: Expected consequence section fully rewritten.
+
+---
+
+## Unchecked justifications
+
+Findings above are grounded in something read or directly checked. The items below are
+not — they are attempted arguments this pass relied on without independently verifying
+them, and the next pass on `03` should treat them as open rather than settled.
+
+- **"Nothing in a weighing comparison could have separated the ETH readings" (F9).**
+  Verified: both readings trace to the same paper. Not verified: the stronger claim
+  that source/reliability/mode being tied is *sufficient* to make a case friction in
+  general, rather than a description that happens to fit this one case.
+
+- **The DAG argument (F8) has never been exercised on real data.** It follows
+  validly from `03`'s own Evidence definition, but no provenance store exists yet to
+  confirm the graph actually behaves this way — no cycles, clean convergence and
+  divergence — once real recording starts.
+
+- **The "noticing the symmetry" reconstruction (F12, and the earlier reasoned-observation
+  material) is retrospective.** I do not have the original reasoning session that
+  produced that claim — only my own memory file's summary of it. Describing it as "the
+  demonstration step connected X with Y" is my reconstruction of how it was likely
+  formed, not a verified account.
+
+- **Whether "noticing the symmetry" is actually still unchecked, or checked-but-not-yet-
+  architected, is unresolved and this pass did not distinguish the two.** The project's
+  restraint principle ("notice the symmetry, do not build for it") could mean "this is
+  not yet known to be true" (an epistemic caution, matching how F12 used it) or "this is
+  believed true but building on it now would be premature" (an architectural caution,
+  a different claim entirely). `03` currently reads it as the former without checking
+  which the project actually means.
+
+  **Addendum (2026-09-10) — addressed, not resolved.** `03` no longer claims to know
+  which reading is correct; the ambiguity is now held explicitly as a qualification /
+  open contract rather than asserted as settled. Which reading is actually true is
+  still unknown — that has not changed — but the document no longer overclaims it.
+
+- **Thinking (F14) and the claim that it "needs no new machinery" are entirely
+  untested.** There is no implemented provenance graph to walk, so nothing about fixed
+  points, termination, or whether the walk stays cheap has been exercised — this is
+  Reasoned mode only, one step removed from being an attempted argument about attempted
+  arguments.
+
+  **Addendum (2026-09-10) — this was wrong, not merely untested.** F16 found that
+  Thinking's walk, as originally written, could not resolve a stall on its own;
+  Feedback had to be added as new material connecting to doing. "No new machinery" held
+  for the walk's internal mechanics, not for what happens once the walk runs out of what
+  it already has.
+
+- **Nearly every concept added in this pass — mode of acquisition beyond the initial
+  hand-tagging trial, weighing claims, friction, demonstration step, thinking — is
+  illustrated by the same single case: the ETH/OQ-7 correction.** That case is real and
+  well-checked, but reusing one example to validate many different concepts shows they
+  are mutually consistent with that case, not that any of them generalizes. A second,
+  independent worked example is the most direct way to test that before this document
+  is treated as settled.
+
+- **Scope (F28) is argued entirely from internal consistency.** No case was checked
+  against it the way OQ-7 grounded requalification or `50-findings/09` grounded
+  convergence. Whether "cannot be reconstructed from provenance" actually holds for a
+  real claim in this corpus, rather than being a plausible-sounding distinction, is
+  untested.
