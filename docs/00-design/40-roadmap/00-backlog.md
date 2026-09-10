@@ -1,6 +1,6 @@
 # Backlog
 
-_Updated: 2026-09-05 — structure and maintenance rules: [`README.md`](README.md)._
+_Updated: 2026-09-10 — structure and maintenance rules: [`README.md`](README.md)._
 
 > **Motto:** Every phase should make the next design decision easier.
 
@@ -16,6 +16,8 @@ document it concerns as an open contract, not parked here
 | Two-mode interaction requirement | [`08-orchestrator-contract.md`](../../10-technical/08-orchestrator-contract.md), spec 11 | [`10-foundations/07`](../10-foundations/07-the-integrated-system-and-its-operator.md) | P1 step 2 — an input to spec 11, not a follow-up edit |
 | Decomposition has no specification counterpart | new, or within spec 11 | [`20-cognitive-architecture/08`](../20-cognitive-architecture/08-decomposition.md) | P1 step 2 — concern-split is a decomposition |
 | Structured role-to-role handoff | open contract on [`07`](../../10-technical/07-naive-context-assembly.md) and [`08`](../../10-technical/08-orchestrator-contract.md) — close it | findings 6, 7 | P1 step 3 |
+| `02` rework not carried into cognitive architecture | [`20-cognitive-architecture/02`](../20-cognitive-architecture/02-processors.md), [`03`](../20-cognitive-architecture/03-orchestrator.md), [`05`](../20-cognitive-architecture/05-runtime.md), [`07`](../20-cognitive-architecture/07-invariant-enforcement.md) — owed | [`10-foundations/02`](../10-foundations/02-reasoning-vs-runtime.md), 2026-09-10 pass (Thinking, Feedback, reads-vs-effects, reversibility risk-evaluation) | M8's decomposition into P1 — cannot specify the ingesting processor without it |
+| `03` rework not carried into cognitive architecture | [`20-cognitive-architecture/06`](../20-cognitive-architecture/06-observability.md), [`02`](../20-cognitive-architecture/02-processors.md); candidate structure for the handoff row above | [`10-foundations/03`](../10-foundations/03-evidence-belief-and-provenance.md), 2026-09-10 pass (Mode of acquisition, Weighing claims, Friction/Convergence, Scope, Provenance as a DAG, souvenir) | P1 step 3, as the answer the handoff row is missing; M8's decomposition |
 
 ## P1 — Work in progress
 
