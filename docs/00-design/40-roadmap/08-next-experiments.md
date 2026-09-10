@@ -92,6 +92,24 @@ is the only item here that measures the assembly rather than a sub-assembly. The
 expert arm must be expert-in-process, not expert-in-this-task's-answer, or it
 measures nothing.
 
+## E6 — Corpus digestion (M8)
+
+Feed the `70-THINKING/` literature-review corpus — the F-numbered findings across
+topics 07 and 08, the I-numbered ideas register — through `03`'s substrate once a
+processor exists to do the ingesting, and ask whether the system holds and
+correctly uses knowledge it did not derive itself in the same session.
+
+Gated on [M8](01-MILESTONES/08-persistent-work-and-knowledge.md) having something
+to run: small tests first — a processor reuses one stored finding and measurably
+beats one starting cold — then the corpus sweep. Not gated on E0–E5; this corpus
+and the M6 suite are different instruments for different questions.
+
+This is the first test the "curated memory beats conversational accumulation"
+hypothesis (`03-research-and-evaluation-agenda.md`) has had. Graded against
+[M9](01-MILESTONES/09-context-governance-measurement.md)'s metrics once those
+exist — validity, reliability, pertinence, scope — not against task success
+alone, since the corpus was not produced to serve any one task.
+
 ## E-corpus — a stand-in for real request traffic
 
 Real facility ticket data is out of reach permanently. A substitute needs the same

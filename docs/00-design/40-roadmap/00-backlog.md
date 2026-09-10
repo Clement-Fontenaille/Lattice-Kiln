@@ -36,11 +36,12 @@ document it concerns as an open contract, not parked here
 - **E0 — suite construct validation.**
   [`08-next-experiments.md`](08-next-experiments.md) → E0. Blocks interpretation of
   P1 step 4. Possibly answerable from runs already recorded.
-- **Next milestone after M7 — ordering decision pending.**
-  - [M9 — Context governance measurement](01-MILESTONES/09-context-governance-measurement.md)
-    — prerequisite if M7 takes the front half; also carries the P0 context rows.
-  - [M8 — Persistent work and knowledge](01-MILESTONES/08-persistent-work-and-knowledge.md)
-    — the inherited order.
+- **Next milestone after M7 — decided, 2026-09-10.**
+  [M8 — Persistent work and knowledge](01-MILESTONES/08-persistent-work-and-knowledge.md),
+  then [M9 — Context governance measurement](01-MILESTONES/09-context-governance-measurement.md)
+  as the framework that measures M8's corpus sweep (E6). This does not resolve
+  whether M9 is also needed earlier as a prerequisite for M7's front half — that
+  is M7's own open scope decision (P1 step 1), independent of this ordering.
 - **M4/M5 re-test at larger N.** Depends on M8 (durable work records) and M9
   (non-naive assembler). Not a milestone; a task inside whichever lands.
 
@@ -88,6 +89,13 @@ document it concerns as an open contract, not parked here
   → prose discipline was added 2026-09-05. Documents written before it have not
   been read against it. Debt created by that change, recorded here because a design
   document has no open-contract section to hold it.
+- **2026-09-10 foundations pass predates M10–M16's framing.** `03`, `02`, `01`,
+  and `05` gained Mode of acquisition, Weighing claims, Friction and Convergence,
+  Thinking, Feedback, Scope, and Collapsing; every later milestone implicitly
+  assumes a knowledge and reasoning substrate and was written before any of it
+  existed in named form. Not blocking — none of their own evidence questions
+  depend on the new vocabulary yet — so not P0. Carry into each as it is
+  decomposed, the way M8 and M9 already were on 2026-09-10.
 - **Naming theme decided and never applied.** `00-design/90-notes/04-naming-theme`
   (no file extension) is marked **Decided** with propagation owed. Zero occurrences
   in the set across the whole MVP. Needs applying or downgrading to *considered,
