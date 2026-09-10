@@ -96,6 +96,16 @@ document it concerns as an open contract, not parked here
   existed in named form. Not blocking — none of their own evidence questions
   depend on the new vocabulary yet — so not P0. Carry into each as it is
   decomposed, the way M8 and M9 already were on 2026-09-10.
+- **`10-technical/` only partly checked against the 2026-09-10 foundations pass.**
+  Two files were checked directly: `01-effect-vocabulary.md` (found real friction —
+  `02`'s Feedback section had claimed local reads cross the boundary as effects;
+  the vocabulary already excludes reads by name; `02` was corrected, and the
+  vocabulary's reversibility-assignment open contract now cites `02`'s risk-
+  evaluation answer) and `09-orchestrator-runtime-boundary.md` (consistent as
+  found, no change needed). `00-06-08` and `10` have not been checked. This is
+  the exact failure this document's own history names twice — the spec set
+  looking correct while describing an older design — so treat as live debt, not
+  a closed audit.
 - **Naming theme decided and never applied.** `00-design/90-notes/04-naming-theme`
   (no file extension) is marked **Decided** with propagation owed. Zero occurrences
   in the set across the whole MVP. Needs applying or downgrading to *considered,
