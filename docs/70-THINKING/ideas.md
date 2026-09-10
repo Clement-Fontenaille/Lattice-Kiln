@@ -549,3 +549,56 @@ arrives late rather than never.
 `00-design/40-roadmap/03-research-and-evaluation-agenda.md` as a context-manager
 evaluation method, and it answers a live entry in the open-questions register's
 *Context governance* section.
+
+---
+
+## I12 — The context manager may be a mechanical engine, not a processor
+
+**Provenance.** Discussion 2026-09-10, arising from the evidence-belief-and-provenance
+conceptual pass (`10-foundations/03`) rather than from a sheet. Prompted by trying to
+place "context manager" in the cognitive architecture and finding it does not sit
+comfortably in the loop of processors and orchestrator described there.
+
+**The idea, in questionable form.** `10-foundations/04-context-as-governed-resource.md`
+already leaves open whether context governance lives in "a dedicated subsystem, a
+specialized processor role, the orchestrator, or some hybrid" and deliberately declines
+to choose. Most of what a context manager would need to do — tracking what the model is
+currently fed, running cache/compaction cycles, tracking what is live versus archived,
+triggering recall of something dropped, and isolating topic boundaries in a stream of
+work — reads as bookkeeping: deterministic, rule-driven, closer to a runtime component
+than to a processor as `20-cognitive-architecture/02-processors.md` defines one ("natural
+-language role instructions, an objective, selected context... interaction
+expectations"). One piece does not obviously fit that mold: identifying pertinence,
+which `10-foundations/03`'s Weighing claims section already names as the one weighing
+dimension that looks like it must be "judged live by whatever is asking" rather than
+recorded once. The idea is that these might be genuinely different in kind — a
+mechanical engine that owns the bookkeeping and calls out to something judgment-capable
+(a processor, possibly the already-floated context-curator role) only for the narrow
+pertinence question, rather than one component trying to be both.
+
+**Why it is worth doing.** It offers a concrete candidate for a boundary `04` explicitly
+defers, and it does so in the direction the project's own strongest evidence already
+points: findings entry 7 shows a deterministic gate outperforming a 7B judgment panel at
+this model size, and `04`'s "naive default" requirement (a crude, unglamorous baseline
+needed on day one, before any curator can be evaluated against it) may turn out to
+already *be* this mechanical engine rather than merely a placeholder for it.
+
+**Open before it is worth committing.**
+
+- Whether pertinence is really the only piece that needs judgment, or whether topic
+  isolation and recall-triggering secretly need it too and only look mechanical because
+  no one has tried to specify them as rules yet.
+- What "mechanical" cashes out to concretely — fixed thresholds, a deterministic
+  algorithm, something else — and where those rules would come from if not from a
+  processor's judgment.
+- Whether this engine *is* `04`'s required naive default, or a further-along design that
+  still needs a cruder version to exist first for the commissioning decision to be
+  evidenced.
+- Its relationship to the already-named context-curator role (`04`; `30-adaptation-and-
+  evolution/02-system-level-feedback.md`): substrate the curator would run on top of, or
+  a design that removes the need to commission one at all.
+
+**Would graduate to** `10-foundations/04-context-as-governed-resource.md` as a refinement
+of "how the implementation boundary will be decided," and — if the mechanical/judgment
+split holds up — a new `20-cognitive-architecture` document once the boundary is
+evidenced, per `04`'s own stated deferral mechanism.
