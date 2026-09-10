@@ -1,16 +1,21 @@
 # Findings — the evidence-belief-and-provenance conceptual pass
 
 **Date:** 2026-09-10
-**Serves:** `10-foundations/03-evidence-belief-and-provenance.md`, revised in place across
-this pass, and — from F15 onward, once Thinking turned out to be misplaced in `03` —
-`10-foundations/02-reasoning-vs-runtime.md` as well. This file is the justification
-record for both revisions — the design-set counterpart to `50-findings/`, produced by a
-design conversation and a hand-tagging trial against the existing corpus rather than by
-a milestone experiment.
+**Serves:** `10-foundations/03-evidence-belief-and-provenance.md`, revised in place
+throughout; `10-foundations/02-reasoning-vs-runtime.md`, from F15 onward, once Thinking
+turned out to be misplaced in `03`; `10-foundations/01-constrained-intelligence-
+thesis.md` and `10-foundations/05-ephemeral-conversation-curated-memory.md`, both from
+F19, once the pass widened from the knowledge model itself to the other locations
+knowledge lives in (external world, model weights, conversation) and what draws the
+line between them. `70-THINKING/01-use-cases.md` also carries two direct edits (P3),
+recorded here rather than there because they are this pass's, not the litreview's. This
+file is the justification record for all of it — the design-set counterpart to
+`50-findings/`, produced by a design conversation and a hand-tagging trial against the
+existing corpus rather than by a milestone experiment.
 
 Each entry states a claim, the mode by which the claim itself was produced (not the
 mode of whatever it is about — the two can differ, per the pass's own third finding),
-what grounds it, and what it changed — in `03` through F14, in both documents from F15.
+what grounds it, and what it changed.
 
 ---
 
@@ -453,3 +458,153 @@ them, and the next pass on `03` should treat them as open rather than settled.
   are mutually consistent with that case, not that any of them generalizes. A second,
   independent worked example is the most direct way to test that before this document
   is treated as settled.
+
+---
+
+## F19 — The model's own weights are a fourth location for knowledge: a world model, distinct in kind from `03`'s substrate
+
+**Claim.** Alongside the external world (`02`), the knowledge base (`03`), and
+conversation (`05`), the model's own weights are a location where knowledge already
+lives — a world model, compressed by training. This does not compete with or
+duplicate `03`: the difference is structural, not a matter of degree. The model's
+world model is general (not particular to this project), frozen (not current), and
+carries no provenance (cannot say why it believes something or when that was last
+checked). `01`'s existing "durable project knowledge" is durable precisely because the
+model's own knowledge is not.
+
+**Mode: Reasoned**, prompted directly in discussion by a four-locations framework
+raised two turns earlier (external world / KB / model weights / conversation).
+
+**Grounds.** None external — argued from `03`'s own already-established properties
+(provenance, currency) applied by contrast, and from `01`'s pre-existing "durable
+project knowledge" line, which the new material explains rather than duplicates.
+
+**Changed.** `10-foundations/01-constrained-intelligence-thesis.md`: added §The
+model's own world model, between Motivation and Working hypothesis.
+
+**Unchecked.** This surfaces a real gap in Mode of acquisition (`03`): a claim stated
+from trained-in knowledge, consulting no specific external source at the moment it is
+made, fits none of Read, Reasoned, Tested, or Operated. Flagged, not fixed.
+
+---
+
+## F20 — Entropy reduction promoted from `70-THINKING/01-use-cases.md` P3 into `02`, in part
+
+**Claim.** "Entropy reduction is the product" (P3) was fully evidenced (M6: 0
+regressions vs 7, 0 crashes vs 4, 5/5 correct declines) but sitting unpromoted. Its
+core claim belongs in `02`'s Proposal and effect: at the system level entropy
+reduction is the product; at the level of a single proposed effect it is the desired
+side effect of executing the task's actual intent well, not a competing goal — a bug
+fix's job is to fix the bug. This is why the runtime's four checks are not bureaucratic
+caution: an effect that needed undoing spread entropy regardless of whether it
+succeeded at its stated task.
+
+**Mode: Operated.** Found by reading P3's cited M6 numbers and `07`'s existing,
+narrower citation of the same commitment directly, not by reasoning abstractly about
+what "the product" should mean.
+
+**Grounds.** `70-THINKING/01-use-cases.md` P3; `10-foundations/07-the-integrated-
+system-and-its-operator.md` ("Reduced entropy... is valuable precisely because it is
+what an operator experiences as help").
+
+**Changed.** `02`: added the entropy-reduction paragraph to Proposal and effect.
+`01-use-cases.md` P3: added a promotion note distinguishing the promoted core claim
+from the still-gated motto revision (which wants the capability sweep P3 itself
+names, and was left untouched in `01`).
+
+---
+
+## F21 — The entropy material in `02` needed a floor/ceiling correction
+
+**Claim.** Framing entropy-bounding (via reversibility) as protection against a
+"floor" beneath a separately-raised "ceiling" contradicts the project's own locked
+position: there is no floor, only the ceiling, read from below. An assembly that
+regresses on one task in three does not have a high ceiling guarded by a weak floor —
+it has a lower ceiling than its peak output suggests, because the ceiling is what it
+reliably delivers.
+
+**Mode: Reasoned**, prompted directly by the user's reminder, checked against the
+root README's own wording before being applied.
+
+**Grounds.** Root README ("There is no floor — only the ceiling, read from below");
+[[praxis-run-the-knowledge-model]] memory, same principle; P3's own cited numbers,
+re-read under this framing rather than a new check.
+
+**Changed.** `02`: added the floor/ceiling sentence to the entropy paragraph in
+Proposal and effect.
+
+---
+
+## F22 — Reversibility cannot be required of every effect; irreversible-effect risk evaluation is reasoning-based, not invariant-layer material
+
+**Claim.** Some requested changes are irreversible by nature — that is what was asked
+for, not an accident of execution — and refusing them on reversibility grounds alone
+would refuse the work itself. What such an effect needs instead is a real, contextual
+risk evaluation. That evaluation is explicitly not the invariant layer's to make: the
+invariant layer holds effects that may never occur regardless of what any loop
+concludes, and a legitimate irreversible effect is, by definition, not one of those.
+It belongs to thinking instead, weighed the same way any other claim is.
+
+**Mode: Reasoned**, raised directly by the user; the invariant-layer boundary was read
+directly from `06` before being asserted, not assumed.
+
+**Grounds.** `10-foundations/06-the-invariant-layer.md`, read in full for this check:
+"Hard constraints — effects that may never occur regardless of what any loop
+concludes."
+
+**Changed.** `02`: added the risk-evaluation paragraph to Proposal and effect,
+immediately after the four-checks sentence it qualifies.
+
+---
+
+## F23 — The floor-language critique of P3's own motto phrasing was itself an overcorrection, and its fix was recorded by collapsing, not appending
+
+**Claim.** "Bound what the model can make worse" does not posit a floor separate from
+the ceiling — it is the ceiling, read from below, which the principle licenses rather
+than forbids; P3's own numbers show the mechanism, not just the wording, is doing the
+same work either way. An earlier annotation on P3 claiming this phrase "needs
+rewording" was itself the error. Because that annotation never left this conversation —
+nothing else cited or relied on it before the next exchange checked it — recording the
+fix as a dated, appended "Correction" (as first attempted) applied `03`'s Qualification
+convention past where its own justification reaches. It was collapsed instead: the
+wrong annotation and its append-style correction were both replaced by the single
+settled paragraph now in `01-use-cases.md`.
+
+**Mode: Reasoned.** Two corrections in sequence, both raised directly by the user: the
+substantive one (the phrase was fine), then a separate, sharper one about how to record
+having been wrong (collapse, don't append) — which is also this finding's own grounds
+for F24, below.
+
+**Grounds.** Root README's "read from below" line, re-examined; `03`'s own Friction
+logic (append-only earns its keep for claims that got *used* elsewhere) applied to a
+case that never met that condition.
+
+**Changed.** `01-use-cases.md` P3: the floor-language critique and its appended
+"Correction (2026-09-10)" paragraph were both removed; replaced with one clean,
+settled paragraph carrying no trace of either.
+
+---
+
+## F24 — Collapsing named and placed in `05`; resolves the `05`/`03` promotion-boundary weakness
+
+**Claim.** An attempted argument superseded before it is ever promoted needs no
+append-only trail: it **collapses** to the settled state, because nothing outside the
+still-active reasoning episode could have relied on the superseded step. This is
+distinct from Qualification/open contract (`03`), which applies once a claim has been
+promoted and potentially used elsewhere. It resolves the boundary an earlier pass
+flagged as a real weakness: `03` lists attempted arguments as something Provenance
+tracks without saying how much of a walk's internal churn actually reaches that graph.
+F23, immediately above, is itself the first applied instance.
+
+**Mode: Reasoned**, proposed directly by the user, applied reflexively to F23's own
+recording before being written up here — the concept was named by first doing the
+thing it names.
+
+**Grounds.** `05`'s own pre-existing text, read directly: "revise its conclusion"
+(Ephemeral interaction) and its Open question ("contradiction... remain intentionally
+unresolved") both already anticipated this, unnamed.
+
+**Changed.** `05`: added §Collapsing, between Ephemeral interaction and Curated
+memory; narrowed Open question (contradiction before promotion vs. after). `03`:
+added a cross-reference in Provenance stating that not every attempted argument a
+walk forms reaches the graph.

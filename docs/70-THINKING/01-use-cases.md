@@ -223,6 +223,17 @@ test-gating, or correct declines says *"because 7B."*
 
 **Not yet promoted to `00-design/`** — wants the capability sweep as evidence.
 
+**Promoted (2026-09-10), in part.** The core claim — entropy reduction is the
+product, not throughput — is now in `10-foundations/02-reasoning-vs-runtime.md`,
+Proposal and effect, cited directly to this entry. The proposed motto revision above
+is not promoted: it is a claim about robustness across model capability, and still
+wants the capability sweep this entry names — `10-foundations/01`'s motto is
+unchanged on that basis alone. The wording itself needs no revision: "bound what the
+model can make worse" is the ceiling, read from below, not a floor separate from it,
+and dloop's higher ceiling *is* that bounding (0 regressions vs 7, 0 crashes vs 4,
+5/5 correct declines), not a separate mechanism protecting a ceiling raised some
+other way.
+
 ### P4 — The suite measures a verb the use cases did not name (2026-09-03)
 
 The requirement uses three verbs: **consolidate, evaluate, organize**. The M6

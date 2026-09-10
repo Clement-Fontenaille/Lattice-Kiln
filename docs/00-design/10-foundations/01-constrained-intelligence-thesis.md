@@ -14,6 +14,12 @@ Attempting to compensate only by increasing context length risks replacing missi
 
 The system should instead reduce the amount of simultaneous reasoning each invocation must perform.
 
+## The model's own world model
+
+The model is not only what the working hypothesis below must work around. Its weights are a location where knowledge already lives — a world model, compressed by training into the most efficient form available, carrying broad patterns, facts, and reasoning capability the system did not have to build.
+
+This does not substitute for `03-evidence-belief-and-provenance.md`'s substrate, and the reason is structural, not a matter of degree. The model's world model is general, not particular to this project; frozen at training, not current; and carries no provenance — it cannot say why it believes something or when that belief was last checked. `03`'s knowledge model exists because a working project needs exactly what training-time compression cannot give it: current, local, checkable claims, each with a record of how it came to be believed. "Durable project knowledge," below, is durable precisely because the model's own knowledge is not — rich, but not this project's, and silent on when it was last true.
+
 ## Working hypothesis
 
 Useful capability can emerge from the combination of limited models and stronger external cognitive structure.

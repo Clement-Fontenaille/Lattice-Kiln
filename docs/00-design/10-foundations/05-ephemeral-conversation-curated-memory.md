@@ -20,6 +20,12 @@ That conversational history is useful while the reasoning episode is active.
 
 It does not automatically deserve long-term persistence.
 
+## Collapsing
+
+An attempted argument (`10-foundations/03-evidence-belief-and-provenance.md`) that gets superseded before it is ever promoted does not need the treatment a promoted claim gets when it is corrected. Qualification and the open-contract convention (`03`, Friction and re-evaluation) exist because a promoted claim may already have been relied on elsewhere, and erasing that history would hide from a later reader that something once stood, was used, and changed. An ephemeral revision within the same active reasoning episode has no such history to protect — nothing outside the episode has cited it, built on it, or could be misled by its disappearance. It **collapses**: the superseded step and the conclusion that replaced it resolve to the settled state alone, with no visible trail, because none is owed.
+
+This is what "revise its conclusion," above, actually means for something that never left working memory. The line it draws is the one `03` does not: not every attempted argument a walk forms belongs in Provenance. Most of a reasoning episode's internal churn collapses before it would ever reach that question; only what survives to be checked, held, and used by something else earns a souvenir instead of disappearing.
+
 ## Curated memory
 
 Persistent memory should contain information expected to remain useful beyond the current interaction.
@@ -36,4 +42,4 @@ This supports both constrained context and independent reassessment.
 
 ## Open question
 
-The rules governing memory promotion, contradiction, aging, and retirement remain intentionally unresolved and should be refined after observing real project behavior.
+Contradiction before promotion collapses (above); contradiction after promotion is `03`'s qualification and open contract. The rules governing promotion itself, aging, and retirement remain intentionally unresolved and should be refined after observing real project behavior.
