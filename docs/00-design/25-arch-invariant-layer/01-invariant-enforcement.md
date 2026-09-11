@@ -34,6 +34,16 @@ Binding the gate to that set is what allows role commissioning to stay aggressiv
 
 This is also how the invariant layer stays small. It needs no clause per role, per loop, or per generation — only a statement about what may never become true, expressed in the one vocabulary the runtime can verify without reasoning.
 
+## What the gate may see is wider than what it evaluates
+
+Binding the gate to effects says what it is keyed to. It must not be read as saying that effects are the only thing it may look at, and the project has made that mistake once: `10-foundations/02` excluded reads from the gate's reach on the grounds that gating every read would recreate a rigid workflow engine, and its 2026-09-11 Qualification withdraws that half.
+
+The argument above is the reason. It binds to effects because effects are "a bounded set that the runtime already represents in order to execute anything at all." A read is equally something the runtime represents in order to execute anything at all. Nothing in the effect-binding argument excludes it; the exclusion was a separate and weaker claim sitting next to it.
+
+So the gate's input domain is runtime-mediated operations, of which typed effects are the subset that change the world outside the system. A read is in the domain. Whether any rule fires on one is policy, and the default should be permissive — reads pass unless a rule names them — because the cost concern that motivated the exclusion is real even though the conclusion drawn from it was not. A permissive default is adjustable; a domain that cannot represent reads is not.
+
+Two things follow. A resource ceiling is expressible: context is a bounded resource (`10-foundations/04`, Overload), ceilings are invariant-layer content (`10-foundations/06`), and a read that would cross one is a read the gate has to be able to see. And the Composition risk below stops having a blind half — a sequence of permitted reads followed by one permitted effect is the shape that section exists to catch, and reads outside the domain are reads outside the sequence.
+
 ## Position relative to capability gating
 
 This sits below the capability and authority model rather than within it.
@@ -47,6 +57,8 @@ An effect must pass both. Passing capability gating is not evidence of passing t
 Capability gating evaluates one proposed effect at a time.
 
 A sequence of individually authorized actions can in principle assemble into an outcome that no single check was designed to catch. The gate must therefore be able to evaluate sequences, not only isolated requests.
+
+The sequence has to include reads, which is the practical consequence of the input-domain section above. The canonical composed outcome is an accumulation of permitted reads followed by one permitted effect that carries the accumulation somewhere it should not go. A gate evaluating only typed effects sees the carrying step and nothing of what filled it, which is the half that determines whether the step matters.
 
 This makes the reconstruction requirement described under observability more load-bearing than it first appears. Detection of composed or drifting behavior runs against reconstructable history, not against individual requests in the moment.
 

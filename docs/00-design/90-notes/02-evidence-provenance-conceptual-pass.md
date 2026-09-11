@@ -806,6 +806,22 @@ Stated as a context-management question it gets sharper rather than vaguer. Regi
 
 ---
 
+## F40 — The read exclusion answered the wrong kind of question: whether to gate reads is a rule, whether the framework can is structural
+
+**Claim.** `10-foundations/02`, Proposal and effect, excluded reads from the invariant gate's reach "because gating every read would recreate exactly the rigid workflow engine this document exists to prevent." The user rejected the argument on a sharper ground than the one this pass had reached for. A first pass here argued the boundary sat in the wrong place — that a read changes governed state under `04` and so meets the effect definition. The user's objection is that the passage settles the wrong *category* of question: being able to gate every read is a rule to adopt or decline within a framework that permits it, not a high-level design decision to foreclose. The argument given is about what gating costs, which is a policy consideration, and it was used to remove a capability.
+
+The asymmetry is what makes it load-bearing. A policy default is reversible; a vocabulary exclusion is not. `10-technical/01-effect-vocabulary.md` states that adding an effect type "requires a design-set decision" and "MUST NOT happen as an implementation convenience" — so under the excluding vocabulary, "hold a rule about this read" is a change to the system's operational surface rather than to its configuration. A permissive default ("reads pass unless a rule names them") buys the same economy without that cost.
+
+Two further consequences, each a thing the exclusion makes inexpressible rather than merely unused. `10-foundations/06` holds resource ceilings among invariant-layer content, context is a bounded resource whose ceiling is `04`'s Overload mode, and a read crossing that ceiling is a resource-ceiling matter the gate cannot see. And `25-arch-invariant-layer`'s Composition risk exists to catch sequences of individually-permitted actions; the canonical such sequence is accumulated reads followed by one permitted carrying effect, and a gate evaluating only typed effects sees the carrying step with none of what filled it. `25`'s own argument for binding to effects — that they are "a bounded set the runtime already represents in order to execute anything at all" — applies to reads equally well and never excluded them; the exclusion was a separate, weaker claim sitting beside it.
+
+**Mode: Reasoned**, and the correction is **Operated** in the same weak sense as F37: the user identified the category error directly rather than it being derived here. Nothing was tested.
+
+**Grounds.** `10-foundations/02`'s own line 39 as the sole site of the argument — `10-technical/04-enforcement-gate.md` never mentions reads at all, having inherited the exclusion silently, which is itself evidence that it propagated as an assumption rather than a decision; `10-technical/01-effect-vocabulary.md`'s statement that vocabulary changes are design-set decisions, which supplies the reversibility asymmetry; `25-arch-invariant-layer/01`'s effect-binding argument and Composition risk section, neither of which needs the exclusion.
+
+**Changed.** `10-foundations/02`: the claim **qualified and dated rather than rewritten**, per `03`'s own rule that a promoted claim other documents relied on is appended to, not silently revised — the leg that survives is that a workspace read is not a typed effect because it changes nothing outside the system; the leg withdrawn is that the gate may therefore not evaluate one. Its Feedback section's "reaches outside it or changes state" narrowed to "changes the world beyond it," since a read changes the system's own context record and that does not make it an effect. Open question gained the permissive-default content and granularity item. `25-arch-invariant-layer/01`: new §What the gate may see is wider than what it evaluates, stating the input domain as runtime-mediated operations with typed effects as the outside-world-changing subset; Composition risk gained the reads-in-the-sequence consequence. `20-arch-runtime.md`: the read path restated as short by default rather than by construction, and its open question replaced — the capability question is settled, the default's content and whether a read eventually earns its own type are not.
+
+---
+
 ## Unchecked justifications
 
 Findings above are grounded in something read or directly checked. The items below are
