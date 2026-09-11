@@ -882,6 +882,22 @@ The ARES material this pass first attached to curation was **relocated**. `70-TH
 
 ---
 
+## F44 — The naive-default restraint sequences the work; it does not doubt that a real store will be needed, and that difference has one design consequence
+
+**Claim.** `21-arch-knowledge-model` states the restraint as "no graph database, no vector index, no model-mediated retrieval, until evidence says the naive version is the actual bottleneck." Read plainly, "until evidence says" makes the sophisticated version **contingent** — something that might turn out to be needed. The user corrected the reading: a proper ontology, model-mediated knowledge, and a real graph store are obviously going to be needed. Only the timing is open.
+
+That is a small change in wording and a real one in consequence. If the replacement is certain rather than contingent, the naive shape has an obligation it does not have otherwise: it must not foreclose the replacement. What has to stay stable across the change is each actor's **service surface**, not its storage shape, and a caller must never learn that a claim or a work item is a file. If paths, formats, or directory structure leak into an interface, the eventual move stops being a substitution and becomes a rewrite of every caller — which is the one way a deliberately crude starting point turns into a trap rather than a baseline.
+
+Worth noting that the ontology is not starting from nothing either. `10-foundations/03`'s four claim types, and its source, mode-of-acquisition and scope axes, are already a proto-ontology, and they were reached from real cases — the hand-tagging trial, the ETH correction — rather than designed in advance. That is the shape the rest of it should take.
+
+**Mode: Reasoned**, the correction **Operated** in the weak sense used since F37 — the user stated the position directly. The interface-stability consequence was derived here.
+
+**Grounds.** `21-arch-knowledge-model/01`'s own naive-default paragraph, whose "until evidence says" phrasing is what carried the contingent reading; `10-foundations/04`'s "a naive default is still required" argument, which asks for something crude and measurable so a smarter version has a baseline to beat — an argument that assumes a smarter version is coming, and therefore already implied this without saying it.
+
+**Changed.** `21-arch-knowledge-model/01`: the restraint reframed as sequencing rather than doubt, with the service-surface obligation stated and `03` named as the ontology's existing seed. `28-arch-work-record/01`: the same reading applied to its own naive default in one sentence.
+
+---
+
 ## Unchecked justifications
 
 Findings above are grounded in something read or directly checked. The items below are

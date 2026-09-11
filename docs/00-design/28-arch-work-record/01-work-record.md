@@ -39,7 +39,7 @@ What this actor does not do is decide anything about the work. Whether a work it
 
 ## General shape and a naive default
 
-The same restraint `21-arch-knowledge-model` and `23-arch-context-management` commit to: the filesystem, no database, no index, until evidence says the naive version is the actual bottleneck.
+The same restraint `21-arch-knowledge-model` and `23-arch-context-management` commit to: the filesystem, no database, no index, until evidence says the naive version is the actual bottleneck. And the same reading of that restraint — it sequences the work rather than doubting that a real store will eventually be needed, so this actor's service surface is the part that has to survive the change, and a caller must never learn that a work item is a file.
 
 One structured record per work item, holding its current formulation and state as directly readable fields, with an append-only transition log kept alongside it rather than inside it.
 
