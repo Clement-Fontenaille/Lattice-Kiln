@@ -898,6 +898,24 @@ Worth noting that the ontology is not starting from nothing either. `10-foundati
 
 ---
 
+## F45 — Objective validation is a system-instance strategy, not an unowned architectural boundary; only its recorded verdict is architectural
+
+**Claim.** `04`'s The objective itself is not a given closed by saying the objective-validity boundary "has no owner yet," and this pass proposed taking it next as a missing-actor gap of the same kind as the work record and thinking. The user rejected the framing: whether a system instance validates its objectives is that instance's to implement or not.
+
+The rejection holds on inspection. Architecture would have to own this only if it needed something that does not already exist, and nothing does. A processor reasoning over what it was given is the definition of a processor. Recording that a task rests on a false assumption is already enumerated under `10-technical/01-effect-vocabulary.md` type 4. The candidate matches `04` says context assembly must surface for the "already satisfied" case arrive as ordinary retrieval artifacts, which needed no new service from `23-arch-context-management`. So there is no missing actor, no missing mechanism, and no missing capability — only an open question about whether a deployment commissions such a role, which `22-arch-cognition/02-processors.md`'s deliberately open role vocabulary already governs.
+
+This is the same correction the user made to arbitration earlier in this pass, and the pattern is worth naming because it recurs: a behavior named in the foundations, with no actor attached, reads as an architectural gap whether or not it is one. It is one when something must exist for the behavior to be possible. It is not one when the behavior only requires that somebody choose to configure it.
+
+What survives as architectural is narrower and concerns representation rather than judgment. If an instance does run the check, its verdict has to be distinguishable from an ordinary failure to proceed, and Milestone 5 recorded that distinction collapsing — the orchestrator resolved both "the task rests on a false premise" and "I cannot find a next step" to a generic `blocked`, where the Milestone 4 arms had explicitly declined.
+
+**Mode: Reasoned**, the correction **Operated** in the weak sense used since F37. The evidence cited on both sides is **operated**: findings-log entries 5 and 6 are real runs.
+
+**Grounds.** `10-technical/01-effect-vocabulary.md` type 4, whose Includes line already names "recording that a task rests on a false assumption" — so the recording half was never unowned; `22-arch-cognition/02-processors.md`'s open role vocabulary and its statement that the set of roles grows on evidence; findings-log entry 5 for the M4 positive (both arms declined a false-premise task) and entry 6 for the M5 collapse.
+
+**Changed.** `10-foundations/04`: the closing "no owner yet" clause replaced by a dated §On ownership note, stating that validation needs no mechanism that does not exist and that commissioning is instance strategy, while naming the representation residue. `28-arch-work-record/01`: the recorded-conclusion responsibility now says why keeping *declined* distinct from *blocked* is load-bearing, citing the M5 collapse, and separates that from whether an instance judges validity at all.
+
+---
+
 ## Unchecked justifications
 
 Findings above are grounded in something read or directly checked. The items below are
