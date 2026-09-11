@@ -1,6 +1,6 @@
 # Findings — the evidence-belief-and-provenance conceptual pass
 
-**Date:** 2026-09-10
+**Date:** 2026-09-10, continuing 2026-09-11
 **Serves:** `10-foundations/03-evidence-belief-and-provenance.md`, revised in place
 throughout; `10-foundations/02-reasoning-vs-runtime.md`, from F15 onward, once Thinking
 turned out to be misplaced in `03`; `10-foundations/01-constrained-intelligence-
@@ -8,8 +8,12 @@ thesis.md` and `10-foundations/05-ephemeral-conversation-curated-memory.md`, bot
 F19, once the pass widened from the knowledge model itself to the other locations
 knowledge lives in (external world, model weights, conversation) and what draws the
 line between them. `70-THINKING/01-use-cases.md` also carries two direct edits (P3),
-recorded here rather than there because they are this pass's, not the litreview's. This
-file is the justification record for all of it — the design-set counterpart to
+recorded here rather than there because they are this pass's, not the litreview's.
+`10-foundations/04-context-as-governed-resource.md`, from F30, once the pass returned to
+context after the knowledge-and-reasoning substrate was in place — first against `03`'s
+graph alone, then, from F31's correction on 2026-09-11, against all four of `01`'s
+locations of knowledge once a concrete scenario showed the graph-only framing too
+narrow. This file is the justification record for all of it — the design-set counterpart to
 `50-findings/`, produced by a design conversation and a hand-tagging trial against the
 existing corpus rather than by a milestone experiment.
 
@@ -668,6 +672,90 @@ finding.
 
 ---
 
+## F30 — "Redundancy, not volume" was in tension with the granularity hypothesis; redundancy and convergence are different axes, not opposites
+
+**Claim.** `04`'s existing claim that "what makes context costly is redundancy, not volume" stated a real, evidenced finding (findings entry 9, §3) as if it were the whole story. It is not: the granularity hypothesis (`20-cognitive-architecture/08-decomposition.md`) predicts a volume-driven ceiling independent of redundancy, and a context can be entirely non-redundant and still overload a small assembly. The original phrasing also invited a second, separate confusion — treating redundancy as the absence of Convergence (`03`) — when the two are unrelated axes: Convergence is independent corroboration between claims, strengthening reliability; redundancy is duplicated coverage inside one assembled window, a pure budget cost.
+
+**Mode: Reasoned.** Both corrections raised directly by the user in discussion: the volume tension first ("That is in direct tension with the granularity hypothesis"), the convergence distinction second, correcting my own "redundancy is the absence of convergence" claim mid-discussion.
+
+**Grounds.** `50-findings/09-field-evidence-2026-09.md` §3 (the redundancy evidence itself, re-read to confirm it supports only the duplication claim, not a volume claim); `20-cognitive-architecture/08-decomposition.md` (the granularity hypothesis, read in full for this check); `03`'s existing Convergence definition (Friction and re-evaluation), read directly rather than assumed.
+
+**Changed.** `04`: the old §"What makes context costly is redundancy, not volume" was removed; its evidenced claim survives, narrowed and correctly scoped, inside the new §Failure modes' Redundancy entry, with an explicit paragraph distinguishing it from both Convergence and Overload.
+
+---
+
+## F31 — `04` needed an actual shape for "context": not a projection of `03`'s graph alone, but the set of artifacts produced by crossings into conversation, judged on two independent axes
+
+**Claim.** Every other foundations document this pass touched ended up with a structural account of its own subject — `03` has claims, modes, weighing dimensions; `02` has Thinking and Feedback as procedures. `04` had only principles (context is relational, redundancy is costly) and no account of what a context actually *is*. A first draft defined it as a bounded projection of `03`'s provenance graph alone. Working the shape against a concrete scenario (a knowledge graph, a workspace of files, a task, live artifacts, several processors) showed that definition too narrow: the naive default (`10-technical/07`) draws its bundle from raw repository files, never touching `03`'s graph at all, and a workspace full of unread papers is not itself context by merely existing. The corrected shape: nothing is context until it **crosses** into conversation, the fourth of `01`'s four locations of knowledge — a tool call reaching the external world, a retrieval reaching `03`'s knowledge base, a generation drawing on the model's weights are the three ways a crossing happens, and what a crossing produces, never the thing reached, is an **artifact**. A context, at any point, is the set of artifacts currently live. Not every artifact is already a `03` claim — a tool call's output is raw until Thinking turns it into one — so `03`'s own apparatus (mode of acquisition, weighing, convergence) applies once an artifact becomes a claim, not to artifacts as such. The two independent axes survive the correction unchanged: **coverage** (does the selection contain what the objective needs), a property of the selection, and **integration** (can the assembly hold what coverage included), a property of the assembly.
+
+**Mode: Reasoned**, in two stages. The axes and the initial projection-of-`03` framing were prompted by the user's own framing ("03 tells you the shape of the knowledge base... here we need the shape of the context, the context model"). The correction was prompted by the user proposing a concrete scenario to stress-test it ("we have a knowledge graph, we have a workspace with a folder hierarchy with a number of papers, we have a task, we have a set of live artifacts, we have a set of processors") and then supplying the actual mechanism directly ("The filesystem is the outside world, its not context. The pieces of filesystem read will be gathered by the context manager as the output of a tool call, an artifact, and the models response, another one. It also tracks the discussion") — the connection to `01`'s pre-existing four locations of knowledge was then drawn by this pass and confirmed by the user before being written.
+
+**Grounds.** `10-technical/07-naive-context-assembly.md`'s naive algorithm, re-read directly and found to draw only from repository files, not `03`'s graph — the concrete fact that broke the first draft; `10-foundations/01-constrained-intelligence-thesis.md`'s pre-existing four-locations material (F19, this same pass); `02-reasoning-vs-runtime.md`'s Feedback (doing produces raw Observations, thinking turns them into knowledge) as the basis for the raw-artifact/claim distinction.
+
+**Changed.** `04`: §The shape of a context rewritten in place (collapsed, not appended — nothing outside this session's drafting had relied on the graph-only version); "claim" language in Failure modes, What is live has to be tracked not inferred, What each failure mode requires, The objective itself is not a given, and Forcing the choice was correspondingly loosened to "artifact" wherever those sections did not specifically mean a `03` claim.
+
+---
+
+## F32 — Context failure has four modes, not one: Insufficiency, Redundancy, Uselessness, Overload — split by which axis fails and evidenced separately
+
+**Claim.** The two axes in F31 generate four distinct failure modes rather than one undifferentiated "too much / too little." Insufficiency and Redundancy are opposite-direction coverage failures (missing versus duplicated), both evidenced in the existing corpus. Uselessness is a third, previously unnamed coverage failure — present, non-duplicating, but irrelevant — predicted to be harmless alone and harmful only by contributing to Overload, with nothing in the corpus testing it in isolation. Overload is the only integration failure: content-quality-agnostic aggregate volume crossing the assembly's ceiling, where the granularity hypothesis lives, itself only retrodictively supported and not yet subjected to its own named falsifier (E2).
+
+**Mode: Reasoned.** Constructed across several rounds of direct correction from the user: an initial three-way split was corrected to separate Uselessness from Overload ("that one is not harmful, until it becomes overload"), and Overload itself was generalized from "individually relevant, non-redundant material that still exceeds the ceiling" (my narrower framing) to content-quality-agnostic "context blur, in general" (the user's correction).
+
+**Grounds.** `50-findings/09-field-evidence-2026-09.md` §3 (Redundancy); the Milestone 4 finding already in `04`'s own Expected behavior section (Insufficiency); `20-cognitive-architecture/08-decomposition.md`, including its own "Status of this account" section ("a lens, not a theory") and `08-next-experiments.md`'s E2 (Overload's evidence status). Uselessness has no grounding beyond the argument itself — flagged as predicted, not evidenced, in the text.
+
+**Changed.** `04`: added §Failure modes, replacing the old redundancy-only section.
+
+---
+
+## F33 — Each failure mode's document-level obligation is what to track and what decision it feeds, not how to resolve it
+
+**Claim.** An initial attempt to answer what `04` owes for Overload reached directly for a resolution technique — `03`'s checked/unchecked (souvenir) distinction, condense versus split — before establishing what actually needs tracking and deciding. The user flagged this as off-topic: out of scope for what a foundations document owes, which is naming what must be addressed, not proposing how. The corrected shape states, per mode, what must be tracked for the mode to be detectable and what decision the tracking feeds, leaving execution to architecture — the same deferral `03`'s Weighing claims already makes for pertinence. Working through this also surfaced gaps worth naming precisely: Insufficiency has no trackable representation of an objective's information requirements yet; Redundancy has to be defined at the level of coverage, not text, to rule out a cheap wrong implementation; Uselessness's real decision is whether detecting it is worth the judgment cost at all, not simply whether to filter it; Overload already has a naive, existing answer (`10-technical/07`'s flat token budget) whose limitation this document's own relational claim already names.
+
+**Mode: Reasoned.** The souvenir-mechanism draft was corrected directly by the user mid-edit ("that is off-topic... what do we need to track and what kind of decisions need to be made"); the per-mode content was then built in discussion before being written, confirmed as "a good start" before finishing.
+
+**Grounds.** `10-technical/07-naive-context-assembly.md` (the existing flat-budget behavior, read directly, not assumed); `20-cognitive-architecture/01-work-intent-and-task-model.md`'s Intent concept (checked as the nearest, not-yet-fitting candidate for Insufficiency's tracking need); `50-findings/09` §3 (re-confirmed as a material-duplication result, grounding the coverage-not-text framing for Redundancy).
+
+**Changed.** `04`: the drafted §Responding to overload (souvenir/condense-split) was replaced before being carried forward as settled — collapsed, not appended, since nothing outside this session's own drafting had relied on it — with §What each failure mode requires.
+
+---
+
+## F34 — Live context needs an explicit, trackable record; none of the four failure modes are detectable without one
+
+**Claim.** Every track/decide pair in F33 presupposes the system can consult what is currently live in context while assembly is happening — Redundancy's overlap check, Insufficiency's missing-coverage check, Overload's running total, and Uselessness's per-item pertinence judgment all compare a candidate or a total against the live set, not against `03`'s full graph. `04`'s own TL;DR already commits to context "measured as a resource" without ever stating what measuring it actually requires: an explicit, first-class, inspectable record of what is live, distinct from what merely exists in `03`'s graph but is not currently loaded.
+
+**Mode: Reasoned.** Raised directly by the user as "one central aspect" of the whole discussion, not derived from a file; grounded here against `70-THINKING/ideas.md` I12, which had already sketched close to this bookkeeping account for a different reason (placing "context manager" in the cognitive architecture) earlier in the same pass.
+
+**Grounds.** `70-THINKING/ideas.md` I12, read directly — its bookkeeping list ("tracking what the model is currently fed... live versus archived") already names most of what this finding requires, though I12 was written to answer a different question (where a context manager sits architecturally) and is cited here as a candidate account, not adopted.
+
+**Changed.** `04`: added §What is live has to be tracked, not inferred, between Failure modes and What each failure mode requires; Open question gained two new items (an objective's trackable information-requirement shape; ownership of the live-context record) and one item reworded (Overload's proxy/threshold, no longer framed as a condense/split question).
+
+---
+
+## F35 — The objective itself is not a given; and context assembly cannot make that judgment, only feed it
+
+**Claim.** `04`'s shape, failure modes, and track/decide obligations all presuppose the objective is genuine, unique, and actually needs new work — an assumption real request traffic (the GitLab-issues case) breaks routinely (duplicate tickets, user error, under-specified reports). `20-cognitive-architecture/01-work-intent-and-task-model.md` already names the needed system behavior — discovering a request "already has been satisfied" or resting on "a false assumption" — but only as a capability, not as something fed. A first attempt to fold this into `04` treated "checking whether the objective is already answered" as itself a context-assembly step, deciding the question. That was corrected directly: context assembly cannot make that judgment — it is a processor's output, reached by Thinking (`02`) — context assembly's job stops at surfacing candidate matches from `03`'s provenance graph for the processor to judge. A false-premise or under-specified objective has no equivalent candidate to surface at all, since the objective's own claim has not yet been weighed; `04` should name that boundary rather than silently assume it away.
+
+**Mode: Reasoned.** Prompted directly by the user ("think of the gitlab issues experiments"), grounded against `20-cognitive-architecture/01`'s existing text, read directly rather than assumed; then corrected again directly by the user when the first draft blurred context assembly's role into the judgment itself ("The context cannot provide for that judgment. That is a processor's output. It will need the proper context to operate though.").
+
+**Grounds.** `20-cognitive-architecture/01-work-intent-and-task-model.md` (Expected behavior, read in full for this check); `02-reasoning-vs-runtime.md`'s Thinking and `03`'s Convergence, applied to distinguish "surfacing a candidate" (context assembly's role) from "judging whether it resolves the objective" (a processor's role) — the same split already drawn for Insufficiency's request-more-context affordance.
+
+**Changed.** `04`: added §The objective itself is not a given, immediately after What each failure mode requires (the section that followed it, first drafted and then retracted, is F36's); Open question gained a new item on the objective-validity boundary's missing owner.
+
+---
+
+## F36 — Context selection can be a forced choice over an indexed menu; self-judgment evidence does not apply to it and was retracted
+
+**Claim.** A first attempt at naming who performs context selection reached for this project's own self-judgment evidence (Entry 7's judge-lab, ADaPT's self-assessment inflation) and treated selection as a judgment-reliability question. The user retracted this directly: judging correctness or sufficiency and selecting from a presented set are different operations, and evidence against the first does not transfer to the second. The pattern actually being pointed at — described by the user from a GitLab-issues study, not read directly in this pass — is a forced choice: the harness presents an indexed menu of candidate context and requires a selection at a defined point, rather than leaving a request optional (the M4 finding's own failure mode) or asking the model to self-assess whether it has enough. This needs two things `04` had not named: an index of what is available but not yet live, distinct from the live record itself, and arbitration over which candidates are offered and which choices are honoured.
+
+**Mode: Reasoned**, and **second-hand** (`03`) for the study itself: the mechanism (index, arbitration, forcing) is taken on the user's direct account, not verified against a primary source by this pass.
+
+**Grounds.** `04`'s own pre-existing M4 finding (Expected behavior: "being able to ask is not enough; the behaviour has to be prompted or required") as the gap this mechanism concretely answers; `10-technical/07-naive-context-assembly.md`'s existing substring-match step, re-read as an unnamed, crude precedent for arbitration.
+
+**Changed.** `04`: the retracted §The model is not a safe default judge of its own failure modes was collapsed — not appended over, since nothing outside this session's own drafting had relied on it — and replaced with §Forcing the choice: an index, and arbitration over it, including a marked prediction (forcing raises selection rate over the M4 optional-affordance baseline) with a named falsifier — a re-run of the M4 setup with a forced-menu arm added; Open question's live-context-record item reworded to drop the self-judgment framing and ask about arbitration instead, and gained a new item naming the prediction as untested.
+
+---
+
 ## Unchecked justifications
 
 Findings above are grounded in something read or directly checked. The items below are
@@ -728,3 +816,9 @@ them, and the next pass on `03` should treat them as open rather than settled.
   convergence. Whether "cannot be reconstructed from provenance" actually holds for a
   real claim in this corpus, rather than being a plausible-sounding distinction, is
   untested.
+
+- **The GitLab-issues study behind F36 has not been read by this pass.** Its
+  index/arbitration/forced-choice mechanism is carried entirely on the user's own
+  account (second-hand, per `03`) — no citation, no verification that the study
+  describes the mechanism this accurately, or at all. `04`'s new section rests on it
+  as stated; a primary-source check is owed before this is promoted further.
