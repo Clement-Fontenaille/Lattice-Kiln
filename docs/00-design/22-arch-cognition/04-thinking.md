@@ -68,7 +68,7 @@ It does not record anything. A conclusion thinking reaches is a proposal, and re
 
 It does not decide what work to do next. Commissioning and sequencing are the orchestrator's.
 
-It does not index anything. Walking a large graph from every correction does not scale, and `02` is explicit that making the walk fast is persistence's problem rather than cognition's. What this family needs is a query it can ask; supplying it efficiently is `21-arch-knowledge-model`'s, and `70-THINKING/ideas.md` I5 is the shape an index for it would take.
+It does not concern itself with how the walk performs. What this family needs is a question it can ask — what cites this claim — and answering it belongs to `21-arch-knowledge-model`, which satisfies it by following child links. `10-foundations/02` is explicit that what belongs on the cognitive side is that the walk is how a processor thinks, not what makes it fast.
 
 ## Service and interactions
 
