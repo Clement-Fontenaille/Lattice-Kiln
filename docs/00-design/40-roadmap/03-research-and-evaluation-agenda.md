@@ -30,7 +30,7 @@ The main risk is that the memory curation mechanism becomes a new source of omis
 
 ## Core hypothesis: decomposition pays where and only where the work exceeds what the assembly can hold
 
-The candidate account in `20-cognitive-architecture/08` proposes that what varies with capability is the granularity at which relevant context can be accounted for, and that decomposition is grain-matching.
+The candidate account in `22-arch-cognition/08` proposes that what varies with capability is the granularity at which relevant context can be accounted for, and that decomposition is grain-matching.
 
 It is currently a lens rather than a theory: assembled to explain observations already held, and yet to make a prediction that could fail. **The named falsifier** is whether the same information at a coarser grain outperforms it at a finer one with quantity held constant. If those come out equal, the account reduces to *relevant context beats maximal context* and should be retired to it.
 

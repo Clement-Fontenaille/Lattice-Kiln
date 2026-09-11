@@ -84,7 +84,7 @@ point for `10-foundations/01`'s open question (*"what makes a direct attempt
 count as failed, cheaply enough that the check costs less than the decomposition
 it triggers"*) and for dloop's escalate-on-stall. It is better evidence for a
 problem the project already has than "tangential success" was. Worth adding to
-entry 9 §4 and `20-cognitive-architecture/08-decomposition.md`.
+entry 9 §4 and `22-arch-cognition/08-decomposition.md`.
 
 ---
 
@@ -343,7 +343,7 @@ exactly unless noted.
    with no evaluation behind it*. The concept is kept (it motivates real
    structure in `02`); only its evidentiary status changed. ADaPT's *actual*
    limitation — models cannot reliably judge their own success — added to entry 9
-   §4 and to `20-cognitive-architecture/08` open questions.
+   §4 and to `22-arch-cognition/08` open questions.
 2. **B — CTXbench**, not "AGENTbench": corrected in `03` (×4) and entry 9 §3.
 3. **C — developer-written effect** is **+2.4%, p≈0.21 (not significant)**, not
    "+4%": corrected in `03` and entry 9 §3.

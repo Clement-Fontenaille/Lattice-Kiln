@@ -85,7 +85,7 @@ The cognitive architecture is a harness in sense 1. Its parts map to the loop:
 | assemble context | **naive context assembly** (`10-technical/07`), later a context governor (M9) |
 | call the model | the inference substrate; assumed, characterised by M0 |
 | parse / decide next | **orchestrator** (`10-technical/08`, from M5) |
-| execute (OUT) | **runtime** (`20-cognitive-architecture/05`); **enforcement gate** on the boundary (`10-technical/04`) |
+| execute (OUT) | **runtime** (`20-arch-runtime`); **enforcement gate** on the boundary (`10-technical/04`) |
 | state / persistence | ephemeral conversation vs curated memory (`10-foundations/05`) |
 
 What the field's word does not carry, and the project adds: the **invariant
@@ -107,7 +107,7 @@ thick.
 | **guardrails / policy layer** | input/output filters, action policies, validation | the project's **enforcement gate** + **capability/authority model** are a hard, deterministic version |
 | **scaffold / scaffolding** | support that *compensates for model limits* and may be removed as the model improves | the project's preferred informal word for the whole assembly; softer than "harness" — includes prompt-level structure, decomposition rules, gates |
 | **orchestrator / controller / router** | the routing brain *inside* the harness: which model, which tool, which subagent, when to decompose, when to escalate | a named component here (`10-technical/08`), scoped by its own contract |
-| **runtime / execution environment** | safe execution of tool calls: container, microVM, VM | the project's **runtime** (`20-cognitive-architecture/05`); the OUT-crossing sandbox |
+| **runtime / execution environment** | safe execution of tool calls: container, microVM, VM | the project's **runtime** (`20-arch-runtime`); the OUT-crossing sandbox |
 | **agent framework** | a packaged, reusable harness with abstractions (chains, graphs, roles) | not used; the project builds its own rather than adopting one |
 | **frontend / assistant / copilot** | the UI-facing wrapper: editor integration, diff review, plan/ask modes | `70-THINKING/03` calls these "frontends"; the project explicitly does not build one (`01-use-cases.md` P1) |
 | **control plane** | fleet-level governance over many agents: policy, audit, cost attribution, isolation | a deployment target, not part of the architecture (`70-THINKING/03` §6.5) |

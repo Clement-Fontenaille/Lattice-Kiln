@@ -58,7 +58,7 @@ interpretable.
 
 ## E2 — Does grain matter independently of quantity?
 
-The discriminator for the decomposition account (`20-cognitive-architecture/08`).
+The discriminator for the decomposition account (`22-arch-cognition/08`).
 Two arms, token-matched and sufficiency-matched, varying only the level of
 abstraction at which the same information is supplied.
 

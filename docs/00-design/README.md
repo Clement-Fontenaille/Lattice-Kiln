@@ -20,9 +20,9 @@ The `00-project` space defines what the project is, what success means, and how 
 
 The `10-foundations` space captures the principles that constrain later architectural choices without prescribing implementation.
 
-The `20-cognitive-architecture` space describes the major conceptual actors and their relationships.
+The architecture space is split by concern rather than held in one folder, since only one of its parts is a reasoning or coordinating actor — the rest are resources or constraints those actors operate with, on, or under. `20-arch-runtime.md` is the entry point and states the split. `21-arch-knowledge-model` and `23-arch-context-management` realize `10-foundations/03` and `04` respectively. `22-arch-cognition` holds the actors: task representation, processors, the orchestrator, decomposition. `24-arch-permission-layer` and `25-arch-invariant-layer` hold what an actor may request and what may never happen regardless. `26-arch-observability` holds what has to be reconstructable after the fact.
 
-The `30-adaptation-and-evolution` space describes the feedback, evaluation, experimentation, generation, and bootstrap concepts.
+The `27-arch-adaptation-and-evolution` space describes the feedback, evaluation, experimentation, generation, and bootstrap concepts.
 
 The `40-roadmap` space describes sequencing, milestones, and the questions that must be answered empirically. Milestones live one per file in `01-MILESTONES/`, where a milestone's number is a **stable identifier rather than a position in a queue**. What order they are worked in — and what has been changed upstream but not yet carried downstream — lives in `00-backlog.md`, in four priority bands. `40-roadmap/README.md` describes how that space is maintained.
 

@@ -2,11 +2,19 @@
   "title": "AI Development System — Conceptual Documentation Set",
   "format": "Markdown",
   "status": "Conceptual architecture, pre-technical specification",
+  "files": [
+    "20-arch-runtime.md"
+  ],
   "directories": [
     "00-project",
     "10-foundations",
-    "20-cognitive-architecture",
-    "30-adaptation-and-evolution",
+    "21-arch-knowledge-model",
+    "22-arch-cognition",
+    "23-arch-context-management",
+    "24-arch-permission-layer",
+    "25-arch-invariant-layer",
+    "26-arch-observability",
+    "27-arch-adaptation-and-evolution",
     "40-roadmap",
     "50-findings",
     "90-notes"

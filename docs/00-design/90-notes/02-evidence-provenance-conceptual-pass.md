@@ -395,7 +395,7 @@ either document should assume.
 **Mode: Reasoned**, a direct correction to F16's framing, which had implicitly modeled
 thinking as the driver and doing as its service.
 
-**Grounds.** `20-cognitive-architecture/01-work-intent-and-task-model.md`'s existing
+**Grounds.** `22-arch-cognition/01-work-intent-and-task-model.md`'s existing
 Intent concept ("the underlying desired outcome or concern") is what actually decides
 which side leads — checked directly, not assumed. This also directly answers the
 standing complaint that opened this whole pass: that knowledge has to come from
@@ -674,11 +674,11 @@ finding.
 
 ## F30 — "Redundancy, not volume" was in tension with the granularity hypothesis; redundancy and convergence are different axes, not opposites
 
-**Claim.** `04`'s existing claim that "what makes context costly is redundancy, not volume" stated a real, evidenced finding (findings entry 9, §3) as if it were the whole story. It is not: the granularity hypothesis (`20-cognitive-architecture/08-decomposition.md`) predicts a volume-driven ceiling independent of redundancy, and a context can be entirely non-redundant and still overload a small assembly. The original phrasing also invited a second, separate confusion — treating redundancy as the absence of Convergence (`03`) — when the two are unrelated axes: Convergence is independent corroboration between claims, strengthening reliability; redundancy is duplicated coverage inside one assembled window, a pure budget cost.
+**Claim.** `04`'s existing claim that "what makes context costly is redundancy, not volume" stated a real, evidenced finding (findings entry 9, §3) as if it were the whole story. It is not: the granularity hypothesis (`22-arch-cognition/08-decomposition.md`) predicts a volume-driven ceiling independent of redundancy, and a context can be entirely non-redundant and still overload a small assembly. The original phrasing also invited a second, separate confusion — treating redundancy as the absence of Convergence (`03`) — when the two are unrelated axes: Convergence is independent corroboration between claims, strengthening reliability; redundancy is duplicated coverage inside one assembled window, a pure budget cost.
 
 **Mode: Reasoned.** Both corrections raised directly by the user in discussion: the volume tension first ("That is in direct tension with the granularity hypothesis"), the convergence distinction second, correcting my own "redundancy is the absence of convergence" claim mid-discussion.
 
-**Grounds.** `50-findings/09-field-evidence-2026-09.md` §3 (the redundancy evidence itself, re-read to confirm it supports only the duplication claim, not a volume claim); `20-cognitive-architecture/08-decomposition.md` (the granularity hypothesis, read in full for this check); `03`'s existing Convergence definition (Friction and re-evaluation), read directly rather than assumed.
+**Grounds.** `50-findings/09-field-evidence-2026-09.md` §3 (the redundancy evidence itself, re-read to confirm it supports only the duplication claim, not a volume claim); `22-arch-cognition/08-decomposition.md` (the granularity hypothesis, read in full for this check); `03`'s existing Convergence definition (Friction and re-evaluation), read directly rather than assumed.
 
 **Changed.** `04`: the old §"What makes context costly is redundancy, not volume" was removed; its evidenced claim survives, narrowed and correctly scoped, inside the new §Failure modes' Redundancy entry, with an explicit paragraph distinguishing it from both Convergence and Overload.
 
@@ -702,7 +702,7 @@ finding.
 
 **Mode: Reasoned.** Constructed across several rounds of direct correction from the user: an initial three-way split was corrected to separate Uselessness from Overload ("that one is not harmful, until it becomes overload"), and Overload itself was generalized from "individually relevant, non-redundant material that still exceeds the ceiling" (my narrower framing) to content-quality-agnostic "context blur, in general" (the user's correction).
 
-**Grounds.** `50-findings/09-field-evidence-2026-09.md` §3 (Redundancy); the Milestone 4 finding already in `04`'s own Expected behavior section (Insufficiency); `20-cognitive-architecture/08-decomposition.md`, including its own "Status of this account" section ("a lens, not a theory") and `08-next-experiments.md`'s E2 (Overload's evidence status). Uselessness has no grounding beyond the argument itself — flagged as predicted, not evidenced, in the text.
+**Grounds.** `50-findings/09-field-evidence-2026-09.md` §3 (Redundancy); the Milestone 4 finding already in `04`'s own Expected behavior section (Insufficiency); `22-arch-cognition/08-decomposition.md`, including its own "Status of this account" section ("a lens, not a theory") and `08-next-experiments.md`'s E2 (Overload's evidence status). Uselessness has no grounding beyond the argument itself — flagged as predicted, not evidenced, in the text.
 
 **Changed.** `04`: added §Failure modes, replacing the old redundancy-only section.
 
@@ -714,7 +714,7 @@ finding.
 
 **Mode: Reasoned.** The souvenir-mechanism draft was corrected directly by the user mid-edit ("that is off-topic... what do we need to track and what kind of decisions need to be made"); the per-mode content was then built in discussion before being written, confirmed as "a good start" before finishing.
 
-**Grounds.** `10-technical/07-naive-context-assembly.md` (the existing flat-budget behavior, read directly, not assumed); `20-cognitive-architecture/01-work-intent-and-task-model.md`'s Intent concept (checked as the nearest, not-yet-fitting candidate for Insufficiency's tracking need); `50-findings/09` §3 (re-confirmed as a material-duplication result, grounding the coverage-not-text framing for Redundancy).
+**Grounds.** `10-technical/07-naive-context-assembly.md` (the existing flat-budget behavior, read directly, not assumed); `22-arch-cognition/01-work-intent-and-task-model.md`'s Intent concept (checked as the nearest, not-yet-fitting candidate for Insufficiency's tracking need); `50-findings/09` §3 (re-confirmed as a material-duplication result, grounding the coverage-not-text framing for Redundancy).
 
 **Changed.** `04`: the drafted §Responding to overload (souvenir/condense-split) was replaced before being carried forward as settled — collapsed, not appended, since nothing outside this session's own drafting had relied on it — with §What each failure mode requires.
 
@@ -734,11 +734,11 @@ finding.
 
 ## F35 — The objective itself is not a given; and context assembly cannot make that judgment, only feed it
 
-**Claim.** `04`'s shape, failure modes, and track/decide obligations all presuppose the objective is genuine, unique, and actually needs new work — an assumption real request traffic (the GitLab-issues case) breaks routinely (duplicate tickets, user error, under-specified reports). `20-cognitive-architecture/01-work-intent-and-task-model.md` already names the needed system behavior — discovering a request "already has been satisfied" or resting on "a false assumption" — but only as a capability, not as something fed. A first attempt to fold this into `04` treated "checking whether the objective is already answered" as itself a context-assembly step, deciding the question. That was corrected directly: context assembly cannot make that judgment — it is a processor's output, reached by Thinking (`02`) — context assembly's job stops at surfacing candidate matches from `03`'s provenance graph for the processor to judge. A false-premise or under-specified objective has no equivalent candidate to surface at all, since the objective's own claim has not yet been weighed; `04` should name that boundary rather than silently assume it away.
+**Claim.** `04`'s shape, failure modes, and track/decide obligations all presuppose the objective is genuine, unique, and actually needs new work — an assumption real request traffic (the GitLab-issues case) breaks routinely (duplicate tickets, user error, under-specified reports). `22-arch-cognition/01-work-intent-and-task-model.md` already names the needed system behavior — discovering a request "already has been satisfied" or resting on "a false assumption" — but only as a capability, not as something fed. A first attempt to fold this into `04` treated "checking whether the objective is already answered" as itself a context-assembly step, deciding the question. That was corrected directly: context assembly cannot make that judgment — it is a processor's output, reached by Thinking (`02`) — context assembly's job stops at surfacing candidate matches from `03`'s provenance graph for the processor to judge. A false-premise or under-specified objective has no equivalent candidate to surface at all, since the objective's own claim has not yet been weighed; `04` should name that boundary rather than silently assume it away.
 
-**Mode: Reasoned.** Prompted directly by the user ("think of the gitlab issues experiments"), grounded against `20-cognitive-architecture/01`'s existing text, read directly rather than assumed; then corrected again directly by the user when the first draft blurred context assembly's role into the judgment itself ("The context cannot provide for that judgment. That is a processor's output. It will need the proper context to operate though.").
+**Mode: Reasoned.** Prompted directly by the user ("think of the gitlab issues experiments"), grounded against `22-arch-cognition/01`'s existing text, read directly rather than assumed; then corrected again directly by the user when the first draft blurred context assembly's role into the judgment itself ("The context cannot provide for that judgment. That is a processor's output. It will need the proper context to operate though.").
 
-**Grounds.** `20-cognitive-architecture/01-work-intent-and-task-model.md` (Expected behavior, read in full for this check); `02-reasoning-vs-runtime.md`'s Thinking and `03`'s Convergence, applied to distinguish "surfacing a candidate" (context assembly's role) from "judging whether it resolves the objective" (a processor's role) — the same split already drawn for Insufficiency's request-more-context affordance.
+**Grounds.** `22-arch-cognition/01-work-intent-and-task-model.md` (Expected behavior, read in full for this check); `02-reasoning-vs-runtime.md`'s Thinking and `03`'s Convergence, applied to distinguish "surfacing a candidate" (context assembly's role) from "judging whether it resolves the objective" (a processor's role) — the same split already drawn for Insufficiency's request-more-context affordance.
 
 **Changed.** `04`: added §The objective itself is not a given, immediately after What each failure mode requires (the section that followed it, first drafted and then retracted, is F36's); Open question gained a new item on the objective-validity boundary's missing owner.
 

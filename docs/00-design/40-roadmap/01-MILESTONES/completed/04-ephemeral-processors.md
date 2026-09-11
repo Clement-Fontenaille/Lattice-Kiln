@@ -47,9 +47,9 @@ runtime, and the M5 follow-up eventually established that the reviewer seat itse
 was the problem — not the loop around it.
 
 Design touches: the effect vocabulary (a conclusion is a type-4 effect),
-[`02-processors.md`](../../../20-cognitive-architecture/02-processors.md),
+[`02-processors.md`](../../../22-arch-cognition/02-processors.md),
 [`04-context-as-governed-resource.md`](../../../10-foundations/04-context-as-governed-resource.md),
-[`06-observability.md`](../../../20-cognitive-architecture/06-observability.md).
+[`01-observability.md`](../../../26-arch-observability/01-observability.md).
 
 ## Owed re-test
 

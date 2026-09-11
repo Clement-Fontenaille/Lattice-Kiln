@@ -70,6 +70,23 @@ grain-matching rule addresses the cheaper half of the problem. The account says
 nothing about how coarse the recombining step must be, and recombination is coarse
 by construction: it requires holding the objective and the parts together.
 
+This has been silently assuming one shape for how split work comes back together:
+**fork/join** — parts run independently of each other, then an explicit step
+rejoins them, and that step is where the coarseness above concentrates. It is not
+the only shape on offer. **Continuation** is the alternative: instead of forking
+into parts unaware of each other and reconciling afterward, each step hands off to
+the next as an evolving single thread, carrying forward what the next step needs
+directly — there is no separate join, because nothing was split into independent
+branches to begin with. This does not make recombination's cost disappear; it
+relocates it, folded into every handoff instead of concentrated at the end, and
+whether that is cheaper is exactly as untested as the rest of this account.
+
+**A preference, not a decision.** Continuation is the standing preference for this
+project, named here precisely so it does not lose by default to fork/join's silent
+assumption above rather than by argument. Nothing in this account yet justifies
+preferring one over the other — both stay on the table until evidence or a sharper
+argument decides between them.
+
 **Objective preservation.** Parts can meet their own criteria and miss what was
 asked, each having acquired a local target in place of the goal. Matching grain
 says nothing about preserving intent, and a rule that only matched grain would
@@ -92,6 +109,11 @@ redundant stages retire on evidence rather than on judgement.
 
 Whether the granularity account survives contact with a prediction that could
 fail, and what replaces it if not.
+
+Whether decomposition executes as fork/join or as continuation (What it does not
+explain, Recombination, above) is unresolved and untested. Nothing in the account
+itself depends on which; the recombination gap reads differently under each, and
+the standing preference for continuation is not yet an argued position.
 
 Whether decomposition and recombination are governed by one quantity or two. The
 account assumes one; the observed concentration of cost in aggregation is the

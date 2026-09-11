@@ -1,8 +1,8 @@
 # Observability Event Model (v0)
 
-**Traces to:** `00-design/20-cognitive-architecture/06-observability.md`,
+**Traces to:** `00-design/26-arch-observability/01-observability.md`,
 `00-design/10-foundations/03-evidence-belief-and-provenance.md`,
-`00-design/20-cognitive-architecture/07-invariant-enforcement.md`,
+`00-design/25-arch-invariant-layer/01-invariant-enforcement.md`,
 `00-design/40-roadmap/01-MILESTONES/completed/02-observability-foundation.md` (M2);
 binds to `10-technical/01-effect-vocabulary.md`.
 
@@ -31,13 +31,13 @@ Own the **recorded form of a run** and its **reconstruction guarantees**: the
 event types that must exist, the identity and lineage that must link them, and
 the outcome categories that must be distinguishable. It does not own effect
 typing (`01-effect-vocabulary.md`), gate logic
-(`07-invariant-enforcement.md`), or the capability model.
+(`01-invariant-enforcement.md`), or the capability model.
 
 ## Narrowing
 
 The design set describes what should be reconstructable — human intent,
 processors invoked, context received, outputs, tool activity, effects, objective
-signals, human corrections (`06-observability.md`) — without fixing a record
+signals, human corrections (`01-observability.md`) — without fixing a record
 structure. This document narrows that to a **record-per-event model** with four
 mandatory event kinds (below), rather than, say, a single narrative log or a
 periodic state snapshot. Discarded alternatives: a pure append-only text log
@@ -67,7 +67,7 @@ MUST carry:
 - `invocation_id` — stable, unique within the run.
 - `parent_invocation_id` — the invocation that caused this one, or null for the
   root. This is what makes **per-actor** and **per-intent-lineage** history
-  reconstructable (`07-invariant-enforcement.md` composition risk).
+  reconstructable (`01-invariant-enforcement.md` composition risk).
 - `intent_ref` — link to the originating human intent record.
 - `role` — the role definition bound at instantiation (text/reference, not an
   enum — the role vocabulary is open).
@@ -98,7 +98,7 @@ MUST carry:
 
 The ordered sequence of realized-effect records per `invocation_id` and per
 `parent` lineage MUST be queryable without replaying the whole run. Gate
-sequence evaluation runs against this (`07-invariant-enforcement.md`); the
+sequence evaluation runs against this (`01-invariant-enforcement.md`); the
 window and grouping for that evaluation are an open contract owned there, not
 here.
 
@@ -106,8 +106,8 @@ here.
 
 A gate trip that stops or alters an effect, and any decommissioning, MUST be
 recorded as a **distinct terminal outcome**, never folded into generic task
-failure (bad output, timeout, low quality) (`07-invariant-enforcement.md`,
-`06-observability.md`).
+failure (bad output, timeout, low quality) (`01-invariant-enforcement.md`,
+`01-observability.md`).
 
 MUST carry:
 
@@ -143,7 +143,7 @@ is an open contract (M4 will show what corrections actually look like).
   domain and shares the "representable/permitted/attributable/reversible" carrier
   open contract. This document requires every realized effect is recorded; it
   does not define the types.
-- **Invariant enforcement gate** (`07-invariant-enforcement.md`) — consumes the
+- **Invariant enforcement gate** (`01-invariant-enforcement.md`) — consumes the
   ordered realized-effect history and emits kind-3 records. Owns sequence-window
   semantics.
 - **Capability and authority model** (`03-capability-authority-model.md`) — a
@@ -153,7 +153,7 @@ is an open contract (M4 will show what corrections actually look like).
   the provenance graph is downstream of these records; runtime bookkeeping
   (observations, provenance links) is not a gated effect and is emitted by the
   runtime, not proposed.
-- **Runtime** (`20-cognitive-architecture/05-runtime.md`) — emits all four kinds
+- **Runtime** (`20-arch-runtime.md`) — emits all four kinds
   as a side effect of doing its job; recording is runtime bookkeeping, not a
   cognitive action.
 
@@ -186,7 +186,7 @@ only supports one-effect-at-a-time review.
   one JSONL file per run under a results tree, like the M0 harness.
 - **The four-property carrier.** Shared with `01-effect-vocabulary.md`: one
   common envelope across all nine effect types, or per-type shapes?
-- **Retention and tiering.** `06-observability.md` flags that full-token
+- **Retention and tiering.** `01-observability.md` flags that full-token
   retention forever is undesirable and short-term forensic detail must eventually
   be distinguished from long-term summarised evidence. What is the forensic
   window, and what is the summarised long-term form?
@@ -209,10 +209,10 @@ only supports one-effect-at-a-time review.
   property of the actor, or a distinct record kind — and how does it interact with
   findings, which the same document now states may be **negative**?
 - **Objective signals.** Build/test/lint results and other objective outcomes are
-  named in `06-observability.md` as reconstructable. Are they realized-effect
+  named in `01-observability.md` as reconstructable. Are they realized-effect
   results (type 2, process execution) or their own record kind?
 - **Sequence-evaluation interface.** The exact query the gate issues against the
-  ordered effect history (owned by `07-invariant-enforcement.md`) — this document
+  ordered effect history (owned by `01-invariant-enforcement.md`) — this document
   guarantees the history exists and is per-actor / per-intent queryable, but the
   query contract is not yet written.
 - **Clock and ordering.** Per-run monotonic sequence is required; is a global

@@ -2,7 +2,7 @@
 
 **State:** open
 **Was:** M12, before rework 2
-**Design:** [`03-meta-level-feedback.md`](../../30-adaptation-and-evolution/03-meta-level-feedback.md), [`08-recursive-symmetry-without-dogma.md`](../../30-adaptation-and-evolution/08-recursive-symmetry-without-dogma.md)
+**Design:** [`03-meta-level-feedback.md`](../../27-arch-adaptation-and-evolution/03-meta-level-feedback.md), [`08-recursive-symmetry-without-dogma.md`](../../27-arch-adaptation-and-evolution/08-recursive-symmetry-without-dogma.md)
 
 ## What this milestone is
 

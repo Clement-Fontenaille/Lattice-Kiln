@@ -3,7 +3,7 @@
 **State:** open. **Gated on [M11](11-safety-response.md)** and on a second
 judgment source.
 **Was:** M10, before rework 2
-**Design:** [`02-system-level-feedback.md`](../../30-adaptation-and-evolution/02-system-level-feedback.md), [`05-experiments-and-candidate-systems.md`](../../30-adaptation-and-evolution/05-experiments-and-candidate-systems.md)
+**Design:** [`02-system-level-feedback.md`](../../27-arch-adaptation-and-evolution/02-system-level-feedback.md), [`05-experiments-and-candidate-systems.md`](../../27-arch-adaptation-and-evolution/05-experiments-and-candidate-systems.md)
 
 ## What this milestone is
 
@@ -42,7 +42,7 @@ for this whole tier. See [`../00-backlog.md`](../00-backlog.md).
 This is the milestone where a system that adapts its own evaluation criteria could
 satisfy its own measurements by redefining what is being measured. The invariant
 layer and the frozen baselines are the structural answer
-([`04-goodhart-and-adversarial-evaluation.md`](../../30-adaptation-and-evolution/04-goodhart-and-adversarial-evaluation.md)),
+([`04-goodhart-and-adversarial-evaluation.md`](../../27-arch-adaptation-and-evolution/04-goodhart-and-adversarial-evaluation.md)),
 and [M14](14-meta-evaluation.md) is where whether they worked gets asked.
 
 ## Scope, not a new kind of agent

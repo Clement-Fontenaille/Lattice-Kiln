@@ -1,6 +1,6 @@
 # Effect Vocabulary
 
-**Traces to:** `00-design/10-foundations/02-reasoning-vs-runtime.md`, `00-design/20-cognitive-architecture/04-capabilities-and-authority.md`, `00-design/20-cognitive-architecture/05-runtime.md`, `00-design/20-cognitive-architecture/07-invariant-enforcement.md`, `00-design/20-cognitive-architecture/06-observability.md`
+**Traces to:** `00-design/10-foundations/02-reasoning-vs-runtime.md`, `00-design/24-arch-permission-layer/01-capabilities-and-authority.md`, `00-design/20-arch-runtime.md`, `00-design/25-arch-invariant-layer/01-invariant-enforcement.md`, `00-design/26-arch-observability/01-observability.md`
 
 ## TL;DR
 
@@ -14,13 +14,13 @@ This document fixes the complete list of effect types in the system and the boun
 
 It is the shared reference for three components that must agree on that list:
 
-- the **invariant enforcement gate**, which checks proposed effects and effect sequences against the invariant layer (`07-invariant-enforcement.md`);
-- the **capability and authority model**, which describes which effect types an actor may request and under what policy (`04-capabilities-and-authority.md`);
-- **observability**, which must record every realized effect in a form that supports later reconstruction (`06-observability.md`).
+- the **invariant enforcement gate**, which checks proposed effects and effect sequences against the invariant layer (`01-invariant-enforcement.md`);
+- the **capability and authority model**, which describes which effect types an actor may request and under what policy (`01-capabilities-and-authority.md`);
+- **observability**, which must record every realized effect in a form that supports later reconstruction (`01-observability.md`).
 
 ## Narrowing
 
-The design set names effect types in several places without a single canonical list: `02-reasoning-vs-runtime.md` gives an illustrative five, `04-capabilities-and-authority.md` gives an overlapping eight framed as capability areas, `07-invariant-enforcement.md` gives six. This document reconciles them into one enumeration of nine types. No new effect type is introduced that those documents do not already imply.
+The design set names effect types in several places without a single canonical list: `02-reasoning-vs-runtime.md` gives an illustrative five, `01-capabilities-and-authority.md` gives an overlapping eight framed as capability areas, `01-invariant-enforcement.md` gives six. This document reconciles them into one enumeration of nine types. No new effect type is introduced that those documents do not already imply.
 
 ## Why the set is closed
 
@@ -103,14 +103,14 @@ Moving a candidate configuration into a trusted generation, and recording the li
 
 Changing what an actor is authorized to request.
 
-- Includes: granting an implementer bounded workspace-mutation authority; **revoking an actor's capabilities immediately and unilaterally** (decommissioning, per `07-invariant-enforcement.md`).
+- Includes: granting an implementer bounded workspace-mutation authority; **revoking an actor's capabilities immediately and unilaterally** (decommissioning, per `01-invariant-enforcement.md`).
 - Grant and revoke are the same primitive in opposite directions. Revocation MUST be realizable without a proposal, an evaluation step, or a wait for human review.
 
 ## Effect sequences
 
-The gate evaluates sequences, not only individual effects (`07-invariant-enforcement.md`). A series of individually permitted effects can compose into an outcome no single check would catch.
+The gate evaluates sequences, not only individual effects (`01-invariant-enforcement.md`). A series of individually permitted effects can compose into an outcome no single check would catch.
 
-An implementation therefore MUST make the ordered history of realized effects reconstructable per actor and per intent lineage, and MUST NOT treat gate evaluation as purely stateless per-effect. The window, grouping, and pattern definitions for sequence evaluation are an open contract carried by `07-invariant-enforcement.md`.
+An implementation therefore MUST make the ordered history of realized effects reconstructable per actor and per intent lineage, and MUST NOT treat gate evaluation as purely stateless per-effect. The window, grouping, and pattern definitions for sequence evaluation are an open contract carried by `01-invariant-enforcement.md`.
 
 ## Relationships
 

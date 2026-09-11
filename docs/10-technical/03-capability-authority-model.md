@@ -1,8 +1,8 @@
 # Capability and Authority Model
 
-**Traces to:** `00-design/20-cognitive-architecture/04-capabilities-and-authority.md`,
-`00-design/20-cognitive-architecture/07-invariant-enforcement.md`,
-`00-design/20-cognitive-architecture/05-runtime.md`,
+**Traces to:** `00-design/24-arch-permission-layer/01-capabilities-and-authority.md`,
+`00-design/25-arch-invariant-layer/01-invariant-enforcement.md`,
+`00-design/20-arch-runtime.md`,
 `00-design/40-roadmap/01-MILESTONES/03-invariant-floor.md` (M3);
 binds to `10-technical/01-effect-vocabulary.md`.
 
@@ -35,7 +35,7 @@ the runtime).
 
 ## Narrowing
 
-`04-capabilities-and-authority.md` leaves capability granularity and the
+`01-capabilities-and-authority.md` leaves capability granularity and the
 representation of policy open. This document narrows the MVP form to:
 
 - **Grants keyed to the nine effect types**, not to finer sub-operations. A grant
@@ -113,7 +113,7 @@ Rules:
     cognition-initiated capability change).
   - **Revocation MUST be realizable immediately and unilaterally by the
     runtime** — no proposal, no evaluation step, no wait for human review
-    (`07-invariant-enforcement.md`, decommissioning). After revocation the
+    (`01-invariant-enforcement.md`, decommissioning). After revocation the
     actor's set is empty and every subsequent request from it fails closed.
 
 ## Failure modes
@@ -140,7 +140,7 @@ Rules:
   order is representability (runtime) → capability → gate.
 - **Observability** (`02-observability-event-model.md`) — records every
   capability decision as a kind-4 disposition.
-- **Runtime** (`05-runtime.md`) — holds the seed grant map, applies revocations,
+- **Runtime** (`20-arch-runtime.md`) — holds the seed grant map, applies revocations,
   and calls this model; it does not let a cognitive component reach the map.
 
 ## Open contracts
@@ -153,7 +153,7 @@ Rules:
   classes). Deferred until M4 shows which constraints real effects need.
 - **Policy dynamism.** When does policy stop being a static map? What triggers a
   grant change mid-run, if ever, and how is that itself gated?
-- **Granularity review.** `04-capabilities-and-authority.md`'s open question —
+- **Granularity review.** `01-capabilities-and-authority.md`'s open question —
   effect-type granularity is the MVP choice; M4 evidence may show a type (likely
   2, process execution, or 4, work-record mutation) needs to be split for
   authority purposes even though the vocabulary keeps it whole.

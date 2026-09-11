@@ -1,8 +1,8 @@
 # Orchestrator / Runtime Boundary (v0)
 
 **Traces to:** `00-design/10-foundations/02-reasoning-vs-runtime.md`,
-`00-design/20-cognitive-architecture/05-runtime.md`,
-`00-design/20-cognitive-architecture/03-orchestrator.md`,
+`00-design/20-arch-runtime.md`,
+`00-design/22-arch-cognition/03-orchestrator.md`,
 `00-design/90-notes/01-next-conceptual-pass.md`,
 `00-design/40-roadmap/01-MILESTONES/completed/05-intelligent-orchestration.md` (M5);
 binds to `10-technical/06-processor-contract.md`,
@@ -24,10 +24,10 @@ else. The runtime validates the four properties plus the deny-list gate and make
 ## Status of this document
 
 v0 for Milestone 5. It narrows the "how much does the runtime validate?" open
-question (`02-reasoning-vs-runtime.md`, `05-runtime.md`) to a concrete MVP
+question (`02-reasoning-vs-runtime.md`, `20-arch-runtime.md`) to a concrete MVP
 answer, and fixes the crossings and the assumptions each side may not make. The
 placement of the gate relative to the runtime stays open
-(`07-invariant-enforcement.md`); the call *order* is pinned here.
+(`01-invariant-enforcement.md`); the call *order* is pinned here.
 
 ## Narrowing
 
@@ -89,7 +89,7 @@ representability pre-check  ->  capability  ->  invariant gate  ->  realize
 ```
 
 Whether the gate is a component *of* the runtime or a layer the runtime is
-subordinate *to* is left open (`07-invariant-enforcement.md`). What is fixed:
+subordinate *to* is left open (`01-invariant-enforcement.md`). What is fixed:
 there is no runtime code path to an effect realization that bypasses the gate.
 
 ## What each side may not assume
@@ -125,7 +125,7 @@ there is no runtime code path to an effect realization that bypasses the gate.
 
 - **Reasoning and runtime boundary** (`02-reasoning-vs-runtime.md`) — the concept;
   this document is its interface narrowing.
-- **Runtime** (`05-runtime.md`) — owns representability and reversibility
+- **Runtime** (`20-arch-runtime.md`) — owns representability and reversibility
   judgments and effect realization; this document says what it may not also do.
 - **Orchestrator contract** (`08`) / **processor contract** (`06`) — the reasoning
   side of the boundary.
@@ -148,4 +148,4 @@ there is no runtime code path to an effect realization that bypasses the gate.
 - **One boundary or two.** Whether the orchestrator/runtime boundary and the
   processor/runtime boundary are the same seam with the same rules, or distinct.
 - **Gate placement.** Component of the runtime, or a layer above it
-  (`07-invariant-enforcement.md`).
+  (`01-invariant-enforcement.md`).

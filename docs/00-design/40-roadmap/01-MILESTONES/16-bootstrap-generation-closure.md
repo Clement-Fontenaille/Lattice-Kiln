@@ -2,7 +2,7 @@
 
 **State:** open. The last milestone in the current sequence.
 **Was:** M14, before rework 2
-**Design:** [`07-bootstrapper-as-transfer-mechanism.md`](../../30-adaptation-and-evolution/07-bootstrapper-as-transfer-mechanism.md)
+**Design:** [`07-bootstrapper-as-transfer-mechanism.md`](../../27-arch-adaptation-and-evolution/07-bootstrapper-as-transfer-mechanism.md)
 
 ## What this milestone is
 

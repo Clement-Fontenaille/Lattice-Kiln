@@ -42,7 +42,7 @@ What makes a direct attempt count as *failed*, cheaply enough that the check cos
 
 How is a composite outcome evaluated? Parts can each be checked against their own criterion while nothing checks whether they are together what was asked. This is what bounds how far decomposition can usefully be pushed.
 
-Are decomposition and recombination governed by one quantity or two? The candidate account (`20-cognitive-architecture/08`) assumes one; the observed concentration of cost in aggregation is the reason to doubt it.
+Are decomposition and recombination governed by one quantity or two? The candidate account (`22-arch-cognition/08`) assumes one; the observed concentration of cost in aggregation is the reason to doubt it.
 
 Where should the decision to split live? The orchestrator is the obvious owner, but a rule this consequential held by a component that is itself tunable system configuration deserves examination rather than assumption.
 

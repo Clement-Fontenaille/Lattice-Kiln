@@ -6,6 +6,20 @@ The runtime is the substrate that preserves reality, limits effects, records his
 
 > **Motto:** Flexible cognition requires a stable world.
 
+## Architecture map
+
+This document is the entry point into the architecture space: runtime sits underneath every other concern here, since it is what actually executes what any of them propose.
+
+- [`21-arch-knowledge-model/`](21-arch-knowledge-model/README.md) — `10-foundations/03`'s substrate, realized.
+- [`22-arch-cognition/`](22-arch-cognition/01-work-intent-and-task-model.md) — the reasoning and coordinating actors: task representation, processors, the orchestrator, decomposition.
+- [`23-arch-context-management/`](23-arch-context-management/README.md) — `10-foundations/04`'s account, realized.
+- [`24-arch-permission-layer/`](24-arch-permission-layer/01-capabilities-and-authority.md) — what an actor may request.
+- [`25-arch-invariant-layer/`](25-arch-invariant-layer/01-invariant-enforcement.md) — what may never happen, regardless of what any actor requests.
+- [`26-arch-observability/`](26-arch-observability/01-observability.md) — what has to be reconstructable after the fact.
+- [`27-arch-adaptation-and-evolution/`](27-arch-adaptation-and-evolution/) — feedback, evaluation, generations, bootstrap.
+
+Split out of a single `20-cognitive-architecture/` folder on 2026-09-11: only `22` holds actors that reason or coordinate anything; the rest are resources or constraints those actors operate with, on, or under.
+
 ## Motivation
 
 The AI layers need freedom to reason, but the system must retain an authoritative record of what actually happened.

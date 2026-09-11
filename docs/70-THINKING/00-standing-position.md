@@ -59,8 +59,8 @@ than the root supports.
   unresolved; a unit for an unvalidated construct is decoration.
 - **Nothing blocks on it.** No experiment in §5 needs rungs to be a *unit* —
   every one works on raw per-ladder scores.
-- **It invites Goodharting the project's own measure**, which `30-adaptation/04`
-  warns about specifically.
+- **It invites Goodharting the project's own measure**, which
+  `27-arch-adaptation-and-evolution/04` warns about specifically.
 - **Under G4′ it is redundant anyway.** A latent-trait estimate *is* a
   commensurable measure by construction. Commensurability falls out of the
   construct-validity work or it does not arrive at all — wanting it does not

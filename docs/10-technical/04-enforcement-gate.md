@@ -1,8 +1,8 @@
 # Enforcement Gate (deny-list form, v0)
 
 **Traces to:** `00-design/10-foundations/06-the-invariant-layer.md`,
-`00-design/20-cognitive-architecture/07-invariant-enforcement.md`,
-`00-design/20-cognitive-architecture/05-runtime.md`,
+`00-design/25-arch-invariant-layer/01-invariant-enforcement.md`,
+`00-design/20-arch-runtime.md`,
 `00-design/40-roadmap/01-MILESTONES/03-invariant-floor.md` (M3);
 binds to `10-technical/01-effect-vocabulary.md`,
 `10-technical/05-provisional-invariant-list.md`,
@@ -31,7 +31,7 @@ MVP"). The MVP gate does not wait on them.
 
 ## Narrowing
 
-`07-invariant-enforcement.md` says the mechanism is "a deterministic runtime
+`01-invariant-enforcement.md` says the mechanism is "a deterministic runtime
 check: narrow, mechanical, over the line or not." The execution cadence narrows
 that to a **deny-list** for the MVP. This document fixes that form:
 
@@ -41,7 +41,7 @@ that to a **deny-list** for the MVP. This document fixes that form:
 - Discarded: an **allow-list** gate — it would duplicate the capability model and
   be permanently incomplete against the open space of effect payloads. A
   **scoring / heuristic** gate — "smart is another word for persuadable"
-  (`07-invariant-enforcement.md`). A **role-keyed** gate — the role vocabulary is
+  (`01-invariant-enforcement.md`). A **role-keyed** gate — the role vocabulary is
   deliberately open; the gate binds effects.
 - Discarded for the MVP only: **gate-alter** (refuse-only here; alter is a design
   concept that needs the triage role, Milestone 11), and **accumulation-stop**
@@ -70,7 +70,7 @@ consulted on every effect that reaches it, including effects the capability mode
 permitted.
 
 Where the gate sits *relative to the runtime* — a component of it, or a layer the
-runtime is subordinate to — is left open (`07-invariant-enforcement.md` open
+runtime is subordinate to — is left open (`01-invariant-enforcement.md` open
 question). For the MVP implementation it is a distinct module the runtime calls
 on every effect and has no code path around.
 
@@ -107,7 +107,7 @@ The gate exposes `check_sequence(history, proposed_effect)`. In v0 it always
 returns `pass`. It exists so callers are wired to it now: turning sequence
 checks on later is a change to the function body, **not** to every call site.
 The window, grouping, and pattern definitions are an open contract owned by
-`07-invariant-enforcement.md`. A conforming MVP runtime MUST call
+`01-invariant-enforcement.md`. A conforming MVP runtime MUST call
 `check_sequence` on every effect even though it currently passes — skipping the
 call is a defect that hides the missing capability.
 
@@ -147,16 +147,16 @@ call is a defect that hides the missing capability.
 - **Observability** (`02-observability-event-model.md`) — consumes the gate's
   refusals as kind-3 records and supplies the ordered history the sequence stub
   will eventually read.
-- **Runtime** (`05-runtime.md`) — calls the gate on every effect, cannot bypass
+- **Runtime** (`20-arch-runtime.md`) — calls the gate on every effect, cannot bypass
   it, and halts any effect the gate refuses or cannot evaluate.
 
 ## Open contracts
 
 - **Gate / runtime placement.** Component of the runtime, or a layer above it?
-  (`07-invariant-enforcement.md`.)
+  (`01-invariant-enforcement.md`.)
 - **Sequence window and grouping.** The real `check_sequence` logic — what
   counts as a sequence, over what window, grouped how — owned by
-  `07-invariant-enforcement.md`, hardened at Milestone 11 (after the
+  `01-invariant-enforcement.md`, hardened at Milestone 11 (after the
   literature-grounding pass that milestone now carries).
 - **Gate-alter.** The design allows the gate to alter an effect, not only refuse
   it. The MVP is refuse-only; alter needs the triage role (Milestone 11).

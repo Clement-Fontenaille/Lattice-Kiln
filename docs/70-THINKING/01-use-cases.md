@@ -269,7 +269,7 @@ work, available today, with none of OQ-2's data-policy problem.
 
 Formerly posed as an open question; it is not one, and the self-reference is not
 a joke. The relevant doctrine is already written: *"notice the symmetry; do not
-design toward it"* (`30-adaptation-and-evolution/08`). A corpus that happens to
+design toward it"* (`27-arch-adaptation-and-evolution/08`). A corpus that happens to
 be at hand is a symmetry to **exploit cheaply**. It would become the failure that
 document warns about only if the project started shaping the work to make the
 self-reference hold — building for the fixture rather than using the fixture that

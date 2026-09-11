@@ -566,7 +566,7 @@ to choose. Most of what a context manager would need to do — tracking what the
 currently fed, running cache/compaction cycles, tracking what is live versus archived,
 triggering recall of something dropped, and isolating topic boundaries in a stream of
 work — reads as bookkeeping: deterministic, rule-driven, closer to a runtime component
-than to a processor as `20-cognitive-architecture/02-processors.md` defines one ("natural
+than to a processor as `22-arch-cognition/02-processors.md` defines one ("natural
 -language role instructions, an objective, selected context... interaction
 expectations"). One piece does not obviously fit that mold: identifying pertinence,
 which `10-foundations/03`'s Weighing claims section already names as the one weighing
@@ -594,11 +594,11 @@ already *be* this mechanical engine rather than merely a placeholder for it.
 - Whether this engine *is* `04`'s required naive default, or a further-along design that
   still needs a cruder version to exist first for the commissioning decision to be
   evidenced.
-- Its relationship to the already-named context-curator role (`04`; `30-adaptation-and-
-  evolution/02-system-level-feedback.md`): substrate the curator would run on top of, or
+- Its relationship to the already-named context-curator role (`04`; `27-arch-adaptation-
+  and-evolution/02-system-level-feedback.md`): substrate the curator would run on top of, or
   a design that removes the need to commission one at all.
 
 **Would graduate to** `10-foundations/04-context-as-governed-resource.md` as a refinement
 of "how the implementation boundary will be decided," and — if the mechanical/judgment
-split holds up — a new `20-cognitive-architecture` document once the boundary is
+split holds up — a new `23-arch-context-management` document once the boundary is
 evidenced, per `04`'s own stated deferral mechanism.

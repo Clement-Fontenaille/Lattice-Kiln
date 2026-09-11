@@ -1,7 +1,7 @@
 # Provisional Invariant List (v0)
 
 **Traces to:** `00-design/10-foundations/06-the-invariant-layer.md`,
-`00-design/20-cognitive-architecture/07-invariant-enforcement.md`,
+`00-design/25-arch-invariant-layer/01-invariant-enforcement.md`,
 `00-design/40-roadmap/01-MILESTONES/03-invariant-floor.md` (M3),
 `00-design/50-findings/` (Entry 1);
 binds to `10-technical/01-effect-vocabulary.md`,

@@ -2,7 +2,7 @@
 
 **State:** open
 **Was:** M8, before rework 2
-**Design:** [`01-project-level-feedback.md`](../../30-adaptation-and-evolution/01-project-level-feedback.md)
+**Design:** [`01-project-level-feedback.md`](../../27-arch-adaptation-and-evolution/01-project-level-feedback.md)
 
 ## What this milestone is
 
@@ -27,7 +27,7 @@ which processor performs them.**
 
 That distinction is load-bearing. Reading the three levels as three agents invents
 an org chart the architecture never asked for, and the recursive-symmetry document
-([`08-recursive-symmetry-without-dogma.md`](../../30-adaptation-and-evolution/08-recursive-symmetry-without-dogma.md))
+([`08-recursive-symmetry-without-dogma.md`](../../27-arch-adaptation-and-evolution/08-recursive-symmetry-without-dogma.md))
 exists to keep the symmetry from hardening into dogma.
 
 ## The first loop

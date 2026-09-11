@@ -123,7 +123,7 @@ over-30-point overestimation on WebShop. The paper recommends external verifiers
 or calibration. This is stated as a limitation of the method, in the paper.
 
 **Why it applies.** ADaPT is the prior art for the rule `02` and
-`20-cognitive-architecture/08` have been circling: decompose on failure, depth
+`22-arch-cognition/08` have been circling: decompose on failure, depth
 emergent, tune to task *and* capability. That the rule is validated (in its
 domains) is genuinely useful — it means the project is calibrating a known
 control structure, not inventing one. And the named limitation is a direct hit on

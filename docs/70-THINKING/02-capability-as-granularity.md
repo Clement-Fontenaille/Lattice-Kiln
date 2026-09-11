@@ -831,7 +831,7 @@ be caveated away by foreseeing it.
 > operations. Treat it as unitary unless the literature establishes otherwise.**
 
 This is the house rule applied consistently —
-`30-adaptation-and-evolution/08`'s *notice the symmetry, do not design toward it*,
+`27-arch-adaptation-and-evolution/08`'s *notice the symmetry, do not design toward it*,
 and the set-wide refusal to settle by intuition what should be settled by
 evidence.
 

@@ -2,7 +2,7 @@
 
 **State:** open. **Blocks completion of [M3](03-invariant-floor.md).**
 **Was:** M9, before rework 2
-**Design:** [`06-the-invariant-layer.md`](../../10-foundations/06-the-invariant-layer.md), [`07-invariant-enforcement.md`](../../20-cognitive-architecture/07-invariant-enforcement.md)
+**Design:** [`06-the-invariant-layer.md`](../../10-foundations/06-the-invariant-layer.md), [`01-invariant-enforcement.md`](../../25-arch-invariant-layer/01-invariant-enforcement.md)
 **Specifications:** [`04-enforcement-gate.md`](../../../10-technical/04-enforcement-gate.md), [`05-provisional-invariant-list.md`](../../../10-technical/05-provisional-invariant-list.md)
 
 ## What this milestone is

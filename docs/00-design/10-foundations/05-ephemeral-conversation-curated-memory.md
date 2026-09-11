@@ -34,7 +34,7 @@ That expectation is a different question from the one Pertinence (`03`, Weighing
 
 The system should preserve scope, provenance, and reliability when practical. All three now have precise homes in `03`, named exactly that — scope is the one property `03` says cannot be recovered later no matter how the rest of a claim's provenance is kept (`03`, Scope). What `03` does not settle is the cost of attempting it here: under-assessing scope lets a claim silently get used outside where it actually holds (`50-findings/09`'s domain-transfer caveats are this cost already being paid by hand); over-assessing it chases a completeness `03` already says no record of this kind can reach. Managing that tradeoff, for whatever is being curated, is curated memory's job.
 
-Project memory and system memory are conceptually distinct for the reason `30-adaptation-and-evolution/01-project-level-feedback.md` and `02-system-level-feedback.md` already give, not a new one: what evidence justifies a change differs by scope, and a repository convention should not silently become a global processor instruction.
+Project memory and system memory are conceptually distinct for the reason `27-arch-adaptation-and-evolution/01-project-level-feedback.md` and `02-system-level-feedback.md` already give, not a new one: what evidence justifies a change differs by scope, and a repository convention should not silently become a global processor instruction.
 
 ## Expected consequence
 

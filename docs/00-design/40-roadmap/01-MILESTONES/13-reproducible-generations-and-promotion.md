@@ -2,7 +2,7 @@
 
 **State:** open
 **Was:** M11, before rework 2
-**Design:** [`06-system-generations.md`](../../30-adaptation-and-evolution/06-system-generations.md)
+**Design:** [`06-system-generations.md`](../../27-arch-adaptation-and-evolution/06-system-generations.md)
 
 ## What this milestone is
 

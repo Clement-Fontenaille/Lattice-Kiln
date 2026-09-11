@@ -1,7 +1,7 @@
 # Orchestrator Contract (v0)
 
-**Traces to:** `00-design/20-cognitive-architecture/03-orchestrator.md`,
-`00-design/20-cognitive-architecture/01-work-intent-and-task-model.md`,
+**Traces to:** `00-design/22-arch-cognition/03-orchestrator.md`,
+`00-design/22-arch-cognition/01-work-intent-and-task-model.md`,
 `00-design/10-foundations/02-reasoning-vs-runtime.md`,
 `00-design/10-foundations/04-context-as-governed-resource.md`,
 `00-design/40-roadmap/01-MILESTONES/completed/05-intelligent-orchestration.md` (M5);

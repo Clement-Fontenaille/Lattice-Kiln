@@ -1,8 +1,8 @@
 # Processor Contract (v0)
 
-**Traces to:** `00-design/20-cognitive-architecture/02-processors.md`,
-`00-design/20-cognitive-architecture/01-work-intent-and-task-model.md`,
-`00-design/20-cognitive-architecture/04-capabilities-and-authority.md`,
+**Traces to:** `00-design/22-arch-cognition/02-processors.md`,
+`00-design/22-arch-cognition/01-work-intent-and-task-model.md`,
+`00-design/24-arch-permission-layer/01-capabilities-and-authority.md`,
 `00-design/10-foundations/05-ephemeral-conversation-curated-memory.md`,
 `00-design/40-roadmap/01-MILESTONES/completed/04-ephemeral-processors.md` (M4);
 binds to `10-technical/01-effect-vocabulary.md` (effect type 6),
