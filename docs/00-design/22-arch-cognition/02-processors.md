@@ -14,7 +14,7 @@ Separate processor invocations also make it possible to obtain independent asses
 
 ## Processor definition
 
-A processor is defined by natural-language role instructions, an objective, selected context, available capabilities, and interaction expectations.
+A processor is defined by natural-language role instructions, an objective, whatever is currently live for it (`23-arch-context-management`), available capabilities, and interaction expectations.
 
 The role may encourage specific reasoning habits without prescribing a universal step sequence.
 

@@ -26,9 +26,9 @@ Higher-level evaluation systems must be able to observe and criticize orchestrat
 
 ## Context constraint
 
-The orchestrator itself must remain subject to context governance.
+The orchestrator receives its own context bundle from `23-arch-context-management`, the same way any processor does. It does not govern its own context, and has no special reach into how the context manager assembles it — the context manager is not a processor, so it sits outside what the orchestrator coordinates; the relationship is consumer to service, not coordinator to coordinated.
 
-Giving it every conversation and every repository detail would recreate the same working-memory problem the processor architecture is intended to solve.
+Giving the orchestrator every conversation and every repository detail would recreate the same working-memory problem the processor architecture is intended to solve — the risk this section originally named before an actor existed to answer it.
 
 ## Expected evolution
 

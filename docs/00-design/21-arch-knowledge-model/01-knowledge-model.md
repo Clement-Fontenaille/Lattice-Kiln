@@ -1,0 +1,53 @@
+# Knowledge Model
+
+## TL;DR
+
+The knowledge model holds `10-foundations/03`'s substrate — claims and their provenance — as a durable, queryable record that outlives any one processor invocation.
+
+> **Motto:** The record outlives the reasoning that made it.
+
+## Status of this document
+
+First draft. Written once the 2026-09-11 reorg gave `03`'s substrate a folder of its own, separate from the actors in `22-arch-cognition` that read and write it. States the actor's responsibility, the service it provides, and a general shape for it — deliberately not a schema, a storage format, or a query language, all of which belong to technical specification once this draft has held up.
+
+## Motivation
+
+`10-foundations/03` defines what a claim is, how it is weighed, and how provenance connects them into a graph. It does not say where that graph actually lives between invocations, or how a processor gets a claim in or out. Without an actor responsible for this, `03`'s substrate stays a schema with no home — findings and observations would persist only for the duration of one conversation, which is exactly the gap `10-foundations/05` (curated memory) argues this project cannot afford to leave open.
+
+## The actor and its responsibility
+
+Hold the provenance graph durably: every claim — Observation, Evidence, Finding, Decision — its source, mode of acquisition, and prior weighing, and the edges connecting them, across processor invocations and sessions. Accept new claims proposed by a processor (a memory-mutation effect, `10-technical/01-effect-vocabulary.md` type 5) and record them with their provenance intact. Serve queries against what it holds without judging what the query means or whether a result is actually pertinent — that judgment stays with whoever asked (`03`, Weighing claims).
+
+## Service provided to the rest of the system
+
+- **Write.** Given a claim and its parent links, persist it and confirm.
+- **Read.** Given a claim's identity, return the claim and its immediate provenance neighborhood.
+- **Query.** A rich interface, not a single fixed lookup — the caller sets breadth (how many candidates, how loose a match counts), depth (return just the matched claim, or walk N hops of its provenance neighborhood too), and matching mode (literal text, or fuzzy). These are parameters exposed on the query itself, always available, the same way a tool's own parameter surface is present whether or not a given call uses all of it.
+
+Explicitly not provided: whether a returned candidate is pertinent to the objective in front of it (`03`, Weighing claims — pertinence is judged live by whatever is asking); whether two claims converge or collide (`03`, Friction and re-evaluation — that is a walk Thinking performs, not a query result this actor can precompute).
+
+## General shape and a naive default
+
+`50-findings/07-m5-followup-investigation.md` (judge-lab) already showed a deterministic mechanism beating a 7B judgment panel at an adjacent decision, and `10-technical/07-naive-context-assembly.md` already commits its own naive default to the same restraint — no embeddings, no model calls. The knowledge model's naive shape should hold to it too: claims as structured records, not free prose, each carrying explicit parent-claim identities; held in the filesystem; queried by deterministic term-matching over claim content and whatever tags a processor assigned at write time, walking parent/child links for depth. Fuzzy does not mean embeddings — edit-distance and token-overlap matching are deterministic and satisfy it within the same discipline. No graph database, no vector index, no model-mediated retrieval, until evidence says the naive version is the actual bottleneck.
+
+This is not a final answer — it is `10-foundations/04`'s "a naive default is still required" argument, applied here: something crude and measurable, so a smarter version has a baseline to beat. It is also not a new invention: `50-findings/` and `90-notes/02`'s own Grounds and Changed lines are already hand-maintained claims with explicit provenance citations in plain files. The naive default formalizes a practice this project is already running by hand.
+
+## Interactions
+
+- A processor proposes a claim, typically a Finding, once Thinking has checked it; this actor persists it.
+- `23-arch-context-management` never queries this actor on its own initiative. The model calls a retrieval tool; the tool queries this actor; the context manager registers whatever comes back, the same as any other tool output.
+- `26-arch-observability` has an overlapping interest: "why did this change become trusted" (`03`, Provenance) is the same reconstruction question observability exists to answer. They are separate stores, not one shared between them — see Relationships, below.
+- `24-arch-permission-layer` and `25-arch-invariant-layer` have no dependency on this actor. The invariant gate is deliberately not smart (`25-arch-invariant-layer/01`); consulting a knowledge graph before deciding would reintroduce exactly the persuadability that document exists to close off. This is a boundary that holds cleanly, not a gap to fill later.
+
+## Relationships
+
+- **`10-foundations/03`** — owns the schema this actor realizes.
+- **`23-arch-context-management`** — the primary consumer of queries.
+- **`26-arch-observability`** — a separate store, not a shared one. Claims here and observability's history have different lifecycles and different retention needs, so observability keeps its own copy rather than reading this actor's graph directly.
+- **`20-arch-runtime.md`** — persists whatever this actor's writes resolve to, the same way it persists any other selected state.
+
+## Open question
+
+What "a tag a processor assigned at write time" actually looks like as a concrete mechanism — `03` defers the harder version of this question (pertinence-judgment) the same way.
+
+Whether claims are ever deleted or only ever superseded. `03`'s append-only Qualification rule suggests the latter, which has storage-growth consequences a naive filesystem shape will feel before a smarter one would.
