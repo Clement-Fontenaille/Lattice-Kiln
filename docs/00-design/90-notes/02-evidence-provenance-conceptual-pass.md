@@ -846,7 +846,7 @@ The word doing the work is *explicitly*. It converts a description of careful re
 
 Two consequences follow that were not asked for and are results rather than restatements.
 
-**Collapsing (`05`) is the null case, not an act.** Nothing performs it and nothing decides it, which is exactly why it is cheap: it is what happens to everything no thinking processor proposes a promotion about. This also dissolves an apparent conflict between `05`'s "no visible trail" and `26-arch-observability`'s reconstruction requirement — the absent trail is in the knowledge model, not in observability's own history, and the two were never in competition.
+**Collapsing (`05`) is the null case, not an act.** Nothing performs it and nothing decides it, which is exactly why it is cheap: it is what happens to everything no thinking processor proposes a promotion about. This also dissolves an apparent conflict between `05`'s "no visible trail" and `26-arch-observability`'s reconstruction requirement — the absent trail is in the knowledge model, not in observability's own history, and the two were never in competition. **Withdrawn by F43**: this held only while the knowledge model received promotions alone, and once every crossing registers there, nothing disappears on its own and Collapsing becomes an act. The "no visible trail" half survives; the null-case half does not.
 
 **Curated memory gets an actor without a new one being invented.** `03` hands scope assessment to whoever curates and `05` accepts the job, but no actor existed to hold it. Deciding a claim is worth keeping, and assessing its scope, are both proposals that change what the project holds, so both are family members. Scope is the member with a deadline — `03` says it must be assessed near creation or not at all — which distinguishes it from a promotion decision that can wait.
 
@@ -860,11 +860,49 @@ A third consequence is stated in the new document and deliberately **not** adopt
 
 ---
 
+## F43 — Every crossing registers into the knowledge model; the pool becomes an index, and forgetting becomes an act that needs an actor
+
+**Claim.** The user set a provisional arrangement: artifacts are registered into `21-arch-knowledge-model`, and the live pool holds only references to those entries plus context-management metadata. Curation then happens when an episode is elided down to what is deemed worth remembering, and needed a place and a mechanism.
+
+This generalises what was previously a single exception. `23-arch-context-management` held a reference-plus-metadata for knowledge-base retrievals only, because a retrieved claim already had an identity while a tool output did not. Registering every crossing as an Observation makes the exception the rule and removes the asymmetry. `10-foundations/03`'s Observation type already covers what crosses — "a test failed, a command returned a value, a file changed... a processor produced a recommendation" — so nothing in the substrate had to be stretched to accept this.
+
+It inverts Collapsing, and **F42's claim that Collapsing is the null case is withdrawn**. That claim was true of an additive arrangement where the knowledge model received only promotions, and everything else disappeared when its episode ended. Nothing disappears now. The record grows with every tool call, test run and generated response until something decides otherwise, so forgetting needs an actor, a mechanism, a trigger, and a criterion.
+
+It also forces F42's membership test to be restated. "Which store moves" no longer discriminates, since both thinking and ordinary crossings write to `21`. What discriminates is **whether anything was proposed**: an Observation is bookkeeping, unproposed and ungated, which `10-technical/01` already classes that way; everything above Observation is a thinking proposal. The test gets sharper rather than weaker, and it lands exactly on `03`'s motto — what happened is recorded automatically, what it means is not.
+
+Two gains and one cost. Provenance roots now exist by construction, since `03` requires roots to stay raw because nothing regenerates an observation never kept, and an observation written as it crosses is never not kept. There is one copy of any content, so the pool cannot drift from the record. The cost is write volume, and the answer is curation rather than selective registration.
+
+**Mode: Reasoned**, the arrangement itself **Operated** in the weak sense used since F37 — the user set it directly. The consequences, the membership-test repair, and the Collapsing withdrawal were derived here.
+
+**Grounds.** `10-foundations/03`'s Observation definition, which already admits tool outputs and processor products, so this needed no new claim type; its Provenance section's roots-stay-raw requirement and its souvenir mechanism, which together supply curation's three outcomes and the hard precondition on eliding; `10-foundations/05`'s Curated memory, which already states that curation needs a forward-looking judgment none of `03`'s three weighing dimensions makes; `10-technical/01-effect-vocabulary.md`'s bookkeeping exclusion, which is what lets Observation registration be ungated; `70-THINKING/07-when-to-decompose/18-ares-soundness.md` for the two cautions below, second-hand since it is this project's own sheet about that paper rather than the paper.
+
+**Changed.** `23-arch-context-management/01`: Register rewritten — what crosses is written to `21` and this actor keeps a reference plus metadata, holding no content of its own; new §The pool is an index, not a store, marked provisional and naming what it buys; the knowledge-base exception removed. `21-arch-knowledge-model/01`: Write split into the bookkeeping and proposal paths; new **Compress** and **Elide** services, Elide carrying a hard precondition that roots and still-cited entries may not be removed; two open questions added, including that curation's firing rate rather than the write rate now decides whether a naive filesystem shape survives. New `22-arch-cognition/05-curation.md`. `22-arch-cognition/04-thinking.md`: membership test restated on proposal rather than store, the chain-of-thought section corrected, curation promoted from a tidying member to the load-bearing one. `10-foundations/05`: Collapsing-as-default **qualified and dated** rather than rewritten, since F42 had been committed and `26` had been edited against it; the surviving half of its cheapness argument separated from the half that fails, because scope now runs at every write. `26-arch-observability/01`: its own copy named as what outlives curation.
+
+---
+
 ## Unchecked justifications
 
 Findings above are grounded in something read or directly checked. The items below are
 not — they are attempted arguments this pass relied on without independently verifying
 them, and the next pass on `03` should treat them as open rather than settled.
+
+- **"Registering every crossing, then curating" (F43) is untested in the one dimension
+  that decides whether it is viable, and a cited result points against part of it.**
+  The arrangement trades write volume for guaranteed provenance roots, and whether that
+  trade holds depends entirely on curation firing often enough and accurately enough.
+  Nothing has measured either. Worse for the design, the ARES sheet
+  (`70-THINKING/07-when-to-decompose/18-ares-soundness.md`) reports that its own
+  ablation found keeping *every* base claim consistently best with a strong judge, with
+  selective retention helping only a weaker binary one — which reads as evidence that
+  eliding may earn nothing except where something downstream is actually being swamped.
+  Curation is adopted here on an argument from tidiness and growth, and that is the
+  weaker of the two cases available.
+
+- **A curator that has stopped filtering produces an absence, and nothing detects it.**
+  The same sheet describes the collapse directly: an overconfident judge drives every
+  retention probability toward one, the pool stops filtering, and the mechanism becomes
+  a no-op while still costing what it cost before — with no diagnostic proposed. This
+  pass adopted curation without proposing one either.
 
 - **The thinking family's membership test (F42) has never been applied to a real
   processor.** "Its product is a proposed knowledge-state transition" is crisp on

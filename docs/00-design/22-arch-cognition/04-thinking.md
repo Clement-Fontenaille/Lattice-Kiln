@@ -22,13 +22,17 @@ A processor belongs to this family when its product is a **proposed mutation of 
 
 That test is mechanical, which is the point of stating it this way rather than as a description of careful reasoning. It does not ask how deeply a model reasoned, how many steps it took, or whether it reflected. It asks which store the processor is trying to move.
 
+**The word "proposed" carries the test.** `21-arch-knowledge-model` is written to by two different paths, and only one of them is thinking. Every crossing `23-arch-context-management` registers lands there immediately as an **Observation**, unproposed and ungated, because `10-technical/01` already classes the runtime recording its own observations as bookkeeping rather than as an effect. Nothing reasoned about it and no processor asked for it. Thinking is the other path: a proposal, from a processor, for anything above the Observation level — Evidence, a Finding, a Decision, a qualification, a requalification, a compression, an elision.
+
+`10-foundations/03`'s motto is the line, and it is doing real architectural work rather than summarising: a conclusion is not an observation. What happened is recorded automatically. What it means is not.
+
 ## Thinking is not chain-of-thought
 
-These are easy to conflate and they touch different stores.
+These are easy to conflate. They are separated by whether anything was proposed, not by where the writing lands — an earlier draft of this document said the two touched different stores, which stopped being true once every crossing began registering into the knowledge model.
 
-Reasoning inside a single generation — a chain of thought, a scratchpad, an argument worked out mid-response — produces tokens. Under `10-foundations/04`'s account those tokens are an artifact of a generation crossing, registered by `23-arch-context-management` into the live pool. That pool is ephemeral and conversation-scoped. Nothing the project holds as knowledge has changed.
+Reasoning inside a single generation — a chain of thought, a scratchpad, an argument worked out mid-response — produces tokens. Under `10-foundations/04`'s account those tokens are an artifact of a generation crossing, which `23-arch-context-management` registers. That registration does write an Observation into `21-arch-knowledge-model`, so the store does grow — but nothing has been *claimed*. An Observation records that a processor produced something, which `10-foundations/03` lists among its examples of directly obtained state. It does not record that what was produced is true, supported, or worth anything.
 
-A knowledge-state transition is `21-arch-knowledge-model` changing: a claim added, a qualification appended, a claim requalified, a souvenir written in place of full working. The distinction between thinking and ordinary reasoning is therefore **which store moves**, not how hard the model worked. A processor can reason at length and perform no thinking; a processor can perform thinking with one short, well-grounded proposal.
+A knowledge-state transition is what the project *holds* changing: a claim asserted, a qualification appended, a claim requalified, a souvenir written in place of full working, an entry elided. Every one of those is proposed by a processor and checked before it lands. The distinction between thinking and ordinary reasoning is therefore **whether a proposal was made**, not how hard the model worked and not which store grew. A processor can reason at length and perform no thinking; a processor can perform thinking with one short, well-grounded proposal.
 
 This is also why thinking cannot be left implicit. Reasoning happens whenever a model generates. Moving the knowledge model requires a proposal, and a proposal has an author, a check, and a record.
 
@@ -55,8 +59,8 @@ Illustrative, not a taxonomy, and expected to change on evidence the same way an
 - **The walk.** Given what changed, traverse provenance outward through dependents, checking each stop for friction or convergence and forming the attempted argument each implies.
 - **Requalification.** Given friction that held, produce the appended correction — which `03` says is a qualification far more often than an inversion, and sometimes an open contract stating the ambiguity rather than resolving it.
 - **Promotion to a claim.** Given a raw artifact returned by doing — a file read, a test result, a fetched source — decide whether it becomes an Observation, Evidence, or Finding, and with what provenance. `02`'s Feedback section already assigns this to thinking: what doing returns is raw, and turning it into knowledge is the other half.
-- **Curation.** Decide whether a checked claim is worth keeping past the episode that produced it, and assess its scope while that is still possible. `10-foundations/05`'s Curated memory names this work and hands the cost tradeoff to whoever performs it; this is who.
-- **Souvenir compression.** Given a checked demonstration step, reduce its full working to named inputs, conclusion, and — only where the connection is not obvious from those — a note of the argument's shape (`03`, Provenance).
+- **Curation.** Decide what an episode leaves behind: which entries stay raw, which compress to souvenirs, which stop being held. Now that every crossing registers into `21-arch-knowledge-model`, this member is how the record stops growing, which makes it the family's load-bearing one rather than a tidying step. Specified on its own in `05-curation.md`, including the fact that its criterion — expected future need — is the one judgment `10-foundations/03`'s dimensions cannot make.
+- **Souvenir compression.** Given a checked demonstration step, reduce its full working to named inputs, conclusion, and — only where the connection is not obvious from those — a note of the argument's shape (`03`, Provenance). Curation's middle outcome, separable because classifying a step as re-derivable is cheap while judging future need is not.
 
 ## What this family does not do
 
