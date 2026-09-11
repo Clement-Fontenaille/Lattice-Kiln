@@ -18,7 +18,7 @@ It becomes the boundary between experimental system evolution and reproducible d
 
 A bootstrap artifact should be able to construct a fresh instance corresponding to a known system generation.
 
-The resulting instance should inherit validated processor roles, orchestration behavior, context policy, evaluation configuration, and other promoted system-level improvements.
+The resulting instance should inherit validated processor roles, orchestration behavior, the recall policy (`23-arch-context-management`), evaluation configuration, and other promoted system-level improvements.
 
 ## Auditability
 

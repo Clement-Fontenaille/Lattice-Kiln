@@ -13,7 +13,11 @@ recorded here rather than there because they are this pass's, not the litreview'
 context after the knowledge-and-reasoning substrate was in place — first against `03`'s
 graph alone, then, from F31's correction on 2026-09-11, against all four of `01`'s
 locations of knowledge once a concrete scenario showed the graph-only framing too
-narrow. This file is the justification record for all of it — the design-set counterpart to
+narrow. From F37 the pass widened again, out of foundations and into the architecture
+band itself, once the 2026-09-11 reorg left `20-arch-runtime.md` describing
+responsibilities that had acquired owners and `22-arch-cognition/01`'s work model with
+no actor holding it: `20-arch-runtime.md`, `22-arch-cognition/01`, and the new
+`28-arch-work-record/01` carry those edits. This file is the justification record for all of it — the design-set counterpart to
 `50-findings/`, produced by a design conversation and a hand-tagging trial against the
 existing corpus rather than by a milestone experiment.
 
@@ -756,6 +760,42 @@ finding.
 
 ---
 
+## F37 — `20-arch-runtime.md`'s responsibility list was stale after the split, and no document drew the sequence its edges implied
+
+**Claim.** The 2026-09-11 reorg moved concerns out of the old bundled folder but did not revise the runtime document that now heads the band. Its Expected responsibilities still claimed capability boundaries, observation recording, and state persistence as the runtime's own, when `24`, `26`, and `21`/`23` respectively had become their owners — the runtime is where those become real, which is not the same as deciding them. Separately, every document in the band named its own edges and none drew the order, leaving three things unstated: that processor instantiation is itself a gated effect, that a read and an effect take different gating paths, and — the one genuine gap — **who asks the context manager for a bundle**. The answer taken is the runtime. It is the only assignment that stays uniform when the instance being invoked is the orchestrator itself, which `22-arch-cognition/03` forbids from governing its own context; the orchestrator cannot be the universal requester without contradicting that, and the instance cannot request what it needs in order to exist.
+
+**Mode: Reasoned**, from internal consistency across documents already in hand. Nothing here was tested or read against an outside source.
+
+**Grounds.** `10-technical/01-effect-vocabulary.md` type 6, which already states that instantiation binds a role definition, an objective, a selected context, and a capability set — so a bundle is bound at invocation, and something must have requested it; the same document's What is not an effect, and `10-foundations/02`'s Proposal and effect, which both exclude plain reads from the gate by name; `22-arch-cognition/03`'s Context constraint, rewritten earlier in this pass to say the orchestrator has no special reach into assembly.
+
+**Changed.** `20-arch-runtime.md`: two dead links in the architecture map repaired (they pointed at the stub READMEs deleted when `21` and `23` were written); Expected responsibilities rewritten to separate what the runtime decides from what it realizes on a named owner's behalf; new §The path an invocation takes, stating instantiation, action, and recording in order. `23-arch-context-management/01`: the runtime named as the requester of a bundle; the claim that `24-arch-permission-layer` "gates the tool call" corrected, since it had flattened two different paths — a read is capability-gated only, an effect passes capability gating and then the invariant gate.
+
+---
+
+## F38 — Work-record mutation had a schema, a policy, and exercised runs, but no actor in the band owned the record it mutates
+
+**Claim.** `10-technical/01-effect-vocabulary.md` type 4 makes changing the durable representation of work a first-class gated effect, `10-technical/03-capability-authority-model.md` writes policy for it, and the M3 runs routed real type-4 mutations through the gate — so something was already persisting work items in practice. No actor in `21`–`27` held it. `22-arch-cognition/01-work-intent-and-task-model.md` defines intent, work items, and work units without storing any of them, and `21-arch-knowledge-model` holds `03`'s claims, which a work item is not: it is what claims attach to. Folding the record into `21` was rejected on write discipline rather than on subject matter — a claim there is append-only and superseded, so its current truth is the end of a chain, whereas a work item's current state must be readable without walking anything, since the orchestrator interprets current work on every loop step. A separate actor holds both a mutable current view and an immutable transition log; collapsing the two into `21` would force one of those to give.
+
+**Mode: Reasoned**, with one operated input: the M3 runs are real exercised evidence that type 4 carves cleanly, not an argument.
+
+**Grounds.** `50-PROGRESS/archives/M3-invariant-floor.md` item 9 — three of nine effect types exercised across the M4 runs, work-record mutation among them, all carving cleanly; `10-technical/01` type 4's own text, which covers attaching a finding, proposal, or decision to a work item and classes a processor's recorded conclusion as a type-4 mutation rather than a memory write; the same document's effect-sequence requirement that realized effects be reconstructable **per intent lineage**, a chain nothing in the band supplied; `22-arch-cognition/01`'s own statement that a work item is refined, challenged, split, merged, deferred, or abandoned, which is what makes it mutable by design.
+
+**Changed.** New `28-arch-work-record/01-work-record.md`, stating the actor, its service — intent lineage, current work state, transition history, attached-claim references — and a filesystem-naive shape, with work units left open exactly as `22-arch-cognition/01` left them. `22-arch-cognition/01` gained §Where this model is held and two pointers, keeping the vocabulary there and the storage in `28`. `21-arch-knowledge-model/01` gained a one-way reference relationship: `28` resolves claims against `21`, and `21` knows nothing about work items. `26-arch-observability/01` extended its separate-store argument to three actors rather than two. `20-arch-runtime.md`'s map, `00-design/README.md`, `manifest.json`, `10-technical/01`'s traces and relationships, and `40-roadmap/00-backlog.md`'s reorg note all updated.
+
+---
+
+## F39 — `27`'s "context policy" was pre-split vocabulary for what is now the recall policy, and that loop is the consumer recall's boundedness was designed for
+
+**Claim.** `27-arch-adaptation-and-evolution` named "context policy" in four places as something system-level feedback proposes changes to, a generation carries, and a bootstrapped instance inherits — with no owner and no definition, since it was written before any actor held context. It is `23-arch-context-management`'s recall policy. Naming it that does more than fix vocabulary: it supplies the consumer that `23`'s central argument had been missing. `23` justifies keeping recall separate from registration on the grounds that a policy choosing a subset of a fixed pool makes two policies directly comparable, holding the pool constant. That property is worth having only if something tunes policies, and `27` is that something. The two documents were each carrying half of one argument.
+
+**Mode: Reasoned**, from reading the two documents against each other. No run has tuned a policy, and the comparability claim remains a design property rather than a demonstrated one.
+
+**Grounds.** `27-arch-adaptation-and-evolution/02`'s Object of adaptation, `06`'s generation contents, and `07`'s inheritance list, all naming "context policy" without an owner; `23-arch-context-management/01`'s Recall responsibility, which states the comparability property without naming who would use it.
+
+**Changed.** `27/02`: the term replaced throughout, plus a new paragraph singling the recall policy out and stating why its boundedness matters to this loop — including that `23` leaves the policy's content unspecified deliberately rather than by omission. `27/06` and `27/07`: the term replaced and the owner cited. `23/01`: a reciprocal interaction with `27`, naming this as the loop recall was shaped to serve.
+
+---
+
 ## Unchecked justifications
 
 Findings above are grounded in something read or directly checked. The items below are
@@ -816,6 +856,21 @@ them, and the next pass on `03` should treat them as open rather than settled.
   convergence. Whether "cannot be reconstructed from provenance" actually holds for a
   real claim in this corpus, rather than being a plausible-sounding distinction, is
   untested.
+
+- **"The runtime requests the context bundle" (F37) is argued entirely from internal
+  consistency.** It is the only assignment that does not contradict a document already
+  written, which is a weaker thing than being correct. No run has exercised it, and the
+  alternative — a distinct assembly step that the orchestrator triggers for other
+  instances while something else supplies its own — was rejected as inelegant rather
+  than as shown wrong.
+
+- **The mutability argument separating `28-arch-work-record` from `21` (F38) has no
+  measurement behind it.** That a work item's current state "must be readable without
+  walking anything" is asserted from the orchestrator consulting it per loop step; the
+  cost of walking a supersession chain instead was never estimated, and at the scale
+  these runs operate at it may be negligible. The separation may be right for reasons of
+  write discipline and still be unjustified on the performance grounds offered alongside
+  it.
 
 - **The GitLab-issues study behind F36 has not been read by this pass.** Its
   index/arbitration/forced-choice mechanism is carried entirely on the user's own

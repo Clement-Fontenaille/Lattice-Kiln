@@ -1,6 +1,6 @@
 # Effect Vocabulary
 
-**Traces to:** `00-design/10-foundations/02-reasoning-vs-runtime.md`, `00-design/24-arch-permission-layer/01-capabilities-and-authority.md`, `00-design/20-arch-runtime.md`, `00-design/25-arch-invariant-layer/01-invariant-enforcement.md`, `00-design/26-arch-observability/01-observability.md`
+**Traces to:** `00-design/10-foundations/02-reasoning-vs-runtime.md`, `00-design/24-arch-permission-layer/01-capabilities-and-authority.md`, `00-design/20-arch-runtime.md`, `00-design/25-arch-invariant-layer/01-invariant-enforcement.md`, `00-design/26-arch-observability/01-observability.md`, `00-design/28-arch-work-record/01-work-record.md`
 
 ## TL;DR
 
@@ -118,6 +118,7 @@ An implementation therefore MUST make the ordered history of realized effects re
 - **Capability and authority model** — expresses permissions over these types; owns the actor-and-policy dimension this document deliberately omits.
 - **Observability** — owns the recorded form of a realized effect and the reconstruction guarantees; this document only requires that every realized effect is recorded.
 - **Runtime** — owns representability and reversibility judgments; rejects the non-representable before the gate is consulted.
+- **Work record** (`00-design/28-arch-work-record/01-work-record.md`) — owns the durable record that type 4 mutates, and supplies the intent lineage this document requires realized effects to be reconstructable against.
 
 ## Open contracts
 

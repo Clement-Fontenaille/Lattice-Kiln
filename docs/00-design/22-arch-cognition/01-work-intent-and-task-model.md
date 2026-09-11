@@ -12,11 +12,17 @@ Human requests often contain assumptions about causes, implementation choices, s
 
 A development system that treats every request as an execution command may efficiently solve the wrong problem.
 
+## Where this model is held
+
+This document defines the vocabulary. It does not hold anything: the durable record of intent, work items, and their transitions belongs to `28-arch-work-record`, which realizes what is defined here and adds no concepts to it.
+
+The separation matters because a work item is revisable by design (below), and something has to hold both its current formulation and the history of how it got there without either one being reconstructed from the other.
+
 ## Intent
 
 Intent represents the underlying desired outcome or concern.
 
-It should remain traceable even when the system rewrites the work derived from it.
+It should remain traceable even when the system rewrites the work derived from it. That traceability is a service `28-arch-work-record` provides as intent lineage, and `10-technical/01-effect-vocabulary.md` already depends on it: a realized effect must be reconstructable per intent lineage, not only per actor.
 
 ## Work representation
 
@@ -30,7 +36,7 @@ This flexibility is deliberate.
 
 A work unit is a bounded piece of cognitive or practical work suitable for one processor or a short interaction.
 
-The project has not yet decided whether work units need first-class persistent representation or can remain an emergent orchestration concept.
+The project has not yet decided whether work units need first-class persistent representation or can remain an emergent orchestration concept. `28-arch-work-record` inherits that question rather than answering it: how many kinds of record it holds depends on which way this goes.
 
 ## Expected behavior
 

@@ -50,7 +50,7 @@ Full retention of every token forever is unlikely to be desirable.
 
 The project must eventually distinguish short-term forensic detail from long-term summarized evidence.
 
-This is also why this actor keeps its own copy of artifacts and events rather than reading `21-arch-knowledge-model`'s graph or `23-arch-context-management`'s live record directly. Those two have different lifecycles — a knowledge-model claim persists as curated project memory, a live artifact persists only for its conversation — and neither one's retention or compression needs match a full historical log's. Sharing a store would also mean every reconstruction query competes with `21`'s own query load, which the naive-default discipline elsewhere in this project (`10-technical/07`) already treats as a cost worth avoiding.
+This is also why this actor keeps its own copy of artifacts and events rather than reading `21-arch-knowledge-model`'s graph, `23-arch-context-management`'s live record, or `28-arch-work-record`'s items directly. Those three have different lifecycles — a knowledge-model claim persists as curated project memory, a live artifact persists only for its conversation, a work item persists until the work is done and then stops changing — and none of their retention or compression needs match a full historical log's. Sharing a store would also mean every reconstruction query competes with those actors' own query loads, which the naive-default discipline elsewhere in this project (`10-technical/07`) already treats as a cost worth avoiding.
 
 ## Open question
 

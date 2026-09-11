@@ -1,0 +1,73 @@
+# Work Record
+
+## TL;DR
+
+The work record holds intent and the work derived from it durably — what was asked, how it is currently formulated, and every transition between the two — so that ephemeral processors can cooperate on the same work across sessions.
+
+> **Motto:** The goal outlives every formulation of it.
+
+## Status of this document
+
+First draft, written 2026-09-11 during the architecture consolidation pass, which found that work-record mutation (`10-technical/01-effect-vocabulary.md` type 4) already had a schema, a capability policy, and real exercised runs behind it, while no actor in this band owned the record it mutates. States the actor's responsibility, the service it provides, and a general shape — deliberately not a schema or a storage format, which belong to technical specification.
+
+It sits at `28` rather than earlier in the band for a mechanical reason only: the numbers below it were already taken when the gap was found. Nothing is implied by its position relative to `27-arch-adaptation-and-evolution`.
+
+## Motivation
+
+`22-arch-cognition/01-work-intent-and-task-model.md` defines intent, work items, and work units — what each one is, and that a work item is deliberately revisable rather than fixed. It does not say where any of it lives between invocations.
+
+Meanwhile `10-technical/01-effect-vocabulary.md` makes work-record mutation a typed, gated effect, `10-foundations/02` names "creating a work item" as a proposal that crosses the same way any effect does, and the M3 runs routed real work-record mutations through the gate. Something was already persisting this in practice with no architectural owner.
+
+`21-arch-knowledge-model` is not that owner. It holds `10-foundations/03`'s claims, and a work item is not a claim — it is what claims attach to.
+
+## The actor and its responsibility
+
+- **Hold intent durably.** Its original human-authored content is not amendable from inside the system — `10-technical/01` type 4 excludes it by name, amendable only out of band. This actor therefore protects intent rather than managing it: written once from outside, read thereafter.
+- **Hold work items and their current state.** One current formulation per item, directly readable without reconstructing anything.
+- **Record every transition** a work item goes through: refined, challenged, split, merged, deferred, abandoned, executed. The current state and the history of how it was reached are both held, and neither is derived from the other.
+- **Hold the attachment edges** between a work item and the claims attached to it — a finding, a proposal, a decision. The claim's content lives in `21-arch-knowledge-model`; this actor holds a reference plus its own metadata, the same way `23-arch-context-management` does for a retrieved claim. Two actors point into one claim store; neither copies it.
+- **Hold a processor's recorded conclusion** — answered, blocked, or declined, with its reasoning. `10-technical/01` classes this as a work-record mutation rather than a memory write, a boundary the M4 runs found carved cleanly once chosen but not self-evident beforehand.
+
+What this actor does not do is decide anything about the work. Whether a work item should be split is the orchestrator's call, and the harder question of where that decision ought to live is `22-arch-cognition/08`'s open question, not this actor's; it records a split once something else has decided and realized one. It likewise does not judge whether a work item is well-formed or whether a recorded conclusion is correct.
+
+## Service provided to the rest of the system
+
+- **Intent lineage.** Given any work item, the chain back to the intent it descends from. `10-technical/01` already requires realized effects to be reconstructable "per intent lineage" and nothing in this band supplied that chain; this actor is what knows it.
+- **Current state of work.** What items exist, how each is currently formulated, what state it is in, and its parent and child links.
+- **Transition history**, for one item or for a whole lineage.
+- **Attached-claim references** for a work item, resolvable against `21-arch-knowledge-model`.
+
+## General shape and a naive default
+
+The same restraint `21-arch-knowledge-model` and `23-arch-context-management` commit to: the filesystem, no database, no index, until evidence says the naive version is the actual bottleneck.
+
+One structured record per work item, holding its current formulation and state as directly readable fields, with an append-only transition log kept alongside it rather than inside it.
+
+That shape is the reason this is a separate actor rather than a region of `21-arch-knowledge-model`. A claim there is append-only and superseded rather than edited, so its current truth sits at the end of a chain. A work item's current state has to be readable without walking anything, because the orchestrator interprets current work on every loop step (`22-arch-cognition/03`, Responsibility). Holding both a mutable current view and an immutable record of how it changed is a different write discipline from `21`'s, and collapsing the two would force one of them to give.
+
+Intent is a third kind of record again, and the simplest: written from outside the system and never rewritten by it, so it needs no transition log at all.
+
+## Interactions
+
+- **`22-arch-cognition/01-work-intent-and-task-model.md`** owns the vocabulary this actor persists — intent, work item, work unit — and this actor adds no concepts to it.
+- **`22-arch-cognition/03-orchestrator.md`** reads current work state on every loop step and proposes the transitions that change it, including its own per-step decision record.
+- **`20-arch-runtime.md`** gates and realizes a work-record mutation; this actor persists what the runtime realized, not what was merely proposed.
+- **`21-arch-knowledge-model`** holds the claims this actor's attachment edges point at. Separate stores, one direction of reference.
+- **`23-arch-context-management`** registers a work item reaching a processor as an artifact, a crossing like any other. This actor is queried; it never pushes into a context.
+- **`26-arch-observability`** keeps its own copy of work-record events, for the same retention and compression reasons it does not read `21` or `23` directly.
+- **`25-arch-invariant-layer`** needs a decommission to be distinguishable from ordinary task failure. The half of that which is a processor's recorded conclusion lands here; the event-history half is `26`'s.
+
+## Relationships
+
+- **`22-arch-cognition/01-work-intent-and-task-model.md`** — owns the model this actor realizes.
+- **`21-arch-knowledge-model`** — a separate store this actor references and never copies.
+- **`26-arch-observability`** — a separate store that keeps its own copy of what happens here.
+- **`20-arch-runtime.md`** — realizes the effects this actor persists.
+
+## Open question
+
+Whether work units need first-class persistent representation at all, or remain an emergent orchestration concept. `22-arch-cognition/01` left this open and nothing here closes it; the answer decides whether this actor holds two kinds of record or three.
+
+Whether split and merge are one primitive exercised in two directions or two genuinely different transitions. This matters for what the parent and child links have to be able to express.
+
+Whether an abandoned work item is retained or removed. Retention is the cheaper assumption and keeps "why was this dropped" answerable, but nothing here establishes that it is required.

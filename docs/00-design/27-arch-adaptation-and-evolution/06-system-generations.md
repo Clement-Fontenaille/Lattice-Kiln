@@ -14,7 +14,7 @@ The project instead promotes validated system-level learning into versioned gene
 
 ## Generation content
 
-A generation may include processor definitions, orchestrator definition, context policy, evaluation mechanisms, feedback configuration, model selection, runtime configuration, benchmark references, and migration or bootstrap metadata.
+A generation may include processor definitions, orchestrator definition, the recall policy (`23-arch-context-management`), evaluation mechanisms, feedback configuration, model selection, runtime configuration, benchmark references, and migration or bootstrap metadata.
 
 The exact package format is an implementation detail to be designed later.
 

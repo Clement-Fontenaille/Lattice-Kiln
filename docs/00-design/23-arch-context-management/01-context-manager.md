@@ -37,11 +37,12 @@ The naive default should grow artifact registration and a real live record first
 
 ## Interactions
 
-- **`20-arch-runtime.md`** executes a tool call a processor proposed; this actor registers the output. It does not itself initiate a crossing.
+- **`20-arch-runtime.md`** executes a tool call a processor proposed; this actor registers the output. It does not itself initiate a crossing. The runtime is also what asks this actor for a bundle when it instantiates a processor (`20-arch-runtime.md`, The path an invocation takes) — the request comes from the runtime rather than from the orchestrator or from the instance being created.
 - **`21-arch-knowledge-model`** answers a query only when the model calls the retrieval tool; this actor registers what comes back the same as any other tool output.
 - **`22-arch-cognition`** processors receive a context bundle at instantiation and may call the knowledge-base retrieval tool mid-reasoning — an ordinary tool call, and the only way knowledge-base content enters the pool. A processor's own role instructions can require that call rather than leave it to unprompted judgment — the "prompted or required" fix `10-foundations/04`'s Expected behavior already names for exactly this class of problem, using role definition, not a new mechanism. `10-foundations/04`, findings-log entry 5 (one model, one prompting setup) showed an *unprompted-and-unsupported* request affordance going unused; that bounds a claim about that condition only, not about a role-required call, and not about whether the result holds across model scale, prompting, or finetuning, which is untested.
 - **`26-arch-observability`** needs this actor's selection trace and lifecycle transitions to answer what context a processor actually received, and when.
-- **`24-arch-permission-layer`** gates the tool call that produces an artifact before this actor ever sees it.
+- **`27-arch-adaptation-and-evolution`** treats the recall policy as tunable system configuration: system-level feedback may propose a revision to it, a generation carries one, and a bootstrapped instance inherits the validated version. This is the loop recall's boundedness was meant to serve — two policies over the same pool are directly comparable, which is what makes a proposed revision evaluable rather than merely plausible.
+- **`24-arch-permission-layer`** decides whether a call is allowed at all, before this actor ever sees what it produces. That check is not uniform across crossing types: a read — a file, a knowledge-model query — is not an effect and is only capability-gated, while an effect passes capability gating and then the invariant gate. Either way, what reaches this actor has already been allowed; this actor never gates anything itself.
 
 ## Relationships
 

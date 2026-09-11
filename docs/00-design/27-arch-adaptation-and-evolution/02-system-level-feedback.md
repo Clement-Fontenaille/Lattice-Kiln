@@ -10,13 +10,15 @@ When failures recur across work, the system should be able to question its own w
 
 Some weaknesses are not repository-specific.
 
-A processor may routinely miss dependencies. The orchestrator may over-investigate trivial work. A context policy may consistently omit tests. A reviewer may identify defects only after expensive implementation cycles.
+A processor may routinely miss dependencies. The orchestrator may over-investigate trivial work. A recall policy may consistently hold back the tests. A reviewer may identify defects only after expensive implementation cycles.
 
 These patterns belong to system-level analysis.
 
 ## Object of adaptation
 
-System-level feedback may propose changes to processor definitions, orchestrator instructions, delegation behavior, context policy, review strategy, evaluation roles, or other cognitive workflow configuration.
+System-level feedback may propose changes to processor definitions, orchestrator instructions, delegation behavior, the recall policy, review strategy, evaluation roles, or other cognitive workflow configuration.
+
+The recall policy (`23-arch-context-management`) is worth singling out, because it is the one item on that list whose architecture was shaped with this loop in mind. Recall decides which already-registered artifacts are fed to the model on a given turn and which are held back; it never fetches anything. That boundedness is what makes two policies comparable — given the same tracked pool, each chooses a subset, so the pool can be held constant while the policy varies. A tuning loop needs exactly that property, and it is the reason `23` leaves the policy's content deliberately unspecified rather than guessing at one.
 
 It may also propose a role that does not yet exist.
 

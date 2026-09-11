@@ -37,6 +37,7 @@ This is not a final answer — it is `10-foundations/04`'s "a naive default is s
 - A processor proposes a claim, typically a Finding, once Thinking has checked it; this actor persists it.
 - `23-arch-context-management` never queries this actor on its own initiative. The model calls a retrieval tool; the tool queries this actor; the context manager registers whatever comes back, the same as any other tool output.
 - `26-arch-observability` has an overlapping interest: "why did this change become trusted" (`03`, Provenance) is the same reconstruction question observability exists to answer. They are separate stores, not one shared between them — see Relationships, below.
+- `28-arch-work-record` holds references to claims held here, attaching a finding, proposal, or decision to a work item. The reference points one way only: that actor resolves claims against this one, and this actor knows nothing about work items. Claims stay the unit of truth; work items are what they are attached to.
 - `24-arch-permission-layer` and `25-arch-invariant-layer` have no dependency on this actor. The invariant gate is deliberately not smart (`25-arch-invariant-layer/01`); consulting a knowledge graph before deciding would reintroduce exactly the persuadability that document exists to close off. This is a boundary that holds cleanly, not a gap to fill later.
 
 ## Relationships
@@ -44,6 +45,7 @@ This is not a final answer — it is `10-foundations/04`'s "a naive default is s
 - **`10-foundations/03`** — owns the schema this actor realizes.
 - **`23-arch-context-management`** — the primary consumer of queries.
 - **`26-arch-observability`** — a separate store, not a shared one. Claims here and observability's history have different lifecycles and different retention needs, so observability keeps its own copy rather than reading this actor's graph directly.
+- **`28-arch-work-record`** — a separate store holding one-way references into this one. A claim is append-only and superseded here; a work item there is mutable, which is why the two are not one store.
 - **`20-arch-runtime.md`** — persists whatever this actor's writes resolve to, the same way it persists any other selected state.
 
 ## Open question
