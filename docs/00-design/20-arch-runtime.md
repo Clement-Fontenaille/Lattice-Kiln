@@ -54,7 +54,9 @@ What gets bound is only what can be fixed in advance: role instructions, an obje
 
 Nothing requests this, which is why the question of who asks for a processor's context has no answer — nothing asks. Everything moving to or from the model passes through this actor by construction, so it is traversed, not called. That is also what keeps the orchestrator's "it does not govern its own context" (`22-arch-cognition/03`) true without needing anyone else to fetch on its behalf.
 
-**The model acts.** A read — a file, a knowledge-model query — is not an effect (`10-technical/01`, What is not an effect); it is capability-gated and then executed. An effect is checked against current policy (`24`), then against the invariant gate (`25`), and only then realized.
+**The model acts.** An effect is checked against current policy (`24`), then against the invariant gate (`25`), and only then realized.
+
+A read of something already inside the workspace — a file, a prior observation, a knowledge-model query — is currently held to take a shorter path: `10-technical/01`'s What is not an effect excludes it from the gate, and says it *may* still be capability-gated rather than requiring it. That exclusion is under active question and should not be read as settled here. `10-foundations/02` draws the line at "a read if it stays inside the workspace, a typed effect if it reaches outside it **or changes state**" — and under `10-foundations/04`'s account a read does change state, since it registers an artifact into a bounded pool. Where that leaves the boundary is an open question, below.
 
 **What comes back crosses in.** The result of the call, or the model's own generated output, is registered by `23-arch-context-management` into the pool. The pool is now larger than it was, and the next turn composes over the larger one. Compose, act, register, compose again — that is the whole loop, and its state lives in the pool rather than in anything handed between steps.
 
@@ -66,7 +68,11 @@ The runtime should make all of this observable enough for later feedback analysi
 
 What is in an instance's pool at the moment it starts is open, and dropping the bundle is what exposes it: a bundle made the question look answered, since a bundle is by definition what an instance begins with.
 
-It is `22-arch-cognition/08`'s open question wearing different clothes. Under fork/join, a new instance starts near-empty and a later step reconciles what the separate branches found. Under continuation — this project's standing preference — each step hands forward what the next one needs, so a pool is seeded rather than empty. Recall governs what is presented out of a pool. It says nothing about how a pool begins, and nothing here settles that either.
+The mechanics tighten it further. A pool is populated by registration, and registration records what a crossing returned — so at turn zero, before anything has crossed, a pool is empty by construction. Anything an instance "inherits" therefore has to arrive one of two ways, and `23-arch-context-management` owns the choice between them. Either inheritance is a new operation, in which case already-registered artifacts move or are referenced across pools without any crossing having occurred, which is neither register nor recall and would be a third primitive. Or a pool genuinely starts empty and inheritance is an ordinary crossing: the preceding step wrote a handoff somewhere durable, and the new instance reads it like anything else.
+
+The second needs no new mechanism and has somewhere to live already — a handoff is an attachment on a work item (`28-arch-work-record`), read like any other read. That is the cheaper hypothesis, not yet an adopted position.
+
+This is a context-management question and not a decomposition one. How split work recombines (`22-arch-cognition/08`, fork/join or continuation) constrains whether sibling instances see each other's crossings, which is pool isolation. It does not constrain how much any one pool starts with: fork/join runs perfectly well with richly seeded branches, and continuation runs perfectly well handing forward almost nothing. The two questions are orthogonal and should not be settled together.
 
 ## What the runtime should avoid
 
@@ -93,3 +99,5 @@ What separates them is adjustability. The runtime is legitimately configurable a
 ## Open question
 
 The practical boundary between runtime policy and AI-mediated policy remains one of the most important implementation questions and should be approached conservatively at first.
+
+Whether a read is genuinely outside the effect vocabulary. The exclusion predates `10-foundations/04`'s account of context as a governed resource, and does not survive it cleanly: an effect is defined as a state-changing operation a cognitive component proposes and the runtime realizes, and a read now changes the state of a bounded, tracked pool. Three separate questions are currently answered by one distinction — whether an operation changes the world outside the system, whether it changes the system's own governed state, and whether it must be evaluated before it happens rather than merely recorded. A read answers no, yes, and unresolved. The cost argument against gating reads (`10-foundations/02`: it would recreate the rigid workflow engine) is about what gating costs, not about reads being inert, and those are different claims.

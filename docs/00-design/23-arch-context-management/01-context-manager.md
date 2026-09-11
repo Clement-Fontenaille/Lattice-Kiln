@@ -56,7 +56,9 @@ The naive default should grow artifact registration and a real live record first
 
 ## Open question
 
-How a pool is seeded when a processor starts. Recall governs what is presented out of a pool; nothing here says what is in one at turn zero. `22-arch-cognition/08` holds this under another name — fork/join implies a near-empty pool with a later reconciliation, continuation implies one seeded by the preceding step — and whatever settles that settles this.
+How a pool is seeded when a processor starts. Register records what a crossing returned and recall presents what a pool already holds, so neither of this actor's two operations can put anything in a pool before the first crossing — a pool is empty at turn zero by construction. Two shapes are available. Inheritance could be a third primitive alongside register and recall, moving or referencing already-registered artifacts across pools with no crossing involved. Or it could be no new mechanism at all: the preceding step writes a handoff into something durable — an attachment on a work item (`28-arch-work-record`) is the obvious candidate — and the next instance reads it, registering the result exactly like any other read. The second is cheaper and fits what already exists, which is a reason to prefer investigating it first, not a reason to consider it settled.
+
+This is not the fork/join-versus-continuation question (`22-arch-cognition/08`). That one governs whether sibling instances see each other's crossings, which is pool isolation; it says nothing about how much any single pool starts with, and either recombination model works with a thin or a fat seed.
 
 What the recall policy actually is. Named here as a required, distinct responsibility — arbitrary by design, not yet specified — governing recall and archive transitions; nothing here fixes what triggers either direction.
 
