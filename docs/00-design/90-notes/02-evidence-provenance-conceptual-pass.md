@@ -760,15 +760,21 @@ finding.
 
 ---
 
-## F37 — `20-arch-runtime.md`'s responsibility list was stale after the split, and no document drew the sequence its edges implied
+## F37 — The context bundle is stale: context is not bound at instantiation, it is composed every turn, so nothing asks for it
 
-**Claim.** The 2026-09-11 reorg moved concerns out of the old bundled folder but did not revise the runtime document that now heads the band. Its Expected responsibilities still claimed capability boundaries, observation recording, and state persistence as the runtime's own, when `24`, `26`, and `21`/`23` respectively had become their owners — the runtime is where those become real, which is not the same as deciding them. Separately, every document in the band named its own edges and none drew the order, leaving three things unstated: that processor instantiation is itself a gated effect, that a read and an effect take different gating paths, and — the one genuine gap — **who asks the context manager for a bundle**. The answer taken is the runtime. It is the only assignment that stays uniform when the instance being invoked is the orchestrator itself, which `22-arch-cognition/03` forbids from governing its own context; the orchestrator cannot be the universal requester without contradicting that, and the instance cannot request what it needs in order to exist.
+**Claim.** The 2026-09-11 reorg moved concerns out of the old bundled folder but did not revise the runtime document that now heads the band. Its Expected responsibilities still claimed capability boundaries, observation recording, and state persistence as the runtime's own, when `24`, `26`, and `21`/`23`/`28` had become their owners — the runtime is where those become real, which is not the same as deciding them. Separately, every document in the band named its own edges and none drew the order.
 
-**Mode: Reasoned**, from internal consistency across documents already in hand. Nothing here was tested or read against an outside source.
+A first attempt at drawing that order asked **who requests a processor's context bundle** and answered "the runtime," on the grounds that it was the only assignment that stayed uniform when the instance being invoked is the orchestrator. The user rejected the question rather than the answer: the bundle itself is stale. It survives from `10-technical/07-naive-context-assembly.md`, which is one-shot by its own account, and it contradicts the register/track/recall split F34 and the `04` pass had already established — recall decides what is fed to the model **on a given turn**, over a pool that grows with every crossing. A bundle is a package assembled once and held; what actually exists is a composition made at each feeding and discarded, with the state living in the pool rather than in anything passed between steps.
 
-**Grounds.** `10-technical/01-effect-vocabulary.md` type 6, which already states that instantiation binds a role definition, an objective, a selected context, and a capability set — so a bundle is bound at invocation, and something must have requested it; the same document's What is not an effect, and `10-foundations/02`'s Proposal and effect, which both exclude plain reads from the gate by name; `22-arch-cognition/03`'s Context constraint, rewritten earlier in this pass to say the orchestrator has no special reach into assembly.
+So the question has no answer because it has no referent. Nothing requests a composition: this actor sits in the path everything to and from the model takes, so it composes because a turn is happening. It is traversed, not called. This also disposes of the orchestrator problem more cleanly than the rejected answer did — the orchestrator needs nobody to fetch on its behalf, because there is no fetch.
 
-**Changed.** `20-arch-runtime.md`: two dead links in the architecture map repaired (they pointed at the stub READMEs deleted when `21` and `23` were written); Expected responsibilities rewritten to separate what the runtime decides from what it realizes on a named owner's behalf; new §The path an invocation takes, stating instantiation, action, and recording in order. `23-arch-context-management/01`: the runtime named as the requester of a bundle; the claim that `24-arch-permission-layer` "gates the tool call" corrected, since it had flattened two different paths — a read is capability-gated only, an effect passes capability gating and then the invariant gate.
+Dropping the bundle surfaces a question it had been concealing: **what is in a pool when an instance starts**. A bundle made this look settled, since a bundle is by definition what an instance begins with. It is `22-arch-cognition/08`'s fork/join-versus-continuation question in different clothes — near-empty with a later reconciliation, or seeded by the preceding step — and recall does not address it, since recall governs presentation out of a pool and says nothing about how a pool begins.
+
+**Mode: Reasoned**, with the correction itself **Operated** in the weak sense that the user identified the staleness directly rather than it being derived here. Nothing was tested or read against an outside source.
+
+**Grounds.** `23-arch-context-management/01`'s own Recall responsibility, which already said "on a given turn" and "over a fixed pool" — the bundle contradicted a distinction this band had already drawn, so this is an internal inconsistency found, not new material; `10-technical/07-naive-context-assembly.md`'s self-described one-shot shape as the bundle's actual provenance; `10-technical/01-effect-vocabulary.md`'s What is not an effect and `10-foundations/02`'s Proposal and effect, which both exclude plain reads from the gate by name.
+
+**Changed.** `20-arch-runtime.md`: two dead links in the architecture map repaired (they pointed at the stub READMEs deleted when `21` and `23` were written); Expected responsibilities rewritten to separate what the runtime decides from what it realizes on a named owner's behalf; §The path an invocation takes was **collapsed** — written and then rewritten within this pass, with nothing outside it having relied on the bundle version — and replaced by §Instantiation, and then a loop, stating that only role, objective, capability set and a pool identity bind at instantiation, and that compose/act/register repeats per turn; new §What instantiation does not settle, naming the pool-seeding question. `23-arch-context-management/01`: the service restated as what the model sees on a given turn rather than a bundle per invocation, with an explicit note that nothing asks for it; the runtime-as-requester claim removed; `22-arch-cognition` recast from "consumer of bundles" to what this actor composes for; the claim that `24-arch-permission-layer` "gates the tool call" corrected, since it had flattened two different paths — a read is capability-gated only, an effect passes capability gating and then the invariant gate. `22-arch-cognition/03`'s Context constraint rewritten on the same grounds: not consumer-to-service either, since a consumer calls and the orchestrator never does.
 
 ---
 
@@ -857,12 +863,14 @@ them, and the next pass on `03` should treat them as open rather than settled.
   real claim in this corpus, rather than being a plausible-sounding distinction, is
   untested.
 
-- **"The runtime requests the context bundle" (F37) is argued entirely from internal
-  consistency.** It is the only assignment that does not contradict a document already
-  written, which is a weaker thing than being correct. No run has exercised it, and the
-  alternative — a distinct assembly step that the orchestrator triggers for other
-  instances while something else supplies its own — was rejected as inelegant rather
-  than as shown wrong.
+- **"Nothing requests a composition; the context manager is traversed, not called"
+  (F37) is a claim about where a boundary sits, and no implementation has tested
+  whether it survives contact with one.** It is coherent with everything else in the
+  band, which is weaker than being right. In particular, it assumes there is always a
+  well-defined "turn" to compose at — an assumption that holds for a request/response
+  model call and may not hold for streaming, for a model that emits several tool calls
+  before yielding, or for any arrangement where feeding is continuous rather than
+  discrete. Nothing in this pass checked that.
 
 - **The mutability argument separating `28-arch-work-record` from `21` (F38) has no
   measurement behind it.** That a work item's current state "must be readable without

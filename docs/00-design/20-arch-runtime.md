@@ -40,19 +40,33 @@ Several responsibilities this document once listed as the runtime's own now have
 
 Keeping that distinction sharp is what stops the runtime from becoming the place every unowned concern quietly lands.
 
-## The path an invocation takes
+## Instantiation, and then a loop
 
 Each document in this band names its own edges and none of them draws the sequence. It is stated once here so those edges can be checked against each other.
 
-**Instantiation.** The orchestrator (`22-arch-cognition/03`) reads current work state from `28-arch-work-record`, decides a processor is needed, and formulates its role and objective. Instantiating it is itself an effect — processor invocation, `10-technical/01-effect-vocabulary.md` type 6 — so it is proposed, gated, and realized like anything else. Realizing it binds four things into a running instance: the role definition, the objective, a capability set under `24-arch-permission-layer`'s policy, and a context bundle from `23-arch-context-management`. The runtime is what requests that bundle. Neither the orchestrator nor the instance being created asks for it, which is what keeps the orchestrator's "it does not govern its own context" true in the case where the instance being invoked is the orchestrator itself.
+There is no assembly step. Context is not gathered, packaged, and handed to a processor at the moment it starts. That shape belongs to `10-technical/07-naive-context-assembly.md`, which is one-shot by its own account and has no recall in any real sense, and it is the shape this band has moved off. What replaces it is a loop, with `23-arch-context-management` sitting inside it rather than being consulted before it.
 
-**Action.** The instance reasons and proposes. A read — a file, a knowledge-model query — is not an effect (`10-technical/01`, What is not an effect); it may still be capability-gated, and the runtime executes it either way. An effect is checked against current policy (`24`), then against the invariant gate (`25`), and only then realized.
+**Instantiation happens once.** The orchestrator (`22-arch-cognition/03`) reads current work state from `28-arch-work-record`, decides a processor is needed, and formulates its role and objective. Instantiating it is itself an effect — processor invocation, `10-technical/01-effect-vocabulary.md` type 6 — so it is proposed, gated, and realized like anything else.
 
-**Recording.** Whatever comes back — a read's content, an effect's outcome, or the model's own generated output — is registered by `23-arch-context-management` into the live record. Separately, `26-arch-observability` records the event into its own history. These are two writes into two stores, not one write read twice, for the retention reasons `26` gives.
+What gets bound is only what can be fixed in advance: role instructions, an objective, and a capability set under `24-arch-permission-layer`'s policy. Context is not among them, because context is not the kind of thing that can be bound. What the instance gets instead is an identity: a tracked pool, which its own crossings register into and which recall runs over each time it is fed.
 
-Two of the effect types resolve into a third and fourth store as well: a claim to `21-arch-knowledge-model`, a work-record mutation — including the instance's own recorded conclusion of answered, blocked, or declined — to `28-arch-work-record`. Four stores, each with its own retention discipline, is the deliberate shape rather than an accident of how this was assembled.
+**Then, on every turn, what the model sees is composed.** `23-arch-context-management` renders it at the moment of feeding, out of what is in the pool and under the recall policy. Not once at the start: every turn, over a pool that has grown since the last one.
+
+Nothing requests this, which is why the question of who asks for a processor's context has no answer — nothing asks. Everything moving to or from the model passes through this actor by construction, so it is traversed, not called. That is also what keeps the orchestrator's "it does not govern its own context" (`22-arch-cognition/03`) true without needing anyone else to fetch on its behalf.
+
+**The model acts.** A read — a file, a knowledge-model query — is not an effect (`10-technical/01`, What is not an effect); it is capability-gated and then executed. An effect is checked against current policy (`24`), then against the invariant gate (`25`), and only then realized.
+
+**What comes back crosses in.** The result of the call, or the model's own generated output, is registered by `23-arch-context-management` into the pool. The pool is now larger than it was, and the next turn composes over the larger one. Compose, act, register, compose again — that is the whole loop, and its state lives in the pool rather than in anything handed between steps.
+
+Alongside it, writes land elsewhere, each into its own store with its own retention discipline: `26-arch-observability` records the event, a claim resolves to `21-arch-knowledge-model`, and a work-record mutation — including the instance's own recorded conclusion of answered, blocked, or declined — resolves to `28-arch-work-record`. None of these is the same write read several times.
 
 The runtime should make all of this observable enough for later feedback analysis.
+
+## What instantiation does not settle
+
+What is in an instance's pool at the moment it starts is open, and dropping the bundle is what exposes it: a bundle made the question look answered, since a bundle is by definition what an instance begins with.
+
+It is `22-arch-cognition/08`'s open question wearing different clothes. Under fork/join, a new instance starts near-empty and a later step reconciles what the separate branches found. Under continuation — this project's standing preference — each step hands forward what the next one needs, so a pool is seeded rather than empty. Recall governs what is presented out of a pool. It says nothing about how a pool begins, and nothing here settles that either.
 
 ## What the runtime should avoid
 

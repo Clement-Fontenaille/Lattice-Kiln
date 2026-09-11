@@ -26,7 +26,9 @@ Higher-level evaluation systems must be able to observe and criticize orchestrat
 
 ## Context constraint
 
-The orchestrator receives its own context bundle from `23-arch-context-management`, the same way any processor does. It does not govern its own context, and has no special reach into how the context manager assembles it — the context manager is not a processor, so it sits outside what the orchestrator coordinates; the relationship is consumer to service, not coordinator to coordinated.
+The orchestrator's own context is composed by `23-arch-context-management` turn by turn, the same way any processor's is. It does not govern its own context and has no special reach into how that composition is made — the context manager is not a processor, so it sits outside what the orchestrator coordinates.
+
+That holds without anything having to fetch context on the orchestrator's behalf. The context manager is in the path everything to and from the model takes, so it composes because a turn is happening; there is no request to place and therefore no awkward case where the orchestrator would have to place it for itself. The relationship is not coordinator to coordinated, and it is not quite consumer to service either, since a consumer calls and the orchestrator never does.
 
 Giving the orchestrator every conversation and every repository detail would recreate the same working-memory problem the processor architecture is intended to solve — the risk this section originally named before an actor existed to answer it.
 

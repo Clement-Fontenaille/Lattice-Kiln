@@ -87,6 +87,16 @@ assumption above rather than by argument. Nothing in this account yet justifies
 preferring one over the other — both stay on the table until evidence or a sharper
 argument decides between them.
 
+**The choice has a concrete consequence now.** `20-arch-runtime.md` states that
+context is not bound when a processor is instantiated: what the model sees is
+composed on each turn out of a pool that grows with every crossing. That leaves one
+thing unspecified, and it is this question in different clothes — **what is in a
+pool when an instance starts**. Fork/join implies near-empty, with a later step
+reconciling what the separate branches found. Continuation implies seeded, with each
+step handing forward what the next one needs. Recall decides what is presented out
+of a pool and says nothing about how a pool begins, so nothing else in the band
+answers it. Whatever settles fork/join versus continuation settles this too.
+
 **Objective preservation.** Parts can meet their own criteria and miss what was
 asked, each having acquired a local target in place of the goal. Matching grain
 says nothing about preserving intent, and a rule that only matched grain would
@@ -113,7 +123,10 @@ fail, and what replaces it if not.
 Whether decomposition executes as fork/join or as continuation (What it does not
 explain, Recombination, above) is unresolved and untested. Nothing in the account
 itself depends on which; the recombination gap reads differently under each, and
-the standing preference for continuation is not yet an argued position.
+the standing preference for continuation is not yet an argued position. Something
+outside the account does depend on it, though: how an instance's context pool is
+seeded at instantiation, which `20-arch-runtime.md` leaves open for exactly this
+reason.
 
 Whether decomposition and recombination are governed by one quantity or two. The
 account assumes one; the observed concentration of cost in aggregation is the
