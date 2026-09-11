@@ -836,9 +836,49 @@ One consequence worth recording on its own: the original cost argument points th
 
 **Changed.** `10-foundations/02`: the Qualification extended from "the second half is withdrawn" to "both legs are withdrawn," with the footprint account, the intent-does-not-rescue-it argument, the vocabulary-as-judgment reframing, and the reversed cost argument; the Feedback section's "or changes the world beyond it" clause dropped entirely, since a read changes state too; Open question gained whether footprint admits a usable measure. `25-arch-invariant-layer/01`: the input-domain section's basis replaced — typed effects are the tracked-footprint subset, not the world-changing subset — with the read's membership in the domain now resting on a stronger reason than before. `20-arch-runtime.md`: the same basis replaced on the action path, plus a note that the runtime's existing semantic-classification work (destructive action versus read-only inspection) is a footprint judgment and therefore on the same axis rather than a special case; open question updated to lead with whether footprint is measurable.
 
+---
+
+## F42 — Thinking is a family of processor roles whose defining product is a proposed knowledge-state transition; the membership test is which store moves
+
+**Claim.** `10-foundations/02` defines Thinking as a procedure and says "thinking is what a processor does with it" without naming any processor, and `22-arch-cognition` represented none of it. This pass first recorded that only as a gap. The user supplied the shape: thinking is to be understood as a **family of processors whose primary role is to explicitly trigger knowledge-state transitions**.
+
+The word doing the work is *explicitly*. It converts a description of careful reasoning into a mechanical membership test — a processor belongs to the family when its product is a proposed mutation of the knowledge model (`10-technical/01-effect-vocabulary.md` type 5). That separates thinking from chain-of-thought by reference to something checkable: **which store moves**. Reasoning inside a generation produces tokens, which `04`'s account registers as an artifact into the live context pool, and nothing the project holds has changed. A knowledge-state transition is `21-arch-knowledge-model` changing. A processor can reason at length and perform no thinking, and can perform thinking with one short proposal.
+
+Two consequences follow that were not asked for and are results rather than restatements.
+
+**Collapsing (`05`) is the null case, not an act.** Nothing performs it and nothing decides it, which is exactly why it is cheap: it is what happens to everything no thinking processor proposes a promotion about. This also dissolves an apparent conflict between `05`'s "no visible trail" and `26-arch-observability`'s reconstruction requirement — the absent trail is in the knowledge model, not in observability's own history, and the two were never in competition.
+
+**Curated memory gets an actor without a new one being invented.** `03` hands scope assessment to whoever curates and `05` accepts the job, but no actor existed to hold it. Deciding a claim is worth keeping, and assessing its scope, are both proposals that change what the project holds, so both are family members. Scope is the member with a deadline — `03` says it must be assessed near creation or not at all — which distinguishes it from a promotion decision that can wait.
+
+A third consequence is stated in the new document and deliberately **not** adopted: if nothing reaches `21` except through this family, the knowledge model is write-gated by role, which would give `03`'s motivating worry — an interpretation stored as truth and later read as evidence — a structural answer rather than only a schema. The line that would make it affordable is `03`'s own motto, since an observation entering the record is runtime bookkeeping and needs no thinking processor while an interpretation does. It is stronger than anything the foundations currently require, so it is held as a consequence to argue, and `21` keeps its unqualified "a processor."
+
+**Mode: Reasoned**, the framing **Operated** in the weak sense used in F37, F40 and F41 — the user supplied the family-of-processors formulation directly; the membership test, the store-based distinction from chain-of-thought, and the three consequences were derived here.
+
+**Grounds.** `10-foundations/02`'s Thinking section, which already calls a walk's product a knowledge-state transition and already assigns it to a processor without naming one; its Feedback section, which already says what doing returns is raw and that turning it into knowledge is thinking's half — so promotion-to-a-claim was a thinking act before the family had a name; `10-foundations/04`'s crossing account, which is what makes the generation/pool versus knowledge-model distinction available at all and which did not exist when `02` was written; `10-foundations/03`'s Scope and Provenance sections for the curation and souvenir members; `22-arch-cognition/02-processors.md`'s open, evidence-grown role vocabulary, which is what permits a family rather than requiring one role.
+
+**Changed.** New `22-arch-cognition/04-thinking.md`: membership test, the chain-of-thought distinction, why a family rather than one role, five candidate members, what the family does not do (record, sequence, or index), and the write-gating consequence held as unadopted. `10-foundations/02`'s Thinking section points at the actor and states the store-based test. `21-arch-knowledge-model/01` gains **Traverse dependents** as a distinct service — the walk searches downward through what cites a claim, the opposite direction to an ordinary provenance lookup, with I5 named as where an index for it would go — plus a note that write-gating by role is proposed and not adopted. `22-arch-cognition/02-processors.md` names the family as a recognised subset of the role vocabulary. `10-foundations/05` gains Collapsing-as-default and the curation actor. `20-arch-runtime.md`'s map line for `22` updated.
+
+---
+
+## Unchecked justifications
+
 Findings above are grounded in something read or directly checked. The items below are
 not — they are attempted arguments this pass relied on without independently verifying
 them, and the next pass on `03` should treat them as open rather than settled.
+
+- **The thinking family's membership test (F42) has never been applied to a real
+  processor.** "Its product is a proposed knowledge-state transition" is crisp on
+  paper, and no run has produced a case where it was unclear whether a processor
+  qualified. The likely hard case is a processor whose main job is something else and
+  which proposes one claim along the way: the test says it performed thinking, which
+  may be the right answer or may show the test is too coarse to carry the write-gating
+  consequence built on top of it.
+
+- **"Detection can stay incidental while resolution is deliberate" (F42) splits a
+  question `03` poses as binary, and nothing checks that the split is legitimate.** It
+  is attractive because it explains the ETH case — friction arose from use, resolution
+  took a deliberate reread — but one case that fits is retrodiction, the same standing
+  this pass gives the granularity account in `22-arch-cognition/08`.
 
 - **"Nothing in a weighing comparison could have separated the ETH readings" (F9).**
   Verified: both readings trace to the same paper. Not verified: the stronger claim

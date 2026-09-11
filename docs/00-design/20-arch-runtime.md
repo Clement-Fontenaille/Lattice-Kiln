@@ -11,7 +11,7 @@ The runtime is the substrate that preserves reality, limits effects, records his
 This document is the entry point into the architecture space: runtime sits underneath every other concern here, since it is what actually executes what any of them propose.
 
 - [`21-arch-knowledge-model/`](21-arch-knowledge-model/01-knowledge-model.md) — `10-foundations/03`'s substrate, realized.
-- [`22-arch-cognition/`](22-arch-cognition/01-work-intent-and-task-model.md) — the reasoning and coordinating actors: task representation, processors, the orchestrator, decomposition.
+- [`22-arch-cognition/`](22-arch-cognition/01-work-intent-and-task-model.md) — the reasoning and coordinating actors: task representation, processors, the orchestrator, thinking, decomposition.
 - [`23-arch-context-management/`](23-arch-context-management/01-context-manager.md) — `10-foundations/04`'s account, realized.
 - [`24-arch-permission-layer/`](24-arch-permission-layer/01-capabilities-and-authority.md) — what an actor may request.
 - [`25-arch-invariant-layer/`](25-arch-invariant-layer/01-invariant-enforcement.md) — what may never happen, regardless of what any actor requests.

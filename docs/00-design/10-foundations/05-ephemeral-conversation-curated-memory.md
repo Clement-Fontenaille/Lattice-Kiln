@@ -26,6 +26,10 @@ An attempted argument (`10-foundations/03-evidence-belief-and-provenance.md`) th
 
 This is what "revise its conclusion," above, actually means for something that never left working memory. The line it draws is the one `03` does not: not every attempted argument a walk forms belongs in Provenance. Most of a reasoning episode's internal churn collapses before it would ever reach that question; only what survives to be checked, held, and used by something else earns a souvenir instead of disappearing.
 
+**Collapsing is the default, not an act.** Nothing performs it and nothing decides it, which is why it costs nothing. Once thinking is an invoked family of processor roles whose product is a proposed knowledge-state transition (`22-arch-cognition/04-thinking.md`), collapsing is simply what happens to everything no such proposal is made about. Promotion is the act; collapsing is its absence.
+
+This also settles what "no visible trail" does and does not mean. It means no trail in the knowledge model (`21-arch-knowledge-model`) — nothing was proposed, so nothing was recorded there. It does not mean the episode is unrecoverable: the reasoning happened in a conversation, its artifacts registered into a live context pool, and `26-arch-observability` keeps its own history under its own retention rules. Collapsing governs what enters the record of what the project holds, not what an observability log may still contain about how an episode went.
+
 ## Curated memory
 
 Curated memory is what survives Collapsing: a claim that was checked, held as a demonstration step, and judged worth keeping as a souvenir (`03`) rather than left to disappear with the episode that produced it — because something outside that episode, a later walk or a fresh processor instance, is expected to need it again.
@@ -33,6 +37,8 @@ Curated memory is what survives Collapsing: a claim that was checked, held as a 
 That expectation is a different question from the one Pertinence (`03`, Weighing claims) already answers. Pertinence asks whether a claim matters to the comparison in front of it, now. Curation asks whether it is likely to matter to a comparison that has not happened yet — which Weighing claims cannot run, because there is no next claim yet to compare against. None of `03`'s three dimensions is stated to look forward this way.
 
 The system should preserve scope, provenance, and reliability when practical. All three now have precise homes in `03`, named exactly that — scope is the one property `03` says cannot be recovered later no matter how the rest of a claim's provenance is kept (`03`, Scope). What `03` does not settle is the cost of attempting it here: under-assessing scope lets a claim silently get used outside where it actually holds (`50-findings/09`'s domain-transfer caveats are this cost already being paid by hand); over-assessing it chases a completeness `03` already says no record of this kind can reach. Managing that tradeoff, for whatever is being curated, is curated memory's job.
+
+Curation is performed by a member of the thinking family (`22-arch-cognition/04-thinking.md`), since deciding a claim is worth keeping and assessing its scope are both proposals that change what the project holds. Scope is the member with the tightest deadline: `03` says it has to be assessed near a claim's creation or not at all, so it cannot wait for a later curation pass the way a promotion decision can.
 
 Project memory and system memory are conceptually distinct for the reason `27-arch-adaptation-and-evolution/01-project-level-feedback.md` and `02-system-level-feedback.md` already give, not a new one: what evidence justifies a change differs by scope, and a repository convention should not silently become a global processor instruction.
 

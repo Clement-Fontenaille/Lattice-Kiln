@@ -23,6 +23,7 @@ Hold the provenance graph durably: every claim — Observation, Evidence, Findin
 - **Write.** Given a claim and its parent links, persist it and confirm.
 - **Read.** Given a claim's identity, return the claim and its immediate provenance neighborhood.
 - **Query.** A rich interface, not a single fixed lookup — the caller sets breadth (how many candidates, how loose a match counts), depth (return just the matched claim, or walk N hops of its provenance neighborhood too), and matching mode (literal text, or fuzzy). These are parameters exposed on the query itself, always available, the same way a tool's own parameter surface is present whether or not a given call uses all of it.
+- **Traverse dependents.** Given a claim, return what cites it — the direction opposite to a provenance lookup. This is a distinct service rather than a special case of Query, because it is the access pattern `22-arch-cognition/04-thinking.md`'s walk is made of: a correction is useful only if what rests on the corrected claim can be found, and that is a search downward through children rather than upward through parents. Doing it efficiently at scale, rather than by traversing from scratch each time, is where an index would go (`70-THINKING/ideas.md` I5, not adopted).
 
 Explicitly not provided: whether a returned candidate is pertinent to the objective in front of it (`03`, Weighing claims — pertinence is judged live by whatever is asking); whether two claims converge or collide (`03`, Friction and re-evaluation — that is a walk Thinking performs, not a query result this actor can precompute).
 
@@ -34,7 +35,7 @@ This is not a final answer — it is `10-foundations/04`'s "a naive default is s
 
 ## Interactions
 
-- A processor proposes a claim, typically a Finding, once Thinking has checked it; this actor persists it.
+- A processor proposes a claim, typically a Finding, once Thinking has checked it; this actor persists it. `22-arch-cognition/04-thinking.md` argues that the proposing processor should always be a member of the thinking family, since a knowledge-state transition is that family's defining product — which would make this actor write-gated by role. That is stated there as a consequence rather than a rule, and this document keeps the unqualified "a processor" until it is argued rather than assumed.
 - `23-arch-context-management` never queries this actor on its own initiative. The model calls a retrieval tool; the tool queries this actor; the context manager registers whatever comes back, the same as any other tool output.
 - `26-arch-observability` has an overlapping interest: "why did this change become trusted" (`03`, Provenance) is the same reconstruction question observability exists to answer. They are separate stores, not one shared between them — see Relationships, below.
 - `28-arch-work-record` holds references to claims held here, attaching a finding, proposal, or decision to a work item. The reference points one way only: that actor resolves claims against this one, and this actor knows nothing about work items. Claims stay the unit of truth; work items are what they are attached to.
@@ -43,6 +44,7 @@ This is not a final answer — it is `10-foundations/04`'s "a naive default is s
 ## Relationships
 
 - **`10-foundations/03`** — owns the schema this actor realizes.
+- **`22-arch-cognition/04-thinking.md`** — the family whose proposals change what this actor holds, and the consumer of dependent traversal.
 - **`23-arch-context-management`** — the primary consumer of queries.
 - **`26-arch-observability`** — a separate store, not a shared one. Claims here and observability's history have different lifecycles and different retention needs, so observability keeps its own copy rather than reading this actor's graph directly.
 - **`28-arch-work-record`** — a separate store holding one-way references into this one. A claim is append-only and superseded here; a work item there is mutable, which is why the two are not one store.
