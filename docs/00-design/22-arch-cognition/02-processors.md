@@ -14,7 +14,9 @@ Separate processor invocations also make it possible to obtain independent asses
 
 ## Processor definition
 
-A processor is defined by natural-language role instructions, an objective, whatever is currently live for it (`23-arch-context-management`), available capabilities, and interaction expectations.
+A processor is defined by natural-language role instructions, an objective, whatever is currently live for it (`23-arch-context-management`), available capabilities, a scope, and interaction expectations.
+
+The scope is the mandate the work must stay within, inherited at instantiation and fixed for the instance's life (`24-arch-permission-layer`). It is worth noting what that costs and why this architecture can afford it: a static scope goes stale when work legitimately evolves, and the remedy is to instantiate again — which is cheap here precisely because processors are disposable. The same rule under a long-lived agent would be a real constraint rather than a bookkeeping one, so this is one of the places ephemerality pays for itself rather than merely being tidy.
 
 The role may encourage specific reasoning habits without prescribing a universal step sequence.
 

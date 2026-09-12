@@ -32,6 +32,14 @@ That holds without anything having to fetch context on the orchestrator's behalf
 
 Giving the orchestrator every conversation and every repository detail would recreate the same working-memory problem the processor architecture is intended to solve — the risk this section originally named before an actor existed to answer it.
 
+## Scope constraint
+
+Every processor is instantiated with a scope it cannot widen (`24-arch-permission-layer`). The orchestrator is a processor, so it has one too, and what it is is the one case that arrangement does not settle.
+
+It reads work state across items rather than operating under a single one, which means a work item's scope is the wrong size for it. The natural reading is that it holds the **intent's** scope, with the work items it formulates inheriting narrowed versions — consistent with mandate descending from intent, and with this role being the place that descent happens. Not yet argued, and recorded here as the open end rather than assumed.
+
+What is clear either way: whatever scope the orchestrator holds bounds every work item it creates, since a child's boundary must sit inside its parent's. So this is not a detail that can be left to specification — it sets the ceiling for everything below it.
+
 ## Expected evolution
 
 The orchestrator role is explicitly considered tunable system configuration.

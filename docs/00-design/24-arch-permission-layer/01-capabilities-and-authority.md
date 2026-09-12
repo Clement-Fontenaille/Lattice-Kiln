@@ -124,6 +124,20 @@ From which the rule on splits follows rather than needing separate justification
 
 Two honest limits. That containment rule is stated here and enforced nowhere yet. And deciding whether a proposed child's boundary sits inside its parent's is itself a natural-language judgment, so this closure does not reduce the amount of judgment required — it places all of it in the same check rather than leaving a path around it.
 
+### An instance's scope is static
+
+It follows from the above and is worth stating plainly, because a good deal rests on it. Instantiation binds a scope along with the role, objective and capability set, and **a running instance cannot widen its own**. Whatever it was given at invocation, it keeps until it ends.
+
+**An instance that finds it needs to go further must stop rather than grow.** It reports — a recorded conclusion, or a proposed transition on the work item — and something else decides. This is the mechanical form of `10-foundations/07`'s requirement to treat work beyond the mandate as requiring a new one, "including where each step past it is locally justified by the last": the locally-justified step cannot be taken, because taking it is not among the things the instance can do.
+
+**A work item's scope and a running instance's scope can diverge, and that is deliberate.** The item's scope may be re-derived mid-task when the item is refined or split. That change does not reach instances already running; it applies from the next invocation. Which closes a variant of the manufacture route that would otherwise remain: widen the work item while an instance is running, and let the running instance use the wider boundary. Static inheritance makes the widening take effect only at a point where something else gets to look.
+
+**This is affordable because processors are ephemeral.** Staleness is the obvious cost of a static scope, and the remedy is re-instantiation, which this architecture treats as cheap and ordinary (`22-arch-cognition/02-processors.md`). Under a long-lived-agent model the same rule would be expensive, and the trade would need arguing rather than assuming.
+
+**Nested invocation follows the same containment rule as splitting.** A processor invoking another — an implementer requesting an independent review — passes down a scope contained in its own, which it may narrow. The rule is not specific to work items; it is the general statement that mandate flows downward and never widens on the way.
+
+The orchestrator is the one case not settled here. It reads work state across items rather than operating under one, so the natural reading is that it holds the **intent's** scope, with work items below inheriting narrowed versions of it — consistent with mandate descending from intent, but not yet argued.
+
 **The check divides on reversibility, and the two halves sit at opposite ends of a task.**
 
 - **Reversible changes are audited at the end.** Their extent can be compared against the declaration once the work is done, in aggregate, which is the only point at which drift is visible as drift. Auditing late is affordable precisely because the finding still has a remedy: what fell outside can be undone.
