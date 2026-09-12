@@ -99,6 +99,8 @@ That second placement is the same one already reached from a different direction
 
 **It requires a dedicated processor**, because the comparison is a judgment over natural language and no deterministic check performs it. That processor is an **invariant processor** (`25-arch-invariant-layer`), not one commissioned from the open role vocabulary: a loop able to remove or retune it would be inside the scope it constrains, which is the same test triage passes. Nothing further needs saying about what protects it — that it cannot be deleted, weakened, or routed around follows from belonging to a layer every loop may read and none may write.
 
+Putting a reasoning component in that layer is safe here for a specific reason, and it is a property of scope rather than a general licence. **A scope only ever narrows within capability; it never reaches past it.** An effect still passes capability gating and still passes the gate whatever the scope says, so a scope check that is lax or talked into generosity degrades to no scope check — which is where this project stands today — rather than opening anything. Its failure mode is uselessness, not permission, which is what makes it eligible where a judgment able to *grant* would not be.
+
 The separation that keeps this coherent: **the mandate is adjustable, the checker is not.** What a given task's scope permits changes with every task and is set by whoever asked for the work, which is why mandate content is not invariant-layer material. That a functioning scope check exists, and cannot be removed or routed around by the loops it constrains, is not adjustable by anything inside the system, which is why the checker is.
 
 ## Open question

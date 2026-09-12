@@ -22,6 +22,8 @@ A reasoning component is persuadable by construction, and persuadability is prec
 
 It should be a deterministic runtime check: narrow, mechanical, over the line or not. It should not be smart, because smart is another word for persuadable.
 
+That is a statement about **the gate**, not about everything this layer may contain. The layer also fixes roles that do reason — triage, below, and the scope check — and Invariant processors sets out the condition under which that is safe rather than contradictory: they may restrict and never widen, so persuading one achieves nothing. The gate remains the thing that is not smart.
+
 ## The gate binds effects, not roles
 
 The system's vocabulary of roles is deliberately open-ended. System-level feedback may commission actors that did not exist when the invariant list was written.
@@ -90,6 +92,8 @@ A triage role assesses and routes: log and let the original, already-gated effec
 
 It must never have authority to approve an effect the gate rejected. If it could, it would become a second and persuadable version of the mechanism it sits behind.
 
+That constraint turns out to be the general condition for any reasoning role this layer fixes, not a precaution particular to triage — see Invariant processors.
+
 ## Why the triage role is fixed rather than commissioned
 
 Role creation otherwise belongs to the feedback loops, which commission against identified need on evidence.
@@ -104,9 +108,21 @@ Non-shared model or lineage with the loops it watches follows from this as a con
 
 ## Invariant processors
 
-The gate is not a role, but some **processors** belong to this layer, and there are now two. Triage, above. And a **scope check**: `10-foundations/07` requires that work stay within the mandate it was given, and `24-arch-permission-layer` establishes that no deterministic check can carry it, since a mandate is stated in natural language at task level and comparing it against what was touched is a judgment.
+The gate is not a role. Some **processors** nonetheless belong to this layer, and there are now two: triage, above, and a **scope check** — `10-foundations/07` requires that work stay within the mandate it was given, and `24-arch-permission-layer` establishes that no deterministic check can carry it, since a mandate is stated in natural language at task level and comparing it against what was touched is a judgment.
 
-Both qualify by the same membership test, and the test is all that has to be argued. A loop able to remove one, retune it, or route around it is inside the scope that role constrains, so a loop cannot be the party that commissions it — which is the test stated in `10-foundations/06` and applied to triage above.
+That sits uneasily next to The gate is not a role, and the discomfort is worth working through rather than waving at, because a reasoning component placed in this layer is exactly the persuadability this layer exists to close off.
+
+**The resolution is direction, and this layer already relies on it without having generalized it.** Triage is permitted to reason because of a constraint stated for it specifically: it must never have authority to approve an effect the gate rejected. Persuading triage gets you an escalation or a halt — outcomes that are never the failure. Persuading it to permit something is not available, because permitting is not among the things it can do.
+
+Stated generally: **an invariant processor may reason only where it can restrict and never widen, so that the worst result of persuading it is that it does nothing.**
+
+The scope check satisfies that, and the reason is worth being precise about. A scope narrows within capability; it never reaches past it. An effect still passes capability gating and still passes the gate, whatever the scope says. So a scope check that is lax, confused, or talked into generosity degrades to *no scope check* — which is where this project stands today — and it cannot open anything capability had closed. Its failure mode is uselessness, not permission.
+
+That is what makes membership safe here and would not make it safe for an arbitrary role. A processor whose judgment could grant would not qualify however well argued, since the whole layer's value is that no argument reaches it.
+
+Two things follow that are easy to get wrong. **The gate itself stays deterministic**: nothing here softens The gate is not a role, and an invariant processor is not a smarter gate but a separate occupant of the same layer. And **deriving a scope is ordinary cognition rather than part of the check** — the derivation is a proposal, recorded with its reasoning and contestable (`24-arch-permission-layer`), while what this layer fixes is that a check runs at all and that it can only narrow.
+
+Beyond direction, membership needs the ordinary test: a loop able to remove one, retune it, or route around it is inside the scope that role constrains, so a loop cannot be the party that commissions it — the test stated in `10-foundations/06` and applied to triage above.
 
 **Everything else follows from membership and is not restated per role.** That system-level feedback may not delete one or reshape the path around it, that a system lacking one is not valid — these are properties of belonging to a layer every loop may read and none may write, not separate stipulations attached to particular occupants. Enumerating them role by role would be worse than redundant: it would imply that a future invariant processor arriving without its own enumeration is unprotected.
 
