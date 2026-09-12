@@ -146,7 +146,7 @@ How scope is concretely inscribed, since the data format depends on it and nothi
 
 What the entry step should be, given that initial selection and topology are separate problems and only the first is open.
 
-Whether per-scenario comparison is stable enough to read at one run per arm, or how few repeats are needed to tell a genuinely flipped scenario from a flaky one. `27-arch-adaptation-and-evolution/05` suggests five as the figure for classifying stability and holds that one is valid; neither number is grounded in anything this project has measured.
+Whether per-scenario comparison is stable enough to read at one run per arm. `27-arch-adaptation-and-evolution/05` answers this for the current phase — the arms here differ in kind rather than degree, so the expected effects are large and one run is adequate — and names the diagnostic for noticing when that stops being true. What is not established is the point at which the candidates this framework wants to compare stop being categorically different from each other, since that is when the answer changes.
 
 What the literature already holds on recall under prefix persistence. This project should inherit results rather than rediscover them, and the reading has not been done.
 

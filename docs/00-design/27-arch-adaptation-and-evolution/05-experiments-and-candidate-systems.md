@@ -32,11 +32,23 @@ The project should later establish practical repetition policies based on cost, 
 
 One consumer of that policy is already waiting on it. `23-arch-context-management/02-context-as-experimental-surface.md` declines to solve credit assignment — determining which artifacts contributed to a result — and relies on aggregate comparison instead. That bet is only good if repetition is sufficient to separate policies, so the repetition policy is not a refinement there but a precondition.
 
+## Everything here depends on expected effect size
+
+How much repetition an experiment needs is governed by how large a difference it is looking for, and that is the variable to establish first rather than a detail to refine later.
+
+**The differences currently under study are enormous.** A monolithic implementer against a three-role chain against an orchestrator. No context management against naive substring matching. No retrieval against retrieval. These are not variants of one design, they are different designs, and the effects they produce should be correspondingly large. In that regime a single run over a well-resolved suite is adequate, and the statistical worry below does not bite.
+
+This also decides how a **null result** reads, which is not obvious and matters for how existing findings should be understood. When a large effect was expected and none appears, that is a result — Milestone 4 expected role separation to help and found it did not, which is informative precisely because the expectation was strong. In a small-effect regime the same observation usually means only that the experiment could not see anything. The identical output supports opposite readings depending on which regime produced it.
+
+**It is a phase, not a permanent condition.** As the large design questions get settled, the remaining differences shrink, and precision starts to matter in a way it does not now. The machinery for that regime should not be built in advance, for the same reason no vector index is being built in advance: it is sequencing, not doubt.
+
+**The transition is not announced, so it needs a signal.** Drifting into the small-effect regime while still running one repeat is how noise starts getting reported as findings. A cheap diagnostic is available and reuses the stability classification below: run one arm twice and compare its variation against itself to the variation between arms. While between-arm differences clearly exceed within-arm ones, one run is enough. When they become comparable, the regime has changed and the experimental protocol has to change with it.
+
 ## Resolution before precision
 
-There is a wrong way to reason about how much repetition is needed, and it is worth naming because it is the intuitive one.
+There is a wrong way to reason about how much repetition is needed, and it is worth naming because it is the intuitive one, and because it is the one that becomes tempting as soon as effects shrink.
 
-The wrong way treats an eight-task suite as eight samples of a single quantity, computes a pass rate, and asks how tightly that rate is estimated. Under that framing the answer is discouraging — separating two arms differing by ten points of pass rate would need something like forty repeats of the suite per arm, and halving the effect quadruples it. That arithmetic is correct and almost always irrelevant.
+The wrong way treats an eight-task suite as eight samples of a single quantity, computes a pass rate, and asks how tightly that rate is estimated. Under that framing the answer is discouraging — separating two arms differing by ten points of pass rate would need something like forty repeats of the suite per arm, and halving the effect quadruples it. That arithmetic is correct and, in the regime described above, irrelevant.
 
 It is irrelevant because the tasks are not interchangeable draws. They are **distinct measurement points**, each a different scenario, and the average over them estimates a quantity that does not correspond to any situation the system will actually be in. This project's own positions say so directly: too much context is a relation and not a property (`10-foundations/04`), adequacy runs on a gradient indexed by model, task and budget (`23-arch-context-management/02-context-as-experimental-surface.md`), and what varies with an assembly's capability is where a boundary sits rather than a scalar score (`22-arch-cognition/08-decomposition.md`). If effects are conditional, averaging across heterogeneous conditions is the wrong operation before it is an imprecise one.
 
@@ -62,4 +74,6 @@ A new scenario can reveal a condition under which the answer changes. A repeat o
 
 ## Open question
 
-We still need to determine how to build benchmark suites that are representative enough to guide evolution without becoming so expensive that experimentation becomes impractical on local hardware.
+We still need to determine how to build benchmark suites that are representative enough to guide evolution without becoming so expensive that experimentation becomes impractical on local hardware. Under Resolution before precision that question sharpens: representativeness is a resolution property — how many distinguishable conditions the suite covers — rather than a matter of size.
+
+When the small-effect regime actually arrives, and whether the within-arm against between-arm diagnostic above is sensitive enough to notice it before a few noisy findings have already been recorded.
