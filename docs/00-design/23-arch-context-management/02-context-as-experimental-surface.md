@@ -70,13 +70,29 @@ And it is **nearly free given what is already built**. At the moment `01-context
 
 ### Four things to pin down first
 
-**What counts as the production context, and this one is a methodological trap.** Two definitions are available and they are not equivalent. The *composition* — what recall actually put in front of the model that turn — is the principled one, since the model produced the artifact from what it was shown rather than from what happened to be tracked. But it is shaped by the recall policy in force at the time, so an index built that way is contaminated by the policy, and comparing policies over a corpus one of them built is biased. The *pool snapshot* — everything live at that moment, presented or not — is contaminated too, but only indirectly, through the model's behaviour rather than through the policy's choices. Full policy-independence is not on offer. The pool snapshot is the weaker contamination and is therefore the better index for cross-policy comparison, which is what this framework exists to do.
+**What counts as the production context.** The **composition** — what recall actually put in front of the model on that turn — and not the pool snapshot. The model produced the artifact from what it was shown, not from what happened to be tracked, so the composition is what the phrase means.
+
+An earlier draft chose the pool snapshot, on the grounds that the composition is shaped by the recall policy in force and would therefore contaminate the very comparison this framework exists to run. That reasoning is abandoned, because it treats as a defect something that is structural. **The set of state transitions in the knowledge model is a product of the system.** Every artifact in it exists because some policy, some model and some configuration caused a crossing that produced it. No definition of production context escapes that: the pool snapshot is contaminated too, through the model's behaviour rather than through the policy's choices, and the difference is one of degree that does not change the epistemic situation. Once neither option is clean, the tiebreaker is which one represents what it claims to.
 
 **How the two combine.** A weighted sum of two similarity scores, with the weight as the swept parameter, is the recommendation — not because it is the best combiner but because the two single-signal arms are its endpoints. Weight zero and weight one give the ablation from the same mechanism rather than from two separate implementations, so there is one thing to build and nothing to keep in sync. Concatenation hides an equal weighting with no knob; two-stage retrieve-then-rerank is a different experiment worth running later.
 
 **What is on the query side, because the pairing is less symmetric than it looks.** At retrieval time the current context is available and can be matched against a stored production context — that is the situation analogy. But nothing on the query side corresponds to artifact *content*, since the artifact is what is being looked for; what plays that role is the task or objective text. So the two signals being combined are two different retrieval modes against two different indexed fields, not two representations of one thing. Saying this plainly matters, because it means the weight is trading off between modes rather than blending views.
 
 **What "better" means.** The bar stated above is that the request was answered, not that relevant material was retrieved, and the attribution stance says to compare in aggregate. That is the expensive distal measure and it needs N. A cheaper proximal signal is available alongside it: whether a retrieved artifact was actually *used* — cited, or appearing in the provenance of what the turn produced. Every retrieval is a datapoint there rather than every task, so it accumulates far faster. It is a weaker signal and should not replace the outcome measure, but it can fail fast, which is what a first candidate most needs.
+
+### What comparison can conclude, once the corpus is a system output
+
+Accepting that the record is produced by the system rather than found bounds what this framework may claim. Three consequences, and none of them is a reason to build it differently.
+
+**Comparisons hold within a corpus lineage.** Policies evaluated over the same lineage are comparable. A policy evaluated over a corpus that another policy built is measuring **transfer** — how well it does on material it did not shape — which is a legitimate and separate question, and easy to mistake for the first one.
+
+**Longitudinal comparison confounds.** Running policy A and then policy B over one growing corpus mixes the policy change with everything else that changed alongside it, corpus size included. Whatever separates them is not attributable to the policy without more care than a before-and-after reading gives.
+
+**What is measured is situated performance, not context-free performance.** The framework can answer whether one policy beats another on the corpus their joint operation produces, which is the operationally relevant question. It cannot answer which policy is best in the abstract, and that question was probably never well posed.
+
+None of this is a new kind of problem here. `10-foundations/03`'s Scope already names it for a single claim: the domain a claim was born into — this host, this model family, the state of the project at that moment — was never fully representable and cannot be recovered later. A corpus has a scope in exactly that sense, and the remedy is the same one `03` prescribes. It has to be recorded as it accumulates rather than reconstructed when someone eventually wants to compare, which means the record must carry which policy, which model and which configuration were in force while each stretch of it was produced.
+
+That costs fields rather than a mechanism. `26-arch-observability` is already greedy and already keeps per-turn compositions, and `27-arch-adaptation-and-evolution`'s generations already name a lineage — a generation carries its recall policy, so corpus lineage and generation lineage are close to the same thing.
 
 ### What it depends on
 
@@ -124,4 +140,4 @@ Whether aggregate comparison separates policies at the N this project can actual
 
 What the literature already holds on recall under prefix persistence. This project should inherit results rather than rediscover them, and the reading has not been done.
 
-Whether a production-context index can be built at all without the policy that produced it contaminating it. The first candidate takes the pool snapshot as the lesser of two contaminations rather than as a clean solution, and nothing here establishes that the residual bias is small enough to ignore.
+How large the lineage effect actually is. Accepting that the corpus is a system output settles what kind of thing it is, and settles that the composition is the right definition of production context, but it says nothing about magnitude. If a policy's advantage over another turns out to be smaller than the difference between two corpora built by the same policy, the comparison is not usable and nothing here would reveal that in advance.

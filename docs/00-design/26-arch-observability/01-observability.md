@@ -44,6 +44,8 @@ Four things need saying more precisely than that, because the architecture aroun
 
 **Work transitions.** Every change to a work item, and every recorded conclusion, keeping *answered*, *blocked* and *declined* distinct (`28-arch-work-record`).
 
+**The conditions in force.** Which recall policy, which model, and which configuration were operating while each stretch of history was produced. This is not metadata for tidiness. The record a system accumulates is a product of that system, so a later comparison between policies is never against a neutral corpus, and it needs to know which lineage it is reading. `10-foundations/03` makes the same point about a single claim under the name Scope — the domain it was born into cannot be recovered afterwards, only recorded near the time. The corpus has a scope in that sense, and this is where it is written down. `23-arch-context-management/02-context-as-experimental-surface.md` sets out what follows for comparison.
+
 The exact storage format can remain simple initially.
 
 ## Reconstructing knowledge, not only events
