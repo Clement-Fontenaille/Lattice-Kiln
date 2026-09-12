@@ -82,6 +82,14 @@ That derivation does not conflict with `10-foundations/07`'s requirement that th
 
 `10-foundations/07` already supplies the form this takes: where the system must decide, it yields "with the reasoning that would let the decision be overturned." A derived scope is such a decision, so what is recorded is the boundary *and* what it was derived from — which is what makes it something the operator can find false rather than something they can only accept.
 
+**Under genuine ambiguity, do not derive at all — propose the plausible readings and ask.** This is the other half of the same instruction in `07`, which pairs yielding-with-reasoning against *asking what only the operator can answer*. A scope that follows from the task is the first case. A scope where two defensible readings compete is the second, and the system's job there is not to pick well but to stop picking.
+
+The asking has a required shape. Naming the candidate interpretations — this reaches only the interface and its tests, or it also reaches the adjacent format handlers — is not the same as asking what the scope is. `07` gives the reason both of its modes take the form they do: they place the operator's act where it is cheap for them, answering about intent rather than evaluating an artifact. An open question hands the whole problem back. A derived boundary handed over for validation asks them to evaluate an artifact. A short list of readings asks them the one thing only they can settle.
+
+**Recording the reasoning does not cover this case, which is why it needs naming separately.** A derivation and a coin flip between two readings produce records that look alike: both show a boundary with reasoning attached, and neither shows that a choice was made between defensible alternatives. So an operator reading a recorded derivation has no signal that the confident-looking boundary was one of two. Ambiguity cannot be handled by recording better. It has to be handled by not deciding.
+
+What counts as enough doubt to stop is unset, and the pressure runs one way. `07` observes that refusing costs more than approving, so approval interfaces lean toward assent — mechanically, not morally. The same mechanics apply to a system choosing between asking and proceeding: asking costs a round trip and proceeding looks like progress, so a scope check left to its own judgment will under-detect ambiguity rather than over-detect it.
+
 **The check divides on reversibility, and the two halves sit at opposite ends of a task.**
 
 - **Reversible changes are audited at the end.** Their extent can be compared against the declaration once the work is done, in aggregate, which is the only point at which drift is visible as drift. Auditing late is affordable precisely because the finding still has a remedy: what fell outside can be undone.
