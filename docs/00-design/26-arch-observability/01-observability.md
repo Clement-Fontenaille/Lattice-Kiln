@@ -36,7 +36,7 @@ A future evaluator should be able to understand the original human intent, which
 
 Four things need saying more precisely than that, because the architecture around this document has changed.
 
-**Each turn, not each invocation.** What a processor sees is composed fresh on every turn out of a pool that grew since the last one (`20-arch-runtime.md`, Instantiation, and then a loop). There is no bundle handed over once at the start. So the unit worth recording is a **turn's composition** — what was actually presented to the model at that moment, and what the recall policy held back — rather than a single record of what an instance received when it began.
+**Each turn, not each invocation.** What a processor sees is composed fresh on every turn out of a live set that grew since the last one (`20-arch-runtime.md`, Instantiation, and then a loop). There is no bundle handed over once at the start. So the unit worth recording is the **turn input** — what was actually transmitted to the model at that moment, and what the recall policy held back — rather than a single record of what an instance received when it began.
 
 **Reads as well as effects.** A read is not a typed effect, but it is in the invariant gate's input domain and it has a real footprint (`10-foundations/02`, Qualification 2026-09-11). It has always been required to be observable here; what has changed is that this is now load-bearing rather than incidental. The reason is in the next section but one.
 
@@ -68,11 +68,11 @@ Milestone 4 (findings-log entry 3) tested this against real runs: unplanned ques
 
 That lesson now extends past effects. A qualification recorded as prose alone has the same defect: "what changed about this claim, and on what grounds" degrades to reading, which does not join across records and does not aggregate. Whatever carries a knowledge-state transition has to name the claim, the kind of change, and the grounds as fields rather than as narration.
 
-## Comparing policies needs recorded compositions
+## Comparing policies needs recorded turn inputs
 
-`23-arch-context-management` argues that recall is worth separating from registration because two recall policies over the same pool choose different subsets, which makes them directly comparable while the pool is held constant.
+`23-arch-context-management` argues that recall is worth separating from registration because two recall policies over the same live set choose different subsets, which makes them directly comparable while the live set is held constant.
 
-That comparison is only available if what each policy actually presented was recorded. Without per-turn compositions kept here, the comparability is a property of the design rather than a measurement anyone can take. This is the concrete reason the per-turn unit above matters, and it is also the first place the ARES material relocated in F43 applies: that work found keeping every candidate beat selective retention under a strong judge, which is a claim about what should be available to reason from next, and this project cannot check it against its own runs without this record.
+That comparison is only available if what each policy actually presented was recorded. Without per-turn turn inputs kept here, the comparability is a property of the design rather than a measurement anyone can take. This is the concrete reason the per-turn unit above matters, and it is also the first place the ARES material relocated in F43 applies: that work found keeping every candidate beat selective retention under a strong judge, which is a claim about what should be available to reason from next, and this project cannot check it against its own runs without this record.
 
 ## Reconstruction as a safety dependency
 
@@ -116,7 +116,7 @@ Sharing a store would also mean every reconstruction query competes with those a
 
 - **`20-arch-runtime.md`** — emits what this actor records; the loop it describes is the shape the per-turn record follows.
 - **`21-arch-knowledge-model`** — holds the current state of the provenance graph; this actor holds the history of how that state was reached, and the entries the sweep removed from it.
-- **`23-arch-context-management`** — supplies the per-turn compositions and the live-state transitions that make recall policies comparable.
+- **`23-arch-context-management`** — supplies the per-turn turn inputs and the live-state transitions that make recall policies comparable.
 - **`22-arch-cognition/04-thinking.md`** and **`05-curation.md`** — the source of knowledge-state transitions, and the consumer of the two diagnostics above.
 - **`25-arch-invariant-layer`** — depends on this actor for sequence evaluation, reads included.
 - **`28-arch-work-record`** — supplies work transitions and recorded conclusions.
@@ -128,4 +128,4 @@ Retention strategy, redaction, summarization, and stable event schemas should em
 
 What a knowledge-state transition looks like as a structured record, given that the M4 lesson says narration will not join across records. `21-arch-knowledge-model`'s own open question about write-time tags is adjacent and probably answered by the same work.
 
-Whether the per-turn composition record should hold what was presented, or a reference plus the policy decision that produced it. The second is far smaller and reconstructs the first only if the pool's own history is complete, which under the sweep it is here and is not in `21-arch-knowledge-model`.
+Whether the turn-input record should hold what was presented, or a reference plus the policy decision that produced it. The second is far smaller and reconstructs the first only if the live set's own history is complete, which under the sweep it is here and is not in `21-arch-knowledge-model`.

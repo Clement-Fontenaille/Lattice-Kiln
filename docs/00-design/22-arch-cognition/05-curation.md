@@ -54,7 +54,7 @@ A proposal is a memory mutation like any other (`10-technical/01-effect-vocabula
 
 ## When it fires
 
-The sweep fires when something stops being live — a pool entry going archived, or a pool ending. It is incremental by nature, because reachability is local.
+The sweep fires when something stops being live — a live set entry going archived, or a live set ending. It is incremental by nature, because reachability is local.
 
 Deliberate remembrance fires during an episode, not after it. Marking something worth keeping is a judgment made while the reasoning that motivates it is still in view; deferring it to a teardown pass would mean reconstructing that motivation from a record of an episode that has ended. Compression can be deferred, since a checked step stays re-derivable.
 
@@ -68,7 +68,7 @@ That is not a contradiction. Reasoning and auditing are different uses, which is
 
 ## General shape and a naive default
 
-The sweep first, since it is deterministic and does the bulk of the work: on a pool entry becoming non-live, remove the referenced entry unless a promoted claim cites it. No model call.
+The sweep first, since it is deterministic and does the bulk of the work: on a live set entry becoming non-live, remove the referenced entry unless a promoted claim cites it. No model call.
 
 Compression second, on structural rules: a claim with kept roots and a recorded check is a souvenir candidate.
 

@@ -18,7 +18,7 @@ These patterns belong to system-level analysis.
 
 System-level feedback may propose changes to processor definitions, orchestrator instructions, delegation behavior, the recall policy, review strategy, evaluation roles, or other cognitive workflow configuration.
 
-The recall policy (`23-arch-context-management`) is worth singling out, because it is the one item on that list whose architecture was shaped with this loop in mind. Recall decides which already-registered artifacts are fed to the model on a given turn and which are held back; it never fetches anything. That boundedness is what makes two policies comparable — given the same tracked pool, each chooses a subset, so the pool can be held constant while the policy varies. A tuning loop needs exactly that property, and it is the reason `23` leaves the policy's content deliberately unspecified rather than guessing at one.
+The recall policy (`23-arch-context-management`) is worth singling out, because it is the one item on that list whose architecture was shaped with this loop in mind. Recall decides which already-registered artifacts are fed to the model on a given turn and which are held back; it never fetches anything. That boundedness is what makes two policies comparable — given the same live set, each chooses a subset, so the live set can be held constant while the policy varies. A tuning loop needs exactly that property, and it is the reason `23` leaves the policy's content deliberately unspecified rather than guessing at one.
 
 It may also propose a role that does not yet exist.
 

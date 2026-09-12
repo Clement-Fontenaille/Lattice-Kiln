@@ -115,6 +115,54 @@ thick.
 
 ---
 
+## context, and the context manager's own terms
+
+Settled 2026-09-12, because the set had drifted into using one word for three
+things.
+
+**context** — *the production context of the model's tokens: its internal state
+while generating.* This is the thing being managed and the word is reserved for
+it. It is not a record, not a selection, and not anything the context manager
+holds; it lives in the inference substrate, and its size is bounded by GPU memory
+rather than by anything textual.
+
+The context manager (`23-arch-context-management`) exists to govern that. Its own
+conceptual tooling therefore needs different words, because reasoning about
+context and being context are not the same activity.
+
+**live set** — *the context manager's tracked representation of what is currently
+in context, or is to be placed there this turn.* It holds references and
+bookkeeping, never content (`21-arch-knowledge-model` holds content). An item
+leaving the live set has left the discussion: if it is not recalled after a cache
+reset it is no longer live, and it drops out. Leaving the live set is not
+deletion — the content stays in the knowledge model until the retention sweep
+reaches it (`22-arch-cognition/05-curation.md`).
+
+**turn input** — *what is actually transmitted to the model on a given turn.*
+Under no prefix persistence this is the whole live set, re-sent, and the only
+remaining lever is order. Under prefix persistence it is the delta appended to a
+context that persists. The same live set therefore produces very different turn
+inputs depending on the serving arrangement, which is why
+`23-arch-context-management/01` treats prefix persistence as changing the shape of
+the policy space rather than only its cost.
+
+**Two words this set no longer uses for these.** *Pool* was used for the live set
+and is retired as ambiguous with premise pools in the literature notes. *Composition*
+was used for the turn input and is retired because the set already uses
+"composition" for concern composition (`22-arch-cognition/08`) and effect
+composition (`25-arch-invariant-layer`), which are unrelated.
+
+**Two ceilings, not one.** What an assembly can correctly *integrate* is a
+cognitive limit (`10-foundations/04`, Overload) and has no operational definition
+yet. What the hardware can *hold* is a physical limit, measurable today, and far
+tighter than text size suggests: a KV cache costs on the order of hundreds of
+kilobytes per thousand tokens for a 7B model against roughly four kilobytes for
+the same text. Two to three orders of magnitude. The physical ceiling belongs to
+the invariant layer's resource ceilings (`10-foundations/06`); the cognitive one
+does not, being a property of an assembly rather than a limit anyone sets.
+
+---
+
 ## Output
 
 _New terms are added here when the set starts using a word it has not defined.

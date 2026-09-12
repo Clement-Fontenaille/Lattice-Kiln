@@ -70,9 +70,9 @@ And it is **nearly free given what is already built**. At the moment `01-context
 
 ### Four things to pin down first
 
-**What counts as the production context.** The **composition** — what recall actually put in front of the model on that turn — and not the pool snapshot. The model produced the artifact from what it was shown, not from what happened to be tracked, so the composition is what the phrase means.
+**What counts as the production context.** The **turn input** — what recall actually put in front of the model on that turn — and not the live set snapshot. The model produced the artifact from what it was shown, not from what happened to be tracked, so the turn input is what the phrase means.
 
-An earlier draft chose the pool snapshot, on the grounds that the composition is shaped by the recall policy in force and would therefore contaminate the very comparison this framework exists to run. That reasoning is abandoned, because it treats as a defect something that is structural. **The set of state transitions in the knowledge model is a product of the system.** Every artifact in it exists because some policy, some model and some configuration caused a crossing that produced it. No definition of production context escapes that: the pool snapshot is contaminated too, through the model's behaviour rather than through the policy's choices, and the difference is one of degree that does not change the epistemic situation. Once neither option is clean, the tiebreaker is which one represents what it claims to.
+An earlier draft chose the live set snapshot, on the grounds that the turn input is shaped by the recall policy in force and would therefore contaminate the very comparison this framework exists to run. That reasoning is abandoned, because it treats as a defect something that is structural. **The set of state transitions in the knowledge model is a product of the system.** Every artifact in it exists because some policy, some model and some configuration caused a crossing that produced it. No definition of production context escapes that: the live set snapshot is contaminated too, through the model's behaviour rather than through the policy's choices, and the difference is one of degree that does not change the epistemic situation. Once neither option is clean, the tiebreaker is which one represents what it claims to.
 
 **How the two combine.** A weighted sum of two similarity scores, with the weight as the swept parameter, is the recommendation — not because it is the best combiner but because the two single-signal arms are its endpoints. Weight zero and weight one give the ablation from the same mechanism rather than from two separate implementations, so there is one thing to build and nothing to keep in sync. Concatenation hides an equal weighting with no knob; two-stage retrieve-then-rerank is a different experiment worth running later.
 
@@ -96,7 +96,7 @@ Accepting that the record is produced by the system rather than found bounds wha
 
 None of this is a new kind of problem here. `10-foundations/03`'s Scope already names it for a single claim: the domain a claim was born into — this host, this model family, the state of the project at that moment — was never fully representable and cannot be recovered later. A corpus has a scope in exactly that sense, and the remedy is the same one `03` prescribes. It has to be recorded as it accumulates rather than reconstructed when someone eventually wants to compare, which means the record must carry which policy, which model and which configuration were in force while each stretch of it was produced.
 
-That costs fields rather than a mechanism. `26-arch-observability` is already greedy and already keeps per-turn compositions, and `27-arch-adaptation-and-evolution`'s generations already name a lineage.
+That costs fields rather than a mechanism. `26-arch-observability` is already greedy and already keeps per-turn turn inputs, and `27-arch-adaptation-and-evolution`'s generations already name a lineage.
 
 The two lineages are not the same thing, though, and the difference is load-bearing. A **generation** is configuration — roles, orchestration, the recall policy, evaluation setup. A **corpus** is whatever accumulated while that configuration ran. In ordinary operation they move together, which is why a system's evidence about itself is weak. They come apart deliberately when a generation is instantiated fresh without the corpus it was tuned against, which is what `27-arch-adaptation-and-evolution/07-bootstrapper-as-transfer-mechanism.md` does — and that separation is what makes the strongest form of evaluation available at all.
 
@@ -108,7 +108,7 @@ Nothing here can run until artifacts are registered with representations attache
 
 Every selection is an experimental decision and has to be recorded as one: the candidates considered, their scores, the representation used, the budget, what was selected, what was actually transmitted to the model, and what followed.
 
-`26-arch-observability` already carries the requirement that per-turn compositions be recorded, and states that recall's comparability is a property of the design rather than a measurement unless they are. This document's requirement is the same one with more fields, and it is the part with no slack in it: a policy whose selections were not recorded cannot be compared to anything, so the instrumentation is not an accompaniment to the experiment but a precondition for it.
+`26-arch-observability` already carries the requirement that per-turn turn inputs be recorded, and states that recall's comparability is a property of the design rather than a measurement unless they are. This document's requirement is the same one with more fields, and it is the part with no slack in it: a policy whose selections were not recorded cannot be compared to anything, so the instrumentation is not an accompaniment to the experiment but a precondition for it.
 
 ## On attributing outcomes to selections
 
@@ -150,4 +150,4 @@ Whether per-scenario comparison is stable enough to read at one run per arm. `27
 
 What the literature already holds on recall under prefix persistence. This project should inherit results rather than rediscover them, and the reading has not been done.
 
-How large the lineage effect actually is. Accepting that the corpus is a system output settles what kind of thing it is, and settles that the composition is the right definition of production context, but it says nothing about magnitude. If a policy's advantage over another turns out to be smaller than the difference between two corpora built by the same policy, the comparison is not usable and nothing here would reveal that in advance.
+How large the lineage effect actually is. Accepting that the corpus is a system output settles what kind of thing it is, and settles that the turn input is the right definition of production context, but it says nothing about magnitude. If a policy's advantage over another turns out to be smaller than the difference between two corpora built by the same policy, the comparison is not usable and nothing here would reveal that in advance.

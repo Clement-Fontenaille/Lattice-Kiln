@@ -48,9 +48,9 @@ There is no assembly step. Context is not gathered, packaged, and handed to a pr
 
 **Instantiation happens once.** The orchestrator (`22-arch-cognition/03`) reads current work state from `28-arch-work-record`, decides a processor is needed, and formulates its role and objective. Instantiating it is itself an effect — processor invocation, `10-technical/01-effect-vocabulary.md` type 6 — so it is proposed, gated, and realized like anything else.
 
-What gets bound is only what can be fixed in advance: role instructions, an objective, and a capability set under `24-arch-permission-layer`'s policy. Context is not among them, because context is not the kind of thing that can be bound. What the instance gets instead is an identity: a tracked pool, which its own crossings register into and which recall runs over each time it is fed.
+What gets bound is only what can be fixed in advance: role instructions, an objective, and a capability set under `24-arch-permission-layer`'s policy. Context is not among them, because context is not the kind of thing that can be bound. What the instance gets instead is an identity: a live set, which its own crossings register into and which recall runs over each time it is fed.
 
-**Then, on every turn, what the model sees is composed.** `23-arch-context-management` renders it at the moment of feeding, out of what is in the pool and under the recall policy. Not once at the start: every turn, over a pool that has grown since the last one.
+**Then, on every turn, what the model sees is composed.** `23-arch-context-management` renders it at the moment of feeding, out of what is in the live set and under the recall policy. Not once at the start: every turn, over a live set that has grown since the last one.
 
 Nothing requests this, which is why the question of who asks for a processor's context has no answer — nothing asks. Everything moving to or from the model passes through this actor by construction, so it is traversed, not called. That is also what keeps the orchestrator's "it does not govern its own context" (`22-arch-cognition/03`) true without needing anyone else to fetch on its behalf.
 
@@ -60,7 +60,7 @@ A read of something already inside the workspace — a file, a prior observation
 
 So a read takes a shorter path by default, not by construction. The default is permissive — reads pass unless a rule names them — and that is a configuration the system may change, rather than a capability the architecture has removed. This is also why the runtime's own classification work below is ordinary and not a special case: distinguishing a destructive filesystem action from a read-only inspection is a judgment about footprint, which is the same axis everything else on this path sits on.
 
-**What comes back crosses in.** The result of the call, or the model's own generated output, is registered by `23-arch-context-management` into the pool. The pool is now larger than it was, and the next turn composes over the larger one. Compose, act, register, compose again — that is the whole loop, and its state lives in the pool rather than in anything handed between steps.
+**What comes back crosses in.** The result of the call, or the model's own generated output, is registered by `23-arch-context-management` into the live set. The live set is now larger than it was, and the next turn composes over the larger one. Compose, act, register, compose again — that is the whole loop, and its state lives in the live set rather than in anything handed between steps.
 
 Alongside it, writes land elsewhere, each into its own store with its own retention discipline: `26-arch-observability` records the event, a claim resolves to `21-arch-knowledge-model`, and a work-record mutation — including the instance's own recorded conclusion of answered, blocked, or declined — resolves to `28-arch-work-record`. None of these is the same write read several times.
 
@@ -68,13 +68,13 @@ The runtime should make all of this observable enough for later feedback analysi
 
 ## What instantiation does not settle
 
-What is in an instance's pool at the moment it starts is open, and dropping the bundle is what exposes it: a bundle made the question look answered, since a bundle is by definition what an instance begins with.
+What is in an instance's live set at the moment it starts is open, and dropping the bundle is what exposes it: a bundle made the question look answered, since a bundle is by definition what an instance begins with.
 
-The mechanics tighten it further. A pool is populated by registration, and registration records what a crossing returned — so at turn zero, before anything has crossed, a pool is empty by construction. Anything an instance "inherits" therefore has to arrive one of two ways, and `23-arch-context-management` owns the choice between them. Either inheritance is a new operation, in which case already-registered artifacts move or are referenced across pools without any crossing having occurred, which is neither register nor recall and would be a third primitive. Or a pool genuinely starts empty and inheritance is an ordinary crossing: the preceding step wrote a handoff somewhere durable, and the new instance reads it like anything else.
+The mechanics tighten it further. A live set is populated by registration, and registration records what a crossing returned — so at turn zero, before anything has crossed, a live set is empty by construction. Anything an instance "inherits" therefore has to arrive one of two ways, and `23-arch-context-management` owns the choice between them. Either inheritance is a new operation, in which case already-registered artifacts move or are referenced across live sets without any crossing having occurred, which is neither register nor recall and would be a third primitive. Or a live set genuinely starts empty and inheritance is an ordinary crossing: the preceding step wrote a handoff somewhere durable, and the new instance reads it like anything else.
 
 The second needs no new mechanism and has somewhere to live already — a handoff is an attachment on a work item (`28-arch-work-record`), read like any other read. That is the cheaper hypothesis, not yet an adopted position.
 
-This is a context-management question and not a decomposition one. How split work recombines (`22-arch-cognition/08`, fork/join or continuation) constrains whether sibling instances see each other's crossings, which is pool isolation. It does not constrain how much any one pool starts with: fork/join runs perfectly well with richly seeded branches, and continuation runs perfectly well handing forward almost nothing. The two questions are orthogonal and should not be settled together.
+This is a context-management question and not a decomposition one. How split work recombines (`22-arch-cognition/08`, fork/join or continuation) constrains whether sibling instances see each other's crossings, which is live-set isolation. It does not constrain how much any one live set starts with: fork/join runs perfectly well with richly seeded branches, and continuation runs perfectly well handing forward almost nothing. The two questions are orthogonal and should not be settled together.
 
 ## What the runtime should avoid
 
