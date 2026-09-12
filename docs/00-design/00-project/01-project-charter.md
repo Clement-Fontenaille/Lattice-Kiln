@@ -46,7 +46,7 @@ What actors should exist is therefore treated as a question for evidence rather 
 
 That posture is only defensible because something sits beneath it.
 
-A small, human-authored layer of goals, resource ceilings, and hard constraints is readable by every part of the system and writable by none. It is amended by direct human action, never by system proposal, however well evidenced, and it is enforced by a deterministic mechanism rather than merely stated.
+A small, human-authored layer of goals, resource ceilings, and inescapable constraints is readable by every part of the system and writable by none. It is amended by direct human action, never by system proposal, however well evidenced, and it is enforced by a deterministic mechanism rather than merely stated.
 
 Without such a floor, a system that adapts its own evaluation criteria can satisfy its own measurements by redefining what is being measured.
 

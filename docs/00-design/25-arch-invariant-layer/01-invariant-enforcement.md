@@ -16,14 +16,14 @@ The operational specifics are not recorded here: the escalation protocol, thresh
 
 ## What sits here, and what the floor is
 
-This document holds four mechanisms. They share one property and nothing else: **none of them is adjustable by what it constrains.**
+This document holds four mechanisms. They share one property and nothing else: **none of them is adjustable by what it constrains** — inescapable, in `10-foundations/06`'s sense, rather than mechanical or bright-line. Two of the four are reasoning components, which that distinction is what permits.
 
 - **The gate** — deterministic, mechanical, over the line or not.
 - **Triage** — the invariant processor that assesses and routes a trip.
 - **The scope check** — the invariant processor that compares work against its mandate (`24-arch-permission-layer`).
 - **The capability engine** — the mechanism that applies capability policy to a requested operation.
 
-**The floor is the gate, not this collection and not the invariant layer.** Those are three different things and the word has been doing double duty. `10-foundations/06`'s **invariant layer** is *content*: the small, explicit set of goals, resource ceilings and hard constraints every loop may read and none may write. The **floor** is the gate — the deterministic point nothing argues past. This document is the *enforcement* architecture, which is where the mechanisms live. A layer of statements, a floor that stops things, and the machinery in between.
+**The floor is the gate, not this collection and not the invariant layer.** Those are three different things and the word has been doing double duty. `10-foundations/06`'s **invariant layer** is *content*: the small, explicit set of goals, resource ceilings and inescapable constraints every loop may read and none may write. The **floor** is the gate — the deterministic point nothing argues past. This document is the *enforcement* architecture, which is where the mechanisms live. A layer of statements, a floor that stops things, and the machinery in between.
 
 **Each mechanism is fixed while its content is adjustable, and by a different party each time.** That pattern recurs and is worth stating once rather than rediscovering per occupant.
 
@@ -45,6 +45,8 @@ A reasoning component is persuadable by construction, and persuadability is prec
 It should be a deterministic runtime check: narrow, mechanical, over the line or not. It should not be smart, because smart is another word for persuadable.
 
 That is a statement about **the gate**, not about everything this layer may contain. The layer also fixes roles that do reason — triage, below, and the scope check — and Invariant processors sets out the condition under which that is safe rather than contradictory: they may restrict and never widen, so persuading one achieves nothing. The gate remains the thing that is not smart.
+
+Where the over-generalization came from is worth knowing, since the same slip is easy to repeat. `10-foundations/06` used to call this layer's content "**hard** constraints", and hard describes a form — bright line, mechanically checkable. Read as definitional, it implies enforcement must be mechanical, and the sentence above follows. That document's 2026-09-13 Qualification withdraws the word for **inescapable**, which is a relation to the system rather than a shape: what it cannot get out from under. A natural-language judgment can be entirely inescapable without being a bright line, which is what makes an invariant processor coherent rather than an exception.
 
 ## The gate binds effects, not roles
 

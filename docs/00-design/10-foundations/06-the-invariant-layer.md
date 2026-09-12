@@ -2,7 +2,7 @@
 
 ## TL;DR
 
-Every adaptive mechanism in this system — role commissioning, context governance, memory curation, model assignment, project-level, system-level, and meta-level feedback — is designed to change itself based on evidence. The invariant layer is the part that is structurally exempt from that change: a small, explicit set of goals, resource ceilings, and hard constraints that every loop may read and none may write.
+Every adaptive mechanism in this system — role commissioning, context governance, memory curation, model assignment, project-level, system-level, and meta-level feedback — is designed to change itself based on evidence. The invariant layer is the part that is structurally exempt from that change: a small, explicit set of goals, resource ceilings, and **inescapable constraints** that every loop may read and none may write.
 
 It is human-authored and human-amended only, and it is enforced rather than merely stated.
 
@@ -24,9 +24,19 @@ Goals — what the system is for, stated well enough that a measurement can be c
 
 Resource ceilings — compute, cost, concurrency, and other physical or financial limits.
 
-Hard constraints — effects that may never occur regardless of what any loop concludes.
+Inescapable constraints — what the system may not get out from under, regardless of what any loop concludes.
 
 The layer should be small. Its value comes from being stable and checkable, not from being comprehensive.
+
+**Qualification (2026-09-13) — "hard constraints" was the wrong word and is withdrawn.** The original read "hard constraints — effects that may never occur regardless of what any loop concludes." What is withdrawn is *hard*; the rest stands.
+
+"Hard" describes the **form** of a constraint: a bright line, mechanically checkable, binary. The property that actually defines membership here is a **relation to the system**: it cannot evade this. Those come apart, and the difference is not academic. A scope check comparing a natural-language mandate against a diff is not a hard constraint in the bright-line sense, and it is entirely inescapable — the system cannot remove it, route around it, or argue past it.
+
+Reading "hard" as definitional had a consequence worth recording, because it propagated. It implied that enforcement must be mechanical, which is where `25-arch-invariant-layer`'s "it should not be smart, because smart is another word for persuadable" came from. That sentence is right about the **gate** and was over-generalized into a rule about the layer. What actually makes a reasoning component safe to fix here is direction — it may restrict and never widen, so persuading it achieves nothing — and that criterion was reachable only once *hard* stopped standing in for *inescapable*.
+
+Note also that "hard" was the odd term of the three. A goal a loop could rewrite is not a goal but a preference; a ceiling the system can raise is not a ceiling. Those two were already defined by inescapability rather than by crispness, and the list was inconsistent with itself.
+
+Nothing widens as a result. What qualifies is still decided by The membership test below, which is unchanged; this settles what membership *means*, not what passes.
 
 ## Read by everything, written by nothing
 
@@ -50,7 +60,7 @@ This set already describes foundational constraints as a matter of decision disc
 
 This layer differs in kind. It requires a deterministic mechanism that checks proposed effects against it and refuses those that cross the line. A constraint that exists only as documentation is a constraint the system can violate without anything noticing.
 
-**This layer is content; the floor is the mechanism.** The distinction is worth holding because one word has been carrying both. What this document defines — goals, resource ceilings, hard constraints — is a set of statements. The **floor** is the gate that enforces them: the deterministic point nothing argues past. `25-arch-invariant-layer` holds that gate along with the other mechanisms no loop may adjust, and sets out the pattern they share, which is that each is fixed while the content it applies is set by someone outside the loops it constrains.
+**This layer is content; the floor is the mechanism.** The distinction is worth holding because one word has been carrying both. What this document defines — goals, resource ceilings, inescapable constraints — is a set of statements. The **floor** is the gate that enforces them: the deterministic point nothing argues past. `25-arch-invariant-layer` holds that gate along with the other mechanisms no loop may adjust, and sets out the pattern they share, which is that each is fixed while the content it applies is set by someone outside the loops it constrains.
 
 ## Why this makes deferral safe
 

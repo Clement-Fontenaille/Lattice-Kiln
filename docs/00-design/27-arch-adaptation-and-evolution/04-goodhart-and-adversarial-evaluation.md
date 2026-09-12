@@ -40,7 +40,7 @@ Candidate changes should be compared against reproducible baselines whenever pos
 
 This prevents the system from silently redefining its own previous state or moving the measurement target during optimization.
 
-The same reasoning extends past benchmarks. If a baseline must be frozen so that measurement stays meaningful, the goals the measurement serves must be frozen for the same reason and more strongly — a system that can revise what it is for can satisfy any metric by redefinition. That generalization is the invariant layer, which holds goals and hard constraints outside the reach of every feedback loop rather than only outside the reach of a single comparison.
+The same reasoning extends past benchmarks. If a baseline must be frozen so that measurement stays meaningful, the goals the measurement serves must be frozen for the same reason and more strongly — a system that can revise what it is for can satisfy any metric by redefinition. That generalization is the invariant layer, which holds goals and inescapable constraints outside the reach of every feedback loop rather than only outside the reach of a single comparison.
 
 **What a frozen baseline does not freeze.** It fixes the task. It does not fix the knowledge the system reads while solving that task, and that record is a product of the system rather than something found: every artifact in it exists because some policy, some model and some configuration caused a crossing that produced it (`23-arch-context-management/02-context-as-experimental-surface.md`). So the same frozen suite, run by the same configuration against two different accumulated corpora, is not the same measurement.
 
