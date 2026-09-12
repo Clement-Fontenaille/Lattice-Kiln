@@ -52,10 +52,11 @@ document it concerns as an open contract, not parked here
 - **Re-analyse M4/M5 as paired comparisons before re-running anything.** The arms ran
   on a shared suite, so which tasks *flipped* between arms may be recoverable from data
   already collected. Paired analysis removes task-difficulty variance entirely and
-  discordant pairs carry far more signal than 6/8 against 5/8 — this is the cheapest
-  experimental improvement available and it needs no new runs. See
+  which scenarios flipped carries far more signal than 6/8 against 5/8, because it names
+  a condition rather than a magnitude — this is the cheapest experimental improvement
+  available and it needs no new runs. See
   [`27-arch-adaptation-and-evolution/05`](../27-arch-adaptation-and-evolution/05-experiments-and-candidate-systems.md),
-  What the numbers say.
+  Resolution before precision.
 - **M4/M5 re-test at larger N.** Depends on M8 (durable work records) and M9
   (non-naive assembler). Not a milestone; a task inside whichever lands.
 

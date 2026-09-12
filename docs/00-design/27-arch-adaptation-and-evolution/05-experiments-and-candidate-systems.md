@@ -32,21 +32,33 @@ The project should later establish practical repetition policies based on cost, 
 
 One consumer of that policy is already waiting on it. `23-arch-context-management/02-context-as-experimental-surface.md` declines to solve credit assignment — determining which artifacts contributed to a result — and relies on aggregate comparison instead. That bet is only good if repetition is sufficient to separate policies, so the repetition policy is not a refinement there but a precondition.
 
-## What the numbers say, roughly
+## Resolution before precision
 
-The gap is larger than "later" suggests, and the project's own findings are the evidence.
+There is a wrong way to reason about how much repetition is needed, and it is worth naming because it is the intuitive one.
 
-With a binary pass or fail per task and a suite of eight, the standard error around a pass rate of 0.7 is about 0.16 — roughly ±1.3 tasks. A one-task difference from a single run is therefore inside the noise, not a measurement. Milestone 4 reported 5/8 against 6/8 and Milestone 5 reported 7/8, 6/8 and 5/8. Those findings hedge correctly, but the reason is sharper than the hedging says: at one run of eight tasks, one task of difference is not a result.
+The wrong way treats an eight-task suite as eight samples of a single quantity, computes a pass rate, and asks how tightly that rate is estimated. Under that framing the answer is discouraging — separating two arms differing by ten points of pass rate would need something like forty repeats of the suite per arm, and halving the effect quadruples it. That arithmetic is correct and almost always irrelevant.
 
-Detecting a 0.10 absolute difference in pass rate at conventional power needs on the order of 350 task-runs per arm — about 44 repeats of an eight-task suite. Halving the effect to 0.05 quadruples it. The project currently runs one. The assumptions behind that arithmetic are also generous: it treats tasks as independent and equally hard, and they are neither.
+It is irrelevant because the tasks are not interchangeable draws. They are **distinct measurement points**, each a different scenario, and the average over them estimates a quantity that does not correspond to any situation the system will actually be in. This project's own positions say so directly: too much context is a relation and not a property (`10-foundations/04`), adequacy runs on a gradient indexed by model, task and budget (`23-arch-context-management/02-context-as-experimental-surface.md`), and what varies with an assembly's capability is where a boundary sits rather than a scalar score (`22-arch-cognition/08-decomposition.md`). If effects are conditional, averaging across heterogeneous conditions is the wrong operation before it is an imprecise one.
 
-Three consequences, and none of them is "run more and hope".
+**Resolution is how many distinguishable conditions an experiment can see. Precision is how tightly it pins one number.** Adding scenarios buys resolution. Repeating a scenario buys precision. For nearly every question this project asks, resolution is worth more — knowing that a policy wins on tasks needing cross-file knowledge and loses on tasks needing long single-file reasoning is more useful than knowing it wins by eight points on average, and it is also more actionable, because it names a condition rather than a magnitude.
 
-**Compare paired, not aggregate.** Running both arms on the same tasks with the same seeds removes task-to-task difficulty variance entirely, leaving only model stochasticity. The measurement then becomes which tasks *flipped* rather than which score was higher, and discordant pairs carry far more signal than a score difference. The existing arms already ran on a shared suite, so this may be recoverable from data already collected rather than requiring new runs — which would be the cheapest experimental improvement available to this project.
+**A suite already carries its own error information.** Grouped into clusters of similar scenarios, the consistency within a cluster is itself a reliability signal, and it costs no repetition. Three related tasks all flipping the same way at one run each is unlikely by chance and says something a tighter estimate of a mean would not. Consistency across related scenarios substitutes for repetition of one scenario, and is more informative per unit of compute.
 
-**Prefer graded objective outcomes over binary ones.** A pass/fail result discards information and inflates the N required. Calls-to-success, retries needed, or regression counts are graded, objective, and already produced — Milestone 5's adaptive-retry finding used exactly this kind of quantity. What they must not be is model-judged, for the reasons the judge-lab result gives.
+**What repetition is actually for.** Not tightening a mean, but classifying whether a given scenario is stable. Five runs distinguishes a task that passes five times out of five from one that passes three — the first is a usable measurement point, the second is noise-dominated and should be treated separately rather than folded into a total. Five is a reasonable default for that purpose. **One remains valid**, particularly on a well-resolved suite, and is the right starting point rather than a compromise.
 
-**Accept that only large effects are visible, and aim at large effects.** This bounds what the experimental framework can be used for. It can answer whether retrieval helps at all; it cannot rank two nearby parameter settings. Fine-grained tuning is out of reach at this scale and attempting it produces noise dressed as evidence.
+Many repeats are right in one case: measuring a precisely specified effect inside an exactly defined frame. That is a rare situation and should be recognised as the exception rather than the standard to which ordinary experiments are held.
+
+Two practices follow that do not depend on any of this arithmetic.
+
+**Compare paired, not aggregate.** Running both arms on the same tasks with the same seeds removes task-difficulty variance entirely, and the measurement becomes which scenarios *flipped* rather than which total was higher. This is the resolution view applied to comparison, and it is where the interesting information was all along. Milestone 4 and Milestone 5 reported totals — 5/8 against 6/8, then 7/8, 6/8 and 5/8 — while running their arms on a shared suite, so the per-scenario pattern may be recoverable from data already collected. That would be the cheapest experimental improvement available here, and it needs no new runs.
+
+**Prefer graded objective outcomes over binary ones.** A pass or fail discards information about how a scenario went. Calls-to-success, retries needed, or regression counts are graded, objective, and already produced — Milestone 5's adaptive-retry finding used exactly that kind of quantity. What they must not be is model-judged, for the reasons the judge-lab result gives.
+
+## What follows for spending
+
+Given a fixed budget, add scenarios before adding repeats.
+
+A new scenario can reveal a condition under which the answer changes. A repeat of an existing one can only make an answer already in hand slightly less noisy. The first can surprise; the second cannot.
 
 ## Open question
 

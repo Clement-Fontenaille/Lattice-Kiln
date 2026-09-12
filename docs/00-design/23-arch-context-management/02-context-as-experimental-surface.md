@@ -76,7 +76,9 @@ An earlier draft chose the pool snapshot, on the grounds that the composition is
 
 **How the two combine.** A weighted sum of two similarity scores, with the weight as the swept parameter, is the recommendation — not because it is the best combiner but because the two single-signal arms are its endpoints. Weight zero and weight one give the ablation from the same mechanism rather than from two separate implementations, so there is one thing to build and nothing to keep in sync. Concatenation hides an equal weighting with no knob; two-stage retrieve-then-rerank is a different experiment worth running later.
 
-**But the sweep is not evaluable by task outcome.** `27-arch-adaptation-and-evolution/05-experiments-and-candidate-systems.md` sets out the arithmetic: at this project's suite sizes, separating two policies differing by a few points of pass rate needs tens of suite-repeats per arm, and ranking nearby parameter values is further out of reach still. So the three ablation arms — which are far apart by construction — are the part the outcome measure can speak to. Intermediate weights are not, and should be judged by the proximal signal below or left alone. Sweeping a parameter whose differences the measurement cannot resolve produces noise with the shape of evidence.
+**The ablation arms and the sweep are not equally measurable, and the difference is in kind.** The three arms differ categorically — one uses artifact similarity, one situation similarity, one both — so they should produce visibly different *patterns* of which scenarios succeed, which is what a paired per-scenario comparison reads (`27-arch-adaptation-and-evolution/05-experiments-and-candidate-systems.md`, Resolution before precision). Intermediate weight values differ only in degree, so they show up nowhere except in an aggregate, and an aggregate over heterogeneous scenarios is the quantity that experiment section argues against relying on.
+
+So run the three arms and read them per scenario. Treat the weight as something to set from what those arms reveal, not as a parameter to sweep for an optimum — a sweep over a quantity only visible in an average is how noise acquires the shape of evidence.
 
 **What is on the query side, because the pairing is less symmetric than it looks.** At retrieval time the current context is available and can be matched against a stored production context — that is the situation analogy. But nothing on the query side corresponds to artifact *content*, since the artifact is what is being looked for; what plays that role is the task or objective text. So the two signals being combined are two different retrieval modes against two different indexed fields, not two representations of one thing. Saying this plainly matters, because it means the weight is trading off between modes rather than blending views.
 
@@ -112,7 +114,11 @@ Every selection is an experimental decision and has to be recorded as one: the c
 
 Determining which artifacts actually contributed to a result is credit assignment, and it is hard. With small task suites and noisy outcomes it cannot be done cleanly per selection.
 
-The position taken is to **not solve it explicitly** and to rely on aggregate comparison instead: run policies against each other and let the difference show statistically rather than tracing which artifact earned which success. That is a deliberate bet, and its cost should be stated plainly — it needs enough runs for the difference to clear the noise, and this project's suites are small. If aggregate comparison turns out not to separate policies at the N available, attribution comes back as a problem rather than staying elided.
+The position taken is to **not solve it explicitly** and to compare policies against each other instead, letting the difference show rather than tracing which artifact earned which success.
+
+What that comparison should be is per scenario rather than aggregate, for the reason `27-arch-adaptation-and-evolution/05-experiments-and-candidate-systems.md` gives: a suite is a set of distinct measurement points, not samples of one quantity, and averaging across conditions this project's own theory says are heterogeneous estimates something that refers to nothing. Which scenarios flip between two policies is both cheaper to obtain and more useful than a score difference, since it names a condition rather than a magnitude.
+
+The bet still has a cost worth stating. It buys no account of *why* a policy won a scenario — only that it did. Where that becomes limiting, the proximal signal below is the cheaper substitute for attribution rather than attribution itself, and nothing here promises it is sufficient.
 
 ## The naive baseline is a permanent arm
 
@@ -140,7 +146,7 @@ How scope is concretely inscribed, since the data format depends on it and nothi
 
 What the entry step should be, given that initial selection and topology are separate problems and only the first is open.
 
-Whether aggregate comparison separates policies at the N this project can actually run — the assumption the attribution stance rests on.
+Whether per-scenario comparison is stable enough to read at one run per arm, or how few repeats are needed to tell a genuinely flipped scenario from a flaky one. `27-arch-adaptation-and-evolution/05` suggests five as the figure for classifying stability and holds that one is valid; neither number is grounded in anything this project has measured.
 
 What the literature already holds on recall under prefix persistence. This project should inherit results rather than rediscover them, and the reading has not been done.
 
