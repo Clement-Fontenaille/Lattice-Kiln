@@ -49,6 +49,13 @@ document it concerns as an open contract, not parked here
   as the framework that measures M8's corpus sweep (E6). This does not resolve
   whether M9 is also needed earlier as a prerequisite for M7's front half — that
   is M7's own open scope decision (P1 step 1), independent of this ordering.
+- **Re-analyse M4/M5 as paired comparisons before re-running anything.** The arms ran
+  on a shared suite, so which tasks *flipped* between arms may be recoverable from data
+  already collected. Paired analysis removes task-difficulty variance entirely and
+  discordant pairs carry far more signal than 6/8 against 5/8 — this is the cheapest
+  experimental improvement available and it needs no new runs. See
+  [`27-arch-adaptation-and-evolution/05`](../27-arch-adaptation-and-evolution/05-experiments-and-candidate-systems.md),
+  What the numbers say.
 - **M4/M5 re-test at larger N.** Depends on M8 (durable work records) and M9
   (non-naive assembler). Not a milestone; a task inside whichever lands.
 
