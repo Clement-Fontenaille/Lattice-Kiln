@@ -126,7 +126,7 @@ Two honest limits. That containment rule is stated here and enforced nowhere yet
 
 ### Who may modify a task's scope
 
-Three parties, and the third is the answer to a question the rest of this section keeps circling.
+Three parties may, and they touch different parts of it — the ceiling, and what sits under it.
 
 **The operator**, without bound, because they are the source. Scope descends from intent and intent is amended out of band (`10-technical/01-effect-vocabulary.md` type 4).
 
