@@ -34,6 +34,10 @@ The loop asks one generic question — whether the system's self-tuning produces
 
 The chain terminates on something not self-tuned. Frozen baselines and the invariant layer sit outside every loop being judged, which is what prevents the tower from quietly moving its own goalposts.
 
+That termination is less complete than it reads, and the gap should be visible here rather than only where it was found. A frozen baseline fixes the task; it does not fix the accumulated record the system consults while performing it, and that record is an output of the system (`04-goodhart-and-adversarial-evaluation.md`, What a frozen baseline does not freeze). The invariant layer is genuinely outside every loop. The evidence this level reads is not, and no anchor currently available makes it so. What is available is knowing which lineage produced it, which `26-arch-observability` records.
+
+This bears directly on one of the questions above. "Whether candidate improvements transfer to independent instances" is precisely the transfer measurement `23-arch-context-management/02-context-as-experimental-surface.md` defines — a policy evaluated on a corpus it did not shape. That is the sharpest tool this level has, because it is the one comparison whose result is not underwritten by the conditions being audited.
+
 And this level is distinct from the others in scope and evidence requirements rather than necessarily in which processor performs it. The separation belongs to invocation, not to agent identity.
 
 ## Open question

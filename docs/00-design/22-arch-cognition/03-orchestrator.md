@@ -64,3 +64,13 @@ Milestone 5 adds: how should the orchestrator's stopping rules tell a principled
 stop (objective met; task refused on inspection) from an unprincipled one (stuck;
 budget hit), and does that distinction need to be a first-class terminal state
 rather than left to free-text rationale?
+
+The second half of that is now answered and the first is not, which is worth
+separating. **Yes, it is a first-class terminal state**, and it lives in
+`28-arch-work-record` as a recorded conclusion keeping *answered*, *blocked* and
+*declined* distinct — Milestone 5's own collapse of "false premise" into a generic
+`blocked` is the evidence that free-text rationale does not survive the question.
+How an orchestrator should actually reach that verdict remains open, and it is
+probably not architecture's to settle: whether an instance inspects its objective
+at all is that instance's strategy (`10-foundations/04`, On ownership). What the
+architecture owes is that the verdict be recordable once reached, which it now is.

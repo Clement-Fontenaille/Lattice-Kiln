@@ -42,6 +42,10 @@ This prevents the system from silently redefining its own previous state or movi
 
 The same reasoning extends past benchmarks. If a baseline must be frozen so that measurement stays meaningful, the goals the measurement serves must be frozen for the same reason and more strongly — a system that can revise what it is for can satisfy any metric by redefinition. That generalization is the invariant layer, which holds goals and hard constraints outside the reach of every feedback loop rather than only outside the reach of a single comparison.
 
+**What a frozen baseline does not freeze.** It fixes the task. It does not fix the knowledge the system reads while solving that task, and that record is a product of the system rather than something found: every artifact in it exists because some policy, some model and some configuration caused a crossing that produced it (`23-arch-context-management/02-context-as-experimental-surface.md`). So the same frozen suite, run by the same configuration against two different accumulated corpora, is not the same measurement.
+
+This does not defeat frozen baselines. It bounds what they establish, and the remedy is the one `10-foundations/03` already prescribes for a single claim under the name Scope: record the conditions as they accumulate rather than reconstruct them afterwards, which `26-arch-observability` now does. A comparison then at least knows which lineage it is reading, even when it cannot neutralise it.
+
 ## Open question
 
 There will never be a perfect metric for developer value. The goal is therefore not to eliminate Goodhart risk but to make misalignment observable, contestable, and difficult to hide.
