@@ -237,14 +237,27 @@ reversible extent at the end of a task and questioning an irreversible change be
 it happens; and it needs a dedicated processor, since comparing a natural-language
 mandate against a diff is a judgment no deterministic check performs.
 
-Two notes on that, both bearing on this document's own constraints. A **stated**
-scope is not an inferred intent — the prohibition above is against predicting what a
-person would have wanted, and a declaration written by whoever asked for the work is
-a record to check against, so the judgment sits in the comparison rather than in
-guessing. And the processor is a fixed role rather than a commissioned one, held
-with the invariant layer for the reason given there: a loop cannot commission its own
-watcher, so it cannot be trusted to keep one either
-(`25-arch-invariant-layer`).
+Two notes on that, both bearing on this document's own constraints.
+
+**A scope is usually derived rather than stated, and that is still not the inference
+this document forbids.** An operator rarely writes a boundary down; a request to add
+an output format to a CLI tool carries one anyway, reaching the interface
+specification and its functional tests but not the web API documentation. What is
+prohibited above is inference about a *person* — predicting what they would have
+wanted, which is unbounded and unfalsifiable. Deriving what a task reaches, from the
+task and the arrangement of the system, is inference about artifacts: checkable by
+anyone who knows the codebase, and capable of being shown wrong. Where the operator
+does indicate a boundary, that indication governs the derived one.
+
+It follows that a derived scope has to be recorded *with what it was derived from*,
+and this is the two-mode instruction above rather than an addition to it: where the
+system must decide, it yields with the reasoning that would let the decision be
+overturned. A boundary derived and never shown is not checked, it is ratified — and
+the audit then measures the work against a mandate that was already too wide.
+
+**The processor is a fixed role rather than a commissioned one**, held with the
+invariant layer for the reason given there: a loop cannot commission its own watcher,
+so it cannot be trusted to keep one either (`25-arch-invariant-layer`).
 
 The minimal statement, for whoever implements it: **generated content must not
 silently occupy the place of authored content.** The system should know the

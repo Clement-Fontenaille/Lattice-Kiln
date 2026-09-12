@@ -72,7 +72,15 @@ What would have to exist, stated as shape rather than mechanism: a **declared sc
 
 **Scope is a task-level property, expressed in natural language.** It cannot be fixed per role, because the same role does differently-bounded work from one task to the next, and it cannot be enumerated in advance, because what a change is allowed to reach is a statement about this piece of work. The artifacts where the boundary matters most are the ones where drift is cheapest and least visible: specification documents, technical documentation, internal APIs.
 
-That natural-language form does not conflict with `10-foundations/07`'s requirement that this become "checkable properties of artifacts and effects, never an inference about intent", and the distinction is worth stating because it is easy to lose. **A stated scope is not an inferred intent.** What `07` forbids is predicting what a person would have wanted; a declared scope was written down by whoever asked for the work, so comparing against it is checking against a record. The judgment lives in the comparison — does this diff fall inside that statement — not in guessing the person.
+**Most scopes are implicit and have to be derived.** An operator rarely states one. A request to add another output format to a CLI tool carries its boundary without anyone writing it down: the user-interface specification and the functional tests around it are in play, the web API documentation is not. Nothing said so; it follows from what the task is and how the system is arranged.
+
+Where the operator *does* indicate a boundary, that indication is carried into the derived scope and governs it. Explicit beats derived; the derivation fills what the operator left unsaid, which is nearly all of it.
+
+That derivation does not conflict with `10-foundations/07`'s requirement that this become "checkable properties of artifacts and effects, never an inference about intent", and the distinction is the whole of why this is workable. **What `07` forbids is inference about a person** — "do what the operator would have wanted" is a psychological prediction, unbounded and unfalsifiable. Deriving that a CLI output format reaches the CLI surface and not the web API docs is an inference about **the work and the structure of the system**. It is checkable by anyone who knows the codebase, it can be shown to be wrong, and it is about artifacts rather than about a mind.
+
+**A derived scope must be recorded and contestable, and this is not optional.** If the system derives a boundary and no one sees it, a wrong derivation does not get caught — it gets ratified, because the end-of-task audit then compares the work against a mandate that was already too wide. Drift becomes legitimate rather than visible, which is the exact failure the check exists to prevent, arriving one step earlier than expected.
+
+`10-foundations/07` already supplies the form this takes: where the system must decide, it yields "with the reasoning that would let the decision be overturned." A derived scope is such a decision, so what is recorded is the boundary *and* what it was derived from — which is what makes it something the operator can find false rather than something they can only accept.
 
 **The check divides on reversibility, and the two halves sit at opposite ends of a task.**
 
