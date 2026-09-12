@@ -1,0 +1,178 @@
+
+Sci-Hub Ξ
+sci
+bot
+Assistant de recherche propulsé par l'IA
+Connexion
+S'inscrire
+?
+Faire un don
+EN
+РУ
+FR
+中
+ع
+VI
+🌐
+Propulsé par Sci-Hub
+Je chercheQuel est l'état de l'art sur les méthodes de sélection de contexte pour les LLM et les agents, lorsque l'information disponible dépasse largement le budget de contexte du modèle ?
+
+Je cherche spécifiquement les méthodes de sélection, et non celles d'assemblage, de compression ou de mise en forme du contexte : comment déterminer quelles informations conserver parmi un ensemble beaucoup plus  à concevoir un gestionnaire de contexte pour un agent LLM, adossé à une base de connaissances en graphe représentant notamment questions, claims, arguments, conclusions, décisions, découvertes et leurs relations de provenance, justification, contradiction, dépendance, etc.
+
+Le gestionnaire doit construire, sous contrainte de budget, le sous-graphe à fournir au LLM. Je voudrais autant que possible éviter qu'un LLM soit lui-même chargé de décider quelles informations sélectionner.
+
+Quelles approches dans la littérature permettent de faire cette sélection de manière algorithmique, à partir de propriétés observables du graphe et du contexte : dépendances, chaînes de justification, provenance, couverture, redondance, diversité, temporalité, coût, structure du graphe, etc. ? Existe-t-il des formulations théoriques ou expérimentales permettant d'aller au-delà d'un simple score heuristique de pertinence des nœuds ?
+
+Je m'interroge notamment sur la frontière entre ce qui est réellement calculable et ce qui semble objectif mais réintroduit en réalité un jugement sémantique dépendant de la tâche — par exemple « pertinence décisionnelle », « information nécessaire » ou « information susceptible de changer la conclusion ».
+
+Enfin, les approches de retrieval progressif/adaptatif montrent-elles qu'un modèle relativement petit peut identifier de façon suffisamment fiable qu'il lui manque du contexte, permettant de construire celui-ci itérativement plutôt que de devoir le sélectionner entièrement a priori ?
+
+Je cherche surtout les travaux expérimentaux qui permettent de répondre à ces questions, et non une revue générale de GraphRAG.
+Afficher le processus de recherche ▾
+
+Excellent — j'ai maintenant lu 9 articles en profondeur. Voici une réponse synthétique et détaillée à votre question.
+État de l'art : Sélection algorithmique de contexte pour LLM et agents sous contrainte de budget
+1. Taxonomie des méthodes de sélection algorithmique de contexte
+
+La littérature distingue plusieurs grandes familles d'approches pour sélectionner le contexte à fournir à un LLM lorsque l'information disponible excède le budget de la fenêtre de contexte.
+a) Approches par re-ranking et filtrage par pertinence
+
+L'approche la plus courante consiste à utiliser un module de re-ranking neuronal (passage reranker) pour classer les éléments de contexte selon leur pertinence par rapport à une requête, puis à ne garder que les k premiers. Francis & Moens [1] montrent sur MS MARCO et NarrativeQA qu'un passage reranker basé sur un transformer (ALBERT) suivi d'un générateur (BART, RoBERTa) atteint la meilleure performance avec k = 3 passages. Au-delà de ce seuil, la performance sature, ce qui indique que l'ajout de passages supplémentaires n'apporte pas d'information utile mais introduit du bruit.
+
+Ces méthodes restent toutefois basées sur un score scalaire de similarité (cosinus ou dot product) entre requête et passage, sans exploiter les relations structurelles entre les éléments de contexte.
+b) Sélection multi-granularité avec fusion de scores
+
+You [2] propose une méthode non supervisée (MGur) qui combine deux granularités de sélection :
+
+    Niveau phrase : alignement non supervisé (VUA) pour la similarité sémantique globale.
+    Niveau passage : un mécanisme de score fusion (multiplication des scores BM25 et d'alignement), suivi d'un gated selection itératif qui sélectionne les passages complémentaires en mesurant l'apport informationnel de chaque nouveau passage par son score d'alignement agrégé avec le contexte déjà retenu.
+
+Ce mécanisme de gated selection (seuil θ sur l'amélioration du score d'alignement) constitue un exemple explicite de sélection algorithmique basée sur des propriétés observables (complémentarité informationnelle entre passages), sans recours à un LLM pour la décision. Les résultats montrent un gain de rapidité de 3× à 44× par rapport à AIR (baseline) et de meilleures performances QA.
+c) Compression de contexte guidée par la distribution thématique
+
+Guan, Liang & Zhang [4] abordent le problème du « lost-in-the-middle » (où les LLM peinent à utiliser l'information située au milieu d'un long contexte) via une méthode algorithmique FITD qui :
+
+    Applique un LDA (Latent Dirichlet Allocation) pour capturer la distribution des sujets importants dans le texte.
+    Génère des probabilités thématiques par chunk.
+    Utilise un Probability BERT (P-BERT) avec masquage pour compresser le prompt en ne conservant que les chunks les plus saillants thématiquement.
+
+Cette approche est purement algorithmique (basée sur des propriétés statistiques du texte) et n'utilise pas le LLM pour la sélection. FITD améliore la performance de Llama-2 de 5,6% en précision et de 18,93% en perplexité sur PubMedQA.
+d) Pruning dynamique de tokens avec attention spécifique à la tâche
+
+Ahmadpanah, Sobhanloo & Afsharfarnia [7] proposent TS-DTP (Task-Specific Dynamic Token Pruning) qui supprime des tokens à l'inférence en combinant :
+
+    Les poids d'attention standards du modèle.
+    Des poids d'attention spécifiques à la tâche (β), appris pendant le fine-tuning, qui pondèrent l'importance de chaque token selon la tâche aval (classification de sentiment, QA, traduction).
+
+Le seuil de pruning est dynamique (μ + k·σ des scores d'importance). Les résultats montrent une réduction de mémoire de 20-30% sans perte significative de précision.
+2. Méthodes exploitant la structure du graphe de connaissances
+
+Votre cas d'usage spécifique — un gestionnaire de contexte pour agent LLM adossé à un graphe de connaissances — trouve plusieurs réponses dans la littérature.
+a) Sélection de sous-graphe par arbre K-D et opérateurs logiques
+
+Phan & Do [5] proposent QUERY2TREE, qui indexe les entités d'un graphe de connaissances dans des arbres K-D (un par relation). Les opérateurs logiques (projection, intersection, union, négation) sont implémentés comme des opérations ensemblistes sur les voisins proches dans ces arbres :
+
+    Projection : k-NN dans l'arbre K-D de la relation, avec k = degré du nœud.
+    Intersection : intersection des ensembles de voisins.
+    Union : union des ensembles de voisins.
+    Négation : complément de l'ensemble de voisins dans l'arbre.
+
+La particularité est que le descriptif textuel des entités (embeddé par Gemma, un LLM) est combiné avec l'embedding structurel (GNN), ce qui permet une recherche enrichie sémantiquement. Cependant, ce sont les opérations structurelles (k-NN sur K-D tree) qui guident la sélection, pas le LLM lui-même. QUERY2TREE atteint jusqu'à 69,6% MRR sur FB15k, surpassant Query2Box, ConE et d'autres modèles d'état de l'art.
+b) Gestion de cycle de vie du contexte pour agents multi-étapes
+
+Liu et al. [6] proposent ContextCache, un framework de gestion de cache pour agents LLM qui :
+
+    Définit des Context Fragment Templates (CFT) structurant les connaissances en fragments modulaires.
+    Génère un plan de tâches avec cycle de vie du contexte (TPCL) sous forme de graphe AOV (Activity-on-Vertex) où chaque nœud de contexte a un état (Active/Evicted).
+    Implémente un cache dynamique qui alloue/libère la mémoire GPU selon les dépendances entre fragments.
+
+Le graphe AOV code explicitement les dépendances entre fragments de contexte et étapes de tâche. Les résultats montrent une réduction de 15% de l'utilisation mémoire par rapport à PromptCache.
+c) Hétérogénéité et pooling multi-niveaux
+
+Bukhari & Yan [8] (CAGNN-Sum) construisent un graphe hétérogène où les nœuds sont de types différents (phrases, entités nommées, sujets latents BERTopic). Un mécanisme de pooling multi-niveaux (ML-GAP) avec des gates conditionnées par l'entrée permet de sélectionner les phrases les plus pertinentes pour le résumé. Les gates apprennent à s'ouvrir quand le flux d'information (entités ou sujets) est fiable et à se fermer quand il ne l'est pas — un mécanisme purement algorithmique pour moduler la contribution des différentes sources d'information.
+3. Frontière entre calculable et jugement sémantique
+
+Votre question sur la frontière entre ce qui est réellement calculable algorithmiquement et ce qui réintroduit un jugement sémantique est cruciale.
+Ce qui est calculable algorithmiquement :
+
+    Similarité cosinus / dot product entre vecteurs d'embeddings (re-ranking) [1].
+    Score de fusion BM25 × alignement sémantique [2].
+    Distribution thématique LDA et saillance des termes [4].
+    k-NN dans des arbres K-D indexés par relation [5].
+    Degré des nœuds comme coefficient k pour le k-NN [5].
+    Graphe AOV et états de cycle de vie [6].
+    Seuils statistiques (μ + k·σ) pour le pruning [7].
+    Mécanismes de gating avec gradients [8].
+
+Ce qui réintroduit un jugement sémantique (même indirectement) :
+
+    Le calcul de similarité cosinus utilise des embeddings sémantiques qui intègrent implicitement des connaissances de la tâche.
+    La définition de « pertinence » pour le re-ranking dépend du signal de supervision (golden passages) qui encode un jugement humain sur ce qui est pertinent.
+    Le seuil d'itération θ dans MGur [2] (quand arrêter d'ajouter des passages) est un paramètre réglé sur un développement set.
+    L'utilisation de Gemma (LLM) pour l'embedding des descriptions textuelles dans QUERY2TREE [5] introduit un LLM dans la boucle d'embedding, même si la sélection reste structurelle.
+
+En pratique, toute sélection implique un modèle de ce qui est « important », et ce modèle contient inévitablement des biais liés à la tâche. Les approches les plus propres conceptuellement sont celles qui rendent ce modèle explicite et apprenable (mécanismes de gating [8], seuils adaptatifs [7]), plutôt que de masquer le jugement dans un « score de pertinence » opaque.
+4. Retrieval progressif/adaptatif et détection de besoin de contexte
+a) RAG adaptatif avec détection d'utilité
+
+Guan et al. [3] proposent une méthode Adaptive RAG où le LLM lui-même évalue si l'information récupérée est utile en comparant la probabilité conditionnelle de la question avec et sans le chunk de contexte. Si P(question | chunk) < P(question | pas de chunk), le LLM génère sans contexte. Les expériences sur 9 retrieveurs (BM25, SBERT, DPR, Contriever, etc.) et 4 datasets (TriviaQA, 2WikiMQA, HotpotQA, NarrativeQA) montrent que cette approche surpasse le RAG vanilla, particulièrement quand le retrieveur est faible.
+
+Limitation importante : cette approche utilise le LLM pour décider de l'utilité, ce que vous souhaitez éviter. Cependant, l'idée de comparer la probabilité conditionnelle est une méthode algorithmique de détection de besoin de contexte qui pourrait être implémentée avec un petit modèle.
+b) Génération abductive pour combler les lacunes
+
+Le papier sur l'inférence abductive dans les RAG (détection d'évidence incomplète, génération de prémisses manquantes, et validation par cohérence) [trouvé dans les résultats de recherche mais non lu en détail] montre une piste prometteuse : le modèle détecte qu'il lui manque de l'information et génère des prémisses explicatives.
+c) Vers un retrieval itératif avec petit modèle
+
+Les résultats de [2] (MGur) et [1] suggèrent qu'un modèle de scoring non-supervisé (VUA avec GloVe, score BM25, ou alignement cosinus) peut suffire pour guider la sélection itérative. Le mécanisme de gated selection de [2] est particulièrement pertinent : il itère tant que l'ajout d'un nouveau passage améliore significativement le score d'alignement agrégé, ce qui constitue une forme de détection de complétude informationnelle sans utiliser de LLM.
+
+Cependant, je n'ai pas trouvé dans les articles lus de démonstration explicite qu'un petit modèle (paramétré) peut identifier de façon fiable qu'il lui manque du contexte. Les approches existantes utilisent soit :
+
+    Des métriques heuristiques (amélioration du score d'alignement) [2].
+    Le LLM lui-même pour juger de l'utilité [3].
+    Des LLM pour générer des prémisses manquantes (approche abductive).
+
+La question de savoir si un modèle de type BERT-Small ou DistilBERT peut détecter de manière fiable l'insuffisance de contexte reste ouverte dans la littérature que j'ai consultée.
+5. Recommandations pour votre gestionnaire de contexte
+
+Pour votre cas spécifique (gestionnaire de contexte pour agent LLM avec base de connaissances en graphe), les éléments suivants émergent de l'état de l'art :
+Propriété du graphe 	Méthode algorithmique applicable 	Référence
+Dépendances entre nœuds 	Graphe AOV avec cycle de vie (ContextCache) 	[6]
+Chaînes de justification / provenance 	Projection sur K-D tree + k-NN 	[5]
+Couverture / diversité 	Gated selection avec seuil d'amélioration 	[2]
+Redondance 	Score fusion BM25 × alignement 	[2]
+Temporalité 	À intégrer via des embeddings temporels (mentionné comme future direction) 	[5]
+Coût (budget tokens) 	k-NN avec k = degré du nœud + pruning adaptatif 	[5,7]
+Structure du graphe 	Pooling multi-niveaux avec gates conditionnées 	[8]
+Distribution thématique 	LDA + masquage (FITD) 	[4]
+
+Une architecture possible pour votre gestionnaire :
+
+    Phase 1 — Indexation : Indexer les entités/nœuds de votre graphe dans des arbres K-D par type de relation (inspiré de [5]).
+    Phase 2 — Sélection initiale : Utiliser un re-ranking non-supervisé (VUA + BM25 fusion) pour identifier les nœuds pertinents initialement ( [2]).
+    Phase 3 — Extension itérative : Appliquer un gated selection qui ajoute les voisins dans le graphe tant que le score d'alignement agrégé s'améliore au-delà d'un seuil ( [2]).
+    Phase 4 — Gestion du budget : Utiliser des seuils adaptatifs (μ + k·σ) pour le pruning des tokens ( [7]) ou la libération de contexte selon le cycle de vie ( [6]).
+    Phase 5 — Validation : Optionnellement, utiliser un petit modèle (ex: DistilBERT) pour comparer la probabilité de la question avec le contexte sélectionné vs. sans contexte (inspiré de [3]).
+
+Références
+[1]S. Francis et M.-F. Moens, « Investigating better context representations for generative question answering », Information Retrieval Journal, vol. 26, nᵒ 1‑2, oct. 2023
+DOI: 10.1007/s10791-023-09420-7
+[2]H. You, « Multi-grained unsupervised evidence retrieval for question answering », Neural Computing and Applications, vol. 35, nᵒ 28, p. 21247‑21257, août 2023
+DOI: 10.1007/s00521-023-08892-4
+[3]W. Guan, J. Lu, Q. Feng, X. Li et J. Zhou, « External Knowledge Is Not Always Needed: An Adaptive Retrieval Augmented Generation Method », in 2024 4th International Symposium on Artificial Intelligence and Intelligent Manufacturing (AIIM), IEEE, déc. 2024, p. 882‑886
+DOI: 10.1109/aiim64537.2024.10934284
+[4]Z. Guan, X. Liang et S. Zhang, « Found In The Distribution: Utilizing Latent Dirichlet Allocation Improves Long Context Comprehension of Large Language Models », in ICASSP 2025, IEEE, avr. 2025, p. 1‑5
+DOI: 10.1109/icassp49660.2025.10890215
+[5]T. H. V. Phan et P. Do, « QUERY2TREE: a reasoning model for answering logical queries based on knowledge graph embedding and large language model », Knowledge and Information Systems, vol. 67, nᵒ 6, p. 5271‑5300, mars 2025
+DOI: 10.1007/s10115-025-02347-z
+[6]T. Liu, P. Guo, D. Feng et P. Wang, « ContextCache: Task-Aware Lifecycle Management for Memory-Efficient LLM Agent Deployment », in 2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), IEEE, oct. 2025, p. 11271‑11276
+DOI: 10.1109/iros60139.2025.11247595
+[7]S. H. Ahmadpanah, S. Sobhanloo et P. Afsharfarnia, « Dynamic token pruning for LLMs: leveraging task-specific attention and adaptive thresholds », Knowledge and Information Systems, vol. 67, nᵒ 9, p. 7431‑7450, mai 2025
+DOI: 10.1007/s10115-025-02450-1
+[8]S. W. A. Bukhari et Y. Yan, « Context-aware heterogeneous graph neural networks with attention-based pooling for long-document summarization », Knowledge and Information Systems, vol. 68, nᵒ 1, juin 2026
+DOI: 10.1007/s10115-026-02809-y
+↺
+nouveau
+♥
+Faire un don
+177 816 jetons, 3m 33s
+zQ7∫Ρ≠λLηCΔψqcZβjMβsw8ΙlΞΞ7WEyΠJ∂H7x≤MDλ8ΓNΓν1V≥VPΟRυeGOΤ4ΓσιΡωr∇hPΤ

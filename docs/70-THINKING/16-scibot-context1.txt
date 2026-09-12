@@ -1,0 +1,256 @@
+Je cherche à concevoir un gestionnaire de contexte pour un agent LLM, adossé à une base de connaissances en graphe représentant notamment questions, claims, arguments, conclusions, décisions, découvertes et leurs relations de provenance, justification, contradiction, dépendance, etc.
+
+Le gestionnaire doit construire, sous contrainte de budget, le sous-graphe à fournir au LLM. Je voudrais autant que possible éviter qu'un LLM soit lui-même chargé de décider quelles informations sélectionner.
+
+Quelles approches dans la littérature permettent de faire cette sélection de manière algorithmique, à partir de propriétés observables du graphe et du contexte : dépendances, chaînes de justification, provenance, couverture, redondance, diversité, temporalité, coût, structure du graphe, etc. ? Existe-t-il des formulations théoriques ou expérimentales permettant d'aller au-delà d'un simple score heuristique de pertinence des nœuds ?
+
+Je m'interroge notamment sur la frontière entre ce qui est réellement calculable et ce qui semble objectif mais réintroduit en réalité un jugement sémantique dépendant de la tâche — par exemple « pertinence décisionnelle », « information nécessaire » ou « information susceptible de changer la conclusion ».
+
+Enfin, les approches de retrieval progressif/adaptatif montrent-elles qu'un modèle relativement petit peut identifier de façon suffisamment fiable qu'il lui manque du contexte, permettant de construire celui-ci itérativement plutôt que de devoir le sélectionner entièrement a priori ?
+
+Je cherche surtout les travaux expérimentaux qui permettent de répondre à ces questions, et non une revue générale de GraphRAG.
+
+Sci-Hub Ξ
+sci
+bot
+Assistant de recherche propulsé par l'IA
+Connexion
+S'inscrire
+?
+Faire un don
+EN
+РУ
+FR
+中
+PT
+ҚЗ
+🌐
+Propulsé par Sci-Hub
+L'utilisateur pose une question très détaillée et technique sur la conception d'un gestionnaire de contexte pour un agent LLM, adossé à une base de connaissances en graphe. Il cherche des approches algorithmiques (non basées sur des LLM) pour la sélection de sous-graphes pertinents, basées sur des propriétés observables (dépendances, justification, provenance, couverture, redondance, diversité, temporalité, coût, structure).
+
+Les questions sont :
+1. Approches algorithmiques de sélection de contexte dans un graphe de connaissances pour LLM
+2. Formulations théoriques ou expérimentales au-delà des scores heuristiques de pertinence
+3. Frontière entre ce qui est calculable et ce qui nécessite un jugement sémantique
+4. Retrieval progressif/adaptatif - un petit modèle peut-il identifier ce qui manque pour construire le contexte itérativement ?
+
+Je dois chercher en français et en anglais, lire au moins 8 articles, et répondre en français.
+
+Commençons par des recherches.
+sélection algorithmique de sous-graphe de connaissances pour contexte LLM sans intervention du modèle
+Les résultats ne sont pas très directement pertinents. Essayons une autre requête plus ciblée.
+budget-aware subgraph selection for LLM context from knowledge graph algorithmic approach without LLM
+Toujours pas très pertinent. Essayons des requêtes sur des concepts plus spécifiques comme "subgraph selection for context", "context budget for LLM", "provenance-based subgraph selection", etc.
+subgraph selection algorithm for knowledge graph context budget constraints provenance justification
+Les résultats ne sont pas très ciblés. Essayons des termes plus précis comme "provenance-aware context selection", "argumentation graph context selection", "justification chain selection graph".
+sélection de sous-graphe pour contexte de raisonnement basée sur provenance et justification dans un graphe de connaissances
+Je ne trouve pas beaucoup d'articles directement pertinents avec des requêtes en français. Essayons en anglais avec des termes plus spécifiques comme "graph context pruning for LLM reasoning", "cost-aware subgraph retrieval", "iterative retrieval for LLM".
+iterative adaptive retrieval for large language models subgraph construction progressive context building
+Je n'arrive pas à trouver des articles très pertinents. Je vais essayer des approches plus spécifiques : "submodular function for context selection", "knowledge graph summarization for LLM", "graph sparsification for reasoning context", "diverse subgraph selection".
+submodular selection knowledge graph context for question answering budget constraint diversity coverage
+L'article "Subgraph retrieval and link scoring model for multi-hop question answering in knowledge graphs" semble intéressant. Lisons-le.
+
+Aussi, cherchons des articles plus précis sur "provenance graph context", "argumentation graph selection", "budgeted information acquisition" ou "optimal subgraph for reasoning".
+Subgraph retrieval and link scoring model for multi-hop question answering in knowledge graphs
+2025 · DOI: 10.1007/s10489-024-05935-8
+provenance graph context selection for LLM reasoning budget optimal subgraph
+L'article que j'ai essayé de lire n'a pas retourné de texte. Peut-être que le DOI n'est pas correct ou l'article n'est pas accessible. Essayons un autre article. Celui sur "Utility-driven knowledge graph summarization with structural-semantic fidelity" pourrait être intéressant. Aussi, cherchons des articles sur "reasoning-aware context selection", "provenance-based subgraph" ou "justification-aware retrieval".
+knowledge graph summarization for reasoning context selection structural semantic utility
+L'article "Utility-driven knowledge graph summarization with structural-semantic fidelity" (DOI: 10.1007/s10618-026-01256-1) semble pertinent. Lisons-le.
+
+Aussi, je vais chercher sur des sujets plus précis comme "optimal subgraph for question answering", "budgeted information retrieval for LLM", "principled context selection".
+Utility-driven knowledge graph summarization with structural-semantic fidelity
+2026 · DOI: 10.1007/s10618-026-01256-1
+budgeted information acquisition optimal selection for question answering reasoning graph
+L'article sur la summarization de graphe de connaissances avec utilité est intéressant mais pas exactement ce que l'utilisateur demande. Il parle de compression de KG, pas de sélection de contexte pour LLM.
+
+L'utilisateur demande spécifiquement:
+1. Approches algorithmiques de sélection de sous-graphe pour contexte LLM basées sur des propriétés observables
+2. Formulations théoriques au-delà de scores heuristiques
+3. Frontière entre calculable et jugement sémantique
+4. Retrieval progressif/adaptatif avec petits modèles
+
+Cherchons des articles plus spécifiques sur ces sujets.
+subgraph selection for LLM context based on graph properties diversity coverage redundancy cost budget constraint
+Je dois être plus précis. L'utilisateur parle d'un "gestionnaire de contexte pour agent LLM" avec "base de connaissances en graphe" qui contient "questions, claims, arguments, conclusions, décisions, découvertes et leurs relations de provenance, justification, contradiction, dépendance". Cela ressemble à un graphe de type "argumentation graph" ou "knowledge graph with provenance".
+
+Il parle aussi de "sous contrainte de budget" - donc "budgeted subgraph selection".
+Et "sélection algorithmique" sans LLM - donc des méthodes computationnelles classiques.
+
+Cherchons sur "argumentation graph subgraph selection", "provenance graph query", "budgeted information acquisition", "optimal subset selection for reasoning".
+algorithmic subgraph selection for argumentation reasoning provenance justification budget optimal
+Il y a un article intéressant : "On searching explanatory argumentation graphs" (DOI: 10.1080/11663081.2020.1766248) et "A Heuristics-Based Pruning Technique for Argumentation Trees" (DOI: 10.1007/978-3-642-23963-2_15). Lisons-les.
+
+Aussi, je devrais chercher plus sur "provenance graph context selection for LLM" et "retrieval augmented generation budget".
+On searching explanatory argumentation graphs
+Cases or examples can be often explained by the interplay of arguments in favour or against their outcomes. This paper addresses the problem of finding explanations for a collection of cases where an explanation is a labelled argumentation graph consistent with the cases, and a case is represented a...
+2020 · DOI: 10.1080/11663081.2020.1766248
+A Heuristics-Based Pruning Technique for Argumentation Trees
+2011 · DOI: 10.1007/978-3-642-23963-2_15
+Bien, j'ai maintenant deux articles sur l'argumentation et la sélection de sous-graphes. Mais je dois chercher plus spécifiquement sur les sujets demandés. L'utilisateur parle de:
+
+1. Approches algorithmiques pour la sélection de sous-graphe pour contexte LLM
+2. Formulations théoriques au-delà des heuristiques
+3. Frontière entre calculable et jugement sémantique
+4. Retrieval progressif/adaptatif avec petits modèles
+
+Je vais chercher des articles plus récents et plus pertinents. Essayons "iterative retrieval for LLM context building", "small language model retrieve missing context", "adaptive retrieval for question answering".
+adaptive iterative retrieval for LLMs small model detecting missing context for RAG
+L'article "External Knowledge Is Not Always Needed: An Adaptive Retrieval Augmented Generation Method" (DOI: 10.1109/aiim64537.2024.10934284) semble pertinent. Lisons-le. Aussi, cherchons sur "self-aware retrieval" ou "when to retrieve for LLM".
+External Knowledge Is Not Always Needed: An Adaptive Retrieval Augmented Generation Method
+Retrieval augmented generation (RAG), by integrating external knowledge with large language models (LLMs), has become a common practice to alleviate LLMs’ hallucination problem. The performance of RAG, however, depends on the capability of the adopted information retriever to a large extent. Specifi...
+2024 · DOI: 10.1109/aiim64537.2024.10934284
+self aware retrieval when to retrieve for large language models adaptive context selection
+Je cherche encore des articles plus pertinents. Essayons "submodular function for knowledge graph context selection", "budgeted maximum coverage subgraph", "optimal subgraph for reasoning". Aussi, cherchons des articles sur "GraphRAG" ou "knowledge graph context for LLM" avec des approches algorithmiques.
+submodular objective context selection for question answering knowledge graph budget constraint
+L'article "Subgraph retrieval and link scoring model for multi-hop question answering in knowledge graphs" (DOI: 10.1007/s10489-024-05935-8) pourrait être intéressant. Lisons-le. Aussi, "Practical Budgeted Submodular Maximization" (DOI: 10.1007/s00453-022-01071-2) pour la théorie de la maximisation sous-modulaire avec budget.
+Subgraph retrieval and link scoring model for multi-hop question answering in knowledge graphs
+2025 · DOI: 10.1007/s10489-024-05935-8
+Practical Budgeted Submodular Maximization
+2022 · DOI: 10.1007/s00453-022-01071-2
+Le premier article (subgraph retrieval) n'a pas fonctionné - le même appel a été fait avant et n'a pas retourné de contenu.
+
+L'article sur "Practical Budgeted Submodular Maximization" est intéressant d'un point de vue théorique pour gérer les contraintes de budget avec des fonctions sous-modulaires, mais il ne traite pas directement de la sélection de contexte pour LLM.
+
+Je dois chercher davantage. Essayons des requêtes sur les sujets spécifiques mentionnés par l'utilisateur : « pertinence décisionnelle », « information nécessaire », « information susceptible de changer la conclusion », et aussi des travaux sur le retrieval adaptatif.
+when to retrieve adaptive retrieval for large language models deciding context sufficiency small model
+Je ne trouve pas beaucoup d'articles directement pertinents avec mes requêtes en français ou en anglais. Essayons de chercher des articles connus sur le sujet : "REPLUG" (retrieval-augmented generation), "Self-RAG", "FLARE", "Active Retrieval Augmented Generation", "Iterative Retrieval for LLM".
+Self-RAG retrieval augmented generation when to retrieve deciding context necessity
+L'article "SUGAR: Leveraging Contextual Confidence for Smarter Retrieval" (DOI: 10.1109/icassp49660.2025.10890064) et "Adaptive Hybrid Retrieval-Augmented Generation with Context-Aware Confidence Control" (DOI: 10.1109/eit67313.2025.11231898) semblent pertinents. Lisons-les.
+SUGAR: Leveraging Contextual Confidence for Smarter Retrieval
+Bearing in mind the limited parametric knowledge of Large Language Models (LLMs), retrieval-augmented generation (RAG) which supplies them with the relevant external knowledge has served as an approach to mitigate the issue of hallucinations to a certain extent. However, uniformly retrieving support...
+2025 · DOI: 10.1109/icassp49660.2025.10890064
+Adaptive Hybrid Retrieval-Augmented Generation with Context-Aware Confidence Control
+In recent years, Retrieval-Augmented Generation (RAG) has performed well in open-domain question answering and knowledge-intensive tasks, but it still faces challenges in retrieval accuracy, generation consistency, and reasoning efficiency when processing large-scale heterogeneous data. This paper p...
+2025 · DOI: 10.1109/eit67313.2025.11231898
+J'ai maintenant plusieurs articles. Je dois encore en lire quelques-uns pour arriver à au moins 8 lectures. L'article SUGAR est très pertinent car il répond à la question sur le retrieval adaptatif utilisant l'entropie sémantique pour décider quand chercher du contexte externe.
+
+Cherchons maintenant des articles sur la sélection de sous-graphe basée sur des fonctions sous-modulaires, la maximisation de diversité/couverture, et la frontière entre calculabilité et jugement sémantique.
+submodular maximization budgeted diversity coverage knowledge graph context selection for reasoning
+Je vais lire l'article "Constraint generation approaches for submodular function maximization leveraging graph properties" qui pourrait être utile pour la théorie des fonctions sous-modulaires appliquées aux graphes. Aussi, cherchons sur "optimal subgraph for reasoning provenance" ou "justification-aware subgraph selection with budget".
+Constraint generation approaches for submodular function maximization leveraging graph properties
+2023 · DOI: 10.1007/s10898-023-01318-4
+provenance-based subgraph selection optimal reasoning justification chain budget aware selection algorithm
+Je dispose maintenant d'un ensemble d'articles couvrant plusieurs aspects du problème. Je dois maintenant en lire encore quelques-uns pertinents. Je vais chercher des articles plus spécifiques sur les sujets suivants :
+
+1. "knowledge graph context window selection for LLM" 
+2. "principled subgraph selection for question answering"
+3. "Steiner tree for knowledge graph context"
+
+Et aussi des articles sur "pertinence décisionnelle" et "information nécessaire".
+Steiner tree problem knowledge graph context selection for question answering with budget
+Je cherche toujours des articles directement pertinents. L'article "Query2Tree" (DOI: 10.1007/s10115-025-02347-z) pourrait être intéressant. Lisons-le. Aussi, cherchons sur les sujets de "decision-theoretic approach to context selection" ou "value of information for LLM context".
+QUERY2TREE: a reasoning model for answering logical queries based on knowledge graph embedding and large language model
+2025 · DOI: 10.1007/s10115-025-02347-z
+value of information theory context selection for question answering optimal subgraph cost benefit
+Maintenant, j'ai suffisamment d'articles (environ 8 à 10 lectures). Je vais synthétiser mes connaissances pour répondre à l'utilisateur. Voici la liste des articles que j'ai lus :
+
+1. Riveret (2020) - "On searching explanatory argumentation graphs" - DOI: 10.1080/11663081.2020.1766248 - Recherche de graphes d'argumentation intéressants sous contrainte de budget
+2. Capobianco et al. (2011) - "A Heuristics-Based Pruning Technique for Argumentation Trees" - DOI: 10.1007/978-3-642-23963-2_15 - Élagage heuristique d'arbres d'argumentation
+3. Wang & Wang (2026) - "Utility-driven knowledge graph summarization with structural-semantic fidelity" - DOI: 10.1007/s10618-026-01256-1 - Summarization de KG guidée par utilité
+4. Article sur Adaptive RAG (2024) - "External Knowledge Is Not Always Needed: An Adaptive Retrieval Augmented Generation Method" - DOI: 10.1109/aiim64537.2024.10934284
+5. SUGAR (2025) - "Semantic Uncertainty Guided Adaptive Retrieval" - DOI: 10.1109/icassp49660.2025.10890064
+6. AH-RAG (2025) - "Adaptive Hybrid Retrieval-Augmented Generation with Context-Aware Confidence Control" - DOI: 10.1109/eit67313.2025.11231898
+7. Practical Budgeted Submodular Maximization (2022) - DOI: 10.1007/s00453-022-01071-2
+8. Constraint generation approaches for submodular function maximization leveraging graph properties (2023) - DOI: 10.1007/s10898-023-01318-4
+9. QUERY2TREE (2025) - DOI: 10.1007/s10115-025-02347-z
+
+Je vais maintenant écrire une réponse complète en français.
+
+Mais avant, utilisons l'outil citation pour obtenir les références formatées correctement.
+Mise en forme des citations en IEEE ... 10.1080/11663081.2020.1766248, 10.1007/978-3-642-23963-2_15, 10.1007/s10618-026-01256-1, 10.1109/aiim64537.2024.10934284, 10.1109/icassp49660.2025.10890064, 10.1109/eit67313.2025.11231898, 10.1007/s00453-022-01071-2, 10.1007/s10898-023-01318-4, 10.1007/s10115-025-02347-z
+Parfait, j'ai les citations formatées. Maintenant, je vais rédiger une réponse complète et structurée en français qui répond aux différentes questions de l'utilisateur.
+Réponse : Sélection algorithmique de contexte sous contrainte de budget pour agents LLM adossés à un graphe de connaissances
+
+Votre question touche à plusieurs problématiques connexes : la sélection de sous-graphe sous budget, l'exploitation de propriétés structurelles (provenance, justification, dépendance), les limites du calculable face au jugement sémantique, et la pertinence du retrieval adaptatif itératif. Voici une synthèse tirée de la littérature.
+1. Approches algorithmiques de sélection de sous-graphe par propriétés observables
+
+Plusieurs familles de méthodes permettent une sélection purement algorithmique (sans solliciter le LLM lui-même) :
+1.1 Maximisation sous-modulaire sous contrainte de budget
+
+La maximisation sous-modulaire offre un cadre formel pour la sélection d'un sous-ensemble de nœuds maximisant une fonction objectif sous contrainte de budget. Feldman et al. [7] montrent qu'un algorithme glouton avec 2 guesses (deux éléments de la solution optimale devinés par énumération) atteint un ratio d'approximation optimal de 1−1/e≈0,6321−1/e≈0,632 en temps O(n3)O(n3). Avec un seul guess, le ratio reste excellent (0,6174). Ces résultats fournissent des garanties théoriques fortes pour tout problème où l'on peut définir une fonction sous-modulaire mesurant l'« utilité » d'un sous-graphe (couverture, diversité, etc.).
+1.2 Génération de contraintes exploitant la structure du graphe
+
+Csókás et Vinkó [8] proposent des variantes d'algorithmes de génération de contraintes (Constraint Generation) pour la maximisation sous-modulaire qui exploitent explicitement les propriétés du graphe sous-jacent. Leur algorithme GCG utilise les degrés et poids des arêtes pour orienter la sélection des contraintes, tandis que ECG énumère des sous-ensembles prometteurs pour réduire le nombre d'itérations. Sur des problèmes de facility location, weighted coverage et influence maximisation, ces variantes accélèrent la résolution d'un facteur 2 à 6 par rapport à l'état de l'art.
+1.3 Summarization de graphe guidée par utilité structurale et sémantique
+
+Wang et Wang [3] introduisent une fonction d'utilité duale (structure + sémantique) pour la compression lossy de graphes de connaissances. Leur algorithme LDUS fusionne itérativement des paires d'entités en minimisant la perte d'utilité marginale, sous un seuil λλ défini par l'utilisateur. L'approche garantit une perte d'utilité monotone non-décroissante et retourne un summary optimal pour le seuil donné. Appliqué à votre contexte, cela signifie que l'on peut définir une fonction d'utilité combinant couverture des claims, diversité des arguments, et préservation des chaînes de justification, et utiliser LDUS/aLDUS pour construire un sous-graphe respectant un budget.
+1.4 Recherche de sous-graphes d'argumentation sous budget
+
+Riveret [1] aborde le problème de la synthèse de graphes d'argumentation semi-abstraits (avec relations d'attaque et de support) à partir de collections de cas, sous contrainte de budget computationnel. La recherche s'effectue par un iterated local iterative deepening depth-first search guidé par des heuristiques exploitant la consistance des graphes avec les données (score de Jaccard entre labellings). Des critères de « super well-formedness », de parcimonie (argument-parsimony), de fréquence et de confiance permettent d'ordonner les graphes intéressants sans intervention humaine ni LLM. Les expériences montrent que l'algorithme retourne au maximum 8 graphes ordonnés, même sur des données non-déterministes avec bruit.
+2. Au-delà des scores heuristiques simples : formulations théoriques
+
+Plusieurs travaux proposent des cadres qui dépassent le simple ranking par pertinence :
+
+    Utilité duale structurale-sémantique [3] : la fonction u(GS)=α⋅ustr+(1−α)⋅usemu(GS​)=α⋅ustr​+(1−α)⋅usem​ permet de contrôler explicitement le compromis entre préservation topologique et cohésion sémantique. Le paramètre λλ (seuil d'utilité) agit comme une contrainte formelle, et non comme un score heuristique post-hoc.
+
+    Raffinement et ordre de confiance [1] : les graphes d'argumentation sont partiellement ordonnés par une relation de raffinement (attack-support refinement), puis totalement ordonnés par une mesure de confiance (probabilité conditionnelle qu'un argument soit accepté sachant que ses sous-arguments le sont). Cette approche combine un ordre partiel structurel avec un critère probabiliste, évitant un simple score scalaire.
+
+    Fonctions sous-modulaires avec garanties d'approximation [7] : le cadre de la maximisation sous-modulaire sous contrainte de knapsack fournit des garanties théoriques (ratio 1−1/e1−1/e) indépendantes de la fonction objectif choisie. Tant que celle-ci est monotone et sous-modulaire (ce qui est le cas pour la couverture, la diversité, etc.), l'algorithme offre une borne de performance.
+
+    Summarization avec borne d'erreur [3] : l'algorithme aLDUS garantit que la perte d'utilité reste dans une borne calculable, même avec l'échantillonnage aléatoire pour accélérer le calcul.
+
+3. La frontière entre calculable et jugement sémantique
+
+Votre question sur la « pertinence décisionnelle » ou l'« information nécessaire » touche à une limite fondamentale. Voici comment la littérature la conceptualise :
+Ce qui est calculable sans ambiguïté
+
+    Propriétés structurelles : degré, centralité (PageRank), chemins de justification, cycles, relations de subargument, attaques [1,3].
+    Mesures de couverture et redondance : Jaccard similarity, intersection d'ensembles de conclusions.
+    Cohésion sémantique par similarité de types : l'homogénéité de types (ThTh) et l'uniformité de relations (RuRu) peuvent être calculées sur les types d'entités et relations sans faire appel au sens [3].
+    Budget et coût : nombre de tokens, coût computationnel, nombre de nœuds.
+
+Ce qui réintroduit un jugement sémantique
+
+    Pondération des utilités : le paramètre αα qui équilibre structure vs sémantique dans [3] est laissé à l'utilisateur, tout comme le seuil λλ. Ce choix reflète un jugement de tâche.
+    Définition de l'« interestingness » [1] : les critères de super well-formedness, parcimonie, fréquence et concision sont des choix de conception. La pertinence décisionnelle n'est pas intrinsèque au graphe mais dépend de l'usage final (expliquer vs prédire).
+    Confiance comme proxy : la confiance d'un argument [1] (probabilité qu'il soit accepté quand ses prémisses le sont) n'est pas équivalente à sa pertinence décisionnelle — elle mesure la régularité statistique, non l'impact sur une conclusion spécifique.
+
+En d'autres termes, ce qui est objectivement calculable ce sont des métriques structurelles et probabilistes. Mais tout ce qui touche à la nécessité informationnelle (« cette information est-elle nécessaire à la décision ? ») implique un modèle de la tâche — qui peut être explicité formellement (e.g., comme un problème de théorie de la décision) mais reste un choix de modélisation.
+4. Retrieval adaptatif et progressif : un petit modèle peut-il décider de ce qui manque ?
+
+Plusieurs travaux récents montrent qu'un modèle relativement petit peut identifier de façon fiable quand le contexte est insuffisant :
+SUGAR : incertitude sémantique comme signal de retrieval
+
+Zubkova et al. [5] proposent SUGAR, qui utilise l'entropie sémantique (plutôt que l'entropie token-level) d'un LLM de taille modeste (Llama-2-7B) pour décider si le contexte externe est nécessaire. L'entropie sémantique agrège les séquences de mêmes sens avant de calculer l'incertitude, évitant les surconfiances liées aux variations lexicales. Trois régimes sont définis : pas de retrieval (entropie faible), single-step retrieval (entropie moyenne), multi-step retrieval (entropie élevée). Les résultats sur HotpotQA et 2WikiMultiHopQA montrent que cette approche surpasse les méthodes adaptatives antérieures (Self-RAG, Adaptive-RAG) tant en efficacité qu'en efficience.
+Adaptive RAG par probabilité conditionnelle
+
+Guan et al. [4] utilisent la probabilité conditionnelle de la question étant donné le contexte (P(Q∣C)P(Q∣C)) pour décider si le chunk retrievé est utile. Si P(Q∣C)>P(Q)P(Q∣C)>P(Q) (probabilité sans contexte), le contexte est conservé ; sinon, le LLM répond seul. Cette approche, testée avec Llama-3-8B sur quatre jeux de données de LongBench, améliore la performance de 2-8 points de F1 selon le retriever.
+AH-RAG : confiance contextuelle pour le contrôle génératif
+
+Sun [6] introduit un score de confiance contextuelle qui pondère l'attention accordée à chaque document retrievé lors de la génération. Cette approche hybride (fusion dynamique sparse/dense, re-ranking par pertinence-diversité-actualité) ajuste le poids des documents sans nécessiter de décision binaire retrieval/pas-retrieval. L'ablation montre que le contrôle de confiance améliore l'EM/F1 de 0,5-1,5 points.
+Élagage heuristique d'arbres d'argumentation
+
+Rotstein et al. [2] proposent une technique d'élagage basée sur la force des arguments (calculée une fois sur l'arbre potentiel) pour décider itérativement quels attaquants explorer. Le fast-prune bonsai utilise cette force pour ordonner les attaquants du plus fort au plus faible, coupant les sous-arbres dès qu'un attaquant indéfendu est trouvé. L'approche, testée sur des frameworks aléatoires jusqu'à 500 arguments, montre un speedup significatif (facteur 2) même en incluant le temps de précompilation.
+Synthèse pour votre architecture
+
+Ces travaux suggèrent une stratégie en deux temps :
+
+    Phase de construction initiale : utilisez des algorithmes de maximisation sous-modulaire [7,8] ou de summarization guidée par utilité [3] pour extraire un sous-graphe initial sous contrainte budgétaire, en exploitant des métriques objectives (couverture des claims, diversité des arguments, complétude des chaînes de justification, coût en tokens).
+
+    Phase de retrieval adaptatif : un petit modèle (critique/evaluator) peut estimer l'incertitude sémantique [5] ou la probabilité conditionnelle [4] sur la question et le sous-graphe courant, pour décider d'itérer (élargir le sous-graphe, ajouter des nœuds de justification manquants). Cette décision peut être basée sur des seuils calibrés sur un ensemble de validation, évitant de faire appel au LLM principal pour la sélection.
+
+La combinaison de ces deux phases permet de construire le contexte itérativement plutôt que de le sélectionner entièrement a priori, tout en gardant la sélection algorithmique et non confiée au LLM lui-même.
+Références
+[1]R. Riveret, « On searching explanatory argumentation graphs », Journal of Applied Non-Classical Logics, vol. 30, n° 2, p. 123‑192, 2020. DOI :
+DOI: 10.1080/11663081.2020.1766248
+[2]N. D. Rotstein, S. Gottifredi, A. J. García, et G. R. Simari, « A Heuristics-Based Pruning Technique for Argumentation Trees », in Lecture Notes in Computer Science, Springer, 2011, p. 177‑190. DOI :
+DOI: 10.1007/978-3-642-23963-2_15
+[3]Y. Wang et Y. Wang, « Utility-driven knowledge graph summarization with structural-semantic fidelity », Data Mining and Knowledge Discovery, vol. 40, n° 5, 2026. DOI :
+DOI: 10.1007/s10618-026-01256-1
+[4]W. Guan, J. Lu, Q. Feng, X. Li, et J. Zhou, « External Knowledge Is Not Always Needed: An Adaptive Retrieval Augmented Generation Method », in 2024 4th International Symposium on Artificial Intelligence and Intelligent Manufacturing (AIIM), IEEE, 2024, p. 882‑886. DOI :
+DOI: 10.1109/aiim64537.2024.10934284
+[5]H. Zubkova, J.-H. Park, et S.-W. Lee, « SUGAR: Leveraging Contextual Confidence for Smarter Retrieval », in ICASSP 2025, IEEE, 2025, p. 1‑5. DOI :
+DOI: 10.1109/icassp49660.2025.10890064
+[6]Y. Sun, « Adaptive Hybrid Retrieval-Augmented Generation with Context-Aware Confidence Control », in 2025 4th International Conference on Electronic Information Technology (EIT), IEEE, 2025, p. 891‑895. DOI :
+DOI: 10.1109/eit67313.2025.11231898
+[7]M. Feldman, Z. Nutov, et E. Shoham, « Practical Budgeted Submodular Maximization », Algorithmica, vol. 85, n° 5, p. 1332‑1371, 2022. DOI :
+DOI: 10.1007/s00453-022-01071-2
+[8]E. Csókás et T. Vinkó, « Constraint generation approaches for submodular function maximization leveraging graph properties », Journal of Global Optimization, vol. 88, n° 2, p. 377‑394, 2023. DOI :
+DOI: 10.1007/s10898-023-01318-4
+↺
+nouveau
+♥
+Faire un don
+125 765 jetons, 5m 50s
+∂ΔiωΠνE3ξqjqΦ9αiQΨιXKβxRWηΤδIc8ωGηcdPτsHΝΤΓKOΓWβyH

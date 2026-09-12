@@ -82,11 +82,23 @@ What does transfer is the collapse mode. When the judge is overconfident and ret
 
 Both readings are second-hand (`03`): they come from this project's own analysis sheet about that paper, not from the paper.
 
+## Forgetting has a second half, not addressed here
+
+Everything above concerns the transition **from discussion into memory**: what an episode leaves behind. That is one of two questions and it is the one this document answers.
+
+The other is retention **within** memory. What has been remembered does not stop accumulating simply because it was worth remembering once, and the project's textual content cannot grow without bound. Hierarchy and provenance exist to make important material findable, not to make unbounded growth acceptable — those are different problems and the first does not solve the second.
+
+This is named rather than addressed. Nothing here says what ages, what is re-compressed, what is retired, or what would trigger any of it. It should be settled before the remembered set is large enough for the question to be urgent, which it is not yet.
+
 ## Open question
 
 What the criterion for deliberate remembrance is. Named above as absent from `03`'s dimensions and left as a parameter.
 
-What detects a remembrance judgment that has stopped discriminating. The collapse mode above has no proposed diagnostic, and its symptom is an absence rather than an error. The sweep bounds the damage — an over-generous curator grows the store rather than corrupting it — but nothing notices.
+What governs retention within memory over time, per the section immediately above.
+
+What detects a remembrance judgment that has stopped discriminating. The collapse mode above produces an absence rather than an error, so nothing notices it from the inside. `26-arch-observability` names the material a detector would need — the ratio of registered observations to remembered ones, tracked over time, is a drift signal computable from its history and from nothing else — but naming the signal is not proposing the mechanism, and none is proposed.
+
+What detects a sweep that took something needed. The failure case is an artifact whose value is recognised only after reachability already removed it. This looked undetectable, on the grounds that the evidence it happened went with it. That is wrong: it went from `21-arch-knowledge-model` alone, and `26-arch-observability` still holds it. A later pass can ask whether anything swept was subsequently searched for, re-fetched, or re-derived, which is the signal that the rule cut too early. That this is answerable at all depends on observability staying greedy.
 
 Whether anything revisits a remembrance decision later, and what would prompt it.
 
