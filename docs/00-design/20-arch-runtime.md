@@ -50,7 +50,7 @@ There is no assembly step. Context is not gathered, packaged, and handed to a pr
 
 What gets bound is only what can be fixed in advance: role instructions, an objective, a capability set under `24-arch-permission-layer`'s policy, and a **scope** — the mandate the work is to stay within, inherited from the work item and narrowable but never wider. Context is not among them, because context is not the kind of thing that can be bound. What the instance gets instead is an identity: a live set, which its own crossings register into and which recall runs over each time it is fed.
 
-The scope is static for the life of the instance (`24-arch-permission-layer`, An instance's scope is static). An instance that finds it needs to reach further stops and reports rather than extending itself, and a mid-task widening of the work item reaches the next invocation rather than this one.
+The scope is static for the life of the instance (`24-arch-permission-layer`, An instance's scope is static). An instance that finds it needs to reach further stops and reports rather than extending itself, and a widening that follows reaches the next invocation rather than this one — so the instance that raised the problem is not the one that acts on the answer.
 
 **Then, on every turn, the turn input is composed.** `23-arch-context-management` renders it at the moment of feeding, out of what is in the live set and under the recall policy. Not once at the start: every turn, over a live set that has changed since the last one.
 
