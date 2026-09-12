@@ -56,6 +56,14 @@ Making that last level reachable is what this loop is for. It is the expensive o
 
 And this level is distinct from the others in scope and evidence requirements rather than necessarily in which processor performs it. The separation belongs to invocation, not to agent identity.
 
+## Validity, as distinct from quality
+
+Most of what this level judges is a matter of degree: is this candidate better, is that improvement real. One thing is not.
+
+A system whose scope check is missing or non-functioning is **invalid**, not merely worse (`25-arch-invariant-layer`, The scope check is a second fixed role). A candidate in that state is malformed and does not enter comparison at all, because comparing it would treat as a trade-off something that is a precondition.
+
+Establishing that it functions is this level's, and it cannot be done by inspection: a check that passes everything looks exactly like one that works. What distinguishes them is a **predefined scenario carrying a planted out-of-scope change**, which a functioning checker must catch. That sits at the extraction level of the gradient above — the configuration run fresh against a scenario it had no hand in shaping — which is where a test of something the loops must not influence belongs.
+
 ## Open question
 
 The project must determine which evaluation anchors should remain externally fixed enough to prevent moving goalposts, and which should themselves be evolvable as our understanding of useful performance improves.

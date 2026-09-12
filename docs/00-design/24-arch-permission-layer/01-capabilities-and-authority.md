@@ -66,7 +66,24 @@ That is not a capability question and capability cannot be stretched to cover it
 
 **It is not the invariant layer's**, and the distinction matters. Mandates differ per work item and are set by whoever asked for the work. A mechanism holding something adjustable would not be the invariant layer, whose defining property is that no loop may write to it.
 
-What would have to exist, stated as shape rather than mechanism: a **declared scope carried on the work item** — which makes it `28-arch-work-record`'s to hold, since that actor holds the work item and its formulation — and a **comparison against what was actually touched**, which has to be aggregate over a sequence rather than per effect. Neither exists. This document names the gap rather than closing it, because closing it means deciding what a scope declaration looks like, which is specification.
+What would have to exist, stated as shape rather than mechanism: a **declared scope carried on the work item** — which makes it `28-arch-work-record`'s to hold, since that actor holds the work item and its formulation — and a **comparison against what was actually touched**, which has to be aggregate over a sequence rather than per effect.
+
+### The shape it takes
+
+**Scope is a task-level property, expressed in natural language.** It cannot be fixed per role, because the same role does differently-bounded work from one task to the next, and it cannot be enumerated in advance, because what a change is allowed to reach is a statement about this piece of work. The artifacts where the boundary matters most are the ones where drift is cheapest and least visible: specification documents, technical documentation, internal APIs.
+
+That natural-language form does not conflict with `10-foundations/07`'s requirement that this become "checkable properties of artifacts and effects, never an inference about intent", and the distinction is worth stating because it is easy to lose. **A stated scope is not an inferred intent.** What `07` forbids is predicting what a person would have wanted; a declared scope was written down by whoever asked for the work, so comparing against it is checking against a record. The judgment lives in the comparison — does this diff fall inside that statement — not in guessing the person.
+
+**The check divides on reversibility, and the two halves sit at opposite ends of a task.**
+
+- **Reversible changes are audited at the end.** Their extent can be compared against the declaration once the work is done, in aggregate, which is the only point at which drift is visible as drift. Auditing late is affordable precisely because the finding still has a remedy: what fell outside can be undone.
+- **Irreversible changes are questioned before they happen.** There is no end-of-task remedy, so the check has to precede the effect.
+
+That second placement is the same one already reached from a different direction. `10-foundations/02` requires an irreversible effect to get a risk evaluation before it is proposed, and `25-arch-invariant-layer` explains why such a judgment must sit upstream of the proposal rather than inside the gating path. Scope questioning for an irreversible change lands at exactly that moment, on exactly that argument. Two requirements derived independently, converging on one point in the loop, is a reason to treat that point as real.
+
+**It requires a dedicated processor**, because the comparison is a judgment over natural language and no deterministic check performs it. That processor is *not* commissioned from the open role vocabulary, and `25-arch-invariant-layer` holds the reason: a loop cannot commission its own watcher. It is a fixed role of the same kind as triage, specified where the invariant layer is specified, and its protection is stated there rather than here.
+
+The separation that keeps this coherent: **the mandate is adjustable, the checker is not.** What a given task's scope permits changes with every task and is set by whoever asked for the work, which is why mandate content is not invariant-layer material. That a functioning scope check exists, and cannot be removed or routed around by the loops it constrains, is not adjustable by anything inside the system, which is why the checker is.
 
 ## Open question
 

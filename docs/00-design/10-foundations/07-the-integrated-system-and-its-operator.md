@@ -225,13 +225,26 @@ vocabulary, where a required stop-rationale already exists as its narrower form.
 arrived: crossing type distinguishes generated from fetched on every tracked entry,
 and `23-arch-context-management` carries the constraint that the distinction must
 survive into what the model is actually shown rather than being flattened there.
-Scope declared and checked has not. `24-arch-permission-layer` has read this
-requirement against itself and found that capability gating cannot carry it — a
+Scope declared and checked now has a shape, though not an implementation.
+`24-arch-permission-layer` found that capability gating cannot carry it — a
 capability is keyed to the actor and evaluated per effect, while a mandate is keyed
 to the work item and evaluated in aggregate against what was touched, so every step
-of a drift can sit inside capability while the whole sits outside the mandate. The
-gap is named there and in `28-arch-work-record`, which would hold the declaration;
-neither has been built.
+of a drift can sit inside capability while the whole sits outside the mandate.
+
+What it settled since: a scope is stated per task in natural language and held on
+the work item (`28-arch-work-record`); the check divides on reversibility, auditing
+reversible extent at the end of a task and questioning an irreversible change before
+it happens; and it needs a dedicated processor, since comparing a natural-language
+mandate against a diff is a judgment no deterministic check performs.
+
+Two notes on that, both bearing on this document's own constraints. A **stated**
+scope is not an inferred intent — the prohibition above is against predicting what a
+person would have wanted, and a declaration written by whoever asked for the work is
+a record to check against, so the judgment sits in the comparison rather than in
+guessing. And the processor is a fixed role rather than a commissioned one, held
+with the invariant layer for the reason given there: a loop cannot commission its own
+watcher, so it cannot be trusted to keep one either
+(`25-arch-invariant-layer`).
 
 The minimal statement, for whoever implements it: **generated content must not
 silently occupy the place of authored content.** The system should know the

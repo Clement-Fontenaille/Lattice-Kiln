@@ -32,6 +32,8 @@ The default assumption should nonetheless remain reuse of an existing role at a 
 
 Role commissioning does not weaken the invariant layer. A commissioned role inherits no exemption from enforcement, because the enforcement gate binds effects rather than roles.
 
+The rule runs in the other direction too, and it bounds what this loop may propose rather than what it may create. Some roles are fixed outside this mechanism because this mechanism cannot reach them — triage, and the scope check that `10-foundations/07`'s mandate requirement needs (`25-arch-invariant-layer`). A proposal that removes one of them, or that reshapes the path so effects reach the world without passing it, is rejected whatever evidence accompanies it. A loop cannot commission its own watcher, and for the same reason it cannot decommission one.
+
 ## Candidate changes
 
 System-level changes should normally create candidate system variants.

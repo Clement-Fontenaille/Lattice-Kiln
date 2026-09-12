@@ -102,6 +102,20 @@ The burden therefore falls to the humans writing the invariant layer, for the sa
 
 Non-shared model or lineage with the loops it watches follows from this as a consequence rather than standing as the primary argument. The correlated-blind-spot concern raised for evaluation independence applies with more force here, since the failure being guarded against is a loop's own drift — but the structural point stands even where blind spots are not at issue.
 
+## The scope check is a second fixed role
+
+Triage is not the only role the loops cannot be trusted to own. `10-foundations/07` requires that work stay within the mandate it was given, and `24-arch-permission-layer` has since established that no deterministic check can carry it: a mandate is stated in natural language at task level, so comparing it against what was touched is a judgment and needs a processor.
+
+That processor satisfies this layer's membership test for the same reason triage does. A loop able to remove it, retune it, or route around it is inside the scope it constrains, so a loop cannot be the party that commissions it. Two consequences follow, and both are protections rather than new machinery.
+
+**System-level feedback may not remove it or weaken it.** A proposed change that deletes the scope check, or that reshapes the path so effects reach the world without passing it, is rejected regardless of the evidence offered for it. This is the ordinary rule that a commissioned role inherits no exemption, applied to a role the loops did not commission.
+
+**A system without a functioning scope check is not a valid system.** That is a validity condition on a generation rather than a quality judgment about one, so a candidate missing it is malformed rather than merely worse (`27-arch-adaptation-and-evolution/03-meta-level-feedback.md`).
+
+What this layer does *not* hold is the mandates themselves. A task's scope is set by whoever asked for the work and differs with every task, which is exactly the adjustability this layer exists to be free of. The checker is fixed; what it checks against is not.
+
+**"Functioning" needs a test, and asserting it is not one.** A scope check that passes everything is indistinguishable from a working one by inspection — the same collapse `22-arch-cognition/05-curation.md` records for an over-generous curator, and the symptom is again an absence. The cheap answer is available here and not there: a predefined scenario carrying a planted out-of-scope change, which a functioning checker must catch. That places the validity test at the extraction level of `27-arch-adaptation-and-evolution/03`'s evidence gradient, which is where a check on something the loops must not influence belongs anyway.
+
 ## Decommissioning is immediate and unilateral
 
 A role attempting to exceed its authorized bounds should have its capabilities revoked by the runtime at once — no proposal, no evaluation step, no waiting for human review before authority is pulled.
