@@ -60,9 +60,9 @@ And this level is distinct from the others in scope and evidence requirements ra
 
 Most of what this level judges is a matter of degree: is this candidate better, is that improvement real. One thing is not.
 
-A system whose scope check is missing or non-functioning is **invalid**, not merely worse (`25-arch-invariant-layer`, The scope check is a second fixed role). A candidate in that state is malformed and does not enter comparison at all, because comparing it would treat as a trade-off something that is a precondition.
+A system missing a functioning **invariant processor** (`25-arch-invariant-layer`) is **invalid**, not merely worse. A candidate in that state is malformed and does not enter comparison at all, because comparing it would treat as a trade-off something that is a precondition. That holds for every occupant of that layer rather than for any particular one — triage and the scope check today, whatever arrives later on the same membership test.
 
-Establishing that it functions is this level's, and it cannot be done by inspection: a check that passes everything looks exactly like one that works. What distinguishes them is a **predefined scenario carrying a planted out-of-scope change**, which a functioning checker must catch. That sits at the extraction level of the gradient above — the configuration run fresh against a scenario it had no hand in shaping — which is where a test of something the loops must not influence belongs.
+Establishing that they function is this level's, and it is the part that does not follow from their membership: being unremovable is not being operational. It also cannot be done by inspection, since a check that passes everything looks exactly like one that works. What distinguishes them is a **predefined scenario carrying a planted violation** of the kind that occupant exists to catch. That sits at the extraction level of the gradient above — the configuration run fresh against a scenario it had no hand in shaping — which is where a test of something the loops must not influence belongs.
 
 ## Open question
 
