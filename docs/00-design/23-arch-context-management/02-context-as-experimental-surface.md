@@ -56,6 +56,32 @@ The second family carries a hypothesis the first does not, and it is the most in
 
 **Prefix persistence.** Whether the serving arrangement keeps a reusable prefix, which changes what a policy can even be — see `01-context-manager.md`.
 
+## The first candidate: artifact embedding × production-context embedding
+
+Each artifact is indexed by two vectors rather than one — its own content, and the informational situation it was produced in. Retrieval then matches against either or both.
+
+This is the first thing to evaluate, for three reasons.
+
+It is the **minimal testable form of the one genuinely novel hypothesis** in the proposal this document comes from: that a past situation can be retrieved by analogy with the current one, rather than an artifact retrieved by similarity to a query. Testing that does not require episode boundaries, hierarchical representations, or anything learned. It requires a second vector per artifact.
+
+It **contains its own ablation**. Artifact vector alone is ordinary semantic retrieval. Production-context vector alone is pure situation matching. Both together is the candidate. Those three arms plus the permanent naive arm answer, directly, one of the questions the proposal itself posed — whether representing the production context adds anything over representing the artifact in isolation.
+
+And it is **nearly free given what is already built**. At the moment `01-context-manager.md` registers an artifact, the live set is its production context by construction. Nothing new has to be tracked to capture it.
+
+### Four things to pin down first
+
+**What counts as the production context, and this one is a methodological trap.** Two definitions are available and they are not equivalent. The *composition* — what recall actually put in front of the model that turn — is the principled one, since the model produced the artifact from what it was shown rather than from what happened to be tracked. But it is shaped by the recall policy in force at the time, so an index built that way is contaminated by the policy, and comparing policies over a corpus one of them built is biased. The *pool snapshot* — everything live at that moment, presented or not — is contaminated too, but only indirectly, through the model's behaviour rather than through the policy's choices. Full policy-independence is not on offer. The pool snapshot is the weaker contamination and is therefore the better index for cross-policy comparison, which is what this framework exists to do.
+
+**How the two combine.** A weighted sum of two similarity scores, with the weight as the swept parameter, is the recommendation — not because it is the best combiner but because the two single-signal arms are its endpoints. Weight zero and weight one give the ablation from the same mechanism rather than from two separate implementations, so there is one thing to build and nothing to keep in sync. Concatenation hides an equal weighting with no knob; two-stage retrieve-then-rerank is a different experiment worth running later.
+
+**What is on the query side, because the pairing is less symmetric than it looks.** At retrieval time the current context is available and can be matched against a stored production context — that is the situation analogy. But nothing on the query side corresponds to artifact *content*, since the artifact is what is being looked for; what plays that role is the task or objective text. So the two signals being combined are two different retrieval modes against two different indexed fields, not two representations of one thing. Saying this plainly matters, because it means the weight is trading off between modes rather than blending views.
+
+**What "better" means.** The bar stated above is that the request was answered, not that relevant material was retrieved, and the attribution stance says to compare in aggregate. That is the expensive distal measure and it needs N. A cheaper proximal signal is available alongside it: whether a retrieved artifact was actually *used* — cited, or appearing in the provenance of what the turn produced. Every retrieval is a datapoint there rather than every task, so it accumulates far faster. It is a weaker signal and should not replace the outcome measure, but it can fail fast, which is what a first candidate most needs.
+
+### What it depends on
+
+Nothing here can run until artifacts are registered with representations attached, which is specification work the backlog already carries. This candidate is named now so that work has a target to satisfy rather than a general capability to build.
+
 ## Instrumentation
 
 Every selection is an experimental decision and has to be recorded as one: the candidates considered, their scores, the representation used, the budget, what was selected, what was actually transmitted to the model, and what followed.
@@ -97,3 +123,5 @@ What the entry step should be, given that initial selection and topology are sep
 Whether aggregate comparison separates policies at the N this project can actually run — the assumption the attribution stance rests on.
 
 What the literature already holds on recall under prefix persistence. This project should inherit results rather than rediscover them, and the reading has not been done.
+
+Whether a production-context index can be built at all without the policy that produced it contaminating it. The first candidate takes the pool snapshot as the lesser of two contaminations rather than as a clean solution, and nothing here establishes that the residual bias is small enough to ignore.

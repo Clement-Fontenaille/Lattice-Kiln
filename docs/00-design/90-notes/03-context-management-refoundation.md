@@ -119,6 +119,14 @@ Recorded compactly. Each is either written into a document or explicitly deferre
 
 **Specific training may be what unlocks leverage from the knowledge base**, and if so the trade it enables is disk space for context space. Recorded as a direction in `02`, with nothing acting on it.
 
+## The first candidate named
+
+Proposed directly: **artifact embedding × production-context embedding** — each artifact indexed by two vectors, its own content and the situation it was produced in.
+
+Written into `23-arch-context-management/02`. Three things recommend it as the first thing to run rather than one among many. It is the minimal testable form of the situation-analogy hypothesis, needing no episode boundaries and nothing learned. It contains its own ablation, since the two single-signal arms are the endpoints of a weighted combination. And the registration path already captures what it needs, because the live set at the moment of registration *is* the production context.
+
+The methodological trap found while specifying it is worth keeping visible. Defining production context as the *composition* — what recall actually showed the model — is principled but contaminates the index with the policy in force, which biases exactly the cross-policy comparison this framework exists to run. Defining it as the *pool snapshot* is contaminated only indirectly, through the model's behaviour. Neither is clean; the snapshot is the weaker contamination and was chosen on that basis, not because the problem was solved.
+
 ## On labelling, and why the thinking family is not the answer
 
 This pass had proposed that a member of the thinking family assigns `03`'s labels — claim type, source, mode of acquisition, scope. That was rejected on a specific ground worth preserving.
