@@ -44,6 +44,8 @@ Where the levels genuinely do the same thing, shared machinery is low-risk and r
 
 A candidate-change record, a comparison mechanism, an evidence and provenance model, or a promotion-decision structure can reasonably serve project-level, system-level, and meta-level feedback alike.
 
+One of those has since been built rather than hypothesised: the evidence and provenance model is `21-arch-knowledge-model`, realizing `10-foundations/03`, and nothing about it is scoped to a particular feedback level. That is this section working as intended — shared machinery discovered because the levels genuinely do the same thing with it, not because a shape recurred.
+
 The test is whether sharing saves implementation effort without obscuring a real difference. A project memory update may still need very different validation from a system generation promotion, even if both are represented as candidate changes.
 
 ## Role symmetry should generally be avoided
@@ -77,3 +79,5 @@ The distinction matters in one direction in particular. An argument that such a 
 The degree of shared implementation among feedback levels should remain undecided until at least one working feedback loop exists to study.
 
 Whether a single evaluation role invoked at three scopes actually performs as well as three specialized ones is an empirical question, and this document states a default rather than a finding.
+
+The same question now has a second instance outside the feedback levels. `22-arch-cognition/04-thinking.md` groups several knowledge-state transitions — the walk, requalification, curation, souvenir compression, irreversible-effect risk evaluation — as a *family*, on the grounds that they differ in cost, scope and required independence. Those are the dimensions this document says invocation varies, so whether that family is several roles or one role invoked several ways is the same unresolved question in a different place. That document now defers to the default here rather than assuming a split.

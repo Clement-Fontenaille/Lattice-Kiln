@@ -52,6 +52,12 @@ Assessing a claim's scope at the moment it is created (`10-foundations/03`, Scop
 
 One role covering all of that would be the kind of universal step sequence `02-processors.md` declines to prescribe. A family lets each member be commissioned, evaluated, and retired on its own evidence, which is the discipline the role vocabulary already follows.
 
+**Against a stated default, and it has to answer for that.** `27-arch-adaptation-and-evolution/08-recursive-symmetry-without-dogma.md` holds the opposite presumption: a single capable role invoked at different scopes, with different context, objectives and thresholds, rather than the role multiplying into species. Its phrase is that multiplicity belongs to invocation, not to identity — and cost, scope and required independence are precisely the things it says invocation varies. Taken strictly, the argument above is the move that document warns against.
+
+So "family" here names a **shared membership test**, not a commitment to distinct roles. What its members certainly share is the test: each proposes a change to what the project holds. Whether they are genuinely different roles — needing different role instructions, not merely different objectives and context — or one role invoked several ways is exactly the empirical question `08` leaves open, and its default of reuse applies until evidence says otherwise.
+
+The honest statement is therefore weaker than the section heading. The transitions differ in ways that *might* warrant distinct roles; nothing here establishes that they do; and the burden sits on whoever proposes to split, not on whoever proposes to reuse.
+
 ## Candidate members
 
 Illustrative, not a taxonomy, and expected to change on evidence the same way any role does.

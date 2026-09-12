@@ -86,6 +86,8 @@ the two and losing a distinction these simpler arms had made.
 
 We still need to learn how specialized roles should be, how much context they should share, and whether model diversity provides enough benefit to justify additional runtime complexity.
 
+Two of those have moved since this was written. How specialized roles should be now has a stated default rather than only a question: reuse an existing role at a new scope unless evidence shows it cannot serve (`27-arch-adaptation-and-evolution/08-recursive-symmetry-without-dogma.md`), which the thinking family is currently the open test case for. And how much context processors share is no longer theirs to decide — it is pool isolation and pool seeding, both held by `23-arch-context-management`.
+
 Milestone 4 adds a specific form of this: does a planner → implementer → reviewer
 chain need a revision loop before role separation pays for its overhead, and is
 that better studied under the Milestone 5 orchestrator than as a fixed chain?

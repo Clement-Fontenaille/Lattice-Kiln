@@ -54,4 +54,6 @@ The exact threshold is an empirical matter.
 
 The project must eventually determine how system-level feedback distinguishes a genuine general weakness from overfitting to one benchmark, one repository type, or one model family.
 
+That question has a measurement attached to it now, though not an answer. Overfitting to the conditions a candidate was tuned under is what **transfer** detects — a configuration evaluated against material it did not shape (`03-meta-level-feedback.md`, Levels of evidence). And the conditions themselves are recorded rather than reconstructed: `26-arch-observability` keeps which policy, model and configuration were in force while each stretch of history accumulated, so a comparison at least knows which lineage it is reading. What remains genuinely unresolved is the threshold — how much transfer loss marks overfitting rather than ordinary domain difference.
+
 Commissioning a role changes the system's cognitive shape more than tuning an existing one does, and probably deserves a higher evidence bar. What distinguishes the two thresholds is unresolved.

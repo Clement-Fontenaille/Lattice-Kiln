@@ -55,3 +55,5 @@ So: this model asks whether the actor may request it, the invariant gate asks wh
 ## Open question
 
 Capability granularity should be derived from actual needs. Overly coarse capabilities weaken control; overly fine capabilities create administrative complexity and can distract the model from the cognitive objective.
+
+Reads are the first concrete instance of that trade-off rather than a separate question. Naming a class of reads by path, by crossing type, or by volume against a ceiling are granularities with very different administrative costs, and the permissive default above means none of them has to be chosen before there is a reason to.

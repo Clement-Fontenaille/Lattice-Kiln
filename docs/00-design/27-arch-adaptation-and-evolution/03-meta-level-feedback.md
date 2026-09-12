@@ -59,3 +59,5 @@ And this level is distinct from the others in scope and evidence requirements ra
 ## Open question
 
 The project must determine which evaluation anchors should remain externally fixed enough to prevent moving goalposts, and which should themselves be evolvable as our understanding of useful performance improves.
+
+Levels of evidence, above, settles part of this and sharpens the rest. The invariant layer is genuinely fixed and no loop may write to it. The accumulated record is not an anchor at all, being a system output. Predefined scenarios are the strongest anchor actually available, and they are fixed by construction rather than by policy — nothing the system produces feeds back into them. What stays open is the middle: which *benchmarks* should be frozen and which allowed to evolve, given that a suite that never changes eventually stops resembling the work while a suite that changes freely stops measuring anything comparable.
