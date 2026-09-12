@@ -18,6 +18,10 @@ An experiment compares a candidate configuration with a known baseline under con
 
 The project should preserve the hypothesis, tested configuration, evaluation inputs, observations, and promotion decision.
 
+**Motivated, and its interpretations framed, before it is run.** A method is not an experiment: describing what apparatus should exist commits to nothing, while running something commits to reading what comes out of it. So each experiment names what decision it is for and who will make it — `10-foundations/07`'s standard for any measurement taken without an operator in it, which most of this project's are — and states beforehand how its possible outcomes will be read.
+
+That second half is not bureaucracy, and Resolution before precision below is why. How a null result reads depends on the effect-size regime: where a large effect was expected and none appears, that is a finding, while in a small-effect regime the same observation usually means only that nothing could be seen. If the regime is decided *after* the result is in hand, either reading is available for any outcome, and the experiment establishes nothing while appearing to. Fixing the expected effect size in advance is what keeps a null informative.
+
 ## Candidate systems
 
 A candidate system is an isolated variation of a trusted generation.

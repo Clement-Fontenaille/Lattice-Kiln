@@ -152,14 +152,17 @@ was used for the turn input and is retired because the set already uses
 "composition" for concern composition (`22-arch-cognition/08`) and effect
 composition (`25-arch-invariant-layer`), which are unrelated.
 
-**Two ceilings, not one.** What an assembly can correctly *integrate* is a
-cognitive limit (`10-foundations/04`, Overload) and has no operational definition
-yet. What the hardware can *hold* is a physical limit, measurable today, and far
-tighter than text size suggests: a KV cache costs on the order of hundreds of
-kilobytes per thousand tokens for a 7B model against roughly four kilobytes for
-the same text. Two to three orders of magnitude. The physical ceiling belongs to
-the invariant layer's resource ceilings (`10-foundations/06`); the cognitive one
-does not, being a property of an assembly rather than a limit anyone sets.
+**Two constraints, one limit.** What an assembly can correctly *integrate* is a
+cognitive constraint (`10-foundations/04`, Overload) and has no operational
+definition yet. What the hardware can *hold* is a physical one, measurable today,
+and far tighter than text size suggests: a KV cache costs on the order of hundreds
+of kilobytes per thousand tokens for a 7B model against roughly four kilobytes for
+the same text — two to three orders of magnitude. They are not two ceilings.
+`10-foundations/07` holds that there is one limit, reached through whichever
+component binds first, so the assembly stops at the lesser of the two and
+improving one buys nothing while the other binds. Only the physical constraint
+belongs among the invariant layer's resource ceilings (`10-foundations/06`); the
+cognitive one is a property of an assembly rather than a limit anyone sets.
 
 ---
 

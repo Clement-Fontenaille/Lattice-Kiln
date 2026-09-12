@@ -12,6 +12,8 @@ New, 2026-09-12, from a design discussion recorded verbatim in `90-notes/03-cont
 
 What is adopted here is the framing, the instrumentation requirement, and the interface that keeps policies interchangeable. The specific techniques listed under Axes are **not** adopted — they are named so the shape can accommodate them, which is a different commitment.
 
+This is a method and not an experiment, and the distinction carries an obligation rather than removing one. Nothing here is an experiment, so nothing here needs a motivation or a decision attached to it. Every experiment run *through* it does, before it is run: what decision it serves, who makes it, and how its possible outcomes will be read. `27-arch-adaptation-and-evolution/05-experiments-and-candidate-systems.md` holds that requirement, and nothing in the apparatus below discharges it.
+
 ## Why this document exists
 
 `01-context-manager.md` has carried "what the recall policy actually is — arbitrary by design, not yet specified" as an open question through several passes. That was read as a gap waiting to be filled by the right answer.
