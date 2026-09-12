@@ -124,6 +124,22 @@ From which the rule on splits follows rather than needing separate justification
 
 Two honest limits. That containment rule is stated here and enforced nowhere yet. And deciding whether a proposed child's boundary sits inside its parent's is itself a natural-language judgment, so this closure does not reduce the amount of judgment required — it places all of it in the same check rather than leaving a path around it.
 
+### Who may modify a task's scope
+
+Three parties, and the third is the answer to a question the rest of this section keeps circling.
+
+**The operator**, without bound, because they are the source. Scope descends from intent and intent is amended out of band (`10-technical/01-effect-vocabulary.md` type 4).
+
+**A deriver, for a task it is not itself executing** — bounded by the parent's scope, and ultimately by the intent's.
+
+**Nobody else.** No instance working *under* a task may modify that task's scope, and the scope check is read-only on it: it compares and reports rather than rewriting.
+
+The line those draw is worth stating on its own, because it generalizes: **a scope may be derived for work one is not doing, and may not be widened for work one is doing.** That is the same shape as a loop being unable to commission its own watcher — the constrained party and the constraining party cannot be the same one.
+
+**This closes a hole that splitting alone did not.** Children inheriting and narrowing bounds the split route, but a work item can also be **refined**, and scope derives from a work item's formulation. Refine the formulation toward something broader, re-derive, and the scope widens without anything ever splitting. Nothing above blocked that.
+
+What blocks it is the ceiling rather than a new rule: a refinement changes a work item's formulation and does not touch its intent, so the re-derived scope is still bounded by the intent's scope. Refinement may therefore move a boundary around underneath the intent, and cannot push past it. Widening beyond that needs new intent, which needs the operator.
+
 ### An instance's scope is static
 
 It follows from the above and is worth stating plainly, because a good deal rests on it. Instantiation binds a scope along with the role, objective and capability set, and **a running instance cannot widen its own**. Whatever it was given at invocation, it keeps until it ends.
