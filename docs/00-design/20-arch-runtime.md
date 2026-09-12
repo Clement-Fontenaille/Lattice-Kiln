@@ -2,7 +2,7 @@
 
 ## TL;DR
 
-The runtime is the substrate that preserves reality, limits effects, records history, and makes experiments reproducible.
+The runtime is the substrate that preserves reality, limits effects, emits the record, and makes experiments reproducible.
 
 > **Motto:** Flexible cognition requires a stable world.
 
@@ -50,7 +50,7 @@ There is no assembly step. Context is not gathered, packaged, and handed to a pr
 
 What gets bound is only what can be fixed in advance: role instructions, an objective, and a capability set under `24-arch-permission-layer`'s policy. Context is not among them, because context is not the kind of thing that can be bound. What the instance gets instead is an identity: a live set, which its own crossings register into and which recall runs over each time it is fed.
 
-**Then, on every turn, what the model sees is composed.** `23-arch-context-management` renders it at the moment of feeding, out of what is in the live set and under the recall policy. Not once at the start: every turn, over a live set that has grown since the last one.
+**Then, on every turn, the turn input is composed.** `23-arch-context-management` renders it at the moment of feeding, out of what is in the live set and under the recall policy. Not once at the start: every turn, over a live set that has changed since the last one.
 
 Nothing requests this, which is why the question of who asks for a processor's context has no answer — nothing asks. Everything moving to or from the model passes through this actor by construction, so it is traversed, not called. That is also what keeps the orchestrator's "it does not govern its own context" (`22-arch-cognition/03`) true without needing anyone else to fetch on its behalf.
 
@@ -60,7 +60,9 @@ A read of something already inside the workspace — a file, a prior observation
 
 So a read takes a shorter path by default, not by construction. The default is permissive — reads pass unless a rule names them — and that is a configuration the system may change, rather than a capability the architecture has removed. This is also why the runtime's own classification work below is ordinary and not a special case: distinguishing a destructive filesystem action from a read-only inspection is a judgment about footprint, which is the same axis everything else on this path sits on.
 
-**What comes back crosses in.** The result of the call, or the model's own generated output, is registered by `23-arch-context-management` into the live set. The live set is now larger than it was, and the next turn composes over the larger one. Compose, act, register, compose again — that is the whole loop, and its state lives in the live set rather than in anything handed between steps.
+**What comes back crosses in.** The result of the call, or the model's own generated output, is registered by `23-arch-context-management` into the live set, and the next turn composes over what the live set now holds. Compose, act, register, compose again — that is the whole loop, and its state lives in the live set rather than in anything handed between steps.
+
+The live set does not only grow. It tracks what is in context, so items leave it as well as enter: something not recalled after a cache reset has left the discussion and drops out (`23-arch-context-management`, What leaves the live set). Bringing such an item back is a retrieval rather than a recall, which means it re-enters through the same path as anything else — a crossing, gated and registered. The loop is therefore not an accumulation, and nothing in it is monotonic.
 
 Alongside it, writes land elsewhere, each into its own store with its own retention discipline: `26-arch-observability` records the event, a claim resolves to `21-arch-knowledge-model`, and a work-record mutation — including the instance's own recorded conclusion of answered, blocked, or declined — resolves to `28-arch-work-record`. None of these is the same write read several times.
 
@@ -92,7 +94,11 @@ This does not require the runtime to understand the project's broader intent.
 
 ## Relationship to invariant enforcement
 
-Invariant enforcement is specified separately from the runtime's ordinary responsibilities, because it answers a different question. The runtime asks whether a requested effect is representable, permitted under current policy, attributable, and reversible. The invariant gate asks whether the effect is permissible at all, and its answer is not adjustable by anything inside the system.
+Invariant enforcement is specified separately from the runtime's ordinary responsibilities, because it answers a different question. The runtime asks whether a requested effect is representable, permitted under current policy, attributable, and reversible **where required**. The invariant gate asks whether the effect is permissible at all, and its answer is not adjustable by anything inside the system.
+
+That qualifier is load-bearing and this document used to drop it. `10-foundations/02` concedes what has to be conceded: some effects are irreversible by nature, that is what was asked for rather than an accident of execution, and refusing them on reversibility grounds alone would be refusing the work. What such an effect needs instead is a judgment of whether it is worth what it forecloses — and that judgment is neither of the two checks here. It belongs to `22-arch-cognition/04-thinking.md` and runs **upstream of the proposal**, while the effect is being formed, rather than as a stage in this path. `25-arch-invariant-layer` sets out why: a judgment stage inside the enforcement path would be a reasoning component sitting in that path, which is the persuadable mechanism the gate exists to exclude.
+
+So the runtime never asks whether an effect was well-considered, and must not learn to. An irreversible effect that passes is permitted, not endorsed.
 
 The two are closely related in practice. Both are deterministic, both operate on effects, and both sit outside cognition. Whether the gate is best understood as a component of the runtime or as a layer the runtime is itself subordinate to is deliberately left open.
 

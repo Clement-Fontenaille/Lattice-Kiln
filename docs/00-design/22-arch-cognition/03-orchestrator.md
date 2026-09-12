@@ -26,7 +26,7 @@ Higher-level evaluation systems must be able to observe and criticize orchestrat
 
 ## Context constraint
 
-The orchestrator's own context is composed by `23-arch-context-management` turn by turn, the same way any processor's is. It does not govern its own context and has no special reach into how that composition is made — the context manager is not a processor, so it sits outside what the orchestrator coordinates.
+The orchestrator's own turn input is composed by `23-arch-context-management` turn by turn, the same way any processor's is. It does not govern its own context and has no special reach into how that composition is made — the context manager is not a processor, so it sits outside what the orchestrator coordinates.
 
 That holds without anything having to fetch context on the orchestrator's behalf. The context manager is in the path everything to and from the model takes, so it composes because a turn is happening; there is no request to place and therefore no awkward case where the orchestrator would have to place it for itself. The relationship is not coordinator to coordinated, and it is not quite consumer to service either, since a consumer calls and the orchestrator never does.
 
@@ -36,7 +36,9 @@ Giving the orchestrator every conversation and every repository detail would rec
 
 The orchestrator role is explicitly considered tunable system configuration.
 
-System-level feedback may later refine its instructions, capabilities, context policy, or coordination style.
+System-level feedback may later refine its instructions, capabilities, or coordination style.
+
+"Context policy" used to appear on that list and has been removed, because it contradicted the section above. The orchestrator does not govern its own context, so there is no context policy belonging to it for feedback to refine. What feedback tunes is the **recall policy**, which belongs to `23-arch-context-management` and applies to every instance rather than to this role — it is on `27-arch-adaptation-and-evolution/02`'s list in its own right, not as a property of the orchestrator.
 
 ## First evidence (Milestone 5)
 
