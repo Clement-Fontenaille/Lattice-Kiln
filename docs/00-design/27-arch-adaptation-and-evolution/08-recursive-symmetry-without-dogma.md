@@ -50,6 +50,8 @@ The test is whether sharing saves implementation effort without obscuring a real
 
 ## Role symmetry should generally be avoided
 
+This is not a second rule pulling against the one above, and reading it that way invites a mistake. Exploiting a structural symmetry **is** factoring: noticing that the levels do the same thing and therefore keeping one of something rather than three. Avoiding role symmetry is that same operation applied to roles, and commissioning a new role on evidence is the de-factoring condition for when the symmetry turns out not to be real. One principle, one release valve.
+
 The more consequential correction is this: a repeating loop shape does not justify a separate kind of agent per level.
 
 There is no strong reason a single evaluation-capable role cannot be invoked at different scopes, with different context, objectives, and evidence thresholds, rather than the role itself multiplying into a project-evaluator, a system-evaluator, and a meta-evaluator as distinct species.
@@ -80,4 +82,8 @@ The degree of shared implementation among feedback levels should remain undecide
 
 Whether a single evaluation role invoked at three scopes actually performs as well as three specialized ones is an empirical question, and this document states a default rather than a finding.
 
-The same question now has a second instance outside the feedback levels. `22-arch-cognition/04-thinking.md` groups several knowledge-state transitions — the walk, requalification, curation, souvenir compression, irreversible-effect risk evaluation — as a *family*, on the grounds that they differ in cost, scope and required independence. Those are the dimensions this document says invocation varies, so whether that family is several roles or one role invoked several ways is the same unresolved question in a different place. That document now defers to the default here rather than assuming a split.
+The same question now has a second instance outside the feedback levels. `22-arch-cognition/04-thinking.md` groups several knowledge-state transitions — the walk, requalification, curation, souvenir compression, irreversible-effect risk evaluation — as a *family*, and defers to the default here rather than assuming a split.
+
+That case also surfaced the one argument for splitting that this document does not already answer, and it is worth having in view. Scope and cost are invocation properties, so they dissolve. **Evolutionary independence** does not: system-level feedback revises role definitions, so two capabilities sharing one definition are tuned together whether or not that is wanted, and no amount of varying the invocation separates them. That is a genuine role-level consideration rather than a disguised invocation one.
+
+It is set aside as premature rather than refuted. It anticipates a coupling nothing has yet experienced, and splitting stays available later on this document's own terms. But if a case ever arises where one capability's tuning demonstrably degrades another sharing its definition, that is the evidence the default asks for, and it will not look like a loop shape recurring.
