@@ -45,7 +45,9 @@ Coverage applies to two of those, differently. Live-set coverage asks whether an
 
 Integration applies to what the assembly holds in one pass, which is the context itself. So Overload is a property of context and never of a live set.
 
-That does not make a large live set harmless, and an earlier draft of this note drew that conclusion too quickly. The live set tracks what is *in* context: something not recalled after a cache reset has left the discussion and drops out of it. A live set is therefore not a growing archive that a turn samples from, and it cannot drift far from what context holds. Where material goes when it leaves is `21-arch-knowledge-model`, until the retention sweep reaches it.
+That does not make a large live set harmless, and an earlier draft of this note drew that conclusion too quickly. The live set tracks what is *in* context: something not recalled after a cache reset has left the discussion and drops out of it. A live set is therefore not a growing archive that a turn samples from, and it cannot drift far from what context holds.
+
+What happens to material once it leaves the discussion is a separate question, and it is `05-ephemeral-conversation-curated-memory.md`'s rather than this document's: leaving is the default and entering long-term memory is an act. Where anything is physically held while either happens is architecture's arrangement and not a commitment this layer makes.
 
 Where this document says "context" without qualification below, it means what the assembly is actually working from.
 

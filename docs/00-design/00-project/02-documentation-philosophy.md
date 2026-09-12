@@ -22,6 +22,22 @@ A future discussion about context selection should not require reopening the ful
 
 This modularity is intended to make conceptual iteration efficient.
 
+## Which layer states what
+
+The split by theme has a second axis that had been practised without being written down, and stating it is what keeps the layers independently reviewable rather than merely separately filed.
+
+**Foundations name functions and constraints.** What has to be true, what distinctions must be kept, what a thing is *for*. Long-term memory, context as a governed resource, the reasoning/runtime boundary.
+
+**Architecture names actors and arrangements.** Who holds what, what service each provides, how they interact. A knowledge model, a context manager, a live set that points rather than copies.
+
+**Technical specification names formats and contracts.** Schemas, effect types, interfaces.
+
+The failure to watch for runs downward: a foundations document naming a particular solution shape. It spends a decision it did not need to make, it is wrong as soon as the architecture changes even though the function it was describing did not, and it quietly removes architecture's freedom to choose differently.
+
+A concrete instance, since the rule is easier to apply against one. Foundationally, a tool's response is discussion material: it arrives, it is live, and it does not enter long-term memory by arriving — promotion is a separate act. Architecturally, the context manager holds no copy and points into a store where everything already sits from the moment it arrives. Both are true. The foundational documents briefly said the second, which made a storage arrangement look like a claim about what the system *knows*, and blurred the distinction between storing something and having decided it was worth keeping.
+
+Citing across layers is not the problem and is expected — a foundations document may cite an architecture document for evidence or for where a question went. Importing its solution shape is.
+
 ## What a mature conceptual document should provide
 
 A document should make the motivation for an abstraction explicit, state what problem it is expected to solve, identify the boundaries of the idea, describe how it relates to neighboring concepts, and preserve the unresolved questions that prevent immediate technical specification.
