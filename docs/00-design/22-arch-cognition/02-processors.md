@@ -32,6 +32,10 @@ Independent processors should sometimes receive conclusions without inheriting t
 
 This allows adversarial reassessment and reduces the risk that one early mistake dominates every later step.
 
+The object this asks for already exists and has a name. `10-foundations/03`'s **souvenir** is a checked step reduced to its named inputs, its conclusion, and a note of the argument's shape only where the connection between the two is not obvious from those alone. That is precisely "a conclusion without the full reasoning history," and it is safe to hand over for the reason `03` gives: the chain's roots stay raw, so the working is re-derivable by anything that decides it needs to look.
+
+It also sharpens what independence is protecting against. Withholding the reasoning is not about hiding information — the receiver can walk to it. It is about not *presenting* the reasoning, so that the receiver forms its own account rather than checking someone else's.
+
 ## Discussion
 
 Processors may participate in short discussions mediated by the orchestrator.
@@ -39,6 +43,24 @@ Processors may participate in short discussions mediated by the orchestrator.
 A processor may challenge another processor's conclusion or request a new investigation.
 
 The system should treat disagreement as potentially useful evidence rather than as a failure to converge quickly.
+
+Both outcomes of a disagreement have precise names in `10-foundations/03`, and using them is worth more than the general principle.
+
+**Friction** is not simply disagreement. A strong claim outweighing a weak one is ordinary weighing working as intended. Friction is what is left over: two claims each carrying enough validity, reliability or pertinence that neither is cheaply dismissed, still pointing in directions that cannot both hold. It marks where a second look is warranted, not which side is wrong. What follows it is **re-evaluation**, and `03` is specific about what that means — not a re-weighing of what is already recorded, since that is what failed to settle it, but going back for what the record does not yet have: a closer read, a re-derivation, new evidence.
+
+**Convergence** is the other outcome, and it is not merely the absence of a problem. Two independently produced conclusions arriving at the same place, by different chains, corroborates — and `03` is precise about what it corroborates: reliability, not validity. Independent agreement is evidence that the chain producing a claim was not one idiosyncratic accident. It is not evidence that the argument is sound, and two processors can converge on the same mistake.
+
+`10-foundations/05` already drew the consequence for this document: a fresh instance beginning from curated knowledge, when it re-derives rather than simply trusting what it was handed, is running exactly this check. That is a reason to prefer re-derivation over trust where the cost is bearable, and it is the other half of why Independence withholds the reasoning rather than the roots.
+
+## What survives a processor
+
+Processors are disposable, and the documents above never said what disposal leaves behind.
+
+Most of it leaves nothing, by design. `10-foundations/05`'s **Collapsing** covers an attempted argument superseded inside an episode: nothing outside cited it, nothing was owed a trail, and it resolves to the settled state alone. That is the default and it costs no judgment.
+
+What survives is what a **thinking** processor proposed (`04-thinking.md`) and what curation kept (`05-curation.md`). The line is `03`'s motto rather than a new rule: what happened is recorded automatically as an Observation, what it *means* has to be proposed by something.
+
+So a processor's own output is raw when it arrives. `10-foundations/02`'s Feedback section says this directly — what doing returns is an observation, not yet knowledge, and turning it into knowledge is a separate act. A conclusion a processor states is not thereby a Finding; it becomes one when a thinking processor proposes it as one and the proposal is realized.
 
 ## First evidence (Milestone 4)
 
@@ -55,7 +77,10 @@ quality" hypothesis at small scale. The reading the evidence supports: the value
 if any, is unlikely to come from role separation alone; it needs the
 reviewer→implementer revision loop and better context assembly. One separate
 positive did hold cleanly: both arms reliably **declined** a task built on a
-false premise rather than implementing it.
+false premise rather than implementing it. That result is what makes *declined*
+worth keeping distinct from *blocked* as a recorded conclusion
+(`28-arch-work-record`), since Milestone 5 then showed an orchestrator collapsing
+the two and losing a distinction these simpler arms had made.
 
 ## Open question
 
