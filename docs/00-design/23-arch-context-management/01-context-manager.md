@@ -34,6 +34,8 @@ Those are not questions this project can settle from its own first principles. T
 
 This is a decision about **where artifact content lives, and nothing more**. It says that the record is the one place artifact content is held, so that promoting something later does not mean copying it out of a conversation and into the record — there is no rewrite step, because it was never anywhere else. It does not say that what is written is kept.
 
+One asymmetry survives, and saying the exception "disappears" overstated it. A crossing's registration records two things: that a crossing happened, with its type and its moment, and what it returned. For a tool call or a generation, what it returned is new content and is written. For a knowledge-base retrieval, what it returned is a claim that already exists, so nothing new is written and the registration carries a pointer instead. The **shape** is uniform — every crossing produces a registration, and the pool holds references either way — while the **cost** is not, since only some crossings add content. That distinction matters for anything sizing this store, and flattening it would make retrieval look as expensive as reading a file for the first time.
+
 Retention is the opposite by default. An artifact that is no longer live, and that nothing registered for remembrance, is removed (`22-arch-cognition/05-curation.md`). Writing to the record is cheap and reversible; remembering is the exception that has to be earned. Reading this section as a retention policy would invert `10-foundations/05`'s position, which it does not touch.
 
 Provisional, adopted to see where it leads rather than because it has been shown correct. What it buys: one copy instead of two, so the pool cannot drift from the record; a pool that is pure bookkeeping — references and metadata — which is the mechanical-engine half `70-THINKING/ideas.md` I12 describes; and no promotion path that has to move content between stores.
@@ -43,7 +45,7 @@ Knowledge-base retrieval is a tool like any other — the model calls it, the ru
 ## Service provided to the rest of the system
 
 - **What the model sees on a given turn.** Composed at the moment of feeding, out of what is in the pool and what recall selects from it. This is not a package delivered once per invocation and then held: it is recomposed every turn, over a pool that grew since the last one. It is also richer than the naive default's flat file list, since each entry carries its crossing type.
-- **A live-state query**, for any of `04`'s failure-mode checks to consult.
+- **A live-state query**, for any of `04`'s failure-mode checks to consult. One of those checks is now answerable here that was not before: `04`'s Insufficiency splits into material that never crossed and material that crossed but was not recalled, and the second is visible by comparing the pool against what was composed. The first is not visible from here at all, since nothing can be compared against what was never fetched.
 
 Nothing has to ask for the first of these. This actor sits in the path everything to and from the model takes, so it composes because a turn is happening, not because something requested a composition. There is no assembly call to place, and no caller to name.
 

@@ -39,9 +39,25 @@ Two things determine whether that set of artifacts serves the assembly it was ga
 
 A context can fail on either axis without failing on the other. The failure modes below are what each way of failing looks like.
 
+**Qualification (2026-09-12) — "context" now names two objects and the axes do not index the same one.** When this was written, what was live and what the model saw were the same set. `23-arch-context-management` has since separated them: a **pool** holds everything registered and not archived, and a **composition** is what recall puts in front of the model on a given turn, rebuilt each turn from the pool.
+
+Coverage applies to both, and differently. Pool coverage asks whether anything ever fetched what the objective needs. Composition coverage asks whether what was fetched was actually shown. Those are the two Insufficiencies separated below.
+
+Integration applies only to the composition. It is about what an assembly can hold and correctly use **in one pass**, and a pool is not held in one pass — most of it is not held at all on any given turn. So Overload is a property of a composition and never of a pool, which also means a pool can grow well past any integration ceiling without that being a failure of any kind.
+
+Where this document says "context" without qualification below, read it as the composition, since that is what an assembly actually works from.
+
 ## Failure modes
 
 **Insufficiency.** Coverage failure by omission: material the objective needed is not present. **Evidenced** — the Milestone 4 finding above (`Expected behavior`): a processor deliberately starved of a needed file did not even use the affordance built to ask for it. The system does not reliably notice or act on its own insufficiency unprompted.
+
+**Qualification (2026-09-12) — this is two failures, not one.** The architecture has since separated registration from recall (`23-arch-context-management`): an artifact enters a tracked pool when a crossing returns it, and a later policy decides which of the pool is put in front of the model on a given turn. Omission can now happen at either step, and the two are not variants of one problem.
+
+*Never crossed.* Nothing fetched the material, so it is not in the pool at all. The remedy is a crossing — a read, a retrieval — and the M4 evidence above attaches here: the starved processor's failure was that it never asked.
+
+*Crossed but not recalled.* The material is in the pool and the policy did not present it. The remedy is a change of recall policy, and nothing needs to be fetched.
+
+The sharper difference is detectability. The second is visible from inside the system: the pool can be compared against what was composed, and the gap is a fact the record already holds. The first is not — nothing can be compared against what was never fetched, which is exactly why `Forcing the choice` below needs an index of crossings *not yet taken* as a separate structure from the live record. Any response to Insufficiency has to say which of the two it addresses, because a recall-policy change does nothing for material that was never fetched, and an extra retrieval does nothing for material already sitting unrecalled.
 
 **Redundancy.** Coverage failure by duplication: material present that restates what the assembly already holds from elsewhere in the same context. **Evidenced** — findings entry 9, §3: repository-level context files that duplicated material already reachable elsewhere in the repository produced no improvement in task success at materially higher cost; stripping the duplicated material before generating the same files reversed the result. Provenance was not the operative variable; duplication was.
 
@@ -69,7 +85,7 @@ This is what the TL;DR already commits to and has not yet cashed out: context "m
 
 Naming a failure mode is not a fix, and this document does not owe one — only what has to be tracked for the mode to be detectable, and what decision the tracking feeds. How each decision gets executed is architecture's business, the same deferral `03`'s Weighing claims already makes for pertinence.
 
-**Insufficiency** requires tracking coverage against the objective's actual information requirements — and stating that plainly exposes a real gap, because nothing in the design set currently gives an objective's information requirements a trackable shape to compare against. `22-arch-cognition/01-work-intent-and-task-model.md`'s Intent concept is the nearest candidate, written for a different purpose and never read against this use. The decision it feeds — request more, or proceed — already exists as an affordance (`Expected behavior`, above); the M4 finding is that nothing forces it to fire.
+**Insufficiency** requires tracking coverage against the objective's actual information requirements — and stating that plainly exposes a real gap, because nothing in the design set currently gives an objective's information requirements a trackable shape to compare against. That gap is a *representation* question rather than a judgment one, which is what keeps it architectural rather than instance strategy (contrast `On ownership`, below): deciding whether an objective is satisfied is a processor's, but having something to compare coverage against is a shape the design owes. `22-arch-cognition/01-work-intent-and-task-model.md`'s Intent concept is the nearest candidate, written for a different purpose and never read against this use. The decision it feeds — request more, or proceed — already exists as an affordance (`Expected behavior`, above); the M4 finding is that nothing forces it to fire.
 
 **Redundancy** requires tracking overlap at the level of coverage, not text: two artifacts restating the same finding in different words are redundant even with no shared substring, and two artifacts sharing vocabulary while supporting different conclusions are not. Stating it this way rules out the cheap wrong implementation — a text-deduplication pass would satisfy neither the evidence behind this mode (findings entry 9, §3 turned on duplicated material, not duplicated wording) nor the definition. The decision it feeds is which of an overlapping pair to drop, once one is shown to add nothing the other does not.
 
