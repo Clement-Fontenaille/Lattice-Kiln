@@ -92,7 +92,9 @@ Accepting that the record is produced by the system rather than found bounds wha
 
 None of this is a new kind of problem here. `10-foundations/03`'s Scope already names it for a single claim: the domain a claim was born into — this host, this model family, the state of the project at that moment — was never fully representable and cannot be recovered later. A corpus has a scope in exactly that sense, and the remedy is the same one `03` prescribes. It has to be recorded as it accumulates rather than reconstructed when someone eventually wants to compare, which means the record must carry which policy, which model and which configuration were in force while each stretch of it was produced.
 
-That costs fields rather than a mechanism. `26-arch-observability` is already greedy and already keeps per-turn compositions, and `27-arch-adaptation-and-evolution`'s generations already name a lineage — a generation carries its recall policy, so corpus lineage and generation lineage are close to the same thing.
+That costs fields rather than a mechanism. `26-arch-observability` is already greedy and already keeps per-turn compositions, and `27-arch-adaptation-and-evolution`'s generations already name a lineage.
+
+The two lineages are not the same thing, though, and the difference is load-bearing. A **generation** is configuration — roles, orchestration, the recall policy, evaluation setup. A **corpus** is whatever accumulated while that configuration ran. In ordinary operation they move together, which is why a system's evidence about itself is weak. They come apart deliberately when a generation is instantiated fresh without the corpus it was tuned against, which is what `27-arch-adaptation-and-evolution/07-bootstrapper-as-transfer-mechanism.md` does — and that separation is what makes the strongest form of evaluation available at all.
 
 ### What it depends on
 

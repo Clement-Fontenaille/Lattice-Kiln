@@ -44,7 +44,11 @@ The same reasoning extends past benchmarks. If a baseline must be frozen so that
 
 **What a frozen baseline does not freeze.** It fixes the task. It does not fix the knowledge the system reads while solving that task, and that record is a product of the system rather than something found: every artifact in it exists because some policy, some model and some configuration caused a crossing that produced it (`23-arch-context-management/02-context-as-experimental-surface.md`). So the same frozen suite, run by the same configuration against two different accumulated corpora, is not the same measurement.
 
-This does not defeat frozen baselines. It bounds what they establish, and the remedy is the one `10-foundations/03` already prescribes for a single claim under the name Scope: record the conditions as they accumulate rather than reconstruct them afterwards, which `26-arch-observability` now does. A comparison then at least knows which lineage it is reading, even when it cannot neutralise it.
+This does not defeat frozen baselines. It bounds what they establish, and there are two responses rather than one.
+
+The cheap response is the one `10-foundations/03` already prescribes for a single claim under the name Scope: record the conditions as they accumulate rather than reconstruct them afterwards, which `26-arch-observability` now does. A comparison then knows which lineage it is reading, even when it cannot neutralise it.
+
+The strong response is to stop carrying the corpus at all — instantiate the configuration fresh and run it against scenarios defined independently of anything it produced. That completes what a frozen baseline starts, since freezing the task and discarding the accumulated record together leave nothing on either side that the audited system shaped. It is expensive, which is why it does not replace the cheap response; `03-meta-level-feedback.md` places both on one gradient and `07-bootstrapper-as-transfer-mechanism.md` is the mechanism.
 
 ## Open question
 
