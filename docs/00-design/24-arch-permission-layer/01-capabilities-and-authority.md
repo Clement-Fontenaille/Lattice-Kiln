@@ -52,8 +52,29 @@ Neither of them answers a third question, and it is worth naming here so that th
 
 So: this model asks whether the actor may request it, the invariant gate asks whether it may happen at all, and thinking asks whether it should. Three questions, three owners, and only the first two are gates.
 
+## A fourth question, which this model does not yet answer
+
+There is one more, and the three-question framing above made it harder to see by looking complete. **Is this within what was asked for?**
+
+`10-foundations/07` names this document as the destination for it — "scope declared and checked belongs with the capability and authority model" — and nothing here currently implements it. The failure mode that commitment exists to prevent is stated there precisely: work beyond the mandate it was given, "including where each step past it is locally justified by the last."
+
+That is not a capability question and capability cannot be stretched to cover it, because the two are keyed to different things. A **capability** is keyed to the actor, set by policy, and evaluated per effect: an implementer may perform bounded workspace changes. A **declared scope** is keyed to the work item, declared per task, and evaluated against what was actually touched. Every step of a drift past the mandate can sit inside capability while the aggregate sits outside the mandate, and a per-effect check keyed to the actor will see nothing wrong at any point.
+
+`25-arch-invariant-layer` already states the property that makes this structural rather than an oversight: capability gating evaluates one proposed effect at a time, and a sequence of individually authorized actions can assemble into an outcome no single check was designed to catch. That observation was made about invariant enforcement and applies here unchanged; the line between it and `07`'s commitment had not been drawn.
+
+**It is authority's rather than capability's**, which is why it belongs in this document despite needing something this document does not have. Authority is already the dynamic half — the runtime interpreting a requested operation under current policy — while capability is the static description of what a role may ask for. A mandate is dynamic in the same way, and adjustable per task.
+
+**It is not the invariant layer's**, and the distinction matters. Mandates differ per work item and are set by whoever asked for the work. A mechanism holding something adjustable would not be the invariant layer, whose defining property is that no loop may write to it.
+
+What would have to exist, stated as shape rather than mechanism: a **declared scope carried on the work item** — which makes it `28-arch-work-record`'s to hold, since that actor holds the work item and its formulation — and a **comparison against what was actually touched**, which has to be aggregate over a sequence rather than per effect. Neither exists. This document names the gap rather than closing it, because closing it means deciding what a scope declaration looks like, which is specification.
+
 ## Open question
 
 Capability granularity should be derived from actual needs. Overly coarse capabilities weaken control; overly fine capabilities create administrative complexity and can distract the model from the cognitive objective.
 
 Reads are the first concrete instance of that trade-off rather than a separate question. Naming a class of reads by path, by crossing type, or by volume against a ceiling are granularities with very different administrative costs, and the permissive default above means none of them has to be chosen before there is a reason to.
+
+How a declared scope is expressed and compared, per the section above. `10-foundations/07` requires that it become "checkable properties of artifacts and effects, never an inference about intent" — so a comparison of declared scope against what was touched qualifies, and anything of the form "what the operator would have wanted" does not.
+
+Whether mandate conformance is refused, escalated, or merely recorded when it fails. `07` says the requirement "cannot be enforced by deterministic refusal alone", which rules out treating it like the invariant gate, and leaves what it *is* treated like unanswered.
+

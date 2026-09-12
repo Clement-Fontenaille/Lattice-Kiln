@@ -221,6 +221,18 @@ and authority model; provenance on context items with observability and context
 assembly; the two-mode handoff with the processor contract and the effect
 vocabulary, where a required stop-rationale already exists as its narrower form.
 
+**Status of those destinations (2026-09-13).** Provenance on context items has
+arrived: crossing type distinguishes generated from fetched on every tracked entry,
+and `23-arch-context-management` carries the constraint that the distinction must
+survive into what the model is actually shown rather than being flattened there.
+Scope declared and checked has not. `24-arch-permission-layer` has read this
+requirement against itself and found that capability gating cannot carry it — a
+capability is keyed to the actor and evaluated per effect, while a mandate is keyed
+to the work item and evaluated in aggregate against what was touched, so every step
+of a drift can sit inside capability while the whole sits outside the mandate. The
+gap is named there and in `28-arch-work-record`, which would hold the declaration;
+neither has been built.
+
 The minimal statement, for whoever implements it: **generated content must not
 silently occupy the place of authored content.** The system should know the
 difference, represent it, and behave differently on each side of it. This is
