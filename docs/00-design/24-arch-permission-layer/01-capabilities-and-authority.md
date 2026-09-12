@@ -94,6 +94,20 @@ The asking has a required shape. Naming the candidate interpretations — this r
 
 What counts as enough doubt to stop is unset, and the pressure runs one way. `07` observes that refusing costs more than approving, so approval interfaces lean toward assent — mechanically, not morally. The same mechanics apply to a system choosing between asking and proceeding: asking costs a round trip and proceeding looks like progress, so a scope check left to its own judgment will under-detect ambiguity rather than over-detect it.
 
+### Four things this does not need
+
+Followed naively, the arrangement grows heavy: an invariant evaluator inscribing a scope on the task, holding its own copy, and validating every effect against it, with each effect carrying proof that it belongs to the task. Most of that is avoidable, and saying which parts keeps the mechanism small enough to be worth having.
+
+**Attachment costs nothing.** Instantiating a processor binds an objective (`10-technical/01-effect-vocabulary.md` type 6), and that objective comes from a work item. Every effect the instance proposes inherits the work item through the instance that proposed it, which the runtime already tracks for attribution. There is no proof for an effect to carry and no attachment mechanism to build.
+
+**The deriver need not be an invariant processor.** Putting it in that layer would protect it from removal, not from being generous, and a protected-but-lax deriver is worth no more than an unprotected one. What has to be inescapable is narrower: **no unscoped work**. If no scope exists, the check fails closed. Removing the deriver then stops work rather than freeing it, which protects it indirectly and far more cheaply than membership would.
+
+**The check is per task, not per effect.** The reversible majority is compared once, at the end, as an accumulated set against the declaration — which is also the only point at which drift is visible *as* drift rather than as a series of individually unremarkable steps. Only irreversible effects are checked one at a time, before the fact, and those are rare.
+
+**No second copy of the scope is needed.** The worry it answers is real: scope lives on the work item, and work-record mutation is an ordinary gated effect, so a loop could widen its own mandate by mutating it. But widening is an effect like any other and the check sees it — modifying the scope is within the current scope or it is not, exactly as touching the web API documentation is. A scope that permits modifying itself is the thing to exclude by default, and that costs a default rather than a mechanism.
+
+What remains genuinely hard is the end-of-task comparison itself: judging an accumulated set of changes against a natural-language boundary. That is one judgment per task rather than one per effect, which is the difference between a check worth running and one nobody will.
+
 **The check divides on reversibility, and the two halves sit at opposite ends of a task.**
 
 - **Reversible changes are audited at the end.** Their extent can be compared against the declaration once the work is done, in aggregate, which is the only point at which drift is visible as drift. Auditing late is affordable precisely because the finding still has a remedy: what fell outside can be undone.
