@@ -916,6 +916,24 @@ What survives as architectural is narrower and concerns representation rather th
 
 ---
 
+## F46 — Three questions can be asked about an effect and only two are gates; risk evaluation sits upstream of the proposal
+
+**Claim.** `10-foundations/02` states that an effect which is irreversible by nature cannot be refused on reversibility grounds alone without refusing the work itself, and that what it needs instead is a real evaluation of whether this specific change, in this specific context, is worth what it forecloses. It assigns that to thinking and says explicitly that it is not the invariant layer's, because that layer holds effects which may never occur regardless of what any loop concludes, and a legitimately irreversible effect is by definition not one of those.
+
+Neither `24-arch-permission-layer` nor `25-arch-invariant-layer` carried any of this. Consolidating it produces a distinction nothing in the band had stated: **three different questions can be asked about a proposed effect, and only two of them are gating questions.** May this actor request it — capability, under adjustable policy. May it happen at all — the invariant gate, under constraints no loop may adjust. Is it worth what it forecloses — a judgment, context-dependent, with no fixed answer.
+
+The load-bearing part is where the third one runs. It sits **upstream of the proposal**, while the effect is being formed, and not as a stage in the gating pipeline. `10-technical/01`'s own open contract already pointed this way by noting that `02` argues the proposing side. The reason it matters is structural rather than procedural: a judgment stage inside the enforcement path would be a reasoning component sitting in the path, which is exactly the persuadable mechanism `25`'s The gate is not a role exists to exclude. Judgment before the proposal, mechanism after it.
+
+One consequence for the gate falls out and is worth keeping: an irreversible effect that passes is permitted, not endorsed, and an effect proposed without the judgment having been made is indistinguishable to the gate from one proposed after it. Whether the judgment happened is a question for the record, not for the gate — which is another way of saying the gate must not start asking whether something was well-considered.
+
+**Mode: Reasoned**, from documents already in hand. The `02` material it carries dates from the 2026-09-10 pass and was the last un-carried item on that document's backlog row.
+
+**Grounds.** `10-foundations/02`'s Proposal and effect, including the "where required" concession on reversibility and its explicit assignment of risk evaluation to thinking rather than to the invariant layer; `10-technical/01-effect-vocabulary.md`'s open contract on who assigns a reversibility class, which already records that `02` argues the proposing side; `25-arch-invariant-layer/01`'s The gate is not a role, which supplies the reason the evaluation cannot be a pipeline stage.
+
+**Changed.** `25-arch-invariant-layer/01`: new §What the gate does not evaluate: whether an effect is worth it, stating the three questions, why the third is not this layer's, why it runs upstream, and that permitted is not endorsed. `24-arch-permission-layer/01`: the capability-area list marked as predating the effect vocabulary and reconciled against it, with memory proposals and task manipulation pointed at their owners; new §Reads, and where the permissive default lives, since what ordinarily happens to a read is a policy question and therefore that document's; What this model does not provide extended with the third question. `22-arch-cognition/04-thinking.md`: risk evaluation added as a family member, with the note that it is the membership test's clearest case and passes it, since what it produces is a Decision.
+
+---
+
 ## Unchecked justifications
 
 Findings above are grounded in something read or directly checked. The items below are
@@ -944,6 +962,14 @@ them, and the next pass on `03` should treat them as open rather than settled.
   with no diagnostic proposed. The sweep bounds the damage here — an over-generous
   curator grows the store rather than corrupting it — but this pass proposed no
   diagnostic either.
+
+- **The thinking family's membership test (F42) has been applied on paper once, to
+  irreversible-effect risk evaluation (F46), and passed — but still never to a real
+  processor.** The paper case is encouraging rather than decisive: the evaluation
+  produces a Decision, which is a `03` claim type, so the test resolves cleanly without
+  being stretched. It also exposes the test's edge. A judgment reached and left
+  unrecorded fails the test while being the same cognitive act, which means membership
+  depends on what a processor is asked to emit rather than on what it does.
 
 - **The thinking family's membership test (F42) has never been applied to a real
   processor.** "Its product is a proposed knowledge-state transition" is crisp on

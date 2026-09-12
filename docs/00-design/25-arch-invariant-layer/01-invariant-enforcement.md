@@ -56,6 +56,22 @@ Capability gating asks whether a given actor is authorized to request a given op
 
 An effect must pass both. Passing capability gating is not evidence of passing the invariant gate.
 
+## What the gate does not evaluate: whether an effect is worth it
+
+Three different questions can be asked about a proposed effect, and only two of them are gating questions. Keeping them apart is what lets this gate stay mechanical.
+
+- **May this actor request it?** Capability and authority (`24-arch-permission-layer`), under a policy that is legitimately adjustable as the system learns.
+- **May it happen at all?** This gate, under constraints no loop may adjust.
+- **Is it worth what it forecloses?** Neither of the above. This is a judgment, it is context-dependent, and it has no fixed answer.
+
+The third question is not this layer's, and `10-foundations/02` says why in a form worth repeating precisely: this layer holds effects that may never occur regardless of what any loop concludes, and **a legitimately irreversible effect is by definition not one of those**. Deleting a branch, dropping a database, publishing something — each may be exactly what was asked for. Refusing them on reversibility grounds alone would be refusing to do the work.
+
+So an irreversible effect needs a real evaluation of whether this specific change, in this specific context, is worth what it closes off. That evaluation is reasoning-based and context-grounded, it is weighed the way any other claim is weighed (`10-foundations/03`, Weighing claims), and it belongs to `22-arch-cognition/04-thinking.md`.
+
+**It sits upstream of the proposal, not in the gating pipeline.** This is the load-bearing part. The evaluation happens while the effect is being formed, before it is submitted — not as a fourth stage after capability and before the invariant check. If it were a stage in the pipeline it would be a reasoning component sitting inside the enforcement path, which is precisely the persuadable mechanism The gate is not a role exists to keep out. Judgment before the proposal; mechanism after it.
+
+One consequence for this layer. The gate never has to ask whether an effect was well-considered, and must not try. An irreversible effect that passes is permitted, not endorsed, and an effect proposed without the judgment having been made looks identical to one proposed after it. Whether the judgment happened is a question for the record (`26-arch-observability`), not for the gate.
+
 ## Composition risk
 
 Capability gating evaluates one proposed effect at a time.
