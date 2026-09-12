@@ -130,7 +130,7 @@ Three parties, and the third is the answer to a question the rest of this sectio
 
 **The operator**, without bound, because they are the source. Scope descends from intent and intent is amended out of band (`10-technical/01-effect-vocabulary.md` type 4).
 
-**A deriver, for a task it is not itself executing** — bounded by the parent's scope, and ultimately by the intent's.
+**A deriver, for a task it is not itself executing** — bounded by the parent's scope, and ultimately by the intent's. That deriver is the **orchestrator**, at the moment it formulates the work item; see `22-arch-cognition/03-orchestrator.md`, which sets out why and what would argue for separating the two acts later.
 
 **Nobody else.** No instance working *under* a task may modify that task's scope, and the scope check is read-only on it: it compares and reports rather than rewriting.
 

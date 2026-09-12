@@ -14,7 +14,7 @@ An intelligent coordinator can instead decide whether the current situation call
 
 ## Responsibility
 
-The orchestrator interprets current work and knowledge, decides what cognitive operation appears useful next, selects or defines a processor role, formulates the processor objective, mediates discussions, and synthesizes results.
+The orchestrator interprets current work and knowledge, decides what cognitive operation appears useful next, selects or defines a processor role, formulates the processor objective and the scope that objective implies, mediates discussions, and synthesizes results.
 
 Its responsibility is strategic coordination.
 
@@ -31,6 +31,20 @@ The orchestrator's own turn input is composed by `23-arch-context-management` tu
 That holds without anything having to fetch context on the orchestrator's behalf. The context manager is in the path everything to and from the model takes, so it composes because a turn is happening; there is no request to place and therefore no awkward case where the orchestrator would have to place it for itself. The relationship is not coordinator to coordinated, and it is not quite consumer to service either, since a consumer calls and the orchestrator never does.
 
 Giving the orchestrator every conversation and every repository detail would recreate the same working-memory problem the processor architecture is intended to solve — the risk this section originally named before an actor existed to answer it.
+
+## Deriving scope
+
+The orchestrator derives a work item's scope, at the moment it formulates that item. Stated as a choice rather than a deduction, with the reasons and the things that would overturn it.
+
+**Why here.** It already formulates the objective, and a scope follows from an objective rather than being independent of it — "add another output format to this CLI tool" carries its boundary with it. Deriving at formulation is close to one act rather than two. It also satisfies the constraint `24-arch-permission-layer` places on any deriver: it does not execute the work item it creates, so it is deriving for work it is not doing. And it holds the ceiling, operating at intent level, so what it derives for a child is bounded without anything extra having to enforce it.
+
+**The same act at every level, including the first.** A root work item has no parent to inherit from; it derives from the intent, which is the operator's own request and is not system-authored. That is the same derivation performed against a different source, not a separate intake mechanism.
+
+**The objection, and why it does not land.** This role is tunable system configuration, so system-level feedback can retune the thing that writes mandates. But a generously-tuned orchestrator derives up to the intent's ceiling and no further, which is the same degradation profile as any lax deriver: it fails to narrow, and it cannot widen past intent. The failure mode is a scope that does nothing, not a scope that permits something new.
+
+**What is given up, and why it is affordable.** Merging formulation with derivation means nothing independent checks whether a derived boundary actually matches the objective it came from. That would matter if the derivation were the only check — it is not. The verification is downstream and independent by construction, sitting in the invariant layer (`25-arch-invariant-layer`). The independence that matters here is between *deriving* and *verifying*, not between *formulating* and *deriving*.
+
+**What would argue for splitting them later.** Evidence that orchestrators derive systematically generously, since the ceiling bounds that but does not prevent it. Or a finding that the two acts want different context or different role instructions, in which case they are two roles by `27-arch-adaptation-and-evolution/08`'s own test rather than by preference.
 
 ## Scope constraint
 
