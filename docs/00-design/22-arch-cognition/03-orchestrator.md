@@ -14,7 +14,7 @@ An intelligent coordinator can instead decide whether the current situation call
 
 ## Responsibility
 
-The orchestrator interprets current work and knowledge, decides what cognitive operation appears useful next, selects or defines a processor role, formulates the processor objective and the scope that objective implies, mediates discussions, and synthesizes results.
+The orchestrator interprets current work and knowledge, decides what cognitive operation appears useful next, selects or defines a processor role, formulates the processor objective, narrows the inherited scope where the objective warrants it, mediates discussions, and synthesizes results.
 
 Its responsibility is strategic coordination.
 
@@ -32,27 +32,25 @@ That holds without anything having to fetch context on the orchestrator's behalf
 
 Giving the orchestrator every conversation and every repository detail would recreate the same working-memory problem the processor architecture is intended to solve — the risk this section originally named before an actor existed to answer it.
 
-## Deriving scope
+## Scope: what this role may and may not do
 
-The orchestrator derives a work item's scope, at the moment it formulates that item. Stated as a choice rather than a deduction, with the reasons and the things that would overturn it.
+This document briefly assigned scope derivation here, and that was wrong. The correction is worth keeping visible because the argument for it failed at the exact point it looked strongest.
 
-**Why here.** It already formulates the objective, and a scope follows from an objective rather than being independent of it — "add another output format to this CLI tool" carries its boundary with it. Deriving at formulation is close to one act rather than two. It also satisfies the constraint `24-arch-permission-layer` places on any deriver: it does not execute the work item it creates, so it is deriving for work it is not doing. And it holds the ceiling, operating at intent level, so what it derives for a child is bounded without anything extra having to enforce it.
+The argument was that a generously-tuned orchestrator derives up to the intent's ceiling and no further, so its failure mode is a scope that does nothing rather than one that permits something new. That holds only if something else writes the ceiling. It does not: the same passage claimed a root work item derives from intent by *the same act at every level*, which puts the ceiling in this role's hands too. "Bounded by the intent's scope" is circular when this role writes the intent's scope. The uniformity that looked economical was what removed the bound.
 
-**The same act at every level, including the first.** A root work item has no parent to inherit from; it derives from the intent, which is the operator's own request and is not system-authored. That is the same derivation performed against a different source, not a separate intake mechanism.
+And this role is tunable system configuration by its own account, above. A mandate written by something feedback can retune is a mandate the loops can widen indirectly, by adjusting the thing that writes it rather than by proposing a widening that a check would see.
 
-**The objection, and why it does not land.** This role is tunable system configuration, so system-level feedback can retune the thing that writes mandates. But a generously-tuned orchestrator derives up to the intent's ceiling and no further, which is the same degradation profile as any lax deriver: it fails to narrow, and it cannot widen past intent. The failure mode is a scope that does nothing, not a scope that permits something new.
+**So derivation from intent belongs to the invariant layer** (`25-arch-invariant-layer`), not here.
 
-**What is given up, and why it is affordable.** Merging formulation with derivation means nothing independent checks whether a derived boundary actually matches the objective it came from. That would matter if the derivation were the only check — it is not. The verification is downstream and independent by construction, sitting in the invariant layer (`25-arch-invariant-layer`). The independence that matters here is between *deriving* and *verifying*, not between *formulating* and *deriving*.
-
-**What would argue for splitting them later.** Evidence that orchestrators derive systematically generously, since the ceiling bounds that but does not prevent it. Or a finding that the two acts want different context or different role instructions, in which case they are two roles by `27-arch-adaptation-and-evolution/08`'s own test rather than by preference.
+**What stays here is narrowing.** The orchestrator formulates work items under a scope already set above it, and may give a child a boundary narrower than its parent's. Narrowing needs no protection: it makes the end-of-task check stricter rather than looser, and a role that declines to narrow simply leaves everything at the inherited boundary. The part of the original argument that survives is the observation underneath it — a scope follows from an objective rather than standing apart from it — which is a reason for narrowing to sit with formulation, and not a reason for the ceiling to.
 
 ## Scope constraint
 
-Every processor is instantiated with a scope it cannot widen (`24-arch-permission-layer`). The orchestrator is a processor, so it has one too, and what it is is the one case that arrangement does not settle.
+Every processor is instantiated with a scope it cannot widen (`24-arch-permission-layer`). The orchestrator is a processor, so it has one too.
 
-It reads work state across items rather than operating under a single one, which means a work item's scope is the wrong size for it. The natural reading is that it holds the **intent's** scope, with the work items it formulates inheriting narrowed versions — consistent with mandate descending from intent, and with this role being the place that descent happens. Not yet argued, and recorded here as the open end rather than assumed.
+It reads work state across items rather than operating under a single one, so a work item's scope is the wrong size for it: it holds the **intent's** scope, derived above it by an invariant processor. Every work item it formulates inherits from that and may be narrower, never wider.
 
-What is clear either way: whatever scope the orchestrator holds bounds every work item it creates, since a child's boundary must sit inside its parent's. So this is not a detail that can be left to specification — it sets the ceiling for everything below it.
+The earlier reading of this section had the orchestrator holding the intent's scope *because this role is where the descent from intent happens*. That was the circularity the section above corrects. It holds the intent's scope as a constraint it received, not as one it wrote.
 
 ## Expected evolution
 

@@ -20,7 +20,7 @@ This document holds four mechanisms. They share one property and nothing else: *
 
 - **The gate** — deterministic, mechanical, over the line or not.
 - **Triage** — the invariant processor that assesses and routes a trip.
-- **The scope check** — the invariant processor that compares work against its mandate (`24-arch-permission-layer`).
+- **Scope work** — deriving a mandate from intent, and checking work against it (`24-arch-permission-layer`).
 - **The capability engine** — the mechanism that applies capability policy to a requested operation.
 
 **The floor is the gate, not this collection and not the invariant layer.** Those are three different things and the word has been doing double duty. `10-foundations/06`'s **invariant layer** is *content*: the small, explicit set of goals, resource ceilings and inescapable constraints every loop may read and none may write. The **floor** is the gate — the deterministic point nothing argues past. This document is the *enforcement* architecture, which is where the mechanisms live. A layer of statements, a floor that stops things, and the machinery in between.
@@ -146,7 +146,15 @@ That is what makes membership safe here and would not make it safe for an arbitr
 
 Two things follow that are easy to get wrong. **The gate itself stays deterministic**: nothing here softens The gate is not a role, and an invariant processor is not a smarter gate but a separate occupant of the same layer. And **deriving a scope is ordinary cognition rather than part of the check** — the derivation is a proposal, recorded with its reasoning and contestable (`24-arch-permission-layer`), while what this layer fixes is that a check runs at all and that it can only narrow.
 
-That second point is what keeps this layer from acquiring occupants it does not need. The obvious worry — a loop biasing derivation toward generosity, so the check passes vacuously — does not argue for fixing the deriver here. Membership protects a role from removal, not from being bad, and a protected-but-generous deriver is worth nothing more than an unprotected one. What belongs here is the narrower thing: **no unscoped work**, so the check fails closed when no scope exists. A loop that removes the deriver then finds that work stops rather than that it is free, which is the protection actually wanted and costs this layer one more occupant than it would otherwise have had: none.
+**Deriving the mandate from intent belongs here too, and an earlier draft had it wrong.** That draft argued the deriver could sit outside, on the grounds that a lax one degrades to no narrowing rather than to permission, and that anything it produced was bounded by the intent's scope anyway. The second half is where it breaks: if the same actor derives the *root* scope from intent, it writes that ceiling, and "bounded by the intent's scope" means nothing. The draft had put derivation with the orchestrator, which is tunable system configuration — so the loops could widen every mandate indirectly by retuning the thing that writes them, without ever proposing a widening any check would see.
+
+Derivation qualifies on the direction test like the rest. A derived scope narrows within capability and cannot exceed it, so the worst a persuaded or degraded deriver produces is scope equal to capability: no narrowing, and nothing newly permitted.
+
+What stays outside is **narrowing**, which needs no protection at all. Giving a child a boundary inside its parent's makes the check stricter, and declining to narrow just leaves the inherited boundary in place. So the orchestrator still shapes scope downward as it formulates work; it simply does not write the ceiling.
+
+**Whether deriving and checking are one role is open, and the default says one.** They are different products — a boundary, and a verdict about conformance to one — which argues for two. But `27-arch-adaptation-and-evolution/08` holds that multiplicity belongs to invocation rather than identity, and the independence that matters here can come from invocation: a checking invocation that does not receive the deriving invocation's reasoning is independent of it in exactly the sense `22-arch-cognition/02-processors.md` means. One role invoked twice is the cheaper reading and the default until evidence says it cannot serve.
+
+One thing this layer holds regardless of that answer: **no unscoped work.** The check fails closed when no scope exists, so a system that somehow lost its deriver stops rather than runs free.
 
 Beyond direction, membership needs the ordinary test: a loop able to remove one, retune it, or route around it is inside the scope that role constrains, so a loop cannot be the party that commissions it — the test stated in `10-foundations/06` and applied to triage above.
 

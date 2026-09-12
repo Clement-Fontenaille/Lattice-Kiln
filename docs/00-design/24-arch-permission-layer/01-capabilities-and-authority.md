@@ -130,7 +130,9 @@ Three parties, and the third is the answer to a question the rest of this sectio
 
 **The operator**, without bound, because they are the source. Scope descends from intent and intent is amended out of band (`10-technical/01-effect-vocabulary.md` type 4).
 
-**A deriver, for a task it is not itself executing** — bounded by the parent's scope, and ultimately by the intent's. That deriver is the **orchestrator**, at the moment it formulates the work item; see `22-arch-cognition/03-orchestrator.md`, which sets out why and what would argue for separating the two acts later.
+**An invariant processor, deriving the mandate from intent.** This is the ceiling, and it is written by `25-arch-invariant-layer` rather than by anything the feedback loops can retune. A first draft assigned it to the orchestrator and that failed on circularity: if the same actor derives the root scope from intent, "bounded by the intent's scope" bounds nothing, because it wrote that too.
+
+**The orchestrator, narrowing.** It formulates work items under a ceiling set above it and may give a child a boundary inside its parent's. Narrowing is safe without protection — it makes the check stricter, and declining to narrow leaves the inherited boundary standing.
 
 **Nobody else.** No instance working *under* a task may modify that task's scope, and the scope check is read-only on it: it compares and reports rather than rewriting.
 
