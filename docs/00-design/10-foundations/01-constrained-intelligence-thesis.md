@@ -44,6 +44,8 @@ Early results suggest the advantage may lie as much in damage avoided as in work
 
 It settles nothing about the second reading, because it concerns the wrong class. Whether verification, invariant enforcement and independent review still earn their cost against a more capable model is untouched by this — a model that needs no help finding its material may still need to be prevented from acting on a bad conclusion. The two kinds of scaffolding should be expected to have different answers, which is itself worth knowing before either is assessed.
 
+`07-the-integrated-system-and-its-operator.md`'s final open question is the second class stated as a comparison this project can actually run: whether restraint — keeping changes narrow, leaving the operator able to question the work — comes from the model or from the harness around it. That is the missing half, already named elsewhere, and it does not need a new experiment designed for this document.
+
 Any comparison here is assembly against assembly. A scaffolded small model set against a bare large one measures two configurations, not scaffolding against size (`07-the-integrated-system-and-its-operator.md`).
 
 ## Where the overhead exceeds the benefit

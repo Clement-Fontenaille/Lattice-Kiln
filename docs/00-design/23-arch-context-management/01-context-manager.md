@@ -54,6 +54,16 @@ Provisional, adopted to see where it leads rather than because it has been shown
 
 Knowledge-base retrieval is a tool like any other — the model calls it, the runtime executes it, this actor registers the reference. This actor never initiates that call itself, on a processor's behalf or otherwise. Once a reference is in the live set it is subject to the same recall policy as anything else, regardless of which crossing put it there.
 
+## A constraint on what a turn input may look like
+
+`10-foundations/07` places one requirement on this actor that is easy to miss, because it is stated there as a constraint on the system rather than as a job for a component: **generated content must not silently occupy the place of authored content.** Its own words for the scope are that this "constrains how the system is permitted to compose its own inputs", which is this actor's business and nobody else's.
+
+Honouring it costs nothing that is not already here. Every entry carries its crossing type, and a generation is a different crossing from a read or a retrieval — so the distinction between what the model produced and what it was given is available at composition time without any new mechanism. `10-foundations/03`'s Source axis carries the second cut, between a human's contribution and the system's own.
+
+What the requirement asks is that the distinction survive into the turn input rather than being flattened there. A turn input that presents a generated artifact indistinguishably from a retrieved claim has erased something it was holding, and it has done so at the one point where the erasure is invisible afterwards — the model sees the flattened version, not the record.
+
+This is a presentation constraint, not a permission one. Nothing here decides what may be recalled; it decides that what is recalled arrives marked as what it is.
+
 ## Service provided to the rest of the system
 
 - **What the model sees on a given turn.** Composed at the moment of feeding, out of what is in the live set and what recall selects from it. This is not a package delivered once per invocation and then held: it is recomposed every turn, over a live set that grew since the last one. It is also richer than the naive default's flat file list, since each entry carries its crossing type.

@@ -238,8 +238,23 @@ finding, and decision. Authorship preservation may be an application of that
 machinery to a new axis rather than a new mechanism; whether it is has not been
 determined.
 
+**For the inbound half, it has been determined since, and it is an application
+(2026-09-12).** `04-context-as-governed-resource.md`'s crossing model gives every
+artifact a **crossing type** — a generation, a read of the external world, a
+retrieval from the knowledge base — and that distinction is exactly "what it
+generated from what it was given". `03`'s Source axis carries the second cut,
+between a human's contribution and the system's own. Together they answer the
+inbound direction with no new mechanism, which is what this paragraph was holding
+open.
+
+The outbound half is untouched by that. Acting within a mandate, and treating work
+beyond it as needing a new one, is not a property of where an artifact came from.
+
 Context governance decides what a processor sees. This document adds that *where
-each part of it came from* is part of what must be governed.
+each part of it came from* is part of what must be governed — now realized, since
+`23-arch-context-management` carries crossing type on every entry it tracks and
+`26-arch-observability` records the conditions each stretch of history accumulated
+under.
 
 ## Status
 
@@ -271,3 +286,13 @@ Whether restraint — keeping changes narrow, leaving the operator able to quest
 the work — comes from the model or from the harness around it. The answer decides
 how much of this requirement has to be built rather than inherited, and the
 comparison that would separate them is one this project can run.
+
+That question turns out to be `01-constrained-intelligence-thesis.md`'s unresolved
+either/or, for one class of scaffolding. `01` asks whether scaffolding substitutes
+for capacity or bounds what capacity can spoil, and records a first observation
+pointing at the former — but only for *context management*, since a capable model
+can find its own material. Restraint belongs to the other class, the one that
+concerns damage rather than retrieval, and a model that needs no help finding
+material may still need preventing from acting on a bad conclusion. So the
+comparison named here is the one that would settle the half `01`'s observation
+could not reach.
