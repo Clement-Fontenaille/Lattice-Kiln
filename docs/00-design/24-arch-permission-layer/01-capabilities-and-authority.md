@@ -108,6 +108,22 @@ Followed naively, the arrangement grows heavy: an invariant evaluator inscribing
 
 What remains genuinely hard is the end-of-task comparison itself: judging an accumulated set of changes against a natural-language boundary. That is one judgment per task rather than one per effect, which is the difference between a check worth running and one nobody will.
 
+### Can the loop get out from under its own mandate?
+
+Three routes are worth checking explicitly, because a scope check that any of them defeats is decoration.
+
+**Rewriting its own rules.** It cannot. Configuration mutation produces a *candidate* — `10-technical/01-effect-vocabulary.md` type 7 excludes modifying the trusted running configuration in place as not representable, and the path from candidate to trusted is promotion, type 8, which carries the heaviest authority constraints of the nine.
+
+**Commissioning a processor that rewrites scope.** Commissioning is not invoking. The primary loop invokes instances of existing roles (type 6); creating a role definition is system-level feedback's (`27-arch-adaptation-and-evolution/02`), and a commissioned role inherits no exemption in any case — it can only request effects the runtime already checks, so a scope-rewriting effect meets the scope check like any other.
+
+**Manufacturing a task whose scope permits what the current one forbids.** This is the real one, and the naive reading of it succeeds. Creating a work item is an ordinary type-4 mutation. Splitting is explicitly legitimate (`22-arch-cognition/01`). So: split the task, give the child a wider boundary, act under the child. Splitting is allowed and the widening hides inside it.
+
+What closes it is already written and had not been connected. **Scope descends from intent and never appears sideways.** `10-technical/01` type 4 excludes "an intent record's original human-authored content, which is amended only out of band" — intent is not system-writable, and `28-arch-work-record` traces every work item back to one. So a *root* task requires new intent, which only comes from outside, and a loop that authored its own mandate would be authoring the thing that constrains it, which is exactly what `10-foundations/06`'s membership test disqualifies.
+
+From which the rule on splits follows rather than needing separate justification: **a split inherits its parent's scope and may narrow it, never widen it.** A proposed child whose scope is not contained in its parent's is not a split at all. It is a new root task, and it needs intent rather than a parent.
+
+Two honest limits. That containment rule is stated here and enforced nowhere yet. And deciding whether a proposed child's boundary sits inside its parent's is itself a natural-language judgment, so this closure does not reduce the amount of judgment required — it places all of it in the same check rather than leaving a path around it.
+
 **The check divides on reversibility, and the two halves sit at opposite ends of a task.**
 
 - **Reversible changes are audited at the end.** Their extent can be compared against the declaration once the work is done, in aggregate, which is the only point at which drift is visible as drift. Auditing late is affordable precisely because the finding still has a remedy: what fell outside can be undone.

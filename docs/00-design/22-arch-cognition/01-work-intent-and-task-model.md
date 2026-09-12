@@ -24,6 +24,8 @@ Intent represents the underlying desired outcome or concern.
 
 It should remain traceable even when the system rewrites the work derived from it. That traceability is a service `28-arch-work-record` provides as intent lineage, and `10-technical/01-effect-vocabulary.md` already depends on it: a realized effect must be reconstructable per intent lineage, not only per actor.
 
+**Intent enters from outside and the system does not author it.** `10-technical/01` states this as an exclusion — an intent record's original human-authored content is amended only out of band — and it carries more weight than a records-hygiene rule. Mandate descends from intent (`24-arch-permission-layer`), so a system able to write its own intent could write its own mandate, which is precisely what `10-foundations/06`'s membership test disqualifies: a loop cannot author what constrains it. Work may be rewritten freely; what the work is *for* may not.
+
 ## Work representation
 
 A work item is a current formulation of what may need to be investigated or done.
