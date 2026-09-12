@@ -14,6 +14,28 @@ The structural claims below — where the gate sits, what it binds, what the tri
 
 The operational specifics are not recorded here: the escalation protocol, threshold definitions, the representation of the failure signal, and what human intervention actually looks like in practice. Those are precisely where existing work on corrigibility, scalable oversight, and interruptibility has both results and known failure modes, and this project should inherit them rather than rediscover them empirically. They remain deferred until that reading pass — scheduled as a Milestone 11 deliverable — is done.
 
+## What sits here, and what the floor is
+
+This document holds four mechanisms. They share one property and nothing else: **none of them is adjustable by what it constrains.**
+
+- **The gate** — deterministic, mechanical, over the line or not.
+- **Triage** — the invariant processor that assesses and routes a trip.
+- **The scope check** — the invariant processor that compares work against its mandate (`24-arch-permission-layer`).
+- **The capability engine** — the mechanism that applies capability policy to a requested operation.
+
+**The floor is the gate, not this collection and not the invariant layer.** Those are three different things and the word has been doing double duty. `10-foundations/06`'s **invariant layer** is *content*: the small, explicit set of goals, resource ceilings and hard constraints every loop may read and none may write. The **floor** is the gate — the deterministic point nothing argues past. This document is the *enforcement* architecture, which is where the mechanisms live. A layer of statements, a floor that stops things, and the machinery in between.
+
+**Each mechanism is fixed while its content is adjustable, and by a different party each time.** That pattern recurs and is worth stating once rather than rediscovering per occupant.
+
+| mechanism | fixed | content, and who sets it |
+|---|---|---|
+| gate | the check | the invariant list — humans, out of band |
+| scope check | that it runs, and that it only narrows | the mandate — whoever asked for the work, per task |
+| capability engine | that it applies | capability policy — system-level feedback |
+| triage | its routing authority and its limits | what trips, which is the gate's |
+
+Confusing the two halves is the failure to watch for in both directions. Treating a mechanism as adjustable removes the floor; treating content as fixed freezes something that has to move — a mandate differs per task, and capability policy is meant to be revised as roles are added.
+
 ## The gate is not a role
 
 The enforcement mechanism is not a processor, not a role, and not anything invoked and reasoned with.

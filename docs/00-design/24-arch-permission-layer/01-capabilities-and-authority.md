@@ -34,6 +34,10 @@ The runtime remains responsible for interpreting a requested operation under the
 
 A reviewer may be allowed to inspect files but not modify them. An implementer may be allowed to propose and perform bounded workspace changes. A system-level optimizer may be able to create candidate configurations without being able to promote them into the trusted baseline.
 
+**The engine that applies this is not here.** It sits with the other non-adjustable mechanisms in `25-arch-invariant-layer`, for the same reason the gate does: a capability engine a loop could remove or route around would gate nothing. What stays in this document is the **model** — what capabilities are, how they are keyed, what a policy may say — and the policy content itself is configuration that system-level feedback revises (`27-arch-adaptation-and-evolution/02`).
+
+That split is the same one `22-arch-cognition/01-work-intent-and-task-model.md` has with `28-arch-work-record`: a document defining a vocabulary, and an actor elsewhere realizing it. It is also the reason the sentence below about not being a floor is exactly right and needs no softening — the policy is adjustable, which is what disqualifies it from being a floor, while the machinery applying it is not adjustable at all.
+
 ## Why the distinction matters
 
 Without this separation, role definitions become entangled with runtime security and system governance.

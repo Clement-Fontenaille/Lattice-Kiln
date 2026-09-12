@@ -13,8 +13,8 @@ This document is the entry point into the architecture space: runtime sits under
 - [`21-arch-knowledge-model/`](21-arch-knowledge-model/01-knowledge-model.md) — `10-foundations/03`'s substrate, realized.
 - [`22-arch-cognition/`](22-arch-cognition/01-work-intent-and-task-model.md) — the reasoning and coordinating actors: task representation, processors, the orchestrator, thinking, decomposition.
 - [`23-arch-context-management/`](23-arch-context-management/01-context-manager.md) — `10-foundations/04`'s account, realized.
-- [`24-arch-permission-layer/`](24-arch-permission-layer/01-capabilities-and-authority.md) — what an actor may request.
-- [`25-arch-invariant-layer/`](25-arch-invariant-layer/01-invariant-enforcement.md) — what may never happen, regardless of what any actor requests.
+- [`24-arch-permission-layer/`](24-arch-permission-layer/01-capabilities-and-authority.md) — the model for what an actor may request; the policy is configuration, the engine is `25`'s.
+- [`25-arch-invariant-layer/`](25-arch-invariant-layer/01-invariant-enforcement.md) — the mechanisms no loop may adjust: the gate, which is the floor, plus triage, the scope check, and the capability engine.
 - [`26-arch-observability/`](26-arch-observability/01-observability.md) — what has to be reconstructable after the fact.
 - [`27-arch-adaptation-and-evolution/`](27-arch-adaptation-and-evolution/) — feedback, evaluation, generations, bootstrap.
 - [`28-arch-work-record/`](28-arch-work-record/01-work-record.md) — intent and the work derived from it, held durably.
@@ -33,7 +33,7 @@ What the runtime decides for itself is narrow: it invokes processors, exposes to
 
 Several responsibilities this document once listed as the runtime's own now have owners elsewhere in this band. The runtime is where they become real, which is not the same as deciding them:
 
-- **Capability boundaries** are described by `24-arch-permission-layer`. The policy is theirs; the enforcement point is here.
+- **Capability boundaries** are described by `24-arch-permission-layer` as a model, and the policy content is configuration that feedback revises. The engine applying them is one of `25-arch-invariant-layer`'s non-adjustable mechanisms rather than this document's, for the reason that layer gives: an engine a loop could route around would gate nothing.
 - **The invariant check** is specified by `25-arch-invariant-layer`. Where the gate sits relative to this document is deliberately left open, below.
 - **What gets recorded** is `26-arch-observability`'s to define. The runtime emits it.
 - **Persisted state** has several owners: `21-arch-knowledge-model` holds claims, `23-arch-context-management` the live record, `28-arch-work-record` intent and work items, `26-arch-observability` its own history. The runtime persists whatever their writes resolve to without owning what any of them decided to write.

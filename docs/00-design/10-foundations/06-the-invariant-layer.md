@@ -50,6 +50,8 @@ This set already describes foundational constraints as a matter of decision disc
 
 This layer differs in kind. It requires a deterministic mechanism that checks proposed effects against it and refuses those that cross the line. A constraint that exists only as documentation is a constraint the system can violate without anything noticing.
 
+**This layer is content; the floor is the mechanism.** The distinction is worth holding because one word has been carrying both. What this document defines — goals, resource ceilings, hard constraints — is a set of statements. The **floor** is the gate that enforces them: the deterministic point nothing argues past. `25-arch-invariant-layer` holds that gate along with the other mechanisms no loop may adjust, and sets out the pattern they share, which is that each is fixed while the content it applies is set by someone outside the loops it constrains.
+
 ## Why this makes deferral safe
 
 Much of this documentation set defers deliberately. Context governance is left to be discovered rather than designed. The vocabulary of roles is left open-ended. Memory policy, model assignment, and evaluation thresholds are all left to be resolved by evidence.
