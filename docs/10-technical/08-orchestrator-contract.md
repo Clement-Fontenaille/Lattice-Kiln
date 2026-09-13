@@ -83,9 +83,8 @@ its own performance (higher-level evaluation, Milestone 12+).
 - A sequence of **processor invocations** (type 6 effects), each carrying the six
   things `06-processor-contract.md` binds: a role, an objective the orchestrator
   formulated, a **scope contained in the work item's**, a live-set identity, a
-  capability set **bounded by the orchestrator's own** — it cannot grant what it
-  does not hold — and an interaction mode. It does not select context; there is
-  nothing to select.
+  capability set (bounded how — see the contested rule under Authority), and an
+  interaction mode. It does not select context; there is nothing to select.
 - A **decision record per loop step** (recorded as a type-4 work-record
   mutation): what was observed, which operation was chosen and a one-line
   natural-language rationale, and what the step is expected to produce. This is
@@ -109,11 +108,18 @@ its own performance (higher-level evaluation, Milestone 12+).
   processors within its capability set; **narrow** a scope for a work item or an
   invocation beneath it; route one processor's output to another; stop the effort.
 - **MUST NOT**: realize workspace / process / network effects directly; rewrite
-  the intent; grant a processor a capability it does not itself hold; **derive a
-  scope ceiling from intent**; **widen any scope**; use a processor to accomplish
-  what it is itself forbidden to do (e.g. instructing an implementer solely to
-  edit the invariant list); define its own success metric or evaluate its own
-  performance; loop without bound.
+  the intent; **derive a scope ceiling from intent**; **widen any scope**; use a
+  processor to accomplish what it is itself forbidden to do (e.g. instructing an
+  implementer solely to edit the invariant list); define its own success metric or
+  evaluate its own performance; loop without bound.
+- **Contested, and not to be implemented from either side yet**: whether it may
+  spawn a processor holding an effect grant it does not itself hold. This document
+  stated that as a prohibition, and the role-keyed grant model contradicts it — an
+  orchestrator holding types 6 and 4 could never spawn an implementer holding 1 and
+  2, which is the arrangement the MVP configuration describes.
+  `03-capability-authority-model.md`, Where a spawned instance's set comes from,
+  holds the collision and a candidate resolution. What survives either way is the
+  forbidden-effect rule above, which is what the prohibition was reaching for.
 - Every processor it spawns is **independently gated** (capability + invariant
   gate). Orchestrator authorization is not processor authorization.
 

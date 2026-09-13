@@ -45,6 +45,40 @@ records that its workflow runs unscoped. What follows fixes the shape so that a
 build has something to conform to, and marks every point where the design set
 deliberately left the content open.
 
+### What a build of the mandate half needs decided first
+
+The shape below is complete enough to conform to and **not complete enough to
+build from**, and the difference is worth stating precisely rather than leaving an
+implementer to discover it. Three decisions are structural — each one changes what
+software gets written, not merely how it behaves.
+
+1. **The disposition on `outside`** decides where the call site goes. *Halt* puts
+   the check on the effect path, synchronously, with a model call in it. *Escalate*
+   needs an operator channel and a suspended work item. *Record-and-continue* makes
+   it a post-hoc reporter that can run as a separate job against the record. Those
+   are three different pieces of software, and the open contract below leaves the
+   choice open.
+2. **What the comparison consumes** decides whether the checker needs the
+   observability store, the workspace, or a prepared summary — and therefore
+   whether it is a processor with a live set at all, or a function called with its
+   inputs.
+3. **The containment check on a transition** is a natural-language judgment that
+   `13-work-record.md` makes a precondition of accepting a split or a refinement.
+   Read literally, that puts a model call inside the work store's write path, which
+   has latency and availability consequences nothing has accepted.
+
+Below those, four smaller gaps that each stop a specific line from being
+implementable: no assigner for the reversibility class the pre-effect check keys
+on; no definition of which transitions count as *termination*; no consumer for the
+`undecidable` verdict; and no checkable form for the self-modifying-scope
+exclusion. All four are recorded as open contracts.
+
+What **is** buildable now, and is worth building before any of the above is
+settled: the three scope fields and their states on the work item, the recording
+and visibility of a derivation, and the fail-closed behaviour on an unscoped item.
+Those need no judgment and no model, and the last of them is the single change
+that would move the system from *unbounded* to *stopped*.
+
 ## Responsibility
 
 Two, and keeping them separate is the point of the document.
@@ -166,6 +200,34 @@ Rules:
 - The constraint vocabulary (`path_within`, `command_allowlist`,
   `destination_class`, `max_concurrent`, …) is illustrative for the MVP and is an
   open contract.
+
+### Where a spawned instance's set comes from — an unresolved collision
+
+Two rules in this set contradict each other, and an implementation cannot satisfy
+both.
+
+**This document** says a grant set is keyed to the **role** and read from seed
+configuration. **`08-orchestrator-contract.md`** says the orchestrator "cannot
+grant what it does not hold" and that a spawned processor's capability set is
+bounded by the orchestrator's own.
+
+The illustrative sets above break the second rule immediately: the orchestrator
+holds types 6 and 4, the implementer it spawns holds 1 and 2, and an orchestrator
+that could only pass down a subset of its own grants could never spawn an
+implementer at all — which is the entire arrangement.
+
+The reading that makes the configuration coherent, stated so that a decision has
+something to accept or reject rather than as a settled position: **delegation is
+bounded by the `roles` constraint on the type-6 grant, not by a subset relation
+over effect types.** An orchestrator may instantiate the roles its own grant
+names, and each instance then holds what seed configuration gives that role. What
+`08`'s rule is reaching for is separately stated there and is the part that
+survives either way — an orchestrator MUST NOT use a processor to accomplish what
+it is itself **forbidden** to do, which is a statement about forbidden effects
+rather than about unheld grants.
+
+Until this is decided, an implementation MUST record which reading it took, because
+the two produce different capability sets for the same configuration.
 
 ## Reads
 
@@ -378,6 +440,11 @@ is.
     runtime** — no proposal, no evaluation step, no wait for human review
     (`01-invariant-enforcement.md`, decommissioning). After revocation the
     actor's set is empty and every subsequent request from it fails closed.
+  - **Revocation targets a running instance, not a role.** Decommissioning is a
+    response to what one actor did, and emptying a role's seed entry would silently
+    disarm every future instance of it — a configuration change wearing an
+    intervention's clothes. An implementation MUST be able to revoke one
+    `invocation_id` without touching the seed map.
 
 ## Failure modes
 
@@ -437,10 +504,39 @@ is.
   direction condition narrows the space usefully: an invariant processor may only
   restrict, so the available dispositions are halt, escalate to the operator, or
   record-and-continue. Which one, and whether it differs between the aggregate and
-  pre-effect halves, is not decided.
+  pre-effect halves, is not decided — and it decides the call site, per What a
+  build needs decided first.
 - **How a scope is expressed and compared.** Free text is what the design set
   fixes; what the comparison actually consumes — the raw change set, a summary of
   it, a diff — is not. This is the single largest unknown in the mandate half.
+- **What invokes the containment check, and where it sits.** `13-work-record.md`
+  makes a passing containment check a precondition of accepting a split or a
+  refinement, and the check is a natural-language judgment. So either a model call
+  sits inside the work store's write path, or containment is checked before the
+  transition is proposed and the store trusts a verdict it is handed, or transitions
+  are accepted provisionally and reconciled. None of the three is argued.
+- **Who assigns a reversibility class, and when.** The pre-effect check is
+  normatively required "before realizing any effect classed irreversible", and
+  nothing assigns that class — `01-effect-vocabulary.md` holds the question open,
+  and `10-foundations/02` argues the proposing side without naming a carrier. As
+  written, half this check has a predicate that does not exist.
+- **What counts as termination.** The aggregate check runs "once per work item at
+  termination". `13-work-record.md` names seven transitions and does not say which
+  are terminal. Whether the check runs on *abandoned* and *deferred*, and whether a
+  work item refined after execution is re-checked, is undefined.
+- **What `undecidable` means operationally.** It is a permitted verdict with no
+  stated consequence. Whether it is treated as `outside`, as a request to escalate,
+  or as a distinct state the work item can sit in, is not decided.
+- **How the self-modifying-scope exclusion is checked.** "A scope permitting its
+  own modification MUST be excluded unless explicitly granted" reads like a
+  mechanical default and is not one: whether a natural-language boundary permits
+  modifying itself is the same judgment the rest of the check makes. Either it is
+  a flag alongside the boundary, or it is another question put to the checker.
+- **How the checker receives its inputs.** An invariant processor is outside the
+  open role vocabulary. Whether it is instantiated like any processor — with a live
+  set, seeded somehow, composing turn inputs — or is invoked as a function with its
+  inputs passed directly, is stated nowhere in this set, and the answer changes what
+  `14-context-manager.md` has to support.
 - **The doubt threshold for asking.** What counts as enough ambiguity to set a
   scope `pending` rather than deriving. Unset, with a known bias toward
   under-detection.
