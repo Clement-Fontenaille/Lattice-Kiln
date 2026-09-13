@@ -178,6 +178,40 @@ purely for relevance.
 Those are not settleable from this project's first principles. They need
 experiment and whatever the literature already holds.
 
+### One prefix or several — the measurement this rests on
+
+The section above assumes a binary that may not be one: keep the prefix or drop
+it. The question underneath it is **how many cached prefixes the serving
+arrangement can hold at once**, and it decides the shape of everything above.
+
+If the answer is one, a policy's only prefix lever is keep-or-drop, and any
+processor needing off-prefix material costs the previous occupant its cache.
+
+If several can be resident, the lever is not keep-or-drop but **which resident
+prefix this turn input continues from** — a selection over a set, bounded by KV
+memory rather than by a binary. Prefix identity then becomes an axis a processor
+can specify, distinct from which live set it registers into and distinct from what
+recall selects.
+
+**The case that forces the question** is the scope check
+(`03-capability-authority-model.md`). It is a judge, so its material must be
+assembled **off the prefix** of the work it is judging, or it inherits the
+reasoning it exists to assess. That must not cost the triggering instance its own
+prefix, nor the next processor on the same task. One prefix cannot serve both; the
+question is whether the substrate can.
+
+**This is an M0-shaped question and should be answered the way M0 was**: measured on
+the reference host, not reasoned about. What to establish — how many independent
+cached sequences the serving arrangement holds, how the resident envelope divides
+among them, whether a suspended one can be moved out of GPU memory and back, and
+what that reload costs against recomputing the prefix from scratch. That last
+figure is the one that decides whether disk can be traded for memory here.
+
+Until it is measured, this document takes **no position** on the number, and a
+policy interface MUST NOT assume one. An interface written against keep-or-drop
+cannot express prefix selection later without changing every call site, while one
+written against selection degenerates to keep-or-drop at N=1 with nothing lost.
+
 ## Compose — the turn input
 
 - The turn input is composed **at the moment of feeding**, out of what the live
@@ -311,9 +345,14 @@ is a change `02-observability-event-model.md` owes.
   unretrieved claim are both enumerable as crossings not yet taken. Whether the
   same holds for the model's own possible output is unsettled
   (`10-foundations/04`).
+- **How many prefixes can be resident.** See One prefix or several, above. Blocks
+  the shape of the policy interface, and is a host measurement rather than a design
+  question. The judge case makes it concrete rather than hypothetical.
 - **KV footprint estimation.** `05-provisional-invariant-list.md` R4 refuses a turn
   input exceeding the resident envelope, which requires estimating its footprint
-  **before** composing it. Nothing here supplies that estimate.
+  **before** composing it. Nothing here supplies that estimate. If several prefixes
+  can be resident, R4's envelope is divided among them and the estimate has to
+  account for the division, not only for this turn input.
 - **Isolation.** Whether two live sets can share entries, and what it means for
   one to be derived from another, is untouched — it depends on the seeding answer
   and on the decomposition question above.

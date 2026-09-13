@@ -229,6 +229,45 @@ rather than about unheld grants.
 Until this is decided, an implementation MUST record which reading it took, because
 the two produce different capability sets for the same configuration.
 
+### The rule the prohibition was reaching for, and what it can actually check
+
+`08-orchestrator-contract.md` also forbids the orchestrator to "use a processor to
+accomplish what it is itself forbidden to do". That statement collapses three
+different senses of *forbidden*, and separating them leaves less than it appears
+to.
+
+**Gate-forbidden.** Its own example — instructing an implementer to edit the
+invariant list — is refused at the implementer's own gate check, since H5 binds the
+effect and not the proposer. The rule adds nothing here, and its illustration is
+its weakest case.
+
+**Capability-forbidden.** Delegating what one cannot do oneself is what an
+orchestrator is *for*, which is the collision above. The distinction the rule never
+drew: **"cannot propose" is not "must not happen under my mandate."** An empty
+type-1 grant is a statement about an actor's hands, not about its remit.
+
+**Scope-forbidden.** Already normative, and already checkable: a child's scope is
+contained in its parent's, and the accumulated change set under a lineage is
+audited against the declaration.
+
+What is left once those three are removed is **purpose** — laundering an intention
+through a delegate — and purpose is not observable from an effect stream. A rule
+keyed to why an invocation was issued is an inference about intent, which
+`10-foundations/07` forbids on exactly the grounds that make it unusable here: it
+cannot be shown wrong. So the prohibition is not implementable as stated, and
+nothing checkable is lost by replacing it with the containment and aggregate checks
+that already exist.
+
+**One real laundering route survives, and it is not about purpose.** A ceiling
+expressed as a per-actor grant constraint is not the same as a system-wide
+invariant, even when both carry the same number. `max_concurrent: 1` on an
+orchestrator's type-6 grant bounds that actor; a child also holding type 6 can
+spawn under its own separate allowance, and total concurrency exceeds one while
+every actor individually conforms. What catches this is R2 in the invariant list,
+which is keyed to the system rather than to a grant — so the capability constraint
+is a **redundant shadow** of the real ceiling. An implementation that builds the
+constraint and not the clause has the hole and will pass its own tests.
+
 ## Reads
 
 A read is not a typed effect and is still something an actor may or may not be
@@ -400,6 +439,33 @@ So, normatively:
   to watch for scopes going missing, which removes a mechanism rather than adding
   one.
 
+### How the checker is invoked
+
+**The runtime hardcodes the call.** Every tool call passes through the runtime,
+which holds the specification's required call sites and makes the invariant-layer
+calls at each of them. The scope check is therefore **triggered by the runtime**,
+not requested by any cognitive component, and there is no path by which the
+triggering instance can decline to trigger it.
+
+This settles two things that looked open.
+
+**The checker is not spawned by the loop.** It is not a type-6 invocation the
+orchestrator issues, which would put the constrained party in charge of summoning
+its own constrainer. The trigger sits with the runtime for the same reason the gate
+call does.
+
+**It still has a live set and a turn input like anything else.** Being triggered by
+the runtime settles *who calls*, not *what the checker sees*. It reaches
+`14-context-manager.md` for its material, and it is a processor reasoning over
+natural language, not a function handed a payload.
+
+What follows from that is one genuine open question and it is not about invocation:
+the checker is a **judge**, so its material should be assembled **off the prefix**
+of whatever it is judging — otherwise it inherits the reasoning it is meant to
+assess. Whether that can be done without discarding the triggering instance's own
+prefix depends on how many cached prefixes the serving arrangement can hold, which
+is a measurement nobody has taken (`14-context-manager.md`).
+
 ### The checker is an invariant processor
 
 The comparison is a judgment over natural language and no deterministic check
@@ -459,6 +525,12 @@ is.
 - **Silent widening.** A code path that permits a request without a matching
   grant is a defect, even if the gate would have caught the effect anyway —
   passing the gate is not evidence of passing capability.
+- **A system ceiling implemented only as a grant constraint.** A per-actor
+  constraint bounds one actor; a system ceiling bounds the system. Where both carry
+  the same number — `max_concurrent: 1` against R2 — implementing only the
+  constraint leaves a route open through delegation, since each actor conforms
+  separately while the total does not. The constraint is a convenience; the
+  invariant clause is the enforcement.
 - **Unscoped work proceeding.** A work item reaching execution with no scope in
   any of the three states is a defect. The check fails closed; a path that runs
   anyway has removed the only thing standing between the system and unbounded
@@ -532,11 +604,11 @@ is.
   mechanical default and is not one: whether a natural-language boundary permits
   modifying itself is the same judgment the rest of the check makes. Either it is
   a flag alongside the boundary, or it is another question put to the checker.
-- **How the checker receives its inputs.** An invariant processor is outside the
-  open role vocabulary. Whether it is instantiated like any processor — with a live
-  set, seeded somehow, composing turn inputs — or is invoked as a function with its
-  inputs passed directly, is stated nowhere in this set, and the answer changes what
-  `14-context-manager.md` has to support.
+- **Which prefix the checker's turn input builds on.** How it is *invoked* is
+  settled — see below. What is not settled is whether the serving arrangement can
+  hold more than one cached prefix at once, which decides whether the checker can
+  be assembled off-prefix without costing the triggering instance its own.
+  `14-context-manager.md` holds this as a measurement rather than a position.
 - **The doubt threshold for asking.** What counts as enough ambiguity to set a
   scope `pending` rather than deriving. Unset, with a known bias toward
   under-detection.

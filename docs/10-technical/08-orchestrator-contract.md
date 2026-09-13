@@ -118,8 +118,14 @@ its own performance (higher-level evaluation, Milestone 12+).
   orchestrator holding types 6 and 4 could never spawn an implementer holding 1 and
   2, which is the arrangement the MVP configuration describes.
   `03-capability-authority-model.md`, Where a spawned instance's set comes from,
-  holds the collision and a candidate resolution. What survives either way is the
-  forbidden-effect rule above, which is what the prohibition was reaching for.
+  holds the collision and a candidate resolution.
+- **The forbidden-effect rule above is weaker than it reads**, and
+  `03-capability-authority-model.md` sets out why: it collapses gate-forbidden
+  (already refused at the delegate's own gate), capability-forbidden (which
+  delegation exists to do), and scope-forbidden (already checked by containment).
+  What remains is purpose, which no effect stream shows. Keep it as a statement of
+  what the orchestrator should not attempt; do not build a check against it, and do
+  not treat its presence as coverage.
 - Every processor it spawns is **independently gated** (capability + invariant
   gate). Orchestrator authorization is not processor authorization.
 
