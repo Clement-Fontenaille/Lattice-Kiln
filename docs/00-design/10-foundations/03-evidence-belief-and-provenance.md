@@ -12,7 +12,7 @@ Feedback systems are especially vulnerable to self-reinforcing errors. If an eva
 
 The project therefore needs conceptual separation between what happened and what an AI believes happened.
 
-## Scope
+## Scope of this document
 
 This document defines the substrate — what a claim is, how it is tagged, how it is weighed, how it connects to others — not the procedures that operate on it. Context management (`10-foundations/04-context-as-governed-resource.md`) assembles from this substrate; the cognitive side of `02-reasoning-vs-runtime.md` reasons over what context management assembles; the runtime side of the same document executes and persists the effects that reasoning proposes — and already claims provenance as something it owns and enforces. This document is what makes all three possible; it is not a description of any of them.
 
