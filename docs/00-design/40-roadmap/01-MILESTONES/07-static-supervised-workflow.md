@@ -1,7 +1,7 @@
 # M7 — Static supervised workflow
 
 **State:** **in execution.** Kept open on strategy.
-**Specification:** `10-technical/11-static-workflow.md` — **owed**
+**Specification:** [`10-technical/11-static-workflow.md`](../../../10-technical/11-static-workflow.md) — **v0 written, back half only; front half carried as an open contract there**
 **Execution record:** `50-PROGRESS/M7-static-workflow.md` — **owed** (moves to `archives/` on completion)
 **Depends on:** [M6](completed/06-evaluation-task-suite.md) (the ruler), [M3](03-invariant-floor.md) (the floor it sits on)
 **Evaluated against:** [`10-evaluation-task-suite.md`](../../../10-technical/10-evaluation-task-suite.md)
@@ -111,7 +111,7 @@ escalation payload above.
 
 ## Work remaining
 
-1. Specify the workflow — `10-technical/11-static-workflow.md`.
+1. ~~Specify the workflow.~~ **Done** — [`10-technical/11-static-workflow.md`](../../../10-technical/11-static-workflow.md) v0, back half. The front half stays unspecified and is an open contract there, since its third prerequisite is M9.
 2. Build it from the `loop_lab` / `m6_arms` parts, with premise-audit-as-advisory,
    conditional concern-split, and the `pipeline_lab` fixes.
 3. Run it on the M6 suite against `monolith` / `dloop` / `staged`.

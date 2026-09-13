@@ -1,6 +1,6 @@
 # Backlog
 
-_Updated: 2026-09-11 — structure and maintenance rules: [`README.md`](README.md)._
+_Updated: 2026-09-13 — structure and maintenance rules: [`README.md`](README.md)._
 
 > **Motto:** Every phase should make the next design decision easier.
 
@@ -10,9 +10,14 @@ _Updated: 2026-09-11 — structure and maintenance rules: [`README.md`](README.m
 document it concerns as an open contract, not parked here
 ([`README.md`](README.md) → what an item carries).
 
+The rows below are narrative and predate the 2026-09-11/13 architecture pass. For the
+specification side, the **Specification inventory** at the end of this section is the
+current list — one row per document, comprehensive, and it supersedes what these rows
+say about `10-technical/`.
+
 | Item | Target | Source | Blocks |
 |---|---|---|---|
-| Static workflow contract | `10-technical/11-static-workflow.md` — **owed** | [M7](01-MILESTONES/07-static-supervised-workflow.md) | P1 step 2 onward |
+| Static workflow contract — **done 2026-09-13** | [`10-technical/11-static-workflow.md`](../../10-technical/11-static-workflow.md) v0, back half specified. The front half is an open contract there rather than here, since it blocks on M9 | [M7](01-MILESTONES/07-static-supervised-workflow.md) | Unblocks P1 step 2 |
 | Two-mode interaction requirement | [`08-orchestrator-contract.md`](../../10-technical/08-orchestrator-contract.md), spec 11 | [`10-foundations/07`](../10-foundations/07-the-integrated-system-and-its-operator.md) | P1 step 2 — an input to spec 11, not a follow-up edit |
 | Decomposition has no specification counterpart | new, or within spec 11 | [`22-arch-cognition/08`](../22-arch-cognition/08-decomposition.md) | P1 step 2 — concern-split is a decomposition |
 | Structured role-to-role handoff | open contract on [`07`](../../10-technical/07-naive-context-assembly.md) and [`08`](../../10-technical/08-orchestrator-contract.md) — close it | findings 6, 7 | P1 step 3 |
@@ -23,6 +28,33 @@ document it concerns as an open contract, not parked here
 | `03` rework not carried into observability or cognition — **carried 2026-09-12** | [`26-arch-observability/01`](../26-arch-observability/01-observability.md) reworked whole: claim vocabulary, knowledge-state transitions, provenance history as distinct from `21`'s current state, and the conditions-in-force record. [`22-arch-cognition/02`](../22-arch-cognition/02-processors.md) took the rest — Independence now names the souvenir as the object it was asking for, Discussion names friction and convergence with `03`'s precise readings (convergence corroborates reliability, not validity), and a new §What survives a processor carries Collapsing and the raw-output rule. Closed at architecture level | [`10-foundations/03`](../10-foundations/03-evidence-belief-and-provenance.md), 2026-09-10 pass (Mode of acquisition, Weighing claims, Friction/Convergence, Scope, Provenance as a DAG, souvenir) | P1 step 3, as the answer the handoff row is missing; M8's decomposition |
 | `04` rework — two passes; carried into architecture, not yet into specification | [`23-arch-context-management/01`](../23-arch-context-management/01-context-manager.md) — **carried 2026-09-11**: the actor now states register / track / recall, with knowledge-base retrieval as an ordinary model-initiated tool call rather than a servicing path of its own, and the recall policy named as a required-but-unspecified responsibility. [`21-arch-knowledge-model/01`](../21-arch-knowledge-model/01-knowledge-model.md) — **carried the same day**, taking the query-surface half (breadth, depth, matching mode). What remains owed is the specification side: [`10-technical/07-naive-context-assembly.md`](../../10-technical/07-naive-context-assembly.md), and [M9](01-MILESTONES/09-context-governance-measurement.md) itself (both self-cite the **2026-09-05** phrase "redundancy, not volume" verbatim as an open contract feeding this row — that phrase no longer stands alone in `04`, so the citation itself is stale, not only the implementation) — owed | [`10-foundations/04`](../10-foundations/04-context-as-governed-resource.md): **2026-09-05** pass ("too much is a relation, not a property"); **2026-09-10/11** pass (the shape of a context — an artifact is what a crossing into conversation, `01`'s fourth location, produces from the external world, the knowledge base, or the model's own weights; a context is the set of artifacts currently live, judged on coverage vs. integration; four-way failure modes on that basis — Insufficiency, Redundancy, Uselessness, Overload; the live-context tracking requirement; a track/decide obligation named per mode; the objective-validity boundary — already-satisfied, false-premise, under-specified — named as a processor judgment context assembly feeds but does not make; context selection reframed as a forced choice over an index of not-yet-taken crossings, needing arbitration, distinct from and not inheriting this project's self-judgment-unreliability evidence) — the second pass supersedes and narrows the first's redundancy claim rather than merely adding to it | M9's context-quality metric — M9's own file claims this is already tracked here; it was not, until now |
 | `05` rework not carried into cognition or observability — **carried 2026-09-12** | [`22-arch-cognition/02`](../22-arch-cognition/02-processors.md)'s new §What survives a processor carries Collapsing as the default and names what does survive: a thinking proposal ([`04-thinking.md`](../22-arch-cognition/04-thinking.md)) that curation kept ([`05-curation.md`](../22-arch-cognition/05-curation.md)). Curated memory got an actor in the thinking family rather than a new one, and `05` itself gained the reachability rule and the second half of forgetting. [`26-arch-observability/01`](../26-arch-observability/01-observability.md) carries the other side — its copy is what outlives the sweep. Closed at architecture level | [`10-foundations/05`](../10-foundations/05-ephemeral-conversation-curated-memory.md), 2026-09-10 pass (Collapsing, Curated memory rebuilt, Scope handed to `03`) | M8's decomposition into P1 — this is M8's own subject document |
+
+### Specification inventory — 2026-09-13
+
+The architecture pass of 2026-09-11/13 is carried at design level and owes the
+specification layer the following. One row per spec document, plus three documents
+that do not exist. `10-technical/06-processor-contract.md` and
+`10-technical/11-static-workflow.md` are already done and are not listed.
+
+| Spec | What is owed |
+|---|---|
+| [`01-effect-vocabulary.md`](../../10-technical/01-effect-vocabulary.md) | Defines an effect as "a state-changing operation", which no longer discriminates — every runtime-mediated operation changes the world, and what separates a typed effect from a read is **footprint**, a gradient. Its *What is not an effect* section excludes reads by name, which `10-foundations/02` withdrew: reads stay out of the vocabulary and inside the gate's input domain, passing by a permissive default. The `MAY still be capability-gated` wording needs to become the default rule. |
+| [`02-observability-event-model.md`](../../10-technical/02-observability-event-model.md) | The recorded unit is the **turn input**, not a per-invocation bundle. Three record kinds are owed: knowledge-state transitions (claim, kind of change, grounds, as fields rather than prose); work transitions including the recorded conclusion; and **the conditions in force** — which recall policy, model and configuration produced each stretch of history, without which no cross-policy comparison knows what lineage it is reading. |
+| [`03-capability-authority-model.md`](../../10-technical/03-capability-authority-model.md) | Contains **zero** mentions of scope. Mandate conformance is authority's dynamic half and is entirely absent: a declared scope per work item, the containment rule for splits, refinements and nested invocations, and the check that compares an accumulated change set against a natural-language boundary. |
+| [`04-enforcement-gate.md`](../../10-technical/04-enforcement-gate.md) | Never mentions reads at all, so the gate as specified cannot represent one whether or not a rule names it. Also owed: **invariant processors** as a category (triage is deferred to M11, the scope check is new), the direction condition that admits them — restrict, never widen — and sequence evaluation that includes reads, since the canonical composed outcome is accumulated reads plus one carrying effect. |
+| [`05-provisional-invariant-list.md`](../../10-technical/05-provisional-invariant-list.md) | Resource ceilings now have a concrete member: the context ceiling, which is physical (KV memory) rather than cognitive. Also owed: that a functioning scope check must exist, and that its absence makes a system invalid rather than worse. |
+| [`07-naive-context-assembly.md`](../../10-technical/07-naive-context-assembly.md) | Produces a one-shot `context_bundle`, which no longer exists. Owed: registration of every crossing, the live set as an index holding references rather than content, per-turn composition, and the reachability sweep. Its truncation behaviour is a degenerate recall policy and should be named as one. |
+| [`08-orchestrator-contract.md`](../../10-technical/08-orchestrator-contract.md) | The two-mode interaction requirement (spec 11) is still owed. Also: the orchestrator **narrows** scope and does not derive the ceiling; it holds no context policy of its own; and its turn input is composed rather than requested. |
+| [`09-orchestrator-runtime-boundary.md`](../../10-technical/09-orchestrator-runtime-boundary.md) | Unreviewed against the pass. Its "exactly two things cross" claim needs checking against the crossing model. |
+| [`10-evaluation-task-suite.md`](../../10-technical/10-evaluation-task-suite.md) | Per-scenario paired reading rather than aggregate scores; resolution before precision; the within-arm against between-arm diagnostic for noticing the small-effect regime. |
+| **`12-knowledge-model.md`** — does not exist | `21-arch-knowledge-model` has no specification counterpart. Write, Read, Query, Traverse dependents, Compress, Elide; the bookkeeping-versus-proposal write paths; the reachability precondition on Elide. |
+| **`13-work-record.md`** — does not exist | `28-arch-work-record` has no specification counterpart. Intent, work items, transitions, declared scope with its derivation, attachment edges, recorded conclusions. |
+| **`14-context-manager.md`** — does not exist | `23-arch-context-management` has only `07`'s naive default, which predates the actor. Register, track, recall; the live set; prefix persistence as a policy-shaping axis. |
+
+**Sequencing note.** Nothing in this table blocks M7, which is specified and buildable
+against the current `06`. The rows that block each other: `01` before `04` before `05`;
+`12` before `07`'s rewrite, since the live set points into the knowledge model.
+
 
 ## P1 — Work in progress
 

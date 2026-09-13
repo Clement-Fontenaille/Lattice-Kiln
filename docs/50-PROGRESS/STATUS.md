@@ -21,9 +21,13 @@ untreated.
       file per completed milestone, append-only by rule — nothing to clean.
 - [x] **2. Editorial pass, foundations + architecture.** Archaeology stripped,
       redundancy reduced, half-answered questions restated.
-- [ ] **3. Inventory of changes owed to `10-technical/`.**
-- [ ] **4. Upgrade `10-technical/` toward a concrete implementation axis.**
-- [ ] **5. M7 — close it, or advance it.**
+- [x] **3. Inventory of changes owed to `10-technical/`.** Written into
+      `40-roadmap/00-backlog.md` as **Specification inventory**, one row per document
+      plus three that do not exist. Filed there rather than here because the backlog
+      owns what is owed; a copy in the sandbox would rot.
+- [~] **4. Upgrade `10-technical/` toward a concrete implementation axis.** Partial —
+      see below.
+- [~] **5. M7.** Step 1 of 4 done.
 
 ### Progress notes
 
@@ -47,6 +51,45 @@ the operator's review._
   archaeology removal already touched the text. A deliberate readability pass over the
   documents this session never rewrote — `22-arch-cognition/08`, most of `27` — has
   not been run.
+
+**3 — inventory. Done.** Twelve rows: nine existing specs, three documents that do not
+exist (`12-knowledge-model`, `13-work-record`, `14-context-manager`). The sharpest
+items: `03-capability-authority-model.md` contains **zero** mentions of scope and needs
+the whole mandate-conformance dimension; `04-enforcement-gate.md` never mentions reads
+at all, so the gate as specified cannot represent one whether or not a rule names it;
+`01`'s definition of an effect as "a state-changing operation" no longer discriminates.
+
+**4 — technical upgrade. Partial, and deliberately so.**
+
+- **Done:** `06-processor-contract.md`, because `11-static-workflow.md` would have
+  inherited it broken. Six things bind at instantiation rather than five —
+  `context_bundle` replaced by a `scope` and a `live_set_id`, with context itself no
+  longer bound at all. One open contract closed: context-request servicing is an
+  ordinary tool call and no servicing path should be built.
+- **Not done, on purpose:** the other eight spec documents. Each is a substantial
+  rewrite, several are ordered behind each other (`01` before `04` before `05`; a
+  knowledge-model spec before `07`'s rewrite), and none of them blocks M7. Doing them
+  in one unsupervised run would have produced a lot of text nobody had reviewed, which
+  is the failure mode the inventory exists to avoid. **This is the main thing left.**
+
+**5 — M7. Step 1 of 4 done, and the other three are not mine to do alone.**
+
+- **Done:** `10-technical/11-static-workflow.md` v0. Back half only, per the recorded
+  proposal in Open decisions below — the loop, its gates, the incumbent-protected
+  keeper, escalate-on-stall, premise audit as advisory, concern split as conditional.
+  Everything in it comes from M6 evidence rather than from argument.
+- **The front half is an open contract in that document**, not a gap. It rests on six
+  tasks at low N and its third prerequisite is `10-foundations/04`'s context-quality
+  question, which makes **M9 a prerequisite for evaluating it**. Specifying it now
+  would be specifying against a ruler nobody has.
+- **Steps 2–4 are build-and-run**, not writing: build from the `loop_lab` / `m6_arms`
+  parts, run against the suite, write the findings entry. Step 3 still needs **E0**
+  (suite construct validation) for the comparison to be interpretable — the dependency
+  named under Where we are.
+- One thing I flagged in the spec rather than fixing: **the workflow runs unscoped.**
+  `06` now binds a `scope` and `24-arch-permission-layer` requires one, but nothing
+  derives, checks or enforces it. That is honest rather than accidental, and it is
+  recorded as an open contract in `11`.
 
 ## Where we are
 
