@@ -107,10 +107,10 @@ MUST carry:
   split, merged, deferred, abandoned, executed.
 - `scope` — three parts, specified in the next section.
 - `conclusion` — null until recorded; see below.
-- `attachments` *(illustrative)* — references into `21-arch-knowledge-model` for
-  the findings, proposals and decisions attached to this item, plus this store's
-  own metadata about each edge. The claim's **content** lives there and MUST NOT
-  be copied here. Two stores point into one claim store; neither owns it.
+- `attachments` — references into `12-knowledge-model.md`, plus this store's own
+  metadata about each edge. The claim's **content** lives there and MUST NOT be
+  copied here. Two stores point into one claim store; neither owns it. See
+  Attachment edges below for what an edge may say.
 
 An item's current state is what the item record says. A reader MUST get it in one
 fetch, without reconstructing it from the transition log.
@@ -232,6 +232,40 @@ not a way to obtain a wider mandate. The derivation runs under containment, belo
 sub-objectives: each part needs a formulation, and a model writes it, which is the
 one composition case `06-processor-contract.md`'s handoff rule explicitly does not
 support. Splitting a task is cheap; saying what each part is for is not.
+
+## Attachment edges
+
+An attachment edge runs from a work item to a claim in `12-knowledge-model.md`. It
+is the **curated** relation: this claim, deliberately, as opposed to everything that
+happened to cross while the task ran. The bulk relation is the task's live set
+(`14-context-manager.md`), which every crossing joins automatically.
+
+**The edge label vocabulary is not fixed, and there is a mismatch to resolve before
+it can be.** What the design set names informally is *finding*, *proposal* and
+*decision*. Two of those three are claim types in `12-knowledge-model.md`, which
+holds `observation`, `evidence`, `finding` and `decision`. **There is no proposal
+claim type**, so as written an attachment may be labelled with something the claim
+store cannot be holding.
+
+Three readings, and the set does not choose:
+
+- A *proposal* is a **pre-realization** object — what a thinking processor produces
+  before the type-5 mutation is gated (`00-design/22-arch-cognition/04-thinking.md`).
+  If so it is not yet a claim, and an attachment pointing at one contradicts
+  attachments pointing into the claim store.
+- A *proposal* is a **decision not yet taken** — a course of action put forward and
+  not accepted. That is a real thing with no type, and it would need one.
+- *Proposal* is loose usage for a Finding that recommends something, in which case
+  the label should go.
+
+Until this resolves, an implementation MUST record the label it used and MUST NOT
+treat the three words as a closed set.
+
+**The edge carries more than a label.** What the design set already implies it must
+hold: which claim, under which work item, when, and by which invocation. Whether it
+also carries a *reason* for the attachment — why this claim was singled out from the
+live set — is unspecified, and it is the field that would make a curated attachment
+distinguishable from an arbitrary one.
 
 ## Containment on split and refine
 
@@ -383,12 +417,12 @@ work/
   declining folded into one, reproduces the failure M5 recorded.
 - **Claim content copied here.** An attachment holding a claim's text rather than
   a reference creates a second copy that goes stale silently.
-- **An attachment left dangling by the sweep.** The opposite failure, and it is
-  currently reachable on a literal reading of `12-knowledge-model.md`: its sweep's
-  root set names promoted claims and not the references this store holds, so a
-  Finding attached here and cited by no other claim can be elided underneath us. An
-  implementation MUST NOT sweep on that reading, and MUST be able to detect an
-  attachment that no longer resolves rather than returning it silently.
+- **An attachment left dangling after its task ends.** While a task lives, anything
+  attached to it is a root and cannot be deleted (`12-knowledge-model.md`). When the
+  task ends, a curated attachment is not by itself a promotion as specified, so the
+  claim can be removed and the edge left pointing at nothing. An implementation MUST
+  be able to detect an attachment that no longer resolves rather than returning it
+  silently.
 
 ## Relationships
 
@@ -426,6 +460,13 @@ work/
 - **Abandoned items.** Retained or removed. Retention is the cheaper assumption
   and keeps "why was this dropped" answerable, but nothing establishes that it is
   required.
+- **The attachment label vocabulary.** *Finding*, *proposal* and *decision* are
+  what the design set names, and *proposal* has no counterpart among the claim
+  types. Resolving it decides whether a new claim type is needed, whether the label
+  goes, or whether attachments may point at something that is not yet a claim.
+- **Whether an attachment edge carries a reason.** Without one, a curated
+  attachment and an arbitrary one are indistinguishable afterwards, which undercuts
+  the point of curating.
 - **Verdict granularity.** Whether three conclusions suffice. A false-premise
   refusal and an already-satisfied request both land on `declined` while calling
   for different follow-ups — possibly M5's collapse reproduced one level down.

@@ -46,15 +46,15 @@ The commonest path in the system, and the one most of what crosses actually take
 | 7 | The live set gains a **reference plus metadata**: crossing type `read`, registered_at. No content | `14`, Register |
 | 8 | **Recorded** as a kind-2 realized-operation record, sharing the kind with typed effects so the gate reads one ordered history | `02` |
 | 9 | **Recalled** into turn inputs while the policy selects it. Each appearance is a kind-5 record carrying its crossing type | `14`, `02` |
-| 10 | Not recalled after a cache reset. It **leaves the live set** — which is not monotonic | `14` |
-| 11 | Nothing proposed it as evidence and no claim cites it, so it is **not reachable** from any promoted claim | `12`, Elide |
-| 12 | **Leaving the live set is itself the trigger**: it loses root status, and since nothing promoted it, it is deleted along with any ancestor no remaining root still reaches | `12` |
+| 10 | Passed over by the recall policy on later turns. It **stays in the live set**: not shown is not the same as not held | `14` |
+| 11 | **The task ends.** Its live set ends with it, and this artifact stops being a root | `14`, `12` |
+| 12 | Nothing promoted it and no other live task holds it, so it is deleted, along with any ancestor no remaining root still reaches | `12` |
 | 13 | It remains reconstructable in observability, and nowhere else | `02` |
 
-**Where the walk stops.** Step 10 has no terminator. An instance ends, and whether
-its live set ends with it is unstated — which now matters more than it did, because
-step 12 hangs off step 10. Removal is triggered by leaving the live set, so an
-undefined end to a live set is an undefined trigger for deletion.
+**The walk now completes.** A live set belongs to a task, so what ends it is the
+task ending, and that is the deletion trigger. The one thing left unspecified on this
+path is whether an artifact can be **detached early** — recognised as noise, or
+superseded — which would be a second trigger nothing describes.
 
 ## Trajectory B — a test failure that becomes a finding
 
@@ -73,7 +73,7 @@ The promotion path. Rare by design: most of what crosses takes trajectory A.
 | 9 | Recorded as a kind-6 knowledge-state transition: claim, kind of change, grounds, as fields | `02` |
 | 10 | Attached to a work item — a reference plus edge metadata, itself a type-4 mutation | `13` |
 | 11 | Once its validity has been checked, its working is **compressed to a souvenir**; the Observation from step 5 is a root and stays raw | `12`, Compress |
-| 12 | The Observation is reachable from a promoted claim, so deletion MUST refuse it when the live set drops it | `12`, Elide |
+| 12 | The Observation is reachable from a promoted claim, so deletion MUST refuse it when the task ends | `12`, Elide |
 | 13 | It persists — for how long, and until what, is not stated | — |
 
 **Where the walk stops.** Step 11 has no scheduler: nothing says when validity is
@@ -162,20 +162,25 @@ earliest rejection in the pipeline — before capability, before the gate — pr
 no record at all, so a component repeatedly proposing writes outside its workspace
 was invisible.
 
-**Still open, and sharper than before.**
+**Still open.**
 
-5. **Nothing says what ends a live set** (`14`). This was the least urgent of the
-   seven and is now among the most, because deletion hangs off it. An item leaving
-   the live set is what triggers removal, so an undefined end to a live set leaves
-   removal without a trigger in the case that should matter most — an instance
-   finishing.
+5. **Whether an artifact can be detached from a live task** (`14`). The live set
+   only grows within a task's life as specified, and a task ending is the single
+   deletion trigger. Early detachment would be a second one, and nothing describes
+   it.
 
 **New, surfaced by the answers.**
 
-6. **An attachment is not a root** (`12`, `13`). The root set is promoted artifacts
-   plus the live set, and a work-item attachment is neither. So a Finding attached to
-   a task and no longer live is deleted underneath the work record. Either attaching
-   promotes, or attachments are expected to dangle and the work record detects it.
+6. **A curated attachment does not promote** (`12`, `13`). While a task lives,
+   anything attached to it is a root, so nothing is at risk. When the task ends, a
+   deliberately attached Finding is not thereby promoted and can be deleted, leaving
+   the edge pointing at nothing. Either the deliberate act promotes — which would be
+   the point of making it deliberate — or the work record detects dangling edges.
+7. **The attachment label vocabulary does not match the claim types** (`13`,
+   `12`). Edges are named *finding*, *proposal* and *decision*; the claim store
+   holds `observation`, `evidence`, `finding` and `decision`. **There is no proposal
+   claim type**, so an edge may be labelled with something the store cannot be
+   holding.
 
 ## Relationships
 

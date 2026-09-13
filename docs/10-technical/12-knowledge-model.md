@@ -195,9 +195,11 @@ Reachability is computed from a **root set with exactly two sources**.
   the word means here, and it is deliberately an *act* rather than a property derived
   from a claim's type. Nothing is promoted by being a Finding rather than an
   Observation; something is promoted when something promotes it.
-- **The live set.** Everything `14-context-manager.md` currently holds is a root for
-  as long as it holds it. Being in front of the model is a reason to keep a claim
-  that needs no further justification, and it expires on its own.
+- **The live set.** Everything attached to a live task is a root for as long as that
+  task exists (`14-context-manager.md`). Note what this is **not** keyed to: not
+  whether the model was recently shown the artifact, but whether a task still holds
+  it. Being worked on is the reason to keep something, and it expires on its own when
+  the work ends.
 
 An entry is kept when a root reaches it by following provenance links. The rest of
 this section is the consequence.
@@ -213,10 +215,11 @@ A root leaves it when an item **leaves the live set**, and at that moment the sy
 holds the departing item's identity — it does not have to go looking for what
 changed.
 
-So removal runs there:
+**A task ending is the trigger**, because that is when its live set ends and its
+members stop being roots. Removal runs there:
 
-- When an item leaves the live set, it loses its root status. If it is not also
-  promoted, it is a deletion candidate.
+- Each artifact the ending task held loses its root status. If it is not also
+  promoted, and no other live task holds it, it is a deletion candidate.
 - From it, walk **up** its provenance edges. Each ancestor is deleted if it is not
   promoted **and** no remaining path from any root still reaches it.
 - That second condition is what the child index exists for. An ancestor may be
@@ -245,21 +248,22 @@ naive filesystem shape viable for longer: nothing walks the whole graph.
   `10-foundations/03`'s three weighing dimensions by that document's own account.
   Leave it parametric; do not invent one here.
 
-**Two stores hold references here and are not roots**, and the difference from the
-live set is the point. `13-work-record.md`'s attachment edges and
-`02-observability-event-model.md`'s copies both point into this store, and neither
-keeps a claim alive.
+**Observability holds references here and is not a root**, deliberately. It keeps
+its own copy precisely so that what is removed here remains reconstructable there.
+A deleted entry stops being something the system knows and stays something an
+auditor can find.
 
-For observability that is deliberate and already argued: it keeps its own copy
-precisely so that what is removed here remains reconstructable there. A swept entry
-stops being something the system knows and stays something an auditor can find.
+**The work record's attachments are a narrower case than they look.** Attachment to
+a task is what live-set membership *is*, so anything a live task holds is already a
+root and cannot be deleted underneath it. What `13-work-record.md` adds is a
+**deliberate, curated** attachment — this Finding, this decision, as opposed to
+everything that happened to cross. The two relations have the same shape and
+different weight.
 
-For the **work record** it is a hazard rather than a decision. A Finding attached to
-a work item, not promoted and no longer live, is deleted, and the attachment is left
-pointing at nothing. Two ways out and neither is chosen here: attaching a claim to a
-work item **is** a promotion, or an attachment is expected to dangle and
-`13-work-record.md` must detect that rather than return it silently. Open contract
-below, and `13`'s own failure modes carry the other half.
+The residual question is what happens to a curated attachment when its task ends.
+Either the deliberate act promotes — which would be the point of making it deliberate —
+or the attachment is expected to dangle afterwards and `13-work-record.md` must
+detect it. Open below.
 
 ## General shape and the naive default
 
@@ -356,11 +360,11 @@ by hand.
 
 ## Open contracts
 
-- **Whether a work-item attachment promotes.** The root set is promoted artifacts
-  plus the live set, and an attachment is neither, so a Finding attached to a task
-  and no longer live is deleted underneath it. Either attaching promotes, or
-  attachments are expected to dangle and `13-work-record.md` detects it. Both are
-  cheap; they are not the same behaviour, and nothing yet picks.
+- **Whether a curated attachment promotes.** While its task lives, an attached
+  claim is a root by virtue of the task holding it. When the task ends, a deliberate
+  attachment is exactly the kind of act that ought to promote — and does not, as
+  specified. Either it does, or the work record detects dangling attachments. Both
+  are cheap; they are not the same behaviour.
 - **Who promotes, and on what.** Promotion is an act rather than a property, which
   leaves open which actors hold it and what they weigh. The natural reading is a
   thinking processor at the moment it proposes a claim worth keeping, but a claim

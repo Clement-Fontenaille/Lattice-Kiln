@@ -28,8 +28,10 @@ activities (`00-design/00-project/05-vocabulary.md`).
 - **Context** is the model's own production state, living in the inference
   substrate and bounded by GPU memory rather than by text size. This component
   *manages* it and never *holds* it.
-- **The live set** is this component's record of what is in context, or is to be
-  placed there this turn. References and metadata.
+- **The live set** is the set of artifacts **attached to a task**. References and
+  metadata. Membership follows the task, not the model: an artifact is in the live
+  set because it crossed while working on that task, and it stays there whether or
+  not any given turn puts it in front of the model.
 - **The turn input** is what is actually transmitted on a given turn.
 
 An implementation MUST NOT name a single object "the context". Reasoning about
@@ -127,15 +129,20 @@ LiveSetEntry := {
 }
 ```
 
-- A live set is **empty at turn zero**, by construction. Register records what a
-  crossing returned and recall presents what is already held, so neither operation
-  can put anything into a live set before the first crossing. How a live set is
-  seeded is an open contract below, not an omission.
-- **The live set is not monotonic.** An item that is not recalled after a cache
-  reset has left the discussion and drops out.
-- **It is not durable memory.** It is an index over a run. What an item leaves
-  behind is its content in `12-knowledge-model.md`, which persists until the
-  retention sweep reaches it.
+- **A live set belongs to a task, not to an instance.** Every artifact that crosses
+  while work proceeds on a task attaches to that task's live set, including a
+  knowledge-base retrieval, which attaches to the task that triggered it.
+- **It grows within a task's life and does not shrink.** Registration only adds. An
+  artifact the recall policy passed over on some turn is still a member; it was not
+  shown, which is a different thing from not being held.
+- **A live set is empty only for a new task's first instance.** A second instance
+  working under the same task finds it already populated, because the set outlived
+  the instance that filled it.
+- **It ends when its task does.** That is what removes its members from the root set
+  and triggers their deletion (`12-knowledge-model.md`).
+- **It is not durable memory.** It is an index over a task. What an item leaves
+  behind is its content in `12-knowledge-model.md`, which persists exactly as long as
+  something still reaches it.
 
 ## Recall
 
@@ -146,13 +153,15 @@ set already holds back in front of the model.
   boundedness is the point rather than a limitation: given a fixed live set, a
   policy chooses what to put in front of the model, which makes **two policies
   directly comparable** while the live set is held constant.
-- **What leaves the live set is out of reach of recall.** Bringing such an item
-  back is not a recall at all; it is a **retrieval** — a fresh crossing, gated and
-  registered like any other.
-- There is **no "archived, then recalled later" tier**. An item is live or it is
-  gone from here. An implementation that adds an archive tier has invented a
-  second state the vocabulary does not have and made "restore" ambiguous between
-  two operations with different gating.
+- **Not being shown is not leaving.** An artifact the policy passed over on one
+  turn can be recalled on the next. That is an ordinary recall, not a fresh
+  crossing, because the artifact never stopped being a member.
+- **What is out of reach of recall is what was never attached to this task.**
+  Obtaining it is a **retrieval** — a fresh crossing, gated and registered like any
+  other, attaching to the task that triggered it.
+- There is **no "archived, then recalled later" tier**. An artifact is attached to
+  a live task or it is not held here at all. An implementation that adds an archive
+  tier has invented a state the vocabulary does not have.
 
 ### Prefix persistence changes the shape of the policy space
 
@@ -414,21 +423,13 @@ is a change `02-observability-event-model.md` owes.
 
 ## Open contracts
 
-- **Live-set seeding.** A live set is empty at turn zero, and neither register nor
-  recall can fill it before the first crossing. Two shapes are available.
-  **Inheritance** as a third primitive alongside register and recall, moving or
-  referencing already-registered artifacts across live sets with no crossing
-  involved. Or **no new mechanism**: the preceding step writes a handoff into
-  something durable — an attachment on a work item (`13-work-record.md`) is the
-  obvious candidate — and the next instance reads it, registering the result like
-  any other read. The second is cheaper and fits what exists, which is a reason to
-  investigate it first and not a reason to treat it as settled.
-
-  This is **not** the fork/join-versus-continuation question
-  (`00-design/22-arch-cognition/08-decomposition.md`). That one governs whether
-  sibling instances see each other's crossings, which is live-set *isolation*; it
-  says nothing about how much any single live set starts with, and either
-  recombination model works with a thin or a fat seed.
+- **Seeding a new task's live set.** Continuation within a task no longer needs
+  seeding: the set belongs to the task, so a second instance finds it populated. What
+  remains is the genuinely new task — a split creating a child, an unrelated request —
+  whose live set starts empty. Whether a child inherits anything from its parent's,
+  and whether that inheritance is a reference or a fresh crossing, is unsettled.
+  This is where `00-design/22-arch-cognition/08-decomposition.md`'s
+  fork/join-versus-continuation question actually bites.
 - **What the recall policy is.** Named as a required, distinct responsibility and
   left arbitrary by design. Nothing here fixes what triggers a drop or what
   ordering is applied.
@@ -441,12 +442,10 @@ is a change `02-observability-event-model.md` owes.
   context length, quantisation, or the arrangement's own overhead. What replaces it
   has to predict a turn input's cost **before** the turn is composed, or R4 reports a
   crash instead of refusing.
-- **What ends a live set.** It is described here as an index over a run, while
-  `live_set_id` binds per instance (`06-processor-contract.md`). Whether an
-  instance's live set ends when the instance does, and what becomes of its entries
-  if it does, is unstated — and it interacts with the sweep, since a live-set
-  reference may or may not protect a claim from elision
-  (`12-knowledge-model.md`). Surfaced by `15-information-trajectories.md`.
+- **Whether an artifact can be detached from a live task.** The set only grows
+  within a task's life as specified. If something can be removed early — a
+  correction, an artifact recognised as noise — that is a second deletion trigger and
+  nothing describes it.
 - **Isolation.** Whether two live sets can share entries, and what it means for
   one to be derived from another, is untouched — it depends on the seeding answer
   and on the decomposition question above.

@@ -61,12 +61,14 @@ M4, the orchestrator from M5 on.
   change for the instance's life. An instance that finds it must reach further stops
   and reports rather than extending itself.
 - `live_set_id` — the identity of the live set this instance's crossings register
-  into, and which recall runs over each time the instance is fed
+  into, and which recall runs over each time the instance is fed. **It belongs to the
+  task, not to this instance**, so a second instance under the same task binds the
+  same one and finds it already populated
   (`00-design/23-arch-context-management/01-context-manager.md`). **Context itself is
   not bound at instantiation.** What the model sees is the *turn input*, composed
   afresh on every turn out of the live set under the recall policy; there is no
-  bundle handed over once and held. A live set is empty at turn zero, since
-  registration records what a crossing returned and nothing has crossed yet.
+  bundle handed over once and held. A live set is empty only for a new
+  task's first instance.
 - `objective` handoff framing — where a prior step's output reaches this instance,
   it MUST arrive **inside the objective**, framed, and MUST NOT be appended as a
   separate block of context. See Handoff framing below; this is normative and
