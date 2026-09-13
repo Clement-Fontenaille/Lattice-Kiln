@@ -12,16 +12,12 @@ binds to `10-technical/14-context-manager.md`,
 
 ## TL;DR
 
-Two deliberately unglamorous defaults, specified together because they are what a
-run needs before anything smarter exists.
+One deliberately unglamorous default: **a degenerate recall policy.** Present
+everything the live set holds, in registration order, until the budget runs out, then
+drop the rest.
 
-**A seeding heuristic** — which reads the caller performs so an instance's live
-set is not empty on turn one. **A degenerate recall policy** — present everything
-the live set holds, in a fixed order, until the budget runs out, then drop the
-rest.
-
-No relevance modelling, no embeddings, no model calls, and a full trace of what
-was included and what was dropped.
+No relevance modelling, no embeddings, no model calls, and a full trace of what was
+included and what was dropped.
 
 > **Motto:** Deliberately unglamorous, so the curator has something to beat.
 
@@ -30,7 +26,7 @@ was included and what was dropped.
 v0. The concrete rules below are illustrative; three properties are **normative**:
 it MUST stay simple (no embeddings, no model calls, no history), it MUST be
 deterministic, and it MUST emit a trace. Milestone 9 measures context quality
-against this baseline and may **replace** either half — never accrete onto it.
+against this baseline and may **replace** it — never accrete onto it.
 
 ## Narrowing
 
@@ -43,81 +39,27 @@ and this document is narrowed to sit inside it rather than alongside it:
   the budget runs out, then drop the rest, is a policy on the same axis as
   anything richer. Naming it that way is what makes a better policy a replacement
   rather than a different kind of thing.
-- **Seeding is the caller's, not the context manager's.** The term-matching rule
-  below chooses **which reads to perform**, and reads are ordinary crossings
-  performed by whoever issues them. The context manager never initiates a
-  crossing; it registers what comes back. Discarded: an assembler that fetches on
-  a processor's behalf, which is the shape the removed `context_bundle` had.
+- **There is no seeding heuristic.** A rule that always reads the README, probes the
+  file tree and term-matches the objective performs orientation unconditionally, and
+  many tasks need none — *"Test, test! say hello :)"* would trigger all of it and use
+  none of it, spending context budget on material irrelevant to the objective, which
+  is the failure `10-foundations/04` names. What a task's live set starts with is
+  whatever the scope evaluation already had to read in order to derive the ceiling,
+  attached at task creation (`70-THINKING/18-task-artifact-edges.md`). Orientation
+  becomes demand-driven, by an actor that can tell a trivial task from a substantial
+  one, instead of unconditional.
 - **There is no bundle.** Nothing is bound at instantiation and held. The turn
   input is composed afresh every turn (`14-context-manager.md`).
 
 ## Responsibility
 
-Two things, separable and specified separately:
-
-1. **Seed selection.** Given an objective and a repository, decide which files the
-   caller reads before an instance's first turn, deterministically and within
-   budget.
-2. **The degenerate recall policy.** Given a live set and a budget, decide what
-   goes into a turn input and in what order.
+One thing: **the degenerate recall policy.** Given a live set and a budget, decide
+what goes into a turn input and in what order.
 
 It owns only the naive baseline. It does not define context governance, retrieval
 quality, or the context-quality metric (Milestone 9).
 
-## Part 1 — Seed selection
-
-**This part may be superseded and is flagged rather than rewritten.** The trace in
-`70-THINKING/18-task-artifact-edges.md` places the same orienting reads — file tree,
-README, adjacent documentation, whether a test suite exists — in the **scope-evaluation
-phase, before the task exists**, performed by the invariant processor deriving the
-ceiling, and attached to the task at its creation. That is the same material fetched
-by a different actor at a different moment, so the two accounts cannot both stand.
-Nothing here is amended until it is settled; what follows is the account this document
-has held.
-
-### Inputs
-
-- `objective` — the processor's objective text.
-- `repo_root` — the repository to draw from (read-only).
-- `path_hints` *(optional)* — explicit files or directories the caller names as
-  relevant.
-- `read_budget` — a byte or token bound on the seeding reads, sized against the
-  same envelope as the turn budget below.
-
-### The seeding rule (illustrative)
-
-1. **Always read**, in this order: the repo's top-level `README` (truncated to a
-   fixed cap), and a file tree to depth `N` (names and sizes only, no contents).
-   The objective is not a read — it is bound at instantiation
-   (`06-processor-contract.md`).
-2. **If `path_hints` are given**: read those files whole, in the given order,
-   until `read_budget` is reached.
-3. **Otherwise**: take salient terms from the objective (literal tokens, minus a
-   small stopword list), match them case-insensitively as substrings against file
-   paths and — for a bounded number of candidate files — file contents; read
-   matched files whole, highest match-count first, ties broken by shortest path,
-   until `read_budget` is reached.
-4. **Never read as part of seeding**: any previous processor's conversation.
-   Persistent memory is not read here either — a claim enters a live set through
-   the model calling the retrieval tool, which is a crossing this heuristic does
-   not make on its behalf.
-
-### What happens to the result
-
-Each read is an ordinary crossing: capability-checked like any read
-(`03-capability-authority-model.md`, permissive default), executed by the runtime,
-written to `12-knowledge-model.md` as an Observation, and **registered into the
-live set** by `14-context-manager.md`.
-
-There is no object handed to the processor. The instance starts with a live set
-that is no longer empty, which is the whole of what seeding does.
-
-**A `review`-mode invocation is seeded with the prior processor's conclusion
-only**, not its reasoning history (`06-processor-contract.md`). That is an
-independence cut, and it is enforced by what is seeded rather than by what is
-recalled.
-
-## Part 2 — The degenerate recall policy
+## The degenerate recall policy
 
 ### The recall rule (illustrative)
 
@@ -149,8 +91,7 @@ not excuse flattening the marking.
 
 ## Budgets
 
-`turn_budget` and `read_budget` are sized to keep the working-default 7B fully
-resident on the reference host (M0, findings-log entry 1); an illustrative default
+`turn_budget` is sized to keep the working-default 7B fully resident on the reference host (M0, findings-log entry 1); an illustrative default
 is 8k tokens for the turn input, leaving generation headroom. Host-specific.
 
 A **token count is a proxy for the thing that actually binds**, and the proxy is
@@ -162,24 +103,17 @@ MUST NOT be mistaken for the ceiling itself.
 
 ## Determinism (normative)
 
-Identical `(objective, repo state, budgets, path_hints, interaction_mode)` MUST
-produce identical seeding reads. Identical `(live set, turn_budget)` MUST produce
-an identical turn input.
+Identical `(live set, turn_budget)` MUST produce an identical turn input.
 
 No clock, no network, no model call, no randomness, no filesystem-order dependence
 — entries are sorted by an explicit key before selection.
 
 ## The trace (mandatory)
 
-Two traces, both required, both consumed by the Milestone 9 measurement.
+One trace, per turn, consumed by the Milestone 9 measurement: which live-set entries
+were included, in what order, which were dropped, and where truncation happened.
 
-- **Seed trace** — which terms were extracted, which files matched and with what
-  score, which matched files were not read for budget, and where truncation
-  happened.
-- **Recall trace**, per turn — which live-set entries were included, in what
-  order, which were dropped, and where truncation happened.
-
-The recall trace is the one the comparison programme needs: two policies over the
+It is what the comparison programme needs: two policies over the
 same live set are comparable only if what each presented was recorded
 (`14-context-manager.md`).
 
@@ -197,39 +131,38 @@ tells the caller what to read; the caller reads.
 - **Silent drop.** An entry dropped with no trace entry defeats the Milestone 9
   measurement — a defect, and the more damaging half because it is the recall
   trace that makes policies comparable.
-- **Empty live set at turn one.** Seeding always reads at least the README and the
-  tree, so an instance starting with nothing registered is a defect.
+- **Empty live set at turn one.** A task's live set holds at least the intent from
+  the moment the task is created, so an instance starting with nothing registered is a
+  defect.
 - **Nondeterminism.** Any run-to-run variation for identical inputs is a defect.
 - **Crossing type flattened.** See Presentation above.
 - **A bundle reappearing.** Any object composed once per invocation and held
   across turns is a defect against `14-context-manager.md`, however convenient.
-- **Seeding from another processor's conversation.** Breaks the independence this
-  baseline is supposed to preserve, and does it invisibly, since the material
-  arrives looking like ordinary context.
+- **Recalling another processor's reasoning to an instance that must not see it.**
+  Breaks the `review` independence cut invisibly, since the material arrives looking
+  like ordinary context. The cut is made against the subdivided `generation` crossing
+  type (`14-context-manager.md`).
 
 ## Relationships
 
 - **Context manager** (`14-context-manager.md`) — this document is one policy
-  inside that component, and the seeding half is a caller's heuristic that feeds
-  it. Everything about registration, the live set, and composition is owned there.
+  inside that component. Everything about registration, the live set, and composition
+  is owned there.
 - **Context as a governed resource** (`10-foundations/04`) — the concept, and the
   clause that mandates a naive baseline exist at all.
-- **Knowledge model** (`12-knowledge-model.md`) — where the seeding reads land as
-  Observations.
+- **Knowledge model** (`12-knowledge-model.md`) — where the live set's entries point.
 - **Processor contract** (`06-processor-contract.md`) — binds a `live_set_id`; the
-  `review` independence cut is enforced by seeding.
-- **Observability** (`02-observability-event-model.md`) — both traces are part of
+  `review` independence cut is made against the crossing type at recall.
+- **Observability** (`02-observability-event-model.md`) — the recall trace is part of
   the run record.
 - **Milestone 9** — the consumer of the baseline measurement. This document
   deliberately does not define the quality metric.
 
 ## Open contracts
 
-- **Budget numbers.** Concrete `turn_budget` and `read_budget`, and how they track
+- **Budget numbers.** A concrete `turn_budget`, and how it tracks
   the resident inference envelope once hardware is a variable. Shared with R4,
   which needs a footprint estimate rather than a token proxy.
-- **Ranking rule for seeding step 3.** Substring count versus path proximity
-  versus filename-exact-match priority. v0 picks one; evidence may replace it.
 - **Ordering rule for recall.** Registration order is the cheapest defensible
   choice and nothing argues it is good. Position affects what a model attends to
   (`14-context-manager.md`, prefix persistence), so ordering is a real lever this
@@ -245,12 +178,10 @@ tells the caller what to read; the caller reads.
 - **Prior-step handoff framing — closed.** It is not this component's contract. A
   handoff is folded into the **objective**, which is bound at instantiation, so the
   rule lives with `06-processor-contract.md` (Handoff framing) and this component
-  never sees one. What remains here is the consequence: seeding MUST NOT read
-  another processor's conversation, which the rule above already states.
+  never sees one.
 
   The alternative shape — a handoff written somewhere durable and **read** by the
   next instance, arriving as a crossing this component would register — is not
-  adopted and is not available until live-set seeding is settled
-  (`14-context-manager.md`).
+  adopted, and nothing measured supports it.
 - **`review` independence cut.** Whether "prior conclusion only" is the right
   isolation for adversarial review (`00-design/22-arch-cognition/02-processors.md`).

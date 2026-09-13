@@ -215,8 +215,7 @@ reference host and should be re-measured before it is assumed to carry.
 
 **The alternative shape this does not adopt.** A handoff could instead be written
 somewhere durable and **read** by the next instance, arriving as a crossing rather
-than as objective text. That is cheaper to justify only once live-set seeding is
-settled (`14-context-manager.md`), and nothing measured supports it yet. Folding
+than as objective text. Nothing measured supports that, and folding
 into the objective needs no new mechanism and is what the evidence covers.
 
 ## Authority

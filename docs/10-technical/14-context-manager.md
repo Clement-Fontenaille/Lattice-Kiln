@@ -512,8 +512,7 @@ is a change `02-observability-event-model.md` owes.
 - **Processor contract** (`06-processor-contract.md`) — binds a `live_set_id`, not
   context. What an instance sees is composed turn by turn.
 - **Naive context assembly** (`07-naive-context-assembly.md`) — the degenerate
-  recall policy and the naive seeding procedure. A fragment of this component, not
-  a competitor to it.
+  recall policy. A fragment of this component, not a competitor to it.
 - **Observability** (`02-observability-event-model.md`) — a separate store holding
   its own copy of turn inputs and lifecycle transitions.
 - **Runtime** (`20-arch-runtime.md`) — executes the crossings whose outputs this
@@ -524,13 +523,13 @@ is a change `02-observability-event-model.md` owes.
 
 ## Open contracts
 
-- **Seeding a new task's live set.** Continuation within a task no longer needs
-  seeding: the set belongs to the task, so a second instance finds it populated. What
-  remains is the genuinely new task — a split creating a child, an unrelated request —
-  whose live set starts empty. Whether a child inherits anything from its parent's,
-  and whether that inheritance is a reference or a fresh crossing, is unsettled.
-  This is where `00-design/22-arch-cognition/08-decomposition.md`'s
-  fork/join-versus-continuation question actually bites.
+- **What a split's child starts with.** Continuation within a task needs nothing:
+  the set belongs to the task, so a second instance finds it populated. A new task
+  starts with whatever its scope evaluation had to read, attached at creation. What is
+  unsettled is a **child** of an existing task — whether it inherits its parent's
+  edges, and whether inheriting duplicates edges or re-crosses. This is where
+  `00-design/22-arch-cognition/08-decomposition.md`'s fork/join-versus-continuation
+  question actually bites.
 - **What the recall policy is.** Named as a required, distinct responsibility and
   left arbitrary by design. Nothing here fixes what triggers a drop or what
   ordering is applied.
@@ -548,5 +547,5 @@ is a change `02-observability-event-model.md` owes.
   correction, an artifact recognised as noise — that is a second deletion trigger and
   nothing describes it.
 - **Isolation.** Whether two live sets can share entries, and what it means for
-  one to be derived from another, is untouched — it depends on the seeding answer
-  and on the decomposition question above.
+  one to be derived from another, is untouched — it depends on the inheritance
+  question above.
