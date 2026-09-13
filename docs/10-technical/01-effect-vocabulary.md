@@ -92,7 +92,7 @@ Writing, revising, or retiring an entry in persistent memory.
 
 ### 6. Processor invocation
 
-Instantiating a processor: binding a role definition, an objective, a selected context, and a capability set into a running instance.
+Instantiating a processor: binding a role definition, an objective, a scope, a live-set identity, a capability set and an interaction mode into a running instance (`06-processor-contract.md`). Context itself is not among them — what the instance sees is composed per turn (`14-context-manager.md`).
 
 - Includes: the orchestrator spawning an implementer; one processor requesting an independent review.
 - Excludes: composing a role definition as text (cognition); the instance's own later effects, each gated on its own.

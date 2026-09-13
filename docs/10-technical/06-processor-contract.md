@@ -94,9 +94,11 @@ M4, the orchestrator from M5 on.
   - `declined` — the correct response is *not* execution
     (`01-work-intent-and-task-model.md`: false assumption, wrong problem, already
     satisfied, needs investigation first).
-- **Context requests** *(illustrative)* — context the instance needed but did not
-  receive (`04-context-as-governed-resource.md`). In M4 these are **recorded but
-  not serviced** — naive assembly does not loop.
+- **Context requests** — not an output envelope field. A request for more context
+  is an **ordinary tool call** the instance makes mid-reasoning: the runtime
+  executes it, and `14-context-manager.md` registers what comes back like any
+  other crossing. What the instance could not obtain is reported through its
+  result — `blocked`, with the reason — not through a separate channel.
 
 ## Authority
 
@@ -149,10 +151,10 @@ M4, the orchestrator from M5 on.
   it; a refusal ends the effect, not necessarily the processor.
 - **Observability** (`02-observability-event-model.md`) — the kind-1 record is
   this contract's instantiation output; kind-2/4 records are its effect activity.
-- **Context management**
-  (`00-design/23-arch-context-management/01-context-manager.md`) — composes the
-  turn input on every turn. `07-naive-context-assembly.md` is the naive default for
-  that composition and is owed an update, since it still produces a one-shot bundle.
+- **Context management** (`14-context-manager.md`) — registers every crossing and
+  composes the turn input on every turn. `07-naive-context-assembly.md` supplies
+  the naive default for both halves: which reads seed a live set, and the
+  degenerate recall policy that orders it.
 - **Orchestrator** (`03-orchestrator.md`, Milestone 5) — becomes the caller;
   until then a fixed harness issues the type-6 effect.
 
