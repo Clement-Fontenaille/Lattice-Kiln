@@ -122,12 +122,58 @@ look as expensive as a first read.
 ```
 LiveSetEntry := {
   live_set_id,
-  claim_ref,            # into 12-knowledge-model
-  crossing_type,        # read | generation | retrieval | effect_response
-  registered_at,        # per-run monotonic sequence, not wall clock
-  policy_metadata       # whatever the configured recall policy needs
+  claim_ref,              # into 12-knowledge-model
+  crossing_type,          # read | generation | retrieval | effect_response
+  origin_invocation_id,   # which instance obtained it
+  origin_task_id,         # under which task that instance ran
+  origin_relation,        # own | inherited  (this task, or an ancestor)
+  registered_at,          # per-run monotonic sequence, not wall clock
+  policy_metadata         # whatever the configured recall policy needs
 }
 ```
+
+### The policy is mechanical, and this is its input domain
+
+**Recall runs on every turn, so it MUST be a deterministic function over recorded
+facts.** A model call to decide what to show the model is a recursion — something
+would have to compose a context in order to choose a context — and this project's own
+evidence points the other way besides: a deterministic gate scored 9/10 alone and
+6/10 with a 7B panel added (M5 follow-up).
+
+That the policy's **content** is deliberately unspecified
+(`00-design/23-arch-context-management/02-context-as-experimental-surface.md`) says
+nothing about its **kind**. What is open is which function; that it is a function
+over these fields is not.
+
+So the fields above are not bookkeeping. They are the **vocabulary every candidate
+policy is written in**, and a fact this entry does not carry is a fact no policy can
+branch on. That makes omissions expensive in a specific way: they do not make a
+policy harder to write, they make a whole class of policy **inexpressible**.
+
+Concretely, each field earns its place by a policy that needs it:
+
+- `crossing_type` — *a retrieval was deliberately fetched; an incidental read was not.*
+  Order by how the artifact was obtained.
+- `origin_invocation_id` — *everything this instance obtained, before anything an
+  earlier one did.* Also what an isolation preference is enforced against: a judge
+  binding `share_nothing` needs to know which entries carry the reasoning it judges.
+- `origin_relation` — *what this task found, before what it inherited.* An artifact
+  from a parent arrived under a wider scope and is not equally pertinent here.
+- `registered_at` — recency, and the ordered tail of the discussion.
+
+**Judgement is available to a mechanical policy, provided it was made elsewhere and
+recorded.** Whether a claim is promoted is a decided fact readable through
+`claim_ref`; so is its claim type; so is a curated attachment on the work item
+(`13-work-record.md`). A policy may branch on all of them. What it may not do is
+*form* a judgement at recall time — ask whether this artifact is pertinent to this
+objective — which is the one thing `10-foundations/03` holds must be judged live by
+whoever is asking.
+
+The pipeline is therefore one-way: **something judges, the judgement is recorded as
+a fact, the policy reads facts.** Never the policy asking for a judgement.
+
+**The criterion for adding a field**: record a fact when a plausible policy would
+branch on it. Not because it is true, and not because it is cheap.
 
 - **A live set belongs to a task, not to an instance.** Every artifact that crosses
   while work proceeds on a task attaches to that task's live set, including a
