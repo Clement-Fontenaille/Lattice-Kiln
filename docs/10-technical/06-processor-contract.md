@@ -298,8 +298,11 @@ into the objective needs no new mechanism and is what the evidence covers.
   should run inputs — reasoning — conclusion into an edge pointing at a blob.
   It would also make `12-knowledge-model.md`'s **Compress** nearly free, since a
   souvenir would be the conclusion artifact once the reasoning artifact is dropped,
-  rather than an operation that rewrites anything. What the cuts are, and whether
-  they differ per role, is not decided.
+  rather than an operation that rewrites anything. The distinction rides on
+  `crossing_type`, by subdividing `generation` (`14-context-manager.md`), since which
+  channel produced an output is a fact about the crossing rather than a property of
+  the result. What the subdivisions are, and whether they differ per role, is not
+  decided.
 - **Result schema.** Free text plus `terminal_state` for now. M4 will show what
   structure the evaluation actually needs.
 - **Role-definition source.** M4 draws role instructions from a tiny fixed
