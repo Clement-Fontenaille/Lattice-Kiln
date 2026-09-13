@@ -111,9 +111,27 @@ MUST carry:
   own metadata about each edge. The claim's **content** lives there and MUST NOT
   be copied here. Two stores point into one claim store; neither owns it.
 
-Reading an item's current state MUST NOT require replaying its transitions. The
-orchestrator interprets current work on every loop step
-(`08-orchestrator-contract.md`), which makes this the hottest read in the system.
+Reading an item's current state MUST NOT require replaying its transitions.
+
+**Which reads this is about.** The orchestrator's observe step, once per loop step
+and once per item it has in view: `get_item`, `children`, `scope_of`. That is the
+hottest read in the system. It is *not* about `transitions`, which is the history
+read and is supposed to walk, nor about `lineage`, which walks parents along a
+chain bounded by how deep the work tree goes, nor about `change_set`, which runs
+once per task for the scope check.
+
+**Two store shapes would force a replay, by different mechanisms.** Under **event
+sourcing** — holding only the append-only log — `get_item` means reading every
+transition for that item and folding them in order, so the cost grows with the
+number of transitions. The hot read gets slower exactly as the loop runs longer
+and the item accumulates history, which is the worst possible direction for it to
+grow. Under **append-and-supersede**, which is `12-knowledge-model.md`'s
+discipline, nothing is edited and a correction is a new entry pointing at the old
+one, so current truth sits at the tip of a supersession chain and reading it means
+chasing pointers. Not a fold, the same class of cost. That second one is the
+actual argument for this being a separate store rather than a region of the
+knowledge model: two different write disciplines, and collapsing them forces one
+to give.
 
 ### 3. Transition
 
@@ -124,9 +142,35 @@ deferred / abandoned / executed), the effect that realized it, the invocation th
 proposed it, and a timestamp.
 
 - The log is **append-only**. A transition is never edited or removed.
-- Current state and history are **both held**, and neither is derived from the
-  other. That redundancy is deliberate: deriving state from the log makes the
-  common read expensive, and deriving the log from state is impossible.
+- Current state and history are **both held**. The redundancy is deliberate:
+  computing state from the log makes the common read expensive, and the log cannot
+  be computed from the state at all, since it holds strictly more — every
+  superseded formulation, who proposed each change, which effect realized it, and
+  when.
+
+### Not derived on read is not the same as not determined
+
+`28-arch-work-record` says the two are held such that "neither is derived from the
+other", and that phrase needs one distinction drawn before an implementation can
+act on it.
+
+The state is **not computed at read time** by folding the log. It is nonetheless
+**logically determined** by it: the state record is what the log's transitions add
+up to. Only the second half of the architecture's phrase is unqualified — the log
+really is not derivable from the state, because it holds more.
+
+That matters for two concrete things.
+
+**A repair path exists.** A state record lost or corrupted can be rebuilt by
+folding the log. The redundancy buys a cheap read without costing recoverability,
+which it would if the two were genuinely independent.
+
+**Write order decides which drift is possible, so it is pinned.** A transition MUST
+be appended to the log **before** the state record is updated. With that order the
+only reachable inconsistency is *state behind log* — a crash between the two
+writes — and repair is a fold. The reverse order admits *state ahead of log*, where
+a real transition exists only in the record that gets rewritten, and no repair
+recovers it.
 
 ## The declared scope
 
@@ -291,10 +335,14 @@ work/
 - **Intent edited in place.** The heaviest failure here, because mandate descends
   from intent: a system that can rewrite what the work is for can rewrite what
   bounds it. Intent records MUST be write-once from the system's side.
-- **State and log disagreeing.** The two are independently held, which means they
-  can drift. An implementation MUST be able to detect that the current state is
-  not the endpoint of the log, and MUST treat the disagreement as a defect rather
-  than picking a winner.
+- **State and log disagreeing.** The two are separately written, which means they
+  can drift. An implementation MUST be able to detect that the current state is not
+  what the log adds up to, and MUST halt rather than continue on the discrepancy.
+  **The log is authoritative for repair** — not because it is more recent, but
+  because it is the only one of the two that is never rewritten, and because the
+  pinned write order makes *state behind log* the only reachable case. Rebuilding
+  the state by folding is a repair; editing the log to match the state is data
+  loss.
 - **Scope change absent from the log.** Then a mid-task widening is
   indistinguishable from a boundary that was always there, which is exactly what
   the audit exists to catch.
