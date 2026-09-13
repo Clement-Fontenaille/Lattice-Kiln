@@ -67,8 +67,9 @@ M4, the orchestrator from M5 on.
   (`00-design/23-arch-context-management/01-context-manager.md`). **Context itself is
   not bound at instantiation.** What the model sees is the *turn input*, composed
   afresh on every turn out of the live set under the recall policy; there is no
-  bundle handed over once and held. A live set is empty only for a new
-  task's first instance.
+  bundle handed over once and held. A new task's live set is not
+  empty either: the intent has crossed, and a crossing registers
+  (`70-THINKING/18-task-artifact-edges.md`).
 - `objective` handoff framing — where a prior step's output reaches this instance,
   it MUST arrive **inside the objective**, framed, and MUST NOT be appended as a
   separate block of context. See Handoff framing below; this is normative and

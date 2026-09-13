@@ -213,9 +213,13 @@ unfinished specification. The search is for which proxies, combined how.
 - **It grows within a task's life and does not shrink.** Registration only adds. An
   artifact the recall policy passed over on some turn is still a member; it was not
   shown, which is a different thing from not being held.
-- **A live set is empty only for a new task's first instance.** A second instance
-  working under the same task finds it already populated, because the set outlived
-  the instance that filled it.
+- **A new task's live set is not empty either.** The intent has crossed into the
+  work, and a crossing registers — so the set holds at least an Observation of the
+  operator's request before any tool is called. Whether the objective and the scope
+  follow by the same argument, and by what crossing type any of them arrives, is
+  open (`70-THINKING/18-task-artifact-edges.md`).
+- A second instance working under the same task finds the set already populated,
+  because it outlived the instance that filled it.
 - **It ends when its task does.** That is what removes its members from the root set
   and triggers their deletion (`12-knowledge-model.md`).
 - **It is not durable memory.** It is an index over a task. What an item leaves
