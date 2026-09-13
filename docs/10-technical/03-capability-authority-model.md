@@ -333,29 +333,47 @@ codebase, and demonstrably wrong when it is wrong.
 
 ### Containment
 
-One rule, three places it applies. **A mandate descends and never widens on the
-way down.**
+**Every task's scope MUST be contained in the ceiling derived from intent.** That is
+the one containment invariant, and it is checked against the **ceiling**, not against
+the parent task.
 
-- A **split**'s children inherit the parent's scope and MAY narrow it. A proposed
-  child whose boundary is not contained in its parent's is not a split; it is a new
-  root task, and a new root needs intent, which only arrives from outside
-  (`01-effect-vocabulary.md` type 4 excludes an intent record's original content
-  from system amendment).
-- A **refinement** changes a work item's formulation and not its intent, so a
-  re-derived scope may move underneath the intent's scope and MUST NOT push past
-  it.
-- A **nested invocation** — a processor invoking another — passes down a scope
-  contained in its own and MAY narrow it.
+The distinction matters and the parent-relative reading was wrong. A task's scope is
+not a floor for everything beneath it: an intermediate task can be much more
+restricted than the tasks around it, and a child of that narrow task may legitimately
+reach wider than its parent, provided it stays inside the ceiling. Narrowing a task to
+*fix the off-by-one in `paginate()`* should not permanently forbid a child from
+touching the test file, when the intent covered the tests all along.
 
-Implementations MUST check containment on all three, not only on splits. The split
-route is the obvious one, and refinement reaches the same place without anything
-ever splitting.
+So local narrowing at each level is **for focus**, and the ceiling is **for
+enforcement**. Only one of the two is a boundary anything is checked against.
+
+The security argument survives intact, because it never depended on the chain. What
+cannot be exceeded is the ceiling; the ceiling descends from intent; and intent is not
+system-writable (`01-effect-vocabulary.md` type 4 excludes an intent record's original
+content from system amendment). A loop may reshape work beneath the ceiling as much as
+it likes and cannot author the ceiling, which is what
+`10-foundations/06`'s membership test requires. Manufacturing mandate by splitting
+fails for that reason, not because each split was compared to its parent.
+
+Three places a scope is written, all checked the same way:
+
+- a **split**'s children, whose scopes are derived at creation;
+- a **refinement**, which re-derives a scope from a changed formulation;
+- a **nested invocation**, which is bounded by its task's scope rather than by the
+  ceiling directly, since an instance operates under one task.
+
+Implementations MUST check all three against the ceiling. The split route is the
+obvious one; refinement reaches the same place without anything ever splitting.
 
 A refusal on containment MUST be recorded, as a `rejected-by-containment`
 disposition (`02-observability-event-model.md`, kind 4). It is neither a capability
 decision nor a gate trip, and it is the clearest boundary-probing signal this whole
-apparatus produces: an attempt to widen a mandate, caught at the moment it was
+apparatus produces: an attempt to reach past the ceiling, caught at the moment it was
 attempted. A single one is ordinary; a pattern of them is the finding.
+
+Note what is **not** a refusal: a child reaching wider than its parent while staying
+inside the ceiling. That is ordinary work and an implementation that refuses it has
+implemented the parent-relative rule.
 
 Deciding whether a proposed child's boundary sits inside its parent's is itself a
 natural-language judgment. This rule does not reduce the amount of judgment

@@ -273,20 +273,18 @@ Two constraints belong to this store because they are about the **shape of the
 lineage** rather than about any judgment. A conforming implementation MUST reject
 a transition that violates either.
 
-- **A split's children inherit the parent's scope and may narrow it, never widen
-  it.** A proposed child whose boundary is not contained in its parent's is not a
-  split; it is a new root, and a new root needs intent, which only arrives from
-  outside. Without this, splitting is a way to manufacture mandate — widen in the
-  child, act under the child.
-- **A refinement stays under its item's intent.** Scope derives from a
-  formulation, so refining broadly and re-deriving would widen the scope without
-  anything ever splitting. What bounds it is that a refinement changes the
-  formulation and not the intent: a re-derived scope may move underneath the
-  intent's scope and MUST NOT push past it.
+- **A split's children get their own scope, derived at creation, and it MUST be
+  contained in the ceiling.** Not in the parent's. A child may legitimately reach
+  wider than a narrow parent as long as it stays inside what intent authorised: a
+  parent's scope focuses that parent, it does not floor everything beneath it.
+- **A refinement re-derives a scope from a changed formulation**, and the result
+  MUST be contained in the ceiling. Refining broadly and re-deriving is the route
+  that widens without anything ever splitting, and the ceiling is what stops it.
 
-The two are one rule seen from two sides — **mandate descends and never widens on
-the way down** — and the third side of it, nested invocation, is
-`06-processor-contract.md`'s.
+One rule rather than two: **every task's scope sits inside the ceiling derived from
+intent** (`03-capability-authority-model.md`). Manufacturing mandate by splitting
+fails because intent is not system-writable, not because each child was compared
+against its parent.
 
 Deciding containment is a natural-language judgment and this store does not make
 it. It rejects a transition whose containment check did not pass; the check itself
