@@ -30,7 +30,7 @@ It should remain traceable even when the system rewrites the work derived from i
 
 A work item is a current formulation of what may need to be investigated or done.
 
-It can be refined, challenged, split, merged, deferred, abandoned, or executed.
+**It is never rewritten.** Its formulation is fixed when it is created. What can change is its state — challenged, deferred, abandoned, executed — and what can follow it is new work: children under it, or a **successor** formulated differently. Redefining the work therefore means creating, not editing (`10-technical/01-effect-vocabulary.md`, type 4).
 
 This flexibility is deliberate.
 
@@ -50,7 +50,7 @@ It may discover that the task is based on a false assumption, that a different p
 
 For "the request has already been satisfied" specifically, `10-foundations/04` also names what context management must supply rather than judge: candidate matches from the knowledge base that plausibly converge with the objective, surfaced as ordinary retrieval artifacts. Whether one of them genuinely resolves the objective is the processor's call.
 
-**Two of the four are conclusions and two are transitions**, which is worth separating because they land in different places. A false assumption and an already-satisfied request end the work item — they are recorded conclusions. A different problem being more relevant, or more investigation being needed, do not end anything: they are work-item transitions, a refinement or a split, and the item continues.
+**Two of the four end the work item and two create new ones**, which is worth separating because they land in different places. A false assumption and an already-satisfied request end it — they are recorded conclusions. A different problem being more relevant, or more investigation being needed, end nothing: they create a successor or children, and the work continues under the new item rather than under a rewritten one.
 
 **An open question this exposes.** `28-arch-work-record` currently keeps three conclusions: *answered*, *blocked*, *declined*. A false-premise refusal and an already-satisfied request are both refusals to execute, so both land on *declined* — yet they call for entirely different follow-ups, and telling them apart matters to whoever reads the record afterwards. That is the same shape of collapse Milestone 5 recorded when an orchestrator resolved "false premise" and "cannot find a next step" both to *blocked*. Whether three verdicts are enough, or whether this vocabulary reproduces that collapse one level down, is unresolved and belongs with the processor contract rather than here.
 

@@ -98,7 +98,7 @@ The mandate path. Nothing on it is built.
 | 6 | Bound at instantiation into an instance, and **static for its life** | `06` |
 | 7 | Recorded verbatim in the kind-1 invocation record, **as bound** — because the item's scope may move underneath it | `02` |
 | 8 | The instance ends. The bound scope ends with it; only the kind-1 record survives | `06`, `02` |
-| 9 | The item is refined; the scope is re-derived; the change appears in the transition log | `13` |
+| 9 | Work is redefined: a **successor task** is created with a new objective and its own derived scope. T-88 is untouched | `13`, `01` |
 | 10 | At task end, the **aggregate check** compares the accumulated change set against the declaration | `03` |
 | 11 | The item reaches a terminal transition. Its scope's lifetime is its item's | `13` |
 | 12 | Whether a terminal item is retained or removed is open | `13`, open contract |

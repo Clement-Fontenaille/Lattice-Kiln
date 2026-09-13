@@ -48,9 +48,10 @@ what something else decided and the runtime realized.
 shape, deliberately stopping short of a schema. This document narrows to:
 
 - **Three record kinds**, not one: intent, work item, transition. They are three
-  because they are written under three different disciplines. Intent is written
-  once and never again. A work item is rewritten in place every time it changes. A
-  transition is appended and never touched afterwards.
+  because they are written under three different disciplines. Intent is written once
+  and never again. **A work item's formulation and scope are also written once**; only
+  its state and its conclusion mutate, in place. A transition is appended and never
+  touched afterwards.
 - **This store is separate from `12-knowledge-model.md`**, and the reason is what a
   work item *is* rather than what it costs to read. A work item is not a claim; it
   is what claims attach to. The knowledge model is also append-and-supersede
@@ -103,8 +104,10 @@ MUST carry:
 - `work_item_id`, `intent_ref`, `parent_item_id` (null for a root).
 - `formulation` — the current statement of what may need to be done, in natural
   language.
-- `state` — one of the transitions below, as a current value: refined, challenged,
-  split, merged, deferred, abandoned, executed.
+- `formulation` and `scope` are **fixed at creation and never rewritten**
+  (`01-effect-vocabulary.md`, type 4). What would have been a refinement is a
+  **successor task** with a redefined objective.
+- `state` — a current value: challenged, deferred, abandoned, executed.
 - `scope` — three parts, specified in the next section.
 - `conclusion` — null until recorded; see below.
 - `attachments` — references into `12-knowledge-model.md`, plus this store's own
@@ -124,9 +127,13 @@ so it would get slower exactly as the loop ran longer.
 
 One append-only log per work item, kept **alongside** the item.
 
-MUST carry: `work_item_id`, `transition` (refined / challenged / split / merged /
-deferred / abandoned / executed), the effect that realized it, the invocation that
-proposed it, and a timestamp.
+MUST carry: `work_item_id`, `transition` (challenged / deferred / abandoned /
+executed), the effect that realized it, the invocation that proposed it, and a
+timestamp.
+
+Splitting and succession are **not** transitions. Both create new work items and leave
+the existing one untouched, so what records them is the new item's own lineage link
+rather than an entry in this log.
 
 - The log is **append-only**. A transition is never edited or removed.
 - The log holds what the item record does not keep: every superseded formulation,
@@ -191,7 +198,7 @@ Normative:
   end. The irreversible half of the check runs before an effect happens.
 - A change to any of the three MUST appear in the transition log. Two reasons, and
   both matter: a mandate widened mid-task is what an audit needs to *see* rather
-  than find silently already true, and an item that is refined or split has its
+  than find silently already true, and a task that is succeeded or split has its
   scope legitimately re-derived — those two look identical unless the history
   distinguishes them.
 - An operator's own indication of a boundary is carried as part of the scope and
@@ -277,9 +284,10 @@ a transition that violates either.
   contained in the ceiling.** Not in the parent's. A child may legitimately reach
   wider than a narrow parent as long as it stays inside what intent authorised: a
   parent's scope focuses that parent, it does not floor everything beneath it.
-- **A refinement re-derives a scope from a changed formulation**, and the result
-  MUST be contained in the ceiling. Refining broadly and re-deriving is the route
-  that widens without anything ever splitting, and the ceiling is what stops it.
+- **A successor task** — created with a redefined objective where an item would
+  otherwise have been refined — derives its scope at creation and MUST be contained in
+  the ceiling. Redefining broadly is the route that widens without anything ever
+  splitting, and the ceiling is what stops it.
 
 One rule rather than two: **every task's scope sits inside the ceiling derived from
 intent** (`03-capability-authority-model.md`). Manufacturing mandate by splitting
@@ -312,7 +320,8 @@ Two of the four reasons `22-arch-cognition/01` gives for not executing are
 conclusions and two are transitions, and they land in different places here. A
 false assumption and an already-satisfied request **end** the item — they are
 conclusions. A different problem being more relevant, or more investigation being
-needed, end nothing — they are a refinement or a split, and the item continues.
+needed, end nothing — they create a successor task or children, and work continues
+under the new item.
 
 Whether an instance judges objective validity at all is that instance's strategy
 (`10-foundations/04`). Being able to record the verdict once it does is not
@@ -397,20 +406,20 @@ work/
 - **An application state edited in place.** Recording `applied` by rewriting the
   transition entry gives up the one property that makes the log worth trusting for
   repair. It MUST be a second append.
-- **A containment refusal left unrecorded.** A split or refinement this store
+- **A containment refusal left unrecorded.** A child or successor this store
   refuses for containment is an attempt to widen a mandate, which is the clearest
   boundary-probing signal the scope apparatus can produce. It is recorded by
   observability as a kind-4 disposition (`02-observability-event-model.md`), not
   here — the item's log records what happened to the item, and nothing happened to
   it. An implementation that records the refusal in neither place has discarded the
   signal.
-- **Scope change absent from the log.** Then a mid-task widening is
-  indistinguishable from a boundary that was always there, which is exactly what
-  the audit exists to catch.
+- **A scope changed at all.** A task's scope is fixed at creation, so an
+  implementation that permits editing it has reintroduced the widening path the
+  ceiling exists to close.
 - **`pending` collapsed into `derived`.** Converts a correctly-detected ambiguity
   into a silently chosen reading.
-- **Containment unchecked on refinement.** An implementation that checks splits
-  and not refinements has left open the route splitting alone did not close.
+- **Containment unchecked on succession.** An implementation that checks children
+  and not successors has left open the route splitting alone did not close.
 - **Verdict collapse.** `declined` folded into `blocked`, or the two reasons for
   declining folded into one, reproduces the failure M5 recorded.
 - **Claim content copied here.** An attachment holding a claim's text rather than
@@ -451,10 +460,9 @@ work/
   remain an emergent orchestration concept. Inherited from
   `22-arch-cognition/01`, and it decides whether this store holds two record kinds
   or three.
-- **Split and merge.** One primitive exercised in two directions, or two genuinely
-  different transitions? This decides what the parent and child links have to be
-  able to express, and a merge with multiple parents does not fit the single
-  `parent_item_id` above.
+- **Lineage links.** A child and a successor are both created by 4a and are not the
+  same relation, so a single `parent_item_id` cannot express both. A merge — one item
+  created from several — needs several parents besides.
 - **Abandoned items.** Retained or removed. Retention is the cheaper assumption
   and keeps "why was this dropped" answerable, but nothing establishes that it is
   required.

@@ -77,9 +77,39 @@ Outbound network I/O initiated by a cognitive component or by a process it start
 
 ### 4. Work-record mutation
 
-Changing the durable representation of work: creating, refining, splitting, merging, deferring, or abandoning a work item, and attaching a finding, proposal, or decision to one.
+Changing the durable representation of work. **This type subdivides**, because a
+single grant over all of it leaks authority: acts with incomparable risk currently
+share one permission, and granting the right to split a task grants the right to
+rewrite its parent.
 
-- Includes: recording that a task rests on a false assumption; splitting one work item into three; marking a decision and its supporting evidence. **A cognitive component's own recorded conclusion — a processor stating that it answered, was blocked, or declined, with its reasoning — is a work-record mutation of this type** (M4 finding, findings-log entry 4: this modelling carved cleanly once chosen, but the boundary was not self-evident from the vocabulary alone).
+It keeps its number rather than becoming several top-level types, so that everything
+keyed to "type 4" — H6's run-store clause, this document's own exclusions, the
+observability dispositions — stays valid. A capability grant MAY be keyed to a
+sub-type.
+
+| Sub-type | Act | What it can do wrong |
+|---|---|---|
+| **4a Create** | Bring a new work item into existence — as a child, or as a successor with a redefined objective | Manufacture mandate. Bounded by the ceiling |
+| **4b Transition** | Change an existing item's state: challenged, deferred, abandoned, executed | Abandon live work, or park it indefinitely |
+| **4c Attach** | Associate an artifact with a task | Little. It adds and never removes or redefines |
+| **4d Conclude** | Record a terminal verdict with its reasoning | Declare an outcome the work does not support |
+
+**No sub-type rewrites a task.** A work item's formulation and its scope are fixed at
+creation and never edited. What would have been a refinement is a **successor task**
+created with a redefined objective, which is 4a.
+
+Two things follow. **Splitting is an application of 4a** rather than a primitive of
+its own: it creates children under a parent and does not touch the parent. And a
+planner holding 4a can decompose or redefine work while being structurally unable to
+rewrite what it is working from.
+
+What still mutates on an existing item is its **state** (4b) and its **conclusion**
+(4d). Neither changes what the task is.
+
+*The sub-type boundaries are derived from what each act can do wrong; that type 4
+subdivides, and that a task is never rewritten, are design-set decisions.*
+
+- Includes: recording that a task rests on a false assumption (4d); creating three children under one work item (4a); attaching a decision and its supporting evidence (4c). **A cognitive component's own recorded conclusion — a processor stating that it answered, was blocked, or declined, with its reasoning — is a work-record mutation of this type** (M4 finding, findings-log entry 4: this modelling carved cleanly once chosen, but the boundary was not self-evident from the vocabulary alone).
 - Excludes: an intent record's original human-authored content, which is amended only out of band; observations, which are runtime bookkeeping.
 
 ### 5. Memory mutation
@@ -135,7 +165,8 @@ An implementation therefore MUST make the ordered history of realized effects re
 ## Open contracts
 
 - What structure carries the "representable, permitted, attributable, reversible" information with each effect submission — a common envelope across all nine types, or per-type shapes?
-- Does type 4 (work-record mutation) stay one type, or split once the work model is specified and findings/proposals/decisions prove to need distinct authority?
+- Do the four sub-types of type 4 hold, and does any of them need subdividing further? The cut follows what each act can do wrong; evidence may show a line in the wrong place. **4c Attach** is the one to watch: attachment at task creation is an ungated runtime call rather than a proposed effect (`13-work-record.md`), so whether a processor attaching mid-work needs a grant at all is unsettled.
+- How a **successor** task links to the one it redefines. A child and a successor are both created by 4a and are not the same relation, and a single `parent_item_id` cannot express both (`13-work-record.md`).
 - Is promotion (type 8) genuinely one effect type, or a small family (promote, reject, roll back) with shared lineage semantics but different authority?
 - Should network access (type 3) distinguish destination classes (package registry, arbitrary host, known-service) at the vocabulary level, or is that entirely a capability-policy concern?
 - At what granularity may a capability rule name a class of reads — by path, by crossing type, by volume against a ceiling, or something else? Open on the foundational side too.

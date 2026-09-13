@@ -59,12 +59,13 @@ Three things remain, and they are smaller than what they replaced.
 1. **Where the containment check on a transition sits.** Deciding whether a child
    task's boundary is inside its parent's is a natural-language judgment, and
    `13-work-record.md` makes a passing check a precondition of accepting a split or
-   a refinement. Read literally, that puts a model call inside the work store's
+   a successor. Read literally, that puts a model call inside the work store's
    write path. Either it belongs there, or containment is checked before the
    transition is proposed and the store trusts a verdict it is handed.
-2. **What counts as termination**, for the aggregate check. `13-work-record.md`
-   names seven transitions and does not say which end a task, so it is unclear
-   whether the end-of-task comparison runs on *abandoned* and *deferred*.
+2. **What counts as termination**, for the aggregate check. A task's states are
+   challenged, deferred, abandoned and executed (`13-work-record.md`), and which of
+   them end a task is unclear — in particular whether the comparison runs on
+   *abandoned* and *deferred*.
 3. **How the self-modifying-scope exclusion is checked.** "A scope permitting its
    own modification is excluded by default" reads mechanical and is not: whether a
    natural-language boundary permits modifying itself is the same judgment as the
@@ -110,11 +111,18 @@ is the static description of what a role may ask for.
 `01-capabilities-and-authority.md` leaves capability granularity, policy
 representation, and the whole of scope expression open. This document narrows to:
 
-- **Grants keyed to the nine effect types**, not to finer sub-operations. A grant
-  is `(effect_type, constraints)`. Discarded for the MVP: per-tool or
-  per-syscall capabilities (administrative complexity the milestone explicitly
-  warns against), and a single coarse "may cause effects" capability (too weak to
-  express reviewer-reads-only vs implementer-writes).
+- **Grants keyed to the nine effect types, and to type 4's sub-types.** A grant is
+  `(effect_type, constraints)` where the type may be `4a`..`4e`
+  (`01-effect-vocabulary.md`). Discarded: per-tool or per-syscall capabilities
+  (administrative complexity the milestone explicitly warns against), and a single
+  coarse "may cause effects" capability (too weak to express reviewer-reads-only vs
+  implementer-writes).
+
+  Type 4 is the one that needed subdividing, and the reason is an authority leak
+  rather than a taste for granularity. Attaching an artifact and abandoning a task
+  are not comparable acts, and one grant over both means **granting the right to
+  split a task grants the right to rewrite its parent**. A planner needs `4a` and
+  must not have `4b`.
 - **Static policy.** The grant set for a role is a fixed map in seed
   configuration. Discarded for the MVP: a policy engine that revises grants
   during a run. Revocation is the one dynamic operation kept, because
@@ -173,9 +181,15 @@ CapabilitySet := { effect_type -> Constraints }
 
 # examples
 implementer := {
-  1 (workspace_mutation):  { path_within: "<assigned_workspace_root>" },
-  2 (process_execution):   { command_allowlist: ["build", "test", "lint", "fmt"] },
-  4 (work_record_mutation): { }        # unconstrained within the run's work items
+  1  (workspace_mutation): { path_within: "<assigned_workspace_root>" },
+  2  (process_execution):  { command_allowlist: ["build", "test", "lint", "fmt"] },
+  4d (attach):             { },
+  4e (conclude):           { own_invocation_only: true }
+}
+planner := {
+  4a (create):             { },       # may decompose
+  4d (attach):             { }
+                                      # no 4b: may not rewrite the task it decomposes
 }
 reviewer := {
   # reads only — no effect grants at all
@@ -358,12 +372,14 @@ fails for that reason, not because each split was compared to its parent.
 Three places a scope is written, all checked the same way:
 
 - a **split**'s children, whose scopes are derived at creation;
-- a **refinement**, which re-derives a scope from a changed formulation;
+- a **successor**, created with a redefined objective, whose scope is derived at
+  creation like any other;
 - a **nested invocation**, which is bounded by its task's scope rather than by the
   ceiling directly, since an instance operates under one task.
 
-Implementations MUST check all three against the ceiling. The split route is the
-obvious one; refinement reaches the same place without anything ever splitting.
+Implementations MUST check all three against the ceiling. Succession is the route
+worth naming beside splitting: redefining an objective reaches the same place without
+anything ever splitting, and it is a creation like any other.
 
 A refusal on containment MUST be recorded, as a `rejected-by-containment`
 disposition (`02-observability-event-model.md`, kind 4). It is neither a capability
@@ -428,9 +444,10 @@ Instantiation binds a scope alongside role, objective, live set and capability s
 (`06-processor-contract.md`). For the instance's life:
 
 - A running instance **MUST NOT** widen its own scope.
-- A change to the work item's scope — re-derivation after a refinement or split,
-  or an operator amendment — **MUST NOT** reach instances already running. It
-  applies from the next invocation.
+- A task's scope is fixed at creation and never rewritten, so an instance's scope
+  cannot go stale against its own task. What an instance does not see is a **successor
+  task** created while it runs; that successor's scope applies from its own
+  invocations, never to this one.
 - An instance that finds it must reach further **MUST stop and report** — a
   recorded conclusion, or a proposed transition on the work item — and something
   else decides.
@@ -639,9 +656,9 @@ is.
 - **A conformance verdict recorded only on failure.** Then a check that never ran
   and a check that passed are the same absence, and the system cannot tell an
   unscoped run from a clean one afterwards.
-- **Scope drift through refinement.** An implementation that checks containment on
-  splits and not on refinements has left the route open that splitting alone did
-  not close.
+- **Scope drift through succession.** An implementation that checks containment when
+  a child is created but not when a successor is has left open the route that
+  splitting alone did not close.
 
 ## Relationships
 
@@ -674,7 +691,7 @@ is.
 - **What counts as termination.** The aggregate check runs "once per work item at
   termination". `13-work-record.md` names seven transitions and does not say which
   are terminal. Whether the check runs on *abandoned* and *deferred*, and whether a
-  work item refined after execution is re-checked, is undefined.
+  task succeeded after execution is re-checked, is undefined.
 - **How the self-modifying-scope exclusion is checked.** "A scope permitting its
   own modification MUST be excluded unless explicitly granted" reads like a
   mechanical default and is not one: whether a natural-language boundary permits
@@ -721,9 +738,9 @@ is.
   classes). Deferred until real effects show which constraints they need.
 - **Policy dynamism.** When does policy stop being a static map? What triggers a
   grant change mid-run, if ever, and how is that itself gated?
-- **Granularity review.** Effect-type granularity is the MVP choice; evidence may
-  show a type (likely 2, process execution, or 4, work-record mutation) needs to be
-  split for authority purposes even though the vocabulary keeps it whole.
+- **Granularity review.** Type 4 is subdivided. Type 2, process execution, is the
+  remaining candidate: running a test suite and running an arbitrary shell command are
+  one grant separated only by a command allowlist.
 - **Read granularity.** At what granularity a rule may name a class of reads — by
   path, by crossing type, by volume against a ceiling. Open on the foundational
   side too (`10-foundations/02`).
