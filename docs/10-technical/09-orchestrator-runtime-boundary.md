@@ -12,12 +12,11 @@ binds to `10-technical/06-processor-contract.md`,
 
 ## TL;DR
 
-Exactly two things cross from the reasoning side (orchestrator + processors) to
-the runtime: a **proposed effect** and a **processor-invocation request**.
-Exactly three things cross back: an **effect result** (or typed refusal), an
-**assembled context**, and an **objective signal** where one exists. Nothing
-else. The runtime validates the four properties plus the deny-list gate and makes
-**no semantic judgment** about the work.
+Two kinds of thing cross from the reasoning side (orchestrator + processors) to
+the runtime: a **proposed effect** and a **read request**. Three cross back: the
+**outcome** of either, a **turn input**, and an **objective signal** where one
+exists. Nothing else. The runtime validates the four properties plus the deny-list
+gate and makes **no semantic judgment** about the work.
 
 > **Motto:** The model proposes; the runtime makes it real — and checks only what it can check without understanding.
 
@@ -42,16 +41,30 @@ crossing and under Validation depth.
 
 | Crossing | Payload | Not allowed |
 |---|---|---|
-| **Proposed effect** | typed `1..9`, with its four-property envelope (`01-effect-vocabulary.md`) | calling a runtime internal; reading raw runtime state; instructing the runtime to skip or reorder a check |
-| **Processor-invocation request** | role, objective, context reference, requested capability set (`06`) | requesting a capability the caller does not hold; binding a processor outside the role library without recording the definition |
+| **Proposed effect** | typed `1..9`, with its four-property envelope (`01-effect-vocabulary.md`). A processor-invocation request is one of these — type 6 — carrying role, objective, scope, live-set identity, capability set and interaction mode (`06`) | calling a runtime internal; reading raw runtime state; instructing the runtime to skip or reorder a check; requesting a capability or a scope the caller does not hold; binding a processor outside the role library without recording the definition |
+| **Read request** | a runtime-mediated read — a file, a process output, a knowledge-model query. Not typed, no effect envelope | assuming it passes because reads usually do; issuing one outside the caller's assigned workspace or allowlist |
+
+**Two rather than three, and not the two previously listed.** A processor
+invocation is not a separate kind of crossing: it is effect type 6, and listing it
+beside "proposed effect" double-counts. What was genuinely missing is the read. A
+read is a runtime-mediated operation, it sits in the gate's input domain
+(`04-enforcement-gate.md`), and it is by far the most frequent thing the reasoning
+side sends across — a boundary specification that does not mention it describes a
+system that cannot look at anything.
 
 ### Runtime → reasoning
 
 | Crossing | Payload | Not allowed |
 |---|---|---|
-| **Effect result** | the realized effect's result reference, or the typed refusal (`rejected_by_capability` / `rejected_by_gate` → kind-3) | leaking another run's data; exposing the gate's internal rule set |
-| **Assembled context** | the `context_bundle` for an invocation, resolvable to its content for the retention window (`07`) | presenting the bundle as complete when it was budget-truncated (the trace MUST say so) |
+| **Operation outcome** | what a proposed effect or a read returned, or the typed refusal (`rejected_by_capability` / `rejected_by_gate` → kind-3) | leaking another run's data; exposing the gate's internal rule set; returning a read result without registering the crossing (`14-context-manager.md`) |
+| **Turn input** | what the model is actually shown this turn, composed by `14-context-manager.md` out of the live set | presenting it as complete when recall dropped or truncated entries (the recall trace MUST say so); flattening crossing type, so a generation reads as authored material |
 | **Objective signal** | build / test / lint outcome where the runtime can produce one | fabricating a signal where none exists; treating absence of a signal as success |
+
+**The turn input is not requested.** It is the one crossing with no counterpart on
+the other side of the table: nothing on the reasoning side asks for it, because
+composition happens as a turn happens. The removed `context_bundle` was a
+request/response object, which is why it appeared here as a symmetric crossing and
+why its replacement does not.
 
 ## Validation depth (the narrowed open question)
 
@@ -66,6 +79,12 @@ For the MVP the runtime checks, and only checks:
 4. **Reversible where required** — an undo path exists (VCS for a file write,
    etc.).
 5. **The deny-list gate** — `04-enforcement-gate.md`.
+
+A **read** takes the same path with two of the five doing nothing: it has no
+reversibility requirement and no effect type, but it is representable or it is
+not, it is attributable, it is capability-checked — under a permissive default —
+and it reaches the gate. It passes unless a rule names it; the point is that there
+is a place for such a rule to fire.
 
 The runtime makes **no semantic judgment**: it does not read a diff to decide
 whether the change is *good*, does not run a type-checker or linter before
@@ -97,7 +116,10 @@ there is no runtime code path to an effect realization that bypasses the gate.
 **Reasoning MUST NOT assume:**
 
 - a proposed effect will be realized — it may be refused;
-- its context is complete — it may be budget-truncated or simply missing a file;
+- a read will be permitted — the default is permissive, not guaranteed;
+- its turn input is complete — recall may have dropped or truncated entries, and
+  the live set itself holds only what has actually crossed;
+- what it saw last turn is still in front of it — the live set is not monotonic;
 - a spawned processor will run or succeed.
 
 **Runtime MUST NOT assume:**
@@ -116,8 +138,12 @@ there is no runtime code path to an effect realization that bypasses the gate.
   — that is a reviewer's job.
 - **Assumed realization.** Reasoning proceeds as though an effect happened without
   checking the result or refusal.
-- **Context assumed complete.** Covered by `07`; restated here as a boundary
-  assumption the reasoning side must not make.
+- **Turn input assumed complete.** Covered by `07` and `14`; restated here as a
+  boundary assumption the reasoning side must not make.
+- **An unregistered read result.** A read that crosses back without
+  `14-context-manager.md` registering it leaves material in front of the model
+  that the live set does not know about — which breaks the live-state query, the
+  R4 ceiling, and the sequence history the gate will eventually read.
 - **Signal fabrication.** The runtime reports an objective signal it did not
   actually obtain, or treats "no signal" as "pass".
 

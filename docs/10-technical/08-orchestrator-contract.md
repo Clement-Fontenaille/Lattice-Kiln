@@ -58,23 +58,34 @@ its own performance (higher-level evaluation, Milestone 12+).
 - The **originating intent** — human-authored, carried verbatim. The orchestrator
   MUST NOT rewrite it (`01-work-intent-and-task-model.md`: preserve the goal,
   question the task). It may conclude the task derived from the intent is wrong.
-- A **curated context** — the orchestrator is itself under context governance
-  (`03-orchestrator.md`). For the MVP: the intent, a bounded running summary of
-  what processors have concluded so far, and the naive repo bundle
-  (`07-naive-context-assembly.md`). It does **not** receive the full repository
-  or every processor's full conversation.
+- Its own **live set**. The orchestrator is itself under context governance
+  (`03-orchestrator.md`) and is fed the same way anything else is: a turn input
+  composed afresh each turn by `14-context-manager.md` out of what has crossed
+  into its live set. It does **not** receive the full repository or every
+  processor's full conversation.
+
+  **The orchestrator holds no context policy of its own.** It does not assemble,
+  select, or budget its own input, and it has no privileged access to a wider one.
+  Whatever recall policy is in force applies to it as to any instance — which is
+  what makes an orchestrator's context a measurable subject rather than an
+  exception carved out of the measurement.
+- Its **scope**, inherited. The orchestrator operates under the intent's scope and
+  may narrow it for the items below; it does not derive it (Authority, below).
 - Its own **capability set** — for the MVP, `processor_invocation` (type 6) and
   `work_record_mutation` (type 4) only. It MUST NOT propose workspace, process,
   or network effects directly; those go through the processors it spawns.
 - The **role library** — free-text role definitions available to bind
-  (`06-processor-contract.md`); open-ended.
+  (`06-processor-contract.md`); open-ended, except for the invariant processors,
+  which are not in it (`04-enforcement-gate.md`).
 
 ## Outputs
 
-- A sequence of **processor invocations** (type 6 effects), each carrying a role,
-  an objective the orchestrator formulated, a context selection, and a capability
-  set **bounded by the orchestrator's own** — it cannot grant what it does not
-  hold.
+- A sequence of **processor invocations** (type 6 effects), each carrying the six
+  things `06-processor-contract.md` binds: a role, an objective the orchestrator
+  formulated, a **scope contained in the work item's**, a live-set identity, a
+  capability set **bounded by the orchestrator's own** — it cannot grant what it
+  does not hold — and an interaction mode. It does not select context; there is
+  nothing to select.
 - A **decision record per loop step** (recorded as a type-4 work-record
   mutation): what was observed, which operation was chosen and a one-line
   natural-language rationale, and what the step is expected to produce. This is
@@ -95,15 +106,29 @@ its own performance (higher-level evaluation, Milestone 12+).
 ## Authority
 
 - **MAY**: formulate processor objectives; choose or define roles; spawn
-  processors within its capability set; route one processor's output to another;
-  stop the effort.
+  processors within its capability set; **narrow** a scope for a work item or an
+  invocation beneath it; route one processor's output to another; stop the effort.
 - **MUST NOT**: realize workspace / process / network effects directly; rewrite
-  the intent; grant a processor a capability it does not itself hold; use a
-  processor to accomplish what it is itself forbidden to do (e.g. instructing an
-  implementer solely to edit the invariant list); define its own success metric
-  or evaluate its own performance; loop without bound.
+  the intent; grant a processor a capability it does not itself hold; **derive a
+  scope ceiling from intent**; **widen any scope**; use a processor to accomplish
+  what it is itself forbidden to do (e.g. instructing an implementer solely to
+  edit the invariant list); define its own success metric or evaluate its own
+  performance; loop without bound.
 - Every processor it spawns is **independently gated** (capability + invariant
   gate). Orchestrator authorization is not processor authorization.
+
+### Why it narrows but does not derive
+
+The orchestrator is under the influence of the feedback loops, so assigning it the
+derivation of the ceiling is circular: the actor said to be bounded by the intent's
+scope would be the one writing that bound. Deriving the ceiling from intent belongs
+to an invariant processor (`03-capability-authority-model.md`, Who may write a
+scope).
+
+Narrowing needs no such protection, and the asymmetry is the whole reason the split
+is cheap. Narrowing makes the check **stricter**, and an orchestrator that declines
+to narrow simply leaves the inherited boundary standing. There is no failure mode on
+this side worth building a mechanism against.
 
 ## Stopping rules
 
@@ -123,6 +148,53 @@ The loop MUST be able to terminate by at least these
 - **No useful next operation** — the orchestrator cannot name an operation likely
   to help → stop, mark `blocked`, with its reasoning recorded.
 
+## Handing something to the operator — two modes, and a forbidden third
+
+The orchestrator is the component that reaches the operator: on a stop for review,
+on an escalation, on a scope left `pending`. `10-foundations/07` places a
+requirement on the **shape** of that handoff, and this is where it becomes a
+contract.
+
+> Ask what only the operator can answer. Where the system must decide, yield with
+> the reasoning that would let the decision be overturned. Never present what the
+> operator can only accept.
+
+So every handoff MUST take one of exactly two forms:
+
+- **A question with candidate answers.** Where the system cannot decide — two
+  defensible readings of a boundary, two incompatible plans — name the
+  interpretations and ask. It MUST NOT be posed as an open question ("what should
+  the scope be?"), which hands the whole problem back, and MUST NOT be resolved
+  into one reading presented for validation.
+- **A decision with overturning reasoning.** Where the system must decide, record
+  what it decided **and** the reasoning that would let the decision be overturned.
+  That reasoning MUST name something the operator can find **false** — an
+  assumption, a read of the codebase, a claim about what the change reaches.
+  Reasoning that merely justifies the decision does not satisfy this, and is the
+  form it decays into.
+
+And one form is forbidden: **a finished artefact presented for approval**, with no
+question and nothing falsifiable attached.
+
+The reason is mechanical rather than moral, and worth carrying in the
+specification because an implementer will otherwise read it as a style preference.
+Approval **can only subtract** — it rejects what is present and cannot introduce
+what is absent. **Refusing costs more than approving**, so every approval interface
+leans toward assent independently of diligence. **Approval quality is invisible**:
+considered and reflexive approval leave the same trace. And it **moves
+responsibility without moving understanding** — whoever approves owns the outcome,
+including the part they could no longer evaluate.
+
+Both permitted modes place the operator's act where it is cheap for them:
+answering about intent rather than evaluating an artefact, checking *why* rather
+than *what*.
+
+**The required stop rationale is this rule's narrower form**, already in force
+above. A `stop` decision carrying its reasoning is the second mode applied to one
+specific decision; what this section adds is that the same shape governs every
+handoff, and that the reasoning has to be the overturning kind rather than the
+justifying kind.
+
 ## Failure modes
 
 - **Runaway loop.** Neither stops nor progresses. R3 backstops it; an orchestrator
@@ -136,13 +208,29 @@ The loop MUST be able to terminate by at least these
   orchestrator lacks, or delegating a forbidden intent. The gate catches the
   effect; this contract forbids the attempt.
 - **Context bloat.** Accumulating every processor's full conversation, recreating
-  the working-memory problem the processor architecture exists to solve. The MVP
-  orchestrator carries only a bounded running summary.
+  the working-memory problem the processor architecture exists to solve. The
+  orchestrator's live set is governed by the same recall policy as anything else,
+  and an implementation that exempts it has removed the only thing bounding this.
+- **Approval-shaped handoff.** A finished plan or diff put to the operator with no
+  question and nothing falsifiable attached. It looks like diligence and is the
+  failure the two-mode rule exists to prevent, because it transfers responsibility
+  without transferring understanding.
+- **Justifying reasoning in place of overturning reasoning.** A yielded decision
+  whose recorded reasoning explains why it is right rather than naming what would
+  make it wrong. This is what the mode decays into, and it passes any check that
+  only asks whether reasoning was recorded.
+- **Self-derived scope.** An orchestrator that writes the ceiling it is bounded by
+  has bounded nothing, whatever the text says.
 
 ## Relationships
 
 - **Processor contract** (`06`) — the orchestrator is the caller that issues the
-  type-6 effect; it formulates the five-part input envelope.
+  type-6 effect; it formulates the six-part input envelope.
+- **Work record** (`13`) — holds the work items the orchestrator formulates, their
+  declared scopes, and the transitions it proposes. It reads current work state
+  every loop step, which is why that read must not replay a transition log.
+- **Context manager** (`14`) — composes the orchestrator's own turn input, under
+  the same policy as everything else.
 - **Effect vocabulary** (`01`) — processor invocation is effect type 6; decision
   records are type 4.
 - **Capability model** (`03`) — the orchestrator's own set bounds what it can
@@ -165,8 +253,13 @@ The loop MUST be able to terminate by at least these
   Milestone 15.
 - **Processor-to-processor debate.** Free-form challenge and re-investigation
   among processors, versus the MVP's route-output-as-input. Deferred.
-- **Orchestrator context budget.** The MVP uses "intent + running summary + naive
-  bundle"; Milestone 9 measures context quality and may change it.
+- **The orchestrator's own scope.** It reads work state across items rather than
+  operating under one, so the natural reading is that it holds the **intent's**
+  scope with work items inheriting narrowed versions. That is consistent with
+  mandate descending from intent and is argued nowhere. Shared with
+  `03-capability-authority-model.md`.
+- **Orchestrator context budget.** Milestone 9 measures context quality and may
+  change what recall policy is in force; nothing here fixes one.
 - **Orchestrator model.** The MVP uses the one resident 7B (M0: no per-role model
   switching on the reference host). Whether a stronger orchestrator model changes
   the result is a Milestone 15 question.
