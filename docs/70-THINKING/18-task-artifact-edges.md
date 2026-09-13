@@ -20,20 +20,25 @@ not the storage layer.*
 
 ## Edge labels
 
-An edge carries a label saying what the artifact is **to** the task. The label is
-known at the moment the edge is created.
+**An edge is labelled only where the artifact's role is fixed by the structure of the
+task.** Everything else takes an unlabelled edge.
 
 | Label | Carried by | Edge created |
 |---|---|---|
 | `objective` | What the task is to accomplish | At task creation, or at invocation when a calling processor writes a new one |
 | `derived_scope` | An invariant processor's ceiling output | At task creation |
-| `tool_output` | What a tool call returned | On registration |
 | `handoff:thinking` | A processor's reasoning | On registration |
 | `handoff:response` | A processor's conclusion | On registration |
+| *(none)* | Everything else: reads, retrievals, effect responses | On registration |
 
 `handoff:thinking` and `handoff:response` are distinct because a `review` instance
 receives a prior processor's conclusion and not its reasoning
 (`10-technical/06`, independence). The label is what that cut is made against.
+
+**How an artifact was obtained is a different question** and is carried by
+`crossing_type` on the live-set entry — `read`, `generation`, `retrieval`,
+`effect_response`. The two only appear to overlap on a generation, where the crossing
+type says the model produced it and the label says through which channel.
 
 ---
 
@@ -75,8 +80,8 @@ If task creation does not follow, none of it is ever declared.
 **2.2** Creation attaches the material assembled for it. Each attachment declares the
 artifact in the knowledge model and creates its edge to T-88:
 
-- the intent, label `tool_output`;
-- the orienting reads from 1.4, label `tool_output`;
+- the intent, unlabelled;
+- the orienting reads from 1.4, unlabelled;
 - the ceiling from 1.5, label `derived_scope`;
 - the task's objective, label `objective`.
 
@@ -192,6 +197,8 @@ stated in the parent's handoff.
   objective is re-written.
 - Whether a processor attaching mid-work (phase 5) uses the same ungated runtime call
   as 2.3, or proposes a gated type-4 effect.
+- Whether a curated attachment in phase 5 labels the edge the retrieval already
+  created, or creates a second edge to the same artifact.
 - How 6.2 determines that another live task holds an artifact.
 - Edge removal before a task ends: the operation exists so that it is available, and
   nothing yet calls it.
