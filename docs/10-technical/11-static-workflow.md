@@ -192,7 +192,10 @@ parameter settings, so one run per arm is adequate and a null result is informat
   candidate verifiers are named and neither is specified: blind K-way test synthesis
   that tolerates partial code, and dueling advocates emitting falsifiable claims that
   the interpreter adjudicates.
-- **Scope checking is not wired in.** `00-design/24-arch-permission-layer` requires
-  work to stay within a declared mandate and `06-processor-contract.md` now binds a
-  `scope`, but nothing here derives, checks or enforces one. This workflow runs
-  unscoped until that lands.
+- **Scope checking is not wired in.** The specification side is complete —
+  `03-capability-authority-model.md` carries mandate conformance whole,
+  `13-work-record.md` holds the declaration, `06-processor-contract.md` binds a
+  `scope` — and nothing here derives, checks or enforces one. This workflow runs
+  unscoped, which `05-provisional-invariant-list.md` G4 classes as an invalidity
+  rather than a shortfall. What stands in for it is that a human supervises every
+  run of it.

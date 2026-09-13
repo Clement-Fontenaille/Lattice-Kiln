@@ -24,11 +24,11 @@ Which contracts get written, and in what order, is not decided here. The owed co
 
 Writing early does not make a contract weaker. **Every document in this set is authoritative, and every one is revisable on findings** — see `00-specification-conventions.md` → authority and revision. A contract written ahead simply has no findings behind it yet, which makes it cheap to overturn without making it optional to honour.
 
-Milestone numbers in this set are **stable identifiers** — allocated on creation, never reordered. Every reference here was corrected to the current numbering on 2026-09-05; before that date the same number could mean two different milestones depending on the file. See `00-design/40-roadmap/01-MILESTONES/README.md`.
+Milestone numbers in this set are **stable identifiers** — allocated on creation, never reordered, so a number means the same milestone in every file. See `00-design/40-roadmap/01-MILESTONES/README.md`.
 
-The **effect vocabulary** is specified first because the enforcement gate, the capability model, and observability all bind to it.
+The **effect vocabulary** is specified first because the enforcement gate, the capability model, observability, and the two stores all bind to it.
 
-Areas deliberately deferred until concepts settle or milestones produce evidence: memory promotion and retirement, context-quality metrics, the operational safety response beyond the deny-list gate, and generation packaging.
+Areas deliberately deferred until concepts settle or milestones produce evidence: context-quality metrics (Milestone 9), the operational safety response beyond the deny-list gate (Milestone 11), and generation packaging (Milestone 13).
 
 ## What this set does not decide
 
