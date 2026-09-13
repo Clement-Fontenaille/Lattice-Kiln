@@ -34,6 +34,16 @@ The second rule is only safe because of the first. A document set that carries n
 
 So the obligation sits on the process rather than on the prose. The cost of a correction is not writing it down, it is walking what depends on it, and that walk is the work.
 
+### Where these two rules apply, and where they do not
+
+They govern the **design set and the specifications**: `00-project/`, `10-foundations/`, the architecture band, and `10-technical/`. Those documents answer *what does the project hold*, and history in them is noise at best and a stale claim wearing current clothes at worst.
+
+They do **not** govern `70-THINKING/`. That is a draft space answering a different question: *what has been explored*. There, annotating is right and adding without deleting is right, because a dead end that is not marked as one gets walked into again. That folder already states the convention for itself — closed threads are retained rather than deleted, since the record of a discarded framing is worth keeping — and this section only says why the design set takes the opposite one.
+
+`90-notes/` and `50-findings/` are records rather than positions and sit outside both rules as well; `50-findings/` is append-only by its own rule.
+
+The distinction to keep: **a design document is made worse by its history, and a thinking document is made worthless without it.**
+
 ## Which layer states what
 
 The split by theme has a second axis that had been practised without being written down, and stating it is what keeps the layers independently reviewable rather than merely separately filed.
