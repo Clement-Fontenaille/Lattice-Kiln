@@ -366,9 +366,12 @@ work/
   the scope check; this store owns the declaration it reads.
 - **Knowledge model** (`12-knowledge-model.md`) — holds the claims this store's
   attachment edges point at. Separate stores, one direction of reference.
-- **Observability** (`02-observability-event-model.md`) — keeps its own copy of
-  work-record events, for the same retention and compression reasons it does not
-  read the other stores directly. It also supplies the realized-effect history
+- **Observability** (`02-observability-event-model.md`) — this store is
+  authoritative for what the work currently is; observability's copy of a work
+  transition is a witness, and a disagreement between them is a partial write to be
+  reported rather than resolved by preference (`02`, Which copy is authoritative).
+  It keeps that copy for the same retention and compression reasons it does not read
+  the other stores directly, and it supplies the realized-effect history
   `change_set` composes with.
 - **Orchestrator** (`08-orchestrator-contract.md`) — reads current work state
   every loop step and proposes the transitions that change it.

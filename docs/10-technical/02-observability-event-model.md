@@ -352,6 +352,32 @@ something the system knows and stops being available to reason from, while
 remaining reconstructable here. Reasoning and auditing are different uses, and
 this store is what makes the sweep safe to perform at all.
 
+### Which copy is authoritative
+
+Keeping copies raises a question the set had not answered: when this store and an
+owning store disagree about the same fact, which one is right.
+
+**Each store is authoritative in its own domain.** `13-work-record.md` is
+authoritative for what the work currently is, `12-knowledge-model.md` for what the
+project currently holds, `14-context-manager.md` for what is currently live. On any
+fact that also lives in one of those, this store is a **witness** rather than the
+source, and the owning store wins.
+
+**A disagreement is itself a defect and MUST be reported.** Both copies are written
+by the runtime while realizing one operation, so drift means a partial write rather
+than a difference of opinion. Neither copy should be quietly preferred without the
+condition being surfaced.
+
+**The exception is temporal rather than a matter of trust.** Once the sweep has
+removed an entry, or a work item's retention has ended, this store's copy is the
+only one left. It is not a witness to anything at that point — it is the record.
+Nothing changes about its accuracy; what changes is that there is no longer an
+owning store to defer to.
+
+That is also why this store's retention is greedy while the others' is not. A
+witness that expires before what it witnessed is useless, and the whole argument for
+performing the sweep at all is that this store outlives it.
+
 ## Open contracts
 
 - **Storage shape.** JSONL-per-run, one growing event log, or a small embedded DB?
