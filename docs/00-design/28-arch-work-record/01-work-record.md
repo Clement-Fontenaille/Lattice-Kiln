@@ -61,7 +61,7 @@ The same restraint `21-arch-knowledge-model` and `23-arch-context-management` co
 
 One structured record per work item, holding its current formulation and state as directly readable fields, with an append-only transition log kept alongside it rather than inside it.
 
-That shape is the reason this is a separate actor rather than a region of `21-arch-knowledge-model`. A claim there is append-only and superseded rather than edited, so its current truth sits at the end of a chain. A work item's current state has to be readable without walking anything, because the orchestrator interprets current work on every loop step (`22-arch-cognition/03`, Responsibility). Holding both a mutable current view and an immutable record of how it changed is a different write discipline from `21`'s, and collapsing the two would force one of them to give.
+That shape is the reason this is a separate actor rather than a region of `21-arch-knowledge-model`, and the reason is the **write discipline** rather than any cost of reading. A claim there is append-only and superseded rather than edited; a work item is rewritten in place every time the work changes. Holding a mutable current view and an immutable record of how it changed asks two incompatible things of one store, and collapsing them would force one of them to give. This is the storage side of the ownership argument above: a work item is not a claim, so it is not held where claims are held.
 
 Intent is a third kind of record again, and the simplest: written from outside the system and never rewritten by it, so it needs no transition log at all.
 

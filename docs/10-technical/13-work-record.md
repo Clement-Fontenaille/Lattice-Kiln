@@ -47,17 +47,18 @@ what something else decided and the runtime realized.
 `28-arch-work-record/01` states a responsibility, a service surface, and a general
 shape, deliberately stopping short of a schema. This document narrows to:
 
-- **Three record kinds**, not one. Intent, work item, transition — with different
-  write disciplines, which is the reason they are not one store. Discarded:
-  folding work into `21-arch-knowledge-model`, where a record is append-only and
-  its current truth sits at the end of a chain. A work item's current state must
-  be readable without walking anything, because the orchestrator reads current
-  work on every loop step.
+- **Three record kinds**, not one: intent, work item, transition. They are three
+  because they are written under three different disciplines. Intent is written
+  once and never again. A work item is rewritten in place every time it changes. A
+  transition is appended and never touched afterwards.
+- **This store is separate from `12-knowledge-model.md`**, and the reason is what a
+  work item *is* rather than what it costs to read. A work item is not a claim; it
+  is what claims attach to. The knowledge model is also append-and-supersede
+  throughout, which is the wrong discipline for a record whose whole purpose is to
+  be rewritten as the work changes.
 - **Scope as three fields on the work item** — boundary, derivation, state — not
   one opaque string and not a structured predicate.
 - **An append-only transition log kept alongside an item rather than inside it.**
-  Discarded: reconstructing current state by folding the log, which makes the
-  read the orchestrator performs most often the most expensive one.
 - **Work units are not given a record kind.** `22-arch-cognition/01` leaves open
   whether they need first-class persistence; this document holds two kinds of
   work record rather than three until that is answered, which is the cheaper
@@ -111,27 +112,13 @@ MUST carry:
   own metadata about each edge. The claim's **content** lives there and MUST NOT
   be copied here. Two stores point into one claim store; neither owns it.
 
-Reading an item's current state MUST NOT require replaying its transitions.
+An item's current state is what the item record says. A reader MUST get it in one
+fetch, without reconstructing it from the transition log.
 
-**Which reads this is about.** The orchestrator's observe step, once per loop step
-and once per item it has in view: `get_item`, `children`, `scope_of`. That is the
-hottest read in the system. It is *not* about `transitions`, which is the history
-read and is supposed to walk, nor about `lineage`, which walks parents along a
-chain bounded by how deep the work tree goes, nor about `change_set`, which runs
-once per task for the scope check.
-
-**Two store shapes would force a replay, by different mechanisms.** Under **event
-sourcing** — holding only the append-only log — `get_item` means reading every
-transition for that item and folding them in order, so the cost grows with the
-number of transitions. The hot read gets slower exactly as the loop runs longer
-and the item accumulates history, which is the worst possible direction for it to
-grow. Under **append-and-supersede**, which is `12-knowledge-model.md`'s
-discipline, nothing is edited and a correction is a new entry pointing at the old
-one, so current truth sits at the tip of a supersession chain and reading it means
-chasing pointers. Not a fold, the same class of cost. That second one is the
-actual argument for this being a separate store rather than a region of the
-knowledge model: two different write disciplines, and collapsing them forces one
-to give.
+The orchestrator performs this read on every loop step, for every item it has in
+view, which makes it the most frequent read in the system. A store that rebuilt
+state by folding the log would make that read cost grow with the item's history,
+so it would get slower exactly as the loop ran longer.
 
 ### 3. Transition
 
@@ -142,35 +129,19 @@ deferred / abandoned / executed), the effect that realized it, the invocation th
 proposed it, and a timestamp.
 
 - The log is **append-only**. A transition is never edited or removed.
-- Current state and history are **both held**. The redundancy is deliberate:
-  computing state from the log makes the common read expensive, and the log cannot
-  be computed from the state at all, since it holds strictly more — every
-  superseded formulation, who proposed each change, which effect realized it, and
-  when.
+- The log holds what the item record does not keep: every superseded formulation,
+  who proposed each change, which effect realized it, and when. The item record
+  keeps only where the work stands now.
 
-### Not derived on read is not the same as not determined
+**One write path keeps the two in step.** A work item changes only when the runtime
+realizes a type-4 effect, and that one call writes both — the log entry first, then
+the item record. Nothing else writes either, so there is no route by which a change
+reaches one and not the other, except a crash between the two writes.
 
-`28-arch-work-record` says the two are held such that "neither is derived from the
-other", and that phrase needs one distinction drawn before an implementation can
-act on it.
-
-The state is **not computed at read time** by folding the log. It is nonetheless
-**logically determined** by it: the state record is what the log's transitions add
-up to. Only the second half of the architecture's phrase is unqualified — the log
-really is not derivable from the state, because it holds more.
-
-That matters for two concrete things.
-
-**A repair path exists.** A state record lost or corrupted can be rebuilt by
-folding the log. The redundancy buys a cheap read without costing recoverability,
-which it would if the two were genuinely independent.
-
-**Write order decides which drift is possible, so it is pinned.** A transition MUST
-be appended to the log **before** the state record is updated. With that order the
-only reachable inconsistency is *state behind log* — a crash between the two
-writes — and repair is a fold. The reverse order admits *state ahead of log*, where
-a real transition exists only in the record that gets rewritten, and no repair
-recovers it.
+Appending first is what makes that crash recoverable: the log is then complete and
+the item record is the one that can fall behind, so it can be rebuilt. The reverse
+order would leave a realized change recorded only in the record that gets
+overwritten.
 
 ## The declared scope
 
@@ -335,14 +306,10 @@ work/
 - **Intent edited in place.** The heaviest failure here, because mandate descends
   from intent: a system that can rewrite what the work is for can rewrite what
   bounds it. Intent records MUST be write-once from the system's side.
-- **State and log disagreeing.** The two are separately written, which means they
-  can drift. An implementation MUST be able to detect that the current state is not
-  what the log adds up to, and MUST halt rather than continue on the discrepancy.
-  **The log is authoritative for repair** — not because it is more recent, but
-  because it is the only one of the two that is never rewritten, and because the
-  pinned write order makes *state behind log* the only reachable case. Rebuilding
-  the state by folding is a repair; editing the log to match the state is data
-  loss.
+- **State and log disagreeing.** An implementation MUST detect that the item record
+  is not what the log adds up to, and MUST halt rather than continue. Repair
+  rebuilds the item record from the log; editing the log to match the record
+  destroys history.
 - **Scope change absent from the log.** Then a mid-task widening is
   indistinguishable from a boundary that was always there, which is exactly what
   the audit exists to catch.
