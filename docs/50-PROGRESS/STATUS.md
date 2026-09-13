@@ -21,12 +21,13 @@ untreated.
       file per completed milestone, append-only by rule — nothing to clean.
 - [x] **2. Editorial pass, foundations + architecture.** Archaeology stripped,
       redundancy reduced, half-answered questions restated.
-- [x] **3. Inventory of changes owed to `10-technical/`.** Written into
-      `40-roadmap/00-backlog.md` as **Specification inventory**, one row per document
-      plus three that do not exist. Filed there rather than here because the backlog
-      owns what is owed; a copy in the sandbox would rot.
-- [~] **4. Upgrade `10-technical/` toward a concrete implementation axis.** Partial —
-      see below.
+- [x] **3. Inventory of changes owed to `10-technical/`.** Twelve documents:
+      nine rewrites plus three that did not exist. Filed in the backlog rather than
+      here, because the backlog owns what is owed and a copy in the sandbox would
+      rot.
+- [x] **4. Upgrade `10-technical/` toward a concrete implementation axis.** All
+      twelve written. The backlog's P0 is rewritten to what remains, which is five
+      items the architecture pass never covered rather than leftovers from it.
 - [~] **5. M7.** Step 1 of 4 done.
 
 ### Progress notes
@@ -79,37 +80,61 @@ reference targets in several places, which no heading-based check will ever catc
   which now reads four misses out of five rather than three out of four — and this is
   the worst of them, since the dependent was not in another document but on the screen.
 
-**3 — inventory. Done.** Twelve rows: nine existing specs, three documents that do not
-exist (`12-knowledge-model`, `13-work-record`, `14-context-manager`). The sharpest
-items: `03-capability-authority-model.md` contains **zero** mentions of scope and needs
-the whole mandate-conformance dimension; `04-enforcement-gate.md` never mentions reads
-at all, so the gate as specified cannot represent one whether or not a rule names it;
-`01`'s definition of an effect as "a state-changing operation" no longer discriminates.
+**3 — inventory. Done.** Twelve rows: nine existing specs, three documents that did
+not exist (`12-knowledge-model`, `13-work-record`, `14-context-manager`).
 
-**4 — technical upgrade. Partial, and deliberately so.**
+**4 — technical upgrade. Done, all twelve.** Worth reviewing rather than trusting: this
+is a large amount of normative text written in one unsupervised run, which is exactly
+the failure mode the inventory existed to make visible. What follows is what to look at
+first.
 
-- **Done:** `06-processor-contract.md`, because `11-static-workflow.md` would have
-  inherited it broken. Six things bind at instantiation rather than five —
-  `context_bundle` replaced by a `scope` and a `live_set_id`, with context itself no
-  longer bound at all. One open contract closed: context-request servicing is an
-  ordinary tool call and no servicing path should be built.
-- **Also done:** `01-effect-vocabulary.md` and `04-enforcement-gate.md`, on a narrower
-  criterion than "upgrade" — these two carried normative text that the foundations pass
-  made **actively false**, and a wrong MUST in a spec propagates into code. `01` now
-  defines an effect by footprint rather than by "state-changing operation", and
-  separates the three exclusions by *reason* rather than listing them together: only
-  cognition and bookkeeping are ungatable, while a read is outside the vocabulary
-  because its footprint is untracked. `04` gains an input domain that includes reads,
-  the invariant-processor category with its direction condition, and a requirement
-  that `check_sequence`'s history carry reads even while the check passes
-  unconditionally — because turning it on later against an effects-only history would
-  be turning on a check that cannot see the case it exists for.
-- **Not done, on purpose:** the remaining six spec documents and the three that do not
-  exist. Each is a substantial rewrite, several are ordered behind each other (`01`
-  before `04` before `05`; a knowledge-model spec before `07`'s rewrite), and none
-  blocks M7. Writing them all in one unsupervised run would produce a great deal of
-  normative text nobody had reviewed, which is the failure mode the inventory exists to
-  avoid. **This is the main thing left.**
+- **`03-capability-authority-model.md` is the largest change**, and the one most worth
+  a read. It had zero mentions of scope; it now carries mandate conformance whole —
+  the three scope fields, derive-record-contest, don't-derive-under-ambiguity,
+  containment across splits *and refinements and nested invocations*, the who-may-write
+  table, static instance scope, and the two halves of the check at opposite ends of a
+  task. The permissive read default landed here too, because `01` and `04` both name
+  this document as where a read policy is expressed and it was not there.
+- **`05` gained G4, which the MVP does not satisfy.** Work executes under a declared
+  scope and a functioning scope check exists. Nothing today derives, records or checks
+  one. I stated it as a goal rather than a hard constraint because its subject is a
+  *presence* and there is no proposed effect whose refusal establishes that a check is
+  running — and recorded plainly that a system without it is invalid rather than
+  degraded. **This is a judgement call an operator may want to overturn**: it puts a
+  clause in the enforced floor that the running system fails.
+- **`05` also gained R4**, the context ceiling, physical rather than cognitive. It is
+  the concrete reason reads must be in the gate's input domain, since what crosses that
+  ceiling is an accumulation of reads and never a typed effect.
+- **`12`, `13`, `14` written from nothing.** The three load-bearing narrowings, each of
+  which could have gone the other way: mode of acquisition on the provenance *edge*
+  rather than on the claim (F6 says a multi-parent claim is the case that occurs);
+  current work state and transition log both held and neither derived from the other
+  (the orchestrator's per-loop-step read must not replay anything); the live set holding
+  references and no content, with a retrieval registering an event and no content at
+  all.
+- **`07` stopped producing a bundle** and is now a seeding heuristic plus the degenerate
+  recall policy. The seeding half is the caller's, not the context manager's — the
+  context manager never initiates a crossing — which is a re-founding rather than an
+  edit, and it makes live-set seeding a visible open contract instead of a question a
+  bundle made look answered.
+- **`09`'s "exactly two things cross" was wrong in both directions.** Going out,
+  processor invocation is effect type 6 and was double-counted, while the read was
+  missing entirely. Coming back, the assembled context was a request/response object
+  that no longer exists.
+- **`02` went from four record kinds to eight**, adding the turn input, knowledge-state
+  transitions, work transitions, and the conditions in force. One narrowing worth
+  flagging: reads and typed effects share **one** record kind rather than getting one
+  each, so the gate reads a single ordered history. Two kinds would invite an
+  implementation to build the query over effects alone, which is the blindness the
+  requirement exists to remove.
+- **`10` gained the reading rules**: paired over aggregate, resolution before precision,
+  what repetition is actually for, the within-arm versus between-arm regime diagnostic,
+  and expected effect size declared before the run.
+
+**Not done inside task 4:** nothing was written for **decomposition**, which has no
+specification counterpart and was not in my own inventory — `11-static-workflow.md`
+specifies concern-split as one conditional stage of one workflow, which is not the same
+thing. It is now a P0 row.
 
 **5 — M7. Step 1 of 4 done, and the other three are not mine to do alone.**
 
@@ -126,9 +151,10 @@ at all, so the gate as specified cannot represent one whether or not a rule name
   (suite construct validation) for the comparison to be interpretable — the dependency
   named under Where we are.
 - One thing I flagged in the spec rather than fixing: **the workflow runs unscoped.**
-  `06` now binds a `scope` and `24-arch-permission-layer` requires one, but nothing
-  derives, checks or enforces it. That is honest rather than accidental, and it is
-  recorded as an open contract in `11`.
+  `06` binds a `scope` and `24-arch-permission-layer` requires one, but nothing
+  derives, checks or enforces it. That is honest rather than accidental, recorded as
+  an open contract in `11`, and it is now also `05`'s G4 and a P0 row — the
+  specification side is complete and the build side has no owner.
 
 ## Where we are
 
@@ -181,8 +207,18 @@ method; how scope is concretely inscribed; fork/join versus continuation; whethe
 thinking family is one role or several; whether scope derivation and scope checking
 are one role or two.
 
-**Owed to specification** — six rows in `00-backlog.md` P0, all created by that pass.
-These are task 3's inventory input.
+**The specification layer is carried.** All twelve documents the pass owed
+`10-technical/` are written, so every actor in the architecture band has a
+specification counterpart. `00-backlog.md` P0 now holds only what the pass did not
+cover: decomposition, the handoff structure, the reversibility-class carrier, M9's
+stale self-citation, and G4's missing owner.
+
+**A specification's open contract is not a design-set gap.** The list above is what the
+design set deliberately holds open; the specs carry their own open contracts against
+it, and the two are not the same list. The one that is both, and the most consequential
+of the new ones: **what the scope comparison actually consumes** — a raw change set, a
+summary, a diff — which is the largest unknown in the mandate half and has no answer on
+either side.
 
 ## Blockers
 
@@ -200,6 +236,16 @@ reviewer model, needing the planned second GPU. Gates M12 onward.
   never been applied. Apply or downgrade.
 - **Praxis before or after M7** — two execution gates rest on positions
   `70-THINKING/04-praxis.md` has not taken.
+- **G4 in the enforced floor.** I put a clause in `05-provisional-invariant-list.md`
+  that the running system fails, and recorded the failure rather than weakening the
+  clause. The alternative was to leave the floor silent about the scope check until
+  something builds one. Keeping it means the list no longer describes only what is
+  enforced; removing it means the floor omits a requirement `10-foundations/07` calls
+  structural.
+- **Who builds the scope check.** It is fully specified and assigned to no milestone.
+  It needs an invariant processor, which is a role category nothing has instantiated
+  yet — triage is the other member and is deferred to M11, so M11 is the natural home
+  unless it should come sooner.
 
 ## Repository
 

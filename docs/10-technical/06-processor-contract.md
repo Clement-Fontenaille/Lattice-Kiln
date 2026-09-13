@@ -126,7 +126,8 @@ M4, the orchestrator from M5 on.
    (`05-ephemeral-conversation-curated-memory.md`).
 3. **Terminate.** The instance ends when it emits its result, or when the runtime
    stops it (safety intervention; resource ceiling R3; error). Termination is
-   final — no resume. A follow-up is a new instance with a new bundle.
+   final — no resume. A follow-up is a new instance, with its own live set and its
+   own scope bound afresh.
 
 ## Failure modes
 
@@ -150,7 +151,9 @@ M4, the orchestrator from M5 on.
 - **Enforcement gate** (`04-enforcement-gate.md`) — every proposed effect passes
   it; a refusal ends the effect, not necessarily the processor.
 - **Observability** (`02-observability-event-model.md`) — the kind-1 record is
-  this contract's instantiation output; kind-2/4 records are its effect activity.
+  this contract's instantiation output, carrying the bound `scope` verbatim;
+  kind-2/4 records are its operation activity, and the kind-5 turn-input records
+  are what it was actually shown, turn by turn.
 - **Context management** (`14-context-manager.md`) — registers every crossing and
   composes the turn input on every turn. `07-naive-context-assembly.md` supplies
   the naive default for both halves: which reads seed a live set, and the

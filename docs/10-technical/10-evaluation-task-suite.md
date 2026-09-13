@@ -1,6 +1,7 @@
 # Evaluation Task Suite (v0)
 
 **Traces to:** `00-design/40-roadmap/01-MILESTONES/completed/06-evaluation-task-suite.md` (M6),
+`00-design/27-arch-adaptation-and-evolution/05-experiments-and-candidate-systems.md`,
 `00-design/40-roadmap/03-research-and-evaluation-agenda.md`,
 `00-design/40-roadmap/07-sequence-rework-02.md`,
 `00-design/00-project/04-execution-cadence.md` (findings need a ruler);
@@ -134,18 +135,135 @@ The per-run record carries, for each task: `terminal` (resolved / needs-change /
 escalate / declined), `SUBTESTS`, every structural score, `regressed` (bool),
 `decline_correct` match, model-call count, wall time.
 
+## How a suite run is read (normative)
+
+The scoring model above says what each task produces. This section says what may
+be concluded from a set of them, and it is normative because the tempting reading
+is the wrong one.
+
+### Compare paired, not aggregate
+
+Two arms MUST be run on the **same tasks with the same seeds**, and the primary
+reading of the comparison is **which scenarios flipped**, not which total was
+higher.
+
+Pairing removes task-difficulty variance entirely, and the flip pattern carries
+more information than the totals do, because it names a **condition** rather than
+a magnitude: knowing that an arm wins on tasks needing cross-file knowledge and
+loses on tasks needing long single-file reasoning is more useful — and more
+actionable — than knowing it wins by eight points.
+
+A comparison report MUST therefore carry a per-scenario flip table. An aggregate
+score MAY be reported alongside; it MUST NOT be the only thing reported.
+
+### Resolution before precision
+
+**Resolution is how many distinguishable conditions an experiment can see.
+Precision is how tightly it pins one number.** Adding scenarios buys resolution;
+repeating a scenario buys precision. For nearly every question this project asks,
+resolution is worth more.
+
+The wrong framing is the intuitive one, and it becomes tempting exactly when
+effects shrink: treat the suite as N samples of a single quantity, compute a pass
+rate, and ask how tightly it is estimated. Under that framing, separating two arms
+differing by ten points would need something like forty repeats per arm, and
+halving the effect quadruples it. The arithmetic is correct and irrelevant,
+because **the tasks are not interchangeable draws**. Each is a different scenario,
+and the average over them estimates a quantity corresponding to no situation the
+system will ever be in. If effects are conditional — which this project's own
+positions say they are — averaging across heterogeneous conditions is the wrong
+operation before it is an imprecise one.
+
+Two consequences for spending, both normative for how the suite grows:
+
+- **Add scenarios before adding repeats.** A new scenario can reveal a condition
+  under which the answer changes; a repeat can only make an answer already in hand
+  slightly less noisy. The first can surprise, the second cannot.
+- **Representativeness is a resolution property**, not a size property. The
+  suite's coverage claim is about how many distinguishable conditions it holds.
+
+### The suite carries its own error information
+
+Tasks grouped into clusters of similar scenarios — which is what the `stresses`
+tags already do — make within-cluster consistency a **reliability signal that
+costs no repetition**. Three related tasks all flipping the same way at one run
+each is unlikely by chance, and says something a tighter estimate of a mean would
+not.
+
+Consistency across related scenarios substitutes for repetition of one scenario,
+and is more informative per unit of compute.
+
+### What repetition is actually for
+
+Not tightening a mean: **classifying whether a scenario is stable.** Five runs
+distinguishes a task passing five times out of five from one passing three. The
+first is a usable measurement point; the second is noise-dominated and MUST be
+reported separately rather than folded into a total.
+
+Five is a reasonable default for that purpose. **One remains valid**, especially
+on a well-resolved suite, and is the right starting point rather than a
+compromise. Many repeats are right in one case only — measuring a precisely
+specified effect inside an exactly defined frame — which is the exception, not the
+standard ordinary experiments are held to.
+
+### Expected effect size is declared before the run
+
+A comparison MUST declare the effect size it expects **before** it runs, because
+how a **null result** reads depends entirely on the regime.
+
+Where a large effect was expected and none appears, that is a finding — Milestone
+4 expected role separation to help and found it did not, which is informative
+precisely because the expectation was strong. In a small-effect regime the same
+observation usually means only that nothing could be seen. If the regime is
+decided after the result is in hand, either reading is available for any outcome,
+and the experiment establishes nothing while appearing to.
+
+### The regime diagnostic
+
+The differences currently under study are enormous — a monolith against a role
+chain against an orchestrator, no context management against substring matching.
+These are different designs rather than variants of one, so a single run over a
+well-resolved suite is adequate and the arithmetic above does not bite.
+
+**That is a phase, not a permanent condition, and the transition is not
+announced.** Drifting into the small-effect regime while still running one repeat
+is how noise starts getting reported as findings.
+
+So the runner MUST support a cheap diagnostic and a comparison SHOULD record it:
+**run one arm twice and compare its variation against itself to the variation
+between arms.** While between-arm differences clearly exceed within-arm ones, one
+run is enough. When they become comparable, the regime has changed and the
+protocol has to change with it.
+
+### Graded outcomes over binary ones, and never model-judged
+
+A pass or fail discards information about how a scenario went. Calls-to-success,
+retries needed, and regression counts are graded, objective, and already produced
+— Milestone 5's adaptive-retry finding used exactly that kind of quantity.
+
+What such a quantity MUST NOT be is **model-judged**. The M5 follow-up measured a
+deterministic gate at 9/10 alone and **6/10 with a 7B panel added**: the judgment
+made the measurement worse, not merely no better.
+
 ## Runner contract
 
 The runner (`run_suite.py`) takes an arm (a callable: objective + workspace →
 terminal + mutated workspace) and produces:
 
 - per-task partial-credit + terminal + cost;
-- **`stresses` slices** — mean outcome per capability tag, so "does concern-split
+- a **per-scenario flip table** against the paired baseline arm — the primary
+  output, per Compare paired above;
+- **`stresses` slices** — outcome per capability tag, so "does concern-split
   help?" is read off the `multi-concern` / `concern-split` slice, not the
-  aggregate;
+  aggregate, and within-cluster consistency is visible;
+- **stability classification** where repeats were run — k-of-n per task, with
+  noise-dominated tasks flagged rather than averaged in;
+- the **within-arm versus between-arm** comparison, where a replicate exists;
 - **decline accuracy** — on `decline_correct` tasks, `declined` vs anything else;
 - **regression count** — tasks where a pre-existing subtest broke;
-- a cost/benefit ledger vs a named baseline arm (monolith).
+- a cost/benefit ledger vs a named baseline arm (monolith);
+- the **declared expected effect size** and the **suite version**, carried on the
+  report so a later reader knows which regime and which ruler produced it.
 
 It reuses the M2 recorder: each task run is a reconstructable run under one
 `intent_ref`, so a suite run is queryable after the fact.
@@ -273,8 +391,21 @@ Grouped by trap; each row is `id — the ask — the trap — the discriminator`
 
 ## Open contracts
 
-- **Suite size and balance.** v0 is ~34 tasks. Whether that separates arms at
-  N=3–5 is itself an M6 evidence question; the catalogue may grow.
+- **Suite size and balance.** v0 is ~34 tasks. Under Resolution before precision
+  the question is not whether the count separates arms but **how many
+  distinguishable conditions the catalogue covers**, and nothing has counted them.
+- **Re-analysing M4 and M5 as paired comparisons.** Both reported totals — 5/8
+  against 6/8, then 7/8, 6/8 and 5/8 — while running their arms on a shared
+  suite, so the per-scenario flip pattern may be recoverable from data already
+  collected. That is the cheapest experimental improvement available here and it
+  needs no new runs.
+- **Cluster definition.** Within-cluster consistency is proposed as a reliability
+  signal, and `stresses` tags are the obvious clustering. Whether they are the
+  right one, and how many tasks a cluster needs before consistency means anything,
+  is unsettled.
+- **When the small-effect regime arrives**, and whether the within-arm versus
+  between-arm diagnostic is sensitive enough to notice it **before** a few noisy
+  findings have already been recorded.
 - **Structural scoring rubric.** `STRUCTSCORE` dimensions (function length,
   duplication, naming) are defined per task in v0. A shared rubric is deferred.
 - **Non-Python / multi-file-repo tasks.** Out for v0 (stdlib-Python,

@@ -75,7 +75,7 @@ quality, or the context-quality metric (Milestone 9).
 - `read_budget` — a byte or token bound on the seeding reads, sized against the
   same envelope as the turn budget below.
 
-### The rule (illustrative)
+### The seeding rule (illustrative)
 
 1. **Always read**, in this order: the repo's top-level `README` (truncated to a
    fixed cap), and a file tree to depth `N` (names and sizes only, no contents).
@@ -110,7 +110,7 @@ recalled.
 
 ## Part 2 — The degenerate recall policy
 
-### The rule (illustrative)
+### The recall rule (illustrative)
 
 Given a live set and `turn_budget`:
 
