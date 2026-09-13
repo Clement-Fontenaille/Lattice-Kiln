@@ -66,6 +66,15 @@ quality, or the context-quality metric (Milestone 9).
 
 ## Part 1 — Seed selection
 
+**This part may be superseded and is flagged rather than rewritten.** The trace in
+`70-THINKING/18-task-artifact-edges.md` places the same orienting reads — file tree,
+README, adjacent documentation, whether a test suite exists — in the **scope-evaluation
+phase, before the task exists**, performed by the invariant processor deriving the
+ceiling, and attached to the task at its creation. That is the same material fetched
+by a different actor at a different moment, so the two accounts cannot both stand.
+Nothing here is amended until it is settled; what follows is the account this document
+has held.
+
 ### Inputs
 
 - `objective` — the processor's objective text.

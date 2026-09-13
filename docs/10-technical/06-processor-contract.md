@@ -296,9 +296,13 @@ into the objective needs no new mechanism and is what the evidence covers.
   bulk and the conclusion is what is load-bearing; it forces retention to keep the
   reasoning or lose the conclusion with it; and it flattens a provenance chain that
   should run inputs — reasoning — conclusion into an edge pointing at a blob.
-  It would also make `12-knowledge-model.md`'s **Compress** nearly free, since a
-  souvenir would be the conclusion artifact once the reasoning artifact is dropped,
-  rather than an operation that rewrites anything. The distinction rides on
+  It does **not** make `12-knowledge-model.md`'s **Compress** cheap. A souvenir is
+  named inputs, a conclusion, and the argument's shape where the link between them is
+  not obvious (`10-foundations/03`) — so dropping a reasoning artifact and keeping a
+  conclusion artifact leaves a bare assertion, which is the failure that document
+  already forbids. Compression will likely need a step that analyses the argument and
+  labels its stages, and expecting a model to annotate its own reasoning finely enough
+  for that is an assumption nothing supports. The distinction rides on
   `crossing_type`, by subdividing `generation` (`14-context-manager.md`), since which
   channel produced an output is a fact about the crossing rather than a property of
   the result. What the subdivisions are, and whether they differ per role, is not

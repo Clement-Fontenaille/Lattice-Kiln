@@ -500,7 +500,7 @@ is a change `02-observability-event-model.md` owes.
   and a gated crossing.
 - **A bundle bound at instantiation.** Reintroduces the object the processor
   contract removed, and makes the turn input stale by construction after turn one.
-- **The live set treated as memory.** It is an index over a run; what persists is
+- **The live set treated as memory.** It is an index over a task; what persists is
   in the knowledge model, subject to the sweep.
 
 ## Relationships

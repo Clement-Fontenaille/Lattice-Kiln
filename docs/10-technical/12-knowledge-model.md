@@ -175,6 +175,13 @@ obvious from the two alone**. The claim stays; its working is what goes.
   argument becomes a demonstration step once validity has checked it and it held;
   compressing before that would preserve a conclusion whose support was never
   verified.
+- **Splitting a processor's output does not perform this operation.** Reasoning and
+  conclusion arriving as separate artifacts (`14-context-manager.md`) makes the
+  working separable, and separable is not compressed: dropping the reasoning leaves a
+  conclusion without its named inputs or its argument's shape, which is a bare
+  assertion. Compression likely needs a step that analyses the argument and labels its
+  stages, and no evidence supports expecting a model to annotate its own reasoning
+  finely enough to skip that.
 
 ## Elide — and why reachability is nearly the whole retention rule
 

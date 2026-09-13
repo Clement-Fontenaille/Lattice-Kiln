@@ -76,8 +76,10 @@ The promotion path. Rare by design: most of what crosses takes trajectory A.
 | 12 | The Observation is reachable from a promoted claim, so deletion MUST refuse it when the task ends | `12`, Elide |
 | 13 | It persists — for how long, and until what, is not stated | — |
 
-**Where the walk stops.** Step 11 has no scheduler: nothing says when validity is
-checked or by what. `10-foundations/03` is explicit that a claim is checked when it
+**Where the walk stops.** Step 11 has no scheduler and no mechanism: nothing says
+when validity is checked or by what, and compression itself likely needs a step that
+analyses the argument and labels its stages rather than dropping a reasoning artifact
+(`12-knowledge-model.md`). `10-foundations/03` is explicit that a claim is checked when it
 is **used** rather than by audit, which is an answer about the mechanism and not
 about who runs it. And step 13 falls off the end: beyond reachability, the knowledge
 model has no retention rule at all.
