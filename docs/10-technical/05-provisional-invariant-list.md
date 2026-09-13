@@ -9,8 +9,8 @@ binds to `10-technical/01-effect-vocabulary.md`,
 
 ## TL;DR
 
-The concrete, checkable list the deny-list gate enforces for the MVP: a few
-goals, a few resource ceilings, and seven hard constraints, each bound to the
+The concrete, checkable list the deny-list gate enforces for the MVP: four
+goals, four resource ceilings, and seven hard constraints, each bound to the
 effect vocabulary so the gate can check it mechanically. Small on purpose.
 Explicitly **provisional** — it is expected to change materially after the
 literature-grounding pass, which is a Milestone 11 deliverable, not a gate on the
@@ -52,6 +52,27 @@ Stated so a measurement can be checked *against* them rather than substituted
 - **G2.** Every run remains reconstructable. Observability is not optional and
   its records are not disposable.
 - **G3.** No feedback loop may weaken this list or the gate that enforces it.
+- **G4.** Work is executed only under a declared scope, and a functioning scope
+  check exists that the loops it constrains can neither remove nor route around
+  (`03-capability-authority-model.md`, Mandate conformance).
+
+  G4 is stated as a goal rather than a hard constraint because its subject is a
+  *presence* rather than an effect: there is no proposed effect whose refusal
+  establishes that a check is running. What binds mechanically is elsewhere — H5
+  protects the checker once it exists, and the check itself fails closed on an
+  unscoped item, so an unscoped work item stops work without needing a clause
+  here.
+
+  **The MVP slice does not satisfy G4**, and this is recorded rather than
+  softened. Nothing currently derives a scope, records one, or checks against one;
+  `11-static-workflow.md` carries the same statement from the workflow side. A
+  system without a scope check is **invalid rather than degraded** — it has no
+  mechanism at all for the failure `10-foundations/07` names, work beyond the
+  mandate it was given where each step past it is locally justified by the last.
+  What stands in for it today is that a human supervises every run, which is the
+  same thing this whole list leans on and is not a substitute for the mechanism.
+  Owner: `03-capability-authority-model.md` specifies it; no milestone has been
+  assigned to build it.
 
 ## Resource ceilings
 
@@ -70,6 +91,28 @@ number is tuning.
 - **R3 — Run bound.** A single run may realize at most **N** effects or run at
   most **T** minutes of wall-clock before it MUST stop for human review. Guards
   runaway loops. `N` and `T` are provisional.
+- **R4 — Context ceiling.** An operation that would compose a turn input whose KV
+  footprint exceeds the resident envelope of the reference host is refused.
+  Match rule: `kv_footprint_exceeds_envelope`.
+
+  This ceiling is **physical, not cognitive**, and the distinction decides whether
+  it belongs here at all. What an assembly can correctly *integrate* is a property
+  of that assembly, has no operational definition yet, and is nobody's to set
+  (`10-foundations/04`, Overload). What the hardware can *hold* is measurable
+  today and far tighter than text size suggests — a KV cache costs on the order of
+  hundreds of kilobytes per thousand tokens for a 7B model against roughly four
+  kilobytes for the same text, two to three orders of magnitude. Only the physical
+  one is a resource ceiling.
+
+  They are not two ceilings. `10-foundations/07` holds that there is one limit,
+  reached through whichever constraint binds first, so an assembly stops at the
+  lesser of the two and improving one buys nothing while the other binds.
+
+  **This clause is inexpressible unless the gate can see a read**
+  (`04-enforcement-gate.md`, The input domain). What pushes a live set past the
+  envelope is an accumulation of reads, and a gate keyed only to typed effects
+  never sees the operation that crosses the line. R4 is the concrete reason the
+  read-in-domain requirement is structural rather than hygienic.
 
 ## Hard constraints
 
@@ -106,9 +149,18 @@ and the match rule it applies.
 
 - **H5 — No self-modification of the invariant layer or the gate.**
   Any effect (type 1 or type 7) whose target is the invariant list, the gate
-  module, or their loader is refused. The layer is read by everything and written
-  by nothing (`06-the-invariant-layer.md`).
+  module, their loader, or **the definition of an invariant processor** is
+  refused. The layer is read by everything and written by nothing
+  (`06-the-invariant-layer.md`).
   Match rule: `target_is_protected_path`.
+
+  The invariant layer holds more than the list and the gate. Processors belong to
+  it too — currently the scope check, and triage from Milestone 11
+  (`04-enforcement-gate.md`, Invariant processors) — and a role definition a loop
+  could retune would put the constraining party inside the scope it constrains.
+  Their definitions are protected paths for the same reason the list is. A type-7
+  configuration mutation naming an invariant processor's role instructions is
+  refused, not turned into a candidate.
 
 - **H6 — No deletion or mutation of observability records.**
   Any effect (type 1, or type 4 acting on the run store) that would delete,
@@ -158,9 +210,11 @@ the human in the loop for everything it does not yet name.
 | G1 | No — a loop cannot author its own purpose without being able to satisfy it by revision | yes |
 | G2 | No — a loop that can disable its own observation removes the correction channel | yes |
 | G3 | No — self-referential by construction | yes |
+| G4 | No — a loop deciding whether it is checked against its mandate is the constrained and the constraining party at once | yes |
 | R1 | No — a loop could raise its own resource budget to meet a target | yes |
 | R2 | No — same | yes |
 | R3 | No — a loop cannot set the bound at which its own runaway triggers a stop | yes |
+| R4 | No — a loop under context pressure has a direct interest in raising the ceiling it is hitting | yes |
 | H1 | No — scope containment is not a loop's to widen | yes |
 | H2 | No — egress policy is not a loop's to widen | yes |
 | H3 | No — a loop cannot authorise promotion of its own output | yes |
@@ -174,7 +228,13 @@ the human in the loop for everything it does not yet name.
 - **Concrete ceilings.** Real values for `N` (effects per run), `T` (minutes per
   run), and the R1 VRAM math (which model/quant/context combinations are
   in-envelope on the reference host, and how that is expressed once hardware is a
-  variable).
+  variable). R4 shares R1's envelope problem and adds one of its own: the KV
+  footprint of a composed turn input has to be estimable *before* the turn is
+  composed for the ceiling to refuse rather than to report a crash.
+- **G4's owner.** No milestone builds the scope check. It is specified in
+  `03-capability-authority-model.md` and unimplemented, which leaves the list
+  carrying a goal the running system does not meet — stated deliberately, but not
+  a state to leave standing.
 - **Allowlist / denylist contents.** The actual network allowlist and the H7
   destructive-command pattern set, both provisional.
 - **Interruptibility.** The list has no explicit "must not resist a human stop"

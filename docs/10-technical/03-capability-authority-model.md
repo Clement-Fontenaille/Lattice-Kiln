@@ -2,41 +2,83 @@
 
 **Traces to:** `00-design/24-arch-permission-layer/01-capabilities-and-authority.md`,
 `00-design/25-arch-invariant-layer/01-invariant-enforcement.md`,
+`00-design/28-arch-work-record/01-work-record.md`,
+`00-design/10-foundations/07-the-integrated-system-and-its-operator.md`,
 `00-design/20-arch-runtime.md`,
 `00-design/40-roadmap/01-MILESTONES/03-invariant-floor.md` (M3);
-binds to `10-technical/01-effect-vocabulary.md`.
+binds to `10-technical/01-effect-vocabulary.md`,
+`10-technical/04-enforcement-gate.md`,
+`10-technical/06-processor-contract.md`.
 
 ## TL;DR
 
-An actor may **request** an effect only if it holds a capability grant for that
-effect type whose constraints the request satisfies. This is the adjustable,
-role-keyed layer. It sits *above* the invariant gate and answers a different
-question — *is this actor allowed to ask?* — not *is this effect permissible at
-all?* An effect must pass both.
+This document specifies two checks that are both authority's and are keyed to
+different things.
 
-> **Motto:** Capability enables proposals; authority governs effects; neither is the floor.
+**Capability** is keyed to the **actor**, set by policy, and evaluated per effect:
+an actor may *request* an effect only if it holds a grant for that effect type
+whose constraints the request satisfies.
+
+**Mandate conformance** is keyed to the **work item**, declared per task, and
+evaluated in aggregate: the work actually done must sit inside the boundary the
+task was given.
+
+Neither is the floor. Both sit above the invariant gate, which asks whether an
+effect is permissible at all.
+
+> **Motto:** Capability enables proposals; authority governs effects; a mandate governs how far they may go together.
 
 ## Status of this document
 
-v0 for the MVP slice. It specifies the static-grant form the MVP needs: grants
-are authored by the human operator in runtime seed configuration, fixed per role
-for the duration of a run, and not proposable by any cognitive component. The
-dynamic side — in-system granting, policy that changes as the system learns —
-is named as an open contract and deferred until there is a feedback loop that
-would exercise it (Milestone 12).
+Two halves at different maturities, and the document says which is which rather
+than presenting one level of readiness.
+
+**The capability half is v0 and implemented.** It specifies the static-grant form
+the MVP needs: grants are authored by the human operator in runtime seed
+configuration, fixed per role for the duration of a run, and not proposable by any
+cognitive component. The dynamic side — in-system granting, policy that changes as
+the system learns — is an open contract deferred to Milestone 12.
+
+**The mandate half is specified and not built.** Nothing in the running system
+derives a scope, records one, or checks against one; `11-static-workflow.md`
+records that its workflow runs unscoped. What follows fixes the shape so that a
+build has something to conform to, and marks every point where the design set
+deliberately left the content open.
 
 ## Responsibility
 
-Given an actor and a proposed effect, decide whether that actor is **authorized
-to request** that effect under current policy, and record the decision. It does
-not decide whether the effect is permissible in principle (that is the gate,
-`10-technical/04-enforcement-gate.md`), and it does not realize effects (that is
-the runtime).
+Two, and keeping them separate is the point of the document.
+
+- **Capability.** Given an actor and a proposed effect, decide whether that actor
+  is **authorized to request** that effect under current policy, and record the
+  decision.
+- **Mandate conformance.** Given a work item's declared scope and the set of
+  changes made under it, decide whether the work stayed **within what was asked
+  for**, and record the verdict with its reasoning.
+
+Neither decides whether an effect is permissible in principle — that is the gate,
+`04-enforcement-gate.md` — and neither realizes effects, which is the runtime's.
+
+## Why one document holds both
+
+A per-effect check keyed to the actor structurally cannot catch drift past a
+mandate, and the reason is worth stating in the specification rather than leaving
+to the design set. Every individual step of a drift can sit inside capability
+while the aggregate sits outside the mandate. An implementer granted bounded
+workspace mutation is permitted to edit each of forty files; nothing in the grant
+notices that the task was about two of them.
+
+So mandate conformance cannot be expressed by adding constraints to grants. It
+needs a different key (the work item), a different evaluation point (aggregate,
+not per effect), and a different comparison (natural language, not a constraint
+predicate). It stays in this document because it is **authority's** — the dynamic
+half, the runtime interpreting a request under current policy — while capability
+is the static description of what a role may ask for.
 
 ## Narrowing
 
-`01-capabilities-and-authority.md` leaves capability granularity and the
-representation of policy open. This document narrows the MVP form to:
+`01-capabilities-and-authority.md` leaves capability granularity, policy
+representation, and the whole of scope expression open. This document narrows to:
 
 - **Grants keyed to the nine effect types**, not to finer sub-operations. A grant
   is `(effect_type, constraints)`. Discarded for the MVP: per-tool or
@@ -47,8 +89,16 @@ representation of policy open. This document narrows the MVP form to:
   configuration. Discarded for the MVP: a policy engine that revises grants
   during a run. Revocation is the one dynamic operation kept, because
   decommissioning requires it.
+- **Scope as one opaque natural-language field plus its derivation**, carried on
+  the work item. Discarded: a structured scope (a path allowlist, a module list, a
+  set of artifact identifiers). The design set is explicit that a boundary is a
+  statement about *this* piece of work and cannot be enumerated in advance, and
+  that the artifacts where drift is cheapest — specifications, internal APIs,
+  documentation — are exactly the ones a path list handles worst.
 
 ## Inputs
+
+For a capability decision:
 
 - A **proposed effect**, typed `1..9` per `01-effect-vocabulary.md`, carrying its
   four-property envelope (representable, permitted, attributable, reversible).
@@ -56,6 +106,18 @@ representation of policy open. This document narrows the MVP form to:
   (from the `processor_invocation` effect that instantiated it — effect type 6).
 - **Current policy**: for the MVP, the static role→grants map plus any revocations
   applied this run.
+
+For a mandate-conformance decision:
+
+- The work item's **declared scope** and the record of what it was derived from,
+  read from the work record (`00-design/28-arch-work-record/01-work-record.md`).
+- The **accumulated change set** attributable to that work item — the realized
+  effects in its intent lineage, from observability
+  (`02-observability-event-model.md`). Attribution needs no new mechanism: every
+  effect inherits its work item through the instance that proposed it, which the
+  runtime already tracks.
+- For the pre-effect half, **one proposed irreversible effect** rather than an
+  accumulation.
 
 ## Outputs
 
@@ -66,6 +128,11 @@ representation of policy open. This document narrows the MVP form to:
   proposed-effect disposition** (`02-observability-event-model.md`), never as a
   safety intervention — a capability rejection is ordinary policy, not a gate
   trip.
+- A **conformance verdict**: `within`, `outside`, or `undecidable`, each carrying
+  natural-language reasoning. The verdict MUST be recorded whatever it says.
+  `within` is not a null result — its absence and its presence must be
+  distinguishable, since a check that did not run and a check that passed look
+  identical in a record that only writes failures.
 
 ## The capability set
 
@@ -100,10 +167,206 @@ Rules:
   `destination_class`, `max_concurrent`, …) is illustrative for the MVP and is an
   open contract.
 
+## Reads
+
+A read is not a typed effect and is still something an actor may or may not be
+allowed to perform (`01-effect-vocabulary.md`, Reads specifically). What
+ordinarily happens to one is a policy question, which makes it this document's.
+
+- The **default is permissive**: a read passes unless a rule names it.
+- That default MUST be expressible as a **rule in policy**, not as a property of
+  the vocabulary or a branch in the gate. The distinction is operational rather
+  than stylistic: as a rule, holding a policy about some class of reads is a
+  configuration change; as a vocabulary exclusion it would be a design-set change.
+- A policy that names a class of reads binds them the same way a grant binds an
+  effect type: the read is refused if the rule matches, permitted otherwise.
+
+At what granularity a rule may name a class of reads — by path, by crossing type,
+by volume against a ceiling — is open, and the permissive default is what makes it
+possible to leave open. Nothing has to choose a granularity until there is a rule
+that needs one.
+
+## Mandate conformance
+
+### What a scope is
+
+**Natural-language text carried on the work item**, not a structured field. The
+work record holds it and does not interpret it
+(`00-design/28-arch-work-record/01-work-record.md`).
+
+A work item MUST carry, as distinct parts:
+
+- the **boundary** itself;
+- **what it was derived from** — the reasoning that produced it;
+- its **state**: `derived`, `stated` (the operator gave one), or `pending` (the
+  reading was ambiguous and the question went to the operator).
+
+The three states are not decoration. `pending` and *absent* MUST be
+distinguishable: the first is the check working as designed, the second is the
+check not having run, and they call for opposite responses.
+
+### Deriving one
+
+Most scopes are implicit. An operator rarely writes a boundary down, and most of
+one follows from what the task is and how the system is arranged — a request to
+add an output format to a CLI reaches the interface specification and its
+functional tests, and not the web API documentation, without anyone saying so.
+
+- Where the operator **states** a boundary, that statement governs, and the
+  derivation fills only what was left unsaid.
+- A derived scope MUST be recorded **with its derivation**, and MUST be visible to
+  the operator. This is not hygiene. A derivation nobody sees cannot be contested,
+  and an uncontested wrong derivation is ratified rather than caught — the
+  end-of-task check then compares the work against a boundary that was already too
+  wide, which turns drift into something legitimate one step earlier than the
+  check was built to notice.
+- Under **genuine ambiguity the system MUST NOT derive**. It sets the scope
+  `pending` and asks, and the asking has a required form: it names the candidate
+  readings rather than posing an open question or handing over a confident
+  boundary for validation (`00-design/10-foundations/07`, the two modes). A short
+  list of readings asks the operator the one thing only they can settle.
+
+What counts as enough doubt to stop is **not set**, and the pressure runs one way:
+asking costs a round trip and proceeding looks like progress, so a check left to
+its own judgment will under-detect ambiguity. Recorded as an open contract below
+rather than given a number here.
+
+This derivation does not violate `10-foundations/07`'s requirement that scope
+become "checkable properties of artifacts and effects, never an inference about
+intent". What that forbids is inference about **a person** — "what the operator
+would have wanted" is a psychological prediction, unbounded and unfalsifiable.
+Inferring that a CLI output format reaches the CLI surface is an inference about
+**the work and the structure of the system**: checkable by anyone who knows the
+codebase, and demonstrably wrong when it is wrong.
+
+### Containment
+
+One rule, three places it applies. **A mandate descends and never widens on the
+way down.**
+
+- A **split**'s children inherit the parent's scope and MAY narrow it. A proposed
+  child whose boundary is not contained in its parent's is not a split; it is a new
+  root task, and a new root needs intent, which only arrives from outside
+  (`01-effect-vocabulary.md` type 4 excludes an intent record's original content
+  from system amendment).
+- A **refinement** changes a work item's formulation and not its intent, so a
+  re-derived scope may move underneath the intent's scope and MUST NOT push past
+  it.
+- A **nested invocation** — a processor invoking another — passes down a scope
+  contained in its own and MAY narrow it.
+
+Implementations MUST check containment on all three, not only on splits. The split
+route is the obvious one, and refinement reaches the same place without anything
+ever splitting.
+
+Deciding whether a proposed child's boundary sits inside its parent's is itself a
+natural-language judgment. This rule does not reduce the amount of judgment
+required; it puts all of it in one check instead of leaving a path around it.
+
+### Who may write a scope
+
+| Party | May | Why |
+|---|---|---|
+| The operator | Anything, without bound | Scope descends from intent, and intent is amended out of band |
+| An **invariant processor**, deriving from intent | Write the ceiling | Assigning this to the orchestrator is circular — the actor bounded by the intent's scope would be the one writing it |
+| The orchestrator | Narrow only | It formulates work items under a ceiling set above it. Narrowing is safe unprotected: it makes the check stricter, and declining to narrow leaves the inherited boundary standing |
+| Anything working *under* a task | Nothing | Including the scope check, which is **read-only** on the scope: it compares and reports, never rewrites |
+
+The general form, because it generalizes past scope: **a scope may be derived for
+work one is not doing, and may not be widened for work one is doing.** The
+constrained party and the constraining party cannot be the same one.
+
+Scope is nonetheless held on the work item like any other field, and needs no
+special protection there. Widening it is a work-record mutation, which is an
+effect, which the check sees — modifying the scope is inside the current scope or
+it is not. What that costs is a **default rather than a mechanism**: a scope
+permitting its own modification MUST be excluded unless explicitly granted.
+
+### An instance's scope is static
+
+Instantiation binds a scope alongside role, objective, live set and capability set
+(`06-processor-contract.md`). For the instance's life:
+
+- A running instance **MUST NOT** widen its own scope.
+- A change to the work item's scope — re-derivation after a refinement or split,
+  or an operator amendment — **MUST NOT** reach instances already running. It
+  applies from the next invocation.
+- An instance that finds it must reach further **MUST stop and report** — a
+  recorded conclusion, or a proposed transition on the work item — and something
+  else decides.
+
+The reason is not defence against a concurrent attacker. It is that the instance
+reporting a boundary problem must not be the one that benefits from the answer. If
+a running instance's scope updated live, the report would cost nothing and change
+nothing: the instance would simply continue under the new boundary, which is the
+locally-justified-step drift `10-foundations/07` names, reached by an honest route
+instead of a dishonest one. Static scope is what gives "requires a new mandate"
+operational force — a new mandate means a new invocation.
+
+The same uniform rule covers an operator amending a mandate mid-run. Waiting for
+re-instantiation is not obviously required there and is adopted anyway, because
+distinguishing an operator amendment from a system widening *at the moment of
+application* would put a judgment inside the path rather than at its edges. It is
+affordable because processors are ephemeral and re-instantiation is cheap.
+
+### Where the check runs
+
+The check divides on reversibility, and the two halves sit at opposite ends of a
+task.
+
+**Reversible changes are audited at the end**, once, as an accumulated set against
+the declaration. This is the only point at which drift is visible *as* drift
+rather than as a series of individually unremarkable steps, and auditing late is
+affordable precisely because the finding still has a remedy: what fell outside can
+be undone.
+
+**Irreversible changes are questioned before they happen**, one at a time. There
+is no end-of-task remedy, so the check must precede the effect. That placement
+coincides with the risk evaluation `10-foundations/02` requires before an
+irreversible effect is proposed — two requirements derived independently landing
+on the same point in the loop.
+
+So, normatively:
+
+- An implementation MUST run the aggregate check once per work item at
+  termination, and MUST run the per-effect check before realizing any effect
+  classed irreversible.
+- It MUST NOT run the aggregate check per effect. That is the difference between
+  one judgment per task and one per effect, which is the difference between a
+  check worth running and one nobody will.
+- The check **fails closed on an unscoped item**. Work stops. Nothing separate has
+  to watch for scopes going missing, which removes a mechanism rather than adding
+  one.
+
+### The checker is an invariant processor
+
+The comparison is a judgment over natural language and no deterministic check
+performs it, so the checker is a processor. It is an **invariant processor**
+(`04-enforcement-gate.md`, Invariant processors), not one drawn from the open role
+vocabulary: a loop able to remove or retune it would be inside the scope it
+constrains.
+
+It qualifies for that layer on the **direction** condition, and the reasoning is
+specific to scope rather than a general licence for reasoning components. **A scope
+only ever narrows within capability and never reaches past it.** An effect still
+passes capability and still passes the gate whatever the scope says. So a scope
+check that is lax, degraded, or talked into generosity yields *no narrowing* —
+which is where this project stands today, running unscoped — rather than new
+permission. Its failure mode is uselessness, not permission.
+
+The separation that keeps this coherent: **the mandate is adjustable, the checker
+is not.** What a task's scope permits changes with every task and is set by
+whoever asked for the work, which is why mandate content is not invariant-layer
+material. That a functioning scope check exists and cannot be removed or routed
+around is not adjustable by anything inside the system, which is why the checker
+is.
+
 ## Authority
 
 - The capability model **may refuse a request**. It may never realize an effect,
   never widen a grant, and never substitute for the gate.
+- The scope check **may only restrict.** It may report `outside`, and it may not
+  permit anything the other checks refused. It is read-only on the scope itself.
 - **Grant** and **revoke** are the same primitive in opposite directions (effect
   type 9). For the MVP:
   - Grants are established only from seed configuration authored by the human
@@ -129,34 +392,78 @@ Rules:
 - **Silent widening.** A code path that permits a request without a matching
   grant is a defect, even if the gate would have caught the effect anyway —
   passing the gate is not evidence of passing capability.
+- **Unscoped work proceeding.** A work item reaching execution with no scope in
+  any of the three states is a defect. The check fails closed; a path that runs
+  anyway has removed the only thing standing between the system and unbounded
+  work.
+- **`pending` read as `derived`.** Collapsing "we asked and are waiting" into "we
+  decided" converts a correctly-detected ambiguity into a silently chosen reading.
+  The states MUST stay distinct in the record and in the check's input.
+- **An unrecorded derivation.** A scope with no recorded reasoning is
+  uncontestable, and an uncontestable derivation is ratified rather than checked.
+  Recording it is normative above for this reason.
+- **A conformance verdict recorded only on failure.** Then a check that never ran
+  and a check that passed are the same absence, and the system cannot tell an
+  unscoped run from a clean one afterwards.
+- **Scope drift through refinement.** An implementation that checks containment on
+  splits and not on refinements has left the route open that splitting alone did
+  not close.
 
 ## Relationships
 
 - **Effect vocabulary** (`01-effect-vocabulary.md`) — supplies the effect-type
   domain this model expresses permissions over. It owns the actor-and-policy
-  dimension the vocabulary deliberately omits.
-- **Enforcement gate** (`04-enforcement-gate.md`) — sits *below* this model and
-  asks the non-adjustable question. An effect must pass capability **and** gate;
-  order is representability (runtime) → capability → gate.
+  dimension the vocabulary deliberately omits, including the read default.
+- **Enforcement gate** (`04-enforcement-gate.md`) — sits *below* the capability
+  model and asks the non-adjustable question. An effect must pass capability
+  **and** gate; order is representability (runtime) → capability → gate. That
+  document also holds the invariant-processor category the scope check belongs to.
+- **Work record** (`13-work-record.md`, owed; `00-design/28-arch-work-record/`) —
+  holds the declared scope, its derivation, its state, and the transitions that
+  change it. This document owns the check; that one owns the declaration.
+- **Processor contract** (`06-processor-contract.md`) — binds a scope at
+  instantiation and forbids an instance widening its own.
 - **Observability** (`02-observability-event-model.md`) — records every
-  capability decision as a kind-4 disposition.
+  capability decision as a kind-4 disposition, and must carry conformance verdicts
+  and scope transitions for the aggregate check to have an input.
 - **Runtime** (`20-arch-runtime.md`) — holds the seed grant map, applies revocations,
   and calls this model; it does not let a cognitive component reach the map.
 
 ## Open contracts
 
+- **What happens when conformance fails.** `10-foundations/07` says the
+  requirement "cannot be enforced by deterministic refusal alone", which rules out
+  treating it like the gate, and leaves what it *is* treated like unanswered. The
+  direction condition narrows the space usefully: an invariant processor may only
+  restrict, so the available dispositions are halt, escalate to the operator, or
+  record-and-continue. Which one, and whether it differs between the aggregate and
+  pre-effect halves, is not decided.
+- **How a scope is expressed and compared.** Free text is what the design set
+  fixes; what the comparison actually consumes — the raw change set, a summary of
+  it, a diff — is not. This is the single largest unknown in the mandate half.
+- **The doubt threshold for asking.** What counts as enough ambiguity to set a
+  scope `pending` rather than deriving. Unset, with a known bias toward
+  under-detection.
+- **The orchestrator's own scope.** It reads work state across items rather than
+  operating under one. The natural reading is that it holds the **intent's** scope
+  with work items inheriting narrowed versions, which is consistent with mandate
+  descending from intent but is not argued anywhere.
+- **Whether derivation and checking are one role or two.** Both are invariant
+  processors; nothing establishes that they are the same one.
 - **Grant authority once loops exist.** Who may issue a type-9 grant when
   system-level feedback (Milestone 12) can commission roles? For the MVP the
   answer is "only the human, out of band"; that will not hold later.
 - **Constraint language.** The illustrative constraint keys need a real,
   checkable grammar (path globs, command matching semantics, destination
-  classes). Deferred until M4 shows which constraints real effects need.
+  classes). Deferred until real effects show which constraints they need.
 - **Policy dynamism.** When does policy stop being a static map? What triggers a
   grant change mid-run, if ever, and how is that itself gated?
-- **Granularity review.** `01-capabilities-and-authority.md`'s open question —
-  effect-type granularity is the MVP choice; M4 evidence may show a type (likely
-  2, process execution, or 4, work-record mutation) needs to be split for
-  authority purposes even though the vocabulary keeps it whole.
+- **Granularity review.** Effect-type granularity is the MVP choice; evidence may
+  show a type (likely 2, process execution, or 4, work-record mutation) needs to be
+  split for authority purposes even though the vocabulary keeps it whole.
+- **Read granularity.** At what granularity a rule may name a class of reads — by
+  path, by crossing type, by volume against a ceiling. Open on the foundational
+  side too (`10-foundations/02`).
 - **Destination classes for type 3.** Whether network access grants distinguish
   registry / known-service / arbitrary host at the capability level or leave all
   host policy to the gate's allowlist.

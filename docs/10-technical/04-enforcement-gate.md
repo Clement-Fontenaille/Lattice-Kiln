@@ -63,7 +63,7 @@ What the gate is **keyed to** is typed effects. What it may **see** is wider, an
 - A **read** MUST be submittable to the gate (`01-effect-vocabulary.md`, Reads specifically). Whether any rule fires on one is policy, and the default is permissive: reads pass unless a rule names them.
 - A gate implementation that cannot represent a read at all does not conform, even where no rule currently names one. The capability is structural; the default is configuration.
 
-Two things depend on this directly. A **resource-ceiling** invariant over context (`05-provisional-invariant-list.md`) is inexpressible if a read crossing that ceiling cannot be seen. And sequence evaluation below has a blind half without reads, since the canonical composed outcome is accumulated reads followed by one permitted carrying effect.
+Two things depend on this directly. The **context ceiling** (`05-provisional-invariant-list.md` R4) is inexpressible if a read crossing it cannot be seen: what pushes a live set past the resident envelope is an accumulation of reads, so a gate keyed to typed effects never sees the operation that crosses the line. And sequence evaluation below has a blind half without reads, since the canonical composed outcome is accumulated reads followed by one permitted carrying effect.
 
 ## Invariant processors
 
@@ -72,7 +72,7 @@ The gate is not a role and must not become one. Some **processors** nonetheless 
 Two exist:
 
 - **Triage** — assesses and routes a trip. Deferred to Milestone 11, as below.
-- **The scope check** — compares an accumulated change set against the work item's declared mandate. Not built; `03-capability-authority-model.md` owes the mandate dimension first.
+- **The scope check** — compares an accumulated change set against the work item's declared mandate. Specified in `03-capability-authority-model.md` (Mandate conformance) and **not built**; `05-provisional-invariant-list.md` G4 records the gap and why it makes a system invalid rather than merely weaker.
 
 The condition that admits a reasoning component to this layer is **direction**: it may restrict and never widen, so that the worst result of persuading it is that it does nothing. Triage may escalate or halt and may never approve what the gate refused. A scope check narrows within capability and never reaches past it, so a degraded one yields no narrowing rather than new permission.
 
@@ -99,10 +99,12 @@ on every effect and has no code path around.
 
 ## Inputs
 
-- A **proposed effect**, typed `1..9`, with its four-property envelope.
+- A **proposed effect**, typed `1..9`, with its four-property envelope, **or a
+  read**, which carries no effect type and is evaluated against the same list.
 - The **provisional invariant list**, loaded from a location no cognitive
-  component can write (`05-provisional-invariant-list.md`; enforced by an
-  invariant clause protecting the list and this module).
+  component can write (`05-provisional-invariant-list.md`; enforced by H5, which
+  protects the list, this module, their loader, and the definitions of the
+  invariant processors).
 - For sequence evaluation (stub in v0): the **ordered realized-effect history**
   for the actor and its intent lineage, from observability
   (`02-observability-event-model.md`).
