@@ -55,6 +55,29 @@ and refuse those that cross it. It does not decide authority
 (`03-capability-authority-model.md`), does not realize or reverse effects (the
 runtime), and does not route or triage a refusal (Milestone 11).
 
+## The input domain
+
+What the gate is **keyed to** is typed effects. What it may **see** is wider, and the two are not the same claim.
+
+- The gate's input domain is **runtime-mediated operations**: typed effects and reads alike.
+- A **read** MUST be submittable to the gate (`01-effect-vocabulary.md`, Reads specifically). Whether any rule fires on one is policy, and the default is permissive: reads pass unless a rule names them.
+- A gate implementation that cannot represent a read at all does not conform, even where no rule currently names one. The capability is structural; the default is configuration.
+
+Two things depend on this directly. A **resource-ceiling** invariant over context (`05-provisional-invariant-list.md`) is inexpressible if a read crossing that ceiling cannot be seen. And sequence evaluation below has a blind half without reads, since the canonical composed outcome is accumulated reads followed by one permitted carrying effect.
+
+## Invariant processors
+
+The gate is not a role and must not become one. Some **processors** nonetheless belong to the invariant layer, and a conforming system holds them outside what its feedback loops may alter (`00-design/25-arch-invariant-layer/01-invariant-enforcement.md`).
+
+Two exist:
+
+- **Triage** — assesses and routes a trip. Deferred to Milestone 11, as below.
+- **The scope check** — compares an accumulated change set against the work item's declared mandate. Not built; `03-capability-authority-model.md` owes the mandate dimension first.
+
+The condition that admits a reasoning component to this layer is **direction**: it may restrict and never widen, so that the worst result of persuading it is that it does nothing. Triage may escalate or halt and may never approve what the gate refused. A scope check narrows within capability and never reaches past it, so a degraded one yields no narrowing rather than new permission.
+
+A processor whose judgment could **grant** does not qualify, however well argued.
+
 ## Position and order
 
 An effect must pass, in this order:
@@ -110,6 +133,14 @@ The window, grouping, and pattern definitions are an open contract owned by
 `01-invariant-enforcement.md`. A conforming MVP runtime MUST call
 `check_sequence` on every effect even though it currently passes — skipping the
 call is a defect that hides the missing capability.
+
+`history` MUST include **reads**, not only typed effects. The composed outcome this
+function exists to catch is an accumulation of permitted reads followed by one
+permitted effect that carries the accumulation somewhere it should not go; a history
+of effects alone shows the carrying step with nothing of what filled it, which is the
+half that decides whether the step matters. A v0 that passes unconditionally still
+has to accumulate the right history, because turning the check on later against an
+incomplete history would be turning on a check that cannot see the case.
 
 ## Authority
 

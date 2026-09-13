@@ -66,11 +66,23 @@ at all, so the gate as specified cannot represent one whether or not a rule name
   `context_bundle` replaced by a `scope` and a `live_set_id`, with context itself no
   longer bound at all. One open contract closed: context-request servicing is an
   ordinary tool call and no servicing path should be built.
-- **Not done, on purpose:** the other eight spec documents. Each is a substantial
-  rewrite, several are ordered behind each other (`01` before `04` before `05`; a
-  knowledge-model spec before `07`'s rewrite), and none of them blocks M7. Doing them
-  in one unsupervised run would have produced a lot of text nobody had reviewed, which
-  is the failure mode the inventory exists to avoid. **This is the main thing left.**
+- **Also done:** `01-effect-vocabulary.md` and `04-enforcement-gate.md`, on a narrower
+  criterion than "upgrade" — these two carried normative text that the foundations pass
+  made **actively false**, and a wrong MUST in a spec propagates into code. `01` now
+  defines an effect by footprint rather than by "state-changing operation", and
+  separates the three exclusions by *reason* rather than listing them together: only
+  cognition and bookkeeping are ungatable, while a read is outside the vocabulary
+  because its footprint is untracked. `04` gains an input domain that includes reads,
+  the invariant-processor category with its direction condition, and a requirement
+  that `check_sequence`'s history carry reads even while the check passes
+  unconditionally — because turning it on later against an effects-only history would
+  be turning on a check that cannot see the case it exists for.
+- **Not done, on purpose:** the remaining six spec documents and the three that do not
+  exist. Each is a substantial rewrite, several are ordered behind each other (`01`
+  before `04` before `05`; a knowledge-model spec before `07`'s rewrite), and none
+  blocks M7. Writing them all in one unsupervised run would produce a great deal of
+  normative text nobody had reviewed, which is the failure mode the inventory exists to
+  avoid. **This is the main thing left.**
 
 **5 — M7. Step 1 of 4 done, and the other three are not mine to do alone.**
 

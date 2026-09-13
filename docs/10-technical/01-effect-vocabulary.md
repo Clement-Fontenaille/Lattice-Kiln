@@ -4,7 +4,7 @@
 
 ## TL;DR
 
-An effect is a state-changing operation that a cognitive component proposes and the runtime realizes. The set of effect *types* is closed and enumerated here. Everything a component can do that is not in this set is either pure reasoning or a read, and neither is gated as an effect.
+An effect is a runtime-mediated operation whose **footprint** this project has decided is worth naming and tracking. The set of effect *types* is closed and enumerated here. What falls outside it is pure reasoning, or an operation whose footprint is small enough to leave untracked — principally a read, which is still something the gate may see and a policy may name.
 
 > **Motto:** Cognition proposes from an open vocabulary; it acts through a closed one.
 
@@ -30,17 +30,29 @@ It is expressed in terms of effects instead, and that only works if the effect s
 
 Adding an effect type is therefore a change to the system's operational surface, not a routine extension. It requires a design-set decision and a corresponding revision here — it MUST NOT happen as an implementation convenience.
 
-## What is not an effect
+## What is outside the vocabulary
 
-The following are outside the vocabulary. They MAY still be capability-gated and MUST still be observable, but the invariant gate does not evaluate them as effects:
+Three things, and they are outside it for **different reasons**. Collapsing them is a defect to avoid, because only two of the three are genuinely ungatable.
 
-- **Reads** — workspace and repository inspection, memory reads, retrieval of observations or provenance.
-- **Cognition** — interpreting, challenging, comparing, planning, and revising conclusions. A conclusion has no effect until a component proposes one of the types below.
-- **Runtime bookkeeping** — the runtime recording its own observations and writing provenance links. This is not proposed by a cognitive component and is not gated.
+- **Cognition** — interpreting, challenging, comparing, planning, revising a conclusion. Nothing is proposed, so there is nothing to gate. A conclusion has no effect until a component proposes one of the types below.
+- **Runtime bookkeeping** — the runtime recording its own observations and writing provenance links. Not proposed by a cognitive component, so again nothing to gate.
+- **Reads** — workspace and repository inspection, memory reads, retrieval of observations or provenance. These **are** proposed by a cognitive component, and the reason they sit outside the vocabulary is different in kind: their footprint is small enough that this project has chosen not to track them as typed effects. That is a judgment about where tracking pays, not a claim that a read changes nothing.
+
+### Reads specifically
+
+A read is **not** outside what may be checked, and listing it alongside the two cases where nothing is proposed invites that misreading. `00-design/10-foundations/02-reasoning-vs-runtime.md` sets out why it would be wrong: every runtime-mediated operation changes the world — a read leaves an access record, makes a store do work and compete for capacity, spends metered quota, and is sometimes a state transition outright.
+
+So, normatively:
+
+- A read MUST be in the enforcement gate's **input domain** (`04-enforcement-gate.md`), whether or not any rule currently fires on one.
+- A read MUST be observable (`02-observability-event-model.md`). This is load-bearing rather than hygienic: the canonical composed outcome is an accumulation of permitted reads followed by one permitted effect that carries the accumulation somewhere it should not go, and a gate evaluating only typed effects sees the carrying step with none of what filled it.
+- The **default** is permissive: reads pass unless a rule names them. This is a configuration, expressed by `03-capability-authority-model.md`, and it MUST be expressible as a rule rather than being a property of the vocabulary. A vocabulary exclusion would make "hold a rule about this read" a design-set change; a default makes it a configuration change.
+
+What granularity a rule may use to name a class of reads — by path, by crossing type, by volume against a ceiling — is an open contract below.
 
 ## The nine effect types
 
-Each realized effect MUST carry enough information for the runtime to judge it representable, permitted, attributable, and reversible where required (`02-reasoning-vs-runtime.md`). The concrete carrier of that information is an open contract (below); the requirement is normative.
+Each realized effect MUST carry enough information for the runtime to judge it representable, permitted, attributable, and reversible **where required** (`00-design/10-foundations/02-reasoning-vs-runtime.md`). That last qualifier is load-bearing: reversibility cannot be demanded of every effect, since some are irreversible by nature and that is what was asked for. What such an effect needs instead is a judgment of whether it is worth what it forecloses, and that judgment is neither of the gating checks — it belongs to a thinking processor and runs **upstream of the proposal** rather than as a stage in this path (`00-design/25-arch-invariant-layer/01-invariant-enforcement.md`). The concrete carrier of that information is an open contract (below); the requirement is normative.
 
 ### 1. Workspace mutation
 
@@ -126,4 +138,6 @@ An implementation therefore MUST make the ordered history of realized effects re
 - Does type 4 (work-record mutation) stay one type, or split once the work model is specified and findings/proposals/decisions prove to need distinct authority?
 - Is promotion (type 8) genuinely one effect type, or a small family (promote, reject, roll back) with shared lineage semantics but different authority?
 - Should network access (type 3) distinguish destination classes (package registry, arbitrary host, known-service) at the vocabulary level, or is that entirely a capability-policy concern?
+- At what granularity may a capability rule name a class of reads — by path, by crossing type, by volume against a ceiling, or something else? Open on the foundational side too.
+- Does **footprint** admit a measure a deterministic gate can apply, now that it rather than kind separates a read from a typed effect? Partial candidates: volume against a ceiling, reversibility class, quota consumed. Nothing establishes they compose.
 - How is a reversibility class assigned to an effect, and by whom — the proposing component, the runtime, or a static property of the type? `00-design/10-foundations/02-reasoning-vs-runtime.md` (Proposal and effect, 2026-09-10) now argues the proposing side: an effect legitimately irreversible by nature still needs a risk evaluation before it is proposed, reasoning-based and context-grounded rather than a static type property or a runtime check. Not yet reconciled with a concrete carrier here.
