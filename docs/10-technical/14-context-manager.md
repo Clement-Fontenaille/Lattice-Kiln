@@ -124,6 +124,7 @@ LiveSetEntry := {
   live_set_id,
   claim_ref,              # into 12-knowledge-model
   crossing_type,          # read | generation | retrieval | effect_response
+                          # generation subdivides: see Splitting a generation
   origin_invocation_id,   # which instance obtained it -- the only primitive here
   registered_at,          # per-run monotonic sequence, not wall clock
   policy_metadata         # whatever the configured recall policy needs
@@ -152,6 +153,24 @@ Concretely, each field earns its place by a policy that needs it:
 
 - `crossing_type` — *a retrieval was deliberately fetched; an incidental read was not.*
   Order by how the artifact was obtained.
+
+#### Splitting a generation
+
+A processor's output is not one artifact. A turn producing reasoning and a conclusion
+registers two, and the distinction between them rides on **`crossing_type`, by
+subdividing `generation`** — not on a separate field and not on the edge. Which
+channel produced an output is a fact about the crossing, and nothing else should
+repeat it.
+
+`generation` is therefore the axis that grows if outputs are split further than two
+ways. What the subdivisions are, and whether they differ per role, is open
+(`06-processor-contract.md`).
+
+Two things depend on the subdivision existing. A `review` instance receives a prior
+processor's conclusion and not its reasoning (`06-processor-contract.md`,
+independence), and that cut is made here. And the largest saving available to a recall
+policy is dropping reasoning while keeping conclusions, which is a branch on this
+field.
 - `origin_invocation_id` — *everything this instance obtained, before anything an
   earlier one did.* Also what an isolation preference is enforced against: a judge
   binding `share_nothing` needs to know which entries carry the reasoning it judges.

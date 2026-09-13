@@ -27,23 +27,24 @@ task.** Everything else takes an unlabelled edge.
 |---|---|---|
 | `objective` | What the task is to accomplish | At task creation, or at invocation when a calling processor writes a new one |
 | `derived_scope` | An invariant processor's ceiling output | At task creation |
-| `handoff:thinking` | A processor's reasoning | On registration |
-| `handoff:response` | A processor's conclusion | On registration |
-| *(none)* | Everything else: reads, retrievals, effect responses | On registration |
+| *(none)* | Everything else | On registration |
 
-`handoff:thinking` and `handoff:response` are distinct because a `review` instance
-receives a prior processor's conclusion and not its reasoning
-(`10-technical/06`, independence). The label is what that cut is made against.
+Two labels. **How an artifact was obtained is a different question**, carried by
+`crossing_type` on the live-set entry — `read`, `generation`, `retrieval`,
+`effect_response` — and nothing on the edge repeats it.
 
 **A processor's output is split at the source rather than kept as one artifact.** A
 turn that produces reasoning and a conclusion registers two artifacts and two edges,
-not one. This first cut is two ways; whether an output splits further, and along what
-lines per role, is not decomposed here.
+not one.
 
-**How an artifact was obtained is a different question** and is carried by
-`crossing_type` on the live-set entry — `read`, `generation`, `retrieval`,
-`effect_response`. The two only appear to overlap on a generation, where the crossing
-type says the model produced it and the label says through which channel.
+That split is carried by **enriching `generation`**, not by an edge label. Both halves
+are generations; what distinguishes them is which channel produced them, which is a
+fact about the crossing and not about the artifact's role in the task. `generation` is
+therefore the axis that grows as outputs are split further, and this first cut is two
+ways rather than complete.
+
+A `review` instance receiving a prior processor's conclusion and not its reasoning
+(`10-technical/06`, independence) makes that cut against the enriched crossing type.
 
 ---
 
@@ -121,7 +122,8 @@ Each tool call follows the same path: scope check before execution, capability, 
 runtime execution, the result crossing back, registration, an edge to T-88.
 
 Each turn of the model registers its own output too: reasoning and conclusion as
-separate artifacts, labelled `handoff:thinking` and `handoff:response`.
+separate artifacts, both crossing type `generation`, distinguished by which channel
+produced them. Their edges are unlabelled.
 
 **4.1** `read("cli/report.py")` → Observation, edge, crossing type `read`, origin
 invocation I-1.
