@@ -28,7 +28,7 @@ There is no "archived, then recalled later" tier. An item is live or it is gone 
 
 ## Prefix persistence changes the shape of the policy space
 
-Whether the serving arrangement keeps a reusable prefix across turns is not a performance detail sitting underneath recall. It decides what kind of question recall is, and this document previously ignored it.
+Whether the serving arrangement keeps a reusable prefix across turns is not a performance detail sitting underneath recall. It decides what kind of question recall is.
 
 **Without prefix persistence**, everything the model is to see on a turn is sent again on that turn. The whole live set is recalled every time, by necessity. Leaving something out is possible but it is not an optimisation — it simply denies the model that material. So the strategy space collapses to two levers: what is included at all, and in what **order** it is presented. Ordering then carries most of the interesting question, and it is a real question, because position affects what a model attends to.
 

@@ -22,6 +22,18 @@ A future discussion about context selection should not require reopening the ful
 
 This modularity is intended to make conceptual iteration efficient.
 
+## Revision cascades, and the documents carry no history
+
+Two rules that only work as a pair.
+
+**A promoted claim that other documents rest on triggers a priority, cascading revision of every design element depending on it.** Not eventually, and not as a follow-up task: before other work. The moment of the change is the moment its dependents are known, and that knowledge decays immediately — whoever made the correction is the only one holding the map.
+
+**A design document states its current position and nothing about its own past.** No "an earlier draft held", no dated qualification of itself, no commentary on what it used to say. It is worth what its current version is worth. Where the history matters it lives in `90-notes/` and in version control, which is what those exist for.
+
+The second rule is only safe because of the first. A document set that carries no history *and* does not cascade is one where a stale claim is invisible — it reads as current, nothing marks it, and the only trace that it should have changed is in a commit message nobody is looking at. Cleanliness without the cascade is not tidiness; it is silent rot.
+
+So the obligation sits on the process rather than on the prose. The cost of a correction is not writing it down, it is walking what depends on it, and that walk is the work.
+
 ## Which layer states what
 
 The split by theme has a second axis that had been practised without being written down, and stating it is what keeps the layers independently reviewable rather than merely separately filed.

@@ -256,11 +256,11 @@ the audit then measures the work against a mandate that was already too wide.
 
 And where the reading is genuinely ambiguous, the *other* mode applies: ask what only
 the operator can answer, by proposing the plausible interpretations rather than
-inferring one. Scope turns out to exercise both halves of that instruction, which is
-the clearest case the project has of it being a pair rather than a preference. Note
-also that recording reasoning does not substitute for asking here, since a derivation
-and a choice between two defensible readings leave records that look alike — the
-second needs to be a question, not a better-annotated answer.
+inferring one. Scope exercises both halves of that instruction, and is the clearest case the project
+has of it being a pair rather than a preference. Recording reasoning does not substitute
+for asking here: a derivation and a choice between two defensible readings leave records
+that look alike, so the second needs to be a question rather than a better-annotated
+answer.
 
 **The processor is a fixed role rather than a commissioned one**, held with the
 invariant layer for the reason given there: a loop cannot commission its own watcher,
@@ -329,8 +329,8 @@ the work — comes from the model or from the harness around it. The answer deci
 how much of this requirement has to be built rather than inherited, and the
 comparison that would separate them is one this project can run.
 
-That question turns out to be `01-constrained-intelligence-thesis.md`'s unresolved
-either/or, for one class of scaffolding. `01` asks whether scaffolding substitutes
+That question is `01-constrained-intelligence-thesis.md`'s unresolved either/or, for
+one class of scaffolding. `01` asks whether scaffolding substitutes
 for capacity or bounds what capacity can spoil, and records a first observation
 pointing at the former — but only for *context management*, since a capable model
 can find its own material. Restraint belongs to the other class, the one that

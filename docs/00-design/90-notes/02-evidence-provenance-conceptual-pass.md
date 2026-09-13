@@ -962,6 +962,13 @@ found by accident or by unrelated re-reading.
 the sense `03` uses when it calls the ETH correction operated: not about how the system
 performs a task, but about how corrections actually propagate here.
 
+It is also a measurement against a **stated obligation** rather than against nothing.
+`00-project/02-documentation-philosophy.md` holds that a promoted claim other documents
+rest on triggers a priority cascading revision of everything depending on it, and that
+the design documents carry no history precisely because that cascade keeps them true.
+One in four is the rate at which that obligation was met by diligence alone, in the
+session that produced the rule.
+
 **Mode: Operated**, small-n and single-session, on this project's own documents.
 
 **Grounds.** The four corrections are in this file's own record (F41, F43, F46) and in

@@ -38,7 +38,7 @@ Every processor is instantiated with a scope it cannot widen (`24-arch-permissio
 
 **This role narrows scope; it does not write the ceiling.**
 
-Deriving a mandate from intent belongs to the invariant layer (`25-arch-invariant-layer`), and the reason is that this role is tunable system configuration by its own account below. A mandate written by something feedback can retune is a mandate the loops can widen indirectly, by adjusting the thing that writes it rather than by proposing a widening any check would see. The tempting counter-argument — that a generously-tuned orchestrator still derives no further than the intent's ceiling — is circular, since it would be this role writing that ceiling too.
+Deriving a mandate from intent belongs to the invariant layer (`25-arch-invariant-layer`), because this role is tunable system configuration (Expected evolution, below). A mandate written by something feedback can retune is a mandate the loops can widen indirectly, by adjusting the thing that writes it rather than by proposing a widening any check would see. Nor does it help to say that a generously-tuned orchestrator derives no further than the intent's ceiling: that is circular where this role would be writing the ceiling too.
 
 What stays here is narrowing. The orchestrator formulates work items under a scope already set above it and may give a child a boundary narrower than its parent's. Narrowing needs no protection: it makes the end-of-task check stricter rather than looser, and declining to narrow leaves everything at the inherited boundary. A scope follows from an objective rather than standing apart from it, which is a reason for narrowing to sit with formulation and not a reason for the ceiling to.
 

@@ -117,8 +117,7 @@ thick.
 
 ## context, and the context manager's own terms
 
-Settled 2026-09-12, because the set had drifted into using one word for three
-things.
+One word was carrying three things; these separate them.
 
 **context** — *the production context of the model's tokens: its internal state
 while generating.* This is the thing being managed and the word is reserved for
@@ -146,11 +145,10 @@ inputs depending on the serving arrangement, which is why
 `23-arch-context-management/01` treats prefix persistence as changing the shape of
 the policy space rather than only its cost.
 
-**Two words this set no longer uses for these.** *Pool* was used for the live set
-and is retired as ambiguous with premise pools in the literature notes. *Composition*
-was used for the turn input and is retired because the set already uses
-"composition" for concern composition (`22-arch-cognition/08`) and effect
-composition (`25-arch-invariant-layer`), which are unrelated.
+**Two words to avoid for these.** *Pool* is ambiguous with premise pools in the
+literature notes. *Composition* is already spoken for by concern composition
+(`22-arch-cognition/08`) and effect composition (`25-arch-invariant-layer`), which
+are unrelated to either term above.
 
 **Two constraints, one limit.** What an assembly can correctly *integrate* is a
 cognitive constraint (`10-foundations/04`, Overload) and has no operational

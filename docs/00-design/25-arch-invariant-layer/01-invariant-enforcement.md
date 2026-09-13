@@ -46,7 +46,7 @@ It should be a deterministic runtime check: narrow, mechanical, over the line or
 
 That is a statement about **the gate**, not about everything this layer may contain. The layer also fixes roles that do reason — triage, below, and the scope check — and Invariant processors sets out the condition under which that is safe rather than contradictory: they may restrict and never widen, so persuading one achieves nothing. The gate remains the thing that is not smart.
 
-The slip to avoid is reading this layer's content as **hard** constraints, where hard describes a form — bright line, mechanically checkable. Read that way it implies enforcement must be mechanical, and the sentence above becomes a rule about the whole layer. `10-foundations/06` defines membership by **inescapability** instead, which is a relation to the system rather than a shape: what it cannot get out from under. A natural-language judgment can be entirely inescapable without being a bright line, which is what makes an invariant processor coherent rather than an exception.
+Membership in this layer is defined by **inescapability** rather than by form (`10-foundations/06`): what the system cannot get out from under, not what is a bright line. Reading it as a matter of form would imply enforcement must be mechanical, and would turn the sentence above into a rule about the whole layer. A natural-language judgment can be entirely inescapable without being a bright line, which is what makes an invariant processor coherent rather than an exception.
 
 ## The gate binds effects, not roles
 
@@ -62,9 +62,9 @@ This is also how the invariant layer stays small. It needs no clause per role, p
 
 ## What the gate may see is wider than what it evaluates
 
-Binding the gate to effects says what it is keyed to. It must not be read as saying that effects are the only thing it may look at, and the tempting mistake is to exclude reads on the grounds that gating every read would recreate a rigid workflow engine.
+Binding the gate to effects says what it is keyed to. It does not say that effects are the only thing it may look at.
 
-The argument above is why that does not follow. The gate binds to effects because effects are "a bounded set that the runtime already represents in order to execute anything at all" — and a read is equally something the runtime represents in order to execute anything at all. Nothing in the effect-binding argument excludes it.
+The argument above is why. The gate binds to effects because effects are "a bounded set that the runtime already represents in order to execute anything at all" — and a read is equally something the runtime represents in order to execute anything at all. Nothing in the effect-binding argument excludes it, and the cost of gating every read is an argument about configuration rather than about the gate's reach.
 
 So the gate's input domain is runtime-mediated operations, and typed effects are not the subset that change the world outside the system — every runtime-mediated operation does that. A read leaves an access record, makes a store do work and compete for its capacity, spends metered quota, and is sometimes a state transition outright — dequeuing a queue item, marking a message read, firing a watcher (`10-foundations/02`, Proposal and effect).
 
@@ -116,7 +116,7 @@ A triage role assesses and routes: log and let the original, already-gated effec
 
 It must never have authority to approve an effect the gate rejected. If it could, it would become a second and persuadable version of the mechanism it sits behind.
 
-That constraint turns out to be the general condition for any reasoning role this layer fixes, not a precaution particular to triage — see Invariant processors.
+That constraint is the general condition for any reasoning role this layer fixes rather than a precaution particular to triage — see Invariant processors.
 
 ## Why the triage role is fixed rather than commissioned
 

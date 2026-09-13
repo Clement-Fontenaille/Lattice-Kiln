@@ -3,7 +3,7 @@
 ## TL;DR
 
 Decomposition is the operation the constrained-intelligence thesis rests on, and
-the one whose cost the thesis did not originally account for. This document holds
+the one whose cost the thesis does not account for. This document holds
 a candidate account of when splitting pays, marked as a sketch rather than a
 settled position.
 
@@ -15,8 +15,8 @@ The thesis asks the system to reduce the amount of simultaneous reasoning each
 invocation must perform. That is decomposition, and everything else in this set
 assumes it works.
 
-The thesis also now records that decomposition costs unconditionally and pays
-conditionally, and that evaluating the composite is where the cost concentrates
+The thesis records that decomposition costs unconditionally and pays conditionally,
+and that evaluating the composite is where the cost concentrates
 (`10-foundations/01`). Neither the orchestrator nor the processor document says
 how the decision to split is made. The orchestrator lists decomposition among the
 operations it may select and offers no rule for selecting it, which leaves the
@@ -56,7 +56,7 @@ what the assembly could already hold.
 
 That matches what has been observed — a fixed chain losing to a single pass, a
 splitting stage bought at high cost for narrow benefit (findings entries 5 and 8)
-— which the thesis previously had no account for at all. It also matches published
+— which the thesis has no account for on its own. It also matches published
 work in which decomposition depth is best left to emerge from failure rather than
 being set in advance (entry 9, §4).
 
@@ -70,10 +70,9 @@ grain-matching rule addresses the cheaper half of the problem. The account says
 nothing about how coarse the recombining step must be, and recombination is coarse
 by construction: it requires holding the objective and the parts together.
 
-This has been silently assuming one shape for how split work comes back together:
-**fork/join** — parts run independently of each other, then an explicit step
-rejoins them, and that step is where the coarseness above concentrates. It is not
-the only shape on offer. **Continuation** is the alternative: instead of forking
+There are two shapes for how split work comes back together, and the coarseness above
+falls differently under each. **Fork/join** — parts run independently of each other,
+then an explicit step rejoins them, and that step is where the cost concentrates. **Continuation** is the alternative: instead of forking
 into parts unaware of each other and reconciling afterward, each step hands off to
 the next as an evolving single thread, carrying forward what the next step needs
 directly — there is no separate join, because nothing was split into independent
