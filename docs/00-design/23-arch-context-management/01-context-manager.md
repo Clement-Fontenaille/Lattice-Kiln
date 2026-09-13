@@ -24,7 +24,7 @@ The word **context** is reserved for what this actor manages rather than for any
 
 **What leaves the live set is out of reach of recall.** The live set tracks what is in context, so an item that is not recalled after a cache reset has left the discussion and drops out of it. Bringing that item back is therefore not a recall at all — it is a retrieval, which is a fresh crossing, gated and registered like any other.
 
-This retires an "archived, then recalled later" state that earlier drafts of this document assumed. There is no such state. An item is live or it is gone from here, and what it leaves behind is its content in `21-arch-knowledge-model`, which persists until the retention sweep reaches it (`22-arch-cognition/05-curation.md`). The simplification is worth having: recall's scope is exactly what is live, with no second tier to reason about, and the expensive question earlier drafts posed — how a policy restores something archived — dissolves into the ordinary retrieval path.
+There is no "archived, then recalled later" tier. An item is live or it is gone from here, and what it leaves behind is its content in `21-arch-knowledge-model`, which persists until the retention sweep reaches it (`22-arch-cognition/05-curation.md`). Recall's scope is therefore exactly what is live, with no second tier to reason about, and the question of how a policy restores something archived does not arise — restoring is retrieval.
 
 ## Prefix persistence changes the shape of the policy space
 
@@ -36,7 +36,7 @@ Whether the serving arrangement keeps a reusable prefix across turns is not a pe
 
 Those are not questions this project can settle from its own first principles. They need experiment, and they need whatever preliminary results the literature already holds. This is one axis among several, named here because it was the first to surface; `02-context-as-experimental-surface.md` holds the general treatment.
 
-**The live set is an index, not a store (2026-09-11).** Everything a crossing returns is written to `21-arch-knowledge-model` first, so there is exactly one copy of any artifact's content and this actor points at it. An earlier version of this document made that arrangement a special case for knowledge-base retrievals only, on the grounds that a retrieved claim already had an identity there while a tool output did not. Registering every crossing removes most of that asymmetry — but not all of it, as the paragraph on event-versus-content below sets out.
+**The live set is an index, not a store.** Everything a crossing returns is written to `21-arch-knowledge-model` first, so there is exactly one copy of any artifact's content and this actor points at it. That holds for every crossing type rather than only for knowledge-base retrievals — though one asymmetry survives, which the paragraph on event-versus-content below sets out.
 
 This is a decision about **where artifact content lives, and nothing more**. It says that the record is the one place artifact content is held, so that promoting something later does not mean copying it out of a conversation and into the record — there is no rewrite step, because it was never anywhere else. It does not say that what is written is kept.
 

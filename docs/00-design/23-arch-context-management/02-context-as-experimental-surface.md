@@ -8,7 +8,7 @@ The question is not what the recall policy should be. It is what apparatus lets 
 
 ## Status of this document
 
-New, 2026-09-12, from a design discussion recorded verbatim in `90-notes/03-context-management-refoundation.md`. It reframes what `01-context-manager.md` leaves open rather than replacing it: that document still holds the actor, its responsibilities and its interactions.
+This reframes what `01-context-manager.md` leaves open rather than replacing it: that document still holds the actor, its responsibilities and its interactions. The discussion behind it is recorded verbatim in `90-notes/03-context-management-refoundation.md`.
 
 What is adopted here is the framing, the instrumentation requirement, and the interface that keeps policies interchangeable. The specific techniques listed under Axes are **not** adopted — they are named so the shape can accommodate them, which is a different commitment.
 
@@ -74,7 +74,7 @@ And it is **nearly free given what is already built**. At the moment `01-context
 
 **What counts as the production context.** The **turn input** — what recall actually put in front of the model on that turn — and not the live set snapshot. The model produced the artifact from what it was shown, not from what happened to be tracked, so the turn input is what the phrase means.
 
-An earlier draft chose the live set snapshot, on the grounds that the turn input is shaped by the recall policy in force and would therefore contaminate the very comparison this framework exists to run. That reasoning is abandoned, because it treats as a defect something that is structural. **The set of state transitions in the knowledge model is a product of the system.** Every artifact in it exists because some policy, some model and some configuration caused a crossing that produced it. No definition of production context escapes that: the live set snapshot is contaminated too, through the model's behaviour rather than through the policy's choices, and the difference is one of degree that does not change the epistemic situation. Once neither option is clean, the tiebreaker is which one represents what it claims to.
+The competing definition is the live-set snapshot, chosen on the grounds that a turn input is shaped by the recall policy in force and would therefore contaminate the very comparison this framework exists to run. That reasoning treats as a defect something that is structural. **The set of state transitions in the knowledge model is a product of the system.** Every artifact in it exists because some policy, some model and some configuration caused a crossing that produced it. No definition of production context escapes that: the live set snapshot is contaminated too, through the model's behaviour rather than through the policy's choices, and the difference is one of degree that does not change the epistemic situation. Once neither option is clean, the tiebreaker is which one represents what it claims to.
 
 **How the two combine.** A weighted sum of two similarity scores, with the weight as the swept parameter, is the recommendation — not because it is the best combiner but because the two single-signal arms are its endpoints. Weight zero and weight one give the ablation from the same mechanism rather than from two separate implementations, so there is one thing to build and nothing to keep in sync. Concatenation hides an equal weighting with no knob; two-stage retrieve-then-rerank is a different experiment worth running later.
 

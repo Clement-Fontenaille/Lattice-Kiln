@@ -18,11 +18,11 @@ Capabilities may cover areas such as workspace access, repository inspection, fi
 
 Capabilities describe available operations, not a guaranteed right to perform arbitrary effects.
 
-**On that list.** It was written before the effect vocabulary existed, and it is one of three overlapping lists `10-technical/01-effect-vocabulary.md` later reconciled into nine types. It should be read as the areas a policy concerns itself with, not as the enumeration — the enumeration is the effect vocabulary's, and a capability policy is expressed over that. Two of the areas have since acquired owners worth naming: memory proposals are proposals to `21-arch-knowledge-model`, which only a thinking processor makes (`22-arch-cognition/04-thinking.md`), and task manipulation is work-record mutation against `28-arch-work-record`.
+**Read that list as areas a policy concerns itself with, not as an enumeration.** The enumeration is `10-technical/01-effect-vocabulary.md`'s nine types, and a capability policy is expressed over those. Two of the areas have owners worth naming: memory proposals are proposals to `21-arch-knowledge-model`, which only a thinking processor makes (`22-arch-cognition/04-thinking.md`), and task manipulation is work-record mutation against `28-arch-work-record`.
 
 ## Reads, and where the permissive default lives
 
-A read is not a typed effect, and it is still something an actor may or may not be allowed to perform. `10-foundations/02`'s 2026-09-11 Qualification withdrew the claim that reads are outside what may be checked, and `25-arch-invariant-layer` now carries reads in the gate's input domain — but the question of what *ordinarily* happens to a read is a policy question, which makes it this document's.
+A read is not a typed effect, and it is still something an actor may or may not be allowed to perform. Reads sit in the gate's input domain (`25-arch-invariant-layer`), so what *ordinarily* happens to one is a policy question — which makes it this document's.
 
 The default is permissive: reads pass unless a rule names them. That is a configuration this model expresses, not a property of reads, and it is stated as a default precisely so that it can be changed without anything structural having to move.
 
@@ -36,7 +36,7 @@ A reviewer may be allowed to inspect files but not modify them. An implementer m
 
 **The engine that applies this is not here.** It sits with the other non-adjustable mechanisms in `25-arch-invariant-layer`, for the same reason the gate does: a capability engine a loop could remove or route around would gate nothing. What stays in this document is the **model** — what capabilities are, how they are keyed, what a policy may say — and the policy content itself is configuration that system-level feedback revises (`27-arch-adaptation-and-evolution/02`).
 
-That split is the same one `22-arch-cognition/01-work-intent-and-task-model.md` has with `28-arch-work-record`: a document defining a vocabulary, and an actor elsewhere realizing it. It is also the reason the sentence below about not being a floor is exactly right and needs no softening — the policy is adjustable, which is what disqualifies it from being a floor, while the machinery applying it is not adjustable at all.
+That split is the same one `22-arch-cognition/01-work-intent-and-task-model.md` has with `28-arch-work-record`: a document defining a vocabulary, and an actor elsewhere realizing it. It is also why this model is not a floor while the machinery applying it is — the policy is adjustable, the engine is not.
 
 ## Why the distinction matters
 
@@ -58,13 +58,13 @@ So: this model asks whether the actor may request it, the invariant gate asks wh
 
 ## A fourth question, which this model does not yet answer
 
-There is one more, and the three-question framing above made it harder to see by looking complete. **Is this within what was asked for?**
+A fourth question hides behind the three above, which look complete without it. **Is this within what was asked for?**
 
 `10-foundations/07` names this document as the destination for it — "scope declared and checked belongs with the capability and authority model" — and nothing here currently implements it. The failure mode that commitment exists to prevent is stated there precisely: work beyond the mandate it was given, "including where each step past it is locally justified by the last."
 
 That is not a capability question and capability cannot be stretched to cover it, because the two are keyed to different things. A **capability** is keyed to the actor, set by policy, and evaluated per effect: an implementer may perform bounded workspace changes. A **declared scope** is keyed to the work item, declared per task, and evaluated against what was actually touched. Every step of a drift past the mandate can sit inside capability while the aggregate sits outside the mandate, and a per-effect check keyed to the actor will see nothing wrong at any point.
 
-`25-arch-invariant-layer` already states the property that makes this structural rather than an oversight: capability gating evaluates one proposed effect at a time, and a sequence of individually authorized actions can assemble into an outcome no single check was designed to catch. That observation was made about invariant enforcement and applies here unchanged; the line between it and `07`'s commitment had not been drawn.
+`25-arch-invariant-layer` states the property that makes this structural rather than an oversight: capability gating evaluates one proposed effect at a time, and a sequence of individually authorized actions can assemble into an outcome no single check was designed to catch. That was written about invariant enforcement and applies here unchanged.
 
 **It is authority's rather than capability's**, which is why it belongs in this document despite needing something this document does not have. Authority is already the dynamic half — the runtime interpreting a requested operation under current policy — while capability is the static description of what a role may ask for. A mandate is dynamic in the same way, and adjustable per task.
 
@@ -100,7 +100,7 @@ Followed naively, the arrangement grows heavy: an invariant evaluator inscribing
 
 **Attachment costs nothing.** Instantiating a processor binds an objective (`10-technical/01-effect-vocabulary.md` type 6), and that objective comes from a work item. Every effect the instance proposes inherits the work item through the instance that proposed it, which the runtime already tracks for attribution. There is no proof for an effect to carry and no attachment mechanism to build.
 
-**No separate enforcement of "a scope must exist."** The check fails closed on an unscoped item, so nothing has to watch for scopes going missing — work simply stops. That much held under an earlier draft of this section which also argued the *deriver* could sit outside the invariant layer, on the grounds that membership protects a role from removal rather than from being generous. That half is withdrawn: a generous deriver writing the ceiling is not a degraded check but an absent one, since nothing above it bounds what it writes. Deriving from intent is `25-arch-invariant-layer`'s (Who may modify a task's scope, above). The fail-closed property survives the correction and still removes a mechanism.
+**No separate enforcement of "a scope must exist."** The check fails closed on an unscoped item, so nothing has to watch for scopes going missing — work simply stops, and that removes a mechanism rather than adding one.
 
 **The check is per task, not per effect.** The reversible majority is compared once, at the end, as an accumulated set against the declaration — which is also the only point at which drift is visible *as* drift rather than as a series of individually unremarkable steps. Only irreversible effects are checked one at a time, before the fact, and those are rare.
 
@@ -130,7 +130,7 @@ Three parties may, and they touch different parts of it — the ceiling, and wha
 
 **The operator**, without bound, because they are the source. Scope descends from intent and intent is amended out of band (`10-technical/01-effect-vocabulary.md` type 4).
 
-**An invariant processor, deriving the mandate from intent.** This is the ceiling, and it is written by `25-arch-invariant-layer` rather than by anything the feedback loops can retune. A first draft assigned it to the orchestrator and that failed on circularity: if the same actor derives the root scope from intent, "bounded by the intent's scope" bounds nothing, because it wrote that too.
+**An invariant processor, deriving the mandate from intent.** This is the ceiling, written by `25-arch-invariant-layer` rather than by anything the feedback loops can retune. Assigning it to the orchestrator fails on circularity: if the same actor derives the root scope from intent, "bounded by the intent's scope" bounds nothing, because it wrote that too.
 
 **The orchestrator, narrowing.** It formulates work items under a ceiling set above it and may give a child a boundary inside its parent's. Narrowing is safe without protection — it makes the check stricter, and declining to narrow leaves the inherited boundary standing.
 

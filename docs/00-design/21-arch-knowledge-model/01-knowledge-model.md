@@ -8,7 +8,7 @@ The knowledge model holds `10-foundations/03`'s substrate — claims and their p
 
 ## Status of this document
 
-First draft. Written once the 2026-09-11 reorg gave `03`'s substrate a folder of its own, separate from the actors in `22-arch-cognition` that read and write it. States the actor's responsibility, the service it provides, and a general shape for it — deliberately not a schema, a storage format, or a query language, all of which belong to technical specification once this draft has held up.
+Draft. States the actor's responsibility, the service it provides, and a general shape — deliberately not a schema, a storage format, or a query language, all of which belong to technical specification.
 
 ## Motivation
 

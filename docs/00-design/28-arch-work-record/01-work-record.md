@@ -8,9 +8,8 @@ The work record holds intent and the work derived from it durably — what was a
 
 ## Status of this document
 
-First draft, written 2026-09-11 during the architecture consolidation pass, which found that work-record mutation (`10-technical/01-effect-vocabulary.md` type 4) already had a schema, a capability policy, and real exercised runs behind it, while no actor in this band owned the record it mutates. States the actor's responsibility, the service it provides, and a general shape — deliberately not a schema or a storage format, which belong to technical specification.
+Draft. Work-record mutation (`10-technical/01-effect-vocabulary.md` type 4) has a schema, a capability policy and exercised runs behind it, and this actor is what owns the record it mutates. States the responsibility, the service, and a general shape — deliberately not a schema or a storage format, which belong to technical specification.
 
-It sits at `28` rather than earlier in the band for a mechanical reason only: the numbers below it were already taken when the gap was found. Nothing is implied by its position relative to `27-arch-adaptation-and-evolution`.
 
 ## Motivation
 

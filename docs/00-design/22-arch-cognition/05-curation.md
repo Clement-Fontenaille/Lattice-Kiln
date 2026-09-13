@@ -8,11 +8,11 @@ Most of what crosses into a conversation is forgotten when the conversation stop
 
 ## Status of this document
 
-First draft, written 2026-09-11. Provisional, like the storage arrangement it sits next to.
+Draft, and provisional like the storage arrangement it sits next to.
 
-An earlier draft of this document got the relationship between the two backwards, and the mistake is worth recording because it is easy to repeat. `23-arch-context-management` now keeps only references into `21-arch-knowledge-model`, with every crossing's content written there as it arrives. That reads as though everything is therefore retained, and that forgetting must consequently become a per-item judgment. It does not follow. Where content *lives* and how long it is *kept* are independent, and the storage decision was taken for a reason that has nothing to do with retention: so that promoting something later does not mean copying it out of a conversation into the record, because it was never anywhere else.
+One inference is easy to make here and is wrong. `23-arch-context-management` keeps only references into `21-arch-knowledge-model`, with every crossing's content written there as it arrives — which reads as though everything is therefore retained, and forgetting must become a per-item judgment. It does not follow. Where content *lives* and how long it is *kept* are independent, and that storage decision was taken for a reason unrelated to retention: so that promoting something later does not mean copying it out of a conversation into the record, because it was never anywhere else.
 
-The retention default is unchanged from `10-foundations/05`, and is the opposite of retention.
+The retention default is `10-foundations/05`'s, and it is the opposite of retention.
 
 ## The default: not live, not remembered, removed
 
@@ -76,7 +76,7 @@ Deliberate remembrance last, and only once the first two have a measured failure
 
 ## A caution, and a relocation
 
-`70-THINKING/07-when-to-decompose/18-ares-soundness.md` describes a retention mechanism where each claim is carried forward into the premise set for later steps with probability equal to its own entailment score. An earlier draft of this document read that as evidence about curation. On a closer reading it is mostly evidence about something else: what that mechanism retains is what is *available to reason from at the next step*, which is recall (`23-arch-context-management`) rather than what is durably kept. The sheet's finding that keeping every base claim was consistently best with a strong judge, with selective retention helping only a weaker binary one, belongs to the recall policy's evidence and not here.
+`70-THINKING/07-when-to-decompose/18-ares-soundness.md` describes a retention mechanism where each claim is carried forward into the premise set for later steps with probability equal to its own entailment score. It reads as evidence about curation and is mostly evidence about something else: what that mechanism retains is what is *available to reason from at the next step*, which is recall (`23-arch-context-management`) rather than what is durably kept. The sheet's finding that keeping every base claim was consistently best with a strong judge, with selective retention helping only a weaker binary one, therefore belongs to the recall policy's evidence rather than here.
 
 What does transfer is the collapse mode. When the judge is overconfident and returns near-certainty everywhere, every retention probability rises toward one, the filter stops filtering, and the mechanism becomes a no-op while still costing what it cost before — and the sheet notes that no diagnostic was proposed to detect it. Any judgment-based filter inherits that, including deliberate remembrance here. The sweep does not, because it has no judge.
 

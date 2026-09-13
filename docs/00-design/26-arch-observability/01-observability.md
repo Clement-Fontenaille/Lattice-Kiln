@@ -8,10 +8,6 @@ The project cannot improve what it cannot reconstruct. This actor records what h
 
 ## Status of this document
 
-Reworked 2026-09-12. The original was written before `10-foundations/03`'s conceptual pass and before the architecture band was split, and it had received none of either: it described events and effects with no claim vocabulary at all, while stating a long-term goal — "why did this change become trusted" — that is `03`'s Provenance question word for word.
-
-Its own position also changed underneath it during the 2026-09-11 pass, when every crossing began registering into `21-arch-knowledge-model` and most of it began being swept again. This actor's copy is now what survives that.
-
 Deliberately greedy for the moment. Retention, redaction and summarization are named as open rather than designed, and the reason is given below rather than assumed.
 
 ## Motivation
@@ -38,7 +34,7 @@ Four things need saying more precisely than that, because the architecture aroun
 
 **Each turn, not each invocation.** What a processor sees is composed fresh on every turn out of a live set that grew since the last one (`20-arch-runtime.md`, Instantiation, and then a loop). There is no bundle handed over once at the start. So the unit worth recording is the **turn input** — what was actually transmitted to the model at that moment, and what the recall policy held back — rather than a single record of what an instance received when it began.
 
-**Reads as well as effects.** A read is not a typed effect, but it is in the invariant gate's input domain and it has a real footprint (`10-foundations/02`, Qualification 2026-09-11). It has always been required to be observable here; what has changed is that this is now load-bearing rather than incidental. The reason is in the next section but one.
+**Reads as well as effects.** A read is not a typed effect, but it is in the invariant gate's input domain and has a real footprint (`10-foundations/02`, Proposal and effect). Recording reads is load-bearing rather than incidental, for the reason given under Reconstruction as a safety dependency below.
 
 **Knowledge-state transitions.** Every proposal that changes what the project holds — a claim asserted, a qualification appended, a claim requalified, a working compressed to a souvenir, an entry swept — with the processor that proposed it and the grounds it gave (`22-arch-cognition/04-thinking.md`).
 
@@ -108,7 +104,7 @@ This actor keeps its own copy of artifacts and events rather than reading `21-ar
 
 Those three have different lifecycles. A knowledge-model claim persists as curated project memory, a live artifact persists only while its conversation needs it, a work item persists until the work is done and then stops changing. None of their retention or compression needs match a full historical log's, and a greedy log's needs least of all.
 
-Under the arrangement adopted on 2026-09-11 this became sharper rather than softer. Every crossing registers into `21-arch-knowledge-model` and most of it is swept again once it is no longer live and nothing has built on it. A swept entry stops being something the system knows and stops being available to reason from, while remaining reconstructable here. That is not a contradiction: reasoning and auditing are different uses, and this actor is what makes the sweep safe to perform at all.
+The sweep sharpens that rather than softening it. Every crossing registers into `21-arch-knowledge-model` and most of it is removed again once it is no longer live and nothing has built on it. A swept entry stops being something the system knows and stops being available to reason from, while remaining reconstructable here. That is not a contradiction: reasoning and auditing are different uses, and this actor is what makes the sweep safe to perform at all.
 
 Sharing a store would also mean every reconstruction query competes with those actors' own query loads, which the naive-default discipline elsewhere in this project (`10-technical/07`) already treats as a cost worth avoiding.
 

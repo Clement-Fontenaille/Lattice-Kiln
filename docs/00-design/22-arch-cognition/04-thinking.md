@@ -8,7 +8,7 @@ Thinking is a family of processor roles whose defining product is a proposed cha
 
 ## Status of this document
 
-First draft, written 2026-09-11. `10-foundations/02-reasoning-vs-runtime.md` defines Thinking as a procedure and states that "thinking is what a processor does" without naming any processor. This document supplies the actor side: what kind of actor, what makes something a member, and what invokes one. It does not specify a prompt, a role definition, or a walk algorithm, all of which belong to technical specification.
+Draft. `10-foundations/02-reasoning-vs-runtime.md` defines Thinking as a procedure and says "thinking is what a processor does" without naming any processor. This document supplies the actor side: what kind of actor, what makes something a member, and what invokes one. It does not specify a prompt, a role definition, or a walk algorithm, all of which belong to technical specification.
 
 ## Motivation
 
@@ -28,7 +28,7 @@ That test is mechanical, which is the point of stating it this way rather than a
 
 ## Thinking is not chain-of-thought
 
-These are easy to conflate. They are separated by whether anything was proposed, not by where the writing lands — an earlier draft of this document said the two touched different stores, which stopped being true once every crossing began registering into the knowledge model.
+These are easy to conflate, and they are separated by whether anything was **proposed** rather than by where the writing lands. Both end up in the same store.
 
 Reasoning inside a single generation — a chain of thought, a scratchpad, an argument worked out mid-response — produces tokens. Under `10-foundations/04`'s account those tokens are an artifact of a generation crossing, which `23-arch-context-management` registers. That registration does write an Observation into `21-arch-knowledge-model`, so the store does grow — but nothing has been *claimed*. An Observation records that a processor produced something, which `10-foundations/03` lists among its examples of directly obtained state. It does not record that what was produced is true, supported, or worth anything.
 
@@ -52,15 +52,13 @@ Assessing a claim's scope at the moment it is created (`10-foundations/03`, Scop
 
 One role covering all of that would be the kind of universal step sequence `02-processors.md` declines to prescribe. A family lets each member be commissioned, evaluated, and retired on its own evidence, which is the discipline the role vocabulary already follows.
 
-**Against a stated default, and it has to answer for that.** `27-arch-adaptation-and-evolution/08-recursive-symmetry-without-dogma.md` holds the opposite presumption: a single capable role invoked at different scopes, with different context, objectives and thresholds, rather than the role multiplying into species. Multiplicity belongs to invocation, not to identity.
+**That argument answers to a stated default, and mostly fails against it.** `27-arch-adaptation-and-evolution/08-recursive-symmetry-without-dogma.md` presumes a single capable role invoked at different scopes, with different context, objectives and thresholds, rather than a role multiplying into species: multiplicity belongs to invocation, not to identity. **Scope** is on that document's own list of what invocation varies. **Cost** follows from scope and context size rather than from the role's identity — a global walk is expensive because it touches more, not because it is a different kind of actor.
 
-Two of the three reasons above do not survive that. **Scope** is on `08`'s own list of what invocation varies. **Cost** follows from scope and context size rather than from anything about the role's identity — a global walk is expensive because it touches more, not because it is a different kind of actor.
+**Required independence is the one that does not dissolve**, and it is not the independence `02-processors.md` protects. That kind — an instance receiving a conclusion without the reasoning behind it, so it judges for itself — is an invocation property. What matters here is **evolutionary** independence: keeping one role's properties intact while a similar one is tuned separately. System-level feedback revises role *definitions*, so two capabilities sharing one definition are tuned together whether or not that is wanted, and no variation of invocation separates them.
 
-**Required independence is different, and it is worth stating correctly because it was stated loosely here at first.** It does not mean the independence `02-processors.md` protects, where an instance receives a conclusion without the reasoning that produced it so that it judges for itself. That kind is an invocation property and dissolves the same way the other two do. What was meant is **evolutionary** independence: keeping one role's properties intact while a similar one is tuned separately over time. That is genuinely a role-level concern, because system-level feedback revises role *definitions*, and two capabilities sharing one definition get tuned together whether or not that is wanted.
+That argument is real and premature. It anticipates a coupling nothing has experienced, and splitting stays available later on `08`'s own terms — evidence that one role cannot serve. Pre-splitting against a problem no run has produced is the move this project declines everywhere else.
 
-So the argument is real. It is also premature, which is the better reason to set it aside. It anticipates a coupling that has never actually bitten, and it overlooks that splitting remains available later on exactly the terms `08` sets — evidence that one role cannot serve. Pre-splitting to protect against a problem no run has produced is the same move the project declines everywhere else.
-
-"Family" therefore names a **shared membership test**, not a commitment to distinct roles: each member proposes a change to what the project holds. Whether the members need different role instructions, or are one role invoked several ways, is `08`'s open empirical question, and its default of reuse applies. The burden sits on whoever proposes to split.
+So **"family" names a shared membership test**, not a commitment to distinct roles: each member proposes a change to what the project holds. Whether they need different role instructions or are one role invoked several ways is `08`'s open empirical question, and its default of reuse applies until evidence answers it.
 
 ## Candidate members
 
