@@ -938,10 +938,10 @@ One consequence for the gate falls out and is worth keeping: an irreversible eff
 
 ---
 
-## F47 — Dependent-finding by diligence missed three corrections out of four in one session
+## F47 — Dependent-finding by diligence missed four corrections out of five in one session
 
-**Claim.** This pass corrected four claims that other documents rested on, and each
-correction required finding what depended on it. One was found by method; three were
+**Claim.** This pass corrected five claims that other documents rested on, and each
+correction required finding what depended on it. One was found by method; four were
 found by accident or by unrelated re-reading.
 
 - **"Hard" to "inescapable" (F41 lineage).** The dependent in `25-arch-invariant-layer`
@@ -957,6 +957,12 @@ found by accident or by unrelated re-reading.
   checker after the fact, for a different reason.
 - **A bolded label dissolved in `10-foundations/04`.** Four references pointed at it.
   Found by the same accidental check.
+- **The cascade rule itself, against its own file.** Writing the rule into
+  `00-project/02-documentation-philosophy.md` left that document's own **Revision
+  policy** section, sixty lines below, still instructing authors to preserve historical
+  rationale in the document. The file contradicted itself for the rest of the session
+  and was found by a later sweep looking for something else. This is the strongest of
+  the five: the dependent was not in another document, it was on the screen.
 
 **This is operated evidence about the project's own knowledge-integrity process**, in
 the sense `03` uses when it calls the ETH correction operated: not about how the system
@@ -966,12 +972,13 @@ It is also a measurement against a **stated obligation** rather than against not
 `00-project/02-documentation-philosophy.md` holds that a promoted claim other documents
 rest on triggers a priority cascading revision of everything depending on it, and that
 the design documents carry no history precisely because that cascade keeps them true.
-One in four is the rate at which that obligation was met by diligence alone, in the
-session that produced the rule.
+One in five is the rate at which that obligation was met by diligence alone, in the
+session that produced the rule — and the rule's own promulgation is one of the four
+misses.
 
 **Mode: Operated**, small-n and single-session, on this project's own documents.
 
-**Grounds.** The four corrections are in this file's own record (F41, F43, F46) and in
+**Grounds.** The five corrections are in this file's own record (F41, F43, F46) and in
 git. The count is exact for this session; nothing establishes it as a rate.
 
 **What it does and does not support.** It is a measurement of what dependent-finding
@@ -985,6 +992,13 @@ mechanical because parent and child links are explicit, whereas design documents
 only prose citations, so the walk failed partly because there was nothing to walk. The
 right reading is narrow — where dependency edges exist, walking them beats diligence;
 where they do not, diligence is what there is, and it misses.
+
+The fifth case qualifies even that. Its dependent sat in the file being edited, at no
+distance at all, and diligence still missed it. So distance is not the whole
+explanation: an author writing a claim is attending to the claim, not to the document
+around it, and re-reading the file you have just written is the check least likely to
+be run. Whatever helps here is a check executed after the fact by something that did
+not write the text, which is what the two ad-hoc checkers were.
 
 Nothing changes in how design documents are filed. Markdown in git, with prose citations
 and an occasional checker, is the right weight for a human-authored set. What the session

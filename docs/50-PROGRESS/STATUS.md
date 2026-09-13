@@ -61,6 +61,23 @@ reference targets in several places, which no heading-based check will ever catc
   archaeology removal already touched the text. A deliberate readability pass over the
   documents this session never rewrote — `22-arch-cognition/08`, most of `27` — has
   not been run.
+- **Third sweep, closing the pass.** Grep across `00-project/`, `10-foundations/` and
+  the `20`–`28` band for self-historical framing. Three fixes: `04-execution-cadence.md`
+  explained milestone numbering by confessing a past mistake, now stated as the failure
+  mode it guards against; `22-arch-cognition/02`'s open question said "two of those have
+  moved since this was written", now three bolded current positions; and the same file's
+  *What survives a processor* opened on what the documents above "never said".
+  Verification after: 0 broken links, no duplicate headings, and the only remaining grep
+  hit is the rule text itself quoting the phrasings it forbids.
+- **The fourth fix was mine, and it is the rule's own failure mode.**
+  `02-documentation-philosophy.md`'s **Revision policy** still said changes "should
+  preserve historical rationale where useful" — written before, left standing while I
+  added the no-history rule two sections above it, in the same file, in the same
+  session. A document contradicting itself between line 31 and line 91 is exactly what
+  "a promoted claim triggers a cascading revision" exists to prevent, and the cascade
+  was not walked even one file deep. Recorded as the fifth case in `90-notes/02` F47,
+  which now reads four misses out of five rather than three out of four — and this is
+  the worst of them, since the dependent was not in another document but on the screen.
 
 **3 — inventory. Done.** Twelve rows: nine existing specs, three documents that do not
 exist (`12-knowledge-model`, `13-work-record`, `14-context-manager`). The sharpest
