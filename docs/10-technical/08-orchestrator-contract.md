@@ -83,9 +83,8 @@ its own performance (higher-level evaluation, Milestone 12+).
 - A sequence of **processor invocations** (type 6 effects), each carrying the seven
   things `06-processor-contract.md` binds: a role, an objective the orchestrator
   formulated, a **scope contained in the work item's**, a live-set identity, an
-  isolation preference, a capability set (bounded how — see the contested rule
-  under Authority), and an interaction mode. It does not select context; there is
-  nothing to select.
+  isolation preference, the capability set seed configuration gives that role, and
+  an interaction mode. It does not select context; there is nothing to select.
 
   On isolation it MAY tighten and MUST NOT loosen. Asking for an independent review
   is a legitimate reason to demand more isolation than the reviewer role defaults
@@ -117,13 +116,12 @@ its own performance (higher-level evaluation, Milestone 12+).
   processor to accomplish what it is itself forbidden to do (e.g. instructing an
   implementer solely to edit the invariant list); define its own success metric or
   evaluate its own performance; loop without bound.
-- **Contested, and not to be implemented from either side yet**: whether it may
-  spawn a processor holding an effect grant it does not itself hold. This document
-  stated that as a prohibition, and the role-keyed grant model contradicts it — an
-  orchestrator holding types 6 and 4 could never spawn an implementer holding 1 and
-  2, which is the arrangement the MVP configuration describes.
-  `03-capability-authority-model.md`, Where a spawned instance's set comes from,
-  holds the collision and a candidate resolution.
+- **MAY** spawn a processor holding an effect grant it does not itself hold. That is
+  what delegation is. Its own grants bound what it may **propose**, not what may
+  happen under its mandate, and what bounds delegation instead is the `roles`
+  constraint on its type-6 grant, the scope the child inherits, and the gate every
+  child effect still meets (`03-capability-authority-model.md`, Where a spawned
+  instance's set comes from).
 - **The forbidden-effect rule above is weaker than it reads**, and
   `03-capability-authority-model.md` sets out why: it collapses gate-forbidden
   (already refused at the delegate's own gate), capability-forbidden (which

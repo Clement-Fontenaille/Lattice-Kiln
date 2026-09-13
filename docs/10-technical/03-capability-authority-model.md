@@ -201,33 +201,28 @@ Rules:
   `destination_class`, `max_concurrent`, …) is illustrative for the MVP and is an
   open contract.
 
-### Where a spawned instance's set comes from — an unresolved collision
+### Where a spawned instance's set comes from
 
-Two rules in this set contradict each other, and an implementation cannot satisfy
-both.
+**Delegation is bounded by the `roles` constraint on the type-6 grant, not by a
+subset relation over effect types.** An orchestrator may instantiate the roles its
+own grant names, and each instance then holds what seed configuration gives that
+role.
 
-**This document** says a grant set is keyed to the **role** and read from seed
-configuration. **`08-orchestrator-contract.md`** says the orchestrator "cannot
-grant what it does not hold" and that a spawned processor's capability set is
-bounded by the orchestrator's own.
+The alternative reading — that a spawned processor's set is bounded by the
+caller's own — cannot be held, and the illustrative sets above are why: the
+orchestrator holds types 6 and 4, the implementer it spawns holds 1 and 2, and a
+caller able only to pass down a subset of its own grants could never spawn that
+implementer. Delegating what one cannot do oneself is what an orchestrator is for.
 
-The illustrative sets above break the second rule immediately: the orchestrator
-holds types 6 and 4, the implementer it spawns holds 1 and 2, and an orchestrator
-that could only pass down a subset of its own grants could never spawn an
-implementer at all — which is the entire arrangement.
+What settles it is the distinction that also disposes of the
+forbidden-effect rule below: **"cannot propose" is not "must not happen under my
+mandate."** An orchestrator's empty type-1 grant says something about its own
+hands, not about its remit. Once that is granted, the subset rule has nothing
+underneath it, and the `roles` constraint is the bound that was there all along.
 
-The reading that makes the configuration coherent, stated so that a decision has
-something to accept or reject rather than as a settled position: **delegation is
-bounded by the `roles` constraint on the type-6 grant, not by a subset relation
-over effect types.** An orchestrator may instantiate the roles its own grant
-names, and each instance then holds what seed configuration gives that role. What
-`08`'s rule is reaching for is separately stated there and is the part that
-survives either way — an orchestrator MUST NOT use a processor to accomplish what
-it is itself **forbidden** to do, which is a statement about forbidden effects
-rather than about unheld grants.
-
-Until this is decided, an implementation MUST record which reading it took, because
-the two produce different capability sets for the same configuration.
+What actually bounds delegation, then, is three things and none of them is a
+subset: which roles the type-6 grant names, the scope the child inherits and may
+only narrow, and the gate, which every effect the child proposes still meets.
 
 ### The rule the prohibition was reaching for, and what it can actually check
 

@@ -115,6 +115,13 @@ M4, the orchestrator from M5 on.
 
 *Exercised by: findings 6, 6 addendum, 8.*
 
+**A handoff is one instance passing something it produced to the next one.** Instances
+are disposable and nothing carries over by itself, so when step N+1 needs to know what
+step N found — the test failed, and here is how — that information has to be put
+somewhere the new instance will see it. There are two places it can go, and they are
+not equivalent: **inside the objective text**, or **beside it**, as another block of
+material the model is also shown.
+
 How a prior step's output reaches the next instance is a measured contract rather
 than a style choice, and getting it wrong does not degrade the result gracefully —
 it changes what the instance does. A 7B implementer whose context carried a plan, a
@@ -161,6 +168,41 @@ produced the better version.
 objective.** A premise audit's concerns are advisory and belong in the escalation
 payload, which a human reads (`11-static-workflow.md`). Routing them into an
 implementer instead is exactly case 3 wearing a justification.
+
+### Who composes the objective
+
+The rules above say what may go into an objective and not who assembles it, and an
+objective for a retry is plainly assembled by something. Three sources, with
+different standing.
+
+**Composed mechanically, from a signal.** The workflow concatenates: the task text,
+the check's output, an instruction about the output form. No model is involved in
+the composition. This is what the Milestone 6 arm does and what the evidence above
+covers.
+
+**Written by a model.** A planner producing the next instance's instructions. This
+is measured and it is the harmful case at this model size — injected plans hurt, and
+the failure is the narration one. It is not forbidden in principle; it is
+unsupported by anything, and a build that wants it owes evidence rather than
+argument.
+
+**Not composed at all.** The task text alone. This is the monolith, and it is the
+baseline the other two are measured against rather than a degenerate case.
+
+**Structured audit output may steer the composition; audit prose may not enter it.**
+The distinction is what the output *is*, not where it came from. A premise audit
+emits a classification — an enum — and `11-static-workflow.md` uses it as the concern
+split's firing condition, which is a structured value selecting a branch. The same
+audit's concerns are prose addressed to the operator and stay out of any objective.
+An implementation that lets audit prose reach an implementer because "the audit
+influences later stages anyway" has crossed exactly the line the grades above draw.
+
+**What this does not cover, and it is the next real question.** Decomposition
+produces sub-objectives, and something has to write them. A split that is more than
+splitting on punctuation needs a model to formulate each part, which is case two
+above — the unsupported one. So the rule here does not extend to decomposition, and
+saying it does would be overreach. `00-design/22-arch-cognition/08-decomposition.md`
+has no specification counterpart, and this is one of the things that document owes.
 
 **Scope of the evidence.** This is measured at the 7–8B size this project runs on,
 and policy adequacy is model-dependent
