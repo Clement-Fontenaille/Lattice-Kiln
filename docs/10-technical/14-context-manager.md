@@ -124,9 +124,7 @@ LiveSetEntry := {
   live_set_id,
   claim_ref,              # into 12-knowledge-model
   crossing_type,          # read | generation | retrieval | effect_response
-  origin_invocation_id,   # which instance obtained it
-  origin_task_id,         # under which task that instance ran
-  origin_relation,        # own | inherited  (this task, or an ancestor)
+  origin_invocation_id,   # which instance obtained it -- the only primitive here
   registered_at,          # per-run monotonic sequence, not wall clock
   policy_metadata         # whatever the configured recall policy needs
 }
@@ -157,9 +155,26 @@ Concretely, each field earns its place by a policy that needs it:
 - `origin_invocation_id` — *everything this instance obtained, before anything an
   earlier one did.* Also what an isolation preference is enforced against: a judge
   binding `share_nothing` needs to know which entries carry the reasoning it judges.
-- `origin_relation` — *what this task found, before what it inherited.* An artifact
-  from a parent arrived under a wider scope and is not equally pertinent here.
 - `registered_at` — recency, and the ordered tail of the discussion.
+
+**What a policy needs and this entry does not store.** *What this task found, before
+what it inherited* is a policy worth being able to write, and the fact it branches on
+is **derived rather than stored**: the originating task resolves through
+`origin_invocation_id`, since the kind-1 record carries `work_item_ref`
+(`02-observability-event-model.md`), and own-versus-inherited follows from comparing
+that task against this one.
+
+Storing either would be a denormalisation, justified only by the cost of resolving
+it on every entry on every turn. Nobody has measured that cost, and this project's
+standing position is not to optimise ahead of evidence. So they are derived until
+measurement says otherwise.
+
+**Why inherited is not equally pertinent, stated correctly.** Not because the parent's
+scope was wider — a child narrows or leaves the boundary unchanged, so a parent's
+scope is never narrower and is often identical. The reason is the **objective**: an
+artifact obtained under a parent was fetched in pursuit of what the parent was for,
+and a child exists because that was split or refined into something else. Fetched for
+one purpose is not thereby fetched for another.
 
 **Judgement is available to a mechanical policy, provided it was made elsewhere and
 recorded.** Whether a claim is promoted is a decided fact readable through
@@ -173,7 +188,24 @@ The pipeline is therefore one-way: **something judges, the judgement is recorded
 a fact, the policy reads facts.** Never the policy asking for a judgement.
 
 **The criterion for adding a field**: record a fact when a plausible policy would
-branch on it. Not because it is true, and not because it is cheap.
+branch on it **and nothing else already carries it**. Not because it is true, and not
+because it is cheap.
+
+The second clause does most of the work in a system with several stores. A claim's
+type and whether it is promoted are on the artifact and readable through `claim_ref`.
+The task's scope is on the work item. The originating task is on the invocation
+record. None of them belongs here, and copying any of them creates a second place
+that can go stale.
+
+**Every field here is a proxy for pertinence, and none of them is pertinence.**
+`10-foundations/03` holds that pertinence is a property of a comparison, judged live
+by whoever is asking, and a policy that runs every turn cannot do that. So a policy
+combines proxies — how the artifact was obtained, how recently, under which objective,
+whether someone judged it worth keeping — and is better or worse according to how well
+that combination predicts what would actually have helped.
+
+That is what makes the policy's content an experimental surface rather than an
+unfinished specification. The search is for which proxies, combined how.
 
 - **A live set belongs to a task, not to an instance.** Every artifact that crosses
   while work proceeds on a task attaches to that task's live set, including a
