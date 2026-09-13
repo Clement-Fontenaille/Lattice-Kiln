@@ -187,7 +187,48 @@ Using this store as the main home for crossings does **not** make the default
 arrives, which avoids copying it out of a conversation later; it is not a decision
 that the artifact is worth keeping.
 
-The precondition is **reachability**:
+### The root set, and what promotion is
+
+Reachability is computed from a **root set with exactly two sources**.
+
+- **Promoted artifacts.** **Promotion is inscription in the root set** — that is what
+  the word means here, and it is deliberately an *act* rather than a property derived
+  from a claim's type. Nothing is promoted by being a Finding rather than an
+  Observation; something is promoted when something promotes it.
+- **The live set.** Everything `14-context-manager.md` currently holds is a root for
+  as long as it holds it. Being in front of the model is a reason to keep a claim
+  that needs no further justification, and it expires on its own.
+
+An entry is kept when a root reaches it by following provenance links. The rest of
+this section is the consequence.
+
+### Removal is incremental, and there is no sweep
+
+A periodic sweep over the whole graph is **not needed**, and specifying one would
+add a mechanism the information does not require.
+
+The reason is that reachability only ever changes at moments the system already
+knows about. A root enters the set when something is promoted or registers as live.
+A root leaves it when an item **leaves the live set**, and at that moment the system
+holds the departing item's identity — it does not have to go looking for what
+changed.
+
+So removal runs there:
+
+- When an item leaves the live set, it loses its root status. If it is not also
+  promoted, it is a deletion candidate.
+- From it, walk **up** its provenance edges. Each ancestor is deleted if it is not
+  promoted **and** no remaining path from any root still reaches it.
+- That second condition is what the child index exists for. An ancestor may be
+  reachable through a different descendant that is still live or promoted, and
+  deleting it on the strength of one departing child would be the reachable-root
+  failure below, arrived at by arithmetic instead of by carelessness.
+
+This trades one large occasional cost for many small ones, and it removes the
+question of when a sweep runs by removing the sweep. It is also what makes the
+naive filesystem shape viable for longer: nothing walks the whole graph.
+
+**Precondition: eliding a reachable root is still refused.**
 
 - An entry that a promoted claim cites is one of that claim's roots.
   `10-foundations/03` makes raw roots the condition on which every souvenir above
@@ -204,26 +245,21 @@ The precondition is **reachability**:
   `10-foundations/03`'s three weighing dimensions by that document's own account.
   Leave it parametric; do not invent one here.
 
-The naive sweep walks the whole graph from a promoted-claim root set. That is
-acceptable until it is not: no index, no incremental reachability, no cached
-dependent set, until measurement shows the walk is the actual bottleneck.
+**Two stores hold references here and are not roots**, and the difference from the
+live set is the point. `13-work-record.md`'s attachment edges and
+`02-observability-event-model.md`'s copies both point into this store, and neither
+keeps a claim alive.
 
-**The root set is under-specified, and this is the most consequential unknown in
-the document.** "Promoted claims" is what the rule names, and **three other stores
-hold references into this one**: `13-work-record.md`'s attachment edges,
-`14-context-manager.md`'s live set, and `02-observability-event-model.md`. None of
-the three is currently named as a reachability root.
+For observability that is deliberate and already argued: it keeps its own copy
+precisely so that what is removed here remains reconstructable there. A swept entry
+stops being something the system knows and stays something an auditor can find.
 
-Read literally, that has a consequence nobody wants: a Finding attached to a work
-item and cited by no other claim is not reachable, so the sweep removes it and
-leaves the work record holding a **dangling reference**. An implementation MUST NOT
-sweep on that reading. What the root set actually includes is an open contract
-below, and until it is closed, an implementation MUST treat a reference held by any
-other store as protective.
-
-**Nothing triggers the sweep either.** Per turn, at an instance's end, on a size
-threshold, on demand — the document says the sweep is the default path and never
-says when the default runs. Also open below.
+For the **work record** it is a hazard rather than a decision. A Finding attached to
+a work item, not promoted and no longer live, is deleted, and the attachment is left
+pointing at nothing. Two ways out and neither is chosen here: attaching a claim to a
+work item **is** a promotion, or an attachment is expected to dangle and
+`13-work-record.md` must detect that rather than return it silently. Open contract
+below, and `13`'s own failure modes carry the other half.
 
 ## General shape and the naive default
 
@@ -320,16 +356,18 @@ by hand.
 
 ## Open contracts
 
-- **What the reachability root set contains.** Stated as "promoted claims" while
-  three other stores hold references here. Candidates for inclusion: a work-item
-  attachment, a live-set entry, an operator-marked claim. Whichever way it goes, the
-  answer decides what the sweep removes, which makes it the retention rule itself
-  rather than a detail of it. Surfaced by `15-information-trajectories.md`.
-- **What "promoted" means.** It carries the root set and therefore the whole
-  retention rule, and no document in this set defines it. Candidates: any claim
-  above Observation, any claim a type-5 proposal realized, any claim something else
-  cites. They are not the same set.
-- **When the sweep runs.** No trigger is specified anywhere.
+- **Whether a work-item attachment promotes.** The root set is promoted artifacts
+  plus the live set, and an attachment is neither, so a Finding attached to a task
+  and no longer live is deleted underneath it. Either attaching promotes, or
+  attachments are expected to dangle and `13-work-record.md` detects it. Both are
+  cheap; they are not the same behaviour, and nothing yet picks.
+- **Who promotes, and on what.** Promotion is an act rather than a property, which
+  leaves open which actors hold it and what they weigh. The natural reading is a
+  thinking processor at the moment it proposes a claim worth keeping, but a claim
+  can also deserve promotion long after it was written.
+- **Cost of the incremental walk.** Removal now runs on every departure from the
+  live set rather than occasionally over everything. That is the right trade at this
+  size and nobody has measured where it stops being one.
 - **How scope is inscribed.** Blocks the record format rather than following from
   it. `10-foundations/03` requires it assessed near creation because no later
   reader recovers it; what actually goes in the field is unanswered.

@@ -204,6 +204,35 @@ is not. What that costs is a default rather than a mechanism: a scope permitting
 its own modification is excluded unless explicitly granted
 (`03-capability-authority-model.md`).
 
+## Creating a task, and where decomposition lives
+
+**Any processor holding the work-record-mutation grant may create a task from the
+one it is working under.** Decomposition needs no mechanism of its own: it is task
+creation, effect type 4, gated and recorded like any other
+(`03-capability-authority-model.md`).
+
+Which actor actually holds that grant is **configuration, not architecture**. An
+orchestrator is the obvious candidate; a planner, a reviewer or a judge are equally
+admissible, and different system arrangements may assign it differently. That is the
+same reason operational constraint is expressed over effects rather than over roles
+(`01-effect-vocabulary.md`): the role vocabulary is open, so nothing normative may
+be keyed to it.
+
+**Creating a task triggers a call to the invariant processor, which writes the new
+task's ceiling.** This is what gives every task a scope by construction. There is no
+separate moment at which a ceiling gets derived and no path by which a task comes
+into existence without one — a task that exists was created, and creation derives.
+
+Two consequences worth stating.
+
+**The child's ceiling is still bounded by the parent's**, so deriving at creation is
+not a way to obtain a wider mandate. The derivation runs under containment, below.
+
+**What remains hard about decomposition is not the creating.** It is writing the
+sub-objectives: each part needs a formulation, and a model writes it, which is the
+one composition case `06-processor-contract.md`'s handoff rule explicitly does not
+support. Splitting a task is cheap; saying what each part is for is not.
+
 ## Containment on split and refine
 
 Two constraints belong to this store because they are about the **shape of the

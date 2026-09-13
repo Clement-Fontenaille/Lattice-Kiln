@@ -679,3 +679,66 @@ decorative.
 **Would graduate to** `22-arch-cognition/` as a role, if the distinct-role question
 resolves that way; otherwise to `04-praxis.md` and the standing position as a
 documented design principle about how this project's own understanding is produced.
+
+---
+
+## I14 — Fine-tune the resident model on the framework's own mode of operation
+
+**Provenance.** Operator, 2026-09-13, while settling the scope check's disposition
+and the handoff rules. Unvetted; recorded as raised.
+
+**The idea.** The specification set is accumulating a **mode of operation** that a
+model has to understand in order to work inside it: what a scope is and that work
+must stay inside one, what a declined task means as distinct from a blocked one,
+that a proposed effect may be refused and what the refusal categories mean, that a
+handoff arrives inside the objective, that an escalation is a question rather than a
+report. None of that is knowledge about programming. It is knowledge about *this
+framework*, and every instance currently has to be taught it through role
+instructions, on every invocation, out of a context budget that is already the
+binding constraint.
+
+A fine-tuning pass would move that from the prompt into the weights.
+
+**Why it might matter.** Three attachment points, and the third is the one that
+makes it more than an optimisation.
+
+- **Context budget.** `10-foundations/04` holds that what makes context costly is
+  redundancy rather than volume, and framework instructions repeated on every
+  invocation are the purest redundancy in the system. They are identical every time
+  and they are never what the task is about.
+- **Compliance.** Several measured failures are compliance failures rather than
+  capability failures: the implementer that narrates instead of writing, the planner
+  that returns `blocked` for "not built yet", the reviewer that rubber-stamps. The
+  M5 follow-up found no reviewer *framing* beat an approval bias — which is evidence
+  that prompting had run out, not that the model could not do it.
+- **It is the project's own recursion.** `27-arch-adaptation-and-evolution` treats
+  role definitions and policies as tunable configuration a generation carries. A
+  fine-tune is the same move one level down: the framework's conventions become part
+  of what a generation *is*, rather than something every instance is told.
+
+**Open before it is worth committing.**
+
+- **What the training data is.** The obvious source is the project's own recorded
+  runs, which observability already keeps in full. That makes the corpus a system
+  output, with everything `23-arch-context-management/02` says about comparing
+  within a lineage rather than across.
+- **Whether it can be evaluated at all.** A fine-tuned model is a different arm, and
+  `10-evaluation-task-suite.md` compares arms per scenario on a fixed suite. But a
+  model trained on this project's runs and evaluated on this project's suite is
+  close to training on the test set, and nothing here says how far apart they need
+  to be.
+- **What it costs to redo.** Every change to the framework's conventions would
+  invalidate part of the tuning. That argues for doing it once the specification set
+  is stable rather than while it moves — which is an argument about *when*, and the
+  set has been moving all session.
+- **Whether it competes with a larger model.** The standing external dependency is a
+  second, stronger judgment source. Tuning a 7B and acquiring a stronger model are
+  two answers to overlapping problems, and nothing compares them.
+- **What it forecloses.** Weights are harder to inspect and revise than a prompt. A
+  convention in role instructions can be read, argued with and changed in one edit;
+  the same convention in weights cannot, which sits awkwardly beside the project's
+  insistence that its positions stay contestable.
+
+**Would graduate to** `27-arch-adaptation-and-evolution/` as a generation-level
+capability, and to the research agenda as an experiment, if the evaluation question
+above finds an answer that is not circular.

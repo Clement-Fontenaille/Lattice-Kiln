@@ -45,39 +45,35 @@ records that its workflow runs unscoped. What follows fixes the shape so that a
 build has something to conform to, and marks every point where the design set
 deliberately left the content open.
 
-### What a build of the mandate half needs decided first
+### What a build of the mandate half still needs
 
-The shape below is complete enough to conform to and **not complete enough to
-build from**, and the difference is worth stating precisely rather than leaving an
-implementer to discover it. Three decisions are structural — each one changes what
-software gets written, not merely how it behaves.
+Most of what used to block a build is now decided. The check sits **on the effect
+path**, synchronously, before every tool call. Its verdicts are `inside`, `outside`
+and `dubious`, and each has a defined consequence. Its four inputs are fixed. A
+task's ceiling is written at task creation and an invocation's scope by the
+processor issuing the invocation. A derived scope reaches the operator inside the
+instructions.
 
-1. **The disposition on `outside`** decides where the call site goes. *Halt* puts
-   the check on the effect path, synchronously, with a model call in it. *Escalate*
-   needs an operator channel and a suspended work item. *Record-and-continue* makes
-   it a post-hoc reporter that can run as a separate job against the record. Those
-   are three different pieces of software, and the open contract below leaves the
-   choice open.
-2. **What the comparison consumes** decides whether the checker needs the
-   observability store, the workspace, or a prepared summary — and therefore
-   whether it is a processor with a live set at all, or a function called with its
-   inputs.
-3. **The containment check on a transition** is a natural-language judgment that
-   `13-work-record.md` makes a precondition of accepting a split or a refinement.
-   Read literally, that puts a model call inside the work store's write path, which
-   has latency and availability consequences nothing has accepted.
+Three things remain, and they are smaller than what they replaced.
 
-Below those, four smaller gaps that each stop a specific line from being
-implementable: no assigner for the reversibility class the pre-effect check keys
-on; no definition of which transitions count as *termination*; no consumer for the
-`undecidable` verdict; and no checkable form for the self-modifying-scope
-exclusion. All four are recorded as open contracts.
+1. **Where the containment check on a transition sits.** Deciding whether a child
+   task's boundary is inside its parent's is a natural-language judgment, and
+   `13-work-record.md` makes a passing check a precondition of accepting a split or
+   a refinement. Read literally, that puts a model call inside the work store's
+   write path. Either it belongs there, or containment is checked before the
+   transition is proposed and the store trusts a verdict it is handed.
+2. **What counts as termination**, for the aggregate check. `13-work-record.md`
+   names seven transitions and does not say which end a task, so it is unclear
+   whether the end-of-task comparison runs on *abandoned* and *deferred*.
+3. **How the self-modifying-scope exclusion is checked.** "A scope permitting its
+   own modification is excluded by default" reads mechanical and is not: whether a
+   natural-language boundary permits modifying itself is the same judgment as the
+   rest of the check.
 
-What **is** buildable now, and is worth building before any of the above is
-settled: the three scope fields and their states on the work item, the recording
-and visibility of a derivation, and the fail-closed behaviour on an unscoped item.
-Those need no judgment and no model, and the last of them is the single change
-that would move the system from *unbounded* to *stopped*.
+What is buildable now without any of those settled: the three scope fields on the
+work item, the ceiling derived at task creation, the scope carried into the
+instructions, and the fail-closed behaviour on an unscoped item. The last of these
+is the single change that moves the system from *unbounded* to *stopped*.
 
 ## Responsibility
 
@@ -162,7 +158,7 @@ For a mandate-conformance decision:
   proposed-effect disposition** (`02-observability-event-model.md`), never as a
   safety intervention — a capability rejection is ordinary policy, not a gate
   trip.
-- A **conformance verdict**: `within`, `outside`, or `undecidable`, each carrying
+- A **conformance verdict**: `inside`, `outside`, or `dubious`, each carrying
   natural-language reasoning. The verdict MUST be recorded whatever it says.
   `within` is not a null result — its absence and its presence must be
   distinguishable, since a check that did not run and a check that passed look
@@ -370,9 +366,33 @@ required; it puts all of it in one check instead of leaving a path around it.
 | Party | May | Why |
 |---|---|---|
 | The operator | Anything, without bound | Scope descends from intent, and intent is amended out of band |
-| An **invariant processor**, deriving from intent | Write the ceiling | Assigning this to the orchestrator is circular — the actor bounded by the intent's scope would be the one writing it |
-| The orchestrator | Narrow only | It formulates work items under a ceiling set above it. Narrowing is safe unprotected: it makes the check stricter, and declining to narrow leaves the inherited boundary standing |
+| An **invariant processor**, deriving from intent | Write a task's ceiling | Assigning this to the orchestrator is circular — the actor bounded by the intent's scope would be the one writing it |
+| The processor that issues an invocation — normally the orchestrator | Write that **invocation's** scope, inside the task's | Narrowing is safe unprotected: it makes the check stricter, and declining to narrow leaves the inherited boundary standing |
 | Anything working *under* a task | Nothing | Including the scope check, which is **read-only** on the scope: it compares and reports, never rewrites |
+
+**Two writes, two triggers, and both are now fixed.**
+
+**A task's scope is written when the task is created**, by a call to the invariant
+processor. Task creation is the trigger, which means every task has a ceiling by
+construction — including tasks created part-way through work, since creating one is
+an ordinary type-4 mutation available to any processor holding it (`13-work-record.md`).
+There is no separate moment at which a root item's ceiling gets derived and no risk
+of one being missed, because a task that exists was created.
+
+**An invocation's scope is written by the processor issuing the invocation.** It
+narrows within the task's ceiling and cannot reach past it.
+
+### How a derived scope reaches the operator
+
+**It is included in the instructions.** No separate channel is built, and none is
+needed: the scope travels in the instructions bound at instantiation, and those are
+recorded verbatim in the kind-1 invocation record
+(`02-observability-event-model.md`), where the operator reads them alongside
+everything else about the invocation.
+
+What this buys is that visibility costs nothing and cannot be forgotten. A boundary
+that only existed in a checker's memory would need someone to decide to surface it;
+a boundary written into the instructions is in front of whoever reads them.
 
 The general form, because it generalizes past scope: **a scope may be derived for
 work one is not doing, and may not be widened for work one is doing.** The
@@ -411,10 +431,64 @@ distinguishing an operator amendment from a system widening *at the moment of
 application* would put a judgment inside the path rather than at its edges. It is
 affordable because processors are ephemeral and re-instantiation is cheap.
 
+### What the checker sees, and what it decides
+
+Four inputs, and they are the whole of what a scope check consumes:
+
+- the **operator's request**, as written;
+- the **derived scope ceiling** for the task;
+- the **invocation's scope**, which sits inside that ceiling;
+- the **tool call itself, before it is executed**.
+
+It returns one of three verdicts:
+
+- `inside` — the call sits within the mandate.
+- `outside` — it does not.
+- `dubious` — the reading is genuinely ambiguous, and the checker declines to
+  decide rather than deciding badly.
+
+`dubious` is not a failure to reach a verdict. It is the verdict that corresponds to
+the second of `10-foundations/07`'s two modes: ask what only the operator can
+answer. A checker that never returns it has stopped exercising half its contract.
+
+### The disposition
+
+**The check sits on the effect path**, synchronously, before the call is executed.
+This is expensive and is accepted as such for now; optimisation comes later and is
+not a reason to move the check off the path.
+
+- `inside` — the call proceeds.
+- `outside` — the call is **rejected, with a motivating message**, and the task
+  **may loop**. Rejection ends the call, not the work.
+- `dubious` — the call is held and the **operator is asked to make the intention
+  precise**. What comes back is an amendment to intent, which is an out-of-band act
+  (`13-work-record.md`).
+
+**A scope rejection is not a gate refusal, and conflating them is a defect.** A gate
+refusal says *never*, carries `retry_eligible: false`, and a consumer that retries a
+rephrased proposal past it is defective
+(`02-observability-event-model.md`). A scope rejection says *not this, under this
+mandate* — and there may be a perfectly good in-scope action the task should take
+instead. So looping after a scope rejection is the expected behaviour rather than
+boundary probing, and the record MUST keep the two categories apart.
+
 ### Where the check runs
 
 The check divides on reversibility, and the two halves sit at opposite ends of a
 task.
+
+**Reversibility is not yet defined, so the placeholder is that every tool call is
+irreversible.** Nothing in the set assigns a reversibility class, and rather than
+leave half the check with an undefined predicate, the conservative reading holds:
+**every** tool call gets the pre-effect check. A call that is genuinely reversible
+could be analysed after the fact, and that becomes available when the distinction
+does.
+
+The aggregate half is **not** removed by this, and that is worth stating because it
+looks redundant once everything is checked before the fact. Per-effect checking
+cannot see drift by construction: each of forty file edits can be inside the mandate
+while the forty together are outside it. The end-of-task comparison is the only
+thing that looks at the set rather than the members.
 
 **Reversible changes are audited at the end**, once, as an accumulated set against
 the declaration. This is the only point at which drift is visible *as* drift
@@ -430,10 +504,10 @@ on the same point in the loop.
 
 So, normatively:
 
-- An implementation MUST run the aggregate check once per work item at
-  termination, and MUST run the per-effect check before realizing any effect
-  classed irreversible.
-- It MUST NOT run the aggregate check per effect. That is the difference between
+- An implementation MUST run the **pre-effect check before every tool call**, under
+  the placeholder above, and MUST run the **aggregate check once per work item at
+  termination**.
+- It MUST NOT run the *aggregate* check per effect. That is the difference between
   one judgment per task and one per effect, which is the difference between a
   check worth running and one nobody will.
 - The check **fails closed on an unscoped item**. Work stops. Nothing separate has
@@ -573,48 +647,21 @@ is.
 
 ## Open contracts
 
-- **What happens when conformance fails.** `10-foundations/07` says the
-  requirement "cannot be enforced by deterministic refusal alone", which rules out
-  treating it like the gate, and leaves what it *is* treated like unanswered. The
-  direction condition narrows the space usefully: an invariant processor may only
-  restrict, so the available dispositions are halt, escalate to the operator, or
-  record-and-continue. Which one, and whether it differs between the aggregate and
-  pre-effect halves, is not decided — and it decides the call site, per What a
-  build needs decided first.
-- **How a scope is expressed and compared.** Free text is what the design set
-  fixes; what the comparison actually consumes — the raw change set, a summary of
-  it, a diff — is not. This is the single largest unknown in the mandate half.
 - **What invokes the containment check, and where it sits.** `13-work-record.md`
   makes a passing containment check a precondition of accepting a split or a
   refinement, and the check is a natural-language judgment. So either a model call
   sits inside the work store's write path, or containment is checked before the
   transition is proposed and the store trusts a verdict it is handed, or transitions
   are accepted provisionally and reconciled. None of the three is argued.
-- **Who assigns a reversibility class, and when.** The pre-effect check is
-  normatively required "before realizing any effect classed irreversible", and
-  nothing assigns that class — `01-effect-vocabulary.md` holds the question open,
-  and `10-foundations/02` argues the proposing side without naming a carrier. As
-  written, half this check has a predicate that does not exist.
 - **What counts as termination.** The aggregate check runs "once per work item at
   termination". `13-work-record.md` names seven transitions and does not say which
   are terminal. Whether the check runs on *abandoned* and *deferred*, and whether a
   work item refined after execution is re-checked, is undefined.
-- **What `undecidable` means operationally.** It is a permitted verdict with no
-  stated consequence. Whether it is treated as `outside`, as a request to escalate,
-  or as a distinct state the work item can sit in, is not decided.
 - **How the self-modifying-scope exclusion is checked.** "A scope permitting its
   own modification MUST be excluded unless explicitly granted" reads like a
   mechanical default and is not one: whether a natural-language boundary permits
   modifying itself is the same judgment the rest of the check makes. Either it is
   a flag alongside the boundary, or it is another question put to the checker.
-- **What triggers deriving a root item's ceiling.** The runtime holds hardcoded
-  invariant-layer call sites and makes the invariant calls at each of them. Deriving
-  a ceiling from intent is not one of them, so the first step of the whole mandate
-  chain has no trigger. Surfaced by `15-information-trajectories.md`.
-- **Through what channel a derived scope reaches the operator.** Recording it with
-  its derivation is normative, and it is being *visible* that makes it contestable
-  rather than ratified. `08-orchestrator-contract.md`'s two-mode handoff is the
-  orchestrator's, and the orchestrator is not who derived this.
 - **What isolating the checker costs.** How it is invoked is settled, that it binds
   `share_nothing` is settled, and the substrate's ability to isolate is a
   deployment precondition rather than a runtime negotiation
@@ -623,6 +670,22 @@ is.
   not it is busy, and nobody has measured how the envelope divides on the reference
   host. That figure decides whether the precondition is met at all, since two
   contexts each too small to work in does not satisfy it.
+- **Reversibility, and what it would buy.** The placeholder is that every tool call
+  is irreversible, so every one gets the pre-effect check. Defining the distinction
+  would let genuinely reversible calls be analysed after the fact instead, which is
+  the difference between a check in the path of every action and a check in the path
+  of the ones that cannot be undone. `01-effect-vocabulary.md` holds the question of
+  who assigns the class; this document holds what the answer would change.
+- **What the comparison consumes, concretely.** The four inputs are fixed — the
+  request, the ceiling, the invocation's scope, the call. What is not fixed is their
+  *form*: the call as a raw payload or as a description, the scope as text the model
+  reads or as something pre-digested. This is now a question about encoding rather
+  than about architecture.
+- **The cost of checking on the effect path.** Every tool call now waits on a model
+  call. That is accepted deliberately and it is the obvious thing to optimise once
+  something works — by caching verdicts for repeated calls, by a cheap
+  deterministic pre-filter, or by the reversibility distinction above. None of these
+  is designed.
 - **The doubt threshold for asking.** What counts as enough ambiguity to set a
   scope `pending` rather than deriving. Unset, with a known bias toward
   under-detection.

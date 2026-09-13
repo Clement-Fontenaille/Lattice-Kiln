@@ -109,9 +109,18 @@ number is tuning.
 - **R3 — Run bound.** A single run may realize at most **N** effects or run at
   most **T** minutes of wall-clock before it MUST stop for human review. Guards
   runaway loops. `N` and `T` are provisional.
-- **R4 — Context ceiling.** An operation that would compose a turn input whose KV
-  footprint exceeds the resident envelope of the reference host is refused.
-  Match rule: `kv_footprint_exceeds_envelope`.
+- **R4 — Context ceiling.** Two limits rather than one, because the serving
+  arrangement holds several independent contexts at once
+  (`14-context-manager.md`).
+  - **A per-context limit.** No single turn input may exceed what one context may
+    hold. Match rule: `kv_footprint_exceeds_context_limit`.
+  - **A global limit.** The sum across all resident contexts may not exceed what
+    the host holds. Match rule: `kv_footprint_exceeds_global_limit`.
+
+  Both are needed and neither implies the other. A single oversized turn input trips
+  the first while the machine has room; several individually-reasonable contexts trip
+  the second while each looks fine on its own. An implementation checking only one of
+  them has a hole in the direction it did not check.
 
   This ceiling is **physical, not cognitive**, and the distinction decides whether
   it belongs here at all. What an assembly can correctly *integrate* is a property
@@ -249,10 +258,17 @@ the human in the loop for everything it does not yet name.
   variable). R4 shares R1's envelope problem and adds one of its own: the KV
   footprint of a composed turn input has to be estimable *before* the turn is
   composed for the ceiling to refuse rather than to report a crash.
-- **G4's isolation precondition has never been measured.** How the resident
-  envelope divides across independent contexts on the reference host, and whether
-  two of them are each still large enough to work in. Cheap, M0-shaped, and it
-  decides whether a scope check is providable at all rather than merely unbuilt.
+- **Both R4 numbers, and where they come from.** The per-context and global limits
+  are a **cost model to build rather than a figure to look up**, and the model is
+  expected to change as the arrangement's capabilities are better understood. The
+  v0 stands in for it: **a naive calibration test, triggered automatically the
+  first time an unknown model is invoked.** Measure, record against the model
+  identity, use that until something better exists. This keeps the ceiling
+  enforceable on day one without pretending the number is principled.
+- **G4's isolation precondition has never been measured.** Whether two contexts can
+  each be large enough to work in, under the two limits above. Cheap, and it decides
+  whether a scope check is providable at all rather than merely unbuilt. Answered by
+  the same calibration.
 - **G4's owner.** No milestone builds the scope check. It is specified in
   `03-capability-authority-model.md` and unimplemented, which leaves the list
   carrying a goal the running system does not meet — stated deliberately, but not

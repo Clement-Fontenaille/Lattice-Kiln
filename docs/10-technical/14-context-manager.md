@@ -213,14 +213,32 @@ against it.)*
 - **Reuse with gaps.** Some builds can reuse a cached prefix across a removed
   chunk rather than requiring a strict common prefix.
 
-Two numbers decide what a policy can sensibly do with these, and **neither is
-measured**. How the usable envelope actually divides at each N on the reference
-host. And what restoring a saved slot costs against simply recomputing the prefix —
-restoring is bounded by disk throughput and linear in KV bytes, which run orders of
-magnitude above the text, while recomputing is a prefill pass bounded by compute.
-Both are plausible winners, and that comparison is what decides whether the
-disk-for-memory trade is worth anything here. This is an M0-shaped question and
-should be answered the way M0 was: measured, not reasoned about.
+#### Two limits, and a cost model nobody has
+
+Capacity is bounded in **two** ways, and a policy has to respect both:
+
+- a **per-context limit** on any single context;
+- a **global limit** on all resident contexts together.
+
+They are independent. One oversized turn input trips the first while the machine has
+room; several individually-reasonable contexts trip the second while each looks fine
+alone. `05-provisional-invariant-list.md` R4 carries both as clauses.
+
+What neither has is a **number**, and getting one is a cost model to build rather
+than a figure to look up. KV footprint depends on the model, the quantisation, the
+arrangement and how much of this the build understands, and that understanding is
+expected to improve. The v0 stands in for the model rather than guessing it:
+
+**A naive calibration test, triggered automatically the first time an unknown model
+is invoked.** Measure what one context costs, record it against the model identity,
+and use that until something better exists. The ceiling is enforceable on day one
+and nobody has to pretend the number is principled.
+
+One further comparison is unmeasured and matters for the disk-for-memory trade:
+restoring a saved context from disk against simply recomputing its prefix. Restoring
+is bounded by disk throughput and linear in KV bytes, which run orders of magnitude
+above the text; recomputing is a prefill pass bounded by compute. Both are plausible
+winners.
 
 #### The isolation preference
 
@@ -418,14 +436,11 @@ is a change `02-observability-event-model.md` owes.
   unretrieved claim are both enumerable as crossings not yet taken. Whether the
   same holds for the model's own possible output is unsettled
   (`10-foundations/04`).
-- **How many prefixes can be resident.** See One prefix or several, above. Blocks
-  the shape of the policy interface, and is a host measurement rather than a design
-  question. The judge case makes it concrete rather than hypothetical.
-- **KV footprint estimation.** `05-provisional-invariant-list.md` R4 refuses a turn
-  input exceeding the resident envelope, which requires estimating its footprint
-  **before** composing it. Nothing here supplies that estimate. If several prefixes
-  can be resident, R4's envelope is divided among them and the estimate has to
-  account for the division, not only for this turn input.
+- **The KV cost model.** First-call calibration is the v0 and is deliberately
+  crude: one measurement per model identity, no account of how footprint scales with
+  context length, quantisation, or the arrangement's own overhead. What replaces it
+  has to predict a turn input's cost **before** the turn is composed, or R4 reports a
+  crash instead of refusing.
 - **What ends a live set.** It is described here as an index over a run, while
   `live_set_id` binds per instance (`06-processor-contract.md`). Whether an
   instance's live set ends when the instance does, and what becomes of its entries

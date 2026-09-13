@@ -48,13 +48,13 @@ The commonest path in the system, and the one most of what crosses actually take
 | 9 | **Recalled** into turn inputs while the policy selects it. Each appearance is a kind-5 record carrying its crossing type | `14`, `02` |
 | 10 | Not recalled after a cache reset. It **leaves the live set** — which is not monotonic | `14` |
 | 11 | Nothing proposed it as evidence and no claim cites it, so it is **not reachable** from any promoted claim | `12`, Elide |
-| 12 | The sweep elides it from the knowledge model | `12` |
+| 12 | **Leaving the live set is itself the trigger**: it loses root status, and since nothing promoted it, it is deleted along with any ancestor no remaining root still reaches | `12` |
 | 13 | It remains reconstructable in observability, and nowhere else | `02` |
 
-**Where the walk stops.** Step 12 has no trigger. Nothing in the set says **when
-the sweep runs** — per turn, at an instance's end, on a size threshold, never until
-something asks. Step 10 has no terminator either: an instance ends, and whether its
-live set ends with it is unstated.
+**Where the walk stops.** Step 10 has no terminator. An instance ends, and whether
+its live set ends with it is unstated — which now matters more than it did, because
+step 12 hangs off step 10. Removal is triggered by leaving the live set, so an
+undefined end to a live set is an undefined trigger for deletion.
 
 ## Trajectory B — a test failure that becomes a finding
 
@@ -73,7 +73,7 @@ The promotion path. Rare by design: most of what crosses takes trajectory A.
 | 9 | Recorded as a kind-6 knowledge-state transition: claim, kind of change, grounds, as fields | `02` |
 | 10 | Attached to a work item — a reference plus edge metadata, itself a type-4 mutation | `13` |
 | 11 | Once its validity has been checked, its working is **compressed to a souvenir**; the Observation from step 5 is a root and stays raw | `12`, Compress |
-| 12 | The Observation is now reachable, so the sweep MUST refuse to elide it | `12`, Elide |
+| 12 | The Observation is reachable from a promoted claim, so deletion MUST refuse it when the live set drops it | `12`, Elide |
 | 13 | It persists — for how long, and until what, is not stated | — |
 
 **Where the walk stops.** Step 11 has no scheduler: nothing says when validity is
@@ -89,10 +89,10 @@ The mandate path. Nothing on it is built.
 | # | Step | Owner |
 |---|---|---|
 | 1 | Intent arrives from outside, written once, never rewritten by the system | `13`, Intent |
-| 2 | An **invariant processor** derives the ceiling from intent | `03`, Who may write a scope |
+| 2 | The task is created, which **calls the invariant processor** to derive its ceiling from intent. Creation is the trigger, so every task has a ceiling | `03`, `13` |
 | 3 | Recorded on the work item as three fields: boundary, derivation, state `derived` | `13` |
-| 4 | Made visible to the operator, so a wrong derivation is contested rather than ratified | `03` |
-| 5 | The orchestrator formulates a child item and **narrows**; containment is checked; the transition is logged | `03`, `13` |
+| 4 | **Carried into the instructions**, which is how the operator sees it. No separate channel, and the kind-1 record holds it verbatim | `03`, `02` |
+| 5 | The processor issuing an invocation writes that invocation's scope, **narrowing** within the task's ceiling; containment is checked | `03`, `13` |
 | 6 | Bound at instantiation into an instance, and **static for its life** | `06` |
 | 7 | Recorded verbatim in the kind-1 invocation record, **as bound** — because the item's scope may move underneath it | `02` |
 | 8 | The instance ends. The bound scope ends with it; only the kind-1 record survives | `06`, `02` |
@@ -101,10 +101,14 @@ The mandate path. Nothing on it is built.
 | 11 | The item reaches a terminal transition. Its scope's lifetime is its item's | `13` |
 | 12 | Whether a terminal item is retained or removed is open | `13`, open contract |
 
-**Where the walk stops.** Step 2 has no trigger — the runtime holds hardcoded
-invariant-layer call sites, and none of them is named as "derive a root item's
-ceiling". Step 4 has no channel: `08`'s two-mode handoff belongs to the
-orchestrator, and the orchestrator is not who derived this.
+**Where the walk stops.** It no longer stops on the way down — steps 2 and 4 both
+had holes and both are filled. It stops at the end: step 12, whether a terminal work
+item is retained or removed, which decides how long a scope outlives the work it
+bounded.
+
+One step is worth reading twice. Step 8 and step 9 are what make the chain honest: an
+instance's scope dies with the instance while the item's scope can move afterwards,
+so an instance that wants more mandate has to stop and be replaced rather than grow.
 
 ## Trajectory D — an effect that is refused
 
@@ -133,31 +137,45 @@ express.
 
 ## What the tracing found
 
-Seven gaps, none of which is visible from inside the document that owns the step.
-They are listed here and belong in those documents; this one does not fix them.
+Seven gaps, none visible from inside the document that owns the step. **Five are now
+answered and one was fixed outright**, which is what the exercise was for. What
+follows is the current state rather than the original list.
 
-1. **The sweep has no trigger** (`12`). Per turn, at an instance's end, on a size
-   threshold, on demand — nothing chooses. Trajectory A cannot be completed without
-   one, and A is the path most information takes.
-2. **Nothing says what ends a live set** (`14`). It is described as an index over a
-   run while `live_set_id` binds per instance. Whether an instance's live set dies
-   with it, and what happens to its entries if it does, is unstated.
-3. **The sweep's root set names only promoted claims** (`12`), while **three stores
-   hold references into the claim store**: the work record's attachment edges, the
-   live set, and observability. None of the three is named as a reachability root.
-   Taken literally, a finding attached to a work item and cited by nothing else is
-   swept, leaving the work record holding a dangling reference — and `13`'s failure
-   modes do not list that one. This is the sharpest of the seven.
-4. **"Promoted" is undefined** (`12`). It carries the root set and therefore the
-   whole retention rule, and no document says what promotes a claim.
-5. **No disposition for a non-representable operation** (`02`). The earliest
-   rejection in the pipeline is the one kind 4 cannot express.
-6. **Nothing triggers deriving a root item's ceiling** (`03`). The runtime holds
-   hardcoded invariant-layer call sites; this is not one of them.
-7. **No channel shows a derived scope to the operator** (`03`). Recording it with
-   its derivation is normative, and being *visible* is what makes it contestable —
-   but `08`'s two-mode handoff belongs to the orchestrator, which is not who derived
-   it.
+**Answered.**
+
+1. **The root set** is promoted artifacts plus the live set, and **promotion is
+   inscription in that set** — an act, not a property a claim type confers. That
+   settles what had been two separate gaps.
+2. **There is no sweep to trigger.** Reachability only changes at moments the system
+   already knows about, so removal runs incrementally when an item leaves the live
+   set: walk up its provenance and delete each ancestor no remaining root reaches.
+   The question of when a periodic pass runs disappeared with the pass.
+3. **A task's ceiling is derived at task creation**, by a call to the invariant
+   processor. Every task has one by construction, because a task that exists was
+   created.
+4. **A derived scope reaches the operator inside the instructions.** No separate
+   channel, and it cannot be forgotten, since the instructions are recorded verbatim
+   in the kind-1 record.
+
+**Fixed rather than filed.** Kind 4 gained `rejected-as-non-representable`. The
+earliest rejection in the pipeline — before capability, before the gate — produced
+no record at all, so a component repeatedly proposing writes outside its workspace
+was invisible.
+
+**Still open, and sharper than before.**
+
+5. **Nothing says what ends a live set** (`14`). This was the least urgent of the
+   seven and is now among the most, because deletion hangs off it. An item leaving
+   the live set is what triggers removal, so an undefined end to a live set leaves
+   removal without a trigger in the case that should matter most — an instance
+   finishing.
+
+**New, surfaced by the answers.**
+
+6. **An attachment is not a root** (`12`, `13`). The root set is promoted artifacts
+   plus the live set, and a work-item attachment is neither. So a Finding attached to
+   a task and no longer live is deleted underneath the work record. Either attaching
+   promotes, or attachments are expected to dangle and the work record detects it.
 
 ## Relationships
 
