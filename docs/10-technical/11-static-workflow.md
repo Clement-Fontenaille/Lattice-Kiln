@@ -79,7 +79,8 @@ hand-set permanently.
 
 When it fires, each concern becomes its own pass through stages 3 and 4, and results
 recombine by continuation — each pass hands forward what the next needs — rather than
-by an explicit join.
+by an explicit join. What a pass hands forward follows the same rule as the retry
+loop: into the objective, as a signal (`06-processor-contract.md`, Handoff framing).
 
 ### 3. Implement — always fires
 
@@ -88,7 +89,11 @@ One implementer instance per pass (`06-processor-contract.md`).
 Three constraints carried from Milestone 6, each fixing an observed failure:
 
 - **No plan is injected into the implementer's turn input.** Injected plans measurably
-  hurt.
+  hurt. What the retry loop hands forward instead is the failing check's own output,
+  folded into the objective (`06-processor-contract.md`, Handoff framing) — a signal
+  rather than a model's account of one. The premise audit's concerns are model prose
+  addressed to the operator and reach the escalation payload only, never an
+  implementer's objective.
 - **Plain framing for greenfield.** Elaborate framing helps only where there is
   pre-existing code to respect.
 - **No lone model probe may flip a terminal state.** A single model's opinion is not

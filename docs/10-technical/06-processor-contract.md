@@ -67,6 +67,10 @@ M4, the orchestrator from M5 on.
   afresh on every turn out of the live set under the recall policy; there is no
   bundle handed over once and held. A live set is empty at turn zero, since
   registration records what a crossing returned and nothing has crossed yet.
+- `objective` handoff framing — where a prior step's output reaches this instance,
+  it MUST arrive **inside the objective**, framed, and MUST NOT be appended as a
+  separate block of context. See Handoff framing below; this is normative and
+  measured.
 - `isolation` — what this instance may inherit from contexts already built, as a
   value the recall policy consumes (`14-context-manager.md`). Stable for the
   instance's life, like `scope`. Its default comes from the role definition; the
@@ -106,6 +110,69 @@ M4, the orchestrator from M5 on.
   executes it, and `14-context-manager.md` registers what comes back like any
   other crossing. What the instance could not obtain is reported through its
   result — `blocked`, with the reason — not through a separate channel.
+
+## Handoff framing
+
+*Exercised by: findings 6, 6 addendum, 8.*
+
+How a prior step's output reaches the next instance is a measured contract rather
+than a style choice, and getting it wrong does not degrade the result gracefully —
+it changes what the instance does. A 7B implementer whose context carried a plan, a
+critique, or a prior summary **narrated instead of writing**: prose describing a fix
+with no file produced. The same model given only an objective and code produces
+effects reliably.
+
+Three framings, graded by what was observed, and the grade is the specification.
+
+**1. An objective signal folded into the objective — required where one exists.**
+The Milestone 6 arm that reached 24/30 with zero regressions folds the failing
+check's own output into the objective text, bounded, and follows it with an explicit
+instruction about the form of the output. What it passes is a **machine-produced
+signal**, not another model's account of one.
+
+*(Illustrative — the shape, not a format.)*
+
+```
+<the objective, verbatim>
+
+Current state still fails:
+<the check's own output, bounded to a fixed number of lines>
+
+Output the whole corrected file(s).
+```
+
+**2. Model-produced prose in a named section — tolerated, not preferred.** A plan
+carried under an explicit heading survived; the same content unlabelled did not.
+Labelling is what keeps it from reading as the conversation the instance is
+supposed to be having.
+
+**3. Unlabelled prose appended as context — MUST NOT.** This is the failure above,
+and it is the one to design against.
+
+Two rules follow that are worth stating separately, because they are what the three
+grades are actually about.
+
+**Prefer a signal to an account of a signal.** Where an objective check exists, its
+own output is what gets handed forward. A model's summary of a failure is strictly
+worse input than the failure, and it is available only because something already
+produced the better version.
+
+**Model prose whose audience is the operator does not enter another instance's
+objective.** A premise audit's concerns are advisory and belong in the escalation
+payload, which a human reads (`11-static-workflow.md`). Routing them into an
+implementer instead is exactly case 3 wearing a justification.
+
+**Scope of the evidence.** This is measured at the 7–8B size this project runs on,
+and policy adequacy is model-dependent
+(`00-design/23-arch-context-management/02-context-as-experimental-surface.md`). A
+larger model may tolerate framings this one does not. The rule stands for the
+reference host and should be re-measured before it is assumed to carry.
+
+**The alternative shape this does not adopt.** A handoff could instead be written
+somewhere durable and **read** by the next instance, arriving as a crossing rather
+than as objective text. That is cheaper to justify only once live-set seeding is
+settled (`14-context-manager.md`), and nothing measured supports it yet. Folding
+into the objective needs no new mechanism and is what the evidence covers.
 
 ## Authority
 

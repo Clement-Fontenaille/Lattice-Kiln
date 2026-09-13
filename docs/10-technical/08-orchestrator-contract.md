@@ -282,12 +282,13 @@ justifying kind.
   the result is a Milestone 15 question.
 - **No objective signal.** The MVP fixture has a per-task check; most real work
   does not. What the orchestrator's stopping rules do without one is deferred.
-- **Handoff framing** *(M5 workflow re-test)*. A constrained local model treats a
-  prior processor's raw prose (a plan, a critique) passed as free-form side input
-  as a cue to *discuss* rather than *act*, and stops emitting effects. Prior-step
-  output must be folded into the next objective or a structured field, never
-  appended as narration. How the context assembler (`07`) should structure that
-  handoff is open.
+- **Handoff framing — closed.** Specified in `06-processor-contract.md` (Handoff
+  framing), and it binds this document because routing one processor's output to
+  another *is* the MVP's whole definition of mediation. What the orchestrator MUST
+  do when it routes: fold the prior output into the next **objective**, prefer an
+  objective signal — a check's own output — over a model's account of one, and keep
+  model prose whose audience is the operator out of another instance's objective
+  entirely.
 - **Planner terminal state.** The tuned planner over-returned `blocked` on
   ordinary "add a capability the code does not yet have" objectives. A planner
   should `block`/`decline` only for a genuine false premise; "not built yet" is

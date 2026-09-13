@@ -233,13 +233,15 @@ tells the caller what to read; the caller reads.
   not volume*. v0 truncates by token count, which is the volume reading of both.
   What replaces a flat budget, and can redundancy be detected cheaply enough to
   compose against?
-- **Prior-step handoff framing** *(M5 workflow re-test, findings-log entry 6
-  addendum)*. A 7B implementer that receives another processor's prose — a plan, a
-  critique — as free-form context shifts from producing effects to narrating about
-  them; the same model with only objective plus code produces effects reliably. So
-  prior-step output MUST be structured (into the objective, or a typed field) and
-  MUST NOT be appended as narration. The exact structure is unresolved, and under
-  the seeding model above the question is now concrete: what does the handoff
-  *read* look like, since it arrives as a crossing rather than as a bundle field.
+- **Prior-step handoff framing — closed.** It is not this component's contract. A
+  handoff is folded into the **objective**, which is bound at instantiation, so the
+  rule lives with `06-processor-contract.md` (Handoff framing) and this component
+  never sees one. What remains here is the consequence: seeding MUST NOT read
+  another processor's conversation, which the rule above already states.
+
+  The alternative shape — a handoff written somewhere durable and **read** by the
+  next instance, arriving as a crossing this component would register — is not
+  adopted and is not available until live-set seeding is settled
+  (`14-context-manager.md`).
 - **`review` independence cut.** Whether "prior conclusion only" is the right
   isolation for adversarial review (`00-design/22-arch-cognition/02-processors.md`).
