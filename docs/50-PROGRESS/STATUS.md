@@ -35,7 +35,7 @@ _Appended as work lands. Difficulties and deliberate omissions collected here fo
 the operator's review._
 
 **A verification gap worth knowing about.** The link checker used throughout this
-session only validates `](path)` links. It does not see **prose references to section
+session only validates markdown links — bracket-text followed by a parenthesised path. It does not see **prose references to section
 names** — "`10-technical/01`, What is not an effect" — and renaming a heading breaks
 those silently. Renaming `What is not an effect` tonight broke one such reference, found
 only by writing a second checker after the fact. Bolded lead-ins are also used as
