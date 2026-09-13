@@ -220,6 +220,49 @@ of the new ones: **what the scope comparison actually consumes** — a raw chang
 summary, a diff — which is the largest unknown in the mandate half and has no answer on
 either side.
 
+## Where the spec set still needs answers
+
+**117 open contracts across the sixteen documents.** Most are the mechanism working
+rather than debt — "deferred until a run shows what the schema needs" is the correct
+state for a contract nobody has exercised. What follows is the triage that matters:
+which ones stop something.
+
+**Three clusters block a build, in this order.**
+
+1. **Retention — `12`.** What the reachability root set contains, what "promoted"
+   means, and when the sweep runs. These are not three details; together they *are*
+   the retention rule, and nothing about forgetting can be built without them. The
+   trajectory walk showed the consequence: the path most information takes cannot be
+   completed end to end.
+2. **The mandate — `03`.** Four, of which the first two are structural. What happens
+   on `outside` decides the call site — halt, escalate, and record-and-continue are
+   three different pieces of software. What the comparison consumes decides whether
+   the checker is a processor or a function. Then: what triggers deriving a root
+   item's ceiling (nothing does), and through what channel a derived scope reaches
+   the operator (no channel exists).
+3. **Decomposition.** Not an open contract anywhere, because there is no document.
+   `11` specifies concern-split as one conditional stage of one workflow, which is a
+   different thing. It also owns the case `06`'s handoff rule explicitly does not
+   cover: something has to write sub-objectives.
+
+**Four measurements cost almost nothing and unblock disproportionately.** None needs
+a decision; each needs someone to run something on the reference host. How the
+resident envelope divides across independent contexts (which decides whether a scope
+check is providable at all — `05` G4); the KV footprint of a composed turn input,
+without which R4 reports a crash instead of refusing; real values for `N`, `T` and
+the R1 envelope math; and peak knowledge-model size during a long episode.
+
+**One needs neither runs nor decisions.** Re-analysing M4 and M5 as paired
+comparisons. Both reported totals while running their arms on a shared suite, so the
+per-scenario flip pattern may be recoverable from data already collected — the
+cheapest experimental improvement available, and it needs no new runs.
+
+**The rest defers legitimately.** Storage shapes, schemas and retention tiers in
+`02` wait on real volume. The M11 cluster — gate-alter, accumulation-stop,
+interruptibility, the literature pass — waits on that milestone. Competing
+orchestrators and model diversity wait on a second GPU. Deferring these is the
+execution cadence working as written.
+
 ## Blockers
 
 None on execution. M2 recorder, M3 floor, M4 runtime, M5 orchestrator are built and
