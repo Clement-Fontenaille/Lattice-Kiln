@@ -221,21 +221,20 @@ and authority model; provenance on context items with observability and context
 assembly; the two-mode handoff with the processor contract and the effect
 vocabulary, where a required stop-rationale already exists as its narrower form.
 
-**Status of those destinations (2026-09-13).** Provenance on context items has
-arrived: crossing type distinguishes generated from fetched on every tracked entry,
-and `23-arch-context-management` carries the constraint that the distinction must
-survive into what the model is actually shown rather than being flattened there.
-Scope declared and checked now has a shape, though not an implementation.
-`24-arch-permission-layer` found that capability gating cannot carry it — a
-capability is keyed to the actor and evaluated per effect, while a mandate is keyed
-to the work item and evaluated in aggregate against what was touched, so every step
-of a drift can sit inside capability while the whole sits outside the mandate.
+**Where those destinations stand.** Provenance on context items is in place: crossing
+type distinguishes generated from fetched on every tracked entry, and
+`23-arch-context-management` carries the constraint that the distinction must survive
+into what the model is actually shown rather than being flattened there.
 
-What it settled since: a scope is stated per task in natural language and held on
-the work item (`28-arch-work-record`); the check divides on reversibility, auditing
-reversible extent at the end of a task and questioning an irreversible change before
-it happens; and it needs a dedicated processor, since comparing a natural-language
-mandate against a diff is a judgment no deterministic check performs.
+Scope declared and checked has a shape and no implementation. Capability gating cannot
+carry it, because a capability is keyed to the actor and evaluated per effect while a
+mandate is keyed to the work item and evaluated in aggregate against what was touched —
+so every step of a drift can sit inside capability while the whole sits outside the
+mandate. What the architecture settled instead: a scope is expressed per task in natural
+language and held on the work item (`28-arch-work-record`); the ceiling is derived from
+intent by an invariant processor while the orchestrator may only narrow beneath it; the
+check divides on reversibility, auditing reversible extent at the end of a task and
+questioning an irreversible change before it happens.
 
 Two notes on that, both bearing on this document's own constraints.
 
@@ -280,18 +279,15 @@ This document constrains **who the scaffolding must work for**, and refuses the
 reading under which a scaffold that only helps experts counts as success.
 
 The evidence and provenance vocabulary already distinguishes observation, evidence,
-finding, and decision. Authorship preservation may be an application of that
-machinery to a new axis rather than a new mechanism; whether it is has not been
-determined.
+finding, and decision. Authorship preservation is an application of that machinery
+to a new axis rather than a new mechanism — for the inbound half.
 
-**For the inbound half, it has been determined since, and it is an application
-(2026-09-12).** `04-context-as-governed-resource.md`'s crossing model gives every
-artifact a **crossing type** — a generation, a read of the external world, a
-retrieval from the knowledge base — and that distinction is exactly "what it
-generated from what it was given". `03`'s Source axis carries the second cut,
-between a human's contribution and the system's own. Together they answer the
-inbound direction with no new mechanism, which is what this paragraph was holding
-open.
+`04-context-as-governed-resource.md`'s crossing model gives every artifact a
+**crossing type**: a generation, a read of the external world, a retrieval from the
+knowledge base. That distinction is exactly "what it generated from what it was
+given". `03`'s Source axis carries the second cut, between a human's contribution
+and the system's own. Together they answer the inbound direction with nothing new
+built.
 
 The outbound half is untouched by that. Acting within a mandate, and treating work
 beyond it as needing a new one, is not a property of where an artifact came from.
@@ -304,15 +300,15 @@ under.
 
 ## Status
 
-Promoted 2026-09-04 from exploratory work; reworked 2026-09-05. The two
-ingredients, the attribution rule and its two instructions are held. Authorship
-preservation is held as a requirement, with its motivation, at the level where it
-is stable — its mechanisms are named as destinations rather than specified here.
+The two ingredients, the attribution rule and its two instructions are held.
+Authorship preservation is held as a requirement, with its motivation, at the level
+where it is stable — its mechanisms are named as destinations rather than specified
+here.
 
-An earlier draft wrapped authorship preservation in a proposed structural layer
-above the invariant floor. The layer had no membership test and one occupant; the
-occupant was the content, and the framing has been removed rather than
-elaborated.
+Authorship preservation is deliberately **not** wrapped in a structural layer of its
+own above the invariant floor. Such a layer would have no membership test and exactly
+one occupant, and the occupant would be the content — which is a requirement wearing a
+layer's clothes rather than a layer.
 
 ## Open questions
 

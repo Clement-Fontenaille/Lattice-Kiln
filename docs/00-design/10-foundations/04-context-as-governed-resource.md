@@ -39,15 +39,13 @@ Two things determine whether that set of artifacts serves the assembly it was ga
 
 A context can fail on either axis without failing on the other. The failure modes below are what each way of failing looks like.
 
-**Qualification (2026-09-12) — the vocabulary here has been split, and the axes do not index the same object.** When this was written, what was live and what the model saw were the same set, so one word served. `00-project/05-vocabulary.md` now separates three: **context** is the model's own production state; the **live set** is the context manager's record of what is in context or is to be placed there this turn; the **turn input** is what is actually transmitted on a given turn.
+**The two axes do not index the same object**, and three words are needed to say which is which. `00-project/05-vocabulary.md` fixes them: **context** is the model's own production state; the **live set** is the context manager's record of what is in context or is to be placed there this turn; the **turn input** is what is actually transmitted on a given turn.
 
 Coverage applies to two of those, differently. Live-set coverage asks whether anything ever fetched what the objective needs. Turn-input coverage asks whether what was fetched was actually put in front of the model. Those are the two Insufficiencies separated below.
 
-Integration applies to what the assembly holds in one pass, which is the context itself. So Overload is a property of context and never of a live set.
+Integration applies to what the assembly holds in one pass, which is the context itself — so Overload is a property of context and never of a live set. That does not make a large live set harmless. The live set tracks what is *in* context: something not recalled after a cache reset has left the discussion and drops out of it, so a live set is not a growing archive that a turn samples from and cannot drift far from what context holds.
 
-That does not make a large live set harmless, and an earlier draft of this note drew that conclusion too quickly. The live set tracks what is *in* context: something not recalled after a cache reset has left the discussion and drops out of it. A live set is therefore not a growing archive that a turn samples from, and it cannot drift far from what context holds.
-
-What happens to material once it leaves the discussion is a separate question, and it is `05-ephemeral-conversation-curated-memory.md`'s rather than this document's: leaving is the default and entering long-term memory is an act. Where anything is physically held while either happens is architecture's arrangement and not a commitment this layer makes.
+What happens to material once it leaves the discussion belongs to `05-ephemeral-conversation-curated-memory.md` rather than here: leaving is the default and entering long-term memory is an act. Where anything is physically held while either happens is architecture's arrangement, not a commitment this layer makes.
 
 Where this document says "context" without qualification below, it means what the assembly is actually working from.
 
@@ -55,13 +53,13 @@ Where this document says "context" without qualification below, it means what th
 
 **Insufficiency.** Coverage failure by omission: material the objective needed is not present. **Evidenced** — the Milestone 4 finding above (`Expected behavior`): a processor deliberately starved of a needed file did not even use the affordance built to ask for it. The system does not reliably notice or act on its own insufficiency unprompted.
 
-**Qualification (2026-09-12) — this is two failures, not one.** The architecture has since separated registration from recall (`23-arch-context-management`): an artifact enters a live set when a crossing returns it, and a later policy decides which of the live set is put in front of the model on a given turn. Omission can now happen at either step, and the two are not variants of one problem.
+**This is two failures rather than one**, because registration and recall are separate steps (`23-arch-context-management`). An artifact enters a live set when a crossing returns it; a policy later decides which of the live set is put in front of the model. Omission can happen at either, and the two are not variants of one problem.
 
-*Never crossed.* Nothing fetched the material, so it is not in the live set at all. The remedy is a crossing — a read, a retrieval — and the M4 evidence above attaches here: the starved processor's failure was that it never asked.
+*Never crossed.* Nothing fetched the material, so it is not in the live set at all. The remedy is a crossing — a read, a retrieval. The M4 evidence attaches here: the starved processor's failure was that it never asked.
 
-*Crossed but not recalled.* The material is in the live set and the policy did not present it. The remedy is a change of recall policy, and nothing needs to be fetched.
+*Crossed but not recalled.* The material is in the live set and the policy did not present it. The remedy is a change of recall policy, and nothing needs fetching.
 
-The sharper difference is detectability. The second is visible from inside the system: the live set can be compared against what was composed, and the gap is a fact the record already holds. The first is not — nothing can be compared against what was never fetched, which is exactly why `Forcing the choice` below needs an index of crossings *not yet taken* as a separate structure from the live record. Any response to Insufficiency has to say which of the two it addresses, because a recall-policy change does nothing for material that was never fetched, and an extra retrieval does nothing for material already sitting unrecalled.
+The sharper difference is detectability. The second is visible from inside: the live set can be compared against what was composed, and the gap is a fact the record already holds. The first is not, because nothing can be compared against what was never fetched — which is why `Forcing the choice` below needs an index of crossings *not yet taken*, as a structure separate from the live record. Any response to Insufficiency has to say which of the two it addresses: a recall-policy change does nothing for material never fetched, and an extra retrieval does nothing for material already sitting unrecalled.
 
 **Redundancy.** Coverage failure by duplication: material present that restates what the assembly already holds from elsewhere in the same context. **Evidenced** — findings entry 9, §3: repository-level context files that duplicated material already reachable elsewhere in the repository produced no improvement in task success at materially higher cost; stripping the duplicated material before generating the same files reversed the result. Provenance was not the operative variable; duplication was.
 
@@ -105,7 +103,9 @@ The shape above, the four failure modes, and what each requires all presuppose t
 
 Context assembly cannot make either of those judgments itself. Whether an objective has already been satisfied, or rests on a false premise, is a processor's output, reached by reasoning over what it was given (`02-reasoning-vs-runtime.md`, Thinking) — not a property context assembly can compute and decide on its own. What context assembly can and must supply is the material that judgment needs to operate on. For "already satisfied," that means surfacing candidate matches from `03`'s provenance graph — claims that plausibly converge with this objective — as part of what is live, the same way any other retrieval's output is surfaced; whether a candidate genuinely resolves the objective is the processor's call, not context assembly's. For a false premise, or an under-specified request, context assembly has nothing equivalent to surface — the objective's own claim has not yet been weighed (`03`, Weighing claims) — and this document is not the place to resolve that check. It only needs to say plainly that it does not: this document otherwise treats the objective as already validated by the time it reaches context assembly.
 
-**On ownership (2026-09-12).** An earlier version of this passage ended by calling that an unowned boundary, as though the architecture still owed it an actor. It does not. Validating an objective needs no mechanism that does not already exist — a processor reasoning over what it was given is what a processor is, recording that a task rests on a false assumption is already a work-record mutation (`10-technical/01-effect-vocabulary.md` type 4), and the candidate matches named above arrive as ordinary retrieval artifacts. What remains is only whether a given system instance commissions a role to do it, which the open role vocabulary (`22-arch-cognition/02-processors.md`) already covers and which is that instance's strategy rather than an architectural assignment.
+**That boundary needs no actor of its own.** Validating an objective requires no mechanism that does not already exist: a processor reasoning over what it was given is what a processor is, recording that a task rests on a false assumption is already a work-record mutation (`10-technical/01-effect-vocabulary.md` type 4), and the candidate matches named above arrive as ordinary retrieval artifacts. What remains is only whether a given system instance commissions a role to do it — a matter of that instance's strategy, covered by the open role vocabulary (`22-arch-cognition/02-processors.md`), rather than an architectural assignment.
+
+What the architecture does owe is that the verdict be recordable distinguishably once reached, which `28-arch-work-record` holds.
 
 One part of it does stay architectural, and it is about representation rather than judgment. If an instance does perform the check, its verdict has to be distinguishable from an ordinary failure to proceed. Milestone 5 recorded exactly that collapse: the orchestrator resolved both "the task rests on a false premise" and "I cannot find a next step" to a generic `blocked`, where the simpler Milestone 4 arms had explicitly declined. `22-arch-cognition/03-orchestrator.md` holds this as an open question about first-class terminal states, and `28-arch-work-record` carries the recorded conclusion — answered, blocked, or declined — that would have to tell them apart.
 
@@ -149,18 +149,16 @@ The first milestone concerned with context is therefore not "design context gove
 
 ## Open question
 
-How context quality should be measured independently of final task success now has two components rather than one — coverage (is what's needed present, without duplication or noise) and integration (does the resulting whole still fit the assembly) — and neither is measured yet, so the commissioning decision above still cannot be made on evidence.
+**How context quality is measured independently of task success.** Two components rather than one: coverage, and integration. Neither is measured yet, so the commissioning decision above cannot be made on evidence.
 
-Whether Uselessness is genuinely harmless in isolation, or carries a cost of its own once something actually isolates it, is untested; treat the prediction in Failure modes as exactly that until it is checked.
+**Whether Uselessness is harmless in isolation.** Failure modes states this as a prediction and nothing has isolated irrelevant-but-non-duplicating material from the other three modes. It decides whether detecting Uselessness is worth spending judgment on at all.
 
-What an objective's information requirements look like as a trackable object, so Insufficiency's coverage check has something concrete to compare against — `22-arch-cognition/01`'s Intent concept is the nearest candidate and has not been read against this use.
+**What an objective's information requirements look like as a trackable object**, so Insufficiency's coverage check has something concrete to compare against. `22-arch-cognition/01`'s Intent concept is the nearest candidate and has not been read against this use. This one is a representation question rather than a judgment question, which is what keeps it architecture's rather than an instance's.
 
-What replaces `10-technical/07`'s flat token budget as Overload's proxy and threshold, now that `Too much is a relation, not a property` names precisely why a flat budget cannot be the answer.
+**What replaces a flat token budget as Overload's proxy and threshold**, given that `Too much is a relation, not a property` names precisely why a flat budget cannot be the answer.
 
-Who owns building and maintaining the live-context record and the broader index every failure mode above depends on being able to consult, and where either lives. `70-THINKING/ideas.md` I12 sketches a mechanical-engine account close to this, with pertinence-judgment as the one piece it does not claim to mechanize — a candidate, not yet adopted. What arbitration over the index should actually look like, and whether the naive default's crude substring-match step is a legitimate starting version of it or needs replacing outright, is unresolved.
+**What arbitration over the index should look like**, and whether `10-technical/07`'s crude substring-match step is a legitimate starting version of it or needs replacing outright.
 
-Where the objective-validity boundary actually lives. Whether an objective is already satisfied, rests on a false premise, or is too under-specified to compute coverage against is a processor's judgment (`The objective itself is not a given`, above), not context assembly's, and nothing in the design set currently owns deciding it. `22-arch-cognition/01-work-intent-and-task-model.md`'s own open question (task semantics deliberately left unstructured) is the nearest candidate home, unexamined against this specific use.
+**Whether forcing the choice raises selection rate** over the optional affordance. `Forcing the choice` names the comparison that would check it directly; it has not been run.
 
-Whether forcing the choice actually raises selection rate over the optional affordance is untested; the comparison run named in `Forcing the choice: an index, and arbitration over it` (above) would check it directly.
-
-Whether a context curator, once commissioned, becomes a bottleneck or a source of systematic blindness — and how that would be detected.
+**Whether a context curator becomes a bottleneck or a source of systematic blindness once commissioned**, and how either would be detected.

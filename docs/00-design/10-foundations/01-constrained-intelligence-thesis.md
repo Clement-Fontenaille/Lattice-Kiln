@@ -18,7 +18,7 @@ The system should instead reduce the amount of simultaneous reasoning each invoc
 
 Four locations, and keeping them apart is what makes the rest of this set possible. The **external world** — the repository, the filesystem, whatever a tool can reach. The **knowledge base** — `03-evidence-belief-and-provenance.md`'s substrate of claims and provenance. The **model's own weights**, argued below. And the **conversation**, which is the only one the other three can enter, and which they enter only by something crossing into it (`04-context-as-governed-resource.md`, The shape of a context).
 
-That enumeration is stated here because `04` builds on it directly and had been citing this document for it before it was actually written down.
+`04-context-as-governed-resource.md` builds on that enumeration directly: nothing is context until something crosses from one of the first three into the fourth.
 
 ## The model's own world model
 
@@ -40,11 +40,11 @@ Model quality remains important, but model size should not be the only or primar
 
 Early results suggest the advantage may lie as much in damage avoided as in work completed. Two readings fit: scaffolding substitutes for capacity, or it bounds what capacity can spoil. They differ in whether the benefit survives a rise in model capability, which is not yet known.
 
-**A first observation bearing on that (2026-09-12), for one class of scaffolding only.** This project is currently operated by hand as a knowledge base, with no context manager, by a model capable enough not to need one — and a weaker model manifestly cannot do the same (`23-arch-context-management/02-context-as-experimental-surface.md`, Policy adequacy is model-dependent). For *context management*, that points at the first reading: the scaffolding substitutes for capacity, and its benefit shrinks as capability rises.
+**One observation bears on that, for one class of scaffolding only.** This project is operated by hand as a knowledge base, with no context manager, by a model capable enough not to need one — and a weaker model manifestly cannot do the same (`23-arch-context-management/02-context-as-experimental-surface.md`, Policy adequacy is model-dependent). For *context management*, that points at the first reading: the scaffolding substitutes for capacity, and its benefit shrinks as capability rises.
 
-It settles nothing about the second reading, because it concerns the wrong class. Whether verification, invariant enforcement and independent review still earn their cost against a more capable model is untouched by this — a model that needs no help finding its material may still need to be prevented from acting on a bad conclusion. The two kinds of scaffolding should be expected to have different answers, which is itself worth knowing before either is assessed.
+It settles nothing about the second reading, because it concerns the wrong class. Whether verification, invariant enforcement and independent review still earn their cost against a more capable model is untouched — a model that needs no help finding its material may still need preventing from acting on a bad conclusion. The two classes should be expected to differ, which is worth knowing before either is assessed.
 
-`07-the-integrated-system-and-its-operator.md`'s final open question is the second class stated as a comparison this project can actually run: whether restraint — keeping changes narrow, leaving the operator able to question the work — comes from the model or from the harness around it. That is the missing half, already named elsewhere, and it does not need a new experiment designed for this document.
+The comparison that would settle the second class is already named: `07-the-integrated-system-and-its-operator.md` asks whether restraint — keeping changes narrow, leaving the operator able to question the work — comes from the model or from the harness around it. No new experiment needs designing for this document.
 
 Any comparison here is assembly against assembly. A scaffolded small model set against a bare large one measures two configurations, not scaffolding against size (`07-the-integrated-system-and-its-operator.md`).
 

@@ -28,15 +28,13 @@ Inescapable constraints — what the system may not get out from under, regardle
 
 The layer should be small. Its value comes from being stable and checkable, not from being comprehensive.
 
-**Qualification (2026-09-13) — "hard constraints" was the wrong word and is withdrawn.** The original read "hard constraints — effects that may never occur regardless of what any loop concludes." What is withdrawn is *hard*; the rest stands.
+**Inescapable, not hard**, and the distinction carries weight. *Hard* would describe the **form** of a constraint — a bright line, mechanically checkable, binary. What defines membership here is a **relation to the system**: it cannot evade this. Those come apart. A scope check comparing a natural-language mandate against a diff is not a bright line and is entirely inescapable, since the system can neither remove it, route around it, nor argue past it.
 
-"Hard" describes the **form** of a constraint: a bright line, mechanically checkable, binary. The property that actually defines membership here is a **relation to the system**: it cannot evade this. Those come apart, and the difference is not academic. A scope check comparing a natural-language mandate against a diff is not a hard constraint in the bright-line sense, and it is entirely inescapable — the system cannot remove it, route around it, or argue past it.
+Reading membership as a matter of form would imply that enforcement must be mechanical, and that would be wrong in a way that propagates: it would exclude any reasoning component from this layer, when what actually makes one safe to fix here is **direction** — it may restrict and never widen, so persuading it achieves nothing (`25-arch-invariant-layer`, Invariant processors).
 
-Reading "hard" as definitional had a consequence worth recording, because it propagated. It implied that enforcement must be mechanical, which is where `25-arch-invariant-layer`'s "it should not be smart, because smart is another word for persuadable" came from. That sentence is right about the **gate** and was over-generalized into a rule about the layer. What actually makes a reasoning component safe to fix here is direction — it may restrict and never widen, so persuading it achieves nothing — and that criterion was reachable only once *hard* stopped standing in for *inescapable*.
+The other two terms were already defined this way. A goal a loop could rewrite is not a goal but a preference; a ceiling the system can raise is not a ceiling. Inescapability, not crispness, is what the three have in common.
 
-Note also that "hard" was the odd term of the three. A goal a loop could rewrite is not a goal but a preference; a ceiling the system can raise is not a ceiling. Those two were already defined by inescapability rather than by crispness, and the list was inconsistent with itself.
-
-Nothing widens as a result. What qualifies is still decided by The membership test below, which is unchanged; this settles what membership *means*, not what passes.
+None of this widens the layer. What qualifies is decided by The membership test below; this settles what membership *means*, not what passes.
 
 ## Read by everything, written by nothing
 
