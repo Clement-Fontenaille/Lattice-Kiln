@@ -88,6 +88,6 @@ The `Motto` line is the exception, and the reason the convention exists. It carr
 
 Conceptual documents are living artifacts.
 
-Changes should preserve historical rationale where useful, especially when a concept is narrowed, renamed, or removed because experiments contradicted an earlier assumption.
+When a concept is narrowed, renamed, or removed because evidence contradicted it, the rationale is preserved — in `90-notes/` and in version control, not in the document itself. Revision cascades, above, sets out why the document carries the position and the record carries the reasoning that got there.
 
-Removing an elegant abstraction is considered progress when evidence shows that the abstraction does not provide useful leverage.
+Removing an elegant abstraction is progress when evidence shows the abstraction does not provide useful leverage.

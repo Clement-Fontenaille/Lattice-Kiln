@@ -74,10 +74,10 @@ rules govern them.
 creation and never reused, never reordered, never renumbered. A new milestone
 takes the next free number whatever position it occupies in the plan.
 
-This is a correction. Numbers used to encode order, so a resequencing renumbered
-milestones — and the renumbering was applied in one file and merely *declared*
-everywhere else. The result was that the same number meant two different
-milestones depending on which document it appeared in, with one reference reading
+The failure this guards against is specific. Where a number encodes order, a
+resequencing renumbers milestones — and a renumbering applied in one file and
+merely *declared* everywhere else leaves the same number meaning two different
+milestones depending on which document it appears in, with one reference reading
 as a perfectly valid new number while pointing at the wrong milestone. Severing
 the number from the position removes the failure mode rather than promising to be
 more careful next time.

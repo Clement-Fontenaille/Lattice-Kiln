@@ -56,9 +56,7 @@ Both outcomes of a disagreement have precise names in `10-foundations/03`, and u
 
 ## What survives a processor
 
-Processors are disposable, and the documents above never said what disposal leaves behind.
-
-Most of it leaves nothing, by design. `10-foundations/05`'s **Collapsing** covers an attempted argument superseded inside an episode: nothing outside cited it, nothing was owed a trail, and it resolves to the settled state alone. That is the default and it costs no judgment.
+Processors are disposable. What disposal leaves behind is mostly nothing, by design. `10-foundations/05`'s **Collapsing** covers an attempted argument superseded inside an episode: nothing outside cited it, nothing was owed a trail, and it resolves to the settled state alone. That is the default and it costs no judgment.
 
 What survives is what a **thinking** processor proposed (`04-thinking.md`) and what curation kept (`05-curation.md`). The line is `03`'s motto rather than a new rule: what happened is recorded automatically as an Observation, what it *means* has to be proposed by something.
 
@@ -86,9 +84,11 @@ the two and losing a distinction these simpler arms had made.
 
 ## Open question
 
-We still need to learn how specialized roles should be, how much context they should share, and whether model diversity provides enough benefit to justify additional runtime complexity.
+**How specialized roles should be** has a stated default rather than an open question: reuse an existing role at a new scope unless evidence shows it cannot serve (`27-arch-adaptation-and-evolution/08-recursive-symmetry-without-dogma.md`). The thinking family is the open test case for it.
 
-Two of those have moved since this was written. How specialized roles should be now has a stated default rather than only a question: reuse an existing role at a new scope unless evidence shows it cannot serve (`27-arch-adaptation-and-evolution/08-recursive-symmetry-without-dogma.md`), which the thinking family is currently the open test case for. And how much context processors share is no longer theirs to decide — it is live-set isolation and live-set seeding, both held by `23-arch-context-management`.
+**How much context processors share** is not theirs to decide: it is live-set isolation and live-set seeding, both held by `23-arch-context-management`.
+
+**Whether model diversity earns its runtime complexity** is genuinely open and needs a second resident model to answer.
 
 Milestone 4 adds a specific form of this: does a planner → implementer → reviewer
 chain need a revision loop before role separation pays for its overhead, and is
