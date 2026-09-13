@@ -2,7 +2,7 @@
 
 ## TL;DR
 
-The work record holds intent and the work derived from it durably — what was asked, how it is currently formulated, and every transition between the two — so that ephemeral processors can cooperate on the same work across sessions.
+The work record holds intent and the work derived from it durably — what was asked, how each work item was formulated, and how the work moved from one to the other — so that ephemeral processors can cooperate on the same work across sessions.
 
 > **Motto:** The goal outlives every formulation of it.
 
@@ -13,7 +13,7 @@ Draft. Work-record mutation (`10-technical/01-effect-vocabulary.md` type 4) has 
 
 ## Motivation
 
-`22-arch-cognition/01-work-intent-and-task-model.md` defines intent, work items, and work units — what each one is, and that a work item is deliberately revisable rather than fixed. It does not say where any of it lives between invocations.
+`22-arch-cognition/01-work-intent-and-task-model.md` defines intent, work items, and work units — what each one is, and that a work item is never rewritten, so that redefining work means creating a successor rather than editing. It does not say where any of it lives between invocations.
 
 Meanwhile `10-technical/01-effect-vocabulary.md` makes work-record mutation a typed, gated effect, `10-foundations/02` names "creating a work item" as a proposal that crosses the same way any effect does, and the M3 runs routed real work-record mutations through the gate. Something was already persisting this in practice with no architectural owner.
 
@@ -22,7 +22,7 @@ Meanwhile `10-technical/01-effect-vocabulary.md` makes work-record mutation a ty
 ## The actor and its responsibility
 
 - **Hold intent durably.** Its original human-authored content is not amendable from inside the system — `10-technical/01` type 4 excludes it by name, amendable only out of band. This actor therefore protects intent rather than managing it: written once from outside, read thereafter.
-- **Hold work items and their current state.** One current formulation per item, directly readable without reconstructing anything.
+- **Hold work items and their current state.** One formulation per item, fixed at creation, directly readable without reconstructing anything. What changes on an item is its state and its conclusion.
 - **Hold a work item's declared scope.** `10-foundations/07` requires that work stay within the mandate it was given, and `24-arch-permission-layer` establishes that capability gating structurally cannot check it — a capability is keyed to the actor and evaluated per effect, while a mandate is keyed to the work item and evaluated in aggregate against what was touched. A declared scope is part of what a work item *says*, which puts the declaration here while the check stays with `24`.
 
   It is **natural-language text, not a structured field**, and this actor holds it without interpreting it — consistent with everything else here, since this actor does not judge whether a work item is well-formed either.
@@ -31,17 +31,17 @@ Meanwhile `10-technical/01-effect-vocabulary.md` makes work-record mutation a ty
 
   A scope can also be **pending** rather than derived, when the reading was ambiguous enough that the question went to the operator instead (`24-arch-permission-layer`). That is a state a work item can sit in, not an absence of one, and it needs to be distinguishable from a scope nobody got around to deriving — the first is the check working, the second is it not having run. The distinction has teeth, because the second state stops work: the scope check fails closed on an unscoped item.
 
-  Note that a scope held here is mutable like the rest of a work item, and that is not a hole. Widening it is a work-record mutation, which is an effect, which the scope check sees — so a mandate can only widen within what the current mandate already permits, and a scope permitting its own modification is excluded by default (`24-arch-permission-layer`, Four things this does not need). This actor needs no special protection for the field, which is why it holds it like any other.
+  A scope held here is **fixed at creation and never edited**, like the formulation it was derived from. That is what closes the widening path without needing a mechanism: there is no mutation of the field to gate, because there is no mutation of the field. Work whose boundary must move gets a successor task with a scope derived afresh, checked against the ceiling like any other.
 
   Two consequences for what this actor must support. The declaration has to be readable at any point during the task rather than only at its end, since an irreversible change is questioned before it happens. And a scope is **fixed at creation**, so there is no mid-task widening for an audit to catch: what an audit follows instead is the lineage, where a child or a successor carries its own derived scope. An operator's own indication of a boundary, where one is given, is carried as part of it and governs the derived portion.
 - **Record every transition** a work item goes through: challenged, deferred, abandoned, executed. The current state and the history of how it was reached are both held, and neither is derived from the other. Splitting and succession are not transitions on an item — both create new items and leave the existing one untouched (`22-arch-cognition/01`).
 
   Transitions are not all equally free, and two constraints belong to this actor because they are about the shape of the lineage rather than about any judgment.
 
-  **A split's children inherit the parent's scope and may narrow it, never widen it.** A proposed child whose boundary is not contained in its parent's is not a split; it is a new root, and a new root needs intent, which only arrives from outside (`10-technical/01-effect-vocabulary.md` type 4 excludes an intent record's original content from system amendment). Without that, splitting would be a way to manufacture mandate — widen the boundary in the child, act under the child.
+  **A split's children derive their own scope at creation, contained in the ceiling** rather than in the parent's. A parent's scope focuses that parent; it does not floor everything beneath it, so a child of a narrow parent may legitimately reach wider while staying inside what intent authorised. What makes splitting unable to manufacture mandate is the ceiling and not the parent: the ceiling descends from intent, and intent is not system-writable (`10-technical/01-effect-vocabulary.md` type 4).
 
   **A successor stays under the intent's ceiling.** Where an item would have been refined, a new item is created with a redefined objective, and its scope is derived at creation like any other. Redefining broadly is the route that widens without anything ever splitting, and what stops it is the ceiling: every task's scope sits inside the one derived from intent, whether it arrived by split, by succession, or by nested invocation (`24-arch-permission-layer`).
-- **Hold the attachment edges** between a work item and the claims attached to it — a finding, a proposal, a decision. The claim's content lives in `21-arch-knowledge-model`; this actor holds a reference plus its own metadata, the same way `23-arch-context-management` does for a retrieved claim. Two actors point into one claim store; neither copies it.
+- **Hold the attachment edges** between a work item and the claims attached to it. The claim's content lives in `21-arch-knowledge-model`; this actor holds a reference plus its own metadata, the same way `23-arch-context-management` does for a retrieved claim. Two actors point into one claim store; neither copies it.
 - **Hold a processor's recorded conclusion** — answered, blocked, or declined, with its reasoning. `10-technical/01` classes this as a work-record mutation rather than a memory write, a boundary the M4 runs found carved cleanly once chosen but not self-evident beforehand. Keeping *declined* distinct from *blocked* is load-bearing rather than cosmetic: Milestone 5 recorded an orchestrator collapsing "the task rests on a false premise" and "I cannot find a next step" into one generic outcome, losing a distinction the simpler Milestone 4 arms had made.
 
 Whether three verdicts suffice is open, and the doubt has the same shape as the failure they were introduced to prevent. `22-arch-cognition/01-work-intent-and-task-model.md` names two distinct reasons to refuse execution — the task rests on a false premise, and the request has already been satisfied — and both currently land on *declined* while calling for entirely different follow-ups. That may be this vocabulary reproducing Milestone 5's collapse one level down. Resolving it belongs with the processor contract rather than here; what this actor owes is only that whatever verdicts exist stay distinguishable in the record. Whether an instance judges objective validity at all is that instance's strategy (`10-foundations/04`, The objective itself is not a given); being able to record the verdict once it does is not.
