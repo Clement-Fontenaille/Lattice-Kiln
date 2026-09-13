@@ -222,46 +222,34 @@ either side.
 
 ## Where the spec set still needs answers
 
-**117 open contracts across the sixteen documents.** Most are the mechanism working
-rather than debt — "deferred until a run shows what the schema needs" is the correct
-state for a contract nobody has exercised. What follows is the triage that matters:
-which ones stop something.
+The holes have a fixed location by convention: **every specification document ends
+with `## Open contracts`**, and that is where a hole is written down rather than
+guessed. There are **117 entries across the sixteen documents**.
 
-**Three clusters block a build, in this order.**
+Most are waiting on something that has not happened yet, which is the correct state
+rather than debt. Ten stop something now.
 
-1. **Retention — `12`.** What the reachability root set contains, what "promoted"
-   means, and when the sweep runs. These are not three details; together they *are*
-   the retention rule, and nothing about forgetting can be built without them. The
-   trajectory walk showed the consequence: the path most information takes cannot be
-   completed end to end.
-2. **The mandate — `03`.** Four, of which the first two are structural. What happens
-   on `outside` decides the call site — halt, escalate, and record-and-continue are
-   three different pieces of software. What the comparison consumes decides whether
-   the checker is a processor or a function. Then: what triggers deriving a root
-   item's ceiling (nothing does), and through what channel a derived scope reaches
-   the operator (no channel exists).
-3. **Decomposition.** Not an open contract anywhere, because there is no document.
-   `11` specifies concern-split as one conditional stage of one workflow, which is a
-   different thing. It also owns the case `06`'s handoff rule explicitly does not
-   cover: something has to write sub-objectives.
+| Where | The question | What it stops |
+|---|---|---|
+| `12-knowledge-model` | What is in the reachability root set? | Nothing can be swept. Three stores hold references and none is named a root |
+| `12-knowledge-model` | What does *promoted* mean? | Same — the word carries the root set |
+| `12-knowledge-model` | When does the sweep run? | Same — no trigger exists |
+| `03-capability-authority` | What happens when the check says `outside`? | Where the call goes in the code: halt, escalate and record-and-continue are three different programs |
+| `03-capability-authority` | What does the comparison actually read? | Whether the checker is a processor with a live set or a function given its inputs |
+| `03-capability-authority` | What triggers deriving a root item's ceiling? | The first step of the mandate chain. Nothing calls it |
+| `03-capability-authority` | How does the operator get shown a derived scope? | A scope nobody sees is ratified instead of checked |
+| *(no document)* | Decomposition | Sub-objectives have no writer. `11` covers concern-split as one workflow stage, which is not the same |
+| `05` G4 / `14` | How does the resident envelope divide across contexts? | Whether a scope check is providable at all. A measurement, not a decision |
+| `14-context-manager` | Can a turn input's KV footprint be estimated before composing it? | R4 reports a crash instead of refusing. Also a measurement |
 
-**Four measurements cost almost nothing and unblock disproportionately.** None needs
-a decision; each needs someone to run something on the reference host. How the
-resident envelope divides across independent contexts (which decides whether a scope
-check is providable at all — `05` G4); the KV footprint of a composed turn input,
-without which R4 reports a crash instead of refusing; real values for `N`, `T` and
-the R1 envelope math; and peak knowledge-model size during a long episode.
+**One more, which needs neither a run nor a decision.** Re-analysing M4 and M5 as
+paired comparisons. Both reported totals while running their arms on a shared suite,
+so the per-scenario flip pattern may be recoverable from data already collected.
 
-**One needs neither runs nor decisions.** Re-analysing M4 and M5 as paired
-comparisons. Both reported totals while running their arms on a shared suite, so the
-per-scenario flip pattern may be recoverable from data already collected — the
-cheapest experimental improvement available, and it needs no new runs.
-
-**The rest defers legitimately.** Storage shapes, schemas and retention tiers in
-`02` wait on real volume. The M11 cluster — gate-alter, accumulation-stop,
-interruptibility, the literature pass — waits on that milestone. Competing
-orchestrators and model diversity wait on a second GPU. Deferring these is the
-execution cadence working as written.
+**Everything else waits on a run, a milestone, or the second GPU.** Storage shapes
+and schemas in `02` wait on real volume; gate-alter, accumulation-stop and
+interruptibility wait on M11; competing orchestrators and model diversity wait on
+hardware.
 
 ## Blockers
 
