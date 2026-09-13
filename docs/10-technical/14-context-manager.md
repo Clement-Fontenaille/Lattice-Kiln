@@ -260,6 +260,31 @@ closed, and work stops.
 That is the one place isolation stops being an economy and becomes a correctness
 property.
 
+#### If the substrate cannot isolate
+
+The rule above is written from the caller's side, where isolation is simply
+required. That leaves the question of what happens when the serving arrangement
+cannot provide it, and the answer is not a fallback.
+
+**Isolation capability is a prerequisite of the deployment, not a runtime
+negotiation.** A conforming arrangement holds at least two independent contexts at
+once, each large enough to do its work. This is recorded as a precondition on G4
+(`05-provisional-invariant-list.md`), it is verifiable before any work starts, and
+a system that fails it cannot provide a functioning scope check whatever else it
+builds.
+
+Putting it at deployment rather than at runtime is what keeps the rule clean. A
+runtime fallback would have to choose between running an unisolated check — which
+is worse than none, since it looks like a pass — and halting on every check, which
+is an unusable system discovered one task at a time. Neither is better than
+refusing to start.
+
+Note what the prerequisite is actually about, because the count is the easy half.
+Two sequences are trivially available; two sequences **each still large enough** is
+the constraint, since the resident envelope divides among them. An arrangement that
+isolates by halving both contexts below what the work needs has traded one failure
+for another, and R4 is where that shows up.
+
 ## Compose — the turn input
 
 - The turn input is composed **at the moment of feeding**, out of what the live

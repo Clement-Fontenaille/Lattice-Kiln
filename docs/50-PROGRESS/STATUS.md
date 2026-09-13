@@ -236,16 +236,14 @@ reviewer model, needing the planned second GPU. Gates M12 onward.
   never been applied. Apply or downgrade.
 - **Praxis before or after M7** — two execution gates rest on positions
   `70-THINKING/04-praxis.md` has not taken.
-- **G4 in the enforced floor.** I put a clause in `05-provisional-invariant-list.md`
-  that the running system fails, and recorded the failure rather than weakening the
-  clause. The alternative was to leave the floor silent about the scope check until
-  something builds one. Keeping it means the list no longer describes only what is
-  enforced; removing it means the floor omits a requirement `10-foundations/07` calls
-  structural.
 - **Who builds the scope check.** It is fully specified and assigned to no milestone.
   It needs an invariant processor, which is a role category nothing has instantiated
   yet — triage is the other member and is deferred to M11, so M11 is the natural home
   unless it should come sooner.
+- **The isolation measurement.** G4's substrate precondition — two independent
+  contexts, each large enough to work in — is verifiable at startup and has never
+  been measured on the reference host. It is M0-shaped and cheap. Nothing is
+  scheduled to run it, and it gates whether a scope check is providable at all.
 
 ## Repository
 

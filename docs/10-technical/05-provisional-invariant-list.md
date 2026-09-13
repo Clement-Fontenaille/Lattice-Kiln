@@ -63,6 +63,24 @@ Stated so a measurement can be checked *against* them rather than substituted
   unscoped item, so an unscoped work item stops work without needing a clause
   here.
 
+  **G4 carries one precondition on the substrate, and it is checkable at startup.**
+  A scope check must be assembled in isolation from the work it is checking, or it
+  inherits the reasoning it exists to assess and passes for the wrong reason
+  (`14-context-manager.md`). So a conforming deployment's serving arrangement MUST
+  be able to hold **at least two independent contexts at once**, large enough that
+  each can do its work — one for the instance under check, one for the checker —
+  without assembling the second destroying the first.
+
+  The real risk there is not the count but the size. Holding two sequences is
+  trivial; holding two that are each still useful is an interaction with R4, since
+  the resident envelope divides among them. A deployment that can isolate only by
+  halving both contexts below what the work needs has not met this precondition,
+  it has traded one failure for another.
+
+  This is **verifiable before any work starts**, which makes it the one part of G4
+  that does not depend on a judgment. A system that cannot meet it cannot provide
+  a functioning scope check, whatever else it builds.
+
   **The MVP slice does not satisfy G4**, and this is recorded rather than
   softened. Nothing currently derives a scope, records one, or checks against one;
   `11-static-workflow.md` carries the same statement from the workflow side. A
@@ -231,6 +249,10 @@ the human in the loop for everything it does not yet name.
   variable). R4 shares R1's envelope problem and adds one of its own: the KV
   footprint of a composed turn input has to be estimable *before* the turn is
   composed for the ceiling to refuse rather than to report a crash.
+- **G4's isolation precondition has never been measured.** How the resident
+  envelope divides across independent contexts on the reference host, and whether
+  two of them are each still large enough to work in. Cheap, M0-shaped, and it
+  decides whether a scope check is providable at all rather than merely unbuilt.
 - **G4's owner.** No milestone builds the scope check. It is specified in
   `03-capability-authority-model.md` and unimplemented, which leaves the list
   carrying a goal the running system does not meet — stated deliberately, but not

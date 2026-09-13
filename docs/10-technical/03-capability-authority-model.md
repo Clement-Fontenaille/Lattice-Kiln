@@ -606,12 +606,14 @@ is.
   mechanical default and is not one: whether a natural-language boundary permits
   modifying itself is the same judgment the rest of the check makes. Either it is
   a flag alongside the boundary, or it is another question put to the checker.
-- **What isolating the checker costs.** How it is invoked is settled, and that it
-  binds `share_nothing` is settled. What is not known is the price: a dedicated
-  sequence takes a permanent share of the resident envelope whether or not it is
-  busy, and nobody has measured how the envelope divides on the reference host.
-  That figure decides how many judging processors the arrangement can afford at
-  once (`14-context-manager.md`).
+- **What isolating the checker costs.** How it is invoked is settled, that it binds
+  `share_nothing` is settled, and the substrate's ability to isolate is a
+  deployment precondition rather than a runtime negotiation
+  (`05-provisional-invariant-list.md` G4). What is not known is the price: a
+  dedicated sequence takes a permanent share of the resident envelope whether or
+  not it is busy, and nobody has measured how the envelope divides on the reference
+  host. That figure decides whether the precondition is met at all, since two
+  contexts each too small to work in does not satisfy it.
 - **The doubt threshold for asking.** What counts as enough ambiguity to set a
   scope `pending` rather than deriving. Unset, with a known bias toward
   under-detection.
