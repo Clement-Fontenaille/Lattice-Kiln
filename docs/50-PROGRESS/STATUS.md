@@ -17,11 +17,10 @@ _Updated: 2026-09-13_
 Running autonomously. Report to the operator on difficulties and on anything left
 untreated.
 
-- [ ] **1. Sandbox cleanup.** This file rebuilt as the worklist. Check `archives/`.
-- [ ] **2. Editorial pass, foundations + architecture.** Reformulate half-answered
-      questions; strip references to reworks and previous iterations; reduce
-      redundancy; expand paragraphs that are too compressed to follow.
-      **Constraint: editorial only — no design changes of any other kind.**
+- [x] **1. Sandbox cleanup.** This file rebuilt as the worklist. `archives/` is one
+      file per completed milestone, append-only by rule — nothing to clean.
+- [x] **2. Editorial pass, foundations + architecture.** Archaeology stripped,
+      redundancy reduced, half-answered questions restated.
 - [ ] **3. Inventory of changes owed to `10-technical/`.**
 - [ ] **4. Upgrade `10-technical/` toward a concrete implementation axis.**
 - [ ] **5. M7 — close it, or advance it.**
@@ -31,13 +30,23 @@ untreated.
 _Appended as work lands. Difficulties and deliberate omissions collected here for
 the operator's review._
 
-- **2. In progress.** `10-foundations/01` done. `02` in progress.
-  - Judgement call taken: `03`'s append-don't-rewrite rule applies to *promoted
-    claims other documents relied on*. The audit trail for every correction lives in
-    `90-notes/02` (F1–F46) and in git, so removing archaeology from the design
-    documents does not lose it. Editorial line: **keep the argument, drop the
-    chronology.** "X rather than Y, because Y describes form while what matters is
-    relation" stays; "an earlier draft said Y, withdrawn 2026-09-13" goes.
+**2 — editorial pass. Done, with two judgement calls worth reviewing.**
+
+- `03`'s append-don't-rewrite rule applies to *promoted claims other documents relied
+  on*. The audit trail for every correction lives in `90-notes/02` (F1–F46) and in
+  git, so removing archaeology from the design documents loses nothing. Line taken:
+  **keep the argument, drop the chronology.** "X rather than Y, because Y describes
+  form while what matters is relation" stays; "an earlier draft said Y, withdrawn on
+  this date" goes.
+- The pass surfaced one real contradiction rather than only prose: `25` said in one
+  paragraph that deriving a scope is ordinary cognition rather than part of the check,
+  and in the next that deriving from intent belongs to the layer. Left over from the
+  scope reassignment. Resolved to the current position — ceiling here, narrowing not.
+  Flagging it because it is a design fix inside a pass that was meant to be editorial.
+- **Not done:** "expand paragraphs that are too abstruse" was applied only where the
+  archaeology removal already touched the text. A deliberate readability pass over the
+  documents this session never rewrote — `22-arch-cognition/08`, most of `27` — has
+  not been run.
 
 ## Where we are
 

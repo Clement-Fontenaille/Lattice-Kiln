@@ -12,10 +12,11 @@ binds to `10-technical/01-effect-vocabulary.md` (effect type 6),
 
 ## TL;DR
 
-A processor is a disposable reasoning instance bound at instantiation by five
-things — role instructions, an objective, a context bundle, a capability set, an
-interaction mode — that reasons in one model context, may **propose** effects
-(never realize them), emits one result, and then ends. There is no resume.
+A processor is a disposable reasoning instance bound at instantiation by six
+things — role instructions, an objective, a scope, a live-set identity, a
+capability set, an interaction mode — that reasons in one model context, may
+**propose** effects (never realize them), emits one result, and then ends. There
+is no resume.
 
 > **Motto:** Give each mind a job, not a lifetime — and a receipt for everything it touched.
 
@@ -54,10 +55,18 @@ M4, the orchestrator from M5 on.
   does not prescribe a step sequence. Not an enum.
 - `objective` — the bounded goal for *this* instance, in the caller's words.
   Recorded verbatim in the kind-1 record so the result can be checked against it.
-- `context_bundle` — the assembled context
-  (`07-naive-context-assembly.md`). This contract treats it as opaque beyond: it
-  has a resolvable `context_ref`, an ordered source list, and a token estimate
-  within budget.
+- `scope` — the mandate this instance's work must stay within, as natural-language
+  text (`00-design/24-arch-permission-layer/01-capabilities-and-authority.md`).
+  Inherited from the work item; the instance may not widen it, and it does not
+  change for the instance's life. An instance that finds it must reach further stops
+  and reports rather than extending itself.
+- `live_set_id` — the identity of the live set this instance's crossings register
+  into, and which recall runs over each time the instance is fed
+  (`00-design/23-arch-context-management/01-context-manager.md`). **Context itself is
+  not bound at instantiation.** What the model sees is the *turn input*, composed
+  afresh on every turn out of the live set under the recall policy; there is no
+  bundle handed over once and held. A live set is empty at turn zero, since
+  registration records what a crossing returned and nothing has crossed yet.
 - `capability_set` — the grants this instance holds
   (`03-capability-authority-model.md`). An effect type absent from the set means
   the instance may not request it; the set may be empty (a pure-reasoning
@@ -95,8 +104,9 @@ M4, the orchestrator from M5 on.
   result.
 - A processor **MUST NOT**: realize any effect; write persistent memory directly
   (memory mutation is a proposed effect, type 5); modify its own role,
-  objective, or capability set; invoke another processor unless granted type 6;
-  or carry state into a later instance except through an explicit `context_bundle`.
+  objective, or capability set; **widen its own scope**; invoke another processor
+  unless granted type 6; or carry state into a later instance except through
+  something durable that the later instance reads for itself.
 - Nothing in this contract exempts a processor's proposed effect from capability
   gating or the invariant gate.
 
@@ -106,9 +116,11 @@ M4, the orchestrator from M5 on.
    envelope, allocates the capability set, and opens a kind-1 invocation record
    with `parent_invocation_id` set to the caller's invocation (or null for a
    harness/root).
-2. **Run.** One model context. Ephemeral: no state from any prior instance except
-   what is in `context_bundle`. The instance's conversation is observable through
-   the run record but is **not** persisted as curated memory
+2. **Run.** One model context, fed a turn input composed afresh on each turn from
+   the live set. Ephemeral: no state carries from a prior instance except by way of
+   a crossing this instance performs for itself — a read of something the previous
+   step wrote down. The instance's conversation is observable through the run record
+   but is **not** persisted as curated memory
    (`05-ephemeral-conversation-curated-memory.md`).
 3. **Terminate.** The instance ends when it emits its result, or when the runtime
    stops it (safety intervention; resource ceiling R3; error). Termination is
@@ -137,8 +149,10 @@ M4, the orchestrator from M5 on.
   it; a refusal ends the effect, not necessarily the processor.
 - **Observability** (`02-observability-event-model.md`) — the kind-1 record is
   this contract's instantiation output; kind-2/4 records are its effect activity.
-- **Naive context assembly** (`07-naive-context-assembly.md`) — produces
-  `context_bundle`.
+- **Context management**
+  (`00-design/23-arch-context-management/01-context-manager.md`) — composes the
+  turn input on every turn. `07-naive-context-assembly.md` is the naive default for
+  that composition and is owed an update, since it still produces a one-shot bundle.
 - **Orchestrator** (`03-orchestrator.md`, Milestone 5) — becomes the caller;
   until then a fixed harness issues the type-6 effect.
 
@@ -146,8 +160,10 @@ M4, the orchestrator from M5 on.
 
 - **Discussion protocol.** Multi-processor, orchestrator-mediated challenge and
   re-investigation (`02-processors.md`, discussion) — Milestone 5.
-- **Context-request servicing.** Naive assembly is one-shot; when does a
-  processor's request for more context get answered, and by what?
+- **Context-request servicing — closed.** A processor's request for more context
+  is an ordinary tool call: the model calls it, the runtime executes it, and the
+  context manager registers what comes back like any other crossing. No separate
+  servicing path is needed, and none should be built.
 - **Result schema.** Free text plus `terminal_state` for now. M4 will show what
   structure the evaluation actually needs.
 - **Role-definition source.** M4 draws role instructions from a tiny fixed
@@ -156,4 +172,9 @@ M4, the orchestrator from M5 on.
 - **Independence cut for `review`.** Is "prior conclusion only" the right amount
   of isolation, or too little / too much (`02-processors.md` open question)?
 - **`terminal_state` granularity.** Whether `answered / blocked / declined` needs
-  finer categories once real tasks run.
+  finer categories once real tasks run. One case is already identified:
+  `00-design/22-arch-cognition/01-work-intent-and-task-model.md` names two distinct
+  reasons to refuse execution — the task rests on a false premise, and the request
+  has already been satisfied — which both land on `declined` while calling for
+  different follow-ups. That is the shape of the collapse Milestone 5 recorded
+  between `declined` and `blocked`, one level down.
