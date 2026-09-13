@@ -288,6 +288,18 @@ into the objective needs no new mechanism and is what the evidence covers.
   is an ordinary tool call: the model calls it, the runtime executes it, and the
   context manager registers what comes back like any other crossing. No separate
   servicing path is needed, and none should be built.
+- **Splitting the output.** The `Result` above is one object carrying a conclusion
+  and a terminal state, and an instance's reasoning is not separated from it. Keeping
+  a handoff monolithic is a pitfall worth anticipating rather than a simplification:
+  it makes the `review` independence cut unperformable without re-parsing prose; it
+  denies a recall policy the most obvious saving available, since reasoning is the
+  bulk and the conclusion is what is load-bearing; it forces retention to keep the
+  reasoning or lose the conclusion with it; and it flattens a provenance chain that
+  should run inputs — reasoning — conclusion into an edge pointing at a blob.
+  It would also make `12-knowledge-model.md`'s **Compress** nearly free, since a
+  souvenir would be the conclusion artifact once the reasoning artifact is dropped,
+  rather than an operation that rewrites anything. What the cuts are, and whether
+  they differ per role, is not decided.
 - **Result schema.** Free text plus `terminal_state` for now. M4 will show what
   structure the evaluation actually needs.
 - **Role-definition source.** M4 draws role instructions from a tiny fixed

@@ -35,6 +35,11 @@ task.** Everything else takes an unlabelled edge.
 receives a prior processor's conclusion and not its reasoning
 (`10-technical/06`, independence). The label is what that cut is made against.
 
+**A processor's output is split at the source rather than kept as one artifact.** A
+turn that produces reasoning and a conclusion registers two artifacts and two edges,
+not one. This first cut is two ways; whether an output splits further, and along what
+lines per role, is not decomposed here.
+
 **How an artifact was obtained is a different question** and is carried by
 `crossing_type` on the live-set entry — `read`, `generation`, `retrieval`,
 `effect_response`. The two only appear to overlap on a generation, where the crossing
@@ -114,6 +119,9 @@ invocation's objective, which becomes a new artifact with label `objective`.
 
 Each tool call follows the same path: scope check before execution, capability, gate,
 runtime execution, the result crossing back, registration, an edge to T-88.
+
+Each turn of the model registers its own output too: reasoning and conclusion as
+separate artifacts, labelled `handoff:thinking` and `handoff:response`.
 
 **4.1** `read("cli/report.py")` → Observation, edge, crossing type `read`, origin
 invocation I-1.
