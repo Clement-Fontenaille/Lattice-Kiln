@@ -936,6 +936,58 @@ One consequence for the gate falls out and is worth keeping: an irreversible eff
 
 ---
 
+---
+
+## F47 — Dependent-finding by diligence missed three corrections out of four in one session
+
+**Claim.** This pass corrected four claims that other documents rested on, and each
+correction required finding what depended on it. One was found by method; three were
+found by accident or by unrelated re-reading.
+
+- **"Hard" to "inescapable" (F41 lineage).** The dependent in `25-arch-invariant-layer`
+  — its "should not be smart" reasoning descended from reading constraints as
+  bright-line — was found, but because the operator's framing prompted a look rather
+  than because anything systematic ran.
+- **Scope derivation reassigned to the invariant layer (F46 lineage).** The document
+  carried an internal contradiction for roughly a day: one paragraph saying deriving a
+  scope is ordinary cognition, the next saying derivation belongs to the layer. Found by
+  re-reading during an unrelated editorial pass.
+- **A section renamed in `10-technical/01`.** A prose citation in
+  `22-arch-cognition/04-thinking.md` pointed at the old name. Found by writing a second
+  checker after the fact, for a different reason.
+- **A bolded label dissolved in `10-foundations/04`.** Four references pointed at it.
+  Found by the same accidental check.
+
+**This is operated evidence about the project's own knowledge-integrity process**, in
+the sense `03` uses when it calls the ETH correction operated: not about how the system
+performs a task, but about how corrections actually propagate here.
+
+**Mode: Operated**, small-n and single-session, on this project's own documents.
+
+**Grounds.** The four corrections are in this file's own record (F41, F43, F46) and in
+git. The count is exact for this session; nothing establishes it as a rate.
+
+**What it does and does not support.** It is a measurement of what dependent-finding
+costs **without an index**, which is what `70-THINKING/ideas.md` I5 is about and what
+`21-arch-knowledge-model`'s Traverse dependents exists to serve. It bears on the
+*system's* knowledge model.
+
+It does **not** argue that the design set should become a graph. The disanalogy is
+load-bearing and cuts against the finding's apparent strength: a knowledge-model walk is
+mechanical because parent and child links are explicit, whereas design documents have
+only prose citations, so the walk failed partly because there was nothing to walk. The
+right reading is narrow — where dependency edges exist, walking them beats diligence;
+where they do not, diligence is what there is, and it misses.
+
+Nothing changes in how design documents are filed. Markdown in git, with prose citations
+and an occasional checker, is the right weight for a human-authored set. What the session
+adds is a caution recorded where it is useful: **a heading rename breaks prose citations
+silently**, and the link checker in use validates only markdown links, never section
+references.
+
+**Changed.** Nothing structural. Recorded here, and the verification gap is noted in
+`50-PROGRESS/STATUS.md` for whoever runs the next pass.
+
 ## Unchecked justifications
 
 Findings above are grounded in something read or directly checked. The items below are
