@@ -96,7 +96,7 @@ It does not concern itself with how the walk performs. What this family needs is
 
 If nothing reaches `21-arch-knowledge-model` except through a member of this family, then the knowledge model is write-gated by role, and `10-foundations/03`'s motivating worry — that an interpretation stored as truth gets treated as evidence by later readers and progressively strengthens a false premise — has a structural answer rather than only a schema.
 
-The line that makes this affordable is `03`'s own: a conclusion is not an observation. An observation entering the record is runtime bookkeeping (`10-technical/01`, What is not an effect) and needs no thinking processor. An **interpretation** — a finding, a decision, a qualification — does. Ordinary work can record what happened; only thinking can record what it means.
+The line that makes this affordable is `03`'s own: a conclusion is not an observation. An observation entering the record is runtime bookkeeping (`10-technical/01`, What is outside the vocabulary) and needs no thinking processor. An **interpretation** — a finding, a decision, a qualification — does. Ordinary work can record what happened; only thinking can record what it means.
 
 Stated as a consequence rather than a rule, because it is stronger than anything the foundations currently require and deserves to be argued before it is relied on.
 

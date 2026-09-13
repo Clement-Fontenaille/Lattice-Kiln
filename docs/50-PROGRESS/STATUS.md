@@ -34,14 +34,24 @@ untreated.
 _Appended as work lands. Difficulties and deliberate omissions collected here for
 the operator's review._
 
+**A verification gap worth knowing about.** The link checker used throughout this
+session only validates `](path)` links. It does not see **prose references to section
+names** — "`10-technical/01`, What is not an effect" — and renaming a heading breaks
+those silently. Renaming `What is not an effect` tonight broke one such reference, found
+only by writing a second checker after the fact. Bolded lead-ins are also used as
+reference targets in several places, which no heading-based check will ever catch.
+
 **2 — editorial pass. Done, with two judgement calls worth reviewing.**
 
-- `03`'s append-don't-rewrite rule applies to *promoted claims other documents relied
-  on*. The audit trail for every correction lives in `90-notes/02` (F1–F46) and in
-  git, so removing archaeology from the design documents loses nothing. Line taken:
-  **keep the argument, drop the chronology.** "X rather than Y, because Y describes
-  form while what matters is relation" stays; "an earlier draft said Y, withdrawn on
-  this date" goes.
+- I invoked `03`'s append-don't-rewrite rule to justify this and should not have.
+  **That rule governs artifacts** — entries in the claim graph the system holds — **not
+  design documents**, which are human-authored specification. Operator ruling,
+  2026-09-13. The instruction to strip the archaeology was authority enough on its own;
+  citing `03` dressed a straightforward editorial decision as a derived one, and I also
+  had the rule's scope condition backwards while doing it.
+- The line actually taken, which stands: **keep the argument, drop the chronology.**
+  "X rather than Y, because Y describes form while what matters is relation" stays;
+  "an earlier draft said Y, withdrawn on this date" goes.
 - The pass surfaced one real contradiction rather than only prose: `25` said in one
   paragraph that deriving a scope is ordinary cognition rather than part of the check,
   and in the next that deriving from intent belongs to the layer. Left over from the
@@ -107,9 +117,9 @@ at all, so the gate as specified cannot represent one whether or not a rule name
 
 **MVP slice M0–M6 complete.** Findings entries 1–9.
 
-**Current milestone: M7 — Static supervised workflow.** Both deliverables owed: the
-spec (`10-technical/11-static-workflow.md`) and the execution record
-(`50-PROGRESS/M7-static-workflow.md`).
+**Current milestone: M7 — Static supervised workflow.** The spec
+(`10-technical/11-static-workflow.md`) is written, back half only. The execution record
+(`50-PROGRESS/M7-static-workflow.md`) is still owed, and steps 2–4 are build-and-run.
 
 **M3 open**, crossed in reduced form for the MVP, stays open until the M11 items land.
 

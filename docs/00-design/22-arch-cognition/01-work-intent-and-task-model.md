@@ -46,7 +46,7 @@ The system should be capable of deciding that the correct response to a task is 
 
 It may discover that the task is based on a false assumption, that a different problem is more relevant, that the request already has been satisfied, or that more investigation is necessary.
 
-**Whether an instance actually performs that check is its own strategy.** Nothing needs building for it: a processor reasoning over what it was given is what a processor is, and recording the verdict is already a work-record mutation. `10-foundations/04`, On ownership, sets out why this is a configuration choice rather than something the architecture owes an actor. What the architecture does owe is that the verdict be *recordable distinguishably* once reached, and that is `28-arch-work-record`'s recorded conclusion.
+**Whether an instance actually performs that check is its own strategy.** Nothing needs building for it: a processor reasoning over what it was given is what a processor is, and recording the verdict is already a work-record mutation. `10-foundations/04`, The objective itself is not a given, sets out why this is a configuration choice rather than something the architecture owes an actor. What the architecture does owe is that the verdict be *recordable distinguishably* once reached, and that is `28-arch-work-record`'s recorded conclusion.
 
 For "the request has already been satisfied" specifically, `10-foundations/04` also names what context management must supply rather than judge: candidate matches from the knowledge base that plausibly converge with the objective, surfaced as ordinary retrieval artifacts. Whether one of them genuinely resolves the objective is the processor's call.
 
