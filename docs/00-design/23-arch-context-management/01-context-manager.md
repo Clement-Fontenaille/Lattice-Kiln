@@ -36,6 +36,28 @@ Whether the serving arrangement keeps a reusable prefix across turns is not a pe
 
 Those are not questions this project can settle from its own first principles. They need experiment, and they need whatever preliminary results the literature already holds. This is one axis among several, named here because it was the first to surface; `02-context-as-experimental-surface.md` holds the general treatment.
 
+## The policy governs several contexts at once
+
+A serving arrangement can hold more than one cached prefix at a time. That extends the strategy space above rather than replacing it: the lever is not only whether a prefix is kept, but which of several resident prefixes a given turn input continues from.
+
+Two things follow for this actor.
+
+**The recall policy is responsible for more than one live context simultaneously.** It decides what each of them is shown, and it decides how the substrate's limited capacity is shared between them. Those two decisions interact, since a context kept resident for one processor is capacity another cannot have.
+
+**The policy drives the cache mechanism rather than merely living above it.** Whatever the arrangement offers — holding several sequences, reusing a common prefix across them, moving a suspended one out of memory and bringing it back — is a mechanism the policy chooses among. Which mechanisms exist is a property of the substrate and belongs to specification; that the policy is what selects among them is an architectural position, and it means a policy interface written for a single context would be the wrong shape rather than a simpler one.
+
+## Isolation is a property a processor's role asks for
+
+What a processor should inherit from work already done is not uniform, so it is an input to the policy rather than a fixed rule.
+
+A processor continuing a task can reasonably resume the preceding step's context: the material is its own work, and resuming it is cheap. A processor performing an independent assessment cannot, for the reason `22-arch-cognition/02-processors.md` already gives about withholding reasoning — a judge assembled on top of the reasoning it is judging has been handed someone else's account instead of forming its own. Between those sit cases wanting partial isolation, sharing a common base while not sharing what either party concluded.
+
+So a role carries an **isolation preference**, and the policy honours it against whatever capacity it has.
+
+**For one class of processor the preference is a requirement.** An invariant processor's isolation is not a performance trade the policy may make: a scope check silently assembled on the prefix of the work it is checking inherits exactly the reasoning it exists to assess, and degrading it that way produces a check that passes for the wrong reason. Where such isolation cannot be provided, the check has not run, and `24-arch-permission-layer` already says what follows from a check that has not run.
+
+This is the one place the isolation question becomes a correctness question rather than an economy.
+
 **The live set is an index, not a store.** Everything a crossing returns is written to `21-arch-knowledge-model` first, so there is exactly one copy of any artifact's content and this actor points at it. That holds for every crossing type rather than only for knowledge-base retrievals — though one asymmetry survives, which the paragraph on event-versus-content below sets out.
 
 This is a decision about **where artifact content lives, and nothing more**. It says that the record is the one place artifact content is held, so that promoting something later does not mean copying it out of a conversation and into the record — there is no rewrite step, because it was never anywhere else. It does not say that what is written is kept.

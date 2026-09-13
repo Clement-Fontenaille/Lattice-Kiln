@@ -180,6 +180,12 @@ MUST carry:
 - **What was held back** — the entries recall dropped, and any truncation.
 - `policy_ref` — which recall policy produced this selection (resolvable through
   kind 8).
+- **Which prefix this turn input continued from**, and the **isolation actually
+  granted** alongside the isolation the instance requested. Recording only the
+  request is not enough: a judge whose isolation was degraded under capacity
+  pressure is otherwise indistinguishable afterwards from one that had it, and that
+  difference decides whether its verdict means anything
+  (`14-context-manager.md`, The isolation preference).
 
 This record is what makes recall policies comparable. Two policies over the same
 live set choose different subsets, and that comparability is a **measurement**

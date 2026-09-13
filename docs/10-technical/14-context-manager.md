@@ -178,39 +178,87 @@ purely for relevance.
 Those are not settleable from this project's first principles. They need
 experiment and whatever the literature already holds.
 
-### One prefix or several — the measurement this rests on
+### Several prefixes can be resident, so the lever is selection
 
-The section above assumes a binary that may not be one: keep the prefix or drop
-it. The question underneath it is **how many cached prefixes the serving
-arrangement can hold at once**, and it decides the shape of everything above.
+Keep-or-drop is not the choice. A serving arrangement holds more than one cached
+sequence at a time, so the lever is **which resident prefix this turn input
+continues from**, bounded by memory rather than by exclusivity. This extends the
+strategy space above; it does not replace it
+(`00-design/23-arch-context-management/01-context-manager.md`, The policy governs
+several contexts at once).
 
-If the answer is one, a policy's only prefix lever is keep-or-drop, and any
-processor needing off-prefix material costs the previous occupant its cache.
+Prefix identity is therefore a **third axis**, distinct from which live set an
+instance registers into and distinct from what recall selects out of that live
+set. A policy interface MUST be written against selection. One written against
+keep-or-drop cannot express selection later without changing every call site, while
+one written against selection degenerates to keep-or-drop at N=1 with nothing lost.
 
-If several can be resident, the lever is not keep-or-drop but **which resident
-prefix this turn input continues from** — a selection over a set, bounded by KV
-memory rather than by a binary. Prefix identity then becomes an axis a processor
-can specify, distinct from which live set it registers into and distinct from what
-recall selects.
+#### What llama.cpp offers
 
-**The case that forces the question** is the scope check
-(`03-capability-authority-model.md`). It is a judge, so its material must be
-assembled **off the prefix** of the work it is judging, or it inherits the
-reasoning it exists to assess. That must not cost the triggering instance its own
-prefix, nor the next processor on the same task. One prefix cannot serve both; the
-question is whether the substrate can.
+The MVP host runs llama.cpp, so the mechanisms available to a policy are its
+mechanisms. *(Illustrative — flag names and behaviour drift between versions, and
+this MUST be verified against the installed build before anything is written
+against it.)*
 
-**This is an M0-shaped question and should be answered the way M0 was**: measured on
-the reference host, not reasoned about. What to establish — how many independent
-cached sequences the serving arrangement holds, how the resident envelope divides
-among them, whether a suspended one can be moved out of GPU memory and back, and
-what that reload costs against recomputing the prefix from scratch. That last
-figure is the one that decides whether disk can be traded for memory here.
+- **Slots.** `--parallel N` gives N independent sequences, each with its own KV
+  region. This is the multiple-prefix primitive.
+- **Per-slot prefix reuse.** A request assigned to a slot is matched against what
+  that slot already holds, and only the divergent suffix is reprocessed.
+- **A divided envelope.** The total context is shared among slots, so roughly
+  `ctx_size / N` each. **Isolation costs context, permanently, for every slot that
+  exists** — this is the price of the whole arrangement and it is paid whether or
+  not a slot is busy.
+- **Slot save and restore.** A slot's KV state can be written to disk and brought
+  back. This is the concrete form of trading disk space for memory space.
+- **Reuse with gaps.** Some builds can reuse a cached prefix across a removed
+  chunk rather than requiring a strict common prefix.
 
-Until it is measured, this document takes **no position** on the number, and a
-policy interface MUST NOT assume one. An interface written against keep-or-drop
-cannot express prefix selection later without changing every call site, while one
-written against selection degenerates to keep-or-drop at N=1 with nothing lost.
+Two numbers decide what a policy can sensibly do with these, and **neither is
+measured**. How the usable envelope actually divides at each N on the reference
+host. And what restoring a saved slot costs against simply recomputing the prefix —
+restoring is bounded by disk throughput and linear in KV bytes, which run orders of
+magnitude above the text, while recomputing is a prefill pass bounded by compute.
+Both are plausible winners, and that comparison is what decides whether the
+disk-for-memory trade is worth anything here. This is an M0-shaped question and
+should be answered the way M0 was: measured, not reasoned about.
+
+#### The isolation preference
+
+An instance binds an `isolation` value at instantiation
+(`06-processor-contract.md`), and the policy consumes it when choosing which prefix
+a turn input continues from.
+
+*(Illustrative shape.)*
+
+```
+isolation := share_nothing | share_base | continue(prefix_id)
+```
+
+- `share_nothing` — a fresh sequence, inheriting no prefix that carries another
+  instance's reasoning.
+- `share_base` — may continue a prefix designated as a common base (role
+  instructions, a repository tree), and no prefix carrying a conclusion.
+- `continue(prefix_id)` — resume a named prefix, normally the preceding step on the
+  same task, where the material is the instance's own work and resuming it is
+  cheap.
+
+**Arbitration when preferences exceed capacity.** Slots are finite and the envelope
+divides, so a policy will not always grant what was asked. It MAY degrade a
+preference, and it MUST record what was actually granted rather than only what was
+requested (`02-observability-event-model.md`, kind 5). A judge whose isolation was
+silently degraded is indistinguishable afterwards from one that had it, which is
+the case the record exists for.
+
+**One class of processor is not negotiable.** An **invariant processor** binds
+`share_nothing` and the policy MUST NOT degrade it. A scope check assembled on the
+prefix of the work it is checking has been handed the reasoning it exists to
+assess, and it then passes for the wrong reason — a failure that looks like a
+passing check. Where `share_nothing` cannot be provided, the check **has not run**,
+and `03-capability-authority-model.md` already says what follows from that: it fails
+closed, and work stops.
+
+That is the one place isolation stops being an economy and becomes a correctness
+property.
 
 ## Compose — the turn input
 

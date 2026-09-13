@@ -12,11 +12,11 @@ binds to `10-technical/01-effect-vocabulary.md` (effect type 6),
 
 ## TL;DR
 
-A processor is a disposable reasoning instance bound at instantiation by six
-things — role instructions, an objective, a scope, a live-set identity, a
-capability set, an interaction mode — that reasons in one model context, may
-**propose** effects (never realize them), emits one result, and then ends. There
-is no resume.
+A processor is a disposable reasoning instance bound at instantiation by seven
+things — role instructions, an objective, a scope, a live-set identity, an
+isolation preference, a capability set, an interaction mode — that reasons in one
+model context, may **propose** effects (never realize them), emits one result, and
+then ends. There is no resume.
 
 > **Motto:** Give each mind a job, not a lifetime — and a receipt for everything it touched.
 
@@ -67,6 +67,13 @@ M4, the orchestrator from M5 on.
   afresh on every turn out of the live set under the recall policy; there is no
   bundle handed over once and held. A live set is empty at turn zero, since
   registration records what a crossing returned and nothing has crossed yet.
+- `isolation` — what this instance may inherit from contexts already built, as a
+  value the recall policy consumes (`14-context-manager.md`). Stable for the
+  instance's life, like `scope`. Its default comes from the role definition; the
+  caller MAY tighten it and MUST NOT loosen it below what the role requires — an
+  orchestrator asking for an independent review can demand isolation a general
+  reviewer role does not default to, and cannot waive isolation a judging role
+  does.
 - `capability_set` — the grants this instance holds
   (`03-capability-authority-model.md`). An effect type absent from the set means
   the instance may not request it; the set may be empty (a pure-reasoning

@@ -80,11 +80,16 @@ its own performance (higher-level evaluation, Milestone 12+).
 
 ## Outputs
 
-- A sequence of **processor invocations** (type 6 effects), each carrying the six
+- A sequence of **processor invocations** (type 6 effects), each carrying the seven
   things `06-processor-contract.md` binds: a role, an objective the orchestrator
-  formulated, a **scope contained in the work item's**, a live-set identity, a
-  capability set (bounded how — see the contested rule under Authority), and an
-  interaction mode. It does not select context; there is nothing to select.
+  formulated, a **scope contained in the work item's**, a live-set identity, an
+  isolation preference, a capability set (bounded how — see the contested rule
+  under Authority), and an interaction mode. It does not select context; there is
+  nothing to select.
+
+  On isolation it MAY tighten and MUST NOT loosen. Asking for an independent review
+  is a legitimate reason to demand more isolation than the reviewer role defaults
+  to; waiving what a judging role requires is not available to it.
 - A **decision record per loop step** (recorded as a type-4 work-record
   mutation): what was observed, which operation was chosen and a one-line
   natural-language rationale, and what the step is expected to produce. This is
@@ -237,7 +242,7 @@ justifying kind.
 ## Relationships
 
 - **Processor contract** (`06`) — the orchestrator is the caller that issues the
-  type-6 effect; it formulates the six-part input envelope.
+  type-6 effect; it formulates the seven-part input envelope.
 - **Work record** (`13`) — holds the work items the orchestrator formulates, their
   declared scopes, and the transitions it proposes. It reads current work state
   every loop step, which is why that read must not replay a transition log.

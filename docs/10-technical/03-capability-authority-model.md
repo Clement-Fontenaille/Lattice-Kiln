@@ -459,12 +459,14 @@ the runtime settles *who calls*, not *what the checker sees*. It reaches
 `14-context-manager.md` for its material, and it is a processor reasoning over
 natural language, not a function handed a payload.
 
-What follows from that is one genuine open question and it is not about invocation:
-the checker is a **judge**, so its material should be assembled **off the prefix**
-of whatever it is judging — otherwise it inherits the reasoning it is meant to
-assess. Whether that can be done without discarding the triggering instance's own
-prefix depends on how many cached prefixes the serving arrangement can hold, which
-is a measurement nobody has taken (`14-context-manager.md`).
+What follows from that is a requirement on how its material is assembled. The
+checker is a **judge**, so it binds `share_nothing`: it inherits no prefix carrying
+the reasoning it is meant to assess (`14-context-manager.md`, The isolation
+preference). This is not a preference the policy may trade away under capacity
+pressure. A check assembled on the prefix of the work it is checking passes for the
+wrong reason, which is worse than not running, because it looks like a passing
+check. Where `share_nothing` cannot be provided, the check **has not run**, and the
+fail-closed rule below applies.
 
 ### The checker is an invariant processor
 
@@ -604,11 +606,12 @@ is.
   mechanical default and is not one: whether a natural-language boundary permits
   modifying itself is the same judgment the rest of the check makes. Either it is
   a flag alongside the boundary, or it is another question put to the checker.
-- **Which prefix the checker's turn input builds on.** How it is *invoked* is
-  settled — see below. What is not settled is whether the serving arrangement can
-  hold more than one cached prefix at once, which decides whether the checker can
-  be assembled off-prefix without costing the triggering instance its own.
-  `14-context-manager.md` holds this as a measurement rather than a position.
+- **What isolating the checker costs.** How it is invoked is settled, and that it
+  binds `share_nothing` is settled. What is not known is the price: a dedicated
+  sequence takes a permanent share of the resident envelope whether or not it is
+  busy, and nobody has measured how the envelope divides on the reference host.
+  That figure decides how many judging processors the arrangement can afford at
+  once (`14-context-manager.md`).
 - **The doubt threshold for asking.** What counts as enough ambiguity to set a
   scope `pending` rather than deriving. Unset, with a known bias toward
   under-detection.
