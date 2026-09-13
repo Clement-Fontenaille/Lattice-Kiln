@@ -236,6 +236,15 @@ reviewer model, needing the planned second GPU. Gates M12 onward.
   never been applied. Apply or downgrade.
 - **Praxis before or after M7** — two execution gates rest on positions
   `70-THINKING/04-praxis.md` has not taken.
+- **The `03` / `08` collision — where a spawned instance's capability set comes
+  from.** Two contradictory MUSTs, recorded in both documents and deliberately left
+  undecided. `03` keys grants to the role from seed configuration; `08` said the
+  orchestrator cannot grant what it does not hold, which its own illustrative
+  configuration breaks immediately. Candidate resolution recorded: delegation is
+  bounded by the `roles` constraint on the type-6 grant, not by a subset relation
+  over effect types. **An implementation cannot proceed on this half of `03` until
+  it is settled** — the two readings produce different capability sets for the same
+  configuration.
 - **Who builds the scope check.** It is fully specified and assigned to no milestone.
   It needs an invariant processor, which is a role category nothing has instantiated
   yet — triage is the other member and is deferred to M11, so M11 is the natural home

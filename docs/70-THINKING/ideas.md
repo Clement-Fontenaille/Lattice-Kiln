@@ -602,3 +602,80 @@ already *be* this mechanical engine rather than merely a placeholder for it.
 of "how the implementation boundary will be decided," and — if the mechanical/judgment
 split holds up — a new `23-arch-context-management` document once the boundary is
 evidenced, per `04`'s own stated deferral mechanism.
+
+---
+
+## I13 — A challenger processor, and a theory as the thing worth producing
+
+**Provenance.** Operator, in conversation during the specification pass of
+2026-09-13. Unvetted; recorded as raised.
+
+**The idea.** A **challenger** role whose product is not a verdict but a
+*discussion*. It asks questions about a proposal, and the asking is what
+strengthens a position, narrows it, or shows it cannot be held. It is not a
+reviewer — a reviewer scores an artifact after the fact — and not a judge, which
+`24-arch-permission-layer`'s scope check and `11-verification-and-judging/` already
+cover. Its output is a better-articulated position and the exchange that produced
+it.
+
+**Why it might matter, and the frame it comes with.** Peter Naur's *Programming as
+Theory Building*: what a programmer produces is not primarily the program text but
+a **theory** — an understanding of the problem and of why the artifact is shaped
+the way it is. The theory is what lets someone extend the system correctly, it
+lives in people rather than in documents, and it is what dies when a team
+disbands. Documentation cannot carry it; it can only point at it.
+
+Read that way, a challenger is not a quality gate. It is a mechanism for
+*producing* theory, and a theory is only had by being **shared** — which means
+articulated to someone who pushes back. That reframes what the project's own
+cognitive output is for: not a set of artifacts, but an understanding the next
+instance can pick up.
+
+**Why it is worth doing.** It has attachment points on several things the design
+set already holds, which is usually the sign an idea is load-bearing rather than
+decorative.
+
+- `10-foundations/03` holds that a claim gets checked when it is **used** —
+  cited, applied, put in contact with another claim — rather than by scheduled
+  audit. A challenger manufactures that contact deliberately instead of waiting
+  for it.
+- `22-arch-cognition/02-processors.md` already names **friction** and
+  **convergence** as the two outcomes of contact, and says disagreement is
+  evidence rather than a failure to converge. It has no actor whose job is to
+  produce contact.
+- The **thinking family** (`22-arch-cognition/04-thinking.md`) is defined by
+  producing a proposed knowledge-state transition. A challenger produces the
+  pressure under which such a proposal gets formed or withdrawn — possibly a
+  family member, possibly its complement.
+- `10-foundations/07`'s two modes say the operator should be asked what only they
+  can answer, and never handed something they can merely approve. A challenger is
+  the same instruction pointed inward, at the system's own positions.
+- `70-THINKING/04-praxis.md` — this session's own practice is the evidence base.
+  The design work here proceeds by exactly this mechanism, and the operator is
+  currently the challenger.
+
+**Open before it is worth committing.**
+
+- Whether the challenger is a distinct role or the existing reviewer role pointed
+  at a proposal rather than at an artifact. `27-arch-adaptation-and-evolution/08`'s
+  default says reuse an existing role at a new scope unless evidence shows it
+  cannot serve, and that default has not been tested here.
+- What its product is, concretely, and where it lands. A recorded conclusion? A
+  qualification on a claim? A set of questions attached to the proposal? Nothing
+  in the record currently holds "an exchange".
+- Whether a 7B can do it. The M5 follow-up found this model size does the doing
+  and not the judging, and a challenger that generates plausible-sounding
+  objections without discriminating power would be worse than none — it would
+  manufacture friction where `03` wants friction to be a signal.
+- Whether the theory-building frame survives contact with an ephemeral
+  architecture. Naur's theory lives in *persistent* people; this system disposes of
+  its processors. That may be the sharpest objection and the most interesting
+  question: what carries a theory across instances that each end?
+- Its relation to the scope check and to triage. Both are already processors whose
+  admission condition is **direction** — they may restrict and never widen. A
+  challenger that only ever narrows a position is safe in the same sense; one that
+  can talk a position into being *stronger* is not obviously so.
+
+**Would graduate to** `22-arch-cognition/` as a role, if the distinct-role question
+resolves that way; otherwise to `04-praxis.md` and the standing position as a
+documented design principle about how this project's own understanding is produced.
