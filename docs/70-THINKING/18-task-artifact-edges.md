@@ -18,23 +18,40 @@ not the storage layer.*
 
 ---
 
+## Edge labels
+
+An edge carries a label saying what the artifact is **to** the task. The label is
+known at the moment the edge is created.
+
+| Label | Carried by | Edge created |
+|---|---|---|
+| `objective` | What the task is to accomplish | At task creation, or at invocation when a calling processor writes a new one |
+| `derived_scope` | An invariant processor's ceiling output | At task creation |
+| `tool_output` | What a tool call returned | On registration |
+| `handoff:thinking` | A processor's reasoning | On registration |
+| `handoff:response` | A processor's conclusion | On registration |
+
+`handoff:thinking` and `handoff:response` are distinct because a `review` instance
+receives a prior processor's conclusion and not its reasoning
+(`10-technical/06`, independence). The label is what that cut is made against.
+
+---
+
 ## Phase 1 — scope evaluation, before the task exists
 
 Deriving a ceiling is a judgment over natural language, so it is performed by an
-invariant processor, which is an LLM instance and needs material to work from. The
-task does not exist yet, so there is no task scope to bind and no task live set to
-register into.
+invariant processor, which is an LLM instance and needs material to work from.
 
 **1.1** Intent arrives out of band and is written to the work record, write-once.
 
-**1.2** An invariant processor instance E-1 is created to derive the ceiling. It
-binds role instructions and an objective (*derive the scope ceiling for this
-intent*). It holds no effect grants; it reads and produces one ceiling.
+**1.2** An invariant processor instance E-1 is created to derive the ceiling. Its
+scope is the **current project** — the working directory — set from outside rather
+than derived, since it cannot be bounded by the ceiling it is producing. It holds no
+effect grants.
 
-**1.3** E-1 reads the intent. Crossing type `read`. An Observation is written to the
-knowledge model.
+**1.3** E-1 reads the intent. Crossing type `read`.
 
-**1.4** E-1 performs orienting tool calls, each a read, each writing an Observation:
+**1.4** E-1 performs orienting tool calls, each a read:
 
 - probe the file tree;
 - read the `README`;
@@ -43,8 +60,11 @@ knowledge model.
 
 **1.5** E-1 produces the ceiling and ends.
 
-At the end of phase 1 the artifacts from 1.3 and 1.4 exist in the knowledge model
-and are attached to no task.
+**Nothing from phase 1 is in the knowledge model.** An artifact cannot be declared
+there before it is attached to a task. What 1.3, 1.4 and 1.5 produced is held in
+memory, unattached, on the running runtime stack.
+
+If task creation does not follow, none of it is ever declared.
 
 ---
 
@@ -52,23 +72,36 @@ and are attached to no task.
 
 **2.1** Task T-88 is created, carrying the ceiling as its scope.
 
-**2.2** Every artifact obtained in phase 1 gains an edge to T-88. The set includes
-the intent Observation and the orienting reads, which is the task's live set at
-creation.
+**2.2** Creation attaches the material assembled for it. Each attachment declares the
+artifact in the knowledge model and creates its edge to T-88:
 
-**2.3** The artifacts are not re-fetched and not copied. Registration happened in
-phase 1; phase 2 creates edges.
+- the intent, label `tool_output`;
+- the orienting reads from 1.4, label `tool_output`;
+- the ceiling from 1.5, label `derived_scope`;
+- the task's objective, label `objective`.
+
+**2.3** Attachment at creation is a **runtime call**. It is not a proposed effect and
+needs no capability evaluation and no gating.
+
+**2.4** The same call serves an operator attaching further context to an existing
+task.
 
 ---
 
 ## Phase 3 — first invocation
 
 **3.1** Instance I-1, an implementer, is instantiated against T-88. It binds role
-instructions, an objective, T-88's scope, T-88's live-set identity, an isolation
+instructions, an objective, a scope, T-88's live-set identity, an isolation
 preference, a capability set, an interaction mode.
 
-**3.2** The first turn input is composed from the live set as it stands: intent,
-file tree, README, documentation, test-suite observation.
+**3.2** No processor invoked I-1 — it is the first, as in a dloop arrangement — so it
+**inherits T-88's objective and scope** rather than receiving new ones. Both are
+already declared, attached in 2.2. No new artifact is created.
+
+Where a calling processor does invoke an instance, that processor writes the
+invocation's objective, which becomes a new artifact with label `objective`.
+
+**3.3** The first turn input is composed from the live set as it stands.
 
 ---
 
@@ -140,19 +173,28 @@ that is not promoted and that no remaining root reaches.
 
 ---
 
+## Splitting — edge inheritance
+
+Two base policies: **inherit all**, or **inherit none**. Inheritance duplicates
+edges, never artifacts.
+
+The objective is never inherited. A new task receives its own objective, which
+becomes a new artifact with label `objective`, even where that objective is also
+stated in the parent's handoff.
+
+---
+
 ## Not yet decomposed
 
-- What bounds E-1 in phase 1, given that it derives the ceiling and so cannot be
-  bounded by it.
-- Whether phase 1's reads are scope-checked, and against what.
-- Where phase 1's artifacts are held between 1.3 and 2.2.
-- What happens to phase 1's artifacts if task creation does not occur.
-- Whether the objective and the scope bound in 3.1 are registered as artifacts, and
-  by which operation.
-- Which operation creates the edges in 2.2, and whether it is a type-4 effect.
+- Whether phase 1's reads are scope-checked against E-1's project scope, and what a
+  refusal there would mean.
+- Whether `derived_scope` is inherited on a split, or re-derived per task the way the
+  objective is re-written.
+- Whether a processor attaching mid-work (phase 5) uses the same ungated runtime call
+  as 2.3, or proposes a gated type-4 effect.
 - How 6.2 determines that another live task holds an artifact.
-- Whether an edge can be removed before its task ends.
-- How inheritance duplicates edges when a task is split.
+- Edge removal before a task ends: the operation exists so that it is available, and
+  nothing yet calls it.
 
 ## Traces not yet run
 
