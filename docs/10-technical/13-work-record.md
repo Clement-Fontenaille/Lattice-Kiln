@@ -138,10 +138,33 @@ realizes a type-4 effect, and that one call writes both — the log entry first,
 the item record. Nothing else writes either, so there is no route by which a change
 reaches one and not the other, except a crash between the two writes.
 
-Appending first is what makes that crash recoverable: the log is then complete and
-the item record is the one that can fall behind, so it can be rebuilt. The reverse
-order would leave a realized change recorded only in the record that gets
-overwritten.
+**The log says whether it was applied.** Rather than inferring from the write order
+what a crash left behind, each transition carries its **application state**:
+
+- `logged` — the entry is durable; the item record does not yet reflect it.
+- `applied` — the item record reflects it.
+
+Recovery then reads rather than infers. Any transition left `logged` is replayed
+against the item record, and the ambiguous case disappears. The ordering above is
+still what makes this work — appending first is what guarantees the log is the
+complete side — but the marker is what a recovery procedure actually consults.
+
+**The state advances by a second append, never by editing the entry.** The log is
+append-only and that property is load-bearing, so `applied` is recorded as a small
+commit entry following the transition it completes. A transition whose commit entry
+is absent is the one to replay. Editing the original entry in place would buy one
+write and give up the guarantee that nothing in this log is ever rewritten.
+
+**Two states, not four.** *Requested* and *rejected* belong to a proposed effect's
+path and never reach this store: nothing is written here until the runtime has
+realized the type-4 effect, so capability and gate have already passed by the time
+the log sees anything. Those dispositions are recorded once, by
+`02-observability-event-model.md` (kind 4). Carrying them here as well would make
+this store shadow observability, and two records of one fact that can disagree is a
+failure mode with no owner.
+
+The application state is a different thing from a disposition. It is local to this
+store and describes only whether **this store** finished its own write.
 
 ## The declared scope
 
@@ -310,6 +333,16 @@ work/
   is not what the log adds up to, and MUST halt rather than continue. Repair
   rebuilds the item record from the log; editing the log to match the record
   destroys history.
+- **An application state edited in place.** Recording `applied` by rewriting the
+  transition entry gives up the one property that makes the log worth trusting for
+  repair. It MUST be a second append.
+- **A containment refusal left unrecorded.** A split or refinement this store
+  refuses for containment is an attempt to widen a mandate, which is the clearest
+  boundary-probing signal the scope apparatus can produce. It is recorded by
+  observability as a kind-4 disposition (`02-observability-event-model.md`), not
+  here — the item's log records what happened to the item, and nothing happened to
+  it. An implementation that records the refusal in neither place has discarded the
+  signal.
 - **Scope change absent from the log.** Then a mid-task widening is
   indistinguishable from a boundary that was always there, which is exactly what
   the audit exists to catch.

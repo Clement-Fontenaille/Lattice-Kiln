@@ -156,7 +156,15 @@ proposals after a refusal.
 
 MUST carry: `invocation_id`, proposed `type` and payload ref, and the disposition
 — realized (links to a kind-2 record) / rejected-by-capability /
-rejected-by-gate (links to a kind-3 record).
+rejected-by-gate (links to a kind-3 record) / **rejected-by-containment**.
+
+That fourth disposition covers a refusal neither of the other two describes. A
+proposed split or refinement whose scope is not contained in its parent's is
+refused by the work record acting on the scope check's verdict
+(`13-work-record.md`), which is not a capability decision and not a gate trip. It
+is also the clearest **boundary-probing** signal the scope apparatus can produce —
+an attempt to widen a mandate, caught — so a system that records it nowhere has
+discarded exactly the evidence this record kind exists to surface.
 
 A **mandate-conformance verdict** is recorded here too, with its natural-language
 reasoning, and `within` is recorded as explicitly as `outside`

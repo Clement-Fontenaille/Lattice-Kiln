@@ -360,6 +360,12 @@ Implementations MUST check containment on all three, not only on splits. The spl
 route is the obvious one, and refinement reaches the same place without anything
 ever splitting.
 
+A refusal on containment MUST be recorded, as a `rejected-by-containment`
+disposition (`02-observability-event-model.md`, kind 4). It is neither a capability
+decision nor a gate trip, and it is the clearest boundary-probing signal this whole
+apparatus produces: an attempt to widen a mandate, caught at the moment it was
+attempted. A single one is ordinary; a pattern of them is the finding.
+
 Deciding whether a proposed child's boundary sits inside its parent's is itself a
 natural-language judgment. This rule does not reduce the amount of judgment
 required; it puts all of it in one check instead of leaving a path around it.
