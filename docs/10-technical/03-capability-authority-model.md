@@ -607,6 +607,14 @@ is.
   mechanical default and is not one: whether a natural-language boundary permits
   modifying itself is the same judgment the rest of the check makes. Either it is
   a flag alongside the boundary, or it is another question put to the checker.
+- **What triggers deriving a root item's ceiling.** The runtime holds hardcoded
+  invariant-layer call sites and makes the invariant calls at each of them. Deriving
+  a ceiling from intent is not one of them, so the first step of the whole mandate
+  chain has no trigger. Surfaced by `15-information-trajectories.md`.
+- **Through what channel a derived scope reaches the operator.** Recording it with
+  its derivation is normative, and it is being *visible* that makes it contestable
+  rather than ratified. `08-orchestrator-contract.md`'s two-mode handoff is the
+  orchestrator's, and the orchestrator is not who derived this.
 - **What isolating the checker costs.** How it is invoked is settled, that it binds
   `share_nothing` is settled, and the substrate's ability to isolate is a
   deployment precondition rather than a runtime negotiation

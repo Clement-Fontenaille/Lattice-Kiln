@@ -208,6 +208,23 @@ The naive sweep walks the whole graph from a promoted-claim root set. That is
 acceptable until it is not: no index, no incremental reachability, no cached
 dependent set, until measurement shows the walk is the actual bottleneck.
 
+**The root set is under-specified, and this is the most consequential unknown in
+the document.** "Promoted claims" is what the rule names, and **three other stores
+hold references into this one**: `13-work-record.md`'s attachment edges,
+`14-context-manager.md`'s live set, and `02-observability-event-model.md`. None of
+the three is currently named as a reachability root.
+
+Read literally, that has a consequence nobody wants: a Finding attached to a work
+item and cited by no other claim is not reachable, so the sweep removes it and
+leaves the work record holding a **dangling reference**. An implementation MUST NOT
+sweep on that reading. What the root set actually includes is an open contract
+below, and until it is closed, an implementation MUST treat a reference held by any
+other store as protective.
+
+**Nothing triggers the sweep either.** Per turn, at an instance's end, on a size
+threshold, on demand — the document says the sweep is the default path and never
+says when the default runs. Also open below.
+
 ## General shape and the naive default
 
 **The filesystem. No database, no vector index, no model-mediated retrieval**,
@@ -303,6 +320,16 @@ by hand.
 
 ## Open contracts
 
+- **What the reachability root set contains.** Stated as "promoted claims" while
+  three other stores hold references here. Candidates for inclusion: a work-item
+  attachment, a live-set entry, an operator-marked claim. Whichever way it goes, the
+  answer decides what the sweep removes, which makes it the retention rule itself
+  rather than a detail of it. Surfaced by `15-information-trajectories.md`.
+- **What "promoted" means.** It carries the root set and therefore the whole
+  retention rule, and no document in this set defines it. Candidates: any claim
+  above Observation, any claim a type-5 proposal realized, any claim something else
+  cites. They are not the same set.
+- **When the sweep runs.** No trigger is specified anywhere.
 - **How scope is inscribed.** Blocks the record format rather than following from
   it. `10-foundations/03` requires it assessed near creation because no later
   reader recovers it; what actually goes in the field is unanswered.

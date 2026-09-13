@@ -156,7 +156,15 @@ proposals after a refusal.
 
 MUST carry: `invocation_id`, proposed `type` and payload ref, and the disposition
 — realized (links to a kind-2 record) / rejected-by-capability /
-rejected-by-gate (links to a kind-3 record) / **rejected-by-containment**.
+rejected-by-gate (links to a kind-3 record) / **rejected-by-containment** /
+**rejected-as-non-representable**.
+
+The last one covers the rejection that happens **earliest** and was the one this
+record could not express. The runtime rejects a non-representable operation *before
+the gate is consulted* (`04-enforcement-gate.md`), so it produces no gate decision
+and no capability decision — and with no disposition of its own it produced no
+record at all. A cognitive component repeatedly proposing writes outside its
+workspace is boundary probing of the plainest kind, and it was invisible.
 
 That fourth disposition covers a refusal neither of the other two describes. A
 proposed split or refinement whose scope is not contained in its parent's is

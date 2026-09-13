@@ -354,6 +354,12 @@ work/
   declining folded into one, reproduces the failure M5 recorded.
 - **Claim content copied here.** An attachment holding a claim's text rather than
   a reference creates a second copy that goes stale silently.
+- **An attachment left dangling by the sweep.** The opposite failure, and it is
+  currently reachable on a literal reading of `12-knowledge-model.md`: its sweep's
+  root set names promoted claims and not the references this store holds, so a
+  Finding attached here and cited by no other claim can be elided underneath us. An
+  implementation MUST NOT sweep on that reading, and MUST be able to detect an
+  attachment that no longer resolves rather than returning it silently.
 
 ## Relationships
 

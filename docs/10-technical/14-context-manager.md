@@ -426,6 +426,12 @@ is a change `02-observability-event-model.md` owes.
   **before** composing it. Nothing here supplies that estimate. If several prefixes
   can be resident, R4's envelope is divided among them and the estimate has to
   account for the division, not only for this turn input.
+- **What ends a live set.** It is described here as an index over a run, while
+  `live_set_id` binds per instance (`06-processor-contract.md`). Whether an
+  instance's live set ends when the instance does, and what becomes of its entries
+  if it does, is unstated — and it interacts with the sweep, since a live-set
+  reference may or may not protect a claim from elision
+  (`12-knowledge-model.md`). Surfaced by `15-information-trajectories.md`.
 - **Isolation.** Whether two live sets can share entries, and what it means for
   one to be derived from another, is untouched — it depends on the seeding answer
   and on the decomposition question above.
