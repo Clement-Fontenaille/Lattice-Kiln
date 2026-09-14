@@ -1,6 +1,6 @@
 # M6 suite run - arm `test_synth` (suite 0.3.0)
 
-_2026-09-14 12:47 - 33 runs_
+_2026-09-14 12:55 - 36 runs_
 
 | task | shape/trap | terminal | base | final | struct | pass | regr | decline | wall |
 |---|---|---|---|---|---|---|---|---|---|
@@ -37,18 +37,23 @@ _2026-09-14 12:47 - 33 runs_
 | wf5_partial | implement/edge-coverage | answered | 0/7 | 7/7 | - | True | - | - | 65.3 |
 | wf5_partial | implement/edge-coverage | answered | 0/7 | 7/7 | - | True | - | - | 73.5 |
 | wf5_partial | implement/edge-coverage | blocked-partial | 0/7 | 5/7 | - | False | - | - | 96.0 |
+| wf5_partial | implement/edge-coverage | blocked-partial | 0/7 | 5/7 | - | False | - | - | 104.9 |
+| wf5_partial | implement/edge-coverage | blocked-partial | 0/7 | 5/7 | - | False | - | - | 69.4 |
+| wf6_multi | migration/multi-concern | blocked-no-progress | 2/6 | 2/6 | DOCSCORE=0/4 TODOSCORE=0/3 | False | - | - | 328.5 |
 
-**objective pass 22/33 - regressions 0 - check crashes 0 - decline accuracy 5/5**
+**objective pass 22/36 - regressions 0 - check crashes 0 - decline accuracy 5/5**
 
 ## `stresses` slices (mean final SUBTESTS fraction)
 
 | capability | n | mean |
 |---|---|---|
 | L2-structural | 15 | 1.00 |
+| combined-score | 1 | 0.33 |
+| concern-split | 1 | 0.33 |
 | cross-file | 5 | 1.00 |
 | edge-coverage | 5 | 0.56 |
-| greenfield-impl | 8 | 0.69 |
-| kway-synth | 3 | 0.90 |
-| partial-credit | 3 | 0.90 |
+| greenfield-impl | 10 | 0.69 |
+| kway-synth | 5 | 0.83 |
+| partial-credit | 5 | 0.83 |
 | premise-audit | 10 | 1.00 |
 | witness-pair | 10 | 1.00 |

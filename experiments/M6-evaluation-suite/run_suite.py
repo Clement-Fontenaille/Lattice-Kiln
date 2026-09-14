@@ -91,7 +91,7 @@ try:
 except Exception as _e:  # noqa: BLE001
     print(f"(m6_arms unavailable: {_e!r})", file=sys.stderr)
 sys.path.insert(0, str(HERE.parent / "M7-static-workflow"))
-for _mod in ("m7_workflow", "m7b_workflow", "m7c_workflow", "m7e_workflow", "m7f_workflow", "judge_staged_workflow", "judge_anchored_workflow", "judge_caveat_workflow", "judge_bypass_workflow", "test_synth_workflow"):     # M7's arms live in their own dir
+for _mod in ("m7_workflow", "m7b_workflow", "m7c_workflow", "m7e_workflow", "m7f_workflow", "judge_staged_workflow", "judge_anchored_workflow", "judge_caveat_workflow", "judge_bypass_workflow", "test_synth_workflow", "judge_fullctx_workflow"):     # M7's arms live in their own dir
     try:
         ARMS.update(__import__(_mod).ARMS_EXTRA)
     except Exception as _e:  # noqa: BLE001
