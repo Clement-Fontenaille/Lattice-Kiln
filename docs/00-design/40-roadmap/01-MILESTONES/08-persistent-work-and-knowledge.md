@@ -34,9 +34,9 @@ derive itself in the same session? Two stages, cheapest first:
    correctly when a later task calls for it. This is not a synthetic benchmark:
    the corpus already exists, was gathered independently of this milestone, and is
    real data the "curated memory beats conversational accumulation" hypothesis
-   (`03-research-and-evaluation-agenda.md`) has never been tested against.
+   (`03-research-and-evaluation/hypotheses.md`) has never been tested against.
    Registered as a sweep target in
-   [`08-next-experiments.md`](../08-next-experiments.md) → E6.
+   [`08-next-experiments.md`](../03-research-and-evaluation/E6-corpus-digestion.md) → E6.
 
 ## What it depends on
 

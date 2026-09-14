@@ -31,7 +31,7 @@ M5 result, are deferred here from
 
 ## Relationship to the capability sweep
 
-Experiment E4 in [`../08-next-experiments.md`](../08-next-experiments.md) — the
+Experiment E4 in [`../03-research-and-evaluation/E4-capability-sweep.md`](../03-research-and-evaluation/E4-capability-sweep.md) — the
 existing suite across models, varying **size and tuning, not size alone** — is a
 scaled-down early instance of this milestone's question, runnable long before the
 milestone itself. Its warning applies here too: a size-only design cannot separate

@@ -26,7 +26,7 @@ We expect that promoting selected knowledge into persistent project memory produ
 
 The main risk is that the memory curation mechanism becomes a new source of omissions and false certainty.
 
-**Untested.** The 2026-09-10 foundations pass gave the mechanism a precise shape it did not have when this hypothesis was written — Mode of acquisition, Weighing claims, Scope, and Collapsing (`10-foundations/03-evidence-belief-and-provenance.md`, `05-ephemeral-conversation-curated-memory.md`). The main risk named above is exactly what Scope exists to bound, and it is exactly the property `03`'s own construction admits it has not checked against a real case. First test: [E6](08-next-experiments.md), digesting the `70-THINKING/` corpus through the substrate at [M8](01-MILESTONES/08-persistent-work-and-knowledge.md).
+**Untested.** The 2026-09-10 foundations pass gave the mechanism a precise shape it did not have when this hypothesis was written — Mode of acquisition, Weighing claims, Scope, and Collapsing (`10-foundations/03-evidence-belief-and-provenance.md`, `05-ephemeral-conversation-curated-memory.md`). The main risk named above is exactly what Scope exists to bound, and it is exactly the property `03`'s own construction admits it has not checked against a real case. First test: [E6](00-questions.md), digesting the `70-THINKING/` corpus through the substrate at [M8](../01-MILESTONES/08-persistent-work-and-knowledge.md).
 
 ## Core hypothesis: decomposition pays where and only where the work exceeds what the assembly can hold
 

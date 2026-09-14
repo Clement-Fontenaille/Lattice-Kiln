@@ -68,7 +68,7 @@ equivalence-preserving reasoning.
   `07-when-to-decompose/00d-findings.md` F4 on the reverse-causation confound in
   observed-length curves.
 
-**Would graduate to** `00-design/40-roadmap/03-research-and-evaluation-agenda.md`.
+**Would graduate to** `00-design/40-roadmap/03-research-and-evaluation/hypotheses.md`.
 
 Partial prior instance: `07-when-to-decompose/` sheet `04` §3.1 runs six shapes
 over the same tasks and measures accuracy *and* cost. It is not a full I1 — the
@@ -113,7 +113,7 @@ output against.
   or encodes steps it cannot perform — which would read as a ceiling but is a
   mismatch.
 
-**Would graduate to** `00-design/40-roadmap/03-research-and-evaluation-agenda.md`.
+**Would graduate to** `00-design/40-roadmap/03-research-and-evaluation/hypotheses.md`.
 
 ---
 
@@ -149,7 +149,7 @@ defence a decomposition harness has against the compounding-error argument.
 - Restoration errors (F25) mean outcome-level grading is biased; the scorer must
   read the working, not just the answer.
 
-**Would graduate to** `00-design/40-roadmap/03-research-and-evaluation-agenda.md`.
+**Would graduate to** `00-design/40-roadmap/03-research-and-evaluation/hypotheses.md`.
 
 ---
 
@@ -182,7 +182,7 @@ at constrained model size — the project's regime.
   tasks, or whether depth/recursion has to be in the representation from the
   start.
 
-**Would graduate to** `00-design/40-roadmap/03-research-and-evaluation-agenda.md`.
+**Would graduate to** `00-design/40-roadmap/03-research-and-evaluation/hypotheses.md`.
 
 ---
 
@@ -268,7 +268,7 @@ admits alternative valid decompositions.
 
 **Would graduate to** a refinement block in `02-capability-as-granularity.md`,
 then — if the evaluator survives a first test —
-`00-design/40-roadmap/03-research-and-evaluation-agenda.md`.
+`00-design/40-roadmap/03-research-and-evaluation/hypotheses.md`.
 
 ---
 
@@ -373,7 +373,7 @@ needs neither I6 nor I7.
 **Rests on, unproven.** φ being recoverable and cheap to query — `02`'s central
 open risk. Independent of [[I7]].
 
-**Would graduate to** `00-design/40-roadmap/03-research-and-evaluation-agenda.md`
+**Would graduate to** `00-design/40-roadmap/03-research-and-evaluation/hypotheses.md`
 as a probe-then-act experiment.
 
 ---
@@ -417,7 +417,7 @@ convergent / discriminant validity, Q-matrix identifiability).
 **Status.** The open-question form is recorded in
 `00-design/40-roadmap/02-open-questions-register.md` under *Capability model (φ)*
 (2026-09-07). The experiment form is what would still graduate to
-`00-design/40-roadmap/03-research-and-evaluation-agenda.md` — `02` already names
+`00-design/40-roadmap/03-research-and-evaluation/hypotheses.md` — `02` already names
 the cheap version: does any candidate φ separate the M6 suite's passes from its
 failures better than chance, using features computable in advance.
 
@@ -499,7 +499,7 @@ field makes sub-results addressable by construction), and F10 (S&D's demonstrate
 value is cost, not accuracy). Sharpens [[I6]]: it names a condition under which
 the aggregator, specifically, is the binding stage.
 
-**Would graduate to** `00-design/40-roadmap/03-research-and-evaluation-agenda.md`
+**Would graduate to** `00-design/40-roadmap/03-research-and-evaluation/hypotheses.md`
 as the aggregator-collapse sweep, plus a design note that decompositions whose
 recombination retrieves from an addressable store of sub-results are preferred
 over those whose recombination holds every partial result in one context.
@@ -546,7 +546,7 @@ arrives late rather than never.
   the context manager on a lag.
 
 **Would graduate to**
-`00-design/40-roadmap/03-research-and-evaluation-agenda.md` as a context-manager
+`00-design/40-roadmap/03-research-and-evaluation/hypotheses.md` as a context-manager
 evaluation method, and it answers a live entry in the open-questions register's
 *Context governance* section.
 

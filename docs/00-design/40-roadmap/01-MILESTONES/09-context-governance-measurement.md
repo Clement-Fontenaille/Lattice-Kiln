@@ -32,7 +32,7 @@ curator role it is supposed to justify would be evaluated by the same signal tha
 already evaluates everything else.
 
 This is the same construct problem experiment E1 in
-[`../08-next-experiments.md`](../08-next-experiments.md) attacks from the probe
+[`../03-research-and-evaluation/`](../03-research-and-evaluation/) attacks from the probe
 side: label by **construction**, not by outcome.
 
 ## What measures this now has to work with

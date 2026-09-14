@@ -66,5 +66,5 @@ they changed the terminal.
 The suite is now a **ruler**, and no one has checked that it measures one coherent
 thing. Construct validation — difficulty distribution, item–total correlation,
 dimensionality — is experiment E0 in
-[`../../08-next-experiments.md`](../../08-next-experiments.md), it is possibly
+[`../../03-research-and-evaluation/E0-suite-construct-validation.md`](../../03-research-and-evaluation/E0-suite-construct-validation.md), it is possibly
 answerable from runs already recorded, and it gates most of what follows.

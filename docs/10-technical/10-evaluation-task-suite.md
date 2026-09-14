@@ -2,7 +2,7 @@
 
 **Traces to:** `00-design/40-roadmap/01-MILESTONES/completed/06-evaluation-task-suite.md` (M6),
 `00-design/27-arch-adaptation-and-evolution/05-experiments-and-candidate-systems.md`,
-`00-design/40-roadmap/03-research-and-evaluation-agenda.md`,
+`00-design/40-roadmap/03-research-and-evaluation/hypotheses.md`,
 `00-design/40-roadmap/07-sequence-rework-02.md`,
 `00-design/00-project/04-execution-cadence.md` (findings need a ruler);
 binds to `10-technical/02-observability-event-model.md` (a suite run is a set of
@@ -417,7 +417,7 @@ Grouped by trap; each row is `id — the ask — the trap — the discriminator`
   variance — and does not say so. What population do these tasks represent, and
   what does the suite's score mean for anyone outside it?
 - **The agenda's two hypotheses are not in the scoring model**
-  *(`00-design/40-roadmap/03-research-and-evaluation-agenda.md`)*.
+  *(`00-design/40-roadmap/03-research-and-evaluation/hypotheses.md`)*.
   Decomposition-as-grain-matching and accessibility-without-weakness were added to
   the agenda and neither is measurable from a suite run. E2 and E5 are the intended
   tests; whether they need suite support, or run beside it, is unresolved.

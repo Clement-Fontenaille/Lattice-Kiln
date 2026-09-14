@@ -15,10 +15,10 @@ what is outstanding), and the registers that keep the open questions honest.
 | [`00-backlog.md`](00-backlog.md) | every outstanding item, in four priority bands | revised freely |
 | [`01-MILESTONES/`](01-MILESTONES/README.md) | one file per milestone: what it is, its evidence question | stable |
 | [`02-open-questions-register.md`](02-open-questions-register.md) | questions the design set has not answered | grows |
-| [`03-research-and-evaluation-agenda.md`](03-research-and-evaluation-agenda.md) | the hypotheses and how each would be falsified | revised on findings |
+| [`03-research-and-evaluation/hypotheses.md`](03-research-and-evaluation/hypotheses.md) | the hypotheses and how each would be falsified | revised on findings |
 | [`04-long-term-perspectives.md`](04-long-term-perspectives.md) | directions beyond the current sequence | loose |
 | [`06-sequence-rework-01.md`](06-sequence-rework-01.md), [`07-sequence-rework-02.md`](07-sequence-rework-02.md) | dated records of past resequencing decisions | never rewritten |
-| [`08-next-experiments.md`](08-next-experiments.md) | experiments ranked by information per unit of cost | revised freely |
+| [`03-research-and-evaluation/`](03-research-and-evaluation/) | experiments ranked by information per unit of cost | revised freely |
 
 Neighbouring spaces: [`../50-findings/`](../50-findings/README.md) records what a
 milestone taught us and is append-only;
@@ -105,7 +105,7 @@ decision is itself a change, and it gets recorded as one.
 
 ### The banding is a claim, not a schedule
 
-The standing rule from [`08-next-experiments.md`](08-next-experiments.md) applies
+The standing rule from [`03-research-and-evaluation/`](03-research-and-evaluation/) applies
 here too: working only from the top band confirms the ordering without ever risking
 it, and the ordering then becomes an unexamined premise.
 
