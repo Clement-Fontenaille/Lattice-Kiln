@@ -20,10 +20,15 @@ differentiated roles now exist to give a judge a meaningfully different context.
 
 ## 1. Independence removes the approval bias. That is the new result and it is real.
 
-| | approval rate |
+| | approval rate, **per task** |
 |---|---|
-| the **worker** on its own work | **96%** |
-| the **judge** on the worker's work | **64%** |
+| the **worker** on its own work | **96%** on `m7`, **100%** on `m7c` (27 of 27) |
+| the **judge** on the worker's work | **72%** |
+
+*(Both figures are per task. An earlier version of this table put the judge at 64%,
+which is its per-**candidate** rate, against a per-task figure for the worker — two
+granularities in one comparison. Finding 5 explains why the candidate rate is not the
+one to use. The conclusion is unchanged and the gap is wider at the right unit.)*
 
 The worker's verdict is mandatory in its control block and recorded on every run ever
 made, and the workflow discards it. Scored for the first time here, it is worthless:
@@ -126,23 +131,58 @@ Establishing that `_legacy_export` *has* callers requires reading another file. 
 information about the premise reaches the judge at all.** Its 13 of 13 cannot be
 detection; it is a prior.
 
-## 5. The note does not move the verdict where it could matter, and might where it does
+## 5. There is no measured note effect anywhere, and two readings of mine were wrong
 
-The first reading of this was wrong. A marginal comparison — `unsound_request` on 43%
-of tasks with a note against 44% without — was presented as refuting an echo. It
-refutes nothing: it averages two populations.
+*(Rewritten twice in one day. What follows replaces both; the errors are kept because
+they are the same error.)*
+
+**First reading, wrong.** A marginal comparison — `unsound_request` on 43% of tasks
+with a note against 44% without — presented as refuting an echo. It averages two
+populations and refutes nothing.
+
+**Second reading, also wrong**, and the operator caught it. Split by diff:
 
 | task level | with a note | without |
 |---|---|---|
 | **empty diff** | 9/9 = **100%** | 4/4 = **100%** |
 | non-empty diff | 1/14 = 7% | 0/5 = 0% |
 
-The note contributes **nothing** where the prior is absolute. At candidate level, on
-non-empty diffs, **17% (15 of 85) against 5% (2 of 40)** — suggestive, small, and the
-only place a note effect appears. A reading worth testing rather than asserting: the
-note may not replace the examination but bias the reading of what is examined.
-`judge_staged` asks the same task twice, without and with the note, which is the only
-design separating *the note moved this* from *both track the same case*.
+I read the top row as *the note contributes nothing where the prior is absolute*.
+**100% against 100% is saturation, not absence.** With the prior occupying the whole
+range the note has nowhere to move the verdict, so *it does not weigh* and *it has no
+room to weigh* are indistinguishable. Nothing is measured there.
+
+### And the candidate-level table was clustered, which is worse
+
+I also read a note effect from the candidate level — 17% (15 of 85) against 5% (2 of
+40) on non-empty diffs. Both halves fail on inspection.
+
+**The empty-diff row has no comparison at all**: its 7 candidates come from a *single
+task*, the `wf3` family, all without a note. A rate over 7 attempts at one objective
+is that objective's behaviour, not a population's.
+
+**And the non-empty row is dominated by two tasks.** Of the 15 `unsound_request`
+verdicts with a note, **12 come from `hf_timeout_param` and `hf_cache_decorator`,
+where the judge said it on all six candidates and never changed its mind.** The
+remaining three are scattered singles.
+
+**The unit of independence is the task, not the candidate.** A judge that decides
+about a task repeats itself across every candidate of that task, so counting
+candidates multiplies n roughly sixfold while adding no information. Cluster sizes in
+this run run 18, 6, 6, 6 … 1, so the inflation is severe and uneven.
+
+At task granularity the difference disappears into the noise, and **no note effect is
+measured anywhere in this investigation.** `judge_staged` remains the only design that
+could show one, by asking the same task twice.
+
+### The general lesson, which is the third face of one mistake
+
+Entry 10 established that an unchanged arm varies by three tasks against itself, and
+its finding 6 restated that a single run is not a measurement. This is the same error
+at a smaller scale: **repeated measurements of one unit are not independent
+observations.** Every per-candidate rate in this investigation is inflated by it, and
+the only reason finding 1 survives is that it was checked.
+
 
 ## 6. What the operator established, and it reframes the whole line
 
