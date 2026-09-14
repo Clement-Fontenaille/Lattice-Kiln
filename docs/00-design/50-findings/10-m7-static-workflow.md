@@ -163,6 +163,49 @@ a stage's influence be a property of the build.
 consumed three times, agrees with a regular expression on 29 of 30, and can only ever
 trigger a no-op when it fires alone. The stage's *syntactic* half is doing the work.
 
+## 6. The audit's own accuracy, which finding 1 did not measure
+
+*(Added 2026-09-14, same day, after an operator question. It corrects finding 5
+below, which counted consumption and called it value.)*
+
+Finding 1 says making the premise audit advisory works, and it does. It says nothing
+about whether the audit is any good, and scored against its nominal job it is not:
+
+| | found | missed |
+|---|---|---|
+| the 5 false-premise tasks | **2** | **3** |
+
+Missed `wf4_assumption` (O(log n) over unsorted data), `hf_already_optimal` and
+`hf_dead_code`. On the 25 sound tasks it raised **9 spurious concerns**. Eleven
+emitted, two correct: **precision 18%, recall 40%.**
+
+**So the two claims inside finding 1 must be kept apart.** *Making the audit advisory
+works* — seven false declines became one, and the value comes from removing its
+authority. *The audit works* — it does not. **The 5/5 decline accuracy is the
+mechanical rule's, not the audit's, and the system performs despite the stage rather
+than because of it.** An audit at this precision holding decline authority is
+precisely what `staged` was.
+
+### What this corrects in finding 5
+
+Finding 5 reported the `concern` field "non-empty on 11, consumed on 8 — it earns its
+place." **Consumption is not correctness.** Nine of those eleven travel into an
+escalation payload addressed to a human and point at a problem that does not exist,
+and a wrong concern is worse than none because it sends the operator to the wrong
+place.
+
+The influence record measures whether an output was read. It cannot measure whether
+the output was right, and reading consumption as value is a mistake the record invites
+rather than prevents. That limit belongs beside the record wherever it is specified.
+
+### What it adds to the candidates
+
+**Retire the premise half of the audit**; the call survives for segmentation, which is
+a different job. And **ask it the question nobody asks** — *is the completion of this
+objective observable from this check?* — showing it the check, which it never sees.
+That stays inside `50-findings/07`'s one demonstrated use for a model panel: a
+reporting aid, not a decision aid. It decides nothing and tells a person to look.
+
 ## Where the prediction was wrong, and where it was right
 
 | Predicted | Actual |

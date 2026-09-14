@@ -202,6 +202,18 @@ Each stage MUST emit, via `02-observability-event-model.md`:
 The third is the one that is easy to omit and the one that makes retirement
 possible.
 
+**The record measures consumption and cannot measure value** (findings-log entry 10,
+finding 6). A stage whose output is read on eight tasks may still be wrong on nine of
+the eleven it produced — the M7 premise audit was, at 18% precision — and nothing in
+this record says so.
+
+So the third field answers *was this output used?* and never *was it worth using?*
+**Reading consumption as value is a mistake this record invites rather than prevents**,
+and the M7 run made it. A stage may be retired on a consumption count of zero; it may
+never be **kept** on a non-zero one without a separate measurement of whether its
+output was right.
+
+
 ## What this competes against
 
 The suite run (`10-evaluation-task-suite.md`) compares this workflow against
