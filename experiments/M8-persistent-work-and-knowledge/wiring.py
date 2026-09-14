@@ -18,7 +18,8 @@ from __future__ import annotations
 
 from context_manager import (ContextManager, GENERATION_CONCLUSION, LABEL_NONE,
                              READ)
-from knowledge_model import KnowledgeStore, ParentEdge, REASONED
+from knowledge_model import DECISION, KnowledgeStore, ParentEdge, REASONED
+from mandate_check import MandateVerdict, run_aggregate_check
 from work_record import ABANDONED, EXECUTED, WorkItem, WorkRecordStore
 
 
@@ -113,9 +114,37 @@ class Substrate:
             self.work.transition_item(work_item_id, terminal, effect_ref=effect_ref,
                                       invocation_ref=invocation_id)
 
+        # The aggregate check runs BEFORE removal -- it needs change_set(),
+        # and removal is what makes that record incomplete.
+        self.check_mandate(work_item_id)
+
         departing = self.context.end_task(work_item_id)
         still_live = self._live_claim_refs(exclude_work_item=work_item_id)
         return self.knowledge.sweep_from(departing, still_live=still_live)
+
+    def check_mandate(self, work_item_id: str) -> MandateVerdict:
+        """03-capability-authority-model.md's aggregate check, run once at
+        termination. This is the seam (mandate_check.py) called at exactly the
+        right moment and with the right inputs; the judgement itself is a stub
+        until M17 supplies a real invariant processor.
+
+        Recorded as a Decision claim rather than a WorkItem field -- the spec
+        gives WorkItem no field for it (only state and conclusion mutate), and
+        the verdict's natural home is observability's kind-4 disposition, which
+        M8 does not build. This is the nearest durable place available now.
+        """
+        item = self.work.get_item(work_item_id)
+        verdict = run_aggregate_check(
+            work_item_id, request=item.formulation,
+            ceiling=item.scope.boundary, change_set=self.work.change_set(work_item_id))
+        self.knowledge.propose_claim(
+            DECISION,
+            {"kind": "mandate_verdict", "work_item_id": work_item_id,
+             "verdict": verdict.verdict, "reasoning": verdict.reasoning,
+             "stub": verdict.stub},
+            source="invariant_processor" if not verdict.stub else "mandate_check_stub",
+            parents=[], checked=True)
+        return verdict
 
     def _live_claim_refs(self, *, exclude_work_item: str) -> set:
         """Every claim_ref still held by some OTHER live work item's live set.

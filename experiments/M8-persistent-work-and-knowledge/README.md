@@ -11,7 +11,27 @@ Specs: `docs/10-technical/{12-knowledge-model,13-work-record,14-context-manager}
 | `knowledge_model.py` | 2 | `12-knowledge-model.md` |
 | `context_manager.py` | 3 | `14-context-manager.md` |
 | `wiring.py` | 4 | the edges between the three |
+| `mandate_check.py` | 4 | the aggregate scope check's seam (03-capability-authority-model.md) |
 | `test_small.py` | 5 | evidence question, small-scale stage |
+| `test_lineage.py` | 4 | split/succession/containment, exercised for the first time |
+| `test_mandate.py` | 4 | aggregate check fires on both terminal states, never on live ones |
+
+### Also built beyond the original five
+
+- **The aggregate mandate check's trigger and recording** (`mandate_check.py`,
+  wired into `Substrate.end_task`/`check_mandate`). 03-capability-authority-model.md
+  requires this to fire once per item, exactly on `abandoned`/`executed`, and to
+  record `inside` as explicitly as `outside`/`dubious` — never only on failure.
+  The judgement itself belongs to an invariant processor (M17); what M8 owes is
+  the trigger point, the four inputs assembled correctly, and a durable record.
+  The default checker is an explicit stub that can only ever return `dubious`,
+  never `inside` — a stub claiming `inside` would be indistinguishable from a
+  real check that passed, which is exactly the failure the spec names as worse
+  than no check at all.
+- **Lineage under split and succession**, exercised for the first time
+  (13-work-record.md's own open contract: "nothing has exercised it"). Both
+  shapes are read off the parent's state alone, with no other signal, matching
+  the spec's account exactly.
 
 Package 6 (the corpus sweep, E6) is not built here — it's graded in M9 and needs a
 processor to do the ingesting, which is cognition, not substrate.
@@ -20,6 +40,8 @@ processor to do the ingesting, which is cognition, not substrate.
 
 ```
 python test_small.py
+python test_lineage.py
+python test_mandate.py
 ```
 
 No model calls. Naive filesystem storage per each spec's own "naive default" —
