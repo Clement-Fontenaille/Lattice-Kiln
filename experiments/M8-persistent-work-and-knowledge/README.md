@@ -15,6 +15,9 @@ Specs: `docs/10-technical/{12-knowledge-model,13-work-record,14-context-manager}
 | `test_small.py` | 5 | evidence question, small-scale stage |
 | `test_lineage.py` | 4 | split/succession/containment, exercised for the first time |
 | `test_mandate.py` | 4 | aggregate check fires on both terminal states, never on live ones |
+| `test_recovery.py` | 1 | crash-recovery replay path (`unapplied()`), exercised for the first time |
+| `test_knowledge_ops.py` | 2 | `compress()`/`traverse_dependents()`, plus a logged gap in `elide()` |
+| `SUSPECT.md` | — | things noticed on the way that need a second pass before closing M8/M9 |
 
 ### Also built beyond the original five
 
@@ -32,6 +35,18 @@ Specs: `docs/10-technical/{12-knowledge-model,13-work-record,14-context-manager}
   (13-work-record.md's own open contract: "nothing has exercised it"). Both
   shapes are read off the parent's state alone, with no other signal, matching
   the spec's account exactly.
+- **Crash-recovery replay** (`test_recovery.py`): simulates a process death
+  between the `logged` and `applied` appends `transition_item` makes, checks
+  `unapplied()` finds exactly the stranded entry, and replays it at the same
+  seq. Never exercised before this pass.
+- **`compress()` and `traverse_dependents()`** (`test_knowledge_ops.py`):
+  neither was touched by `test_small.py`. Found and logged one real gap along
+  the way — see `SUSPECT.md` #1: `elide()`'s docstring promises a refusal
+  condition (promoted root OR live task's attachment) that the code only half
+  implements (promoted root only). Not currently reachable from the wired
+  system (`wiring.py` never calls `elide()` directly), but the function's own
+  contract doesn't hold if called on its own. Left unfixed pending a decision
+  on which half is authoritative — the docstring or the check.
 
 Package 6 (the corpus sweep, E6) is not built here — it's graded in M9 and needs a
 processor to do the ingesting, which is cognition, not substrate.
@@ -42,6 +57,8 @@ processor to do the ingesting, which is cognition, not substrate.
 python test_small.py
 python test_lineage.py
 python test_mandate.py
+python test_recovery.py
+python test_knowledge_ops.py
 ```
 
 No model calls. Naive filesystem storage per each spec's own "naive default" —
