@@ -8,26 +8,27 @@ _Updated: 2026-09-13 — structure and maintenance rules: [`README.md`](README.m
 
 **Every row here blocks P1.** A gap that blocks nothing is written into the
 document it concerns as an open contract, not parked here
-([`README.md`](README.md) → what an item carries).
+([`README.md`](README.md) — what an item carries).
 
-**The specification inventory is discharged.** The architecture pass of
-2026-09-11/13 owed the specification layer twelve documents: nine rewrites and
-three that did not exist. All twelve are written. `10-technical/` now holds a
-specification counterpart for every actor in the architecture band, and the
-cross-layer claims — reads in the gate's input domain, the dead context bundle,
-the live set as an index, mandate conformance, the turn input as the recorded unit
-— are carried on both sides.
-
-What remains below is what that pass did **not** cover.
+**Nothing in this band blocks M7 any more.** The specification inventory is
+discharged, the handoff contract is closed, and decomposition turned out to need no
+mechanism of its own. What is left below blocks later work, and the rows say which.
 
 | Item | Target | Source | Blocks |
 |---|---|---|---|
-| **Decomposition has no specification counterpart** | new document, or within [`11-static-workflow.md`](../../10-technical/11-static-workflow.md). That document specifies concern-split as one conditional stage of one workflow, which is not the same as specifying decomposition: fork/join versus continuation, what a recombination step consumes, and how a split's parts are evaluated against the composite are all untouched | [`22-arch-cognition/08`](../22-arch-cognition/08-decomposition.md) | P1 step 2 — concern-split is a decomposition |
-| **Structured role-to-role handoff** — **done 2026-09-13** | Specified in [`06-processor-contract.md`](../../10-technical/06-processor-contract.md), Handoff framing, and not where it had been parked: a handoff is folded into the **objective**, which binds at instantiation, so it was never the context assembler's contract. Three framings graded by what was observed — an objective signal folded into the objective (the M6 arm that scored 24/30 with zero regressions), model prose in a named section (tolerated), unlabelled prose appended as context (the narration failure, forbidden). The rule underneath: prefer a signal to an account of a signal, and keep model prose whose audience is the operator out of another instance's objective. Bounded to the 7–8B size measured. Closed on [`07`](../../10-technical/07-naive-context-assembly.md) and [`08`](../../10-technical/08-orchestrator-contract.md) | findings 6, 6 addendum, 8 | Unblocks P1 step 3 |
-| **Who assigns a reversibility class, and how it is carried** | [`01-effect-vocabulary.md`](../../10-technical/01-effect-vocabulary.md) open contract. [`10-foundations/02`](../10-foundations/02-reasoning-vs-runtime.md) argues the proposing side — an effect irreversible by nature still needs a risk evaluation before it is proposed, reasoning-based rather than a static type property or a runtime check. Not reconciled with a concrete carrier. Sharpened by the scope check, whose pre-effect half fires **on exactly this classification** | [`10-foundations/02`](../10-foundations/02-reasoning-vs-runtime.md); [`03-capability-authority-model.md`](../../10-technical/03-capability-authority-model.md) | P1 — the irreversible half of the scope check has no trigger without it |
+| **Writing sub-objectives** | Decomposition needed no specification of its own: creating a task is effect **4a**, available to any processor holding the grant, and which actor holds it is configuration rather than architecture ([`13-work-record.md`](../../10-technical/13-work-record.md)). What is **not** covered is the formulation — a split that is more than splitting on punctuation needs a model to write each part's objective, which is the one composition case [`06`](../../10-technical/06-processor-contract.md)'s handoff rule explicitly does not support | Operator ruling 2026-09-14 | M8 |
+| **The scope check has no builder** | [`05`](../../10-technical/05-provisional-invariant-list.md) G4 requires a functioning scope check; the specification is complete in [`03`](../../10-technical/03-capability-authority-model.md) and no milestone builds one. It needs an invariant processor, a role category nothing has instantiated — triage is the other member and is deferred to M11 | [`10-foundations/07`](../10-foundations/07-the-integrated-system-and-its-operator.md) | Nothing scheduled, which is the problem |
+| **G4's substrate precondition is unmeasured** | Two independent contexts, each large enough to work in, verifiable at startup. Cheap and M0-shaped. It decides whether a scope check is **providable at all** rather than merely unbuilt | [`05`](../../10-technical/05-provisional-invariant-list.md), [`14`](../../10-technical/14-context-manager.md) | The row above |
+| **Retention has an unresolved edge** | The root set is promoted artifacts plus the live set, and removal runs when a task ends. A **curated attachment** is neither promoted nor live, so a Finding attached to a task can be deleted underneath the work record when that task ends. Either attaching promotes, or attachments are expected to dangle and [`13`](../../10-technical/13-work-record.md) detects it | [`12`](../../10-technical/12-knowledge-model.md), operator rulings 2026-09-14 | M8 |
 | **M9 self-cites a phrase that no longer stands alone** | [M9](01-MILESTONES/09-context-governance-measurement.md) quotes [`10-foundations/04`](../10-foundations/04-context-as-governed-resource.md)'s **2026-09-05** "redundancy, not volume" verbatim as an open contract. The second pass superseded and narrowed that claim rather than adding to it, so the citation is stale, not only the implementation | [`10-foundations/04`](../10-foundations/04-context-as-governed-resource.md) | M9 |
-| **Seven gaps from the trajectory walk** | [`15-information-trajectories.md`](../../10-technical/15-information-trajectories.md) follows four pieces of information from production to forgetting and records where a walk cannot complete. Each gap is filed in the document that owns it. The sharpest: **the sweep's root set names only promoted claims** while three stores hold references into the claim store, so on a literal reading a Finding attached to a work item is swept and leaves a dangling reference. Also: no trigger for the sweep, no definition of *promoted*, nothing ends a live set, no trigger for deriving a root ceiling, no channel showing a derived scope to the operator, and no disposition for a non-representable operation (now added) | [`15`](../../10-technical/15-information-trajectories.md) | Retention cannot be built without the root set |
-| **G4 has no owner** | [`05-provisional-invariant-list.md`](../../10-technical/05-provisional-invariant-list.md) G4 requires a functioning scope check and no milestone builds one. The specification is complete ([`03-capability-authority-model.md`](../../10-technical/03-capability-authority-model.md)); a system without the check is invalid rather than degraded, and what stands in for it today is the human in the loop | [`10-foundations/07`](../10-foundations/07-the-integrated-system-and-its-operator.md) | Nothing yet — it should |
+
+**Closed since the last revision of this band**, each in the document that owns it
+rather than here: the structured role-to-role handoff; the reversibility-class
+carrier, now a placeholder that every tool call is irreversible so every one gets the
+pre-effect check; and five of the seven gaps the trajectory walk found — the
+reachability root set, what promotion means, when removal runs, what triggers deriving
+a ceiling, and how a derived scope reaches the operator. A sixth was fixed outright
+(kind 4 gained a disposition for a non-representable operation).
 
 ## P1 — Work in progress
 
@@ -38,7 +39,8 @@ What remains below is what that pass did **not** cover.
    the back half has no open dependency. *Proposed: back half now, front half
    recorded as an open contract.*
 2. **Specify** — P0 row 1, scoped by the decision above.
-3. **Build** — after the spec. Needs the handoff-framing row in P0.
+3. **Build** — **unblocked.** The spec is written and the handoff contract it needed
+   is closed.
 4. **Run against the M6 suite** — needs E0 (P2) for the comparison to be
    interpretable.
 5. **Findings entry.**
