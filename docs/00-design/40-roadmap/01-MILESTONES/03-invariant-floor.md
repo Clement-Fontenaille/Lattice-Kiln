@@ -94,6 +94,15 @@ throughout everything before it.
 2. The literature-grounding pass, and the revision of the invariant list and gate
    against it.
 3. Enough effect-type coverage to answer the evidence question on more than 3 of
-   9 types.
+   9 types. **[M8](08-persistent-work-and-knowledge.md) is what supplies this**, and
+   the connection is worth naming: types 4 and 5 only become real when durable stores
+   exist, and they are the two types the 2026-09-14 pass subdivided. This milestone's
+   own recorded blur — *a conclusion is a type-4 effect*, noted as a choice rather
+   than something self-evident — is now a named sub-type, 4d, and M8 is where that
+   either settles or moves.
+
+Note that [M17](17-mandate-chain.md), split out of M11 on 2026-09-14, does **not**
+close any of these. The scope check sits above the gate; what this milestone owes is
+below it.
 
 Until then this file, not the completed folder, is where M3 lives.

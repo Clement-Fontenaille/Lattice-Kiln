@@ -89,6 +89,12 @@ Ordered by identifier. For priority see [`../00-backlog.md`](../00-backlog.md).
 | M14 | [Meta-evaluation](14-meta-evaluation.md) | open |
 | M15 | [Cross-generation comparison](15-cross-generation-comparison.md) | open |
 | M16 | [Bootstrap generation closure](16-bootstrap-generation-closure.md) | open |
+| M17 | [The mandate chain](17-mandate-chain.md) | open — **runs early**, split out of M11 |
+
+M17 is the identifier rule's first real exercise: it was created last, it takes the
+highest free number, and it runs earlier than most of the numbers below it. A folder
+listing that sorted by execution order would have renumbered eleven files to insert
+it.
 
 ## Completed
 

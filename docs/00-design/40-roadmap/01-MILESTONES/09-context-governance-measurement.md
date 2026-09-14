@@ -125,6 +125,51 @@ metric cannot be a threshold on size. `10-technical/07-naive-context-assembly.md
 truncates by token count, which is the volume reading of both, and carries that as
 its own open contract.
 
+## Work packages
+
+1. **The recall trace.** Per turn: which live-set entries were included, in what
+   order, which were dropped, where truncation happened
+   ([`07-naive-context-assembly.md`](../../../10-technical/07-naive-context-assembly.md)
+   requires it already). Two policies over one live set are comparable **only if what
+   each presented was recorded**, so this is the package everything else here rests
+   on — and it costs nothing at runtime, which is why it is the one most likely to be
+   skipped.
+2. **Turn-input records** — kind 5 in
+   [`02-observability-event-model.md`](../../../10-technical/02-observability-event-model.md).
+   Built in [M8](08-persistent-work-and-knowledge.md) or here, whichever runs first.
+3. **The four failure-mode detectors**, one per mode named below. Insufficiency
+   divides and only half of it is detectable; Redundancy needs overlap **at the level
+   of coverage rather than text**; Uselessness is predicted and unevidenced; Overload
+   is the only content-quality-agnostic one.
+4. **The four claim dimensions** — validity, reliability, pertinence, scope — assessed
+   on `03`'s terms at the point a claim enters or leaves an assembly. Scope is the
+   sharpest of the four and the hardest: a scope failure is a claim used correctly by
+   outcome but outside where it actually held, which is precisely the case an
+   outcome-scored metric cannot see.
+5. **Re-grade E6.** [M8](08-persistent-work-and-knowledge.md) runs the corpus sweep;
+   this milestone is what makes its result mean something other than *it seemed to
+   work*.
+6. **A less-naive assembler**, as the thing that moves the metric. The bar recorded at
+   rework 1 has two halves and the second is usually forgotten: the naive assembler's
+   failures are quantifiable, **and** a less-naive one moves the measurement.
+
+Packages 1 and 2 are plumbing and can land with M8. Packages 3 and 4 are the
+milestone. Package 6 is what falsifies the metric — a dimension no better assembler
+can move is a dimension that was measuring something else.
+
+### A cost this milestone should know about before it baselines
+
+[M17](17-mandate-chain.md) carves a **permanent share of the resident envelope** for
+the scope checker's slot, busy or not, because isolation costs context for every slot
+that exists (`10-technical/14-context-manager.md`). Overload is measured against that
+envelope.
+
+So a baseline taken before M17 and compared against a reading taken after it is a
+comparison across two different machines. Either this milestone runs after M17, or it
+records which side of that line each reading was taken on.
+[`../00-backlog.md`](../00-backlog.md) currently orders them the other way, and the
+question is open rather than decided.
+
 ### What the metric depends on existing
 
 None of the four modes is checkable without the live set being a first-class,

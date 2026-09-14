@@ -91,8 +91,11 @@ Stated so a measurement can be checked *against* them rather than substituted
   What stands in for it today is that a human supervises every run, which is the
   same thing this whole list leans on and is not a substitute for the mechanism.
   Owner: `03-capability-authority-model.md` specifies it and
-  `40-roadmap/01-MILESTONES/11-safety-response.md` builds it, alongside triage — the
-  two are the same role category and need it instantiated once.
+  `40-roadmap/01-MILESTONES/17-mandate-chain.md` builds it. That milestone was split
+  out of M11 on 2026-09-14 for this clause's sake: the two share a role category and
+  need it instantiated once, but M11's placement argument — *the safety response
+  watches adaptive loops, and there are none yet* — never covered a scope check, which
+  bounds every task whether or not anything adapts.
 
 ## Resource ceilings
 

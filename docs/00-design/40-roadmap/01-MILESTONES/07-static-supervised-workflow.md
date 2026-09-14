@@ -117,6 +117,18 @@ escalation payload above.
 3. Run it on the M6 suite against `monolith` / `dloop` / `staged`.
 4. Write the findings entry.
 
+Step 3 needs **E0** ([`../03-research-and-evaluation/E0-suite-construct-validation.md`](../03-research-and-evaluation/E0-suite-construct-validation.md))
+for the comparison to be interpretable, and E0 is possibly answerable from runs
+already recorded.
+
+**Step 3 also has a deadline nothing else records.**
+[M17](17-mandate-chain.md) puts a model call in front of every tool call, and this
+milestone's evidence question is **outcome-per-call**, measured against arms that are
+comparable back to M4 and M5. Once the scope check is on the effect path, every arm
+pays a cost no earlier arm paid and the axis stops meaning what it meant. So this
+run completes before M17 lands, or it runs with the check disabled and the findings
+entry says which.
+
 Per-stage outcome-influence observability is not step 5. It is a property of
 step 2, because the whole point is that **redundant stages retire on evidence** —
 and a stage whose influence was never recorded cannot be retired on anything.

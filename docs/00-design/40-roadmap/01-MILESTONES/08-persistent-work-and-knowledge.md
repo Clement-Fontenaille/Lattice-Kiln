@@ -57,6 +57,58 @@ Two threads land here rather than earlier:
   What memory retains, and what it therefore relieves the operator of
   understanding, is a question this milestone opens rather than settles.
 
+## Work packages
+
+The 2026-09-13/14 specification pass turned this milestone's substrate from a
+description into three documents with service surfaces, so the packages are now the
+documents.
+
+1. **Work record store** ([`13-work-record.md`](../../../10-technical/13-work-record.md)).
+   Three record kinds, the immutable formulation and scope, the append-only
+   transition log with its `logged`/`applied` marker, the `derived_from` lineage, and
+   the service surface including `lineage` and `change_set`.
+2. **Knowledge model store** ([`12-knowledge-model.md`](../../../10-technical/12-knowledge-model.md)).
+   The claim record with mode-of-acquisition on the edge, the two write paths, the
+   `children/` index, Read / Query / Traverse dependents.
+3. **Context manager** ([`14-context-manager.md`](../../../10-technical/14-context-manager.md)).
+   Register, the live set with its entry shape including `label`, recall over the
+   degenerate policy, and the per-turn composition path.
+4. **The wiring between them.** Attachment at task creation as an ungated runtime
+   call; 4c attachment mid-work as a gated effect; incremental removal when a task
+   reaches a terminal state. This is the package most likely to be underestimated:
+   each store is simple and the edges between them are where the specification pass
+   found its gaps.
+5. **Small tests.** A processor reuses one stored finding and measurably beats one
+   starting cold. This is what answers the evidence question at small scale, and it
+   does **not** need M9.
+6. **The corpus sweep** — E6. Run here; **graded in
+   [M9](09-context-governance-measurement.md)**, since E6 is explicitly not graded on
+   task success alone.
+
+Packages 1–3 are independent of each other and can be built in any order. Package 4
+depends on all three. Package 5 gates package 6: a corpus sweep that fails tells you
+nothing about which of ingestion, retention or retrieval failed.
+
+## What this milestone does for M3
+
+**[M3](03-invariant-floor.md)'s evidence question gets its first real data here**, and
+nothing currently records that connection.
+
+M3 asks whether the enumerated effect types carve cleanly when real effects flow
+through the gate. Six of nine types have never flowed. Two of the six — **type 4
+work-record mutation and type 5 memory mutation** — only become real when durable
+stores exist, which is this milestone.
+
+They are also the two types that were **subdivided** in the 2026-09-14 pass: 4 into
+Create / Transition / Attach / Conclude, 5 into Write / Relate. The cut was made from
+what each act can do wrong, argued rather than observed. This milestone is the first
+thing that puts real effects through those boundaries, so it is a test of the
+subdivision and not only of the stores.
+
+M3's own recorded blur is in the same place: *a conclusion is a type-4 effect* was
+noted as a choice rather than something self-evident. Conclusion is now 4d, a named
+sub-type. Whether that settles the blur or relocates it is answerable here.
+
 ## Relationship to M9
 
 [M9](09-context-governance-measurement.md) measures whether what this milestone

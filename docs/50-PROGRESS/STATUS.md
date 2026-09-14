@@ -23,9 +23,9 @@ then M8/M9/M11 for a testable codebase.
       `15`, and the heavily-reworked `03`, `07`. Find inconsistencies, answer the
       easy questions, tighten. Cascaded into `01` and `02`, and one fix into
       `00-design/22-arch-cognition/05-curation.md`.
-- [ ] **3. Milestone consolidation.** Name the work packages each existing
+- [x] **3. Milestone consolidation.** Name the work packages each existing
       milestone needs, check the order still holds, subdivide where it smooths
-      execution.
+      execution. **M11 split; M17 created.**
 - [x] **4. Research and evaluation becomes a folder.** `03-research-and-evaluation/`
       with `00-questions.md` cataloguing open questions that can become experiments,
       absorbing `08-next-experiments.md`. One sheet per well-circumscribed
@@ -87,6 +87,38 @@ came with a new open contract naming what is left.
 **Worth the operator's eye:** `13` now names a work-item state (`open`) that
 `22-arch-cognition/01` does not. The spec is ahead of the design set on one word, and
 the design set is where that vocabulary belongs.
+
+**3 — milestone consolidation. Done. One split, work packages on the near band, two
+ordering findings.**
+
+- **M11 split; [M17 — The mandate chain](../00-design/40-roadmap/01-MILESTONES/17-mandate-chain.md)
+  created.** M11 bundled six deliverables under one placement argument — *the safety
+  response watches adaptive loops, and there are none before M10*. That argument is
+  true of triage, decommissioning and the accumulation threshold, and **false of the
+  scope check**, which bounds every task whether or not anything adapts and which M8
+  makes necessary the moment work items carry scope fields. What held them together
+  was an engineering saving (same role category, build it once), which survives the
+  split: whichever half runs first builds the category. M17 takes the next free
+  identifier and runs early, which is the first real exercise of the folder's
+  identifier rule.
+- **Ordering finding 1 — M17 must not precede M7's suite run.** The scope check puts
+  a model call in front of every tool call. M7's evidence question is
+  *outcome-per-call*, comparable back to M4 and M5. Turning the check on mid-programme
+  makes every arm pay a cost no earlier arm paid. Recorded in M7, M17 and the backlog.
+- **Ordering finding 2 — M17 probably belongs before M9.** M17 carves a permanent
+  share of the resident envelope for the checker's slot, busy or not. M9 measures
+  Overload against that envelope. A baseline taken before and a reading taken after
+  are two different machines. The backlog currently orders them the other way; both
+  are proposals, neither is taken.
+- **M8 is what answers M3's evidence question**, and nothing recorded it. Six of nine
+  effect types have never flowed through the gate; types 4 and 5 only become real when
+  durable stores exist, and they are precisely the two the 2026-09-14 pass subdivided.
+  M3's own recorded blur — *a conclusion is a type-4 effect*, noted as a choice — is
+  now sub-type 4d, and M8 is where that settles or moves.
+- **Work packages named for M3, M7, M8, M9, M11, M17.** **Not for M10 and M12–M16**,
+  deliberately: five of the seven have no evidence question stated, and packages
+  written under an unstated evidence question produce a list nobody can tell is
+  complete. Recorded as a decision in the backlog rather than left as an omission.
 
 **A verification gap worth knowing about.** The link checker used throughout this
 session only validates markdown links — bracket-text followed by a parenthesised path. It does not see **prose references to section
@@ -217,7 +249,9 @@ thing. It is now a P0 row.
 (`10-technical/11-static-workflow.md`) is written, back half only. The execution record
 (`50-PROGRESS/M7-static-workflow.md`) is still owed, and steps 2–4 are build-and-run.
 
-**M3 open**, crossed in reduced form for the MVP, stays open until the M11 items land.
+**M3 open**, crossed in reduced form for the MVP, stays open until the M11 items land
+— and until M8 supplies the effect-type coverage its evidence question needs, which
+is a connection nothing recorded before 2026-09-14.
 
 Milestone state: `40-roadmap/01-MILESTONES/README.md`. What to do next:
 `40-roadmap/00-backlog.md`.
@@ -277,8 +311,9 @@ either side.
 
 **P0 is empty as of 2026-09-14.** Every row closed, and most of them closed by asking
 whether they were design or implementation rather than by new design. The scope check
-and the scope writer are M11 deliverables alongside triage, all three being invariant
-processors, so the category is instantiated once.
+and the scope writer are **M17** deliverables — split out of M11 on 2026-09-14, since
+sharing a role category with triage is an engineering saving and not a reason to share
+a trigger.
 
 
 The holes have a fixed location by convention: **every specification document ends
@@ -294,10 +329,12 @@ decisions** — which is a different position from the last reading of this tabl
 | `05` G4 / `14` | How does the resident envelope divide across contexts? | Whether a scope check is providable at all |
 | `14-context-manager` | Can a turn input's KV footprint be estimated before composing it? | R4 reports a crash instead of refusing |
 
-**The same instrument answers both.** `05`'s bootstrap occupancy test measures
-memory-per-token on first encountering an unknown model identity and derives R4's two
-limits and G4's substrate precondition from one run. It is M0-shaped, cheap, and
-nothing is scheduled to run it.
+**The same instrument answers both, and it now has an owner.** `05`'s bootstrap
+occupancy test measures memory-per-token on first encountering an unknown model
+identity and derives R4's two limits and G4's substrate precondition from one run. It
+is M0-shaped, cheap, and depends on nothing — no stores, no workflow, no loop. As of
+2026-09-14 it is **M17's first work package**, and it blocks the rest of that
+milestone rather than sitting inside it.
 
 **Eight rows left this table since the last reading**, and it is worth recording how,
 because only one of them was closed by new design. The root set, the meaning of

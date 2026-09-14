@@ -17,10 +17,9 @@ and how a model expresses a split is a build decision. What is left below blocks
 work, and the rows say which.
 
 **P0 is empty.** Every row has closed, and the last two closed on assignment and on a
-cascade rather than on new design: the scope check and the scope writer are
-[M11](01-MILESTONES/11-safety-response.md) deliverables alongside triage, since all
-three are invariant processors and the category is instantiated once; and M9's stale
-self-citation is corrected against what `10-foundations/04` now holds.
+cascade rather than on new design: the scope check and the scope writer got an owner —
+now [M17](01-MILESTONES/17-mandate-chain.md), split out of M11 on 2026-09-14 — and
+M9's stale self-citation is corrected against what `10-foundations/04` now holds.
 
 **Closed since the last revision of this band**, each in the document that owns it
 rather than here: the structured role-to-role handoff; the reversibility-class carrier,
@@ -64,6 +63,24 @@ an open contract looks blocking.
   as the framework that measures M8's corpus sweep (E6). This does not resolve
   whether M9 is also needed earlier as a prerequisite for M7's front half — that
   is M7's own open scope decision (P1 step 1), independent of this ordering.
+- **The bootstrap occupancy test — runnable now, and nothing schedules it.**
+  It is [M17](01-MILESTONES/17-mandate-chain.md)'s first work package and blocks the
+  rest of that milestone, but it depends on nothing: no durable stores, no workflow,
+  no loop. It answers **both** remaining rows of `STATUS.md`'s blocking-holes table
+  in one run, and it decides whether a scope check is providable on this host at all.
+  M0-shaped and cheap.
+- **Two ordering questions the M11 split opened (2026-09-14).** Both are decisions,
+  not research, and neither is taken.
+
+  **M17 against M7's suite run.** The scope check puts a model call in front of every
+  tool call. M7's evidence question is *outcome-per-call*, comparable back to M4 and
+  M5. Turning M17 on before M7 runs breaks that axis. *Proposed: M7's run completes
+  first, or M7's arms run with the check off and the findings entry says so.*
+
+  **M17 against M9.** M17 carves a permanent share of the resident envelope for the
+  checker's slot. M9 measures Overload against that envelope, so a baseline taken
+  before M17 is taken on a different machine than a reading taken after.
+  *Proposed: M17 between M8 and M9, which is not the order the row above records.*
 - **Re-analyse M4/M5 as paired comparisons before re-running anything.** The arms ran
   on a shared suite, so which tasks *flipped* between arms may be recoverable from data
   already collected. Paired analysis removes task-difficulty variance entirely and
@@ -81,14 +98,22 @@ an open contract looks blocking.
 
 | | Dependency |
 |---|---|
-| [M3 — Invariant floor](01-MILESTONES/03-invariant-floor.md) | **open.** Its remaining items are owned by M11. |
+| [M3 — Invariant floor](01-MILESTONES/03-invariant-floor.md) | **open.** Its remaining items are owned by M11 — not M17, which sits above the gate. Its effect-type coverage comes from M8. |
 | [M10 — Project-level adaptation](01-MILESTONES/10-project-level-adaptation.md) | — |
-| [M11 — Safety response](01-MILESTONES/11-safety-response.md) | Gates M12. Closes M3. Instantiates **invariant processors** as a category: triage, the scope check, the scope writer. Satisfies G4 |
+| [M11 — Safety response](01-MILESTONES/11-safety-response.md) | Gates M12. Closes M3. Triage, gate-`alter`, decommissioning, the accumulation threshold, sequence-check hardening, the literature pass |
 | [M12 — System-level candidate tuning](01-MILESTONES/12-system-level-candidate-tuning.md) | M11, and a second judgment source. |
 | [M13 — Reproducible generations](01-MILESTONES/13-reproducible-generations-and-promotion.md) | Relaxes invariant H3. |
 | [M14 — Meta-evaluation](01-MILESTONES/14-meta-evaluation.md) | — |
 | [M15 — Cross-generation comparison](01-MILESTONES/15-cross-generation-comparison.md) | A second resident model. |
 | [M16 — Bootstrap generation closure](01-MILESTONES/16-bootstrap-generation-closure.md) | — |
+| [M17 — The mandate chain](01-MILESTONES/17-mandate-chain.md) | **Runs early**, split out of M11 on 2026-09-14. Instantiates **invariant processors** as a category: the scope writer, the scope check. Satisfies G4. First work package is the bootstrap occupancy test, runnable now |
+
+**M10–M16 get no work packages in this pass, deliberately.** Five of the seven have
+no evidence question stated, and naming packages under an unstated evidence question
+produces a task list nobody can tell is complete. They also all sit behind either M11
+or the second GPU, so the packages would be written against a substrate that will have
+moved. The rule this follows is already recorded above: *carry the foundations pass
+into each as it is decomposed.*
 
 ### Blocked externally
 

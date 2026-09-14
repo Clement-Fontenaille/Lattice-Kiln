@@ -46,7 +46,7 @@ what is missing.
 prefix of the work it judges is required to be isolated
 (`10-technical/14-context-manager.md`), on the argument that it would otherwise
 inherit the reasoning it assesses. Nothing has tested that the inheritance changes the
-verdict. *Missing: a scope check to run, which is M11.*
+verdict. *Missing: a scope check to run, which is M17.*
 
 **Does recording a derived scope with its derivation change whether it gets
 contested?** The whole derive-record-contest requirement rests on the claim that an
