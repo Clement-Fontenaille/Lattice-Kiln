@@ -1,6 +1,6 @@
 # M6 suite run - arm `judge_anchored` (suite 0.4.0)
 
-_2026-09-14 18:28 - 154 runs_
+_2026-09-14 18:36 - 160 runs_
 
 | task | shape/trap | terminal | base | final | struct | pass | regr | decline | wall |
 |---|---|---|---|---|---|---|---|---|---|
@@ -19,6 +19,11 @@ _2026-09-14 18:28 - 154 runs_
 | hf_cache_nondeterministic | perf/false-premise | declined | 4/4 | 4/4 | - | True | - | ok | 77.9 |
 | hf_cache_nondeterministic | perf/false-premise | declined | 4/4 | 4/4 | - | True | - | ok | 8.4 |
 | hf_cache_nondeterministic | perf/false-premise | declined | 4/4 | 4/4 | - | True | - | ok | 86.5 |
+| hf_counter_race | concurrency/silent-failure | answered | 2/3 | 3/3 | - | True | - | - | 18.8 |
+| hf_counter_race | concurrency/silent-failure | answered | 2/3 | 3/3 | - | True | - | - | 72.1 |
+| hf_counter_race | concurrency/silent-failure | answered | 2/3 | 3/3 | - | True | - | - | 72.1 |
+| hf_counter_race | concurrency/silent-failure | answered | 2/3 | 3/3 | - | True | - | - | 116.5 |
+| hf_counter_race | concurrency/silent-failure | answered | 2/3 | 3/3 | - | True | - | - | 118.0 |
 | hf_csv | data/edge-coverage | blocked-partial | 3/6 | 5/6 | - | False | - | - | 75.5 |
 | hf_csv | data/edge-coverage | answered | 3/6 | 6/6 | - | True | - | - | 105.0 |
 | hf_csv | data/edge-coverage | blocked-partial | 3/6 | 5/6 | - | False | - | - | 76.1 |
@@ -53,6 +58,7 @@ _2026-09-14 18:28 - 154 runs_
 | hf_json_serialize | feature/multi-concern | blocked-partial | 2/5 | 5/5 | STRUCTSCORE=1/2 | True | - | - | 75.6 |
 | hf_json_serialize | feature/multi-concern | blocked-partial | 2/5 | 5/5 | STRUCTSCORE=1/2 | True | - | - | 81.3 |
 | hf_json_serialize | feature/multi-concern | blocked-partial | 2/5 | 5/5 | STRUCTSCORE=0/2 | True | - | - | 98.3 |
+| hf_json_serialize | feature/multi-concern | blocked-partial | 2/5 | 5/5 | STRUCTSCORE=1/2 | True | - | - | 92.7 |
 | hf_merge_config | data/edge-coverage | answered | 3/6 | 6/6 | - | True | - | - | 17.9 |
 | hf_merge_config | data/edge-coverage | blocked-partial | 3/6 | 4/6 | - | False | - | - | 94.2 |
 | hf_merge_config | data/edge-coverage | answered | 3/6 | 6/6 | - | True | - | - | 73.9 |
@@ -159,7 +165,7 @@ _2026-09-14 18:28 - 154 runs_
 | wf6_multi | migration/multi-concern | blocked-no-progress | 2/6 | 2/6 | DOCSCORE=0/4 TODOSCORE=0/3 | False | - | - | 226.5 |
 | wf6_multi | migration/multi-concern | blocked-partial | 2/6 | 6/6 | DOCSCORE=0/4 TODOSCORE=0/3 | True | - | - | 279.2 |
 
-**objective pass 111/154 - regressions 0 - check crashes 0 - decline accuracy 25/25**
+**objective pass 117/160 - regressions 0 - check crashes 0 - decline accuracy 25/25**
 
 ## `stresses` slices (mean final SUBTESTS fraction)
 
@@ -167,8 +173,8 @@ _2026-09-14 18:28 - 154 runs_
 |---|---|---|
 | L2-structural | 40 | 0.90 |
 | backward-compat | 20 | 0.89 |
-| combined-score | 9 | 0.93 |
-| concern-split | 9 | 0.93 |
+| combined-score | 10 | 0.93 |
+| concern-split | 10 | 0.93 |
 | cross-file | 15 | 0.92 |
 | edge-coverage | 40 | 0.87 |
 | greenfield-impl | 10 | 0.71 |
@@ -176,5 +182,5 @@ _2026-09-14 18:28 - 154 runs_
 | partial-credit | 15 | 0.88 |
 | premise-audit | 35 | 0.96 |
 | regression-guard | 45 | 0.97 |
-| silent-failure | 15 | 1.00 |
+| silent-failure | 20 | 1.00 |
 | witness-pair | 10 | 1.00 |

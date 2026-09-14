@@ -6,5 +6,8 @@
   "meta": {
     "arm": "judge_anchored",
     "suite": "m6"
-  }
+  },
+  "ended": "2026-09-14T16:29:48.015060+00:00",
+  "outcome": "completed",
+  "event_count": 39
 }
