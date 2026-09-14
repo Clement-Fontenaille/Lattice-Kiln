@@ -389,6 +389,52 @@ Grouped by trap; each row is `id — the ask — the trap — the discriminator`
 - The suite is versioned; adding/removing a task is a recorded change, so a
   cross-run comparison always states the suite version.
 
+## Authoring rule: every task needs a mechanical witness
+
+Operator ruling, 2026-09-14, after `wf3_refactor` was found to have none
+(`00-design/40-roadmap/03-research-and-evaluation/E0-suite-construct-validation.md`).
+
+**A task belongs in this suite only if its completion is mechanically observable.**
+The test is cheap and runs without a model:
+
+> Does the **untouched source** fail the check?
+
+Where it passes while the objective demands work, the check cannot separate done from
+not-done, and every arm scores the task identically whatever it did. That is not a
+hard task; it is a task that measures nothing.
+
+The five false-premise tasks are the deliberate exception and the reason the test is
+stated as a question rather than an assertion: there, the untouched source passing
+*is* the correct answer, and declining is what is being measured.
+
+### Restating rather than adding a judge
+
+When an objective has no witness, restate it until it does. `wf3_refactor`'s
+*remove the duplication by extracting a shared helper* becomes:
+
+> the two functions become one, **or** each body reduces to a call into a third
+> function carrying the shared logic
+
+which an AST walk decides. Two admissible outcomes rather than one, so the criterion
+says what finished looks like without prescribing the method.
+
+**Do not reach for a model to close the gap.** `50-findings/07` measured that: a
+deterministic core scored 9/10 with zero model calls and dropped to 6/10 once a 7B
+checklist and panel were added on top. A judge also relocates the problem rather than
+removing it, since something must then establish that the judge was right.
+
+`00-design/22-arch-cognition/08-decomposition.md` carries this as a **granularity**
+criterion rather than a verification one, alongside the capacity criterion it is
+independent of.
+
+### What this does not yet fix
+
+The rule is stated and the suite is not yet audited against it. Three tasks pass
+untouched while demanding work — `wf3_refactor`, `hf_extract_fn`, `hf_dict_dispatch` —
+though only the first lacks a witness outright; the other two **have** one
+(`STRUCTSCORE`) that the headline metric discards. Those are two different repairs and
+E0 holds both.
+
 ## Open contracts
 
 - **Suite size and balance.** v0 is ~34 tasks. Under Resolution before precision

@@ -104,6 +104,70 @@ Depth follows from that comparison rather than being configured. And the firing
 rule for any heavier stage is conditioned on the same quantity, which would let
 redundant stages retire on evidence rather than on judgement.
 
+## A second criterion: the mechanical witness
+
+Operator ruling, 2026-09-14. The account above splits on **capacity** — until each
+unit is one the assembly can hold. This is a second criterion, independent of it, and
+it constrains **formulation** rather than size.
+
+**A task is well-formed when its completion has a mechanical witness.** Where no
+statement of the objective admits one, the task is at the wrong granularity, and the
+response is to restate or split it.
+
+The case that produced this is `wf3_refactor` in the evaluation suite. Its objective
+reads *remove the duplication by extracting a shared helper, without changing what
+either function returns*. Nothing mechanical observes that. The untouched source
+passes every check and so does a correct refactor, so doing the work and not doing it
+are the same observation
+(`40-roadmap/03-research-and-evaluation/E0-suite-construct-validation.md`).
+
+Restated, it has a witness immediately:
+
+> the two functions become one, **or** each body reduces to a call into a third
+> function carrying the shared logic.
+
+That is an inspection of two function bodies. No model, no judgement.
+
+Note the shape: **two admissible outcomes rather than one imposed.** It says what
+*finished* looks like without prescribing how to get there. A criterion admitting only
+one implementation has stopped being a completion test and become a specification of
+method.
+
+### The response to a missing witness is not a judge
+
+Two reasons, and the first is measured rather than argued.
+
+**This project has already tested adding one.** `50-findings/07`, the Milestone 5
+follow-up, found the deterministic core alone scoring **9/10 with zero model calls**,
+and a 7B checklist-and-panel added on top dropping it to **6/10**. The checklist
+codified false premises as requirements and the panel emitted confident, wrong
+`not_met` verdicts on correct code. Its verdict: a 7B does the *doing* with
+scaffolding and **cannot do the *judging*, and the gap is not a prompt away.** The
+panel's one demonstrated use was explaining a *known* failing test line — a reporting
+aid, not a decision aid.
+
+**And structurally, a judge relocates the unverifiability rather than removing it.**
+Something now has to establish that the judge was right, and that is the question
+that was already unanswerable.
+
+### What is not settled
+
+**Whether a test-writer is redundant in the same way.** The judge result does not
+transfer: writing a check and judging an artifact are different operations, and `07`
+found the panel useful precisely for explaining a *known* failure. Three suite tasks
+carry the `kway-synth` tag for this, and blind K-way synthesis is listed among
+Milestone 7's unexplored strategies. Open, and flagged as open by the operator who
+gave the ruling.
+
+### Against the account above
+
+The capacity criterion and this one can disagree. Two units can be identical in what
+an assembly can hold and opposite in whether their completion is observable.
+
+That bears on the open question below — *whether decomposition is governed by one
+quantity or two* — by naming a candidate second one on the **splitting** side, where
+the existing doubt was on the recombination side.
+
 ## Open question
 
 Whether the granularity account survives contact with a prediction that could

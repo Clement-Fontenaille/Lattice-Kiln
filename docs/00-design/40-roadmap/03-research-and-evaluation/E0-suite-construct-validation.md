@@ -90,6 +90,35 @@ structural dimension, but its check has an explicit discriminator subtest
 (`old_parse matches new_parse`) that a warning-only deprecation fails. Its coverage is
 adequate; only the separate score line is missing. One task in thirty, not two.
 
+### The remedy, and what it is not
+
+Operator ruling, 2026-09-14. **The repair for defect 3 is in the objective, not in the
+checking apparatus.** Restate the task until its completion has a mechanical witness:
+
+> the two functions become one, **or** each body reduces to a call into a third
+> function carrying the shared logic
+
+An AST walk decides that. Two admissible outcomes rather than one, so it says what
+finished looks like without prescribing the method.
+
+**Do not close the gap with a judge or a test-writer.** For the judge half this
+project has the measurement already: `50-findings/07` scored a deterministic core at
+9/10 with zero model calls and 6/10 once a 7B checklist and panel were added. A judge
+also relocates the unverifiability rather than removing it. *The test-writer half does
+not follow from that and is deliberately left open* — writing a check and judging an
+artifact are different operations, and three suite tasks already carry `kway-synth`
+for it.
+
+The general form is carried as a **granularity** criterion in
+`00-design/22-arch-cognition/08-decomposition.md`, independent of that account's
+capacity criterion, and as an authoring rule in
+`10-technical/10-evaluation-task-suite.md`.
+
+Note that defects 1 and 3 need **different** repairs. `hf_extract_fn` and
+`hf_dict_dispatch` already have a witness — `STRUCTSCORE` — that the metric throws
+away; folding the structural dimensions into the exit code fixes those and does
+nothing for `wf3_refactor`, which has no witness to fold.
+
 ### The cheap test this yields
 
 **For every task, does the untouched source fail the check?** Where it does not while
