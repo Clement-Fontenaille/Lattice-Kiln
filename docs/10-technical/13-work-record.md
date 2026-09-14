@@ -14,9 +14,10 @@ binds to `10-technical/01-effect-vocabulary.md` (effect type 4),
 
 The durable store for intent and the work derived from it. It holds **three kinds
 of record**: intent, written from outside and never rewritten by the system; work
-items, whose current formulation is directly readable; and an append-only
-transition log for each item. It decides nothing about the work — it persists what
-a realized effect changed.
+items, whose formulation and scope are fixed at creation and whose current state is
+directly readable; and an append-only transition log for each item. It decides
+nothing about the work — it persists what a realized effect changed, and refuses only
+what would break the shape of the lineage.
 
 > **Motto:** The goal outlives every formulation of it.
 
@@ -28,8 +29,8 @@ it; what had no specification was the record those effects mutate.
 
 Two things here are specified ahead of any run. The **declared scope** fields
 exist because `03-capability-authority-model.md` needs somewhere to read a mandate
-from, and nothing derives one yet. The **containment checks** on split and refine
-are stated normatively and enforced nowhere.
+from, and nothing derives one yet. The **containment checks** on creation — a child
+or a successor — are stated normatively and enforced nowhere.
 
 ## Responsibility
 
@@ -54,9 +55,14 @@ shape, deliberately stopping short of a schema. This document narrows to:
   touched afterwards.
 - **This store is separate from `12-knowledge-model.md`**, and the reason is what a
   work item *is* rather than what it costs to read. A work item is not a claim; it
-  is what claims attach to. The knowledge model is also append-and-supersede
-  throughout, which is the wrong discipline for a record whose whole purpose is to
-  be rewritten as the work changes.
+  is what claims attach to.
+
+  The older reason — that a claim is append-only while a work item is mutable — **no
+  longer holds**, since a formulation and a scope are now fixed at creation here too.
+  What survives it is a difference in **access pattern**: the orchestrator reads an
+  item's current state on every loop step and must get it in one fetch, while a claim
+  is reached by walking provenance. A store built for the walk would make the loop's
+  read cost grow with history.
 - **Scope as three fields on the work item** — boundary, derivation, state — not
   one opaque string and not a structured predicate.
 - **An append-only transition log kept alongside an item rather than inside it.**
@@ -70,8 +76,10 @@ shape, deliberately stopping short of a schema. This document narrows to:
 - **Realized type-4 effects**, from the runtime. This store is written by nothing
   else (below).
 - **Intent**, written from outside the system, out of band.
-- **Derived or narrowed scopes**, from an invariant processor (the ceiling) or the
-  orchestrator (a narrowing), each arriving as a type-4 mutation like any other.
+- **A derived scope**, from the invariant processor, arriving **as part of the 4a
+  that creates the item** rather than as a mutation of its own. There is no second
+  input here, because there is no later write: an invocation's narrowing is bound
+  into the instance (`06-processor-contract.md`) and never reaches this store.
 
 ## The three record kinds
 
@@ -108,9 +116,31 @@ MUST carry:
 - `formulation` and `scope` are **fixed at creation and never rewritten**
   (`01-effect-vocabulary.md`, type 4). What would have been a refinement is a
   **successor task** with a redefined objective.
-- `state` — a current value: challenged, deferred, abandoned, executed.
+- `state` — a current value, from the set below.
 - `scope` — three parts, specified in the next section.
 - `conclusion` — null until recorded; see below.
+
+#### Work item states
+
+`22-arch-cognition/01` names four things a state can change *to* — challenged,
+deferred, abandoned, executed — and does not name what an item is before any of them
+happens. This document adds that value, because two other specifications already
+depend on it:
+
+- **`open`** — the initial state. Set by 4a at creation, and never arrived at by a
+  transition.
+- `challenged`, `deferred` — the item is still live.
+- `abandoned`, `executed` — **terminal**. The item is over.
+
+The addition is not bookkeeping tidiness. **Live-versus-terminal is the predicate the
+whole retention mechanism runs on**: `12-knowledge-model.md` keeps an artifact because
+a live task holds it and deletes it when that task ends, and `14-context-manager.md`
+ends a live set when its task does. Both were written against a distinction this
+store did not represent, so without it neither could be implemented. The terminal pair
+is also what `03-capability-authority-model.md`'s aggregate check runs on.
+
+An item in any of the three live states is a root-holder; an item in either terminal
+state is not. Nothing else keys on the finer distinctions.
 This store holds **no reference to any artifact**. What crossed under a task is the
 task's live set, held by `14-context-manager.md`, and there is no second edge set
 here. This store holds the work.
@@ -205,13 +235,21 @@ Normative:
 - `pending` and **absent** MUST be distinguishable. The first is the check working
   as designed; the second is the check not having run. They call for opposite
   responses, and the second stops work.
+- **`pending` resolves by succession, not by being overwritten.** It is the one
+  scope state that looks like it must change later, and it does not: what the
+  operator sends back is an amendment to intent, out of band
+  (`03-capability-authority-model.md`, The disposition), and a fresh task is derived
+  under the amended intent. The item that asked keeps `pending` permanently, as the
+  record of a question that was put. Which terminal state that item then takes is an
+  open contract below.
 - The scope MUST be readable **at any point during the task**, not only at its
   end. The irreversible half of the check runs before an effect happens.
-- A change to any of the three MUST appear in the transition log. Two reasons, and
-  both matter: a mandate widened mid-task is what an audit needs to *see* rather
-  than find silently already true, and a task that is succeeded or split has its
-  scope legitimately re-derived — those two look identical unless the history
-  distinguishes them.
+- The three fields are written together at creation and **there is no path that
+  changes any of them afterwards**. What an earlier draft required — that a scope
+  change appear in the transition log — is satisfied by there being none: a task
+  whose boundary must move gets a successor, and the `derived_from` edge is where
+  the history lives. The audit question *was this mandate widened mid-task* is
+  answered structurally rather than by reading a log.
 - An operator's own indication of a boundary is carried as part of the scope and
   **governs** the derived portion. Explicit beats derived.
 
@@ -263,10 +301,10 @@ creation that violates either.
   contained in the ceiling.** Not in the parent's. A child may legitimately reach
   wider than a narrow parent as long as it stays inside what intent authorised: a
   parent's scope focuses that parent, it does not floor everything beneath it.
-- **A successor task** — created with a redefined objective where an item would
-  otherwise have been refined — derives its scope at creation and MUST be contained in
-  the ceiling. Redefining broadly is the route that widens without anything ever
-  splitting, and the ceiling is what stops it.
+- **A successor task** — created with a redefined objective where an item would, under
+  a mutable model, have been edited in place — derives its scope at creation and MUST
+  be contained in the ceiling. Redefining broadly is the route that widens without
+  anything ever splitting, and the ceiling is what stops it.
 
 One rule rather than two: **every task's scope sits inside the ceiling derived from
 intent** (`03-capability-authority-model.md`). Manufacturing mandate by splitting
@@ -400,6 +438,13 @@ work/
   and not successors has left open the route splitting alone did not close.
 - **Verdict collapse.** `declined` folded into `blocked`, or the two reasons for
   declining folded into one, reproduces the failure M5 recorded.
+- **A terminal state left unrecorded.** An item whose work is over but whose state
+  still reads live keeps its whole live set as roots, so nothing beneath it is ever
+  deleted. The knowledge model has no independent way to notice: it asks this store
+  whether the task is live and believes the answer.
+
+## Relationships
+
 - **`22-arch-cognition/01-work-intent-and-task-model.md`** — owns the vocabulary
   this store persists. It adds no concepts to it.
 - **Effect vocabulary** (`01-effect-vocabulary.md`) — type 4 is the only write
@@ -434,6 +479,11 @@ work/
 - **Abandoned items.** Retained or removed. Retention is the cheaper assumption
   and keeps "why was this dropped" answerable, but nothing establishes that it is
   required.
+- **What state a `pending` item ends in.** Its question went to the operator and a
+  successor carries the answer, so the item itself is over — but `abandoned` reads
+  as a judgment about the work, which is wrong here, and `deferred` reads as
+  resumable, which it is not. Both terminal states misdescribe it. The choice matters
+  because the state decides whether the item's live set is released.
 - **Verdict granularity.** Whether three conclusions suffice. A false-premise
   refusal and an already-satisfied request both land on `declined` while calling
   for different follow-ups — possibly M5's collapse reproduced one level down.

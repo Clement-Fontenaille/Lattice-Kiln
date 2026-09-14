@@ -125,11 +125,34 @@ LiveSetEntry := {
   claim_ref,              # into 12-knowledge-model
   crossing_type,          # read | generation | retrieval | effect_response
                           # generation subdivides: see Splitting a generation
+  label,                  # objective | derived_scope | none -- see The two labels
   origin_invocation_id,   # which instance obtained it -- the only primitive here
   registered_at,          # per-run monotonic sequence, not wall clock
   policy_metadata         # whatever the configured recall policy needs
 }
 ```
+
+#### The two labels
+
+An entry's `label` says **what the artifact is to the task**, and it is set only where
+the task's own structure fixes that. Everything else is unlabelled.
+
+| Label | What it marks | Written |
+|---|---|---|
+| `objective` | What the task is to accomplish | At task creation, and again when a calling processor writes an invocation's own objective |
+| `derived_scope` | The invariant processor's ceiling output | At task creation |
+| *(none)* | Everything else | On every other registration |
+
+**Two labels, and the vocabulary is meant to stay near that.** The temptation is to
+label by provenance — this came from a tool, that from the model — and that question
+is already answered by `crossing_type`, on the same entry. A label that duplicates a
+crossing type is a second place for one fact to be recorded and disagree
+(`70-THINKING/18-task-artifact-edges.md`).
+
+The criterion is narrow on purpose: a label exists where an artifact occupies a
+**structural position** in the task that a processor must be able to find by asking
+for it — the thing to accomplish, the boundary it must stay inside. An artifact that
+merely happens to be useful has no such position and takes no label.
 
 ### The policy is mechanical, and this is its input domain
 
@@ -153,6 +176,13 @@ Concretely, each field earns its place by a policy that needs it:
 
 - `crossing_type` — *a retrieval was deliberately fetched; an incidental read was not.*
   Order by how the artifact was obtained.
+- `label` — *never drop the objective or the ceiling, whatever the budget does.* The
+  one branch a policy needs that nothing else expresses, and the reason a degenerate
+  policy is survivable at all.
+- `origin_invocation_id` — *everything this instance obtained, before anything an
+  earlier one did.* Also what an isolation preference is enforced against: a judge
+  binding `share_nothing` needs to know which entries carry the reasoning it judges.
+- `registered_at` — recency, and the ordered tail of the discussion.
 
 #### Splitting a generation
 
@@ -171,10 +201,13 @@ processor's conclusion and not its reasoning (`06-processor-contract.md`,
 independence), and that cut is made here. And the largest saving available to a recall
 policy is dropping reasoning while keeping conclusions, which is a branch on this
 field.
-- `origin_invocation_id` — *everything this instance obtained, before anything an
-  earlier one did.* Also what an isolation preference is enforced against: a judge
-  binding `share_nothing` needs to know which entries carry the reasoning it judges.
-- `registered_at` — recency, and the ordered tail of the discussion.
+
+**What the split does not give.** Separating reasoning from conclusion makes the
+working *separable*, and separable is not compressed
+(`12-knowledge-model.md`, Compress). Dropping the reasoning half leaves a conclusion
+with neither its named inputs nor its argument's shape, which is a bare assertion. A
+recall policy may cheaply decline to *show* reasoning; deciding it can be *deleted* is
+a different operation with its own precondition.
 
 **What a policy needs and this entry does not store.** *What this task found, before
 what it inherited* is a policy worth being able to write, and the fact it branches on
@@ -188,17 +221,25 @@ it on every entry on every turn. Nobody has measured that cost, and this project
 standing position is not to optimise ahead of evidence. So they are derived until
 measurement says otherwise.
 
-**Why inherited is not equally pertinent, stated correctly.** Not because the parent's
-scope was wider — a child narrows or leaves the boundary unchanged, so a parent's
-scope is never narrower and is often identical. The reason is the **objective**: an
-artifact obtained under a parent was fetched in pursuit of what the parent was for,
-and a child exists because that was split or refined into something else. Fetched for
-one purpose is not thereby fetched for another.
+**Why inherited is not equally pertinent, stated correctly.** Not because of scope.
+Scope says nothing usable here in either direction: every task is checked against the
+**ceiling** rather than against its parent
+(`03-capability-authority-model.md`, Containment), so a child's boundary may be
+narrower, identical, or wider than the one above it, and comparing the two yields no
+signal a policy could branch on.
+
+The reason is the **objective**: an artifact obtained under a parent was fetched in
+pursuit of what the parent was for, and a child exists because that was split or
+redefined into something else. Fetched for one purpose is not thereby fetched for
+another. That argument stands on its own and never needed the scope relation.
 
 **Judgement is available to a mechanical policy, provided it was made elsewhere and
 recorded.** Whether a claim is promoted is a decided fact readable through
-`claim_ref`; so is its claim type; so is a curated attachment on the work item
-(`13-work-record.md`). A policy may branch on all of them. What it may not do is
+`claim_ref`; so is its claim type; so is a deliberate attachment, which is a **4c
+effect writing an edge into this live set** and not a field on the work item —
+`13-work-record.md` holds no artifact reference. A policy may branch on all of them,
+and on `label`, which is decided by the task's structure rather than by anyone's
+opinion of the artifact. What it may not do is
 *form* a judgement at recall time — ask whether this artifact is pertinent to this
 objective — which is the one thing `10-foundations/03` holds must be judged live by
 whoever is asking.
@@ -232,11 +273,18 @@ unfinished specification. The search is for which proxies, combined how.
 - **It grows within a task's life and does not shrink.** Registration only adds. An
   artifact the recall policy passed over on some turn is still a member; it was not
   shown, which is a different thing from not being held.
-- **A new task's live set is not empty either.** The intent has crossed into the
-  work, and a crossing registers — so the set holds at least an Observation of the
-  operator's request before any tool is called. Whether the objective and the scope
-  follow by the same argument, and by what crossing type any of them arrives, is
-  open (`70-THINKING/18-task-artifact-edges.md`).
+- **A new task's live set is not empty either**, and what it starts with is settled.
+  The intent crossed in as a `read` and registers like anything else. The scope
+  evaluation then had to read something in order to derive a ceiling, and those reads
+  attach too. Its output attaches with label `derived_scope`, and the task's
+  objective with label `objective`
+  (`70-THINKING/18-task-artifact-edges.md`, phases 1.4–1.6).
+
+  **Attachment at creation is a runtime call, not a proposed effect.** Task creation
+  carries the option of attaching context to the task it creates, and that path needs
+  no capability evaluation and no gate — nothing is being requested, the runtime is
+  populating a set it is constructing (`13-work-record.md`). The 4c effect is for a
+  processor attaching mid-work, which is a different act by a different party.
 - A second instance working under the same task finds the set already populated,
   because it outlived the instance that filled it.
 - **It ends when its task does.** That is what removes its members from the root set
@@ -497,7 +545,7 @@ is a change `02-observability-event-model.md` owes.
 - **A bundle bound at instantiation.** Reintroduces the object the processor
   contract removed, and makes the turn input stale by construction after turn one.
 - **The live set treated as memory.** It is an index over a task; what persists is
-  in the knowledge model, subject to the sweep.
+  in the knowledge model, and only for as long as something still reaches it.
 
 ## Relationships
 
@@ -519,13 +567,23 @@ is a change `02-observability-event-model.md` owes.
 
 ## Open contracts
 
-- **What a split's child starts with.** Continuation within a task needs nothing:
-  the set belongs to the task, so a second instance finds it populated. A new task
-  starts with whatever its scope evaluation had to read, attached at creation. What is
-  unsettled is a **child** of an existing task — whether it inherits its parent's
-  edges, and whether inheriting duplicates edges or re-crosses. This is where
-  `00-design/22-arch-cognition/08-decomposition.md`'s fork/join-versus-continuation
-  question actually bites.
+- **What a split's child starts with — narrowed to one question.** Three things are
+  settled (`70-THINKING/18-task-artifact-edges.md`, Splitting). Continuation within a
+  task needs nothing, since the set belongs to the task and a second instance finds it
+  populated. Inheritance **duplicates edges and never artifacts**, so the single-copy
+  rule holds across a split by construction. And the **objective is never inherited**:
+  a new task always receives its own, even where it restates the parent's, because an
+  inherited objective would make the child's live set claim the child is for what the
+  parent was for.
+
+  Two base policies are admissible — **inherit all** or **inherit none** — and which
+  is the default is not decided. What is genuinely open beneath that is narrower than
+  it looks: whether `derived_scope` is inherited or **re-derived per task the way the
+  objective is re-written**. Re-deriving is the answer consistent with every task
+  getting its ceiling at creation; inheriting is cheaper and avoids a model call per
+  child. Nothing has argued it either way, and this is where
+  `00-design/22-arch-cognition/08-decomposition.md`'s
+  fork/join-versus-continuation question actually bites.
 - **What the recall policy is.** Named as a required, distinct responsibility and
   left arbitrary by design. Nothing here fixes what triggers a drop or what
   ordering is applied.

@@ -54,7 +54,9 @@ A proposal is a memory mutation like any other (`10-technical/01-effect-vocabula
 
 ## When it fires
 
-The sweep fires when something stops being live — a live set entry going archived, or a live set ending. It is incremental by nature, because reachability is local.
+The sweep fires when something stops being live, which happens **when a task ends** — its live set ends with it, and every artifact that set held stops being a root (`10-technical/12-knowledge-model.md`, `10-technical/14-context-manager.md`). It is incremental by nature, because reachability is local.
+
+There is no second trigger, and in particular no *archived* state for a live set entry to pass through: an artifact is attached to a live task or it is not held at all (`23-arch-context-management/01-context-manager.md`). Whether an artifact can be detached from a task before that task ends would be a second trigger, and nothing describes one.
 
 Deliberate remembrance fires during an episode, not after it. Marking something worth keeping is a judgment made while the reasoning that motivates it is still in view; deferring it to a teardown pass would mean reconstructing that motivation from a record of an episode that has ended. Compression can be deferred, since a checked step stays re-derivable.
 

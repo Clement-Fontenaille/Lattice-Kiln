@@ -167,15 +167,16 @@ record at all. A cognitive component repeatedly proposing writes outside its
 workspace is boundary probing of the plainest kind, and it was invisible.
 
 That fourth disposition covers a refusal neither of the other two describes. A
-proposed split or refinement whose scope is not contained in its parent's is
-refused by the work record acting on the scope check's verdict
-(`13-work-record.md`), which is not a capability decision and not a gate trip. It
+proposed **creation** — a child or a successor — whose scope is not contained in the
+ceiling derived from intent is refused by the work record acting on the scope
+check's verdict (`13-work-record.md`), which is not a capability decision and not a
+gate trip. It
 is also the clearest **boundary-probing** signal the scope apparatus can produce —
 an attempt to widen a mandate, caught — so a system that records it nowhere has
 discarded exactly the evidence this record kind exists to surface.
 
 A **mandate-conformance verdict** is recorded here too, with its natural-language
-reasoning, and `within` is recorded as explicitly as `outside`
+reasoning, and `inside` is recorded as explicitly as `outside`
 (`03-capability-authority-model.md`). A check that never ran and a check that
 passed must not be the same absence.
 
@@ -233,22 +234,33 @@ than operated ones.
 
 ### 7. Work transition
 
-One per change to a work item, and one per recorded conclusion
-(`13-work-record.md`).
+One per change to a work item, one per recorded conclusion, and **one per work item
+created** (`13-work-record.md`).
 
 MUST carry: `work_item_ref`, the transition, the realizing operation, the
 proposing `invocation_id`, and — for a conclusion — the verdict with its
 reasoning.
+
+**Creation is recorded here even though `13-work-record.md` does not log it as a
+transition**, and the divergence is deliberate. That store keeps a per-item log of
+what happened *to* an item, and nothing happens to an item when it is created — its
+existence and its lineage are the item record itself. This store has no such
+per-item framing: it is one ordered history, and a creation that produced no entry
+in it would leave the lineage visible only by fetching items one at a time.
+
+A creation record MUST carry the new item's `derived_from` parents, its scope and its
+derivation. Those are the fields an audit of a widening lineage reads.
 
 `answered`, `blocked` and `declined` MUST stay distinct. Milestone 5 recorded an
 orchestrator collapsing "the task rests on a false premise" and "I cannot find a
 next step" into one generic outcome, losing a distinction the simpler Milestone 4
 arms had made.
 
-A **scope change** is a work transition and MUST be recorded as one. An audit needs
-to *see* a mandate widened mid-task rather than find it silently already true, and
-a re-derivation after a refinement is indistinguishable from a widening unless the
-history separates them.
+**There is no scope change to record**, and the requirement that used to sit here is
+met by its absence. A task's scope is written once, at creation, and never edited
+(`13-work-record.md`), so the audit question *was this mandate widened mid-task* has
+no event to look for. A boundary that moved means a **new item**, and the creation
+record above is where an auditor sees it.
 
 ### 8. Conditions in force
 
@@ -319,10 +331,13 @@ proposes no detector. Recording greedily supplies material for both, which is a
 reason for the greed beyond general caution. Neither is a mechanism — they are
 stated so the material is not discarded before anyone tries.
 
-- **A sweep that took something needed.** The evidence went with it — but only from
-  `12-knowledge-model.md`. It is still here. A later pass can ask whether anything
-  swept was subsequently searched for, re-fetched, or re-derived, which is exactly
-  the signal that reachability cut too early.
+- **A removal that took something needed.** The evidence went with it — but only
+  from `12-knowledge-model.md`. It is still here. A later pass can ask whether
+  anything deleted was subsequently searched for, re-fetched, or re-derived, which is
+  exactly the signal that reachability cut too early. Incremental removal makes this
+  sharper rather than harder: every deletion is attributable to the task whose ending
+  caused it, so the question becomes *which task ended too soon* rather than *what did
+  the last pass take*.
 - **A curator that has stopped discriminating.** Over-generous remembrance grows
   the store without corrupting it and produces an absence rather than an error. The
   ratio of registered observations to remembered ones, tracked over time, is a
@@ -338,7 +353,7 @@ stated so the material is not discarded before anyone tries.
   capability rejection and a conformance verdict are both kind-4 dispositions; the
   policy lives there.
 - **Knowledge model** (`12-knowledge-model.md`) — holds current state; this holds
-  the history of how it was reached, and the entries the sweep removed.
+  the history of how it was reached, and the entries deletion removed.
 - **Work record** (`13-work-record.md`) — supplies work transitions and recorded
   conclusions.
 - **Context manager** (`14-context-manager.md`) — supplies per-turn turn inputs
@@ -355,10 +370,10 @@ needs it, a work item persists until the work is done and then stops changing.
 None of their retention needs match a full historical log's, and a greedy log's
 needs least of all.
 
-The sweep sharpens this rather than softening it. A swept entry stops being
+Deletion sharpens this rather than softening it. A deleted entry stops being
 something the system knows and stops being available to reason from, while
 remaining reconstructable here. Reasoning and auditing are different uses, and
-this store is what makes the sweep safe to perform at all.
+this store is what makes deletion safe to perform at all.
 
 ### Which copy is authoritative
 
@@ -376,15 +391,15 @@ by the runtime while realizing one operation, so drift means a partial write rat
 than a difference of opinion. Neither copy should be quietly preferred without the
 condition being surfaced.
 
-**The exception is temporal rather than a matter of trust.** Once the sweep has
-removed an entry, or a work item's retention has ended, this store's copy is the
+**The exception is temporal rather than a matter of trust.** Once an entry has been
+deleted, or a work item's retention has ended, this store's copy is the
 only one left. It is not a witness to anything at that point — it is the record.
 Nothing changes about its accuracy; what changes is that there is no longer an
 owning store to defer to.
 
 That is also why this store's retention is greedy while the others' is not. A
 witness that expires before what it witnessed is useless, and the whole argument for
-performing the sweep at all is that this store outlives it.
+deleting anything at all is that this store outlives it.
 
 ## Open contracts
 
@@ -400,8 +415,8 @@ performing the sweep at all is that this store outlives it.
 - **Turn-input content versus reference.** Whether a kind-5 record holds what was
   presented, or a reference plus the policy decision that produced it. The second
   is far smaller and reconstructs the first **only if the live set's own history is
-  complete** — which it is here, and is not in `12-knowledge-model.md` after the
-  sweep.
+  complete** — which it is here, and is not in `12-knowledge-model.md` once entries
+  have been deleted.
 - **Retention and tiering.** Full-token retention forever is not a long-term
   position. What is the forensic window, and what is the summarised long-term form?
 - **Redaction.** Secrets, personal data, and large blobs — redact at capture, at

@@ -194,8 +194,16 @@ to the roots, and what happens to the working is deletion rather than replacemen
 ## Elide — and why reachability is nearly the whole retention rule
 
 Remove an entry. **This is the default path rather than an exceptional one**: an
-entry no longer live that nothing registered for remembrance is swept, and most of
-what crosses is swept.
+entry no longer live that nothing registered for remembrance is removed, and most of
+what crosses is removed.
+
+**It is not proposed by anyone.** Elide is a service this store performs for the
+runtime, not an effect a cognitive component requests: removal is not a sub-type of
+type 5, because an entry is deleted when nothing reaches it any more, which is
+runtime bookkeeping (`01-effect-vocabulary.md`, type 5). It is listed among the six
+operations because it is something the store does, not because it is something
+anything asks for. Whether a **deliberate** retirement path is needed besides — a
+redaction, a privacy requirement — is open there and unaddressed here.
 
 Using this store as the main home for crossings does **not** make the default
 "keep". The knowledge base is where an artifact already sits from the moment it
@@ -210,19 +218,38 @@ Reachability is computed from a **root set with exactly two sources**.
   the word means here, and it is deliberately an *act* rather than a property derived
   from a claim's type. Nothing is promoted by being a Finding rather than an
   Observation; something is promoted when something promotes it.
+
+  Being an act, it is a **proposed, gated effect: 5b Relate**
+  (`01-effect-vocabulary.md`). That placement is what makes promotion contestable —
+  it passes capability and the gate like any other effect, and it is recorded. It is
+  also slightly uncomfortable, since 5b is otherwise about relations *between
+  entries* and the root set is not an entry; `01` carries that as an open question and
+  nothing here depends on how it resolves.
 - **The live set.** Everything attached to a live task is a root for as long as that
   task exists (`14-context-manager.md`). Note what this is **not** keyed to: not
   whether the model was recently shown the artifact, but whether a task still holds
   it. Being worked on is the reason to keep something, and it expires on its own when
   the work ends.
 
+  *Live* is read off the work item's state: the three live states against the two
+  terminal ones (`13-work-record.md`, Work item states). This store does not decide
+  it and has no way to; it asks.
+
 An entry is kept when a root reaches it by following provenance links. The rest of
 this section is the consequence.
 
-### Removal is incremental, and there is no sweep
+### Removal is incremental, and no periodic pass is needed
 
-A periodic sweep over the whole graph is **not needed**, and specifying one would
-add a mechanism the information does not require.
+A **periodic** pass over the whole graph is not needed, and specifying one would add
+a mechanism the information does not require.
+
+Say *periodic* rather than *sweep*, because the two are not the same thing and the
+design set uses the second word for the operation itself.
+`00-design/22-arch-cognition/05-curation.md` already holds that the sweep "is
+incremental by nature, because reachability is local" — so what this section removes
+is the **schedule**, not the sweep. Nothing here diverges from that document; this
+document simply stops using a word that reads as *a pass that runs over everything*
+when what happens is a walk from one departing item.
 
 The reason is that reachability only ever changes at moments the system already
 knows about. A root enters the set when something is promoted or registers as live.
@@ -243,8 +270,8 @@ members stop being roots. Removal runs there:
   failure below, arrived at by arithmetic instead of by carelessness.
 
 This trades one large occasional cost for many small ones, and it removes the
-question of when a sweep runs by removing the sweep. It is also what makes the
-naive filesystem shape viable for longer: nothing walks the whole graph.
+question of when removal runs by making the answer structural. It is also what makes
+the naive filesystem shape viable for longer: nothing walks the whole graph.
 
 **Precondition: eliding a reachable root is still refused.**
 
@@ -256,7 +283,7 @@ naive filesystem shape viable for longer: nothing walks the whole graph.
   damage is invisible at the moment it is done and appears only when someone tries
   to verify a descendant.
 - For nearly everything, reachability is therefore not merely the constraint on
-  this operation but the **entire retention rule**, and the sweep is a graph
+  this operation but the **entire retention rule**, and removal is a graph
   traversal needing no judgment.
   `00-design/22-arch-cognition/05-curation.md` holds only the part that does —
   deliberate remembrance — and the criterion for that is absent from
@@ -330,8 +357,8 @@ by hand.
 
 - **Eliding a reachable root.** The worst failure here, and the quietest: every
   descending souvenir becomes unverifiable and nothing reports it. The reachability
-  refusal is the only thing standing in the way, so a sweep that bypasses it is a
-  defect even when it removes nothing important.
+  refusal is the only thing standing in the way, so a removal pass that bypasses it
+  is a defect even when it takes nothing important.
 - **Mode recorded once per claim.** Flattens a multi-parent claim onto whichever
   parent was written first, and F6 says this is the case that actually occurs.
 - **Source read off the flag.** Treating `source` as sufficient loses
@@ -405,8 +432,11 @@ by hand.
   `00-design/23-arch-context-management/02-context-as-experimental-surface.md`'s
   subject rather than as a gap here.
 - **Peak size.** Steady-state size is bounded by what is live plus what was
-  remembered, since the sweep removes the rest. **Peak** size during a long episode
-  is unmeasured, and it is the figure a naive filesystem shape feels first.
-- **Whether the walk must be indexed.** The naive sweep and the naive dependent
-  traversal both walk from scratch. `70-THINKING/ideas.md` I5 holds the
+  remembered, since removal takes the rest. **Peak** size during a long episode
+  is unmeasured, and it is the figure a naive filesystem shape feels first. Note that
+  incremental removal makes the peak *higher* than a periodic pass would, not lower:
+  nothing is reclaimed until a task ends, so a long-running task holds everything it
+  ever touched.
+- **Whether the walk must be indexed.** The provenance walk at removal and the naive
+  dependent traversal both walk from scratch. `70-THINKING/ideas.md` I5 holds the
   architecture-scoped version of this question; nothing here adopts it.

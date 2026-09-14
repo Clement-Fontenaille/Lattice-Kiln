@@ -10,7 +10,8 @@ moment it is produced to the moment it is forgotten, naming the document that ow
 every step.
 
 Its value is not the walks. It is **what the walks cannot complete**: a step no
-document answers is a gap in that document, and four traces found seven.
+document answers is a gap in that document, and four traces have found seven — six on
+the first pass, one more on re-walking them after the specifications moved.
 
 > **Motto:** Follow one thing all the way down, and the seams show.
 
@@ -47,7 +48,7 @@ The commonest path in the system, and the one most of what crosses actually take
 | 8 | **Recorded** as a kind-2 realized-operation record, sharing the kind with typed effects so the gate reads one ordered history | `02` |
 | 9 | **Recalled** into turn inputs while the policy selects it. Each appearance is a kind-5 record carrying its crossing type | `14`, `02` |
 | 10 | Passed over by the recall policy on later turns. It **stays in the live set**: not shown is not the same as not held | `14` |
-| 11 | **The task ends.** Its live set ends with it, and this artifact stops being a root | `14`, `12` |
+| 11 | **The task ends** — it reaches `abandoned` or `executed`. Its live set ends with it, and this artifact stops being a root | `13`, `14`, `12` |
 | 12 | Nothing promoted it and no other live task holds it, so it is deleted, along with any ancestor no remaining root still reaches | `12` |
 | 13 | It remains reconstructable in observability, and nowhere else | `02` |
 
@@ -72,17 +73,28 @@ The promotion path. Rare by design: most of what crosses takes trajectory A.
 | 8 | Written to the knowledge model with parent edges, each carrying **its own** mode of acquisition | `12` |
 | 9 | Recorded as a kind-6 knowledge-state transition: claim, kind of change, grounds, as fields | `02` |
 | 10 | Attached to the task by a 4c effect, which adds an edge to its live set. The work record holds no artifact reference | `01`, `14` |
-| 11 | Once its validity has been checked, its working is **compressed to a souvenir**; the Observation from step 5 is a root and stays raw | `12`, Compress |
-| 12 | The Observation is reachable from a promoted claim, so deletion MUST refuse it when the task ends | `12`, Elide |
-| 13 | It persists — for how long, and until what, is not stated | — |
+| 11 | **Promoted**: a 5b effect inscribes the Finding in the root set. This is the step that makes it the promotion path, and nothing before it does — attaching is not promoting | `01`, `12` |
+| 12 | Once its validity has been checked, its working is **compressed to a souvenir**; the Observation from step 5 is a root and stays raw | `12`, Compress |
+| 13 | The Observation is reachable from a promoted claim, so deletion MUST refuse it when the task ends | `12`, Elide |
+| 14 | It persists — for how long, and until what, is not stated | — |
 
-**Where the walk stops.** Step 11 has no scheduler and no mechanism: nothing says
+**Step 11 was missing and the walk was wrong without it.** Step 13 refuses a deletion
+on the strength of reachability from a *promoted* claim, and no earlier step promoted
+anything. Attaching (step 10) looks like it should be enough and is not: it makes the
+Finding a root only while the task lives, so without step 11 the whole chain —
+Finding, souvenir, and the raw Observation under it — goes when the task ends. A trace
+of the promotion path that omits the promotion is the failure this document exists to
+catch, and it survived the first pass.
+
+**Where the walk stops.** Step 12 has no scheduler and no mechanism: nothing says
 when validity is checked or by what, and compression itself likely needs a step that
 analyses the argument and labels its stages rather than dropping a reasoning artifact
 (`12-knowledge-model.md`). `10-foundations/03` is explicit that a claim is checked when it
 is **used** rather than by audit, which is an answer about the mechanism and not
-about who runs it. And step 13 falls off the end: beyond reachability, the knowledge
-model has no retention rule at all.
+about who runs it. And step 14 falls off the end: beyond reachability, the knowledge
+model has no retention rule at all. A promoted claim is a root, a root is never
+unreachable, so nothing ever removes it — which is correct for now and is not a
+retention policy.
 
 ## Trajectory C — a declared scope
 
@@ -98,7 +110,7 @@ The mandate path. Nothing on it is built.
 | 6 | Bound at instantiation into an instance, and **static for its life** | `06` |
 | 7 | Recorded verbatim in the kind-1 invocation record, **as bound** — because the item's scope may move underneath it | `02` |
 | 8 | The instance ends. The bound scope ends with it; only the kind-1 record survives | `06`, `02` |
-| 9 | Work is redefined: a **successor task** is created with a new objective and its own derived scope. T-88 is untouched | `13`, `01` |
+| 9 | Work is redefined: a **successor task** is created with a new objective and its own derived scope. The original item is untouched | `13`, `01` |
 | 10 | At task end, the **aggregate check** compares the accumulated change set against the declaration | `03` |
 | 11 | The item reaches a terminal transition. Its scope's lifetime is its item's | `13` |
 | 12 | Whether a terminal item is retained or removed is open | `13`, open contract |
@@ -128,7 +140,7 @@ survives a refusal.
 | 7 | That crossing **registers like any other**: the instance was told something, so an Observation is written and the live set gains a reference | `14` |
 | 8 | So a refusal leaves two records with different purposes — the decision, in observability; what the instance saw, in the knowledge model | `02`, `12` |
 | 9 | Repeated rephrased proposals after a refusal are **boundary probing**, visible in the kind-4 history and read by `check_sequence` | `02`, `04` |
-| 10 | The Observation of the refusal is swept like any other, unless something built on it | `12` |
+| 10 | The Observation of the refusal is deleted at task end like any other, unless something built on it | `12` |
 
 **Where the walk stops.** Step 2 produces no record. Kind 4 exists for every
 operation proposed by a cognitive component, and its dispositions are
@@ -139,19 +151,26 @@ express.
 
 ## What the tracing found
 
-Seven gaps, none visible from inside the document that owns the step. **Five are now
-answered and one was fixed outright**, which is what the exercise was for. What
-follows is the current state rather than the original list.
+Seven gaps, none visible from inside the document that owns the step. **Four are
+answered, two were fixed outright, one stays open**, which is what the exercise was
+for. What follows is the current state rather than the original list.
+
+Worth noting how the last one arrived. Gaps 1–6 came from the first walk; **gap 7 came
+from re-walking the same four trajectories after the immutability rulings changed the
+documents underneath them**. That is the case for keeping this file rather than
+retiring it once the first pass was done: the walks are cheap to re-run and they find
+different things each time the set moves.
 
 **Answered.**
 
 1. **The root set** is promoted artifacts plus the live set, and **promotion is
    inscription in that set** — an act, not a property a claim type confers. That
    settles what had been two separate gaps.
-2. **There is no sweep to trigger.** Reachability only changes at moments the system
-   already knows about, so removal runs incrementally when an item leaves the live
-   set: walk up its provenance and delete each ancestor no remaining root reaches.
-   The question of when a periodic pass runs disappeared with the pass.
+2. **There is no periodic pass to schedule.** Reachability only changes at moments
+   the system already knows about, so removal runs incrementally when an item leaves
+   the live set: walk up its provenance and delete each ancestor no remaining root
+   reaches. The question of when a pass runs disappeared with the schedule, not with
+   the operation.
 3. **A task's ceiling is derived at task creation**, by a call to the invariant
    processor. Every task has one by construction, because a task that exists was
    created.
@@ -178,6 +197,17 @@ was invisible.
    and ephemeral; once membership became attachment to a task, it held the same edges
    under another name. Removed. Attaching still exists as effect 4c — what it writes
    is a live-set edge.
+
+**Found by re-walking, after the immutability rulings.**
+
+7. **Nothing represented a live task.** Every step above that says *while the task
+   lives* or *when the task ends* rests on a distinction `13` did not carry: it named
+   four transitions and no initial state, so there was no value meaning *this work is
+   still going*. Trajectory A step 11 and trajectory B step 12 were both unimplementable
+   for that reason, and neither document could see it, because each was reading a
+   predicate the other was supposed to supply. Fixed: `13` now names `open` and marks
+   `abandoned` and `executed` terminal.
+
 ## Relationships
 
 Every specification in this set, as a consumer of none of them. If a document

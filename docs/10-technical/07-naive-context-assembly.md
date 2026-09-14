@@ -131,9 +131,18 @@ tells the caller what to read; the caller reads.
 - **Silent drop.** An entry dropped with no trace entry defeats the Milestone 9
   measurement — a defect, and the more damaging half because it is the recall
   trace that makes policies comparable.
-- **Empty live set at turn one.** A task's live set holds at least the intent from
-  the moment the task is created, so an instance starting with nothing registered is a
+- **Empty live set at turn one.** A task's live set holds at least the intent, the
+  objective and the derived scope from the moment the task is created
+  (`14-context-manager.md`), so an instance starting with nothing registered is a
   defect.
+- **The objective dropped by the budget.** A policy that truncates purely by
+  position can drop the artifact labelled `objective` or `derived_scope`, and an
+  instance told neither what it is for nor what bounds it will do something
+  plausible and unrelated. **This policy avoids it by accident rather than by
+  rule**: both are attached at task creation, so registration order puts them at
+  the front, and nothing preserves that if the ordering changes. Any replacement
+  policy MUST keep the two labelled entries, and the fact that v0 need not say so
+  is a property of its ordering, not a property of its design.
 - **Nondeterminism.** Any run-to-run variation for identical inputs is a defect.
 - **Crossing type flattened.** See Presentation above.
 - **A bundle reappearing.** Any object composed once per invocation and held
@@ -167,6 +176,14 @@ tells the caller what to read; the caller reads.
   choice and nothing argues it is good. Position affects what a model attends to
   (`14-context-manager.md`, prefix persistence), so ordering is a real lever this
   policy spends arbitrarily.
+
+  There is a cheap improvement available and it is deliberately not taken: order by
+  `label` first — objective and derived scope ahead of everything — then by
+  registration. That would make the guarantee above structural instead of
+  accidental, at the cost of the policy no longer being the simplest thing that
+  could work. **Whether v0 should be corrected or left degenerate is the question**,
+  and leaving it degenerate has an argument: a baseline that quietly acquires good
+  ideas stops being the thing a curator has to beat.
 - **Context-quality metric.** Owned by Milestone 9; explicitly not here.
 - **Cost as relation and redundancy, not volume** *(`10-foundations/04`)*. Two
   positions the foundation holds and this document does not implement: *too much is

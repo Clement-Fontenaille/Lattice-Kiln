@@ -17,15 +17,16 @@ _Updated: 2026-09-13_
 Consolidation pass after the type-4/type-5 immutability rulings, then M7 wrap-up,
 then M8/M9/M11 for a testable codebase.
 
-- [ ] **1. Backlog sweep.** P1/P2/P3 — remove entries the rework made meaningless.
+- [x] **1. Backlog sweep.** P1/P2/P3 — remove entries the rework made meaningless.
       P0 is already empty.
-- [ ] **2. Consolidation pass over the new technical specs.** `12`, `13`, `14`,
+- [x] **2. Consolidation pass over the new technical specs.** `12`, `13`, `14`,
       `15`, and the heavily-reworked `03`, `07`. Find inconsistencies, answer the
-      easy questions, tighten.
+      easy questions, tighten. Cascaded into `01` and `02`, and one fix into
+      `00-design/22-arch-cognition/05-curation.md`.
 - [ ] **3. Milestone consolidation.** Name the work packages each existing
       milestone needs, check the order still holds, subdivide where it smooths
       execution.
-- [ ] **4. Research and evaluation becomes a folder.** `03-research-and-evaluation/`
+- [x] **4. Research and evaluation becomes a folder.** `03-research-and-evaluation/`
       with `00-questions.md` cataloguing open questions that can become experiments,
       absorbing `08-next-experiments.md`. One sheet per well-circumscribed
       experiment.
@@ -37,6 +38,55 @@ then M8/M9/M11 for a testable codebase.
 
 _Appended as work lands. Difficulties and deliberate omissions collected here for
 the operator's review._
+
+**2 (this batch) — spec consolidation. Done. Six findings, and one of them is the
+kind that should have been caught earlier.**
+
+- **The parent-relative containment rule survived in five places** after the ceiling
+  ruling replaced it — four in `03` (the delegation bound, the *scope-forbidden*
+  paragraph, the "inside its parent's" judgment line, and by implication the
+  spawned-set argument), one in `02`, and one in `14` where it was the stated premise
+  of an argument the operator had already corrected twice. The replacement text was
+  written into `03`'s Containment section and the cascade was never walked out of it.
+  **This is the same failure `90-notes/02` F47 records**, one more time: a ruling
+  applied where it was discussed and not where it was cited.
+- **The work item had no state meaning *live*.** `13` named four transitions —
+  challenged, deferred, abandoned, executed — and no initial value, following
+  `22-arch-cognition/01`, which does not name one either. But `12` deletes an artifact
+  when its task stops being live and `14` ends a live set when its task ends, so both
+  were reading a predicate nothing supplied. Fixed by adding `open` and marking
+  `abandoned`/`executed` terminal. **Neither document could have found this alone**,
+  which is the argument for `15` existing.
+- **Trajectory B never promoted anything.** `15`'s promotion path had a step refusing
+  deletion "because the claim is promoted" and no step that promoted it — attaching
+  (4c) looks sufficient and is not. Inserted as step 11. Found by re-walking, which is
+  gap 7 in that document and the first one the re-walk produced.
+- **`03`'s type-4 sub-type numbering was off by one** against `01`: grants written as
+  `4d (attach)` / `4e (conclude)` where the vocabulary has 4c Attach and 4d Conclude,
+  and a `4a..4e` range where only `4a..4d` exist. A capability example that does not
+  match the vocabulary it keys to is the kind of error an implementer inherits
+  silently.
+- **`14`'s live-set entry never absorbed the edge labels.** `70-THINKING/18` settled
+  them — `objective`, `derived_scope`, everything else unlabelled — and the normative
+  document had no `label` field, so the policy it calls mechanical could not branch on
+  the one thing structurally fixed about a task. Added, with the criterion.
+- **"There is no sweep" was overstated** and I wrote it. The design set already called
+  removal "the sweep" and already called it incremental
+  (`22-arch-cognition/05-curation.md`); what the ruling removed was the *schedule*.
+  `12` now says so, and the spec set stops using a word that reads as a whole-graph
+  pass. While reconciling, `05-curation.md` was found naming an *archived* live-set
+  state that `23-arch-context-management/01` and `14` both forbid — fixed there.
+
+**Easy questions answered rather than filed:** which transitions are terminal and
+therefore run the aggregate check; how `pending` resolves without a scope ever being
+edited (by succession — it never resolves in place); that Elide is runtime bookkeeping
+and not a proposed effect; that promotion is effect 5b; that attachment at task
+creation is an ungated runtime call while mid-work attachment is 4c. Three of those
+came with a new open contract naming what is left.
+
+**Worth the operator's eye:** `13` now names a work-item state (`open`) that
+`22-arch-cognition/01` does not. The spec is ahead of the design set on one word, and
+the design set is where that vocabulary belongs.
 
 **A verification gap worth knowing about.** The link checker used throughout this
 session only validates markdown links — bracket-text followed by a parenthesised path. It does not see **prose references to section
@@ -233,27 +283,35 @@ processors, so the category is instantiated once.
 
 The holes have a fixed location by convention: **every specification document ends
 with `## Open contracts`**, and that is where a hole is written down rather than
-guessed. There are **117 entries across the sixteen documents**.
+guessed. There are **123 entries across the fifteen documents**.
 
 Most are waiting on something that has not happened yet, which is the correct state
-rather than debt. Ten stop something now.
+rather than debt. **Two stop something now, and both are measurements rather than
+decisions** — which is a different position from the last reading of this table.
 
 | Where | The question | What it stops |
 |---|---|---|
-| `12-knowledge-model` | What is in the reachability root set? | Nothing can be swept. Three stores hold references and none is named a root |
-| `12-knowledge-model` | What does *promoted* mean? | Same — the word carries the root set |
-| `12-knowledge-model` | When does the sweep run? | Same — no trigger exists |
-| `03-capability-authority` | What happens when the check says `outside`? | Where the call goes in the code: halt, escalate and record-and-continue are three different programs |
-| `03-capability-authority` | What does the comparison actually read? | Whether the checker is a processor with a live set or a function given its inputs |
-| `03-capability-authority` | What triggers deriving a root item's ceiling? | The first step of the mandate chain. Nothing calls it |
-| `03-capability-authority` | How does the operator get shown a derived scope? | A scope nobody sees is ratified instead of checked |
-| *(no document)* | Decomposition | Sub-objectives have no writer. `11` covers concern-split as one workflow stage, which is not the same |
-| `05` G4 / `14` | How does the resident envelope divide across contexts? | Whether a scope check is providable at all. A measurement, not a decision |
-| `14-context-manager` | Can a turn input's KV footprint be estimated before composing it? | R4 reports a crash instead of refusing. Also a measurement |
+| `05` G4 / `14` | How does the resident envelope divide across contexts? | Whether a scope check is providable at all |
+| `14-context-manager` | Can a turn input's KV footprint be estimated before composing it? | R4 reports a crash instead of refusing |
 
-**One more, which needs neither a run nor a decision.** Re-analysing M4 and M5 as
-paired comparisons. Both reported totals while running their arms on a shared suite,
-so the per-scenario flip pattern may be recoverable from data already collected.
+**The same instrument answers both.** `05`'s bootstrap occupancy test measures
+memory-per-token on first encountering an unknown model identity and derives R4's two
+limits and G4's substrate precondition from one run. It is M0-shaped, cheap, and
+nothing is scheduled to run it.
+
+**Eight rows left this table since the last reading**, and it is worth recording how,
+because only one of them was closed by new design. The root set, the meaning of
+*promoted*, and the removal trigger were settled by the operator's rulings on
+promotion-as-inscription and incremental removal. The `outside` disposition, what the
+comparison reads, what triggers a ceiling derivation, and how a derived scope reaches
+the operator were settled by asking whether each was design or implementation — and
+`03` now carries an explicit section saying where the specification stops and what a
+build owes. Decomposition was closed by finding it needed **no mechanism of its own**:
+it is task creation, which already had a contract.
+
+**One item needs neither a run nor a decision.** Re-analysing M4 and M5 as paired
+comparisons — now E7 in `40-roadmap/03-research-and-evaluation/`, the only sheet
+there needing no run, no build and no population.
 
 **Everything else waits on a run, a milestone, or the second GPU.** Storage shapes
 and schemas in `02` wait on real volume; gate-alter, accumulation-stop and

@@ -65,7 +65,8 @@ realization requires decisions only a build can make well.
 - It is **triggered by the runtime**, on the effect path, before every tool call.
 - Its inputs are the four named above: the operator's request, the derived ceiling,
   the invocation's scope, and the call.
-- Its verdicts are `inside`, `outside`, `dubious`, with the dispositions above.
+- Its verdicts are `inside`, `outside`, `dubious`, with the dispositions given under
+  *The disposition* below.
 - It **fails closed** on an unscoped item, and is **read-only** on the scope.
 - Every verdict is recorded, `inside` as explicitly as `outside`.
 - The **scope writer** derives a task's ceiling from intent at task creation, and an
@@ -127,8 +128,8 @@ is the static description of what a role may ask for.
 `01-capabilities-and-authority.md` leaves capability granularity, policy
 representation, and the whole of scope expression open. This document narrows to:
 
-- **Grants keyed to the nine effect types, and to type 4's sub-types.** A grant is
-  `(effect_type, constraints)` where the type may be `4a`..`4e`
+- **Grants keyed to the nine effect types, and to the sub-types of 4 and 5.** A grant
+  is `(effect_type, constraints)` where the type may be `4a`..`4d` or `5a`..`5b`
   (`01-effect-vocabulary.md`). Discarded: per-tool or per-syscall capabilities
   (administrative complexity the milestone explicitly warns against), and a single
   coarse "may cause effects" capability (too weak to express reviewer-reads-only vs
@@ -137,8 +138,13 @@ representation, and the whole of scope expression open. This document narrows to
   Type 4 is the one that needed subdividing, and the reason is an authority leak
   rather than a taste for granularity. Attaching an artifact and abandoning a task
   are not comparable acts, and one grant over both means **granting the right to
-  split a task grants the right to rewrite its parent**. A planner needs `4a` and
-  must not have `4b`.
+  decompose work grants the right to abandon it**. A planner needs `4a` and must not
+  have `4b`.
+
+  Note what subdivision no longer has to guard against. **Rewriting a task is not a
+  sub-type**, because no actor may do it at all — a formulation and a scope are fixed
+  at creation (`01-effect-vocabulary.md`, type 4). The leak the cut closes is the one
+  between creating work and disposing of it, not between creating and editing.
 - **Static policy.** The grant set for a role is a fixed map in seed
   configuration. Discarded for the MVP: a policy engine that revises grants
   during a run. Revocation is the one dynamic operation kept, because
@@ -184,7 +190,7 @@ For a mandate-conformance decision:
   trip.
 - A **conformance verdict**: `inside`, `outside`, or `dubious`, each carrying
   natural-language reasoning. The verdict MUST be recorded whatever it says.
-  `within` is not a null result — its absence and its presence must be
+  `inside` is not a null result — its absence and its presence must be
   distinguishable, since a check that did not run and a check that passed look
   identical in a record that only writes failures.
 
@@ -199,16 +205,21 @@ CapabilitySet := { effect_type -> Constraints }
 implementer := {
   1  (workspace_mutation): { path_within: "<assigned_workspace_root>" },
   2  (process_execution):  { command_allowlist: ["build", "test", "lint", "fmt"] },
-  4d (attach):             { },
-  4e (conclude):           { own_invocation_only: true }
+  4c (attach):             { },
+  4d (conclude):           { own_invocation_only: true }
 }
 planner := {
   4a (create):             { },       # may decompose
-  4d (attach):             { }
-                                      # no 4b: may not rewrite the task it decomposes
+  4c (attach):             { }
+                                      # no 4b: may not transition the task it decomposes
 }
 reviewer := {
   # reads only — no effect grants at all
+}
+thinker := {
+  5a (memory_write):       { },       # may propose a finding
+  5b (memory_relate):      { }        # may supersede one, and may promote
+  4c (attach):             { }
 }
 orchestrator := {
   6 (processor_invocation): { max_concurrent: 1, roles: ["implementer", "reviewer"] },
@@ -247,8 +258,8 @@ hands, not about its remit. Once that is granted, the subset rule has nothing
 underneath it, and the `roles` constraint is the bound that was there all along.
 
 What actually bounds delegation, then, is three things and none of them is a
-subset: which roles the type-6 grant names, the scope the child inherits and may
-only narrow, and the gate, which every effect the child proposes still meets.
+subset: which roles the type-6 grant names, the **ceiling** every task beneath the
+intent sits inside, and the gate, which every effect the child proposes still meets.
 
 ### The rule the prohibition was reaching for, and what it can actually check
 
@@ -267,9 +278,11 @@ orchestrator is *for*, which is the collision above. The distinction the rule ne
 drew: **"cannot propose" is not "must not happen under my mandate."** An empty
 type-1 grant is a statement about an actor's hands, not about its remit.
 
-**Scope-forbidden.** Already normative, and already checkable: a child's scope is
-contained in its parent's, and the accumulated change set under a lineage is
-audited against the declaration.
+**Scope-forbidden.** Already normative, and already checkable: every task's scope is
+contained in the ceiling derived from intent, and the accumulated change set under a
+lineage is audited against the declaration. Delegating does not reach past the
+ceiling, because the child's scope was checked against it at creation like every
+other.
 
 What is left once those three are removed is **purpose** — laundering an intention
 through a delegate — and purpose is not observable from an effect stream. A rule
@@ -407,9 +420,15 @@ Note what is **not** a refusal: a child reaching wider than its parent while sta
 inside the ceiling. That is ordinary work and an implementation that refuses it has
 implemented the parent-relative rule.
 
-Deciding whether a proposed child's boundary sits inside its parent's is itself a
+Deciding whether a proposed task's boundary sits inside the ceiling is itself a
 natural-language judgment. This rule does not reduce the amount of judgment
 required; it puts all of it in one check instead of leaving a path around it.
+
+It does reduce the number of *places* the judgment is made. Under the parent-relative
+reading, a task ten levels down was compared against ten boundaries, each comparison
+an opportunity to be wrong and each error inherited by everything below it. Against a
+single ceiling, one comparison decides it, and the thing compared against is the one
+artifact no part of the system may write.
 
 ### Who may write a scope
 
@@ -685,9 +704,11 @@ is.
   model and asks the non-adjustable question. An effect must pass capability
   **and** gate; order is representability (runtime) → capability → gate. That
   document also holds the invariant-processor category the scope check belongs to.
-- **Work record** (`13-work-record.md`, owed; `00-design/28-arch-work-record/`) —
-  holds the declared scope, its derivation, its state, and the transitions that
-  change it. This document owns the check; that one owns the declaration.
+- **Work record** (`13-work-record.md`; `00-design/28-arch-work-record/`) — holds the
+  declared scope, its derivation and its state. This document owns the check; that
+  one owns the declaration. Note that the declaration does not move: a scope is
+  written once, at task creation, so what that store holds for a given task is what
+  the check will read for that task's whole life.
 - **Processor contract** (`06-processor-contract.md`) — binds a scope at
   instantiation and forbids an instance widening its own.
 - **Observability** (`02-observability-event-model.md`) — records every
@@ -699,15 +720,22 @@ is.
 ## Open contracts
 
 - **What invokes the containment check, and where it sits.** `13-work-record.md`
-  makes a passing containment check a precondition of accepting a split or a
-  refinement, and the check is a natural-language judgment. So either a model call
-  sits inside the work store's write path, or containment is checked before the
-  transition is proposed and the store trusts a verdict it is handed, or transitions
-  are accepted provisionally and reconciled. None of the three is argued.
-- **What counts as termination.** The aggregate check runs "once per work item at
-  termination". `13-work-record.md` names seven transitions and does not say which
-  are terminal. Whether the check runs on *abandoned* and *deferred*, and whether a
-  task succeeded after execution is re-checked, is undefined.
+  makes a passing containment check a precondition of accepting a **creation** — a
+  child or a successor — and the check is a natural-language judgment. So either a
+  model call sits inside the work store's write path, or containment is checked
+  before the creation is proposed and the store trusts a verdict it is handed, or
+  creations are accepted provisionally and reconciled. None of the three is argued.
+  This is the sharpest form of the question, because creation is now the *only*
+  moment a scope is written: get this wrong and there is no later write at which to
+  catch it.
+- **What counts as termination — narrowed, not closed.** The terminal pair is
+  `abandoned` and `executed` (`13-work-record.md`, Work item states), so the
+  aggregate check runs on both and not on `challenged` or `deferred`. **Running it on
+  `abandoned` is the half worth defending:** abandoned work has usually made changes
+  already, and skipping the audit there would leave the one category of task that
+  ends badly as the one category nobody compares against its mandate. What remains
+  open is the deferred item that is never resumed — terminal in practice, `deferred`
+  in the record, and audited by nothing.
 - **How the self-modifying-scope exclusion is checked.** "A scope permitting its
   own modification MUST be excluded unless explicitly granted" reads like a
   mechanical default and is not one: whether a natural-language boundary permits
