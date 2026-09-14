@@ -6,5 +6,8 @@
   "meta": {
     "arm": "m7b",
     "suite": "m6"
-  }
+  },
+  "ended": "2026-09-14T08:57:50.334470+00:00",
+  "outcome": "completed",
+  "event_count": 70
 }

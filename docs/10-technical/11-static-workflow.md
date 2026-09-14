@@ -135,6 +135,46 @@ of failures was empty and nothing could enter it. Only M7 finished in a partial
 position, which is the only place the rule is actually asked to choose. **A rule is
 only tested where it has to decide.** Compare sets.
 
+### If a model verdict is ever admitted, it is task-level and never candidate-level
+
+Both the keeper and the terminal read *the dimensions*, so "add the judge as another
+dimension" is ambiguous between two designs. The difference is not cosmetic.
+
+**Task-level.** The verdict is taken once, after the loop, and enters only the
+completeness test. The keeper never sees it.
+
+**Candidate-level.** The verdict is taken per attempt and enters the
+candidate-against-incumbent comparison.
+
+**Only the first is admissible**, on three grounds, and the third is the one that
+settles it.
+
+It **cannot fabricate a success.** A task-level verdict can withhold `answered` and
+turn it into an escalation; it never causes a candidate to be accepted. That is the
+direction condition `03-capability-authority-model.md` admits invariant processors on —
+may restrict, never widen — so a degraded judge yields unnecessary escalation rather
+than a false pass. A candidate-level verdict has the opposite property: a change that
+fixes nothing but which the judge calls `met` raises the combined score by one and is
+kept, on the judge's word alone. That is approval bias entering through the keeper,
+and approval bias at 7B is what `50-findings/07` measured.
+
+It **costs one call instead of up to twelve**, since a per-candidate verdict needs a
+judge call per attempt.
+
+And it **keeps the keeper mechanical.** The keeper's rule is deterministic and so are
+the dimensions it compares, because they come from the check: the same candidate always
+produces the same decision. Putting a model verdict into that comparison ends it. The
+same candidate could be kept on one run and discarded on the next, the arm's trajectory
+stops being reproducible, and no run can be replayed or explained afterwards.
+
+**That last property is also what makes a task-level verdict measurable without being
+deployed.** Since it changes no candidate, the trajectory is identical with and without
+it, and the terminal can be recomputed from a recorded verdict — which is how m7d is
+derived from m7c's log rather than run
+(`experiments/M7-static-workflow/derive_m7d.py`). A candidate-level verdict cannot be
+derived at all: there is no single trajectory to recompute.
+
+
 **Escalate on stall.** Stall is a bounded, mechanical condition: no strict improvement
 across *N* consecutive attempts, or the call budget is reached. v0 sets N = 2 and a
 budget of 4 calls, both from Milestone 6's observed 1–4 call range.

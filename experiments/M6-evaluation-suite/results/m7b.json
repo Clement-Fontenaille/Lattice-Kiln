@@ -636,5 +636,149 @@
     "declined_correctly": false,
     "wall_s": 40.7,
     "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1"
+  },
+  {
+    "task": "hf_csv",
+    "shape": "data",
+    "trap": "edge-coverage",
+    "stresses": [
+      "edge-coverage",
+      "kway-synth",
+      "partial-credit"
+    ],
+    "rep": 1,
+    "arm": "m7b",
+    "terminal": "blocked-partial",
+    "baseline_sub": [
+      3,
+      6
+    ],
+    "final_sub": [
+      5,
+      6
+    ],
+    "struct": {},
+    "objective_pass": false,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 62.4,
+    "tail": "SUBTESTS 5/6\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]"
+  },
+  {
+    "task": "hf_path_sanitize",
+    "shape": "robustness",
+    "trap": "edge-coverage",
+    "stresses": [
+      "edge-coverage",
+      "partial-credit"
+    ],
+    "rep": 1,
+    "arm": "m7b",
+    "terminal": "answered",
+    "baseline_sub": [
+      1,
+      8
+    ],
+    "final_sub": [
+      8,
+      8
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 14.1,
+    "tail": "SUBTESTS 8/8"
+  },
+  {
+    "task": "hf_merge_config",
+    "shape": "data",
+    "trap": "edge-coverage",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "m7b",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 73.5,
+    "tail": "SUBTESTS 6/6"
+  },
+  {
+    "task": "hf_misfiled_bug",
+    "shape": "fix",
+    "trap": "misdirection",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "m7b",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      3,
+      4
+    ],
+    "struct": {},
+    "objective_pass": false,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 25.5,
+    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'"
+  },
+  {
+    "task": "hf_pagination",
+    "shape": "fix",
+    "trap": "edge-coverage",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "m7b",
+    "terminal": "answered",
+    "baseline_sub": [
+      1,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 9.6,
+    "tail": "SUBTESTS 5/5"
   }
 ]
