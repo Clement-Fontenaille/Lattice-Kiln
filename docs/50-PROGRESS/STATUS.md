@@ -12,23 +12,26 @@ _Updated: 2026-09-13_
 >
 > Nothing should exist only here.
 
-## Current batch — instructions of 2026-09-13
+## Current batch — instructions of 2026-09-14
 
-Running autonomously. Report to the operator on difficulties and on anything left
-untreated.
+Consolidation pass after the type-4/type-5 immutability rulings, then M7 wrap-up,
+then M8/M9/M11 for a testable codebase.
 
-- [x] **1. Sandbox cleanup.** This file rebuilt as the worklist. `archives/` is one
-      file per completed milestone, append-only by rule — nothing to clean.
-- [x] **2. Editorial pass, foundations + architecture.** Archaeology stripped,
-      redundancy reduced, half-answered questions restated.
-- [x] **3. Inventory of changes owed to `10-technical/`.** Twelve documents:
-      nine rewrites plus three that did not exist. Filed in the backlog rather than
-      here, because the backlog owns what is owed and a copy in the sandbox would
-      rot.
-- [x] **4. Upgrade `10-technical/` toward a concrete implementation axis.** All
-      twelve written. The backlog's P0 is rewritten to what remains, which is five
-      items the architecture pass never covered rather than leftovers from it.
-- [~] **5. M7.** Step 1 of 4 done.
+- [ ] **1. Backlog sweep.** P1/P2/P3 — remove entries the rework made meaningless.
+      P0 is already empty.
+- [ ] **2. Consolidation pass over the new technical specs.** `12`, `13`, `14`,
+      `15`, and the heavily-reworked `03`, `07`. Find inconsistencies, answer the
+      easy questions, tighten.
+- [ ] **3. Milestone consolidation.** Name the work packages each existing
+      milestone needs, check the order still holds, subdivide where it smooths
+      execution.
+- [ ] **4. Research and evaluation becomes a folder.** `03-research-and-evaluation/`
+      with `00-questions.md` cataloguing open questions that can become experiments,
+      absorbing `08-next-experiments.md`. One sheet per well-circumscribed
+      experiment.
+- [ ] **5. Wrap up M7.** Follow-up experiments from tests already run stay
+      available as experimental work.
+- [ ] **6. M8, M9, M11** — a stable codebase to test against.
 
 ### Progress notes
 

@@ -41,11 +41,12 @@ an open contract looks blocking.
 
 **[M7 — Static supervised workflow](01-MILESTONES/07-static-supervised-workflow.md)**
 
-1. **Decision pending — scope.** Back half only, or back half plus front half. The
-   front half depends on [M9](01-MILESTONES/09-context-governance-measurement.md);
-   the back half has no open dependency. *Proposed: back half now, front half
-   recorded as an open contract.*
-2. **Specify** — P0 row 1, scoped by the decision above.
+1. **Scope — decided.** Back half only. The front half is an open contract in
+   [`11-static-workflow.md`](../../10-technical/11-static-workflow.md), since its
+   third prerequisite is `10-foundations/04`'s context-quality question, which makes
+   [M9](01-MILESTONES/09-context-governance-measurement.md) a prerequisite for
+   *evaluating* it.
+2. **Specify** — done. [`11-static-workflow.md`](../../10-technical/11-static-workflow.md) v0.
 3. **Build** — **unblocked.** The spec is written and the handoff contract it needed
    is closed.
 4. **Run against the M6 suite** — needs E0 (P2) for the comparison to be
@@ -55,7 +56,7 @@ an open contract looks blocking.
 ## P2 — Short term work to address next
 
 - **E0 — suite construct validation.**
-  [`08-next-experiments.md`](08-next-experiments.md) → E0. Blocks interpretation of
+  [`03-research-and-evaluation/`](03-research-and-evaluation/) → E0. Blocks interpretation of
   P1 step 4. Possibly answerable from runs already recorded.
 - **Next milestone after M7 — decided, 2026-09-10.**
   [M8 — Persistent work and knowledge](01-MILESTONES/08-persistent-work-and-knowledge.md),
@@ -105,7 +106,8 @@ an open contract looks blocking.
   host-specific numbers. Owner: the bootstrapper design, at the latest M16.
 - **Editor-agent frontend choice.** Owner: the bootstrapper design.
 - **Experiments E1–E5 and E-corpus.**
-  [`08-next-experiments.md`](08-next-experiments.md). E4 gated on E0.
+  One sheet each in [`03-research-and-evaluation/`](03-research-and-evaluation/).
+  E4 gated on E0.
 - **Repetition stop unimplemented.** [`08-orchestrator-contract.md`](../../10-technical/08-orchestrator-contract.md)
   requires it; `run_orchestrated` does not implement it. A defect against a
   written contract, not an open question — owner is whatever milestone next drives
@@ -113,11 +115,12 @@ an open contract looks blocking.
 - **`Exercised by` lines absent across [`10-technical/`](../../10-technical/README.md).**
   Mechanical rollout of a 2026-09-05 convention; recoverable from the findings
   entries.
-- **Prose discipline predates the set it governs.**
+- **Prose discipline: two folders never read against it.**
   [`02-documentation-philosophy.md`](../00-project/02-documentation-philosophy.md)
-  → prose discipline was added 2026-09-05. Documents written before it have not
-  been read against it. Debt created by that change, recorded here because a design
-  document has no open-contract section to hold it.
+  → prose discipline was added 2026-09-05. `00-project/`, `10-foundations/`, the
+  architecture band and `10-technical/` have since been rewritten or swept.
+  `40-roadmap/` and `70-THINKING/` have not, and `70-THINKING/` is not governed by
+  it in any case.
 - **2026-09-10 foundations pass predates M10–M16's framing.** `03`, `02`, `01`,
   and `05` gained Mode of acquisition, Weighing claims, Friction and Convergence,
   Thinking, Feedback, Scope, and Collapsing; every later milestone implicitly
@@ -125,22 +128,10 @@ an open contract looks blocking.
   existed in named form. Not blocking — none of their own evidence questions
   depend on the new vocabulary yet — so not P0. Carry into each as it is
   decomposed, the way M8 and M9 already were on 2026-09-10.
-- **`10-technical/` only partly checked against the 2026-09-10 foundations pass.**
-  Two files were checked directly: `01-effect-vocabulary.md` (found real friction —
-  `02`'s Feedback section had claimed local reads cross the boundary as effects;
-  the vocabulary already excludes reads by name; `02` was corrected, and the
-  vocabulary's reversibility-assignment open contract now cites `02`'s risk-
-  evaluation answer) and `09-orchestrator-runtime-boundary.md` (consistent as
-  found, no change needed). `00-06-08` and `10` have not been checked. This is
-  the exact failure this document's own history names twice — the spec set
-  looking correct while describing an older design — so treat as live debt, not
-  a closed audit.
 - **Naming theme decided and never applied.** `00-design/90-notes/04-naming-theme`
   (no file extension) is marked **Decided** with propagation owed. Zero occurrences
   in the set across the whole MVP. Needs applying or downgrading to *considered,
   not adopted* — a standing decision nothing honours misleads a cold reader.
-- **No repository README.** Nothing at the repo root states what this is or where
-  to start. First file anyone opens.
 - **Praxis thread open.** [`70-THINKING/04-praxis.md`](../../70-THINKING/04-praxis.md).
   Two execution gates — *spec in shape*, *finding is critical* — rest on positions
   it has not taken. Both currently operate on human judgment, which holds while a
@@ -165,6 +156,9 @@ an open contract looks blocking.
   capability policy, and exercised M3 runs behind it, while no actor in the band
   held the record it mutates: `22-arch-cognition/01` defines intent and work items
   without storing them, and `21-arch-knowledge-model` holds claims, which work
-  items are not. Given its own folder rather than folded into `21` because a claim
-  there is append-only and superseded while a work item is mutable by design. Its
-  number sits above `27`'s only because the lower ones were taken.
+  items are not. Given its own folder rather than folded into `21` because a work
+  item is not a claim, and because its current state must be readable directly on every
+  orchestrator loop step rather than by walking a provenance graph. *(The original
+  reason — a claim is append-only while a work item is mutable — no longer holds: a
+  work item's formulation and scope are fixed at creation too.)* Its number sits above
+  `27`'s only because the lower ones were taken.
