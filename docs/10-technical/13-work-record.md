@@ -33,9 +33,9 @@ are stated normatively and enforced nowhere.
 
 ## Responsibility
 
-Hold intent, work items, their declared scopes, their transitions, their
-attachment edges, and their recorded conclusions — durably, and readably enough
-that an ephemeral processor can cooperate on work it did not start.
+Hold intent, work items, their declared scopes, their transitions, their lineage
+and their recorded conclusions — durably, and readably enough that an ephemeral
+processor can cooperate on work it did not start.
 
 It does **not** decide anything about the work. Whether an item should be split is
 the orchestrator's call; whether a formulation is well-formed is nobody's job
@@ -111,10 +111,9 @@ MUST carry:
 - `state` — a current value: challenged, deferred, abandoned, executed.
 - `scope` — three parts, specified in the next section.
 - `conclusion` — null until recorded; see below.
-- `attachments` — references into `12-knowledge-model.md`, plus this store's own
-  metadata about each edge. The claim's **content** lives there and MUST NOT be
-  copied here. Two stores point into one claim store; neither owns it. See
-  Attachment edges below for what an edge may say.
+This store holds **no reference to any artifact**. What crossed under a task is the
+task's live set, held by `14-context-manager.md`, and there is no second edge set
+here. This store holds the work.
 
 An item's current state is what the item record says. A reader MUST get it in one
 fetch, without reconstructing it from the transition log.
@@ -216,12 +215,11 @@ Normative:
 - An operator's own indication of a boundary is carried as part of the scope and
   **governs** the derived portion. Explicit beats derived.
 
-The scope needs **no special protection** in this store, and that is a result
-rather than an oversight. Widening it is a type-4 mutation, which is an effect,
-which the scope check sees — modifying the scope is inside the current scope or it
-is not. What that costs is a default rather than a mechanism: a scope permitting
-its own modification is excluded unless explicitly granted
-(`03-capability-authority-model.md`).
+The scope needs **no special protection** in this store, and that is a result rather
+than an oversight. It is **fixed at creation and never edited**, like the formulation
+it was derived from, so there is no mutation of the field to gate. Work whose
+boundary must move gets a successor task with a scope derived afresh, checked
+against the ceiling like any other (`03-capability-authority-model.md`).
 
 ## Creating a task, and where decomposition lives
 
@@ -244,53 +242,20 @@ into existence without one — a task that exists was created, and creation deri
 
 Two consequences worth stating.
 
-**The child's ceiling is still bounded by the parent's**, so deriving at creation is
-not a way to obtain a wider mandate. The derivation runs under containment, below.
+**The new task's ceiling is still bounded by the intent's**, so deriving at creation
+is not a way to obtain a wider mandate. The derivation runs under containment,
+below.
 
 **What remains hard about decomposition is not the creating.** It is writing the
 sub-objectives: each part needs a formulation, and a model writes it, which is the
 one composition case `06-processor-contract.md`'s handoff rule explicitly does not
 support. Splitting a task is cheap; saying what each part is for is not.
 
-## Attachment edges
-
-An attachment edge runs from a work item to a claim in `12-knowledge-model.md`. It
-is the **curated** relation: this claim, deliberately, as opposed to everything that
-happened to cross while the task ran. The bulk relation is the task's live set
-(`14-context-manager.md`), which every crossing joins automatically.
-
-**The edge label vocabulary is not fixed, and there is a mismatch to resolve before
-it can be.** What the design set names informally is *finding*, *proposal* and
-*decision*. Two of those three are claim types in `12-knowledge-model.md`, which
-holds `observation`, `evidence`, `finding` and `decision`. **There is no proposal
-claim type**, so as written an attachment may be labelled with something the claim
-store cannot be holding.
-
-Three readings, and the set does not choose:
-
-- A *proposal* is a **pre-realization** object — what a thinking processor produces
-  before the type-5 mutation is gated (`00-design/22-arch-cognition/04-thinking.md`).
-  If so it is not yet a claim, and an attachment pointing at one contradicts
-  attachments pointing into the claim store.
-- A *proposal* is a **decision not yet taken** — a course of action put forward and
-  not accepted. That is a real thing with no type, and it would need one.
-- *Proposal* is loose usage for a Finding that recommends something, in which case
-  the label should go.
-
-Until this resolves, an implementation MUST record the label it used and MUST NOT
-treat the three words as a closed set.
-
-**The edge carries more than a label.** What the design set already implies it must
-hold: which claim, under which work item, when, and by which invocation. Whether it
-also carries a *reason* for the attachment — why this claim was singled out from the
-live set — is unspecified, and it is the field that would make a curated attachment
-distinguishable from an arbitrary one.
-
-## Containment on split and refine
+## Containment
 
 Two constraints belong to this store because they are about the **shape of the
-lineage** rather than about any judgment. A conforming implementation MUST reject
-a transition that violates either.
+lineage** rather than about any judgment. A conforming implementation MUST reject a
+creation that violates either.
 
 - **A split's children get their own scope, derived at creation, and it MUST be
   contained in the ceiling.** Not in the parent's. A child may legitimately reach
@@ -356,7 +321,6 @@ lineage(work_item_id)                -> [work_item, …, intent]
 get_item(work_item_id)               -> WorkItem          # current state, one read
 children(work_item_id)               -> [WorkItem]
 transitions(work_item_id | lineage)  -> [Transition]      # ordered
-attachments(work_item_id)            -> [ClaimRef]        # resolve against 12
 scope_of(work_item_id)               -> (boundary, derivation, scope_state)
 change_set(work_item_id)             -> [EffectRef]       # for the scope check
 ```
@@ -434,14 +398,6 @@ work/
   and not successors has left open the route splitting alone did not close.
 - **Verdict collapse.** `declined` folded into `blocked`, or the two reasons for
   declining folded into one, reproduces the failure M5 recorded.
-- **Claim content copied here.** An attachment holding a claim's text rather than
-  a reference creates a second copy that goes stale silently.
-- **An attachment left dangling after its task ends.** While a task lives, anything
-  attached to it is a root and cannot be deleted (`12-knowledge-model.md`). When the
-  task ends, an unpromoted artifact goes whether or not something attached it
-  deliberately — attaching is not promoting — so the edge is left pointing at nothing.
-  That is the rule working, not a defect, and what this store owes is **detection**: an
-  attachment that no longer resolves MUST be reported rather than returned silently.
 - **`22-arch-cognition/01-work-intent-and-task-model.md`** — owns the vocabulary
   this store persists. It adds no concepts to it.
 - **Effect vocabulary** (`01-effect-vocabulary.md`) — type 4 is the only write
@@ -449,8 +405,8 @@ work/
   here.
 - **Capability and authority model** (`03-capability-authority-model.md`) — owns
   the scope check; this store owns the declaration it reads.
-- **Knowledge model** (`12-knowledge-model.md`) — holds the claims this store's
-  attachment edges point at. Separate stores, one direction of reference.
+- **Knowledge model** (`12-knowledge-model.md`) — this store does not reference it.
+  What crossed under a task is the task's live set (`14-context-manager.md`).
 - **Observability** (`02-observability-event-model.md`) — this store is
   authoritative for what the work currently is; observability's copy of a work
   transition is a witness, and a disagreement between them is a partial write to be
@@ -476,13 +432,6 @@ work/
 - **Abandoned items.** Retained or removed. Retention is the cheaper assumption
   and keeps "why was this dropped" answerable, but nothing establishes that it is
   required.
-- **The attachment label vocabulary.** *Finding*, *proposal* and *decision* are
-  what the design set names, and *proposal* has no counterpart among the claim
-  types. Resolving it decides whether a new claim type is needed, whether the label
-  goes, or whether attachments may point at something that is not yet a claim.
-- **Whether an attachment edge carries a reason.** Without one, a curated
-  attachment and an arbitrary one are indistinguishable afterwards, which undercuts
-  the point of curating.
 - **Verdict granularity.** Whether three conclusions suffice. A false-premise
   refusal and an already-satisfied request both land on `declined` while calling
   for different follow-ups — possibly M5's collapse reproduced one level down.

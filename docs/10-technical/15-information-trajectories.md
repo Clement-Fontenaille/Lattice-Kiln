@@ -71,7 +71,7 @@ The promotion path. Rare by design: most of what crosses takes trajectory A.
 | 7 | That proposal is a **type-5 memory mutation** — capability, then gate, like any effect | `01`, `03`, `04` |
 | 8 | Written to the knowledge model with parent edges, each carrying **its own** mode of acquisition | `12` |
 | 9 | Recorded as a kind-6 knowledge-state transition: claim, kind of change, grounds, as fields | `02` |
-| 10 | Attached to a work item — a reference plus edge metadata, itself a type-4 mutation | `13` |
+| 10 | Attached to the task by a 4c effect, which adds an edge to its live set. The work record holds no artifact reference | `01`, `14` |
 | 11 | Once its validity has been checked, its working is **compressed to a souvenir**; the Observation from step 5 is a root and stays raw | `12`, Compress |
 | 12 | The Observation is reachable from a promoted claim, so deletion MUST refuse it when the task ends | `12`, Elide |
 | 13 | It persists — for how long, and until what, is not stated | — |
@@ -173,13 +173,11 @@ was invisible.
 
 **New, surfaced by the answers.**
 
-6. **The live set and the work record's attachments may be one relation** (`12`,
-   `13`, `14`). Both run from a task to a claim, with different fields, held by two
-   actors. Attaching does not confer survival — an unpromoted artifact goes when its
-   task ends whether or not something attached it deliberately, and what must outlive a
-   task is promoted — so the two differ in what they record rather than in what they
-   mean.
-
+6. **There is one task—artifact relation, and it is the live set.** The work
+   record's `attachments` field was a leftover from when a live set was per-instance
+   and ephemeral; once membership became attachment to a task, it held the same edges
+   under another name. Removed. Attaching still exists as effect 4c — what it writes
+   is a live-set edge.
 ## Relationships
 
 Every specification in this set, as a consumer of none of them. If a document

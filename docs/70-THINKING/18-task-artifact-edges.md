@@ -165,8 +165,8 @@ permitted, reordering is not.*
 *the formatter interface assumes line-oriented output; JSON needs a whole-document
 hook.*
 
-**5.4** Each attachment passes scope check, capability and gate like any other type-4
-effect.
+**5.4** Each attachment passes scope check, capability and gate like any other 4c
+effect. What it writes is an edge in T-88's live set; no other store holds one.
 
 ---
 
@@ -181,7 +181,7 @@ promoted, and does another live task hold it?
 |---|---|
 | Observations from phases 1 and 4 — intent, file tree, README, docs, test suite, `report.py`, `formats.py`, `web.md`, test output | Deleted unless promoted or reachable from a promoted claim, or held by another live task |
 | `c-4471` | Held elsewhere and promoted. The claim survives; the edge T-88 → c-4471 dies |
-| The attached finding | Survives if the attachment promoted it |
+| The attached finding | Deleted unless promoted. Attaching is not promoting |
 
 **6.3** For each artifact, deletion walks up its provenance and removes each ancestor
 that is not promoted and that no remaining root reaches.
@@ -207,8 +207,8 @@ stated in the parent's handoff.
   objective is re-written.
 - Whether a processor attaching mid-work (phase 5) uses the same ungated runtime call
   as 2.3, or proposes a gated type-4 effect.
-- Whether a curated attachment in phase 5 labels the edge the retrieval already
-  created, or creates a second edge to the same artifact.
+- Whether an attachment in phase 5 labels the edge the retrieval already created, or
+  creates a second edge to the same artifact.
 - How 6.2 determines that another live task holds an artifact.
 - Edge removal before a task ends: the operation exists so that it is available, and
   nothing yet calls it.

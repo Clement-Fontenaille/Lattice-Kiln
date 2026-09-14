@@ -41,7 +41,6 @@ Meanwhile `10-technical/01-effect-vocabulary.md` makes work-record mutation a ty
   **A split's children derive their own scope at creation, contained in the ceiling** rather than in the parent's. A parent's scope focuses that parent; it does not floor everything beneath it, so a child of a narrow parent may legitimately reach wider while staying inside what intent authorised. What makes splitting unable to manufacture mandate is the ceiling and not the parent: the ceiling descends from intent, and intent is not system-writable (`10-technical/01-effect-vocabulary.md` type 4).
 
   **A successor stays under the intent's ceiling.** Where an item would have been refined, a new item is created with a redefined objective, and its scope is derived at creation like any other. Redefining broadly is the route that widens without anything ever splitting, and what stops it is the ceiling: every task's scope sits inside the one derived from intent, whether it arrived by split, by succession, or by nested invocation (`24-arch-permission-layer`).
-- **Hold the attachment edges** between a work item and the claims attached to it. The claim's content lives in `21-arch-knowledge-model`; this actor holds a reference plus its own metadata, the same way `23-arch-context-management` does for a retrieved claim. Two actors point into one claim store; neither copies it.
 - **Hold a processor's recorded conclusion** — answered, blocked, or declined, with its reasoning. `10-technical/01` classes this as a work-record mutation rather than a memory write, a boundary the M4 runs found carved cleanly once chosen but not self-evident beforehand. Keeping *declined* distinct from *blocked* is load-bearing rather than cosmetic: Milestone 5 recorded an orchestrator collapsing "the task rests on a false premise" and "I cannot find a next step" into one generic outcome, losing a distinction the simpler Milestone 4 arms had made.
 
 Whether three verdicts suffice is open, and the doubt has the same shape as the failure they were introduced to prevent. `22-arch-cognition/01-work-intent-and-task-model.md` names two distinct reasons to refuse execution — the task rests on a false premise, and the request has already been satisfied — and both currently land on *declined* while calling for entirely different follow-ups. That may be this vocabulary reproducing Milestone 5's collapse one level down. Resolving it belongs with the processor contract rather than here; what this actor owes is only that whatever verdicts exist stay distinguishable in the record. Whether an instance judges objective validity at all is that instance's strategy (`10-foundations/04`, The objective itself is not a given); being able to record the verdict once it does is not.
@@ -53,7 +52,6 @@ What this actor does not do is decide anything about the work. Whether a work it
 - **Intent lineage.** Given any work item, the chain back to the intent it descends from. `10-technical/01` already requires realized effects to be reconstructable "per intent lineage" and nothing in this band supplied that chain; this actor is what knows it.
 - **Current state of work.** What items exist, how each is formulated, what state it is in, and its lineage links in both directions.
 - **Transition history**, for one item or for a whole lineage.
-- **Attached-claim references** for a work item, resolvable against `21-arch-knowledge-model`.
 
 ## General shape and a naive default
 
@@ -70,7 +68,7 @@ Intent is a third kind of record again, and the simplest: written from outside t
 - **`22-arch-cognition/01-work-intent-and-task-model.md`** owns the vocabulary this actor persists — intent, work item, work unit — and this actor adds no concepts to it.
 - **`22-arch-cognition/03-orchestrator.md`** reads current work state on every loop step and proposes the transitions that change it, including its own per-step decision record.
 - **`20-arch-runtime.md`** gates and realizes a work-record mutation; this actor persists what the runtime realized, not what was merely proposed.
-- **`21-arch-knowledge-model`** holds the claims this actor's attachment edges point at. Separate stores, one direction of reference.
+- **`21-arch-knowledge-model`** is not referenced by this actor at all. What crossed under a task is that task's live set (`23-arch-context-management`), which is the one task—artifact relation; this actor holds the work.
 - **`23-arch-context-management`** registers a work item reaching a processor as an artifact, a crossing like any other. This actor is queried; it never pushes into a context.
 - **`26-arch-observability`** keeps its own copy of work-record events, for the same retention and compression reasons it does not read `21` or `23` directly.
 - **`25-arch-invariant-layer`** needs a decommission to be distinguishable from ordinary task failure. The half of that which is a processor's recorded conclusion lands here; the event-history half is `26`'s.

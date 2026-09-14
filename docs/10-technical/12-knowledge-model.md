@@ -68,9 +68,8 @@ Fields marked *(illustrative)* name intent, not a fixed shape.
 
 MUST carry:
 
-- `claim_id` — stable, and referenced from outside this store (by
-  `13-work-record.md`'s attachment edges and by `14-context-manager.md`'s live
-  set).
+- `claim_id` — stable, and referenced from outside this store by
+  `14-context-manager.md`'s live set.
 - `type` — one of `observation`, `evidence`, `finding`, `decision`.
 - `content` — structured, not free prose. What "structured" means per type is an
   open contract; what it excludes is a single unparsed paragraph, because the
@@ -269,9 +268,9 @@ its own copy precisely so that what is removed here remains reconstructable ther
 A deleted entry stops being something the system knows and stays something an
 auditor can find.
 
-**The work record's attachments are not a separate root source.** Attachment to a
-task is what live-set membership *is*, so anything a live task holds is already a root
-and cannot be deleted underneath it.
+**There is one edge set, not two.** Attachment to a task *is* live-set membership,
+held by `14-context-manager.md`. `13-work-record.md` holds no artifact references at
+all: it holds the work.
 
 **What happens when the task ends is correct rather than a hole.** An unpromoted
 artifact goes, whether or not something attached it deliberately. Attaching is not
@@ -279,9 +278,7 @@ promoting, and there is no third state: what must outlive its task is promoted, 
 is the whole of the rule. An implementation that let a deliberate attachment confer
 survival would have invented a second promotion path without saying so.
 
-What the two do leave open is whether they are **two relations at all**. Same source,
-same target, different fields, held by two actors — which the non-duplication rule
-says one of them should be holding. Open below.
+
 
 ## General shape and the naive default
 
@@ -353,8 +350,8 @@ by hand.
 - **Storage leaking into the interface.** A caller that can learn a claim is a file
   turns the eventual move to a real store into a rewrite of everything calling it —
   the one way a deliberately crude starting point becomes a trap.
-- **Claim content copied into another store.** `13-work-record.md` and
-  `14-context-manager.md` both hold references. A copy goes stale silently.
+- **Claim content copied into another store.** `14-context-manager.md` holds
+  references. A copy goes stale silently.
 
 ## Relationships
 
@@ -365,9 +362,8 @@ by hand.
   keeps only references plus its own metadata. It never queries this store on its
   own initiative: the model calls a retrieval tool, the tool queries here, and
   whatever comes back registers like any other tool output.
-- **Work record** (`13-work-record.md`) — holds attachment edges pointing into this
-  store. One direction only: that store resolves claims against this one, and this
-  one knows nothing about work items.
+- **Work record** (`13-work-record.md`) — holds no reference into this store. The
+  task—artifact relation is the live set's.
 - **Observability** (`02-observability-event-model.md`) — a **separate store, not a
   shared one**. "Why did this change become trusted" is the same reconstruction
   question, but claims and run history have different lifecycles and different
@@ -378,12 +374,6 @@ by hand.
 
 ## Open contracts
 
-- **Whether the live set and the work record's attachments are one relation.** Both
-  run from a task to a claim. `14-context-manager.md` holds crossing type, origin
-  invocation and registration order; `13-work-record.md` holds its own edge metadata.
-  If they are one relation, one actor should hold it, and the choice is awkward: the
-  live set is read every turn and dies with its task, while the work record is durable
-  and has nothing left to remember once unpromoted artifacts are gone.
 - **Who promotes, and on what.** Promotion is an act rather than a property, which
   leaves open which actors hold it and what they weigh. The natural reading is a
   thinking processor at the moment it proposes a claim worth keeping, but a claim
