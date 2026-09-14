@@ -1,0 +1,482 @@
+[
+  {
+    "task": "wf1_crossfile",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 39.2,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "wf1_crossfile",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 2,
+    "arm": "test_synth",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 15.8,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "wf1_crossfile",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 3,
+    "arm": "test_synth",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 51.3,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "wf1_crossfile",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 4,
+    "arm": "test_synth",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 66.1,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "wf1_crossfile",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 5,
+    "arm": "test_synth",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 79.9,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "blocked-partial",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      3,
+      5
+    ],
+    "struct": {},
+    "objective_pass": false,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 76.7,
+    "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)"
+  },
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 2,
+    "arm": "test_synth",
+    "terminal": "blocked-partial",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      3,
+      5
+    ],
+    "struct": {},
+    "objective_pass": false,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 84.6,
+    "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: raised UnboundLocalError(\"local variable 'e' referenced before assignment\")"
+  },
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 3,
+    "arm": "test_synth",
+    "terminal": "blocked-partial",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      3,
+      5
+    ],
+    "struct": {},
+    "objective_pass": false,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 194.2,
+    "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: raised UnboundLocalError(\"local variable 'e' referenced before assignment\")"
+  },
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 4,
+    "arm": "test_synth",
+    "terminal": "blocked-partial",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      2,
+      5
+    ],
+    "struct": {},
+    "objective_pass": false,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 82.2,
+    "tail": "SUBTESTS 2/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: raised UnboundLocalError(\"local variable 'e' referenced before assignment\")\n  retries=0 is one attempt: raised UnboundLocalError(\"local variable 'e' referenced before assignment\")"
+  },
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 5,
+    "arm": "test_synth",
+    "terminal": "blocked-partial",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      3,
+      5
+    ],
+    "struct": {},
+    "objective_pass": false,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 74.4,
+    "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: raised UnboundLocalError(\"local variable 'e' referenced before assignment\")"
+  },
+  {
+    "task": "wf3_refactor",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "declined",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 12.8,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "wf3_refactor",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural"
+    ],
+    "rep": 2,
+    "arm": "test_synth",
+    "terminal": "declined",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 65.3,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "wf3_refactor",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural"
+    ],
+    "rep": 3,
+    "arm": "test_synth",
+    "terminal": "declined",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 12.8,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "wf3_refactor",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural"
+    ],
+    "rep": 4,
+    "arm": "test_synth",
+    "terminal": "declined",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 84.0,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "wf3_refactor",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural"
+    ],
+    "rep": 5,
+    "arm": "test_synth",
+    "terminal": "declined",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 67.5,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "wf3_refactor_witnessed",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural",
+      "witness-pair"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "answered",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        3,
+        3
+      ]
+    },
+    "objective_pass": true,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 86.0,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3"
+  }
+]

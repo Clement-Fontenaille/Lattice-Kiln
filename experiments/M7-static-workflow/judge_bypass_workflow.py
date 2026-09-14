@@ -336,19 +336,46 @@ def _implement(objective: str, ws: Path, rec, root, tag: str = "plain"):
                          interaction_mode="oneshot",
                          config_ref=f"judge_bypass-{tag}")
 
-def _decline_is_certain(best: dict) -> bool:
-    """True when no verdict can change the terminal any more.
+def _judge_is_moot(best: dict, premise_doubted: bool) -> bool:
+    """True when a verdict cannot add anything the check has not already settled.
 
-    `best` still holds the incumbent and the incumbent already satisfies the check,
-    so nothing can improve on it and the terminal will be `declined` whatever anyone
-    says. Asking the judge here measures its ability to notice an empty diff, which
-    is not what it is being measured for.
+    Three conditions, and the third is the one that matters. Operator ruling, and it
+    corrects an earlier version of this rule that had only the first two.
+
+    `best["src"] == "incumbent"` -- nothing the arm produced beat the starting point.
+    `best["s"]["full"]` -- and the check is satisfied. Together these mean the
+    terminal is `declined` whatever anyone says, so a verdict cannot move it.
+
+    **But that is not enough to skip the judge, and skipping on those two alone was a
+    serious mistake.** There are two reasons a check can be satisfied while nothing
+    improved, and they call for opposite treatment:
+
+      the request really had nothing to do -- the five false-premise tasks. The
+      decline is right, the diff is empty, and a verdict here measures the judge's
+      ability to notice emptiness rather than anything about the work.
+
+      **or the check does not measure what was asked.** `wf3_refactor_blindview` is
+      exactly this: the check the worker saw passes on untouched source, so the arm
+      declines, and the decline is *measurably wrong* -- the recorded score says
+      STRUCTSCORE 0/3. Here the check has said its piece and said "fine", and the
+      only remaining question is whether it was asking the right question. **No
+      mechanical thing can answer that, and the judge is the only instrument left.**
+      Skipping it here removes the one case where it is not redundant with the check
+      but complementary to it.
+
+    So the premise audit routes: it is consulted for *which* of the two this is, never
+    for whether to decline. Measured on the m7c run, that routing separated the
+    subpopulation perfectly -- a concern on all five false premises, silence on both
+    real-work tasks. That is 7 tasks in one run and it is the right measurement, since
+    what matters is discrimination inside this subpopulation and not the audit's
+    precision over the whole suite, which is around 20% and describes nothing here.
     """
-    return best["src"] == "incumbent" and best["s"]["full"]
+    return best["src"] == "incumbent" and best["s"]["full"] and premise_doubted
 
 
 def _pass(target: str, ws: Path, rec, root, best: dict, calls: list,
           greenfield: bool, deadline: float, objective: str, expected: list,
+          premise_doubted: bool,
           pristine: dict, jlog: list) -> dict:
     """Stage 4 around stage 3, with a candidate-level judge motivating the retry.
 
@@ -402,8 +429,8 @@ def _pass(target: str, ws: Path, rec, root, best: dict, calls: list,
         cand = _snap(ws)
 
         # the judge, on this candidate -- unless the decline is already certain
-        if _decline_is_certain(best):
-            v = {"verdict": None, "skipped": "decline certain", "calls": 0,
+        if _judge_is_moot(best, premise_doubted):
+            v = {"verdict": None, "skipped": "premise doubted", "calls": 0,
                  "instruction": "", "diff_empty": None}
         else:
             v = judge_change(objective, expected, pristine, cand)
@@ -617,10 +644,12 @@ def run_m7(objective: str, ws: Path) -> str:
         deadline = t0 + TASK_WALL_CAP_S          # R2
         attempts, jlog = [], []
         expected = audit.get("expected") or []
+        premise_doubted = bool(audit.get("concern"))
         for t in targets:
             before = best["s"]["comb"]
             best = _pass(t, ws, rec, root, best, calls, greenfield, deadline,
-                         objective, expected, pristine, jlog)
+                         objective, expected, pristine, jlog,
+                         premise_doubted)
             attempts.append({"target": t[:120], "comb_before": before,
                              "comb_after": best["s"]["comb"]})
         _restore(ws, best["snap"])
@@ -634,9 +663,9 @@ def run_m7(objective: str, ws: Path) -> str:
         # single run yields both readings: the candidate-level verdicts that
         # motivated retries, and the task-level one a restricting terminal
         # would have consumed.
-        if _decline_is_certain(best):
-            verdict = {"verdict": None, "skipped": "decline certain", "calls": 0,
-                       "instruction": "", "diff_empty": None}
+        if _judge_is_moot(best, premise_doubted):
+            verdict = {"verdict": None, "skipped": "premise doubted",
+                       "calls": 0, "instruction": "", "diff_empty": None}
         else:
             verdict = judge_change(objective, expected, pristine, _snap(ws))
         verdict["scope"] = "task-level, on the kept state"
