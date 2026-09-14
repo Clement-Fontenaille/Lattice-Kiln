@@ -1,6 +1,6 @@
 # E0 — Is the evaluation suite measuring one coherent thing?
 
-**Status:** not run. Possibly answerable from runs already recorded.
+**Status:** **partially answered 2026-09-14** from runs already recorded — three defects found, see below. The item-analysis half has still not been run.
 **Gates:** E4, and the interpretation of every arm comparison on the M6 suite.
 
 ## The question
@@ -35,6 +35,83 @@ A suite that fails item analysis is not thereby worthless — it may be several
 coherent sub-instruments. Splitting it and reporting per cluster is the likely
 remedy, not rebuilding it, and `10-technical/10-evaluation-task-suite.md`'s `stresses`
 tags are the candidate clustering.
+
+## Partial result, 2026-09-14 — three defects found without a new run
+
+Prompted by an operator question about what the M7 arm's decline rule actually rests
+on. All three are computable from data already recorded, which is what this sheet
+predicted.
+
+### 1. The headline metric discards the dimensions the checks print
+
+`objective_pass` is `exit_code == 0`, and every check's exit code reflects
+**SUBTESTS alone**. `hf_extract_fn/test_task.py` prints `STRUCTSCORE s/3` and then
+exits on the subtest count; the structural score never reaches the metric.
+
+Four tasks emit a structural dimension — `STRUCTSCORE` on `hf_extract_fn`,
+`hf_dict_dispatch`, `hf_rec_to_iter`, `hf_json_serialize`, plus `DOCSCORE`/`TODOSCORE`
+on `wf6_multi`. **None of them contributes to the score anyone reads.**
+`hf_dict_dispatch` at `STRUCTSCORE 0/3` — a refactor not performed at all — counts as
+a pass.
+
+### 2. The baseline scores 8/30 by doing nothing
+
+The `baseline` arm makes no model call and changes no file.
+
+| | tasks | reading |
+|---|---|---|
+| false-premise | `wf4_assumption`, `hf_already_optimal`, `hf_dead_code`, `hf_remove_validation`, `hf_cache_nondeterministic` | correct — doing nothing *is* the answer |
+| **work demanded** | `wf3_refactor`, `hf_extract_fn`, `hf_dict_dispatch` | **the metric cannot see the work** |
+
+So the suite's dynamic range is **22 tasks, not 30**, with a floor of 8 that no arm
+earned. Reading 24/30 against 18/30 is reading 16 against 10 of what was in play, and
+the relative gap between arms is therefore **larger** than the totals suggest, not
+smaller.
+
+### 3. `wf3_refactor` has no structural dimension at all
+
+Its objective asks for a shared helper to be extracted. Its check verifies only the
+returned prices, and its own comments show what the author guarded against:
+
+```
+# staff must stay exact - a shared helper that rounds would break this
+# clearance must stay rounded - a shared helper without rounding breaks this
+```
+
+**The check catches a badly-done refactor and cannot catch an absent one.** The
+untouched source passes 5/5, and so does a correct refactor. Doing the work and not
+doing it are the same score.
+
+This is the instructive form of the defect: the author protected against the error
+they imagined — the wrong refactor — and not against the null action.
+
+*Checked and withdrawn:* `hf_deprecate` carries the same `L2-structural` tag with no
+structural dimension, but its check has an explicit discriminator subtest
+(`old_parse matches new_parse`) that a warning-only deprecation fails. Its coverage is
+adequate; only the separate score line is missing. One task in thirty, not two.
+
+### The cheap test this yields
+
+**For every task, does the untouched source fail the check?** Where it does not while
+the objective demands work, the check cannot separate done from not-done. No run
+needed; it is one pass over the recorded `baseline` results.
+
+That there is only one case of defect 3 is a property of how carefully this suite was
+authored — the discriminators are deliberate — and not a property of the
+arrangement. **Nothing in the harness audits check coverage, and nothing declares it.**
+The suite cannot report this about itself.
+
+### What this does to the sheet's own question
+
+*Is the suite measuring one coherent thing?* Partly answered, and negatively: it is
+measuring subtests, while printing structural scores that look like they count. That
+is two instruments reported as one — the exact failure mode named at the top of this
+sheet, arrived at from the metric rather than from item analysis.
+
+**The remedy is not obviously a rebuild.** Folding the structural dimensions into the
+exit code is a one-line change per check and would restore what the suite already
+measures. Whether the M4/M5/M6/M7 comparisons should be re-scored against it is a
+separate decision, and it is the one with consequences.
 
 ## Cost
 
