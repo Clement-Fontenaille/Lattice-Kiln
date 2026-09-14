@@ -18,18 +18,21 @@ work, and the rows say which.
 
 | Item | Target | Source | Blocks |
 |---|---|---|---|
-| **The scope check has no builder** | [`05`](../../10-technical/05-provisional-invariant-list.md) G4 requires a functioning scope check; the specification is complete in [`03`](../../10-technical/03-capability-authority-model.md) and no milestone builds one. It needs an invariant processor, a role category nothing has instantiated — triage is the other member and is deferred to M11 | [`10-foundations/07`](../10-foundations/07-the-integrated-system-and-its-operator.md) | Nothing scheduled, which is the problem |
-| **G4's substrate precondition is unmeasured** | Two independent contexts, each large enough to work in, verifiable at startup. Cheap and M0-shaped. It decides whether a scope check is **providable at all** rather than merely unbuilt | [`05`](../../10-technical/05-provisional-invariant-list.md), [`14`](../../10-technical/14-context-manager.md) | The row above |
-| **Two actors hold the same edge set** | A task—artifact edge is held twice: by [`14`](../../10-technical/14-context-manager.md) as live-set membership, and by [`13`](../../10-technical/13-work-record.md) as `attachments`. Same source, same target, different fields. By the non-duplication rule one of them should hold it, and which one is not obvious — the live set is read every turn by recall and dies with its task, while the work record is durable but has nothing to remember once unpromoted artifacts are gone | Operator challenge 2026-09-14 | M8 |
+| **The scope check has no milestone** | The specification side is complete and closed: [`03`](../../10-technical/03-capability-authority-model.md) binds what a conforming check must satisfy and hands the rest to implementation. What is missing is an assignment. It needs an **invariant processor**, a role category nothing has instantiated — triage is the other member and is deferred to M11, which makes M11 the natural home unless it should come sooner | [`05`](../../10-technical/05-provisional-invariant-list.md) G4 | Nothing scheduled, which is the problem |
 | **M9 self-cites a phrase that no longer stands alone** | [M9](01-MILESTONES/09-context-governance-measurement.md) quotes [`10-foundations/04`](../10-foundations/04-context-as-governed-resource.md)'s **2026-09-05** "redundancy, not volume" verbatim as an open contract. The second pass superseded and narrowed that claim rather than adding to it, so the citation is stale, not only the implementation | [`10-foundations/04`](../10-foundations/04-context-as-governed-resource.md) | M9 |
 
 **Closed since the last revision of this band**, each in the document that owns it
-rather than here: the structured role-to-role handoff; the reversibility-class
-carrier, now a placeholder that every tool call is irreversible so every one gets the
-pre-effect check; and five of the seven gaps the trajectory walk found — the
-reachability root set, what promotion means, when removal runs, what triggers deriving
-a ceiling, and how a derived scope reaches the operator. A sixth was fixed outright
-(kind 4 gained a disposition for a non-representable operation).
+rather than here: the structured role-to-role handoff; the reversibility-class carrier,
+now a placeholder that every tool call is irreversible so every one gets the pre-effect
+check; five of the seven gaps the trajectory walk found; writing sub-objectives, which
+needed nothing specified; the duplicate task—artifact edge set, resolved by removing the
+work record's `attachments`; and G4's substrate precondition, which stopped being an
+unscheduled measurement when the **bootstrap occupancy test** became a requirement
+(`05-provisional-invariant-list.md`).
+
+**Two rows left, and neither is a design question.** One is an assignment and one is a
+stale citation. That is what repeatedly asking *is this design or implementation?*
+leaves behind.
 
 ## P1 — Work in progress
 
