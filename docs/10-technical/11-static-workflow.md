@@ -124,11 +124,16 @@ away.
 
 **The second clause is a correction, and it is load-bearing** (findings-log entry 10).
 An implementation that compares *how many* checks pass rather than *which* ones will
-accept a change that fixes three and breaks one, because the count went up. Milestone
-6 reported zero regressions under the count rule, and Milestone 7 produced one with a
-byte-identical rule — the difference being that M7 made enough progress on
-`wf6_multi` to have something to trade. **A guarantee that holds only while the
-system is not progressing is not a guarantee.** Compare sets.
+accept a change that fixes three and breaks one, because the count went up. That is
+what M7 did on `wf6_multi`: subtests 2/6 → 5/6 while `topo cycle`, green at the start,
+went red. The keeper saw 5 >= 2 and accepted.
+
+**Do not read the earlier arms' zero regressions as evidence the count rule is safe.**
+Three arms scored zero on that task for three unrelated reasons: `monolith` and `dloop`
+changed nothing, so nothing could regress; `staged` fixed **every** subtest, so the set
+of failures was empty and nothing could enter it. Only M7 finished in a partial
+position, which is the only place the rule is actually asked to choose. **A rule is
+only tested where it has to decide.** Compare sets.
 
 **Escalate on stall.** Stall is a bounded, mechanical condition: no strict improvement
 across *N* consecutive attempts, or the call budget is reached. v0 sets N = 2 and a

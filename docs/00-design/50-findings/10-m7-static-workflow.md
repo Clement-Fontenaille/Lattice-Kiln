@@ -92,12 +92,36 @@ On `wf6_multi`, `m7` took subtests 2/6 → 5/6 while a check that passed at base
 the set gained a member, so the harness recorded a regression. Both are behaving as
 written. The documented guarantee is stronger than the implemented one.
 
-**Why no earlier arm found this.** The rule is byte-identical in `dloop` and `m7`.
-`dloop` got zero regressions partly because it never made enough progress to trade:
-it left `wf6_multi` at 2/6 and escalated. `m7` is the first arm to reach combined 10
-on that task — further than `staged`'s 9 — and reaching further is what exposed the
-gap. **A guarantee that holds only while the system is not making progress is not the
-guarantee that was recorded.**
+**Why no earlier arm found this, corrected.** The rule is byte-identical in `dloop`
+and `m7`, so what differs is where each arm *stopped*, not how careful it was.
+
+| arm | subtests | structural | combined | regression |
+|---|---|---|---|---|
+| `monolith` | 2/6 — 2/6 | 0/4, 0/3 | 2 | no |
+| `dloop` | 2/6 — 2/6 | 0/4, 0/3 | 2 | no |
+| `staged` | 2/6 — **6/6** | 0/4, 3/3 | 9 | no |
+| `m7` | 2/6 — **5/6** | 3/4, 2/3 | 10 | **yes** |
+
+**The trade is only visible from a partial position**, and the three zeros above have
+three different causes:
+
+- `monolith` and `dloop` changed nothing on this task, so nothing could regress.
+- `staged` fixed **every** subtest. With none failing at the end, the set of failures
+  is empty and nothing can have entered it. Zero by exhaustion.
+- `m7` stopped at 5/6. That is the only position where a subtest fails at the end, and
+  therefore the only one where it can be checked whether that subtest was passing at
+  the start.
+
+So `dloop`'s zero says mostly that it did not move, and `staged`'s says it finished.
+Neither is evidence about the rule. **A rule is only tested where it is actually
+asked to choose.**
+
+*(Corrected 2026-09-14, same day as written. This paragraph first said `m7` "is the
+first arm to reach combined 10 — further than `staged`'s 9 — and reaching further is
+what exposed the gap." That is wrong: `staged` reached further on subtests, 6/6
+against 5/6, and regressed nothing. The error is recorded rather than silently
+replaced, because it is the same count-versus-set confusion this finding is about —
+combined 10 against 9 is a count, and it decided nothing.)*
 
 This does not weaken the case for the keeper, which prevented the monolith's seven
 regressions. It corrects what the keeper promises.
