@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_a3b2243f4e27",
+  "started": "2026-09-14T12:07:05.804138+00:00",
+  "intent_text": "Add a timeout parameter to fetch(url, timeout=None). None means no timeout and existing fetch(url) callers keep working. A positive budget raises TimeoutError for a slow URL. timeout=0 is a zero budget - it must also time out a slow URL, not be treated as 'no timeout'.",
+  "meta": {
+    "arm": "test_synth",
+    "suite": "m6"
+  },
+  "ended": "2026-09-14T12:08:51.207345+00:00",
+  "outcome": "completed",
+  "event_count": 74
+}

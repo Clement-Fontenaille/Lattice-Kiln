@@ -184,6 +184,10 @@ def main():
     ap.add_argument("--arm", default="baseline", choices=list(ARMS))
     ap.add_argument("--tasks", nargs="+")
     ap.add_argument("--reps", type=int, default=1)
+    ap.add_argument("--resume", action="store_true",
+                    help="keep rows already recorded for this arm and run only the "
+                         "(task, rep) pairs that are missing. Makes a long queue "
+                         "survive being interrupted, which it otherwise does not.")
     args = ap.parse_args()
     if args.arm not in ("baseline",) and not health():
         print("Ollama not reachable", file=sys.stderr)
@@ -196,11 +200,19 @@ def main():
     RUNS.mkdir(exist_ok=True)
 
     rows, t0 = [], time.monotonic()
+    done = set()
+    out_json = RESULTS / f"{args.arm}.json"
+    if args.resume and out_json.is_file():
+        rows = json.loads(out_json.read_text(encoding="utf-8"))
+        done = {(r["task"], r["rep"]) for r in rows}
+        print(f"resuming: {len(done)} rows already recorded", flush=True)
     total = len(tasks) * args.reps
     i = 0
     for task in tasks:
         for rep in range(1, args.reps + 1):
             i += 1
+            if (task["id"], rep) in done:
+                continue
             print(f"[{i}/{total}] {task['id']} rep{rep} ({args.arm}) ...", flush=True)
             row = run_task(task, args.arm, rep, cmd, protected)
             rows.append(row)

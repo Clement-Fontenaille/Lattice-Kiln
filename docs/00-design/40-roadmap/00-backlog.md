@@ -130,6 +130,45 @@ into each as it is decomposed.*
 
 ### Unscheduled
 
+- **Deliberation between agents — parked deliberately, 2026-09-14.** The operator's
+  decision: dueling advocates belong with the deliberation mechanisms as a body of
+  work, not as one more arm bolted onto M7, and it is a large piece. No milestone
+  holds it yet; it takes the next free identifier when it gets one.
+
+  **The judge investigation is what it inherits** (`50-findings/11`), and four results
+  there constrain any deliberation design before it is drawn:
+
+  **A reader's value is the difference between its context and the others', not the
+  size of its context.** Two instances of one model over one context share their blind
+  spots, so their agreement and their disagreement are both sampling variance. Any
+  design putting N agents on the same material is running one measurement N times.
+
+  **The unit of independence is the task, not the exchange.** A model that decides
+  about a task repeats itself across every turn about that task — in the M7 run one
+  judge said `unsound_request` on all six candidates of a task without changing its
+  mind. A deliberation of six turns is not six observations, and a design that reads
+  convergence as agreement will read stubbornness as consensus.
+
+  **Verdicts do not work at 7B and executable claims might.** The judge scored below a
+  constant on the population that required judgement, and its two failure modes —
+  matching a change's topic instead of verifying it, and misreading code outright —
+  are both comprehension rather than framing. The dueling-advocates shape avoids this
+  by construction: the readers emit **falsifiable input/output claims** and the
+  *interpreter* adjudicates, so the model supplies material and the machine decides.
+  That is the same move `test_synth` makes and the same one `10-technical/11`'s keeper
+  makes.
+
+  **And a judge does earn its place in one situation**, which is the only positive
+  result the investigation produced: where the check is satisfied, nothing improved,
+  and the premise was not doubted. There the check has said *fine* and the open
+  question is whether it asked the right thing — no mechanical instrument can answer
+  that, and a reader is the only one left. A deliberation design should be built for
+  that case rather than for the general one.
+
+  Prior material: `40-roadmap/01-MILESTONES/completed/07-…`, Strategies still to
+  explore; `M15`'s reviewer-independence question, which asks the same thing of two
+  *different* models and is gated on the second GPU.
+
 - **Hardware as a variable.** A replayable re-bootstrap and envelope
   re-characterisation, plus a statement of what in the design set depends on
   host-specific numbers. Owner: the bootstrapper design, at the latest M16.

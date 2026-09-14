@@ -1,0 +1,46 @@
+{
+  "_note": "Ordered by information, not convenience. If the queue does not finish, what ran is what mattered most. Every arm runs on suite 0.4.0 so the table is comparable on one version -- the reference arms are re-run for that reason alone, since their existing N=5 figures are on 0.1.0 and predate the two most discriminating tasks.",
+  "jobs": [
+    {"arm": "baseline", "reps": 1,
+     "why": "free, no model calls. The floor on 0.4.0, and it is what every other number is read against"},
+
+    {"arm": "test_synth", "reps": 5,
+     "why": "the only arm that changes mechanism rather than framing: the model writes an executable witness instead of reading a diff, so its verdict depends on no reading of the worker's code"},
+
+    {"arm": "judge_anchored", "reps": 5,
+     "why": "half of the pair that lifts the anchor confound. At N=1 the comparison had two variables at once"},
+
+    {"arm": "m7f", "reps": 5,
+     "why": "the other half. judge_anchored is m7f plus the expectation, so the pair isolates the anchor alone"},
+
+    {"arm": "judge_fullctx", "reps": 5,
+     "why": "tests the operator ruling that a same-context judge becomes a second sample of the worker. Scored against the worker's self-report, not only against the check"},
+
+    {"arm": "m7b", "reps": 5,
+     "why": "keeper-strict on 0.4.0. hf_audit_perf is the first task ever built that discriminates a set-comparing keeper from a count-comparing one"},
+
+    {"arm": "m7", "reps": 5,
+     "why": "the count-comparing keeper, on the same suite. With m7b above this is the only attributable R1 comparison available"},
+
+    {"arm": "dloop", "reps": 5,
+     "why": "the spine, re-run on 0.4.0. Its 23.6 is on 0.1.0 and cannot be compared across suite versions"},
+
+    {"arm": "judge_bypass", "reps": 5,
+     "why": "the corrected routing rule: call the judge when the check is satisfied, nothing improved, and the premise was NOT doubted"},
+
+    {"arm": "judge_staged", "reps": 5,
+     "why": "the only design that can show a note effect, by asking the same task twice without and with the note"},
+
+    {"arm": "m7e", "reps": 5,
+     "why": "register. Weakened by m7c showing no narration at all, so it ranks low"},
+
+    {"arm": "judge_caveat", "reps": 5,
+     "why": "a remedy for a defect that is itself unestablished. Lowest value of the judge arms and ordered accordingly"},
+
+    {"arm": "monolith", "reps": 5,
+     "why": "cheap reference, and the only arm with a regression rate worth measuring at N=5"},
+
+    {"arm": "staged", "reps": 5,
+     "why": "last. Its result is a large effect already decisive at N=1, so repetition adds least here"}
+  ]
+}
