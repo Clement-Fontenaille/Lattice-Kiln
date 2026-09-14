@@ -121,6 +121,11 @@ qualification, a requalification — each arrives as a **type-5 memory mutation*
 from a thinking processor (`00-design/22-arch-cognition/04-thinking.md`) and is
 gated like any other.
 
+**No write revises an existing entry.** Content is fixed when an entry is created
+(`01-effect-vocabulary.md`, type 5). A qualification or a requalification is a new
+entry plus an edge, never an edit to the entry it qualifies, which is
+`10-foundations/03`'s append-only rule made structural rather than conventional.
+
 - An implementation MUST NOT let the bookkeeping path write a claim of type
   `evidence`, `finding` or `decision`. Collapsing the two paths would make every
   crossing a belief, which is the distinction `10-foundations/03` exists to keep.
@@ -160,9 +165,13 @@ says where to go; the difficulty lives entirely in getting the first one.
 
 ## Compress — the souvenir
 
-Replace a **checked** claim's full working with a souvenir: its named inputs, its
-conclusion, and a note of the argument's shape **only where that connection is not
-obvious from the two alone**. The claim stays; its working is what goes.
+Produce a souvenir — named inputs, a conclusion, and a note of the argument's shape
+**only where that connection is not obvious from the two alone** — for a **checked**
+claim, and drop the working it replaces.
+
+**This creates rather than rewrites.** An entry's content is never revised
+(`01-effect-vocabulary.md`, type 5), so a souvenir is a new entry with its own edges
+to the roots, and what happens to the working is deletion rather than replacement.
 
 - A trivial step needs nothing beyond its conclusion. A non-trivial one needs
   enough of its shape that a later reader is not left re-deriving the same insight
@@ -393,11 +402,11 @@ by hand.
   trainable, at the cost of a labeller that never saw the reasoning it annotates.
 - **Structured content per type.** What structure an Observation carries versus a
   Decision. Required to be structured; the shape is not fixed.
-- **Deletion versus supersession.** `10-foundations/03`'s append-only
-  qualification rule governs *corrections to a promoted claim that others relied
-  on*. Elide governs *discarding an Observation nothing ever built on*. Both are
-  right; what is not settled is whether an entry can exist in a state where neither
-  clearly applies.
+- **Deletion versus supersession.** Now largely settled by content being immutable:
+  a correction is always a supersession, and deletion is always by reachability. What
+  remains is whether a **superseded** entry is itself subject to deletion once the
+  task that held it ends, since it is reachable from its successor and that may be the
+  only thing keeping it.
 - **Query representation.** Which retrieval representation actually finds useful
   material. Held open deliberately as
   `00-design/23-arch-context-management/02-context-as-experimental-surface.md`'s

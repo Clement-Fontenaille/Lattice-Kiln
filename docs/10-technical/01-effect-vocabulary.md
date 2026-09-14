@@ -114,11 +114,30 @@ subdivides, and that a task is never rewritten, are design-set decisions.*
 
 ### 5. Memory mutation
 
-Writing, revising, or retiring an entry in persistent memory.
+Changing what persistent memory holds. **An entry's content is fixed at creation and
+is never revised.** What can change is an entry's **relations** to other objects.
 
-- Includes: promoting a finding to project memory; revising a stale convention; retiring a contradicted entry.
+This subdivides for the same reason type 4 does — the acts are not comparable — and a
+capability grant MAY be keyed to a sub-type.
+
+| Sub-type | Act |
+|---|---|
+| **5a Write** | Create an entry, with its content, its provenance edges and its scope fixed at that moment |
+| **5b Relate** | Add or change an entry's relations: a qualification, a supersession, an attachment, promotion into the root set |
+
+**A correction is 5a followed by 5b, never an edit.** A contradicted entry is
+superseded by a new one and an edge, and the original stands alongside it. That is
+`00-design/10-foundations/03-evidence-belief-and-provenance.md`'s append-only rule,
+and it was previously contradicted here by "revising a stale convention" being listed
+as something this type does.
+
+**Removal is not a sub-type**, because it is not proposed by a cognitive component.
+An entry is deleted when nothing reaches it any more, which happens as a task ends and
+is runtime bookkeeping (`12-knowledge-model.md`). Whether a *deliberate* retirement
+path is needed besides is an open contract below.
+
 - Scope is part of the effect: **project memory** and **system memory** are distinct targets, and a repository convention MUST NOT be writable as a system-scope entry through a single effect.
-- Excludes: reading memory; ephemeral conversation, which is never persisted by this type.
+- Excludes: reading memory; ephemeral conversation, which is never persisted by this type; deletion, per above.
 
 ### 6. Processor invocation
 
@@ -166,6 +185,14 @@ An implementation therefore MUST make the ordered history of realized effects re
 
 - What structure carries the "representable, permitted, attributable, reversible" information with each effect submission — a common envelope across all nine types, or per-type shapes?
 - Do the four sub-types of type 4 hold, and does any of them need subdividing further? The cut follows what each act can do wrong; evidence may show a line in the wrong place. **4c Attach** is the one to watch: attachment at task creation is an ungated runtime call rather than a proposed effect (`13-work-record.md`), so whether a processor attaching mid-work needs a grant at all is unsettled.
+- **Whether promotion is a relation.** Promotion decorates an entry rather than
+  linking it to another entry, so calling it 5b reads it as a relation to the root set
+  itself. That works and is not obviously the intended sense of "relations to other
+  objects".
+- **Whether a deliberate retirement path is needed.** Reachability removes what
+  nothing needs. An entry that must go for another reason — a redaction, a privacy
+  requirement — has no path, and out-of-band operator action is the assumed answer
+  rather than a stated one.
 - How a **successor** task links to the one it redefines. A child and a successor are both created by 4a and are not the same relation, and a single `parent_item_id` cannot express both (`13-work-record.md`).
 - Is promotion (type 8) genuinely one effect type, or a small family (promote, reject, roll back) with shared lineage semantics but different authority?
 - Should network access (type 3) distinguish destination classes (package registry, arbitrary host, known-service) at the vocabulary level, or is that entirely a capability-policy concern?
