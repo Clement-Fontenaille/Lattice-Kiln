@@ -51,7 +51,7 @@ What this actor does not do is decide anything about the work. Whether a work it
 ## Service provided to the rest of the system
 
 - **Intent lineage.** Given any work item, the chain back to the intent it descends from. `10-technical/01` already requires realized effects to be reconstructable "per intent lineage" and nothing in this band supplied that chain; this actor is what knows it.
-- **Current state of work.** What items exist, how each is currently formulated, what state it is in, and its parent and child links.
+- **Current state of work.** What items exist, how each is formulated, what state it is in, and its lineage links in both directions.
 - **Transition history**, for one item or for a whole lineage.
 - **Attached-claim references** for a work item, resolvable against `21-arch-knowledge-model`.
 
@@ -86,6 +86,6 @@ Intent is a third kind of record again, and the simplest: written from outside t
 
 Whether work units need first-class persistent representation at all, or remain an emergent orchestration concept. `22-arch-cognition/01` left this open and nothing here closes it; the answer decides whether this actor holds two kinds of record or three.
 
-What the lineage links have to express. A child and a successor are both created rather than transitioned, and they are not the same relation; a merge, one item created from several, needs several parents besides.
+Whether one lineage relation suffices for every shape creation produces. A child, a successor and a merge result all descend from existing work by the same edge, differing in fan-out and fan-in rather than in kind, and what separates decomposition from redefinition is the parent's state rather than the edge. Nothing has exercised this.
 
 Whether an abandoned work item is retained or removed. Retention is the cheaper assumption and keeps "why was this dropped" answerable, but nothing here establishes that it is required.

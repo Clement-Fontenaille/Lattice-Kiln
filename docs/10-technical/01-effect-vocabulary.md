@@ -193,7 +193,7 @@ An implementation therefore MUST make the ordered history of realized effects re
   nothing needs. An entry that must go for another reason — a redaction, a privacy
   requirement — has no path, and out-of-band operator action is the assumed answer
   rather than a stated one.
-- How a **successor** task links to the one it redefines. A child and a successor are both created by 4a and are not the same relation, and a single `parent_item_id` cannot express both (`13-work-record.md`).
+- Whether one lineage relation is enough for every shape 4a produces. It appears to be: split, succession and merge are one **derived-from** edge differing only in fan-out and fan-in (`13-work-record.md`).
 - Is promotion (type 8) genuinely one effect type, or a small family (promote, reject, roll back) with shared lineage semantics but different authority?
 - Should network access (type 3) distinguish destination classes (package registry, arbitrary host, known-service) at the vocabulary level, or is that entirely a capability-policy concern?
 - At what granularity may a capability rule name a class of reads — by path, by crossing type, by volume against a ceiling, or something else? Open on the foundational side too.

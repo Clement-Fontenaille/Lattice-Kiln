@@ -101,7 +101,8 @@ One record per item, holding current state as **directly readable fields**.
 
 MUST carry:
 
-- `work_item_id`, `intent_ref`, `parent_item_id` (null for a root).
+- `work_item_id`, `intent_ref`, `derived_from` — zero or more parent work items,
+  empty for a root.
 - `formulation` — the current statement of what may need to be done, in natural
   language.
 - `formulation` and `scope` are **fixed at creation and never rewritten**
@@ -134,6 +135,17 @@ timestamp.
 Splitting and succession are **not** transitions. Both create new work items and leave
 the existing one untouched, so what records them is the new item's own lineage link
 rather than an entry in this log.
+
+**One relation covers both, and merging as well.** A child, a successor and a merge
+result are all created by 4a and all point back through `derived_from`. What separates
+them is shape rather than kind: a split fans out from one parent, a merge fans in from
+several, a succession is one to one. Nothing needs a second edge type.
+
+What tells decomposition from redefinition is not the edge but the **parent's state**,
+which is recorded anyway: an item left open while its children run was decomposed, and
+one abandoned or executed as its successor was created was redefined. A cardinality
+rule would not separate them in any case, since re-scoping into a single narrower task
+and splitting into one part are the same act.
 
 - The log is **append-only**. A transition is never edited or removed.
 - The log holds what the item record does not keep: every superseded formulation,
@@ -460,9 +472,10 @@ work/
   remain an emergent orchestration concept. Inherited from
   `22-arch-cognition/01`, and it decides whether this store holds two record kinds
   or three.
-- **Lineage links.** A child and a successor are both created by 4a and are not the
-  same relation, so a single `parent_item_id` cannot express both. A merge — one item
-  created from several — needs several parents besides.
+- **Whether the single lineage relation holds under use.** It covers split,
+  succession and merge without strain, and nothing has exercised it. The case to watch
+  is a parent left open for a reason unrelated to decomposition, where reading the
+  shape off the parent's state would mislead.
 - **Abandoned items.** Retained or removed. Retention is the cheaper assumption
   and keeps "why was this dropped" answerable, but nothing establishes that it is
   required.
