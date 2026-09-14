@@ -1,0 +1,89 @@
+[
+  {
+    "task": "wf4_assumption",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "declined",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "wall_s": 60.2,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "hf_dead_code",
+    "shape": "cleanup",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "declined",
+    "baseline_sub": [
+      4,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "wall_s": 3.7,
+    "tail": "SUBTESTS 4/4"
+  },
+  {
+    "task": "hf_pagination",
+    "shape": "fix",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      1,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 18.4,
+    "tail": "SUBTESTS 5/5"
+  }
+]
