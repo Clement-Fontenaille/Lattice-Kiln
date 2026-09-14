@@ -30,8 +30,8 @@ then M8/M9/M11 for a testable codebase.
       with `00-questions.md` cataloguing open questions that can become experiments,
       absorbing `08-next-experiments.md`. One sheet per well-circumscribed
       experiment.
-- [ ] **5. Wrap up M7.** Follow-up experiments from tests already run stay
-      available as experimental work.
+- [x] **5. Wrap up M7.** Built, run on the suite, findings entry 10 written,
+      milestone moved to `completed/`. Follow-up experiments stay available.
 - [ ] **6. M8, M9, M11** — a stable codebase to test against.
 
 ### Progress notes
@@ -221,33 +221,59 @@ specification counterpart and was not in my own inventory — `11-static-workflo
 specifies concern-split as one conditional stage of one workflow, which is not the same
 thing. It is now a P0 row.
 
-**5 — M7. Step 1 of 4 done, and the other three are not mine to do alone.**
+**5 — M7. Complete. Built, run, entry 10 written, milestone moved to `completed/`.**
 
-- **Done:** `10-technical/11-static-workflow.md` v0. Back half only, per the recorded
-  proposal in Open decisions below — the loop, its gates, the incumbent-protected
-  keeper, escalate-on-stall, premise audit as advisory, concern split as conditional.
-  Everything in it comes from M6 evidence rather than from argument.
-- **The front half is an open contract in that document**, not a gap. It rests on six
-  tasks at low N and its third prerequisite is `10-foundations/04`'s context-quality
-  question, which makes **M9 a prerequisite for evaluating it**. Specifying it now
-  would be specifying against a ruler nobody has.
-- **Steps 2–4 are build-and-run**, not writing: build from the `loop_lab` / `m6_arms`
-  parts, run against the suite, write the findings entry. Step 3 still needs **E0**
-  (suite construct validation) for the comparison to be interpretable — the dependency
-  named under Where we are.
-- One thing I flagged in the spec rather than fixing: **the workflow runs unscoped.**
-  `06` binds a `scope` and `24-arch-permission-layer` requires one, but nothing
-  derives, checks or enforces it. That is honest rather than accidental, recorded as
-  an open contract in `11`, and it is now also `05`'s G4 and a P0 row — the
-  specification side is complete and the build side has no owner.
+24/30, 1 regression, 5/5 decline accuracy, 13.7 min. Four things worth carrying, and
+the first is not about the workflow:
+
+- **The suite at N=1 cannot resolve a one-or-two-task difference.** M7 and `dloop`
+  both scored 24/30 with **four tasks flipped between them**, and none of the four was
+  touched by the stages M7 added. So a four-task churn is available from variance
+  alone. M6 concluded the 30-task suite was "decisive" where the 6-task fixture was
+  within noise; that holds for the large effects it was reporting and not for the
+  small one M7 was built to produce. **E0 and repetition are promoted by this.**
+- **Making the premise audit advisory works, and it is the one clean confirmation.**
+  `staged`'s seven false declines became one — exactly the six predicted tasks
+  recovered, with the seventh (`wf3_refactor`) named in advance as inherited from
+  `dloop` rather than caused here. An advisory stage cannot produce a false terminal
+  because it cannot produce a terminal.
+- **The incumbent-protected keeper protects a count, not a set.** Entry 8 describes it
+  as rejecting *any* subtest regression; the implemented rule compares how many
+  subtests pass. On `wf6_multi` M7 took subtests 2/6 → 5/6 while a check that passed
+  at baseline began failing — count up, set grown, keeper satisfied, harness records a
+  regression. `dloop` runs a byte-identical rule and got zero regressions **because it
+  never made enough progress to have something to trade.** A guarantee that holds only
+  while the system is not progressing is not the guarantee that was recorded.
+- **Building it found two specification defects**, which is what a build is for: the
+  per-task 4-call budget cannot survive a concern split (the figure came from `dloop`,
+  which never splits), and stage 2's model firing signal can only ever trigger a no-op
+  because segmentation is syntactic and the signal is not. Both corrected in `11`.
+
+**A prediction was recorded before the run** (`experiments/M7-static-workflow/PREDICTION.md`)
+and not revised. It hit on decline accuracy and on the six recovered tasks, and missed
+on regressions, on `wf6_multi`, and on cost. Two of the three misses are the findings
+above — which is the argument for writing it down beforehand rather than a happy
+accident.
+
+**Still true and still unfixed:** the workflow runs unscoped. That is now
+[M17](../00-design/40-roadmap/01-MILESTONES/17-mandate-chain.md)'s, and this run is
+**the last one comparable to M4 and M5 on cost** — once a model call sits in front of
+every tool call, every arm pays what no earlier arm paid.
 
 ## Where we are
 
-**MVP slice M0–M6 complete.** Findings entries 1–9.
+**MVP slice M0–M6 complete, and M7 closed 2026-09-14.** Findings entries 1–10.
 
-**Current milestone: M7 — Static supervised workflow.** The spec
-(`10-technical/11-static-workflow.md`) is written, back half only. The execution record
-(`50-PROGRESS/M7-static-workflow.md`) is still owed, and steps 2–4 are build-and-run.
+**Current milestone: M8 — Persistent work and knowledge.** Six work packages named in
+the milestone file. Packages 1–3 are the three specifications written 2026-09-13
+(`12`, `13`, `14`) and are independent of each other; package 4 is the wiring between
+them, and it is the one the consolidation pass suggests will be underestimated —
+every gap that pass found lived on an edge between two stores rather than inside one.
+
+**M7 is done, back half only.** 24/30 on the suite, 1 regression, 5/5 decline
+accuracy — the same score as `dloop` with four tasks flipped between them. The
+execution record is `50-PROGRESS/M7-static-workflow.md`; the milestone moved to
+`01-MILESTONES/completed/07-…`. The front half stays unspecified and M9-gated.
 
 **M3 open**, crossed in reduced form for the MVP, stays open until the M11 items land
 — and until M8 supplies the effect-type coverage its evidence question needs, which
@@ -256,9 +282,10 @@ is a connection nothing recorded before 2026-09-14.
 Milestone state: `40-roadmap/01-MILESTONES/README.md`. What to do next:
 `40-roadmap/00-backlog.md`.
 
-**Dependency before M7's suite run:** backlog P1 step 4 needs **E0, suite construct
-validation** (P2) for the comparison to be interpretable. E0 may be answerable from
-runs already recorded.
+**E0 was promoted by M7's result.** The M7 run went ahead without it, and what came
+back is the argument for it: two arms scoring 24/30 with four tasks flipped between
+them, none touched by the stages under test. A four-task churn is available from
+variance alone at N=1. E0 may still be answerable from runs already recorded.
 
 ## What the completed milestones established
 
@@ -365,8 +392,6 @@ reviewer model, needing the planned second GPU. Gates M12 onward.
 
 ## Open decisions waiting on the operator
 
-- **M7 scope** — back half only, or back half plus front half. The front half pulls M9
-  in front of it. Proposed: back half now, front half as an open contract.
 - **Naming theme** — `00-design/90-notes/04-naming-theme` is marked *Decided* and has
   never been applied. Apply or downgrade.
 - **Praxis before or after M7** — two execution gates rest on positions

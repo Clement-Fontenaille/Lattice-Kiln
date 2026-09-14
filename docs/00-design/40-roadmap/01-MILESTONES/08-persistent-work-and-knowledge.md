@@ -1,6 +1,6 @@
 # M8 — Persistent work and knowledge
 
-**State:** open. Next after [M7](07-static-supervised-workflow.md).
+**State:** open. Next after [M7](completed/07-static-supervised-workflow.md).
 **Was:** M6, before rework 2
 **Design:** [`10-foundations/03-evidence-belief-and-provenance.md`](../../10-foundations/03-evidence-belief-and-provenance.md), [`02-reasoning-vs-runtime.md`](../../10-foundations/02-reasoning-vs-runtime.md), [`05-ephemeral-conversation-curated-memory.md`](../../10-foundations/05-ephemeral-conversation-curated-memory.md)
 

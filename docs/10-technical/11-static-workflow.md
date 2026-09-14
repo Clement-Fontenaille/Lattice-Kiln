@@ -1,6 +1,7 @@
 # Static Supervised Workflow
 
-**Traces to:** `00-design/40-roadmap/01-MILESTONES/07-static-supervised-workflow.md`, `00-design/22-arch-cognition/02-processors.md`, `00-design/22-arch-cognition/08-decomposition.md`, `00-design/10-foundations/07-the-integrated-system-and-its-operator.md`
+**Traces to:** `00-design/40-roadmap/01-MILESTONES/completed/07-static-supervised-workflow.md`, `00-design/22-arch-cognition/02-processors.md`, `00-design/22-arch-cognition/08-decomposition.md`, `00-design/10-foundations/07-the-integrated-system-and-its-operator.md`
+**Exercised by:** `experiments/M7-static-workflow/m7_workflow.py`; findings-log entry 10
 **Consumes:** `06-processor-contract.md`, `02-observability-event-model.md`, `04-enforcement-gate.md`, `10-evaluation-task-suite.md`
 **Evaluated against:** `10-evaluation-task-suite.md`
 
@@ -77,6 +78,18 @@ classification as a stand-in trigger and records every firing decision with its
 inputs, so the rule can be **learned from the suite's `stresses` slice** rather than
 hand-set permanently.
 
+**A firing signal that the stage cannot act on is a no-op, and v0 has one**
+(findings-log entry 10). M7's build fired on either a syntactic signal — the objective
+enumerates its parts — or the audit's `multi_concern` flag, while segmentation was
+purely syntactic. When the model signal fired alone the stage fired and had nothing to
+split. The two signals agreed on 29 of 30 tasks, so the model half earned nothing a
+regular expression did not.
+
+An implementation MUST either give the model signal a way to produce segments, or drop
+it. Recording a firing decision the stage could not act on makes the influence record
+say a stage fired when nothing happened, which is the one thing that record exists to
+prevent.
+
 When it fires, each concern becomes its own pass through stages 3 and 4, and results
 recombine by continuation — each pass hands forward what the next needs — rather than
 by an explicit join. What a pass hands forward follows the same rule as the retry
@@ -105,15 +118,31 @@ The loop. Run the objective check. On failure, iterate: a fresh implementer inst
 with the failure recorded, bounded by the stall rule below.
 
 **Incumbent-protected keeper.** A new attempt replaces the incumbent only if it
-strictly improves the objective check. A tie keeps the incumbent. This is what
-produces zero regressions, and it is the rule to preserve if any other is traded
+strictly improves the objective check **and no check that was passing has begun to
+fail**. A tie keeps the incumbent. This is the rule to preserve if any other is traded
 away.
+
+**The second clause is a correction, and it is load-bearing** (findings-log entry 10).
+An implementation that compares *how many* checks pass rather than *which* ones will
+accept a change that fixes three and breaks one, because the count went up. Milestone
+6 reported zero regressions under the count rule, and Milestone 7 produced one with a
+byte-identical rule — the difference being that M7 made enough progress on
+`wf6_multi` to have something to trade. **A guarantee that holds only while the
+system is not progressing is not a guarantee.** Compare sets.
 
 **Escalate on stall.** Stall is a bounded, mechanical condition: no strict improvement
 across *N* consecutive attempts, or the call budget is reached. v0 sets N = 2 and a
-per-task budget of 4 calls, both from Milestone 6's observed 1–4 call range. Neither
-number is derived from anything, and both are recorded per run so the suite can move
-them.
+budget of 4 calls, both from Milestone 6's observed 1–4 call range.
+
+**The budget is per pass, not per task**, and the distinction only appears once stage
+2 fires. M6's 1–4 range was measured on `dloop`, which never splits; a three-concern
+objective under a per-*task* budget of four would give each concern barely one
+attempt, which is worse than not splitting. A task-level cap belongs alongside it to
+stop a many-concern objective running away — M7's build used 12, and one task reached
+11 calls and 43% of that arm's entire wall clock.
+
+Neither number is derived from anything, and both are recorded per run so the suite
+can move them.
 
 Escalation is not failure. It is a terminal outcome with its own payload, below.
 
@@ -176,8 +205,16 @@ tasks flip between arms carries far more than a score difference, and the arms s
 a suite, so the pairing is available
 (`00-design/27-arch-adaptation-and-evolution/05-experiments-and-candidate-systems.md`).
 
-Expected effects here are large, since these are different designs rather than
-parameter settings, so one run per arm is adequate and a null result is informative.
+**One run per arm was adequate for the differences M6 was reporting and is not
+adequate here** (findings-log entry 10). M7 and `dloop` both scored 24/30 while four
+tasks flipped between them — two gained, two lost — and none of the four was a task
+the added stages touched. A four-task churn is available from run-to-run variance
+alone at N=1, so any comparison whose expected effect is one or two tasks needs
+repetition before it means anything.
+
+The large effects stay readable at N=1: the monolith's seven regressions and
+`staged`'s seven false declines are not noise. The suite discriminates designs that
+differ in kind and not designs that differ by a task.
 
 ## Open contracts
 

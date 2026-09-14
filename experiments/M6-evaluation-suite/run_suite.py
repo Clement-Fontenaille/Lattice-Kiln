@@ -89,6 +89,12 @@ try:
     ARMS.update(ARMS_EXTRA)          # dloop, staged
 except Exception as _e:  # noqa: BLE001
     print(f"(m6_arms unavailable: {_e!r})", file=sys.stderr)
+try:                                  # M7's arm lives in its own milestone directory
+    sys.path.insert(0, str(HERE.parent / "M7-static-workflow"))
+    from m7_workflow import ARMS_EXTRA as _M7
+    ARMS.update(_M7)                 # m7
+except Exception as _e:  # noqa: BLE001
+    print(f"(m7_workflow unavailable: {_e!r})", file=sys.stderr)
 
 
 # --------------------------------------------------------------- driver

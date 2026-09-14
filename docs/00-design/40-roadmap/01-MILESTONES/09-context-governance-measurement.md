@@ -68,7 +68,7 @@ The bar recorded at rework 1 is still the right shape as a floor:
 
 ## Why it may need to move earlier
 
-[M7](07-static-supervised-workflow.md)'s proposed front half is convergence before
+[M7](completed/07-static-supervised-workflow.md)'s proposed front half is convergence before
 implementation, and its unresolved problem is that **convergence closes on
 nothing** — `dloop` closes on a test, but nothing validates the artifact the
 convergence step produces. Validating that artifact is a context-quality question,

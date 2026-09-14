@@ -121,7 +121,7 @@ synchronously, and that is accepted deliberately for now
 (`03-capability-authority-model.md`, The disposition).
 
 That has a sequencing consequence nothing else records.
-[M7](07-static-supervised-workflow.md)'s evidence question is *best
+[M7](completed/07-static-supervised-workflow.md)'s evidence question is *best
 outcome-per-call*, measured against the `monolith` / `dloop` / `staged` arms and
 comparable back to M4 and M5. **Turning this milestone on before M7's suite run
 breaks that comparison** — every arm pays a per-tool-call model call that no earlier

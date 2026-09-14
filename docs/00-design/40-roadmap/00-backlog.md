@@ -38,25 +38,29 @@ an open contract looks blocking.
 
 ## P1 — Work in progress
 
-**[M7 — Static supervised workflow](01-MILESTONES/07-static-supervised-workflow.md)**
+**[M7 — Static supervised workflow](01-MILESTONES/completed/07-static-supervised-workflow.md)
+— closed 2026-09-14.** All five steps done; findings-log entry 10. Back half only, as
+scoped; the front half stays an open contract in
+[`11-static-workflow.md`](../../10-technical/11-static-workflow.md) and is M9-gated.
 
-1. **Scope — decided.** Back half only. The front half is an open contract in
-   [`11-static-workflow.md`](../../10-technical/11-static-workflow.md), since its
-   third prerequisite is `10-foundations/04`'s context-quality question, which makes
-   [M9](01-MILESTONES/09-context-governance-measurement.md) a prerequisite for
-   *evaluating* it.
-2. **Specify** — done. [`11-static-workflow.md`](../../10-technical/11-static-workflow.md) v0.
-3. **Build** — **unblocked.** The spec is written and the handoff contract it needed
-   is closed.
-4. **Run against the M6 suite** — needs E0 (P2) for the comparison to be
-   interpretable.
-5. **Findings entry.**
+**[M8 — Persistent work and knowledge](01-MILESTONES/08-persistent-work-and-knowledge.md)
+is next.** Six work packages, named in that file. Packages 1–3 are the three
+specification documents written on 2026-09-13 and are independent of each other;
+package 4 is the wiring between them and is the one most likely to be
+underestimated.
 
 ## P2 — Short term work to address next
 
-- **E0 — suite construct validation.**
-  [`03-research-and-evaluation/`](03-research-and-evaluation/) → E0. Blocks interpretation of
-  P1 step 4. Possibly answerable from runs already recorded.
+- **E0 — suite construct validation. Promoted by findings-log entry 10.**
+  [`03-research-and-evaluation/`](03-research-and-evaluation/) → E0. M7 and `dloop`
+  both scored 24/30 while **four tasks flipped between them**, none touched by the
+  stages M7 added — so a four-task churn is available from variance alone at N=1. The
+  suite discriminates designs that differ in kind and not designs that differ by a
+  task, and nothing had measured that before. Possibly answerable from runs already
+  recorded.
+- **Repetition is no longer optional for small-effect comparisons.** Same source. Any
+  arm comparison whose expected effect is one or two tasks needs N > 1 before it means
+  anything. This does not apply retroactively to M4/M5/M6's large effects.
 - **Next milestone after M7 — decided, 2026-09-10.**
   [M8 — Persistent work and knowledge](01-MILESTONES/08-persistent-work-and-knowledge.md),
   then [M9 — Context governance measurement](01-MILESTONES/09-context-governance-measurement.md)

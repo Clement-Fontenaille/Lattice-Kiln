@@ -8,7 +8,7 @@
 
 ## What this milestone was
 
-Everything downstream — the static workflow ([M7](../07-static-supervised-workflow.md))
+Everything downstream — the static workflow ([M7](07-static-supervised-workflow.md))
 and every adaptive loop after it — is judged by running it against tasks. The MVP
 used a 4-then-6-task fixture that was too small and too synthetic to separate arms
 at N ≤ 3, and it missed whole classes of common request.

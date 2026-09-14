@@ -48,7 +48,7 @@ result that reshaped the near-term plan more than any other:
 **Consequence:** on a 7B the judgment seat is deterministic checks + run-the-test +
 keep-the-incumbent + escalate. The model is a doer and a failure-explainer, not a
 judge. That is what motivated [M6](06-evaluation-task-suite.md) and
-[M7](../07-static-supervised-workflow.md), and it is why a second judgment source —
+[M7](07-static-supervised-workflow.md), and it is why a second judgment source —
 a stronger or independent reviewer model — became the gating dependency for any
 self-improving loop.
 

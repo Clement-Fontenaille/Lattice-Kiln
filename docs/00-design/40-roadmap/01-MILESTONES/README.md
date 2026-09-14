@@ -79,8 +79,7 @@ Ordered by identifier. For priority see [`../00-backlog.md`](../00-backlog.md).
 | ID | Milestone | State |
 |---|---|---|
 | M3 | [Invariant floor](03-invariant-floor.md) | reduced form crossed; full form open |
-| **M7** | [**Static supervised workflow**](07-static-supervised-workflow.md) | **in execution** |
-| M8 | [Persistent work and knowledge](08-persistent-work-and-knowledge.md) | open |
+| **M8** | [**Persistent work and knowledge**](08-persistent-work-and-knowledge.md) | **next** |
 | M9 | [Context governance measurement](09-context-governance-measurement.md) | open |
 | M10 | [Project-level adaptation](10-project-level-adaptation.md) | open |
 | M11 | [Safety response mechanisms](11-safety-response.md) | open |
@@ -109,6 +108,7 @@ has an answer — including an answer of "not yet answerable, and here is why."
 | M4 | [Ephemeral processor experiments](completed/04-ephemeral-processors.md) | 2026-08-30 | inconclusive, leaning weakens |
 | M5 | [Intelligent orchestration experiments](completed/05-intelligent-orchestration.md) | 2026-08-31 | confirms, narrowly |
 | M6 | [Evaluation task suite](completed/06-evaluation-task-suite.md) | 2026-09-03 | **confirms** |
+| M7 | [Static supervised workflow](completed/07-static-supervised-workflow.md) | 2026-09-14 | confirms narrowly |
 
 M3 is absent from both the completed count and this table's spirit: it was crossed
 in a reduced form sufficient for the MVP and is **not complete**. It stays open
