@@ -389,51 +389,92 @@ Grouped by trap; each row is `id — the ask — the trap — the discriminator`
 - The suite is versioned; adding/removing a task is a recorded change, so a
   cross-run comparison always states the suite version.
 
-## Authoring rule: every task needs a mechanical witness
+## Authoring rule: every clause of a demand needs an observable witness
 
-Operator ruling, 2026-09-14, after `wf3_refactor` was found to have none
-(`00-design/40-roadmap/03-research-and-evaluation/E0-suite-construct-validation.md`).
+Operator ruling, 2026-09-14, refined the same day.
 
-**A task belongs in this suite only if its completion is mechanically observable.**
-The test is cheap and runs without a model:
+> **A demand that is not the subject of a witness defeats the arm every time.**
 
-> Does the **untouched source** fail the check?
+Three things that statement fixes, each of which an earlier wording got wrong.
 
-Where it passes while the objective demands work, the check cannot separate done from
-not-done, and every arm scores the task identically whatever it did. That is not a
-hard task; it is a task that measures nothing.
+**The unit is the demand, not the check.** An earlier version said "a check that does
+not clearly show what it measures", where *clearly* did no work. Coverage is binary:
+either this clause of the demand has a witness or it does not.
 
-The five false-premise tasks are the deliberate exception and the reason the test is
-stated as a question rather than an assertion: there, the untouched source passing
-*is* the correct answer, and declining is what is being measured.
+**It separates two defects that look alike.** `wf3_refactor`'s *remove the
+duplication* has no witness, so **the arm** cannot tell done from not-done.
+`hf_extract_fn`'s structural clause **has** one, `STRUCTSCORE`, and the M7 arm read it
+and escalated correctly — there the **metric** is at fault, not the arm. One statement,
+two diagnoses.
+
+**Witness, not test.** A `test_task.py` case is one kind. An AST walk asking whether
+two function bodies reduced to calls is another. `DOCSCORE` reading the source for
+docstrings is another. Saying *test* excludes by vocabulary half the repairs
+available.
+
+### What is defeated is the terminal, not the work
+
+An arm working on an unwitnessed clause may do the job perfectly. What it cannot do is
+**report**. On `wf3_refactor` an arm that refactors correctly reports `declined`, and
+an arm that does nothing reports `declined`. The artifact may be fine either way; the
+self-assessment is worthless either way.
+
+For a workflow whose stated value is honest escalation, that is the expensive loss,
+and it is worth naming precisely so the repair aims at the right thing.
+
+### The system cannot check this for you
+
+Nothing in an arm or in this harness can detect that a clause has no witness — it
+would mean comparing a natural-language demand against what a check measures. This is
+a criterion for **writing** tasks, applied by a person. **A suite cannot audit itself
+on this point**, and an implementation must not be built as though it could.
+
+### The check, and why the cheap version is not enough
+
+**Necessary:** does the untouched source fail the check? Where it passes while the
+objective demands work, some clause has no witness. Computable from recorded
+`baseline` results with no run.
+
+**Not sufficient.** A three-clause demand with two clauses witnessed fails untouched
+on the strength of those two, and the third stays silently unwitnessed. The cheap
+test reports nothing.
+
+**Sufficient form, per clause:** for each clause of the demand, is there a dimension
+that moves when that clause alone is done?
+
+`wf6_multi` already satisfies it — `SUBTESTS` for `topo_sort`, `DOCSCORE` for the
+docstrings and `NOTES.md`, `TODOSCORE` for the TODO gardening — and so does
+`hf_json_serialize`. **The practice is present in this suite and is not a rule**,
+which is the same shape as the defect it catches: it holds by the author's care, and
+nothing would report its absence.
 
 ### Restating rather than adding a judge
 
-When an objective has no witness, restate it until it does. `wf3_refactor`'s
-*remove the duplication by extracting a shared helper* becomes:
+When a clause has no witness, restate it until it has one.
+`wf3_refactor`'s *remove the duplication by extracting a shared helper* becomes:
 
 > the two functions become one, **or** each body reduces to a call into a third
 > function carrying the shared logic
 
-which an AST walk decides. Two admissible outcomes rather than one, so the criterion
-says what finished looks like without prescribing the method.
+decided by an AST walk. Two admissible outcomes rather than one, so it says what
+finished looks like without prescribing the method.
 
-**Do not reach for a model to close the gap.** `50-findings/07` measured that: a
+**Do not reach for a model to close the gap.** `50-findings/07` measured it: a
 deterministic core scored 9/10 with zero model calls and dropped to 6/10 once a 7B
-checklist and panel were added on top. A judge also relocates the problem rather than
-removing it, since something must then establish that the judge was right.
+checklist and panel were added. A judge also relocates the unverifiability rather than
+removing it, since something must then establish that the judge was right. *Whether a
+test-writer is redundant in the same way does not follow and is open* — three tasks
+carry `kway-synth` for it.
 
-`00-design/22-arch-cognition/08-decomposition.md` carries this as a **granularity**
-criterion rather than a verification one, alongside the capacity criterion it is
-independent of.
+`00-design/22-arch-cognition/08-decomposition.md` carries the general form as a
+**granularity** criterion, independent of that account's capacity criterion.
 
-### What this does not yet fix
+### The five false-premise tasks are the deliberate exception
 
-The rule is stated and the suite is not yet audited against it. Three tasks pass
-untouched while demanding work — `wf3_refactor`, `hf_extract_fn`, `hf_dict_dispatch` —
-though only the first lacks a witness outright; the other two **have** one
-(`STRUCTSCORE`) that the headline metric discards. Those are two different repairs and
-E0 holds both.
+There the untouched source passing **is** the correct answer, and declining is what is
+being measured. This is why the check above is posed as a question rather than an
+assertion.
+
 
 ## Open contracts
 

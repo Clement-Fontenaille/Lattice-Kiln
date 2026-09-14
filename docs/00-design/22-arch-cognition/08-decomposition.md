@@ -133,6 +133,31 @@ Note the shape: **two admissible outcomes rather than one imposed.** It says wha
 one implementation has stopped being a completion test and become a specification of
 method.
 
+### Three refinements, same day
+
+**The unit is the demand, not the check.** An earlier wording put the fault on the
+check and qualified it with *clearly*, which did no work. Coverage is binary: either a
+clause of the demand has a witness or it has not. Stated as the operator put it:
+
+> A demand that is not the subject of a witness defeats the arm every time.
+
+**Witness, not test.** A `test_task.py` case is one kind of witness. An AST walk
+asking whether two function bodies reduced to calls is another; reading the source for
+docstrings is a third. Saying *test* excludes by vocabulary half the repairs
+available, including the one proposed for `wf3_refactor` above.
+
+**What is defeated is the terminal, not the work.** An arm working on an unwitnessed
+clause may do the job perfectly. What it cannot do is report. On `wf3_refactor` an arm
+that refactors correctly reports `declined`, and an arm that does nothing reports
+`declined` — the artifact may be fine either way, the self-assessment is worthless
+either way. For a system whose value is honest escalation, that is the expensive loss.
+
+**And nothing inside the system can check it.** Detecting an unwitnessed clause means
+comparing a natural-language demand against what a check measures. This is a criterion
+applied by a person when the work is formulated. A suite, or a task store, cannot
+audit itself on it, and an implementation must not be built as though it could.
+
+
 ### The response to a missing witness is not a judge
 
 Two reasons, and the first is measured rather than argued.

@@ -42,17 +42,35 @@ Prompted by an operator question about what the M7 arm's decline rule actually r
 on. All three are computable from data already recorded, which is what this sheet
 predicted.
 
-### 1. The headline metric discards the dimensions the checks print
+### 1. `objective_pass` does not measure whether the objective was met
 
-`objective_pass` is `exit_code == 0`, and every check's exit code reflects
-**SUBTESTS alone**. `hf_extract_fn/test_task.py` prints `STRUCTSCORE s/3` and then
-exits on the subtest count; the structural score never reaches the metric.
+*(Restated 2026-09-14, same day. This first read "the headline metric discards the
+dimensions the checks print", which implied an oversight. It is not one.)*
 
-Four tasks emit a structural dimension — `STRUCTSCORE` on `hf_extract_fn`,
-`hf_dict_dispatch`, `hf_rec_to_iter`, `hf_json_serialize`, plus `DOCSCORE`/`TODOSCORE`
-on `wf6_multi`. **None of them contributes to the score anyone reads.**
-`hf_dict_dispatch` at `STRUCTSCORE 0/3` — a refactor not performed at all — counts as
-a pass.
+`wf6_multi/test_task.py` says so in its own docstring:
+
+```
+DOCSCORE c/d   - documentation attended to (quality signal, does not gate)
+TODOSCORE e/f  - TODO gardening (quality signal, does not gate)
+```
+
+**The author declared it.** `SUBTESTS` gates; the structural dimensions are quality
+signals and deliberately do not reach the exit code. Four checks are built this way.
+
+So the defect is not in the checks. It is that the harness computes
+`objective_pass = (exit_code == 0)` and every downstream reader — the arm comparison
+tables, `50-findings/08`, `50-findings/10`, this project's own prose — has taken it to
+mean *the task was done*. It means **the gating dimension passed**.
+
+The concrete cost: `hf_dict_dispatch` finishing at `STRUCTSCORE 0/3`, a refactor not
+performed at all, is counted as a pass by every arm comparison published so far.
+
+Two repairs are available and they are not the same. Fold the structural dimensions
+into the exit code, which changes what the suite gates on. Or rename the metric and
+report the dimensions alongside it, which changes nothing about the suite and
+everything about how its numbers read. **Neither has been chosen**, and the second is
+the cheaper one to get wrong quietly.
+
 
 ### 2. The baseline scores 8/30 by doing nothing
 
@@ -119,16 +137,27 @@ Note that defects 1 and 3 need **different** repairs. `hf_extract_fn` and
 away; folding the structural dimensions into the exit code fixes those and does
 nothing for `wf3_refactor`, which has no witness to fold.
 
-### The cheap test this yields
+### The cheap test this yields, and why it is not sufficient
 
-**For every task, does the untouched source fail the check?** Where it does not while
-the objective demands work, the check cannot separate done from not-done. No run
-needed; it is one pass over the recorded `baseline` results.
+**Necessary:** for every task, does the **untouched source** fail the check? Where it
+passes while the objective demands work, some part of the demand has no witness. One
+pass over the recorded `baseline` results, no run needed.
 
-That there is only one case of defect 3 is a property of how carefully this suite was
-authored — the discriminators are deliberate — and not a property of the
-arrangement. **Nothing in the harness audits check coverage, and nothing declares it.**
-The suite cannot report this about itself.
+**Not sufficient**, and the gap matters. Take a demand with three clauses where two
+are witnessed and the third is not. The untouched source fails — on the strength of
+the first two — so this test reports nothing wrong, and the third clause stays
+silently unwitnessed.
+
+**The sufficient form is per clause, not per task:** *for each clause of the demand,
+is there a dimension that moves when that clause alone is done?* That is more
+expensive, because it obliges the author to name a witness clause by clause.
+
+`wf6_multi` already does exactly that — `SUBTESTS` for `topo_sort`, `DOCSCORE` for the
+docstrings and `NOTES.md`, `TODOSCORE` for the TODO gardening — and so does
+`hf_json_serialize`. **The practice exists in this suite and is not a rule**, which is
+the same shape as the defect it is meant to catch: it holds by the author's care and
+nothing would report its absence.
+
 
 ### What this does to the sheet's own question
 
