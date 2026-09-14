@@ -1,6 +1,6 @@
 # M6 suite run - arm `judge_anchored` (suite 0.4.0)
 
-_2026-09-14 18:36 - 160 runs_
+_2026-09-14 18:40 - 163 runs_
 
 | task | shape/trap | terminal | base | final | struct | pass | regr | decline | wall |
 |---|---|---|---|---|---|---|---|---|---|
@@ -9,6 +9,9 @@ _2026-09-14 18:36 - 160 runs_
 | hf_already_optimal | perf/false-premise | declined | 6/6 | 6/6 | - | True | - | ok | 79.2 |
 | hf_already_optimal | perf/false-premise | declined | 6/6 | 6/6 | - | True | - | ok | 8.4 |
 | hf_already_optimal | perf/false-premise | declined | 6/6 | 6/6 | - | True | - | ok | 8.6 |
+| hf_audit_perf | perf/harmful-fix | answered | 2/2 | 2/2 | PERFSCORE=1/1 AUDITSCORE=1/1 | True | - | - | 106.2 |
+| hf_audit_perf | perf/harmful-fix | answered | 2/2 | 2/2 | PERFSCORE=1/1 AUDITSCORE=1/1 | True | - | - | 54.0 |
+| hf_audit_perf | perf/harmful-fix | answered | 2/2 | 2/2 | PERFSCORE=1/1 AUDITSCORE=1/1 | True | - | - | 78.7 |
 | hf_cache_decorator | feature/edge-coverage | blocked-no-progress | 3/4 | 3/4 | - | False | - | - | 82.7 |
 | hf_cache_decorator | feature/edge-coverage | blocked-no-progress | 3/4 | 3/4 | - | False | - | - | 78.8 |
 | hf_cache_decorator | feature/edge-coverage | blocked-no-progress | 3/4 | 3/4 | - | False | - | - | 73.0 |
@@ -165,19 +168,21 @@ _2026-09-14 18:36 - 160 runs_
 | wf6_multi | migration/multi-concern | blocked-no-progress | 2/6 | 2/6 | DOCSCORE=0/4 TODOSCORE=0/3 | False | - | - | 226.5 |
 | wf6_multi | migration/multi-concern | blocked-partial | 2/6 | 6/6 | DOCSCORE=0/4 TODOSCORE=0/3 | True | - | - | 279.2 |
 
-**objective pass 117/160 - regressions 0 - check crashes 0 - decline accuracy 25/25**
+**objective pass 120/163 - regressions 0 - check crashes 0 - decline accuracy 25/25**
 
 ## `stresses` slices (mean final SUBTESTS fraction)
 
 | capability | n | mean |
 |---|---|---|
-| L2-structural | 40 | 0.90 |
+| L2-structural | 43 | 0.91 |
 | backward-compat | 20 | 0.89 |
 | combined-score | 10 | 0.93 |
 | concern-split | 10 | 0.93 |
 | cross-file | 15 | 0.92 |
+| decline-taxonomy | 3 | 1.00 |
 | edge-coverage | 40 | 0.87 |
 | greenfield-impl | 10 | 0.71 |
+| keeper-set-rule | 3 | 1.00 |
 | kway-synth | 10 | 0.82 |
 | partial-credit | 15 | 0.88 |
 | premise-audit | 35 | 0.96 |
