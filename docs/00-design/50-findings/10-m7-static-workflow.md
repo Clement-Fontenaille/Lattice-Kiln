@@ -72,59 +72,66 @@ This is the clearest motivation yet for
 for repetition, and it was produced by an arm that scored *the same* as its
 predecessor.
 
-## 3. The incumbent-protected keeper protects a count, not a set
+## 3. The regression was an artifact, and the rule it exposed is real anyway
 
-The single regression is `wf6_multi`, and it is the most consequential thing in this
-entry.
+*(Rewritten 2026-09-14, same day. The first version of this finding reported that m7
+regressed `wf6_multi`. **It did not.** What follows replaces it; the original claim and
+why it was wrong are both kept, because the error is instructive.)*
 
-Entry 8 describes the keeper as rejecting *"any subtest regression, even for a
-structural gain."* The implemented rule is:
+### There was no regression
 
-```
-s["sub"][0] >= best["s"]["sub"][0] and s["comb"] > best["s"]["comb"] and s["py"]
-```
+`topo cycle` was **already failing at baseline**. Running the check on untouched
+`wf6_multi` prints `topo cycle: still NotImplementedError` among four failing lines.
 
-It compares **how many** subtests pass. The evaluation harness, independently, judges
-a regression by the **set** of failing check labels: `fin["fails"] - base["fails"]`.
+What changed between start and end is not the check's state but the **label the
+harness extracts**. Its pattern is `^\s{2,}([^:]{2,70}):` — and `[^:]` matches
+newlines, so it runs across lines until it meets a colon:
 
-On `wf6_multi`, `m7` took subtests 2/6 → 5/6 while a check that passed at baseline —
-`topo cycle` — began failing. The count went up by three, so the keeper accepted it;
-the set gained a member, so the harness recorded a regression. Both are behaving as
-written. The documented guarantee is stronger than the implemented one.
+| | failing lines | label extracted |
+|---|---|---|
+| baseline | four, three of them without a colon | `topo diamond raised NotImplementedError()\n  topo cycle` |
+| after m7 | one, `topo cycle:` | `topo cycle` |
 
-**Why no earlier arm found this, corrected.** The rule is byte-identical in `dloop`
-and `m7`, so what differs is where each arm *stopped*, not how careful it was.
+Two different strings, so the set difference is non-empty, so `regressed` fires.
+**m7 fixed three subtests and broke nothing. Its regression count is 0, not 1**, and
+the prediction of zero recorded before the run was right.
 
-| arm | subtests | structural | combined | regression |
-|---|---|---|---|---|
-| `monolith` | 2/6 — 2/6 | 0/4, 0/3 | 2 | no |
-| `dloop` | 2/6 — 2/6 | 0/4, 0/3 | 2 | no |
-| `staged` | 2/6 — **6/6** | 0/4, 3/3 | 9 | no |
-| `m7` | 2/6 — **5/6** | 3/4, 2/3 | 10 | **yes** |
+**N=5 confirms it**: 150 m7 runs, **zero regressions**. The N=1 event never recurred
+because it never happened.
 
-**The trade is only visible from a partial position**, and the three zeros above have
-three different causes:
+### The rule is still wrong, and here is the case that shows it
 
-- `monolith` and `dloop` changed nothing on this task, so nothing could regress.
-- `staged` fixed **every** subtest. With none failing at the end, the set of failures
-  is empty and nothing can have entered it. Zero by exhaustion.
-- `m7` stopped at 5/6. That is the only position where a subtest fails at the end, and
-  therefore the only one where it can be checked whether that subtest was passing at
-  the start.
+The keeper compares **how many** subtests pass, not **which**. That remains true and
+`monolith` on `hf_cache_decorator` demonstrates it cleanly:
 
-So `dloop`'s zero says mostly that it did not move, and `staged`'s says it finished.
-Neither is evidence about the rule. **A rule is only tested where it is actually
-asked to choose.**
+**3/4 → 3/4.** The count is *identical*. `cached value is not corruptible` passed at
+baseline and fails at the end, while another subtest went the other way — and the
+label there is a single clean line, so the extractor reported it correctly.
 
-*(Corrected 2026-09-14, same day as written. This paragraph first said `m7` "is the
-first arm to reach combined 10 — further than `staged`'s 9 — and reaching further is
-what exposed the gap." That is wrong: `staged` reached further on subtests, 6/6
-against 5/6, and regressed nothing. The error is recorded rather than silently
-replaced, because it is the same count-versus-set confusion this finding is about —
-combined 10 against 9 is a count, and it decided nothing.)*
+No reading of the count saves the rule on that task. The remedy is unchanged; only its
+evidence moved, from a task where nothing happened to one where something did.
 
-This does not weaken the case for the keeper, which prevented the monolith's seven
-regressions. It corrects what the keeper promises.
+### What the error cost, and what it says about the harness
+
+The harness's failure-label extractor is broken in **two** ways, and the second is
+worse than the one above. It spans newlines. And it requires a colon — a failing line
+like `topo chain raised NotImplementedError()` or `no module docstring` yields **no
+label at all**.
+
+Since `regressed` is `bool(new_fails)` and nothing else, **a regression is detectable
+only on checks whose failure text happens to contain a colon.** Most do not.
+
+So every *zero regressions* in this project's records is weaker than it reads —
+`dloop`'s across 150 runs, `staged`'s, m7's. Those arms may have broken checks whose
+failure lines carry no colon, and nothing would have said so. The monolith's seven are
+still real: five have outright score drops, and `hf_cache_decorator` has a clean
+single-line label.
+
+Recorded in
+`40-roadmap/03-research-and-evaluation/E0-suite-construct-validation.md` as a fourth
+defect. **It is the largest of the four**, because unlike the other three it corrupts a
+headline number rather than an interpretation.
+
 
 ## 4. The conditional concern split is not carried by this run
 
@@ -205,6 +212,46 @@ a different job. And **ask it the question nobody asks** — *is the completion 
 objective observable from this check?* — showing it the check, which it never sees.
 That stays inside `50-findings/07`'s one demonstrated use for a model panel: a
 reporting aid, not a decision aid. It decides nothing and tells a person to look.
+
+## 7. N=5, which settles finding 2 and overturns part of finding 3
+
+_150 runs each, 2026-09-14. `results/n5_dloop.json`, `results/n5_m7.json`._
+
+| arm | pass per rep | mean | regressions | decline |
+|---|---|---|---|---|
+| `dloop` | 24, 23, 24, 22, **25** | 23.6 | **0** / 150 | 25/25 |
+| `m7` | 24, **25**, 24, **25**, **25** | **24.6** | **0** / 150 | 25/25 |
+
+**Finding 2 holds and sharpens.** `dloop` varies by **3 tasks against itself** — 22 to
+25 on an unchanged arm and an unchanged suite. Any single-run difference of one or two
+tasks is inside that, which is what the N=1 comparison was.
+
+**The four tasks that flipped at N=1:**
+
+| task | `dloop` | `m7` | reading |
+|---|---|---|---|
+| `hf_multi_recipient` | 3/5 | 5/5 | intermediate — noise, as predicted |
+| `wf2_retry` | 4/5 | 5/5 | intermediate — noise |
+| `wf5_partial` | 2/5 | 0/5 | intermediate — noise |
+| `hf_cache_decorator` | **0/5** | **0/5** | **not noise** — neither arm can do it |
+
+Three of four as predicted. The fourth is more interesting than the prediction: at N=1
+`dloop` *passed* `hf_cache_decorator`, and over five further runs it never does.
+**That single pass was the fluke**, not the m7 failure beside it. Note the bound: 0/5
+does not mean impossible, only that the rate is likely under ~45%.
+
+**No clean arm effects.** Not one task is 0/5 in one arm and 5/5 in the other. Whatever
+separates these arms is not a task either can reliably do and the other cannot.
+
+**What separates them is consistency, not height.** `m7` means 24.6 against 23.6 — one
+task, at the edge of what N=5 resolves — but its spread is 24–25 against `dloop`'s
+22–25. **The tighter range is the more defensible claim**, and it is one the totals at
+N=1 could not express at all.
+
+**And m7 regressed nothing across 150 runs**, which is the evidence that the single
+N=1 regression was the extractor artifact described in finding 3. The prediction that
+it would recur in 1–4 of 5 reps is **falsified**, for the good reason that there was
+nothing to recur.
 
 ## Where the prediction was wrong, and where it was right
 

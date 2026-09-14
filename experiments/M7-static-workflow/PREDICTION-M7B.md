@@ -70,3 +70,67 @@ Whether `m7b` is better than `m7`. `dloop` at N=5 varied by 3 tasks against itse
 (24 23 24 22 25), so a one-run difference of one or two tasks means nothing. This is
 N=1 and it is a **defect check**, not a comparison: does R1 remove the regression, does
 R2 bound the cost, does R4 make the stage act. The comparison needs N=5 and comes after.
+
+---
+
+# Addendum, before the run — three changes since the above
+
+## R2 widened to 600s, which reclassifies it
+
+The operator asked for a wide value. At 180s the governor **cut** `wf6_multi`, which
+took 356s — it would have changed behaviour and become a second variable. At 600s it
+fires on nothing observed (median task 10s, worst 356s).
+
+So R2 moves from *measurable* to *free*, and **R1 is now the only remediation here
+that can move a number.** That is a better experiment than the one first written.
+
+## R1's evidence changed underneath it, and the rule survives
+
+The `wf6_multi` regression that motivated R1 **was an artifact.** `topo cycle` was
+already failing at baseline; what changed between start and end was the *label* the
+harness's broken extractor produced — its pattern excludes only the colon, and that
+class matches newlines, so at baseline the label ran across lines and landed on
+different text. **m7 had zero regressions, and the original prediction of zero was
+right.**
+
+The rule R1 fixes is still real, and there is a clean case for it: **`monolith` on
+`hf_cache_decorator`, 3/4 → 3/4.** The count is *identical*, and a subtest that passed
+at baseline fails at the end while another went the other way. No reading of the count
+saves the rule there.
+
+m7b's own extractor was rebuilt for this: one label per line, text before the first
+colon or the whole line when there is none. It reports nothing on `wf6_multi` and
+catches the `hf_cache_decorator` shape.
+
+**Operator ruling: no regression is accepted, even for a gain elsewhere.** That is what
+the keeper now implements.
+
+## The `wf3` pair — suite 0.2.0, 31 tasks
+
+R6 said the repair was in the objective and not in the arm. Rather than repair it, the
+operator's twist **keeps both versions**: `wf3_refactor` with its truncated check, and
+`wf3_refactor_witnessed` with a complete one. Same objective, same source, one
+variable.
+
+The witness is an AST walk asking whether the 20% computation now appears **once**
+instead of twice — which covers both admissible outcomes, a shared helper or one
+function delegating to the other. Verified on all three states before any run:
+untouched 0/3, shared helper 3/3, delegation 3/3.
+
+At baseline the pair already reads in opposite directions: the truncated task **passes
+doing nothing**, the witnessed one fails at `STRUCTSCORE 0/3`.
+
+**Prediction for the pair, and it is the point of the whole exercise:**
+
+- `wf3_refactor` — **`declined`**, as under m7 and `dloop`, deterministically. The
+  check passes at baseline and nothing can improve it.
+- `wf3_refactor_witnessed` — **not `declined`**, whatever else happens. The mechanical
+  decline rule cannot fire, because the check does not pass at baseline. The arm will
+  attempt the work.
+
+**If the witnessed half also declines, the decline rule does not work the way I have
+been describing it all day**, and everything said about `wf3` needs redoing. That is
+the falsifier, and it is sharper than a score.
+
+Whether the arm then *succeeds* is a separate, capability question this pair does not
+claim to answer.

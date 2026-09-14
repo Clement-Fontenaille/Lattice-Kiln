@@ -1,0 +1,10 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_fb4139f63f13",
+  "started": "2026-09-14T08:50:00.756226+00:00",
+  "intent_text": "prices.unit_cost is called a lot and is slow. Optimize it to run faster.",
+  "meta": {
+    "arm": "m7b",
+    "suite": "m6"
+  }
+}

@@ -49,11 +49,32 @@ PASS_BUDGET = 4          # model calls per implementation pass
 TASK_CALL_CAP = 12       # stops a many-concern split from running away
 # R2: a call cap did not bound the worst case -- one task took 43% of the arm's wall
 # clock inside its cap. Wall time is what the operator actually pays, so bound that
-# too and escalate on exceeding rather than silently continuing.
-TASK_WALL_CAP_S = 180
+# too. Set WIDE deliberately: the median task is 10s and the worst observed is 356s,
+# so 600 fires on nothing seen so far. That keeps R2 a safety net rather than a
+# behaviour change, leaving R1 as the only remediation here able to move a number
+# -- which is what makes the result attributable.
+TASK_WALL_CAP_S = 600
 
 _SCORE = re.compile(r"^([A-Z]+SCORE|SUBTESTS)\s+(\d+)\s*/\s*(\d+)", re.M)
 _FAIL = re.compile(r"^\s{2,}([^\n]{2,120})$", re.M)
+
+# R1: the keeper must see the SET of failing checks, not how many there are.
+#
+# Two traps, both of which the harness own extractor falls into and this one must
+# not. Its pattern excludes only the colon, and that class also matches a newline,
+# so a label can run across lines and land on the wrong text; and a failure line
+# with no colon yields no label at all, which is most of them. Under that extractor
+# a regression is visible only on checks whose failure text happens to contain a
+# colon.
+#
+# Here: one label per line, the text before the first colon, or the whole line when
+# there is none. Splitting on the colon keeps a label stable when only the reported
+# values move (an "input: got 3 want 5" line).
+_FAILLINE = re.compile(r"^[ \t]{2,}(\S[^\n]{0,119})$", re.M)
+
+
+def _labels(out: str) -> frozenset:
+    return frozenset(ln.split(":", 1)[0].strip() for ln in _FAILLINE.findall(out))
 _JSON = re.compile(r"\{.*\}", re.S)
 _SEG = re.compile(r"(?=\(\d\))")
 
@@ -101,6 +122,7 @@ def _score(ws: Path) -> dict:
         "tot": sum(t for _, t in sc.values()) or 1,
         "full": bool(sc) and all(p == t for p, t in sc.values()),
         "fails": "\n".join(_FAIL.findall(out)[:12]),
+        "failset": _labels(out),              # R1
         "py": _py_ok(ws),
         "dims": len(sc),                      # how many dimensions the check reports
     }

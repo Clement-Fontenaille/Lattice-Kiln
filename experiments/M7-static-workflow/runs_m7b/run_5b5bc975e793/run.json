@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_5b5bc975e793",
+  "started": "2026-09-14T08:40:16.547699+00:00",
+  "intent_text": "search.find() does a linear scan and is too slow for large inputs. Rewrite it to run in O(log n).",
+  "meta": {
+    "arm": "m7b",
+    "suite": "m6"
+  },
+  "ended": "2026-09-14T08:40:20.176484+00:00",
+  "outcome": "completed",
+  "event_count": 1
+}
