@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_ba71ba317b59",
+  "started": "2026-09-14T08:09:34.103700+00:00",
+  "intent_text": "Deprecate parse.old_parse: it must emit a DeprecationWarning and delegate to new_parse so it returns the same result for every input.",
+  "meta": {
+    "arm": "m7",
+    "suite": "m6"
+  },
+  "ended": "2026-09-14T08:09:42.619146+00:00",
+  "outcome": "completed",
+  "event_count": 8
+}
