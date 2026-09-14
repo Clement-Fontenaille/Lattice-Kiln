@@ -193,6 +193,43 @@ mechanical rule's, not the audit's, and the system performs despite the stage ra
 than because of it.** An audit at this precision holding decline authority is
 precisely what `staged` was.
 
+### Restated, 2026-09-14: those were one run's numbers, not the audit's properties
+
+The figures above — 2 of 5 found, 9 spurious, 18% precision — come from the **m7 N=1
+run alone**. The `m7c` run scores the same stage very differently:
+
+| | m7 (N=1) | m7c |
+|---|---|---|
+| raised a concern on | 11 of 30 tasks | **23 of 32** |
+| false premises found | **2 of 5** | **5 of 5** |
+| precision | 18% | 22% |
+
+**The audit did not get better between runs; it got louder.** It raises a concern on
+37% of tasks in one and 72% in the other, so recall climbs with the alarm rate while
+precision barely moves. That is the ordinary trade, not a change in the stage.
+
+**What survives.** Precision near 20% in both runs, so the substance of finding 6
+stands: most concerns are spurious, and the field cannot be read as a detector. What
+does **not** survive is any specific recall figure, and "2 of 5" should never have been
+written as though it described the audit rather than one draw from it.
+
+**This is the third correction to this finding in a day, and the cause is the same
+each time: reading a single run as a measurement.** The project already holds the
+remedy — `dloop` varies by three tasks against itself at N=5, and nothing about a
+stochastic stage should be reported from n=1. It applies to the stages inside an arm
+exactly as it applies to the arm's score, and finding 2 said so before this finding
+ignored it.
+
+### One thing the m7c run could not answer
+
+Whether the judge's `unsound_request` verdicts are its own or an echo of the audit's
+note. Globally there is **no echo**: the judge returns `unsound_request` on 43% of
+tasks where a note was raised and 44% where none was, which is the same rate.
+
+But on the five false-premise tasks the audit raised a note on **all five**, so no case
+exists where it was silent and the judge had to find the premise alone. The confound is
+total and the question stays open until a run supplies one.
+
 ### What this corrects in finding 5
 
 Finding 5 reported the `concern` field "non-empty on 11, consumed on 8 — it earns its

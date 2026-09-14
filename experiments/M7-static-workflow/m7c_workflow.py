@@ -233,31 +233,39 @@ def _implement(objective: str, ws: Path, rec, root):
                          parent_invocation_id=root, intent_ref="m7",
                          interaction_mode="oneshot")
 
-
 def _pass(target: str, ws: Path, rec, root, best: dict, calls: list,
-          greenfield: bool, deadline: float) -> dict:
-    """Stage 4 around stage 3: the test-gated loop with an incumbent-protected keeper.
+          greenfield: bool, deadline: float, objective: str, concern: str,
+          pristine: dict, jlog: list) -> dict:
+    """Stage 4 around stage 3, with a candidate-level judge motivating the retry.
 
-    A new attempt replaces the incumbent only on a strict improvement that does not
-    regress subtests. A tie keeps the incumbent. This is the rule that produces zero
-    regressions and it is the one to preserve if any other is traded away.
+    The judge sees each candidate and, when it disagrees, its reason is folded into
+    the next attempt's instruction. It does **not** enter the keeper: keep-or-discard
+    stays a deterministic function of the check's dimensions, so the same candidate
+    always produces the same decision and a run stays replayable.
 
-    `greenfield` implements M6's third fix: elaborate framing helps only where there
-    is pre-existing code to respect. So the first attempt at a greenfield target gets
-    the bare objective and no failure preamble - a check reporting 0/N against code
-    that does not exist yet says nothing an implementer can act on. Later attempts
-    get the hint either way, because by then there is a prior state and the signal is
-    about code that now exists.
+    What the judge can do is make the loop go round once more when the check alone
+    would have stopped -- the check is satisfied and the judge is not. That case is
+    the whole experiment: `a judge earns its place only where it contradicts the check
+    and is right`, and a judge that can never contradict a satisfied check is never
+    observed doing so.
+
+    **This injects model prose into an implementer's instruction, which
+    `11-static-workflow.md` forbids** on M6 evidence that injected plans measurably
+    hurt. The departure is deliberate and is the second thing being tested: an
+    objection about work already done may not behave like a plan conjectured before
+    it. If the arm degrades, that rule was right and is wider than plans.
     """
     stall = 0
+    pending_objection = ""
     for rnd in range(PASS_BUDGET):
         if calls[0] >= TASK_CALL_CAP:
             break
         if time.monotonic() > deadline:          # R2
             best["over_budget"] = True
             break
-        if best["s"]["full"] and best["n_targets"] == 1:
+        if best["s"]["full"] and best["n_targets"] == 1 and not pending_objection:
             break
+
         _restore(ws, best["snap"])
         step = target
         plain = greenfield and rnd == 0 and best["src"] == "incumbent"
@@ -266,18 +274,31 @@ def _pass(target: str, ws: Path, rec, root, best: dict, calls: list,
             if hint:
                 step = (f"{target}\n\nCurrent state still fails:\n{hint}\n"
                         "Output the whole corrected file(s).")
+        if pending_objection:
+            step = (f"{step}\n\nA reviewer who saw only the request and your change, "
+                    f"and no test output, objects:\n{pending_objection}\n"
+                    "Address it or show it does not apply.")
+
         _implement(step, ws, rec, root)
         calls[0] += 1
         s = _score(ws)
-        # R1: strict improvement AND no check that was passing has begun to fail.
-        # The count rule (sub[0] >= best sub[0]) accepts a candidate that fixes three
-        # and breaks one; the set rule does not. findings-log entry 10.
+        cand = _snap(ws)
+
+        # the judge, on this candidate. Recorded whatever it says.
+        v = judge_change(objective, concern, pristine, cand)
+        calls[0] += v["calls"]
+        v.update({"round": rnd, "target": target[:80], "check_full": s["full"],
+                  "check_comb": s["comb"]})
+        jlog.append(v)
+        pending_objection = v["why"] if v["verdict"] == "not_met" else ""
+
+        # the keeper. Mechanical, and blind to the verdict above.
         broke = s["failset"] - best["s"]["failset"]
         improved = (not broke
                     and s["comb"] > best["s"]["comb"]
                     and s["py"])
         if improved:
-            best = {**best, "s": s, "snap": _snap(ws), "src": f"r{rnd}"}
+            best = {**best, "s": s, "snap": cand, "src": f"r{rnd}"}
             stall = 0
         else:
             stall += 1
@@ -438,10 +459,12 @@ def run_m7(objective: str, ws: Path) -> str:
                 "n_targets": len(targets)}
         calls = [audit["calls"]]
         deadline = t0 + TASK_WALL_CAP_S          # R2
-        attempts = []
+        attempts, jlog = [], []
+        concern = audit.get("concern", "")
         for t in targets:
             before = best["s"]["comb"]
-            best = _pass(t, ws, rec, root, best, calls, greenfield, deadline)
+            best = _pass(t, ws, rec, root, best, calls, greenfield, deadline,
+                         objective, concern, pristine, jlog)
             attempts.append({"target": t[:120], "comb_before": before,
                              "comb_after": best["s"]["comb"]})
         _restore(ws, best["snap"])
@@ -450,7 +473,13 @@ def run_m7(objective: str, ws: Path) -> str:
         # The judge. It sees the request, the audit's note and the diff -- and no
         # check output, no implementer text, no retry hint. Its verdict is recorded
         # and scored afterwards; nothing below reads it.
-        verdict = judge_change(objective, audit.get("concern", ""), pristine, _snap(ws))
+        # One more verdict on the state that was actually kept. This is the
+        # TASK-LEVEL judgement, and it is what derive_m7d.py reads -- so a
+        # single run yields both readings: the candidate-level verdicts that
+        # motivated retries, and the task-level one a restricting terminal
+        # would have consumed.
+        verdict = judge_change(objective, concern, pristine, _snap(ws))
+        verdict["scope"] = "task-level, on the kept state"
         calls[0] += verdict["calls"]
 
         # ---- terminal. Only the gate and the escalation rule produce one.
@@ -480,7 +509,10 @@ def run_m7(objective: str, ws: Path) -> str:
                                else []),
         }
         stage["judge"] = verdict
-        stage["influence"]["judge_consumed_by"] = []      # by construction: nothing
+        stage["judge_candidates"] = jlog
+        stage["influence"]["judge_consumed_by"] = (
+            ["s3_retry_instruction"] if any(v["verdict"] == "not_met" for v in jlog)
+            else [])
         stage.update({"terminal": terminal, "calls": calls[0],
                       "wall_s": round(time.monotonic() - t0, 1),
                       "baseline_comb": incbase["comb"], "final_comb": fin["comb"],

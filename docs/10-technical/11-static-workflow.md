@@ -161,11 +161,25 @@ and approval bias at 7B is what `50-findings/07` measured.
 It **costs one call instead of up to twelve**, since a per-candidate verdict needs a
 judge call per attempt.
 
-And it **keeps the keeper mechanical.** The keeper's rule is deterministic and so are
-the dimensions it compares, because they come from the check: the same candidate always
-produces the same decision. Putting a model verdict into that comparison ends it. The
-same candidate could be kept on one run and discarded on the next, the arm's trajectory
-stops being reproducible, and no run can be replayed or explained afterwards.
+And it **keeps the keep-or-discard decision recomputable from the log without a
+model.** Today it is a pure function of the check's recorded dimensions, so anyone can
+recompute it after the fact. With a model verdict inside the rule you can still see
+*what* was decided -- the verdict is logged like everything else -- but not verify that
+it followed from the inputs, since checking it means re-invoking a model that will
+answer differently.
+
+What that buys, concretely, is **testing keeper rules offline against runs already
+made.** R1 was evaluated exactly that way: the set comparison was replayed against
+`wf6_multi`'s recorded candidates to see whether it would have changed the decision. A
+judge inside the rule ends that, and a keeper change would then need a fresh run to
+evaluate.
+
+*(Stated more narrowly than a first version of this section, which claimed a model
+verdict in the keeper would make a run impossible to **replay or explain**. Neither
+holds. The arm already contains a model at non-zero temperature, so no run was ever
+replayable -- N=5 gave 24, 25, 24, 25, 25 on an unchanged arm -- and everything is
+logged, so every decision stays explainable. What is lost is offline recomputability of
+the decision, and nothing wider.)*
 
 **That last property is also what makes a task-level verdict measurable without being
 deployed.** Since it changes no candidate, the trajectory is identical with and without

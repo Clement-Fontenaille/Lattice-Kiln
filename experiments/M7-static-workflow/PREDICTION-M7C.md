@@ -88,3 +88,59 @@ noisy verdict to a gate that is already right most of the time subtracts.
 Whether a judge helps. It has no authority, so it cannot help or harm. It settles
 whether the verdict is **worth** authority, which is the question that must come first
 and did not, last time.
+
+---
+
+# Addendum: the judge variants, and what separates them
+
+Three arms now differ **only in the judge's prompt and how its text is folded in**.
+The judge's inputs are identical throughout — the request, the audit's note, the diff,
+and no check output — and the keeper is mechanical and blind to the verdict in all
+three.
+
+| arm | the judge's text | how it is folded in | orientation |
+|---|---|---|---|
+| `m7c` | a **critique** (`why`) | *"A reviewer ... objects: ... Address it or show it does not apply."* | none |
+| `m7e` | an **instruction**, imperative | `Also: {instruction}`, beside the mechanical hint | none |
+| `m7f` | the same instruction | the same | **five worked examples + what produced the inputs** |
+
+## What each pair isolates
+
+**`m7c` against `m7e` — register.** findings-log entry 6 names the trigger as
+conversational text and the failure as narration instead of writing. A critique is one
+of the three cases it names. An instruction is the register the implementer already
+receives. *If both behave alike, the harm is model prose as such and `register` is my
+gloss describing nothing.*
+
+**`m7e` against `m7f` — orientation.** Operator's point: the judge has no intuitive
+grasp of what produced its inputs. It does not know a 7B wrote the diff in a loop, that
+an empty diff is ambiguous between *could not* and *correctly refused*, or that the
+note it is handed has 18% precision. `m7f` says all three and shows five examples.
+
+## Predictions
+
+**1. `m7f` separates `unsound_request` from `not_met` better than `m7e`.** This is the
+one distinction the diff cannot carry — both look like an empty diff, and only the
+request tells them apart. Two of the five examples exist for exactly this, so if
+orientation buys anything it should show here first. **Measured on the five
+false-premise tasks**, where the correct verdict is `unsound_request`.
+
+**2. `m7f` echoes the note less.** Told the note is unreliable, it should agree with it
+less often than `m7e` does. If the echo rate is unchanged, being told is not enough.
+
+**3. The `met` bias survives in all three.** `50-findings/07` found no reviewer framing
+beats approval bias at 7B, and neither register nor examples is a framing it did not
+try. Overturning this would be the first real evidence for the operator's hypothesis
+that context independence was the missing variable.
+
+**4. Cost rises slightly with `m7f`** — 800 extra prompt tokens per judge call, up to
+a dozen calls per task.
+
+## What would make the whole line negative
+
+If `m7f` is no better than `m7e`, and `m7e` no better than `m7c`, then none of
+register, orientation or examples moves a 7B judge — and `07`'s verdict stands wider
+than it was stated: not *this framing fails* but *framing is not the variable*.
+
+That is a real possible outcome and it is worth as much as the positive one, because it
+would close a line of work rather than leave it open and untried.
