@@ -246,10 +246,12 @@ Two consequences worth stating.
 is not a way to obtain a wider mandate. The derivation runs under containment,
 below.
 
-**What remains hard about decomposition is not the creating.** It is writing the
-sub-objectives: each part needs a formulation, and a model writes it, which is the
-one composition case `06-processor-contract.md`'s handoff rule explicitly does not
-support. Splitting a task is cheap; saying what each part is for is not.
+**Writing the sub-objectives needs nothing further specified.** A created task carries
+a formulation, the 4a effect carries it, and it reaches the instance as its bound
+objective rather than as prose beside one — so `06-processor-contract.md`'s handoff
+rule does not bear on it. How a model expresses a decomposition, whether by a
+structured response the runtime parses or by tool calls it makes, is a build decision.
+The contract it exercises already exists.
 
 ## Containment
 

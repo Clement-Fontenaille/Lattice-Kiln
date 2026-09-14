@@ -12,11 +12,12 @@ document it concerns as an open contract, not parked here
 
 **Nothing in this band blocks M7 any more.** The specification inventory is
 discharged, the handoff contract is closed, and decomposition turned out to need no
-mechanism of its own. What is left below blocks later work, and the rows say which.
+specification of its own — creating a task is effect 4a, the formulation rides on it,
+and how a model expresses a split is a build decision. What is left below blocks later
+work, and the rows say which.
 
 | Item | Target | Source | Blocks |
 |---|---|---|---|
-| **Writing sub-objectives** | Decomposition needed no specification of its own: creating a task is effect **4a**, available to any processor holding the grant, and which actor holds it is configuration rather than architecture ([`13-work-record.md`](../../10-technical/13-work-record.md)). What is **not** covered is the formulation — a split that is more than splitting on punctuation needs a model to write each part's objective, which is the one composition case [`06`](../../10-technical/06-processor-contract.md)'s handoff rule explicitly does not support | Operator ruling 2026-09-14 | M8 |
 | **The scope check has no builder** | [`05`](../../10-technical/05-provisional-invariant-list.md) G4 requires a functioning scope check; the specification is complete in [`03`](../../10-technical/03-capability-authority-model.md) and no milestone builds one. It needs an invariant processor, a role category nothing has instantiated — triage is the other member and is deferred to M11 | [`10-foundations/07`](../10-foundations/07-the-integrated-system-and-its-operator.md) | Nothing scheduled, which is the problem |
 | **G4's substrate precondition is unmeasured** | Two independent contexts, each large enough to work in, verifiable at startup. Cheap and M0-shaped. It decides whether a scope check is **providable at all** rather than merely unbuilt | [`05`](../../10-technical/05-provisional-invariant-list.md), [`14`](../../10-technical/14-context-manager.md) | The row above |
 | **Two actors hold the same edge set** | A task—artifact edge is held twice: by [`14`](../../10-technical/14-context-manager.md) as live-set membership, and by [`13`](../../10-technical/13-work-record.md) as `attachments`. Same source, same target, different fields. By the non-duplication rule one of them should hold it, and which one is not obvious — the live set is read every turn by recall and dies with its task, while the work record is durable but has nothing to remember once unpromoted artifacts are gone | Operator challenge 2026-09-14 | M8 |

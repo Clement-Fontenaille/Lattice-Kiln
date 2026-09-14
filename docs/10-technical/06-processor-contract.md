@@ -200,12 +200,12 @@ audit's concerns are prose addressed to the operator and stay out of any objecti
 An implementation that lets audit prose reach an implementer because "the audit
 influences later stages anyway" has crossed exactly the line the grades above draw.
 
-**What this does not cover, and it is the next real question.** Decomposition
-produces sub-objectives, and something has to write them. A split that is more than
-splitting on punctuation needs a model to formulate each part, which is case two
-above — the unsupported one. So the rule here does not extend to decomposition, and
-saying it does would be overreach. `00-design/22-arch-cognition/08-decomposition.md`
-has no specification counterpart, and this is one of the things that document owes.
+**A sub-objective is not a handoff.** This section governs what happens when a prior
+step's output reaches the next instance. A planner writing the objective for a task it
+creates is not doing that: the formulation is carried by the 4a effect that creates the
+task (`13-work-record.md`), and it arrives at the instance as its **bound objective**,
+not as material beside one. The measured failure is model prose arriving *alongside* an
+objective, which is a different thing from an objective a model wrote.
 
 **Scope of the evidence.** This is measured at the 7–8B size this project runs on,
 and policy adequacy is model-dependent
