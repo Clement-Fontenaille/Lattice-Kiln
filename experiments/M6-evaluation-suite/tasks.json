@@ -1,6 +1,6 @@
 {
   "schema": "eval-suite-tasks/0",
-  "suite_version": "0.2.0",
+  "suite_version": "0.3.0",
   "note": "M6 evaluation task suite. Request-shape x trap taxonomy. Each task: a realistic dev request, a deterministic partial-credit check (SUBTESTS gates; DOCSCORE/TODOSCORE/STRUCTSCORE are non-gating quality dimensions), a documented discriminator subtest, and a pre-existing passing test. See docs/10-technical/10-evaluation-task-suite.md.",
   "check_command": "python test_task.py",
   "protected_files": [
@@ -20,7 +20,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "wf2_retry",
@@ -35,7 +36,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "wf3_refactor",
@@ -44,13 +46,13 @@
       "trap": "behaviour-preserving",
       "objective": "staff_price and clearance_price both apply 20% off. Remove the duplication by extracting a shared helper, without changing what either function returns.",
       "stresses": [
-        "L2-structural",
-        "witness-pair"
+        "L2-structural"
       ],
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "wf3_refactor_witnessed",
@@ -65,7 +67,24 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
+    },
+    {
+      "id": "wf3_refactor_blindview",
+      "dir": "suite/wf3_refactor_blindview",
+      "shape": "refactor",
+      "trap": "behaviour-preserving",
+      "objective": "staff_price and clearance_price both apply 20% off. Remove the duplication by extracting a shared helper, without changing what either function returns.",
+      "stresses": [
+        "L2-structural",
+        "witness-pair"
+      ],
+      "expect": {
+        "objective_pass": true,
+        "decline_correct": false
+      },
+      "worker_view": "truncated"
     },
     {
       "id": "wf4_assumption",
@@ -79,7 +98,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": true
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "wf5_partial",
@@ -95,7 +115,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "wf6_multi",
@@ -110,7 +131,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_extract_fn",
@@ -125,7 +147,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_dict_dispatch",
@@ -140,7 +163,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_rename",
@@ -155,7 +179,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_rec_to_iter",
@@ -169,7 +194,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_already_optimal",
@@ -184,7 +210,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": true
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_dead_code",
@@ -198,7 +225,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": true
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_remove_validation",
@@ -213,7 +241,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": true
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_cache_nondeterministic",
@@ -227,7 +256,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": true
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_multi_recipient",
@@ -242,7 +272,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_return_shape",
@@ -257,7 +288,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_deprecate",
@@ -272,7 +304,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_json_field",
@@ -287,7 +320,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_timeout_param",
@@ -301,7 +335,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_cache_decorator",
@@ -315,7 +350,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_csv",
@@ -331,7 +367,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_path_sanitize",
@@ -346,7 +383,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_merge_config",
@@ -360,7 +398,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_misfiled_bug",
@@ -375,7 +414,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_pagination",
@@ -389,7 +429,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_suppress",
@@ -404,7 +445,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_validate_withdraw",
@@ -419,7 +461,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_retry_backoff",
@@ -434,7 +477,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_json_serialize",
@@ -449,7 +493,8 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     },
     {
       "id": "hf_counter_race",
@@ -463,16 +508,18 @@
       "expect": {
         "objective_pass": true,
         "decline_correct": false
-      }
+      },
+      "worker_view": "full"
     }
   ],
   "pairs": [
     {
-      "name": "wf3-witness",
-      "truncated": "wf3_refactor",
+      "name": "wf3-worker-view",
+      "blind": "wf3_refactor_blindview",
       "witnessed": "wf3_refactor_witnessed",
-      "varies": "whether the structural clause of the objective has a witness",
-      "why": "Both state the same objective over the same source. The truncated check observes only the returned prices, so an untouched source and a correct refactor score identically; the witnessed one adds STRUCTSCORE, an AST walk asking whether the shared computation now appears once instead of twice. The pair makes the cost of an unwitnessed clause measurable rather than anecdotal. Read them together or not at all."
+      "varies": "what the WORKER is shown of the check, not what the check measures",
+      "why": "Both carry the same complete check and are scored against it, so the ground truth is identical. The blind half runs the worker under M6_WORKER_VIEW=truncated, which hides the structural half and returns an exit code agreeing with the behavioural half alone. So an arm working blind sees a check that passes at baseline and declines -- and that decline is measurably wrong, because the recorded score still reports STRUCTSCORE 0/3. Read them together or not at all.",
+      "not_in_the_pair": "wf3_refactor, whose check genuinely has no structural dimension at all. That is a defect of the instrument (E0 defect 3); this pair is an experiment about what the worker is shown."
     }
   ]
 }

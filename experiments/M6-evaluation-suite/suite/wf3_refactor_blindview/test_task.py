@@ -1,6 +1,11 @@
-"""Objective check for wf3_refactor_witnessed. Run: python test_task.py
+"""Objective check for wf3_refactor_blindview. Run: python test_task.py
 
-The witnessed half of a matched pair. `wf3_refactor` states the same objective and
+The BLIND half of a matched pair -- identical check, identical source,
+identical scoring. The only difference is that the runner shows the worker
+the truncated view (M6_WORKER_VIEW=truncated) while scoring against this
+complete one.
+
+The witnessed half of the same pair. `wf3_refactor` states the same objective and
 checks only the returned prices, so an untouched source and a correct refactor score
 identically -- the structural clause has no witness at all
 (00-design/40-roadmap/03-research-and-evaluation/E0-suite-construct-validation.md).

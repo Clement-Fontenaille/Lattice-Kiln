@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -101,12 +102,20 @@ for _mod in ("m7_workflow", "m7b_workflow", "m7c_workflow"):     # M7's arms liv
 
 def run_task(task, arm_name, rep, cmd, protected):
     ws = fresh_ws(task)
-    base = score(ws, cmd)
+    base = score(ws, cmd)          # always the complete check
     t0 = time.monotonic()
+    # The worker may be shown less than the check measures. Set only around
+    # the arm, never around scoring, so ground truth is identical for every
+    # task whatever the arm was allowed to see.
+    view = task.get("worker_view", "full")
+    if view != "full":
+        os.environ["M6_WORKER_VIEW"] = view
     try:
         terminal = ARMS[arm_name](task["objective"], ws)
     except Exception as e:  # noqa: BLE001
         terminal = f"error:{e!r}"[:120]
+    finally:
+        os.environ.pop("M6_WORKER_VIEW", None)
     wall = round(time.monotonic() - t0, 1)
     restore_protected(ws, task, protected)
     fin = score(ws, cmd)
@@ -119,6 +128,7 @@ def run_task(task, arm_name, rep, cmd, protected):
     new_fails = fin["fails"] - base["fails"]
     row = {
         "task": task["id"], "shape": task["shape"], "trap": task["trap"],
+        "worker_view": view,
         "stresses": task["stresses"], "rep": rep, "arm": arm_name, "terminal": terminal,
         "baseline_sub": [bsub, btot], "final_sub": [fsub, ftot],
         "struct": {k: v for k, v in fin["scores"].items() if k != "SUBTESTS"},

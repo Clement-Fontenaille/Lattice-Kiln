@@ -1,8 +1,9 @@
 [
   {
-    "task": "wf3_refactor",
+    "task": "wf3_refactor_witnessed",
     "shape": "refactor",
     "trap": "behaviour-preserving",
+    "worker_view": "full",
     "stresses": [
       "L2-structural",
       "witness-pair"
@@ -18,20 +19,26 @@
       5,
       5
     ],
-    "struct": {},
-    "objective_pass": true,
+    "struct": {
+      "STRUCTSCORE": [
+        0,
+        3
+      ]
+    },
+    "objective_pass": false,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price"
   },
   {
-    "task": "wf3_refactor_witnessed",
+    "task": "wf3_refactor_blindview",
     "shape": "refactor",
     "trap": "behaviour-preserving",
+    "worker_view": "truncated",
     "stresses": [
       "L2-structural",
       "witness-pair"
