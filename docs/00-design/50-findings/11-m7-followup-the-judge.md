@@ -57,6 +57,50 @@ Five of those happened to be false-premise tasks, so it *caught 5 of 5* where th
 premise audit caught 2 of 5. **Without splitting the populations that would have been
 reported as the judge's triumph.**
 
+### Restated: it is not a prior on empty diffs, it blames the request for the worker
+
+*(Operator question, same day: are there cases where the worker simply failed a valid,
+well-formed, achievable task? There are, and they are the majority.)*
+
+The 13 empty diffs split:
+
+| | tasks | the verdict |
+|---|---|---|
+| genuine false premises | **5** | correct |
+| **valid tasks the worker failed** | **8** | **wrong** |
+
+The eight leave no room for argument: `hf_extract_fn` and `hf_dict_dispatch` are
+ordinary refactors, `hf_deprecate` a routine deprecation, `hf_cache_decorator` a
+memoisation, `hf_rec_to_iter` a recursion-to-iteration rewrite, `hf_misfiled_bug` a
+real bug behind a misdirected cause, `wf3_refactor_blindview` a refactor the arm
+performs correctly when it can see the criterion. Every one is achievable and every
+one is done by some other arm.
+
+**So the mechanism is sharper and worse than "a prior on empty diffs". The judge
+attributes the worker's incapacity to the request.** *Nothing was done* becomes *the
+request was doubtful*.
+
+It is structurally forced. On an empty diff the judge holds
+`(no change to any .py file)` and the request. With no trace of an attempt and no
+code, *the request must have been bad* is the only account available for why nothing
+happened.
+
+**And it is the exact inverse of what a judge is for.** A judge exists to catch the
+worker's failures; this one exonerates the worker and blames the task. Given any
+authority it would answer an operator *your request was ill-founded* every time the
+system could not do something — which is the single most trust-destroying behaviour
+available to it. Eight times in thirteen, in one run.
+
+### What this does not touch
+
+The routing rule in finding 8 survives, and the two populations are easy to confuse.
+That rule applies only where **the check is satisfied** and nothing improved. Inside
+that subpopulation the five with a note are the five false premises and the only one
+without is `wf3_refactor_blindview`, which is valid — the discrimination holds.
+
+The eight false `unsound_request` are mostly `blocked-no-progress`, where the check is
+**not** satisfied, and therefore outside the bypass condition entirely.
+
 ## 3. Two failure modes, opposite, which is why the total lands near chance
 
 **False `met` — topic matching in place of verification.** Its own words: *the diff
