@@ -334,15 +334,11 @@ They are independent. One oversized turn input trips the first while the machine
 room; several individually-reasonable contexts trip the second while each looks fine
 alone. `05-provisional-invariant-list.md` R4 carries both as clauses.
 
-What neither has is a **number**, and getting one is a cost model to build rather
-than a figure to look up. KV footprint depends on the model, the quantisation, the
-arrangement and how much of this the build understands, and that understanding is
-expected to improve. The v0 stands in for the model rather than guessing it:
-
-**A naive calibration test, triggered automatically the first time an unknown model
-is invoked.** Measure what one context costs, record it against the model identity,
-and use that until something better exists. The ceiling is enforceable on day one
-and nobody has to pretend the number is principled.
+What neither has is a **number**, and it is measured rather than configured. A
+conforming system runs a **bootstrap occupancy test** on first encountering a model
+identity it has no measurement for, and derives both limits from it
+(`05-provisional-invariant-list.md`, The bootstrap occupancy test). A system that
+cannot complete the test does not proceed as though the limits were generous.
 
 One further comparison is unmeasured and matters for the disk-for-memory trade:
 restoring a saved context from disk against simply recomputing its prefix. Restoring
@@ -537,11 +533,10 @@ is a change `02-observability-event-model.md` owes.
   unretrieved claim are both enumerable as crossings not yet taken. Whether the
   same holds for the model's own possible output is unsettled
   (`10-foundations/04`).
-- **The KV cost model.** First-call calibration is the v0 and is deliberately
-  crude: one measurement per model identity, no account of how footprint scales with
-  context length, quantisation, or the arrangement's own overhead. What replaces it
-  has to predict a turn input's cost **before** the turn is composed, or R4 reports a
-  crash instead of refusing.
+- **The cost model that replaces the bootstrap test.** One measurement per model
+  identity, with no account of how occupancy scales with context length, quantisation,
+  or the arrangement's own overhead. What replaces it has to **predict** a turn input's
+  cost before the turn is composed, since that is what R4 refuses against.
 - **Whether an artifact can be detached from a live task.** The set only grows
   within a task's life as specified. If something can be removed early — a
   correction, an artifact recognised as noise — that is a second deletion trigger and

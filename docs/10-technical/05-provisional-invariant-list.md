@@ -77,9 +77,10 @@ Stated so a measurement can be checked *against* them rather than substituted
   halving both contexts below what the work needs has not met this precondition,
   it has traded one failure for another.
 
-  This is **verifiable before any work starts**, which makes it the one part of G4
-  that does not depend on a judgment. A system that cannot meet it cannot provide
-  a functioning scope check, whatever else it builds.
+  This is **verifiable before any work starts** by the bootstrap occupancy test
+  below, which makes it the one part of G4 that does not depend on a judgment. A
+  system that cannot meet it cannot provide a functioning scope check, whatever else
+  it builds.
 
   **The MVP slice does not satisfy G4**, and this is recorded rather than
   softened. Nothing currently derives a scope, records one, or checks against one;
@@ -140,6 +141,37 @@ number is tuning.
   envelope is an accumulation of reads, and a gate keyed only to typed effects
   never sees the operation that crosses the line. R4 is the concrete reason the
   read-in-domain requirement is structural rather than hygienic.
+
+## The bootstrap occupancy test
+
+R4's two limits and G4's substrate precondition are both numbers about the host, and
+neither can be written into a configuration file honestly. They depend on the model,
+its quantisation and the serving arrangement, and the project has no cost model that
+predicts them.
+
+**So a conforming system measures, at bootstrap, before any work starts.**
+
+- On first encountering a **model identity** it has no recorded measurement for, the
+  runtime MUST run an occupancy test and record the result against that identity.
+- The test measures **memory occupancy per token** for that model under the serving
+  arrangement in force — what a unit of context actually costs, which runs two to
+  three orders of magnitude above the size of the text.
+- From that it derives R4's **per-context** and **global** limits, in tokens, at the
+  concurrency the arrangement is configured for.
+- It evaluates **G4's precondition** from the same measurement: whether two
+  independent contexts can be held at once, each large enough to work in.
+- The result is recorded and is part of the **conditions in force**
+  (`02-observability-event-model.md`, kind 8), because a run's limits are a
+  condition a later comparison needs to know.
+
+**A system that cannot complete the test MUST NOT proceed as though the limits were
+generous.** R4 fails closed like every other ceiling: with no measurement there is no
+limit to enforce, and an unenforceable ceiling is the case where the system discovers
+the problem by crashing rather than by refusing.
+
+**The test is deliberately naive**, and is expected to be replaced by a cost model
+rather than refined in place. What it buys is that the ceiling is enforceable on day
+one without anyone pretending the number was principled.
 
 ## Hard constraints
 
@@ -258,17 +290,10 @@ the human in the loop for everything it does not yet name.
   variable). R4 shares R1's envelope problem and adds one of its own: the KV
   footprint of a composed turn input has to be estimable *before* the turn is
   composed for the ceiling to refuse rather than to report a crash.
-- **Both R4 numbers, and where they come from.** The per-context and global limits
-  are a **cost model to build rather than a figure to look up**, and the model is
-  expected to change as the arrangement's capabilities are better understood. The
-  v0 stands in for it: **a naive calibration test, triggered automatically the
-  first time an unknown model is invoked.** Measure, record against the model
-  identity, use that until something better exists. This keeps the ceiling
-  enforceable on day one without pretending the number is principled.
-- **G4's isolation precondition has never been measured.** Whether two contexts can
-  each be large enough to work in, under the two limits above. Cheap, and it decides
-  whether a scope check is providable at all rather than merely unbuilt. Answered by
-  the same calibration.
+- **The cost model that replaces the bootstrap test.** The test measures one model
+  identity under one arrangement and says nothing about how occupancy scales with
+  context length, quantisation, or concurrency. What replaces it has to **predict**
+  rather than measure, since R4 must refuse a turn input before it is composed.
 - **G4's owner.** No milestone builds the scope check. It is specified in
   `03-capability-authority-model.md` and unimplemented, which leaves the list
   carrying a goal the running system does not meet — stated deliberately, but not

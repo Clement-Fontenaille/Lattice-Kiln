@@ -45,37 +45,53 @@ records that its workflow runs unscoped. What follows fixes the shape so that a
 build has something to conform to, and marks every point where the design set
 deliberately left the content open.
 
-### What a build of the mandate half still needs
+### Where this document stops, and what implementation supplies
 
-Most of what used to block a build is now decided. The check sits **on the effect
-path**, synchronously, before every tool call. Its verdicts are `inside`, `outside`
-and `dubious`, and each has a defined consequence. Its four inputs are fixed. A
-task's ceiling is written at task creation and an invocation's scope by the
-processor issuing the invocation. A derived scope reaches the operator inside the
-instructions.
+**The complete specification of the scope check and the scope writer is a
+deliverable of implementation, not of this document.** What remains open about them
+is not a design question. It is the concrete shape of two components whose purpose,
+position, inputs, verdicts and failure behaviour are fixed here, and whose
+realization requires decisions only a build can make well.
 
-Three things remain, and they are smaller than what they replaced.
+**What this document binds.** Any conforming implementation satisfies all of it:
 
-1. **Where the containment check on a transition sits.** Deciding whether a child
-   task's boundary is inside its parent's is a natural-language judgment, and
-   `13-work-record.md` makes a passing check a precondition of accepting a split or
-   a successor. Read literally, that puts a model call inside the work store's
-   write path. Either it belongs there, or containment is checked before the
-   transition is proposed and the store trusts a verdict it is handed.
-2. **What counts as termination**, for the aggregate check. A task's states are
-   challenged, deferred, abandoned and executed (`13-work-record.md`), and which of
-   them end a task is unclear — in particular whether the comparison runs on
-   *abandoned* and *deferred*.
-3. **How the self-modifying-scope exclusion is checked.** "A scope permitting its
-   own modification is excluded by default" reads mechanical and is not: whether a
-   natural-language boundary permits modifying itself is the same judgment as the
-   rest of the check.
+- A functioning scope check **exists**, and the loops it constrains can neither
+  remove it nor route around it (`05-provisional-invariant-list.md` G4).
+- It is an **invariant processor**, admitted on the direction condition: it may
+  restrict and never widen, so a degraded one yields no narrowing rather than new
+  permission.
+- It binds **`share_nothing`** isolation, which the recall policy may not degrade
+  (`14-context-manager.md`).
+- It is **triggered by the runtime**, on the effect path, before every tool call.
+- Its inputs are the four named above: the operator's request, the derived ceiling,
+  the invocation's scope, and the call.
+- Its verdicts are `inside`, `outside`, `dubious`, with the dispositions above.
+- It **fails closed** on an unscoped item, and is **read-only** on the scope.
+- Every verdict is recorded, `inside` as explicitly as `outside`.
+- The **scope writer** derives a task's ceiling from intent at task creation, and an
+  invocation's scope is written by the processor issuing the invocation, never wider
+  than the task's.
 
-What is buildable now without any of those settled: the three scope fields on the
-work item, the ceiling derived at task creation, the scope carried into the
-instructions, and the fail-closed behaviour on an unscoped item. The last of these
-is the single change that moves the system from *unbounded* to *stopped*.
+**What implementation supplies.** Each is a build decision, and a build that records
+which way it went has satisfied this document:
 
+- The role instructions the checker runs under.
+- What the comparison consumes in concrete form — the call as a payload or as a
+  description, the scope as text the model reads or as something pre-digested.
+- The threshold at which a reading counts as ambiguous enough to return `dubious`.
+  The pressure runs one way and this document says so; where the line sits is
+  tuning.
+- How containment is decided when a task is created, and where that call sits.
+- A checkable form for the self-modifying-scope exclusion.
+- Which transitions count as terminating a task, for the aggregate check.
+- Any caching of verdicts, deterministic pre-filtering, or other means of paying for
+  a model call on every tool call.
+
+**Why the split falls here.** Everything in the first list can be got wrong in a way
+that makes the check *not a check* — a removable checker, one that can widen, a
+verdict that is not recorded. Everything in the second can be got wrong in a way that
+makes it a **worse** check, which evidence corrects. That is the line between what a
+specification must hold and what a build owes.
 ## Responsibility
 
 Two, and keeping them separate is the point of the document.
