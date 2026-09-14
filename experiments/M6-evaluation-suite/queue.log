@@ -1,0 +1,5 @@
+15:54:53  [1/14] baseline reps=1 - partial, 2/34
+15:55:01        -> exit 0, 34/34 rows, 0 min elapsed overall
+15:55:01  [2/14] test_synth reps=5 - partial, 160/170
+16:00:42        -> exit 0, 170/170 rows, 6 min elapsed overall
+16:00:42  [3/14] judge_anchored reps=5 - partial, 35/170

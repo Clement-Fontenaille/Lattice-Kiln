@@ -110,12 +110,20 @@ def run_task(task, arm_name, rep, cmd, protected):
     view = task.get("worker_view", "full")
     if view != "full":
         os.environ["M6_WORKER_VIEW"] = view
+    # An arm logs its own stage record and cannot otherwise know WHICH rep it is
+    # in, which makes per-rep matching impossible for anything at N>1 and
+    # silently invites collapsing five draws on one side of a comparison and not
+    # the other. Cheap to carry, so carry it.
+    os.environ["M6_TASK"] = task["id"]
+    os.environ["M6_REP"] = str(rep)
     try:
         terminal = ARMS[arm_name](task["objective"], ws)
     except Exception as e:  # noqa: BLE001
         terminal = f"error:{e!r}"[:120]
     finally:
         os.environ.pop("M6_WORKER_VIEW", None)
+        os.environ.pop("M6_TASK", None)
+        os.environ.pop("M6_REP", None)
     wall = round(time.monotonic() - t0, 1)
     restore_protected(ws, task, protected)
     fin = score(ws, cmd)

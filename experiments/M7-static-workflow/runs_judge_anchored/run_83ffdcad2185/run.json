@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_83ffdcad2185",
+  "started": "2026-09-14T14:59:44.163776+00:00",
+  "intent_text": "rates.current_rate is called frequently. Add caching (e.g. functools.lru_cache) so repeated calls are fast.",
+  "meta": {
+    "arm": "judge_anchored",
+    "suite": "m6"
+  },
+  "ended": "2026-09-14T15:01:10.645179+00:00",
+  "outcome": "completed",
+  "event_count": 21
+}

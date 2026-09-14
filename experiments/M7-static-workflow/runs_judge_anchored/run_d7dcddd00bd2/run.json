@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_d7dcddd00bd2",
+  "started": "2026-09-14T16:08:36.823387+00:00",
+  "intent_text": "Add input validation to bank.withdraw(acct, amt): reject a negative amount, an overdraw, and a non-numeric amount (raise ValueError/TypeError). Withdrawing the exact balance is legal; a zero withdrawal is a no-op, not an error.",
+  "meta": {
+    "arm": "judge_anchored",
+    "suite": "m6"
+  },
+  "ended": "2026-09-14T16:09:45.323373+00:00",
+  "outcome": "completed",
+  "event_count": 43
+}

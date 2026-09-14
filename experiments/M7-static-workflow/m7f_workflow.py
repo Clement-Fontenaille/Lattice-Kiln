@@ -61,6 +61,7 @@ from __future__ import annotations
 
 import ast
 import json
+import os
 import re
 import difflib
 import subprocess
@@ -527,7 +528,9 @@ def run_m7(objective: str, ws: Path) -> str:
     root = rec.invocation(role="m7f-workflow", model_identity={"name": "harness"},
                           intent_ref="m7", config_ref="m7")
     t0 = time.monotonic()
-    stage = {"task_objective": objective[:200]}
+    stage = {"task_objective": objective[:200],
+             "task": os.environ.get("M6_TASK"),
+             "rep": os.environ.get("M6_REP")}
     try:
         # ---- stage 1: always fires, advisory
         audit = premise_audit(objective, ws)

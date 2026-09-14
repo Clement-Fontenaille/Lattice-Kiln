@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_6e2f51f5f093",
+  "started": "2026-09-14T15:09:28.137637+00:00",
+  "intent_text": "get_user(uid) returns a (name, age) tuple and callers use index access. Also expose the user's email, without breaking get_user(uid)[0] and get_user(uid)[1].",
+  "meta": {
+    "arm": "judge_anchored",
+    "suite": "m6"
+  },
+  "ended": "2026-09-14T15:10:47.860619+00:00",
+  "outcome": "completed",
+  "event_count": 41
+}
