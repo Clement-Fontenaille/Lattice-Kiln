@@ -86,15 +86,51 @@ that fails is exactly the kind of result these metrics need to be able to
 explain — but it does depend on M8's substrate existing to assess in the first
 place.
 
-## Related foundations
+## What foundations now gives this milestone to measure
 
-Two positions were added to
 [`04-context-as-governed-resource.md`](../../10-foundations/04-context-as-governed-resource.md)
-in the 2026-09-05 design pass and have not yet flowed into this milestone's
-framing or into the specification set:
+names **four failure modes**, and a context-quality metric has to be able to tell
+them apart rather than score context on one axis.
 
-- *Too much is a relation, not a property.*
-- *What makes context costly is redundancy, not volume.*
+- **Insufficiency** — needed coverage absent. It divides: material that never
+  crossed, and material that crossed but was not recalled. Only the second is
+  visible from the live set (`10-technical/14-context-manager.md`); nothing can be
+  compared against what was never fetched.
+- **Redundancy** — duplicated coverage inside one window. Evidenced, findings entry 9
+  §3. It requires tracking overlap **at the level of coverage rather than text**: two
+  artifacts restating one finding in different words are redundant with no shared
+  substring, so a deduplication pass measures the wrong thing.
+- **Uselessness** — material neither needed nor duplicated. Predicted, not evidenced,
+  and predicted to be harmless in isolation — Overload's raw material rather than a
+  cost of its own.
+- **Overload** — the aggregate exceeding what the assembly can integrate in one pass.
+  Predicted, argued from retrodiction, not directly tested. Its named falsifier is
+  E2.
 
-Both bear directly on what a context-quality metric should measure. Carrying them
-down is listed as un-carried work in [`../00-backlog.md`](../00-backlog.md).
+**Only Overload is content-quality-agnostic.** The other three are about *which*
+artifacts are present; Overload is about how much is present once coverage has
+decided that.
+
+### Two earlier phrasings this milestone should not carry down
+
+An earlier statement of the same ground held that *what makes context costly is
+redundancy, not volume*. `04` now says the opposite half of that explicitly: a
+context can be entirely non-redundant and still be too much for a given assembly,
+which is **Overload**, a different axis rather than a restatement. Volume is a real
+cost with its own name.
+
+The companion phrase, *too much is a relation and not a property*, survives and
+sharpens: too much is relative to an assembly and an objective, which is why the
+metric cannot be a threshold on size. `10-technical/07-naive-context-assembly.md`
+truncates by token count, which is the volume reading of both, and carries that as
+its own open contract.
+
+### What the metric depends on existing
+
+None of the four modes is checkable without the live set being a first-class,
+inspectable record rather than a byproduct of whatever assembly did. Redundancy
+compares a candidate against what is already live; Insufficiency compares what is
+live against what the objective needs; Overload needs a running total rather than a
+count taken afterwards. That record now exists in specification
+(`10-technical/14-context-manager.md`), which removes the precondition this
+milestone used to owe.

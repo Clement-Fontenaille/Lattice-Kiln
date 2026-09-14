@@ -90,8 +90,9 @@ Stated so a measurement can be checked *against* them rather than substituted
   mandate it was given where each step past it is locally justified by the last.
   What stands in for it today is that a human supervises every run, which is the
   same thing this whole list leans on and is not a substitute for the mechanism.
-  Owner: `03-capability-authority-model.md` specifies it; no milestone has been
-  assigned to build it.
+  Owner: `03-capability-authority-model.md` specifies it and
+  `40-roadmap/01-MILESTONES/11-safety-response.md` builds it, alongside triage — the
+  two are the same role category and need it instantiated once.
 
 ## Resource ceilings
 

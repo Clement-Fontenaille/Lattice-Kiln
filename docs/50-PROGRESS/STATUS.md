@@ -222,6 +222,12 @@ either side.
 
 ## Where the spec set still needs answers
 
+**P0 is empty as of 2026-09-14.** Every row closed, and most of them closed by asking
+whether they were design or implementation rather than by new design. The scope check
+and the scope writer are M11 deliverables alongside triage, all three being invariant
+processors, so the category is instantiated once.
+
+
 The holes have a fixed location by convention: **every specification document ends
 with `## Open contracts`**, and that is where a hole is written down rather than
 guessed. There are **117 entries across the sixteen documents**.
@@ -267,10 +273,6 @@ reviewer model, needing the planned second GPU. Gates M12 onward.
   never been applied. Apply or downgrade.
 - **Praxis before or after M7** — two execution gates rest on positions
   `70-THINKING/04-praxis.md` has not taken.
-- **Who builds the scope check.** It is fully specified and assigned to no milestone.
-  It needs an invariant processor, which is a role category nothing has instantiated
-  yet — triage is the other member and is deferred to M11, so M11 is the natural home
-  unless it should come sooner.
 - **The isolation measurement.** G4's substrate precondition — two independent
   contexts, each large enough to work in — is verifiable at startup and has never
   been measured on the reference host. It is M0-shaped and cheap. Nothing is

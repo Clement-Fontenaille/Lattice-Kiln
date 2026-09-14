@@ -16,10 +16,11 @@ specification of its own — creating a task is effect 4a, the formulation rides
 and how a model expresses a split is a build decision. What is left below blocks later
 work, and the rows say which.
 
-| Item | Target | Source | Blocks |
-|---|---|---|---|
-| **The scope check has no milestone** | The specification side is complete and closed: [`03`](../../10-technical/03-capability-authority-model.md) binds what a conforming check must satisfy and hands the rest to implementation. What is missing is an assignment. It needs an **invariant processor**, a role category nothing has instantiated — triage is the other member and is deferred to M11, which makes M11 the natural home unless it should come sooner | [`05`](../../10-technical/05-provisional-invariant-list.md) G4 | Nothing scheduled, which is the problem |
-| **M9 self-cites a phrase that no longer stands alone** | [M9](01-MILESTONES/09-context-governance-measurement.md) quotes [`10-foundations/04`](../10-foundations/04-context-as-governed-resource.md)'s **2026-09-05** "redundancy, not volume" verbatim as an open contract. The second pass superseded and narrowed that claim rather than adding to it, so the citation is stale, not only the implementation | [`10-foundations/04`](../10-foundations/04-context-as-governed-resource.md) | M9 |
+**P0 is empty.** Every row has closed, and the last two closed on assignment and on a
+cascade rather than on new design: the scope check and the scope writer are
+[M11](01-MILESTONES/11-safety-response.md) deliverables alongside triage, since all
+three are invariant processors and the category is instantiated once; and M9's stale
+self-citation is corrected against what `10-foundations/04` now holds.
 
 **Closed since the last revision of this band**, each in the document that owns it
 rather than here: the structured role-to-role handoff; the reversibility-class carrier,
@@ -30,9 +31,11 @@ work record's `attachments`; and G4's substrate precondition, which stopped bein
 unscheduled measurement when the **bootstrap occupancy test** became a requirement
 (`05-provisional-invariant-list.md`).
 
-**Two rows left, and neither is a design question.** One is an assignment and one is a
-stale citation. That is what repeatedly asking *is this design or implementation?*
-leaves behind.
+**What emptied this band was mostly a question rather than work.** Asking *is this
+design or implementation?* of each row dissolved three of them: the scope check's
+remaining shape, writing sub-objectives, and the reversibility-class carrier were build
+decisions that existing contracts already covered. Worth keeping in view the next time
+an open contract looks blocking.
 
 ## P1 — Work in progress
 
@@ -79,7 +82,7 @@ leaves behind.
 |---|---|
 | [M3 — Invariant floor](01-MILESTONES/03-invariant-floor.md) | **open.** Its remaining items are owned by M11. |
 | [M10 — Project-level adaptation](01-MILESTONES/10-project-level-adaptation.md) | — |
-| [M11 — Safety response](01-MILESTONES/11-safety-response.md) | Gates M12. Closes M3. |
+| [M11 — Safety response](01-MILESTONES/11-safety-response.md) | Gates M12. Closes M3. Instantiates **invariant processors** as a category: triage, the scope check, the scope writer. Satisfies G4 |
 | [M12 — System-level candidate tuning](01-MILESTONES/12-system-level-candidate-tuning.md) | M11, and a second judgment source. |
 | [M13 — Reproducible generations](01-MILESTONES/13-reproducible-generations-and-promotion.md) | Relaxes invariant H3. |
 | [M14 — Meta-evaluation](01-MILESTONES/14-meta-evaluation.md) | — |

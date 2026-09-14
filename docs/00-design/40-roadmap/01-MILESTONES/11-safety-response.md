@@ -22,6 +22,20 @@ Deliverables:
   innocuous trips into a mandatory stop no loop can reason past.
 - The triage role **fixed outside the feedback loops**, since a loop cannot
   commission its own watcher.
+- The **scope check** and the **scope writer**, the other two members of that same
+  category (`10-technical/03-capability-authority-model.md`). They land here because
+  this milestone is what instantiates **invariant processors** as a role category at
+  all: a processor held outside what the loops may alter, protected by H5, admitted on
+  the direction condition that it may restrict and never widen. Triage and the scope
+  check need the same thing built once.
+
+  What this milestone owes them is the category and the wiring, not their content:
+  `03` binds what a conforming check must satisfy and hands the concrete
+  specification to implementation.
+
+  Their absence is why `05-provisional-invariant-list.md` **G4 is unmet** and why a
+  system without them is invalid rather than degraded. This milestone is where that
+  stops being true.
 - The **literature-grounding pass** against corrigibility, scalable oversight,
   specification gaming, and shutdown and interruptibility work.
 
