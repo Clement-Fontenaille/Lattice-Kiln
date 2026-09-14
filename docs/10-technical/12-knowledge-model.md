@@ -269,17 +269,19 @@ its own copy precisely so that what is removed here remains reconstructable ther
 A deleted entry stops being something the system knows and stays something an
 auditor can find.
 
-**The work record's attachments are a narrower case than they look.** Attachment to
-a task is what live-set membership *is*, so anything a live task holds is already a
-root and cannot be deleted underneath it. What `13-work-record.md` adds is a
-**deliberate, curated** attachment — this Finding, this decision, as opposed to
-everything that happened to cross. The two relations have the same shape and
-different weight.
+**The work record's attachments are not a separate root source.** Attachment to a
+task is what live-set membership *is*, so anything a live task holds is already a root
+and cannot be deleted underneath it.
 
-The residual question is what happens to a curated attachment when its task ends.
-Either the deliberate act promotes — which would be the point of making it deliberate —
-or the attachment is expected to dangle afterwards and `13-work-record.md` must
-detect it. Open below.
+**What happens when the task ends is correct rather than a hole.** An unpromoted
+artifact goes, whether or not something attached it deliberately. Attaching is not
+promoting, and there is no third state: what must outlive its task is promoted, which
+is the whole of the rule. An implementation that let a deliberate attachment confer
+survival would have invented a second promotion path without saying so.
+
+What the two do leave open is whether they are **two relations at all**. Same source,
+same target, different fields, held by two actors — which the non-duplication rule
+says one of them should be holding. Open below.
 
 ## General shape and the naive default
 
@@ -376,11 +378,12 @@ by hand.
 
 ## Open contracts
 
-- **Whether a curated attachment promotes.** While its task lives, an attached
-  claim is a root by virtue of the task holding it. When the task ends, a deliberate
-  attachment is exactly the kind of act that ought to promote — and does not, as
-  specified. Either it does, or the work record detects dangling attachments. Both
-  are cheap; they are not the same behaviour.
+- **Whether the live set and the work record's attachments are one relation.** Both
+  run from a task to a claim. `14-context-manager.md` holds crossing type, origin
+  invocation and registration order; `13-work-record.md` holds its own edge metadata.
+  If they are one relation, one actor should hold it, and the choice is awkward: the
+  live set is read every turn and dies with its task, while the work record is durable
+  and has nothing left to remember once unpromoted artifacts are gone.
 - **Who promotes, and on what.** Promotion is an act rather than a property, which
   leaves open which actors hold it and what they weigh. The natural reading is a
   thinking processor at the moment it proposes a claim worth keeping, but a claim

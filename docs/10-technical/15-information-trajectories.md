@@ -173,16 +173,12 @@ was invisible.
 
 **New, surfaced by the answers.**
 
-6. **A curated attachment does not promote** (`12`, `13`). While a task lives,
-   anything attached to it is a root, so nothing is at risk. When the task ends, a
-   deliberately attached Finding is not thereby promoted and can be deleted, leaving
-   the edge pointing at nothing. Either the deliberate act promotes — which would be
-   the point of making it deliberate — or the work record detects dangling edges.
-7. **The attachment label vocabulary does not match the claim types** (`13`,
-   `12`). Edges are named *finding*, *proposal* and *decision*; the claim store
-   holds `observation`, `evidence`, `finding` and `decision`. **There is no proposal
-   claim type**, so an edge may be labelled with something the store cannot be
-   holding.
+6. **The live set and the work record's attachments may be one relation** (`12`,
+   `13`, `14`). Both run from a task to a claim, with different fields, held by two
+   actors. Attaching does not confer survival — an unpromoted artifact goes when its
+   task ends whether or not something attached it deliberately, and what must outlive a
+   task is promoted — so the two differ in what they record rather than in what they
+   mean.
 
 ## Relationships
 

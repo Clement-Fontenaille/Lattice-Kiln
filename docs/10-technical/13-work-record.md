@@ -438,13 +438,10 @@ work/
   a reference creates a second copy that goes stale silently.
 - **An attachment left dangling after its task ends.** While a task lives, anything
   attached to it is a root and cannot be deleted (`12-knowledge-model.md`). When the
-  task ends, a curated attachment is not by itself a promotion as specified, so the
-  claim can be removed and the edge left pointing at nothing. An implementation MUST
-  be able to detect an attachment that no longer resolves rather than returning it
-  silently.
-
-## Relationships
-
+  task ends, an unpromoted artifact goes whether or not something attached it
+  deliberately — attaching is not promoting — so the edge is left pointing at nothing.
+  That is the rule working, not a defect, and what this store owes is **detection**: an
+  attachment that no longer resolves MUST be reported rather than returned silently.
 - **`22-arch-cognition/01-work-intent-and-task-model.md`** — owns the vocabulary
   this store persists. It adds no concepts to it.
 - **Effect vocabulary** (`01-effect-vocabulary.md`) — type 4 is the only write
