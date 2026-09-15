@@ -71,6 +71,20 @@ none had exercised the "anchors alone exhaust the budget" case, which is the
 only reason this survived as long as it did. Recorded here rather than only
 in M9's README since the bug and its fix are both in M8's file.
 
+## 5. Incremental-deletion cost per item nearly doubled between two probes at 83-entry scale
+
+`e6_corpus_sweep.py`'s deletion probe, run against the real 70-THINKING corpus
+(83 entries) with the stub ingestor: a 15-claim probe cost ~1.00ms/item, a
+second probe on the remaining 68 cost ~1.84ms/item. `test_e6_sweep.py` calls
+this "flat" only because the growth factor stayed under 3x, which is an
+arbitrary threshold picked to make the test assert *something* rather than
+nothing. 83 entries is still small next to what a real corpus (or E6 run
+against the full `70-THINKING/` tree, not just topics 07/08) would hold. Worth
+a real growth-curve measurement (not a two-point comparison) before trusting
+`sweep_from` stays cheap at the scale a real H100 sweep would actually reach —
+12-knowledge-model.md names exactly this question as open, and 83 items is not
+enough to answer it either way.
+
 ## 4. `still_live` computation in `wiring.py` is O(all live work items) per `end_task`
 
 `_live_claim_refs` globs every `live_sets/*.jsonl` file and replays each one

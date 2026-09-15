@@ -18,6 +18,8 @@ Specs: `docs/10-technical/{12-knowledge-model,13-work-record,14-context-manager}
 | `test_recovery.py` | 1 | crash-recovery replay path (`unapplied()`), exercised for the first time |
 | `test_knowledge_ops.py` | 2 | `compress()`/`traverse_dependents()`, plus a logged gap in `elide()` |
 | `test_turn_input.py` | 1, 2 (M9) | the kind-5 turn-input record M9 says can land here |
+| `e6_corpus_sweep.py` | 6 | the E6 corpus-sweep harness: discovery + ingestion seam + sweep loop |
+| `test_e6_sweep.py` | 6 | runs the harness against the REAL 70-THINKING corpus (83 entries) |
 | `SUSPECT.md` | — | things noticed on the way that need a second pass before closing M8/M9 |
 
 `context_manager.py::recall()`/`turn_inputs()` also now carry M9's packages 1-2
@@ -54,8 +56,17 @@ says these are plumbing that can land with M8 rather than waiting. See
   contract doesn't hold if called on its own. Left unfixed pending a decision
   on which half is authoritative — the docstring or the check.
 
-Package 6 (the corpus sweep, E6) is not built here — it's graded in M9 and needs a
-processor to do the ingesting, which is cognition, not substrate.
+Package 6 (the corpus sweep, E6) has its harness built (`e6_corpus_sweep.py`) --
+discovery of the real corpus, the ingestion seam, the sweep loop, an incremental-
+deletion timing probe, and the pipe into M9's dimension seam -- but not the
+ingestion itself, which needs a processor (cognition, not substrate) and is the
+one function (`Ingestor`) this file explicitly leaves for later. Run against the
+real 70-THINKING corpus (83 entries: 69 findings across two topics, 14 ideas),
+the stub ingestor + naive filesystem substrate handled the full sweep in ~0.15s
+with flat per-item deletion cost. That derisks the plumbing a real H100 run would
+otherwise be discovering for the first time under model-call latency; the only
+work left for a real sweep is writing a real `Ingestor` and pointing this harness
+at it.
 
 ## Running
 
@@ -66,6 +77,7 @@ python test_mandate.py
 python test_recovery.py
 python test_knowledge_ops.py
 python test_turn_input.py
+python test_e6_sweep.py
 ```
 
 No model calls. Naive filesystem storage per each spec's own "naive default" —

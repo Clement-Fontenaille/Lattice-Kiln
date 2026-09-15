@@ -76,10 +76,17 @@ exhausted by anchors alone), which is why it survived until this pass.
 
 ## What is deliberately NOT here
 
-- **Package 5, re-grading E6.** Needs M8's corpus sweep (package 6, itself
-  deferred — "needs a processor to do the ingesting, which is cognition, not
-  substrate") to have produced something to re-grade in the first place.
-  Nothing to build against yet.
+- **Package 5, re-grading E6.** Still needs a real processor to do the actual
+  ingestion and the real dimension judgements — nothing here changes that.
+  What did land this pass: `../M8-persistent-work-and-knowledge/e6_corpus_sweep.py`,
+  the sweep harness itself (corpus discovery, the ingestion seam, the sweep
+  loop, an incremental-deletion probe, and a pipe into this directory's
+  `claim_dimensions.py`), load-tested against the real 70-THINKING corpus (83
+  entries). So the "nothing to build against yet" gap is now narrower than
+  the whole milestone package — only the `Ingestor` function and the real
+  checkers behind `assess_validity`/`assess_pertinence`/`assess_scope` remain,
+  and both are the same processor-shaped gap the rest of this README already
+  names.
 - **Package 6, a less-naive assembler.** The milestone's own bar: "the naive
   assembler's failures are quantifiable, AND a less-naive one moves the
   measurement." Building a second assembler and showing the metric moves is
