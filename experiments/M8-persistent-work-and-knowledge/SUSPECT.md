@@ -58,6 +58,19 @@ arguments, does a missing ceiling get refused), never real semantic
 containment. A malicious or merely careless `ceiling` string currently passes
 as long as it's non-empty.
 
+## 4b. (Fixed while building M9) `recall()`'s `truncated` flag could read False while entries were being dropped
+
+Found building M9's `check_overload()` against a turn where the *labelled*
+anchors alone (intent/objective/scope) already exhausted the turn budget
+before the unlabelled loop started. The old logic set
+`truncated = truncated or budget > 0` at the point of the first drop, which
+is `False` whenever budget was already at or below zero — so a turn that
+dropped 21 entries could still report `truncated=False`. Fixed to
+`truncated = bool(dropped)`. All of M8's own tests passed before and after;
+none had exercised the "anchors alone exhaust the budget" case, which is the
+only reason this survived as long as it did. Recorded here rather than only
+in M9's README since the bug and its fix are both in M8's file.
+
 ## 4. `still_live` computation in `wiring.py` is O(all live work items) per `end_task`
 
 `_live_claim_refs` globs every `live_sets/*.jsonl` file and replays each one

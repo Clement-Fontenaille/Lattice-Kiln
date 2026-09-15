@@ -45,13 +45,29 @@ class LiveSetEntry:
 
 @dataclass
 class TurnInputRecord:
-    """What observability keeps per turn (14-context-manager.md, Observability):
-    included entries in order, dropped entries, whether truncation happened.
-    Kept here too for M8's small-test purposes; the real copy is 02's job.
+    """Kind 5, 02-observability-event-model.md: "the recorded unit is the turn,
+    not the invocation." MUST carry, per that spec: what was presented (in
+    order, WITH crossing type -- "flattening crossing type here defeats the
+    authored-versus-generated requirement at the one point where the erasure
+    cannot be recovered"), what was held back, `policy_ref`, which prefix this
+    turn continued from, and isolation requested vs actually granted ("a judge
+    whose isolation was silently degraded is indistinguishable afterwards from
+    one that had it, which is the case the record exists for").
+
+    M9's own accounting: packages 1 and 2 ("the recall trace" / "turn-input
+    records") are explicitly sayable to land with M8 rather than waiting on M9
+    proper, so this is that landing, not a preview of unbuilt M9 work.
     """
-    included: list       # [live_set_id, ...] in presentation order
-    dropped: list
+    invocation_id: str
+    turn_index: int                    # per-work-item, monotonic from 1
+    included: list       # [(live_set_id, crossing_type), ...] in presentation order
+    dropped: list                       # [live_set_id, ...]
     truncated: bool
+    policy_ref: str                     # which recall policy produced this selection
+    continued_from: Optional[str]       # prefix_id, or None (a fresh sequence)
+    isolation_requested: str            # share_nothing | share_base | continue(id)
+    isolation_granted: str              # what was ACTUALLY granted -- may differ
+    stub_isolation: bool = True         # True until a real arbitration policy can degrade a request
 
 
 class ContextManager:
@@ -62,6 +78,7 @@ class ContextManager:
     def __init__(self, root: Path | str):
         self.root = Path(root)
         (self.root / "live_sets").mkdir(parents=True, exist_ok=True)
+        (self.root / "turn_inputs").mkdir(parents=True, exist_ok=True)
         self._seq = 0
 
     # ------------------------------------------------------------ register
@@ -128,8 +145,10 @@ class ContextManager:
 
     # ------------------------------------------------------------- recall
 
-    def recall(self, work_item_id: str, *, turn_budget: int = 8000,
-              approx_tokens_per_entry: int = 200) -> TurnInputRecord:
+    def recall(self, work_item_id: str, *, invocation_id: str,
+              turn_budget: int = 8000, approx_tokens_per_entry: int = 200,
+              isolation_requested: str = "share_nothing",
+              continued_from: Optional[str] = None) -> TurnInputRecord:
         """The degenerate recall policy (07-naive-context-assembly.md): order by
         registered_at, include until budget runs out, EXCEPT never drop a
         labelled entry -- "never drop the objective or the ceiling, whatever the
@@ -138,7 +157,23 @@ class ContextManager:
 
         This is deliberately the naive baseline, not a good policy -- the point
         of naming it that way is that a better one is a replacement on the same
-        axis, not a different kind of thing.
+        axis, not a different kind of thing. The record it produces (kind 5) is
+        real regardless of how naive the policy is; recording is M9 packages 1-2,
+        not the policy itself.
+
+        `isolation_requested` and `continued_from` are the caller's declared
+        preference (06-processor-contract.md is what would actually set these;
+        M8 has no processor-instantiation record to read them from, so they are
+        a seam the caller fills in, like `ceiling` in work_record.py). This
+        naive policy NEVER arbitrates or degrades what was requested -- it has
+        no prefix-sharing mechanism to degrade INTO -- so `isolation_granted`
+        always equals what was requested here. That equality is itself the
+        build decision to flag: a real arrangement with finite slots WILL
+        sometimes degrade a preference (14-context-manager.md, Arbitration),
+        and this naive policy cannot yet exhibit that, which is exactly the
+        kind of gap 14-context-manager.md warns is invisible unless recorded --
+        recorded here as `stub_isolation=True` so a reader does not mistake
+        "never degrades" for "was never under pressure."
         """
         entries = sorted(self.live_set(work_item_id), key=lambda e: e.registered_at)
         labelled = [e for e in entries if e.label]
@@ -146,22 +181,62 @@ class ContextManager:
 
         included, dropped, budget = [], [], turn_budget
         for e in labelled:
-            included.append(e.live_set_id)
+            included.append((e.live_set_id, e.crossing_type))
             budget -= approx_tokens_per_entry
-        truncated = False
         for e in unlabelled:
             if budget < approx_tokens_per_entry:
                 dropped.append(e.live_set_id)
-                truncated = truncated or budget > 0   # partial room counts as truncation
                 continue
-            included.append(e.live_set_id)
+            included.append((e.live_set_id, e.crossing_type))
             budget -= approx_tokens_per_entry
-        return TurnInputRecord(included=included, dropped=dropped, truncated=truncated)
+        # truncated means exactly "something was dropped for budget reasons" --
+        # NOT "budget still had partial room left over." A prior version tied
+        # this to `budget > 0` at the point of the first drop, which is False
+        # whenever the labelled entries alone already exhausted (or exceeded)
+        # the turn budget, silently reporting truncated=False while `dropped`
+        # was non-empty -- caught by M9's test_failure_modes.py exercising
+        # check_overload() on a turn where anchors alone ate the whole budget.
+        truncated = bool(dropped)
+
+        turn_index = self._next_turn(work_item_id)
+        record = TurnInputRecord(
+            invocation_id=invocation_id, turn_index=turn_index, included=included,
+            dropped=dropped, truncated=truncated, policy_ref="naive-degenerate-v1",
+            continued_from=continued_from, isolation_requested=isolation_requested,
+            isolation_granted=isolation_requested)
+        self._append_turn_input(work_item_id, record)
+        return record
+
+    def turn_inputs(self, work_item_id: str) -> list[TurnInputRecord]:
+        """Read back every turn-input record for this item, in turn order."""
+        p = self._turn_input_path(work_item_id)
+        if not p.is_file():
+            return []
+        out = []
+        for line in p.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                d = json.loads(line)
+                d["included"] = [tuple(x) for x in d["included"]]
+                out.append(TurnInputRecord(**d))
+        return out
 
     # ------------------------------------------------------------- internals
 
     def _log_path(self, work_item_id: str) -> Path:
         return self.root / "live_sets" / f"{work_item_id}.jsonl"
+
+    def _turn_input_path(self, work_item_id: str) -> Path:
+        return self.root / "turn_inputs" / f"{work_item_id}.jsonl"
+
+    def _next_turn(self, work_item_id: str) -> int:
+        p = self._turn_input_path(work_item_id)
+        if not p.is_file():
+            return 1
+        return sum(1 for l in p.read_text(encoding="utf-8").splitlines() if l.strip()) + 1
+
+    def _append_turn_input(self, work_item_id: str, record: TurnInputRecord):
+        with self._turn_input_path(work_item_id).open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(asdict(record)) + "\n")
 
     def _append(self, work_item_id: str, entry: LiveSetEntry):
         with self._log_path(work_item_id).open("a", encoding="utf-8") as fh:

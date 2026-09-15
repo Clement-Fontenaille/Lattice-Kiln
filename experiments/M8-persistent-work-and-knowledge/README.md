@@ -17,7 +17,13 @@ Specs: `docs/10-technical/{12-knowledge-model,13-work-record,14-context-manager}
 | `test_mandate.py` | 4 | aggregate check fires on both terminal states, never on live ones |
 | `test_recovery.py` | 1 | crash-recovery replay path (`unapplied()`), exercised for the first time |
 | `test_knowledge_ops.py` | 2 | `compress()`/`traverse_dependents()`, plus a logged gap in `elide()` |
+| `test_turn_input.py` | 1, 2 (M9) | the kind-5 turn-input record M9 says can land here |
 | `SUSPECT.md` | — | things noticed on the way that need a second pass before closing M8/M9 |
+
+`context_manager.py::recall()`/`turn_inputs()` also now carry M9's packages 1-2
+(the recall trace and the kind-5 turn-input record) — M9's own milestone doc
+says these are plumbing that can land with M8 rather than waiting. See
+`../M9-context-governance-measurement/README.md` for what builds on top of it.
 
 ### Also built beyond the original five
 
@@ -59,6 +65,7 @@ python test_lineage.py
 python test_mandate.py
 python test_recovery.py
 python test_knowledge_ops.py
+python test_turn_input.py
 ```
 
 No model calls. Naive filesystem storage per each spec's own "naive default" —

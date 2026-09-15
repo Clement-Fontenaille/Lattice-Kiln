@@ -65,6 +65,12 @@ class Claim:
     scope: Optional[str] = None
     tags: list = field(default_factory=list)
     checked: bool = False       # whether validity has checked this step (for Compress)
+    created_at: str = ""        # 03-evidence-belief-and-provenance.md, Scope: "has to
+                                 # be assessed near its own creation" -- unenforceable
+                                 # and unauditable without a timestamp to measure
+                                 # "near" against. Added when this gap surfaced while
+                                 # building M9's scope-assessment seam; every existing
+                                 # write path sets it (none relied on the old default).
 
 
 class KnowledgeStore:
@@ -261,7 +267,8 @@ class KnowledgeStore:
                                  "unparsed paragraph)")
         claim = Claim(claim_id=f"cl_{uuid.uuid4().hex[:12]}", type=type_,
                      content=content, source=source, parents=parents or [],
-                     scope=scope, tags=tags or [], checked=checked)
+                     scope=scope, tags=tags or [], checked=checked,
+                     created_at=_now())
         self._write_json(self._claim_path(claim.claim_id), _claim_to_dict(claim))
         for edge in claim.parents:
             self._append_child(edge.claim_id, claim.claim_id)
@@ -320,3 +327,7 @@ def _fuzzy_hit(term: str, blob: str) -> bool:
     t = set(term.lower().split())
     b = set(blob.lower().split())
     return bool(t) and len(t & b) / len(t) >= 0.5
+
+
+def _now() -> str:
+    return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
