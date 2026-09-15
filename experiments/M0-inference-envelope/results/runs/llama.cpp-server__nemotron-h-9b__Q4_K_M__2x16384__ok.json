@@ -1,0 +1,19 @@
+{
+  "schema": "m0-concurrent/1",
+  "runtime": "llama.cpp (llama-server)",
+  "runtime_version": "llama.cpp f1793c1 (build 2), server built 2026-09-15 with LLAMA_BUILD_SERVER=ON",
+  "model": "nemotron_h-9b (nvidia_NVIDIA-Nemotron-Nano-9B-v2-Q4_K_L.gguf, local WSL copy)",
+  "quant": "Q4_K_L",
+  "context_fill": 14003,
+  "condition": "concurrent-2-slots",
+  "timestamp": "2026-09-15T20:05:00+02:00",
+  "host_ref": "b50a3ad701b9fb16ef56ff4a03d3ff88363002a8478a5cd3210dbea96bf298f1",
+  "server_config": { "n_parallel": 2, "kv_unified_per_slot": 16384, "kv_pool_total": 32768, "ngl": 99 },
+  "metrics": {
+    "slot0": { "prompt_n": 14003, "prompt_ms": 14289.0, "predicted_n": 64, "predicted_ms": 9001.2, "predicted_tok_s": 7.00 },
+    "slot1": { "prompt_n": 14003, "prompt_ms": 23195.1, "predicted_n": 64, "predicted_ms": 2268.4, "predicted_tok_s": 27.77 }
+  },
+  "vram_resident_mb": 7394,
+  "status": "ok",
+  "note": "Two genuinely concurrent HTTP requests (fired in the background, both in flight at once, confirmed by id_slot 0 vs 1 in the responses) each with a ~14K-token prompt, against a single llama-server instance with n_parallel=2 and a unified KV pool sized 2x16384=32768. Both completed successfully -- no OOM, no error. VRAM used: 7394 MiB, essentially IDENTICAL to the single-stream 32768-context measurement (7300 MiB, see llama.cpp__nemotron-h-9b sibling runs) -- confirms the server shares model weights across slots (one ~6.3GB load, not two), so concurrent serving on this 8GB card costs the same VRAM as one stream at the SUM of the concurrent contexts, not double per-request. The two slots' throughput is asymmetric (7.0 vs 27.77 tok/s) and prompt_ms differs substantially (14.3s vs 23.2s) despite identical prompt size -- expected under continuous batching, where the two requests' compute interleaves rather than running independently; this is not two independent measurements of solo throughput, it is what concurrent serving on this host actually delivers per request."
+}

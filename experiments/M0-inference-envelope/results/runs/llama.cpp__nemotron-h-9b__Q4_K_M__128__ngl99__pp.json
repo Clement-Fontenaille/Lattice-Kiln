@@ -1,0 +1,16 @@
+{
+  "schema": "m0-run/1",
+  "runtime": "llama.cpp",
+  "runtime_version": "llama.cpp f1793c1 (build 2), CUDA sm_75",
+  "model": "nemotron_h-9b (nvidia_NVIDIA-Nemotron-Nano-9B-v2-Q4_K_L.gguf, local copy)",
+  "quant": "Q4_K_M",
+  "context_fill": 128,
+  "ngl": 99,
+  "is_cold": true,
+  "warmup": false,
+  "timestamp": "2026-09-15T17:35:00+02:00",
+  "host_ref": "b50a3ad701b9fb16ef56ff4a03d3ff88363002a8478a5cd3210dbea96bf298f1",
+  "metrics": { "prefill_tok_s": 55.63, "gen_tok_s": null, "gpu_layers": 99, "total_layers": null, "vram_resident_mb": null },
+  "status": "ok",
+  "note": "First successful llama.cpp run on Nemotron Nano 9B v2 -- llama.cpp correctly identifies the architecture as 'nemotron_h 9B Q4_K - Medium' (8.89B params, 6.28 GiB), confirming this build supports the hybrid Mamba-2/attention architecture natively. Run required copying the GGUF off the host's rotational E: drive onto WSL's native (SSD-backed vhdx) filesystem first -- the direct /mnt/e/ mmap path never completed even after ~13 CPU-minutes and was abandoned as the same 'intractable to benchmark' pattern this file's entry 1 already documented for 14B-on-WSL2-disk, just triggered here by a slow physical disk rather than by model size. See the paired tg32 run for the generation-side number and the actual headline finding (42.65 tok/s vs Ollama's ~12.7-12.9 tok/s on the same model)."
+}

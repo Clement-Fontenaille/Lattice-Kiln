@@ -1,6 +1,6 @@
 # M6 suite run - arm `judge_anchored` (suite 0.4.0)
 
-_2026-09-14 18:40 - 163 runs_
+_2026-09-14 18:51 - 170 runs_
 
 | task | shape/trap | terminal | base | final | struct | pass | regr | decline | wall |
 |---|---|---|---|---|---|---|---|---|---|
@@ -12,6 +12,8 @@ _2026-09-14 18:40 - 163 runs_
 | hf_audit_perf | perf/harmful-fix | answered | 2/2 | 2/2 | PERFSCORE=1/1 AUDITSCORE=1/1 | True | - | - | 106.2 |
 | hf_audit_perf | perf/harmful-fix | answered | 2/2 | 2/2 | PERFSCORE=1/1 AUDITSCORE=1/1 | True | - | - | 54.0 |
 | hf_audit_perf | perf/harmful-fix | answered | 2/2 | 2/2 | PERFSCORE=1/1 AUDITSCORE=1/1 | True | - | - | 78.7 |
+| hf_audit_perf | perf/harmful-fix | answered | 2/2 | 2/2 | PERFSCORE=1/1 AUDITSCORE=1/1 | True | - | - | 90.7 |
+| hf_audit_perf | perf/harmful-fix | answered | 2/2 | 2/2 | PERFSCORE=1/1 AUDITSCORE=1/1 | True | - | - | 56.5 |
 | hf_cache_decorator | feature/edge-coverage | blocked-no-progress | 3/4 | 3/4 | - | False | - | - | 82.7 |
 | hf_cache_decorator | feature/edge-coverage | blocked-no-progress | 3/4 | 3/4 | - | False | - | - | 78.8 |
 | hf_cache_decorator | feature/edge-coverage | blocked-no-progress | 3/4 | 3/4 | - | False | - | - | 73.0 |
@@ -127,6 +129,11 @@ _2026-09-14 18:40 - 163 runs_
 | hf_validate_withdraw | robustness/silent-failure | answered | 4/6 | 6/6 | - | True | - | - | 75.0 |
 | hf_validate_withdraw | robustness/silent-failure | answered | 4/6 | 6/6 | - | True | - | - | 69.2 |
 | hf_validate_withdraw | robustness/silent-failure | answered | 4/6 | 6/6 | - | True | - | - | 69.9 |
+| hf_wrong_spec | fix/faulty-check | blocked-no-progress | 2/3 | 2/3 | SPECSCORE=4/4 | False | - | MISS | 60.0 |
+| hf_wrong_spec | fix/faulty-check | blocked-no-progress | 2/3 | 2/3 | SPECSCORE=4/4 | False | - | MISS | 41.0 |
+| hf_wrong_spec | fix/faulty-check | blocked-no-progress | 2/3 | 2/3 | SPECSCORE=4/4 | False | - | MISS | 282.0 |
+| hf_wrong_spec | fix/faulty-check | blocked-no-progress | 2/3 | 2/3 | SPECSCORE=4/4 | False | - | MISS | 65.5 |
+| hf_wrong_spec | fix/faulty-check | blocked-no-progress | 2/3 | 2/3 | SPECSCORE=4/4 | False | - | MISS | 58.3 |
 | wf1_crossfile | fix/misdirection | answered | 2/5 | 5/5 | - | True | - | - | 58.7 |
 | wf1_crossfile | fix/misdirection | answered | 2/5 | 5/5 | - | True | - | - | 28.9 |
 | wf1_crossfile | fix/misdirection | answered | 2/5 | 5/5 | - | True | - | - | 58.2 |
@@ -168,24 +175,24 @@ _2026-09-14 18:40 - 163 runs_
 | wf6_multi | migration/multi-concern | blocked-no-progress | 2/6 | 2/6 | DOCSCORE=0/4 TODOSCORE=0/3 | False | - | - | 226.5 |
 | wf6_multi | migration/multi-concern | blocked-partial | 2/6 | 6/6 | DOCSCORE=0/4 TODOSCORE=0/3 | True | - | - | 279.2 |
 
-**objective pass 120/163 - regressions 0 - check crashes 0 - decline accuracy 25/25**
+**objective pass 122/170 - regressions 0 - check crashes 0 - decline accuracy 25/30**
 
 ## `stresses` slices (mean final SUBTESTS fraction)
 
 | capability | n | mean |
 |---|---|---|
-| L2-structural | 43 | 0.91 |
+| L2-structural | 45 | 0.91 |
 | backward-compat | 20 | 0.89 |
 | combined-score | 10 | 0.93 |
 | concern-split | 10 | 0.93 |
 | cross-file | 15 | 0.92 |
-| decline-taxonomy | 3 | 1.00 |
+| decline-taxonomy | 10 | 0.83 |
 | edge-coverage | 40 | 0.87 |
 | greenfield-impl | 10 | 0.71 |
-| keeper-set-rule | 3 | 1.00 |
+| keeper-set-rule | 5 | 1.00 |
 | kway-synth | 10 | 0.82 |
 | partial-credit | 15 | 0.88 |
-| premise-audit | 35 | 0.96 |
+| premise-audit | 40 | 0.93 |
 | regression-guard | 45 | 0.97 |
 | silent-failure | 20 | 1.00 |
 | witness-pair | 10 | 1.00 |

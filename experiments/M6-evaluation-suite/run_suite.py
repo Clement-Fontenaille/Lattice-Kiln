@@ -28,7 +28,13 @@ sys.path.insert(0, str(HERE))
 from _m6bridge import Gate, RunRecorder, assemble, health, run_processor  # noqa: E402
 
 SUITE = HERE / "suite"
-RESULTS = HERE / "results"
+# LATTICE_RESULTS_SUBDIR lets a run against a different model land in its own
+# results/ tree instead of overwriting the qwen2.5-coder baseline this suite
+# was collected against -- run_task's output path keys only on arm name, not
+# model, so switching model without switching this would silently corrupt or
+# skip-as-already-done the existing rows (added 2026-09-15 alongside
+# ollama_client.py's LATTICE_EVAL_MODEL, for the first Nemotron Nano 9B v2 pass).
+RESULTS = HERE / os.environ.get("LATTICE_RESULTS_SUBDIR", "results")
 RUNS = HERE / "runs"
 _SCORE = re.compile(r"^([A-Z]+SCORE|SUBTESTS)\s+(\d+)\s*/\s*(\d+)", re.M)
 _FAIL_LABEL = re.compile(r"^\s{2,}([^:]{2,70}):", re.M)

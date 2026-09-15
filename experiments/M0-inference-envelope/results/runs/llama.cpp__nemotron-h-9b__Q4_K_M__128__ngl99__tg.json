@@ -1,0 +1,16 @@
+{
+  "schema": "m0-run/1",
+  "runtime": "llama.cpp",
+  "runtime_version": "llama.cpp f1793c1 (build 2), CUDA sm_75",
+  "model": "nemotron_h-9b (nvidia_NVIDIA-Nemotron-Nano-9B-v2-Q4_K_L.gguf, local WSL copy)",
+  "quant": "Q4_K_M",
+  "context_fill": 128,
+  "ngl": 99,
+  "is_cold": true,
+  "warmup": false,
+  "timestamp": "2026-09-15T17:35:00+02:00",
+  "host_ref": "b50a3ad701b9fb16ef56ff4a03d3ff88363002a8478a5cd3210dbea96bf298f1",
+  "metrics": { "prefill_tok_s": null, "gen_tok_s": 42.65, "gpu_layers": 99, "total_layers": null, "vram_resident_mb": null },
+  "status": "ok",
+  "note": "Paired tg row for the pp128 run in the sibling file. 42.65 tok/s vs Ollama's ~12.7-12.9 tok/s on the same model/quant -- Ollama's automatic layer placement was NOT achieving full GPU residency (ollama ps showed 15%/85% CPU/GPU) where llama.cpp -ngl 99 does. This is the headline result: the bottleneck measured via Ollama earlier the same day was Ollama's placement heuristic, not the model or the host."
+}

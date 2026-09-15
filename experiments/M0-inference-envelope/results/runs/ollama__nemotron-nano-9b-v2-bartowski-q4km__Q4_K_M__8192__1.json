@@ -1,0 +1,29 @@
+{
+  "schema": "m0-run/1",
+  "runtime": "ollama",
+  "runtime_version": "ollama version is 0.34.0",
+  "model": "hf.co/bartowski/nvidia_NVIDIA-Nemotron-Nano-9B-v2-GGUF:Q4_K_M",
+  "quant": "Q4_K_M",
+  "context_fill": 508,
+  "num_ctx": 8192,
+  "repetition": 1,
+  "is_cold": true,
+  "warmup": false,
+  "timestamp": "2026-09-15T16:31:00+02:00",
+  "host_ref": "b50a3ad701b9fb16ef56ff4a03d3ff88363002a8478a5cd3210dbea96bf298f1",
+  "metrics": {
+    "load_ms": 128200,
+    "prompt_eval_count": 508,
+    "prompt_eval_ms": 3990,
+    "eval_count": 248,
+    "eval_ms": 19290,
+    "prefill_tok_s": 127.4,
+    "gen_tok_s": 12.9,
+    "gpu_layers": null,
+    "total_layers": null,
+    "size_mb": 6500,
+    "vram_resident_mb": null
+  },
+  "status": "ok",
+  "note": "Second Nemotron Nano 9B v2 data point, Q4_K_M this time (bartowski's HF repo, pulled directly via `ollama pull hf.co/...`), for comparison against ollama__nemotron-nano-9b-v2-q4kl__Q4_K_L__8192__1.json. Expectation going in: Q4_K_M is a smaller quant (community/HF card figures put it around 5.51 GB) and should leave enough headroom on this 8 GB card to become fully GPU-resident at num_ctx=8192, unlike the Q4_K_L run. NOT CONFIRMED: this specific bartowski build loads at 6.5 GB (matching this file's on-disk size, not the ~5.51 GB figure researched earlier -- quant-size labels are not fully comparable across repos/maintainers), and gen_tok_s=12.9 is statistically indistinguishable from Q4_K_L's 12.7 tok/s. `ollama ps`'s CPU/GPU split was not captured live for this run (checked seconds too late, after Ollama's idle-unload had already evicted the model) -- the near-identical generation speed to the confirmed-partial-offload Q4_K_L run is circumstantial, not confirmed, evidence that this quant ALSO spills. This is is_cold=true (this model had never been loaded before this call) which folds a genuine first-load cost into load_ms; is_cold is NOT what makes gen_tok_s slow, since gen_tok_s is measured after load completes -- but it does explain why load_ms=128200 is so much larger than this file's Qwen model-switch figures (17-30s): those measured warm switches between already-downloaded Qwen sizes, not a genuinely cold first load of a 6.5 GB file plus whatever Nemotron's hybrid Mamba-2 architecture costs to initialize that a plain transformer does not pay. Re-running this exact call now that the model is warm, and confirming the CPU/GPU split via `ollama ps` polled DURING generation rather than after, is the natural next data point -- not yet taken."
+}

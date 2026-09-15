@@ -1,6 +1,6 @@
 # Backlog
 
-_Updated: 2026-09-13 — structure and maintenance rules: [`README.md`](README.md)._
+_Updated: 2026-09-15 — structure and maintenance rules: [`README.md`](README.md)._
 
 > **Motto:** Every phase should make the next design decision easier.
 
@@ -169,6 +169,19 @@ into each as it is decomposed.*
   explore; `M15`'s reviewer-independence question, which asks the same thing of two
   *different* models and is gated on the second GPU.
 
+- **Experiments packaged as artifacts, air-gapped hosts included
+  (2026-09-15).** An experiment's preparation should assume the repo travels as
+  an archive to a machine with no network access, runs there, and produces
+  artifacts that are repatriated for investigation and only then pushed to the
+  forge — not that a forge push is itself how an experiment is packaged.
+  Related to the raw-output/`.gitignore` question parked the same day
+  (M6/M7 `runs_*/` churn from repeated sweeps) and to "Hardware as a variable"
+  below, but distinct from both: this is about an experiment's own portability,
+  not the host's. **Blocks the E6 corpus sweep's rented-H100 run**
+  (`experiments/M8-persistent-work-and-knowledge/e6_corpus_sweep.py`,
+  M8/`08-persistent-work-and-knowledge.md` package 6) — the operator's own
+  framing, 2026-09-15: pipeline consolidation is a prerequisite for that sweep,
+  not a parallel concern. No owner yet.
 - **Hardware as a variable.** A replayable re-bootstrap and envelope
   re-characterisation, plus a statement of what in the design set depends on
   host-specific numbers. Owner: the bootstrapper design, at the latest M16.

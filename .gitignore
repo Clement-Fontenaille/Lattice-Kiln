@@ -36,3 +36,6 @@ experiments/M0-inference-envelope/results/bench-ollama.log
 ### Python ###
 __pycache__/
 *.pyc
+
+### Queue runner operational logs (regenerated, never read by analysis scripts) ###
+experiments/**/queue*.log

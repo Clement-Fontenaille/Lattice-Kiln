@@ -1,0 +1,19 @@
+{
+  "schema": "m0-concurrent/1",
+  "runtime": "llama.cpp (llama-server)",
+  "runtime_version": "llama.cpp f1793c1 (build 2), server built 2026-09-15 with LLAMA_BUILD_SERVER=ON",
+  "model": "nemotron_h-9b (nvidia_NVIDIA-Nemotron-Nano-9B-v2-Q4_K_L.gguf, local WSL copy)",
+  "quant": "Q4_K_L",
+  "context_fill": 26603,
+  "condition": "concurrent-2-slots",
+  "timestamp": "2026-09-15T20:10:00+02:00",
+  "host_ref": "b50a3ad701b9fb16ef56ff4a03d3ff88363002a8478a5cd3210dbea96bf298f1",
+  "server_config": { "n_parallel": 2, "kv_unified_per_slot": 32768, "kv_pool_total": 65536, "ngl": 99 },
+  "metrics": {
+    "slot0": { "prompt_n": 26603, "prompt_ms": 25403.9, "predicted_n": 64, "predicted_ms": 19674.1, "predicted_tok_s": 3.20 },
+    "slot1": { "prompt_n": 26603, "prompt_ms": 45110.3, "predicted_n": 64, "predicted_ms": 4435.2, "predicted_tok_s": 14.20 }
+  },
+  "vram_resident_mb": 7863,
+  "status": "ok",
+  "note": "Same protocol as the paired 2x16384 run, doubled: two concurrent ~26.6K-token requests against a server sized for 2x32768=65536 total KV. Both completed -- no hang, no OOM -- combined context (2x26603=53206) stays under the solo wall this file already located at (65536, 73728]. VRAM 7863 MiB, essentially identical to the single-stream 65536-context measurement (7822 MiB) -- the shared-weights finding holds at this size too. Generation dropped versus the 2x16384 pair (7.0/27.8 tok/s there vs 3.2/14.2 tok/s here) under the added KV/compute pressure, but crucially did NOT hang the way solo single-stream runs did once total context passed ~70K -- concurrent serving of two smaller streams appears to tolerate a given total-context budget better than one solo stream at the same total, though this is one data point, not yet a controlled comparison at matched totals."
+}
