@@ -12,6 +12,8 @@ Foundations: `docs/00-design/10-foundations/{03-evidence-belief-and-provenance,0
 | `claim_dimensions.py` | 4 | validity, reliability, pertinence, scope |
 | `test_failure_modes.py` | 3 | exercises all four, including the truncated-flag bug it found |
 | `test_claim_dimensions.py` | 4 | exercises all four dimensions and the staleness guard on Scope |
+| `less_naive_assembler.py` | 6 | the falsifier: an antistarvation recall policy that moves Insufficiency-visible |
+| `test_less_naive_assembler.py` | 6 | naive 9/10 never-recalled vs antistarvation 0/10, same load |
 
 This milestone's own text splits its six work packages: "Packages 1 and 2 are
 plumbing and can land with M8. Packages 3 and 4 are the milestone." That's why
@@ -87,11 +89,27 @@ exhausted by anchors alone), which is why it survived until this pass.
   checkers behind `assess_validity`/`assess_pertinence`/`assess_scope` remain,
   and both are the same processor-shaped gap the rest of this README already
   names.
-- **Package 6, a less-naive assembler.** The milestone's own bar: "the naive
-  assembler's failures are quantifiable, AND a less-naive one moves the
-  measurement." Building a second assembler and showing the metric moves is
-  real design work this pass does not attempt — it needs the metric to exist
-  first, which is what packages 3-4 supply.
+- **Package 6, a less-naive assembler — partially built.** `context_manager.py`
+  `recall()` now takes an `order_unlabelled` seam so a second policy can reuse
+  everything (persistence, turn indexing, the never-drop-labelled rule)
+  except the ordering itself — two policies over the same live set stay
+  comparable on exactly the axis that differs. `less_naive_assembler.py`'s
+  `recall_antistarvation` is that second policy: unlabelled entries are
+  ordered by how often they were previously dropped, so a sustained-pressure
+  scenario cannot starve the same tail forever. Measured against the naive
+  baseline under identical load, it moved Insufficiency-visible from 9/10 to
+  0/10 never-recalled entries (`test_less_naive_assembler.py`) — the
+  milestone's own falsification bar, met on this one axis.
+
+  **What this does NOT claim.** Only Insufficiency-visible was moved, and
+  the module's own docstring says why the other three failure modes could
+  not be, by this or any ordering policy: Overload is a pure volume question
+  reordering cannot touch; Redundancy and Uselessness have no real verdict
+  yet (stub seams, `failure_modes.py`) for any policy to move. A reviewer
+  should read this as "one axis falsified, honestly scoped," not "package 6
+  done" — the milestone's bar is broader than what a reordering-only policy
+  can ever satisfy, and a real assembler doing semantic curation is still
+  unbuilt.
 - **Real judgement behind any of the five stub seams** (Redundancy,
   Uselessness, Validity, Scope, Pertinence). All five need a cognitive
   processor (03's "reasoner," 04's semantic coverage comparator) that M9 does

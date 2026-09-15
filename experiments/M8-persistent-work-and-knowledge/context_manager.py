@@ -17,7 +17,7 @@ import time
 import uuid
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Optional
+from typing import Callable, Optional
 
 # Crossing types. 14-context-manager.md, Track.
 READ = "read"
@@ -148,18 +148,30 @@ class ContextManager:
     def recall(self, work_item_id: str, *, invocation_id: str,
               turn_budget: int = 8000, approx_tokens_per_entry: int = 200,
               isolation_requested: str = "share_nothing",
-              continued_from: Optional[str] = None) -> TurnInputRecord:
-        """The degenerate recall policy (07-naive-context-assembly.md): order by
-        registered_at, include until budget runs out, EXCEPT never drop a
-        labelled entry -- "never drop the objective or the ceiling, whatever the
-        budget does" (14-context-manager.md, the field `label` earns its place
-        on exactly this branch).
+              continued_from: Optional[str] = None,
+              order_unlabelled: Optional[Callable] = None,
+              policy_name: str = "naive-degenerate-v1") -> TurnInputRecord:
+        """The degenerate recall policy (07-naive-context-assembly.md) BY
+        DEFAULT: order by registered_at, include until budget runs out, EXCEPT
+        never drop a labelled entry -- "never drop the objective or the
+        ceiling, whatever the budget does" (14-context-manager.md, the field
+        `label` earns its place on exactly this branch).
 
         This is deliberately the naive baseline, not a good policy -- the point
         of naming it that way is that a better one is a replacement on the same
         axis, not a different kind of thing. The record it produces (kind 5) is
         real regardless of how naive the policy is; recording is M9 packages 1-2,
         not the policy itself.
+
+        `order_unlabelled` is M9 package 6's seam: a callable
+        `(unlabelled_entries, work_item_id) -> ordered_entries` that decides
+        the priority order labelled entries are not subject to. Passing one
+        in, together with a matching `policy_name`, is the entire API surface
+        a "less-naive assembler" needs -- everything else (persistence, turn
+        indexing, the never-drop-labelled rule, the record shape) stays
+        shared, so two policies over the same live set are comparable on
+        exactly the axis that differs. Default (`None`) reproduces the
+        original registered_at ordering byte-for-byte.
 
         `isolation_requested` and `continued_from` are the caller's declared
         preference (06-processor-contract.md is what would actually set these;
@@ -178,6 +190,8 @@ class ContextManager:
         entries = sorted(self.live_set(work_item_id), key=lambda e: e.registered_at)
         labelled = [e for e in entries if e.label]
         unlabelled = [e for e in entries if not e.label]
+        if order_unlabelled is not None:
+            unlabelled = order_unlabelled(unlabelled, work_item_id)
 
         included, dropped, budget = [], [], turn_budget
         for e in labelled:
@@ -201,7 +215,7 @@ class ContextManager:
         turn_index = self._next_turn(work_item_id)
         record = TurnInputRecord(
             invocation_id=invocation_id, turn_index=turn_index, included=included,
-            dropped=dropped, truncated=truncated, policy_ref="naive-degenerate-v1",
+            dropped=dropped, truncated=truncated, policy_ref=policy_name,
             continued_from=continued_from, isolation_requested=isolation_requested,
             isolation_granted=isolation_requested)
         self._append_turn_input(work_item_id, record)
