@@ -1,6 +1,9 @@
 # E0 — Is the evaluation suite measuring one coherent thing?
 
-**Status:** **partially answered 2026-09-14** from runs already recorded — three defects found, see below. The item-analysis half has still not been run.
+**Status:** **answered 2026-09-17.** The item analysis has now run. The suite is
+**not unidimensional** — parallel analysis retains **two** factors. Three earlier
+defects (2026-09-14) stand, and folding the structural dimensions into the gate
+**changes arm ordering**. See "Item analysis, 2026-09-17" below.
 **Gates:** E4, and the interpretation of every arm comparison on the M6 suite.
 **Protocol:** [`experiments/E0-suite-construct-validation/PROTOCOL.md`](../../../../experiments/E0-suite-construct-validation/PROTOCOL.md)
 — the untouched-source test, the cost of defect 1, the item analysis, and the
@@ -173,6 +176,146 @@ sheet, arrived at from the metric rather than from item analysis.
 exit code is a one-line change per check and would restore what the suite already
 measures. Whether the M4/M5/M6/M7 comparisons should be re-scored against it is a
 separate decision, and it is the one with consequences.
+
+## Item analysis, 2026-09-17 — the half this sheet was opened for
+
+Run from data already recorded. Script and outputs:
+[`experiments/E0-suite-construct-validation/`](../../../../experiments/E0-suite-construct-validation/).
+
+**Read every number below against this:** the "subjects" are **scaffolds on one
+model**, not models spanning an ability range. An item–total correlation computed
+over pipelines answers *does this item separate pipelines*, which is adjacent to
+but not the same as *does this item measure the construct*. E4 supplies the real
+spread; until then this is pipeline discrimination.
+
+Response matrix: **34 items × 41 fully-observed attempts** (arm × rep, `baseline`
+excluded as the untouched-source control rather than a pipeline).
+
+### The answer: two factors, not one
+
+Parallel analysis against the 95th percentile of random data of the same shape:
+
+| # | observed eigenvalue | random p95 |
+|---|---|---|
+| 1 | **5.827** | 3.051 |
+| 2 | **4.120** | 2.528 |
+| 3 | 1.885 | 2.220 |
+
+**Two factors retained**, and it is not a marginal call — the first two sit well
+clear of the threshold, the third falls below it. The suite named at the top of
+this sheet as possibly being *"several instruments reported as one"* is, on this
+evidence, **two**.
+
+This does not make it worthless. The sheet already said so: *splitting it and
+reporting per cluster is the likely remedy, not rebuilding it.* What it does mean
+is that a single headline number over all 34 tasks aggregates across two things.
+
+### A third of the suite discriminates nothing
+
+| | count | tasks |
+|---|---|---|
+| **floor** — no attempt ever passes | 2 | `hf_misfiled_bug`, `hf_wrong_spec` |
+| **ceiling** — every attempt passes | 9 | `hf_already_optimal`, `hf_cache_nondeterministic`, `hf_counter_race`, `hf_dead_code`, `hf_remove_validation`, `hf_retry_backoff`, `hf_validate_withdraw`, `wf1_crossfile`, `wf3_refactor` |
+| **discriminating** (0 < p < 1) | 23 | — |
+
+**11 of 34 items carry zero response variance** and therefore contribute nothing
+to any factor structure computed on outcomes. Four of the nine ceiling items are
+false-premise tasks — consistent with defect 2, where doing nothing is the
+correct answer and every arm manages it.
+
+`wf3_refactor` sitting at the ceiling is **defect 3 confirmed from a third
+direction**: it has no structural witness, so every attempt passes whether the
+refactor happened or not.
+
+### Seven items where better pipelines do worse
+
+Item–total correlation (point-biserial, item excluded from its own total):
+
+| task | r |
+|---|---|
+| `wf3_refactor_blindview` | **−0.497** |
+| `hf_deprecate` | **−0.463** |
+| `wf2_retry` | −0.288 |
+| `hf_return_shape` | −0.144 |
+| `wf6_multi` | −0.092 |
+| `hf_rename` | −0.084 |
+| `wf5_partial` | −0.009 |
+
+Negative discrimination is the classic broken-check signal — an item where
+stronger attempts fail more often is usually wrong, not subtle. The two large
+ones deserve inspection before anything else on this list:
+
+- **`wf3_refactor_blindview` (−0.497)** is the truncated-view twin of a task this
+  sheet already found witness-less. Worst item in the suite.
+- **`hf_deprecate` (−0.463)** is the task withdrawn from defect 3 on 2026-09-14 as
+  having *"adequate coverage"* via its `old_parse`/`new_parse` discriminator.
+  **That withdrawal should be revisited** — adequate coverage and inverted
+  discrimination are not compatible readings of the same item.
+
+### Folding the structural dimensions changes arm ORDERING
+
+Defect 1 priced. Comparing `objective_pass` as published against a folded pass
+that also requires every `struct` dimension at full marks, over the rows that
+carry structural dimensions:
+
+| arm | gated | folded | rank shift |
+|---|---|---|---|
+| `judge_bypass` | 0.636 | 0.500 | 13th → **1st** |
+| `m7` | 0.767 | 0.333 | 2nd → **11th** |
+| `dloop` | 0.700 | 0.267 | 5th → **15th** |
+| `n5_dloop` | 0.700 | 0.267 | 6th → **16th** |
+| `monolith` | 0.455 | 0.364 | 17th → **9th** |
+
+**The ordering is not preserved.** It is close to inverted for several arms, and
+the arms that lose most are the ones this project has been building — `m7` and
+`dloop` both drop roughly ten places. Four tasks account for every disagreement:
+`hf_dict_dispatch` (64 rows), `hf_extract_fn` (57), `hf_json_serialize` (27),
+`wf6_multi` (22).
+
+Per this sheet's own framing, that moves the repair from a clarity fix to a
+correctness one: **every published arm comparison is contingent on a metric
+choice nobody made deliberately.**
+
+*Coverage limit:* `struct` is populated on a minority of tasks per arm, so the
+folded column is a **sensitivity estimate**, not a corrected headline. It is
+enough to show the ordering is unstable; it is not enough to publish as a
+re-scoring.
+
+### The untouched-source test
+
+The cheap necessary test this sheet specified, run over the `baseline` arm:
+
+| verdict | count |
+|---|---|
+| correct — untouched source fails, work demanded | 25 |
+| correct — untouched source passes, false premise | 5 |
+| **defect — passes while work is demanded** | **3** |
+| **defect — fails while declining is correct** | **1** |
+
+The three no-witness tasks are `wf3_refactor`, `hf_extract_fn`,
+`hf_dict_dispatch`. `wf3_refactor` was predicted by this sheet and its appearance
+is the check that the analysis works. The other two are **defect 1 showing up in
+defect 3's test** — they *do* have witnesses (`STRUCTSCORE`), but `objective_pass`
+discards them, so at the level this test operates the demand is unwitnessed.
+
+The inverted case is `hf_wrong_spec` (faulty-check trap): the untouched source
+fails a check that is itself wrong. Arguably correct behaviour for a task built
+around a faulty check, and it is also one of the two floor items. Flagged rather
+than resolved — it needs a decision about what a faulty-check task *should* score.
+
+### What this leaves open
+
+**The repair decision for defect 1 is now urgent and still unmade.** The ordering
+result removes the option of treating it as cosmetic. Both repairs remain on the
+table and neither has been chosen:
+
+- fold the dimensions into the exit code — changes what the suite gates on, and
+  obliges a re-score or an explicit mark on every prior comparison;
+- rename the metric and report dimensions alongside — cheaper, and this sheet
+  already warned it is the easier one to get wrong quietly.
+
+**Not choosing is also a decision**, and after this result it is a more expensive
+one than it was on 2026-09-14.
 
 ## Operator note, 2026-09-15 — what the early suite was for
 

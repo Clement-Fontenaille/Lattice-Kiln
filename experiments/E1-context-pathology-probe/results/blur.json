@@ -1,0 +1,1752 @@
+{
+  "schema": "e1-blur/1",
+  "generated": "2026-09-17T11:20:33.459064+00:00",
+  "part_a": [
+    {
+      "task": "wf1_crossfile",
+      "rep": 1,
+      "core": 1.0,
+      "low": null,
+      "doc": null,
+      "todo": null,
+      "objective_pass": true,
+      "total_calls": 22,
+      "pattern": "incomplete"
+    },
+    {
+      "task": "wf1_crossfile",
+      "rep": 2,
+      "core": 1.0,
+      "low": null,
+      "doc": null,
+      "todo": null,
+      "objective_pass": true,
+      "total_calls": 17,
+      "pattern": "incomplete"
+    },
+    {
+      "task": "wf2_retry",
+      "rep": 1,
+      "core": 0.0,
+      "low": null,
+      "doc": null,
+      "todo": null,
+      "objective_pass": false,
+      "total_calls": 16,
+      "pattern": "incomplete"
+    },
+    {
+      "task": "wf2_retry",
+      "rep": 2,
+      "core": 0.0,
+      "low": null,
+      "doc": null,
+      "todo": null,
+      "objective_pass": false,
+      "total_calls": 16,
+      "pattern": "incomplete"
+    },
+    {
+      "task": "wf3_refactor",
+      "rep": 1,
+      "core": 1.0,
+      "low": null,
+      "doc": null,
+      "todo": null,
+      "objective_pass": true,
+      "total_calls": 17,
+      "pattern": "incomplete"
+    },
+    {
+      "task": "wf3_refactor",
+      "rep": 2,
+      "core": 1.0,
+      "low": null,
+      "doc": null,
+      "todo": null,
+      "objective_pass": true,
+      "total_calls": 12,
+      "pattern": "incomplete"
+    },
+    {
+      "task": "wf4_assumption",
+      "rep": 1,
+      "core": 1.0,
+      "low": null,
+      "doc": null,
+      "todo": null,
+      "objective_pass": true,
+      "total_calls": 3,
+      "pattern": "incomplete"
+    },
+    {
+      "task": "wf4_assumption",
+      "rep": 2,
+      "core": 1.0,
+      "low": null,
+      "doc": null,
+      "todo": null,
+      "objective_pass": true,
+      "total_calls": 3,
+      "pattern": "incomplete"
+    },
+    {
+      "task": "wf5_partial",
+      "rep": 1,
+      "core": 0.0,
+      "low": null,
+      "doc": null,
+      "todo": null,
+      "objective_pass": false,
+      "total_calls": 16,
+      "pattern": "incomplete"
+    },
+    {
+      "task": "wf5_partial",
+      "rep": 2,
+      "core": 0.714,
+      "low": null,
+      "doc": null,
+      "todo": null,
+      "objective_pass": false,
+      "total_calls": 16,
+      "pattern": "incomplete"
+    },
+    {
+      "task": "wf6_multi",
+      "rep": 1,
+      "core": 1.0,
+      "low": 0.708,
+      "doc": [
+        3,
+        4
+      ],
+      "todo": [
+        2,
+        3
+      ],
+      "objective_pass": true,
+      "total_calls": 28,
+      "pattern": "mixed"
+    },
+    {
+      "task": "wf6_multi",
+      "rep": 2,
+      "core": 1.0,
+      "low": 1.0,
+      "doc": [
+        4,
+        4
+      ],
+      "todo": [
+        3,
+        3
+      ],
+      "objective_pass": true,
+      "total_calls": 29,
+      "pattern": "both_hold"
+    }
+  ],
+  "part_b": [
+    {
+      "arm": "baseline",
+      "task": "wf6_multi",
+      "rep": 1,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 16384
+    },
+    {
+      "arm": "dloop",
+      "task": "wf6_multi",
+      "rep": 1,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "dloop",
+      "task": "wf6_multi",
+      "rep": 2,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "dloop",
+      "task": "wf6_multi",
+      "rep": 3,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "dloop",
+      "task": "wf6_multi",
+      "rep": 4,
+      "core": 0.333,
+      "low": 0.125,
+      "gap": 0.208,
+      "dims": {
+        "DOCSCORE": [
+          1,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "dloop",
+      "task": "wf6_multi",
+      "rep": 5,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "judge_anchored",
+      "task": "wf6_multi",
+      "rep": 1,
+      "core": 1.0,
+      "low": 0.333,
+      "gap": 0.667,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          2,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "blur",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 16384
+    },
+    {
+      "arm": "judge_anchored",
+      "task": "wf6_multi",
+      "rep": 2,
+      "core": 1.0,
+      "low": 0.583,
+      "gap": 0.417,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          2,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "mixed",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 16384
+    },
+    {
+      "arm": "judge_anchored",
+      "task": "wf6_multi",
+      "rep": 3,
+      "core": 1.0,
+      "low": 0.583,
+      "gap": 0.417,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          2,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "mixed",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 16384
+    },
+    {
+      "arm": "judge_anchored",
+      "task": "wf6_multi",
+      "rep": 4,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 16384
+    },
+    {
+      "arm": "judge_anchored",
+      "task": "wf6_multi",
+      "rep": 5,
+      "core": 1.0,
+      "low": 0.0,
+      "gap": 1.0,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "blur",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 16384
+    },
+    {
+      "arm": "judge_bypass",
+      "task": "wf6_multi",
+      "rep": 1,
+      "core": 1.0,
+      "low": 0.333,
+      "gap": 0.667,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          2,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "blur",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "judge_bypass",
+      "task": "wf6_multi",
+      "rep": 2,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "judge_caveat",
+      "task": "wf6_multi",
+      "rep": 1,
+      "core": 1.0,
+      "low": 0.708,
+      "gap": 0.292,
+      "dims": {
+        "DOCSCORE": [
+          3,
+          4
+        ],
+        "TODOSCORE": [
+          2,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "mixed",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "judge_caveat",
+      "task": "wf6_multi",
+      "rep": 2,
+      "core": 1.0,
+      "low": 0.0,
+      "gap": 1.0,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "blur",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "judge_caveat",
+      "task": "wf6_multi",
+      "rep": 3,
+      "core": 1.0,
+      "low": 0.583,
+      "gap": 0.417,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          2,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "mixed",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "judge_fullctx",
+      "task": "wf6_multi",
+      "rep": 1,
+      "core": 0.333,
+      "low": 0.25,
+      "gap": 0.083,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 16384
+    },
+    {
+      "arm": "judge_fullctx",
+      "task": "wf6_multi",
+      "rep": 2,
+      "core": 0.333,
+      "low": 0.25,
+      "gap": 0.083,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 16384
+    },
+    {
+      "arm": "judge_fullctx",
+      "task": "wf6_multi",
+      "rep": 3,
+      "core": 0.333,
+      "low": 0.25,
+      "gap": 0.083,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 16384
+    },
+    {
+      "arm": "judge_fullctx",
+      "task": "wf6_multi",
+      "rep": 4,
+      "core": 1.0,
+      "low": 0.583,
+      "gap": 0.417,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          2,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "mixed",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 16384
+    },
+    {
+      "arm": "judge_fullctx",
+      "task": "wf6_multi",
+      "rep": 5,
+      "core": 0.833,
+      "low": 0.708,
+      "gap": 0.125,
+      "dims": {
+        "DOCSCORE": [
+          3,
+          4
+        ],
+        "TODOSCORE": [
+          2,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "mixed",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 16384
+    },
+    {
+      "arm": "judge_staged",
+      "task": "wf6_multi",
+      "rep": 1,
+      "core": 0.833,
+      "low": 1.0,
+      "gap": -0.167,
+      "dims": {
+        "DOCSCORE": [
+          4,
+          4
+        ],
+        "TODOSCORE": [
+          3,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_hold",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "judge_staged",
+      "task": "wf6_multi",
+      "rep": 2,
+      "core": 0.833,
+      "low": 0.583,
+      "gap": 0.25,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          2,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "mixed",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "judge_staged",
+      "task": "wf6_multi",
+      "rep": 3,
+      "core": 0.333,
+      "low": 0.25,
+      "gap": 0.083,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "m7",
+      "task": "wf6_multi",
+      "rep": 1,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "m7",
+      "task": "wf6_multi",
+      "rep": 2,
+      "core": 1.0,
+      "low": 0.0,
+      "gap": 1.0,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "blur",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "m7",
+      "task": "wf6_multi",
+      "rep": 3,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "m7",
+      "task": "wf6_multi",
+      "rep": 4,
+      "core": 1.0,
+      "low": 0.5,
+      "gap": 0.5,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          3,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "mixed",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "m7",
+      "task": "wf6_multi",
+      "rep": 5,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "m7b",
+      "task": "wf6_multi",
+      "rep": 1,
+      "core": 0.333,
+      "low": 0.583,
+      "gap": -0.25,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          2,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "mixed",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "m7b",
+      "task": "wf6_multi",
+      "rep": 2,
+      "core": 1.0,
+      "low": 0.875,
+      "gap": 0.125,
+      "dims": {
+        "DOCSCORE": [
+          3,
+          4
+        ],
+        "TODOSCORE": [
+          3,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "both_hold",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "m7b",
+      "task": "wf6_multi",
+      "rep": 3,
+      "core": 1.0,
+      "low": 0.333,
+      "gap": 0.667,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          2,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "blur",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "m7b",
+      "task": "wf6_multi",
+      "rep": 4,
+      "core": 0.333,
+      "low": 0.25,
+      "gap": 0.083,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "m7b",
+      "task": "wf6_multi",
+      "rep": 5,
+      "core": 1.0,
+      "low": 0.708,
+      "gap": 0.292,
+      "dims": {
+        "DOCSCORE": [
+          3,
+          4
+        ],
+        "TODOSCORE": [
+          2,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "mixed",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "m7c",
+      "task": "wf6_multi",
+      "rep": 1,
+      "core": 1.0,
+      "low": 0.708,
+      "gap": 0.292,
+      "dims": {
+        "DOCSCORE": [
+          3,
+          4
+        ],
+        "TODOSCORE": [
+          2,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "mixed",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "m7e",
+      "task": "wf6_multi",
+      "rep": 1,
+      "core": 0.333,
+      "low": 0.25,
+      "gap": 0.083,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "m7e",
+      "task": "wf6_multi",
+      "rep": 2,
+      "core": 0.333,
+      "low": 0.25,
+      "gap": 0.083,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "m7e",
+      "task": "wf6_multi",
+      "rep": 3,
+      "core": 0.833,
+      "low": 0.25,
+      "gap": 0.583,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "blur",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "m7f",
+      "task": "wf6_multi",
+      "rep": 1,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 16384
+    },
+    {
+      "arm": "m7f",
+      "task": "wf6_multi",
+      "rep": 2,
+      "core": 0.833,
+      "low": 0.875,
+      "gap": -0.042,
+      "dims": {
+        "DOCSCORE": [
+          3,
+          4
+        ],
+        "TODOSCORE": [
+          3,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_hold",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 16384
+    },
+    {
+      "arm": "m7f",
+      "task": "wf6_multi",
+      "rep": 3,
+      "core": 0.833,
+      "low": 0.25,
+      "gap": 0.583,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "blur",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 16384
+    },
+    {
+      "arm": "m7f",
+      "task": "wf6_multi",
+      "rep": 4,
+      "core": 0.333,
+      "low": 0.25,
+      "gap": 0.083,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 16384
+    },
+    {
+      "arm": "m7f",
+      "task": "wf6_multi",
+      "rep": 5,
+      "core": 0.333,
+      "low": 0.25,
+      "gap": 0.083,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 16384
+    },
+    {
+      "arm": "monolith",
+      "task": "wf6_multi",
+      "rep": 1,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "monolith",
+      "task": "wf6_multi",
+      "rep": 2,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "monolith",
+      "task": "wf6_multi",
+      "rep": 3,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "n5_dloop",
+      "task": "wf6_multi",
+      "rep": 1,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "n5_dloop",
+      "task": "wf6_multi",
+      "rep": 2,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "n5_dloop",
+      "task": "wf6_multi",
+      "rep": 3,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "n5_dloop",
+      "task": "wf6_multi",
+      "rep": 4,
+      "core": 0.333,
+      "low": 0.125,
+      "gap": 0.208,
+      "dims": {
+        "DOCSCORE": [
+          1,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "n5_dloop",
+      "task": "wf6_multi",
+      "rep": 5,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "n5_m7",
+      "task": "wf6_multi",
+      "rep": 1,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "n5_m7",
+      "task": "wf6_multi",
+      "rep": 2,
+      "core": 1.0,
+      "low": 0.0,
+      "gap": 1.0,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "blur",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "n5_m7",
+      "task": "wf6_multi",
+      "rep": 3,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "n5_m7",
+      "task": "wf6_multi",
+      "rep": 4,
+      "core": 1.0,
+      "low": 0.5,
+      "gap": 0.5,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          3,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "mixed",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "n5_m7",
+      "task": "wf6_multi",
+      "rep": 5,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "staged",
+      "task": "wf6_multi",
+      "rep": 1,
+      "core": 1.0,
+      "low": 0.5,
+      "gap": 0.5,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          3,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "mixed",
+      "L1_requirement_count": 3,
+      "L2_worker_view": null,
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "staged",
+      "task": "wf6_multi",
+      "rep": 2,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "staged",
+      "task": "wf6_multi",
+      "rep": 3,
+      "core": 1.0,
+      "low": 0.5,
+      "gap": 0.5,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          3,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "mixed",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "test_synth",
+      "task": "wf6_multi",
+      "rep": 1,
+      "core": 0.333,
+      "low": 0.0,
+      "gap": 0.333,
+      "dims": {
+        "DOCSCORE": [
+          0,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 16384
+    },
+    {
+      "arm": "test_synth",
+      "task": "wf6_multi",
+      "rep": 2,
+      "core": 1.0,
+      "low": 0.583,
+      "gap": 0.417,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          2,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "mixed",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 16384
+    },
+    {
+      "arm": "test_synth",
+      "task": "wf6_multi",
+      "rep": 3,
+      "core": 0.833,
+      "low": 0.708,
+      "gap": 0.125,
+      "dims": {
+        "DOCSCORE": [
+          3,
+          4
+        ],
+        "TODOSCORE": [
+          2,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "mixed",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 16384
+    },
+    {
+      "arm": "test_synth",
+      "task": "wf6_multi",
+      "rep": 4,
+      "core": 0.833,
+      "low": 0.583,
+      "gap": 0.25,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          2,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "mixed",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 16384
+    },
+    {
+      "arm": "test_synth",
+      "task": "wf6_multi",
+      "rep": 5,
+      "core": 0.333,
+      "low": 0.25,
+      "gap": 0.083,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 16384
+    },
+    {
+      "arm": "test_synth_retry",
+      "task": "wf6_multi",
+      "rep": 1,
+      "core": 0.333,
+      "low": 0.25,
+      "gap": 0.083,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "both_drop",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "test_synth_retry",
+      "task": "wf6_multi",
+      "rep": 2,
+      "core": 1.0,
+      "low": 0.583,
+      "gap": 0.417,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          2,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "mixed",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "test_synth_retry",
+      "task": "wf6_multi",
+      "rep": 3,
+      "core": 0.333,
+      "low": 0.583,
+      "gap": -0.25,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          2,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "mixed",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "test_synth_retry",
+      "task": "wf6_multi",
+      "rep": 4,
+      "core": 1.0,
+      "low": 0.875,
+      "gap": 0.125,
+      "dims": {
+        "DOCSCORE": [
+          3,
+          4
+        ],
+        "TODOSCORE": [
+          3,
+          3
+        ]
+      },
+      "objective_pass": true,
+      "pattern": "both_hold",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    },
+    {
+      "arm": "test_synth_retry",
+      "task": "wf6_multi",
+      "rep": 5,
+      "core": 0.833,
+      "low": 0.25,
+      "gap": 0.583,
+      "dims": {
+        "DOCSCORE": [
+          2,
+          4
+        ],
+        "TODOSCORE": [
+          0,
+          3
+        ]
+      },
+      "objective_pass": false,
+      "pattern": "blur",
+      "L1_requirement_count": 3,
+      "L2_worker_view": "full",
+      "L3_ctx_budget": 8192
+    }
+  ],
+  "patterns": {
+    "both_drop": 36,
+    "blur": 10,
+    "mixed": 19,
+    "both_hold": 4
+  },
+  "tasks_with_low_salience_dims": [
+    "wf6_multi"
+  ],
+  "proxy_correlations": {
+    "L1_requirement_count": null,
+    "L3_ctx_budget": -0.07624781996871503
+  }
+}

@@ -1,0 +1,249 @@
+{
+  "schema": "e7-flip/1",
+  "generated": "2026-09-17T11:15:24.988809+00:00",
+  "sources": {
+    "m4": "experiments\\M4-ephemeral-processors\\results\\results.json",
+    "m5": "experiments\\M5-intelligent-orchestration\\results\\results.json"
+  },
+  "headline_check": {
+    "checks": [
+      {
+        "milestone": "m4",
+        "arm": "monolith",
+        "published": "6/8",
+        "recomputed": "6/8",
+        "match": true
+      },
+      {
+        "milestone": "m4",
+        "arm": "ephemeral",
+        "published": "5/8",
+        "recomputed": "5/8",
+        "match": true
+      },
+      {
+        "milestone": "m5",
+        "arm": "monolith",
+        "published": "6/8",
+        "recomputed": "6/8",
+        "match": true
+      },
+      {
+        "milestone": "m5",
+        "arm": "ephemeral",
+        "published": "5/8",
+        "recomputed": "5/8",
+        "match": true
+      },
+      {
+        "milestone": "m5",
+        "arm": "orchestrated",
+        "published": "7/8",
+        "recomputed": "7/8",
+        "match": true
+      }
+    ],
+    "matches_published": true
+  },
+  "arms_only_in_m5": [
+    "orchestrated"
+  ],
+  "m5_within_milestone": [
+    {
+      "task": "task_1_stringcalc",
+      "arm": "orchestrated",
+      "ephemeral": "2/2",
+      "monolith": "2/2",
+      "orchestrated": "2/2"
+    },
+    {
+      "task": "task_2_median",
+      "arm": "orchestrated",
+      "ephemeral": "1/2",
+      "monolith": "2/2",
+      "orchestrated": "1/2"
+    },
+    {
+      "task": "task_3_nobug",
+      "arm": "orchestrated",
+      "ephemeral": "2/2",
+      "monolith": "2/2",
+      "orchestrated": "2/2"
+    },
+    {
+      "task": "task_4_starve",
+      "arm": "orchestrated",
+      "ephemeral": "0/2",
+      "monolith": "0/2",
+      "orchestrated": "2/2"
+    }
+  ],
+  "cells": [
+    {
+      "task": "task_1_stringcalc",
+      "arm": "ephemeral",
+      "rep": 1,
+      "m4_pass": true,
+      "m5_pass": true,
+      "label": "stable_pass",
+      "kind": "implement"
+    },
+    {
+      "task": "task_1_stringcalc",
+      "arm": "ephemeral",
+      "rep": 2,
+      "m4_pass": true,
+      "m5_pass": true,
+      "label": "stable_pass",
+      "kind": "implement"
+    },
+    {
+      "task": "task_1_stringcalc",
+      "arm": "monolith",
+      "rep": 1,
+      "m4_pass": true,
+      "m5_pass": true,
+      "label": "stable_pass",
+      "kind": "implement"
+    },
+    {
+      "task": "task_1_stringcalc",
+      "arm": "monolith",
+      "rep": 2,
+      "m4_pass": true,
+      "m5_pass": true,
+      "label": "stable_pass",
+      "kind": "implement"
+    },
+    {
+      "task": "task_2_median",
+      "arm": "ephemeral",
+      "rep": 1,
+      "m4_pass": false,
+      "m5_pass": true,
+      "label": "unstable",
+      "kind": "bugfix"
+    },
+    {
+      "task": "task_2_median",
+      "arm": "ephemeral",
+      "rep": 2,
+      "m4_pass": true,
+      "m5_pass": false,
+      "label": "unstable",
+      "kind": "bugfix"
+    },
+    {
+      "task": "task_2_median",
+      "arm": "monolith",
+      "rep": 1,
+      "m4_pass": false,
+      "m5_pass": true,
+      "label": "unstable",
+      "kind": "bugfix"
+    },
+    {
+      "task": "task_2_median",
+      "arm": "monolith",
+      "rep": 2,
+      "m4_pass": true,
+      "m5_pass": true,
+      "label": "unstable",
+      "kind": "bugfix"
+    },
+    {
+      "task": "task_3_nobug",
+      "arm": "ephemeral",
+      "rep": 1,
+      "m4_pass": true,
+      "m5_pass": true,
+      "label": "stable_pass",
+      "kind": "false_premise"
+    },
+    {
+      "task": "task_3_nobug",
+      "arm": "ephemeral",
+      "rep": 2,
+      "m4_pass": true,
+      "m5_pass": true,
+      "label": "stable_pass",
+      "kind": "false_premise"
+    },
+    {
+      "task": "task_3_nobug",
+      "arm": "monolith",
+      "rep": 1,
+      "m4_pass": true,
+      "m5_pass": true,
+      "label": "stable_pass",
+      "kind": "false_premise"
+    },
+    {
+      "task": "task_3_nobug",
+      "arm": "monolith",
+      "rep": 2,
+      "m4_pass": true,
+      "m5_pass": true,
+      "label": "stable_pass",
+      "kind": "false_premise"
+    },
+    {
+      "task": "task_4_starve",
+      "arm": "ephemeral",
+      "rep": 1,
+      "m4_pass": false,
+      "m5_pass": false,
+      "label": "stable_fail",
+      "kind": "context_starvation"
+    },
+    {
+      "task": "task_4_starve",
+      "arm": "ephemeral",
+      "rep": 2,
+      "m4_pass": false,
+      "m5_pass": false,
+      "label": "stable_fail",
+      "kind": "context_starvation"
+    },
+    {
+      "task": "task_4_starve",
+      "arm": "monolith",
+      "rep": 1,
+      "m4_pass": true,
+      "m5_pass": false,
+      "label": "unstable",
+      "kind": "context_starvation"
+    },
+    {
+      "task": "task_4_starve",
+      "arm": "monolith",
+      "rep": 2,
+      "m4_pass": false,
+      "m5_pass": false,
+      "label": "unstable",
+      "kind": "context_starvation"
+    }
+  ],
+  "summary": {
+    "stable_pass": 8,
+    "unstable": 6,
+    "stable_fail": 2
+  },
+  "unstable_cells": {
+    "m4": [
+      "task_2_median/ephemeral",
+      "task_2_median/monolith",
+      "task_4_starve/monolith"
+    ],
+    "m5": [
+      "task_2_median/ephemeral",
+      "task_2_median/orchestrated"
+    ]
+  },
+  "limitations": [
+    "objective_pass is the gating metric only (E0 defect 1); M4/M5 records carry no structural dimensions to fold in",
+    "stresses tags absent from M4/M5 records; kind used instead; tag-clustering question unanswerable from this data",
+    "4 tasks x 2 reps per arm: any pattern is directional, not decisive",
+    "the orchestrated arm exists only in M5 and therefore cannot flip"
+  ]
+}

@@ -1,6 +1,9 @@
 # E1 — Can context pathology be detected from processing?
 
-**Status:** not run.
+**Status:** **first move run 2026-09-17 — negative.** The context-blur claim does
+not survive: the motivating anecdote is a global failure, not selective omission,
+and exactly one suite task carries a low-salience requirement. The probe battery
+remains not run and is **blocked** on an unspecified feature space (below).
 **Gates:** nothing downstream depends on it; it feeds `10-foundations/04`'s failure
 modes and M9's metric.
 **Protocol:** [`experiments/E1-context-pathology-probe/PROTOCOL.md`](../../../../experiments/E1-context-pathology-probe/PROTOCOL.md)
@@ -101,6 +104,79 @@ since a negative result here (uniform decline, or no selectivity pattern outside
 `wf6`) would mean the probe's target class needs rethinking before its apparatus
 is built.
 
+### Result, 2026-09-17 — the claim does not survive
+
+Run over the recorded corpus. Script and outputs:
+[`experiments/E1-context-pathology-probe/`](../../../../experiments/E1-context-pathology-probe/).
+
+**1. The anecdote's numbers reproduce. Its reading does not.**
+
+`monolith` on `wf6_multi` scores `DOCSCORE 0/4`, `TODOSCORE 0/3` in every rep —
+exactly as reported. But the same rows carry `final_sub = 2/6` and
+`objective_pass = False`.
+
+> **The core did not hold.** The claim requires selective omission — periphery
+> dropped *while the core is delivered*. What actually happened is that
+> everything failed together. That is ordinary global failure, which this
+> experiment named in advance as **not** the blur mechanism.
+
+The framing *"monolith drops docs+TODO under load"* has been propagating through
+`10-foundations/04`, `02-capability-as-granularity.md` and this sheet as evidence
+for selective omission. The numbers are right and the inference is not.
+
+**2. The claim cannot be tested at corpus scale, because the corpus has one task.**
+
+Of 34 suite tasks, exactly **one** carries an explicitly low-salience requirement:
+
+| task | dimensions |
+|---|---|
+| **`wf6_multi`** | `DOCSCORE`, `TODOSCORE` |
+| `hf_dict_dispatch`, `hf_extract_fn`, `hf_json_serialize`, `hf_rec_to_iter`, `hf_rename`, `wf3_refactor_blindview`, `wf3_refactor_witnessed` | `STRUCTSCORE` |
+| `hf_audit_perf` | `AUDITSCORE`, `PERFSCORE` |
+| `hf_wrong_spec` | `SPECSCORE` |
+
+`STRUCTSCORE` and friends are neither the gate nor obviously peripheral, and were
+excluded from the salience assignment in advance rather than pressed into service
+after the fact. So the 69 analysable rows are **69 runs of one task**.
+
+**3. Across those 69 rows, the dominant pattern is global failure.**
+
+| pattern | rows | share |
+|---|---|---|
+| `both_drop` — core and periphery both fail | **36** | **52%** |
+| `mixed` | 19 | 28% |
+| **`blur` — core holds, periphery dropped** | **10** | **14%** |
+| `both_hold` | 4 | 6% |
+
+The blur pattern exists but is a minority, and the `inverse` pattern is visible
+too — `judge_staged` rep1 scores `DOCSCORE 4/4`, `TODOSCORE 3/3` while missing a
+subtest, which is selectivity running the other way.
+
+**4. No load proxy predicts the gap.** L1 (requirement count) has no variance,
+since there is only one task. L2 (worker view) has no variance. L3 (context
+budget, 16384 vs 8192) correlates with the core-minus-periphery gap at
+**−0.076** — indistinguishable from zero, and in the wrong direction for the
+claim.
+
+### What follows
+
+**The probe's target class needs rethinking, which is what this first move was
+for.** Context blur, as currently evidenced, is not established as a distinct
+selective mechanism — it is one task where failure is usually global and
+occasionally selective, with no dose to point at.
+
+Two concrete consequences:
+
+- **A suite-coverage gap, and a cheap one to fix.** Studying selective omission
+  requires tasks that *have* separable low-salience requirements. There is one.
+  Authoring more is item-writing, not research, and it is the prerequisite for
+  any version of this question — including a controlled dose experiment, which
+  does not exist and cannot be built on a single item.
+- **The claim should be downgraded where it is cited**, in
+  `10-foundations/04` and `02-capability-as-granularity.md`, from an observed
+  behaviour to an unsupported reading of a global failure — pending fixtures that
+  could actually separate the two.
+
 ## The hypothesis is an ordering, not a cell
 
 Fixed in writing before any data exists:
@@ -121,6 +197,25 @@ stress classes with matched present/absent pairs.
 **Calculus runs first as a positive control** and contributes no evidence about the
 hypothesis. If the probe cannot detect arithmetic error, nothing downstream is
 interpretable.
+
+## Open decision, 2026-09-16 — the probe has no specified feature space
+
+**This blocks the battery below, and it is a design decision rather than
+something further reading will settle.**
+
+This sheet says *probe* throughout and never says what the probe reads. The
+candidates are not interchangeable — they differ in what access they need, what
+they could detect in principle, and whether the result transfers:
+
+| candidate | what it reads | note |
+|---|---|---|
+| **attention weights** | entropy/peakedness of attention from query tokens to context | matches the "failed binding — diffuse rather than peaked" language this sheet's own ordering rests on. But attention-as-salience has a standing literature against it |
+| **hidden-state activations** | a light classifier over layer activations | the classical sense of "probing classifier". Model-specific coordinates; see `02-capability-as-granularity.md`'s white-box section |
+| **output logprobs** | entropy of the next-token distribution | no internal access needed, cheapest, and the weakest — it measures the model's epistemic state, which is empty under confident wrongness |
+
+Nothing in the battery can be designed until one is chosen, because the matched
+present/absent pairs have to be scored *by something*. Recorded here as an open
+decision with a date rather than left implicit in the word "probe".
 
 ## What a null means — two different nulls
 
