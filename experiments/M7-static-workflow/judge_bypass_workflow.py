@@ -650,9 +650,15 @@ def run_m7(objective: str, ws: Path) -> str:
         premise_doubted = bool(audit.get("concern"))
         for t in targets:
             before = best["s"]["comb"]
+            # Keyword-passed from `expected` on. These three were positionally
+            # rotated against the signature (pristine/jlog/premise_doubted where
+            # premise_doubted/pristine/jlog was expected), which crashed every
+            # run of this arm -- 90 of 102 rows on 2026-09-17, each recorded as a
+            # scored result. Keywords so the drift cannot recur silently.
             best = _pass(t, ws, rec, root, best, calls, greenfield, deadline,
-                         objective, expected, pristine, jlog,
-                         premise_doubted)
+                         objective, expected=expected,
+                         premise_doubted=premise_doubted,
+                         pristine=pristine, jlog=jlog)
             attempts.append({"target": t[:120], "comb_before": before,
                              "comb_after": best["s"]["comb"]})
         _restore(ws, best["snap"])

@@ -1,0 +1,646 @@
+{
+  "schema": "stale-run-evidence/1",
+  "recorded": "2026-09-17T19:02:21.406572+00:00",
+  "why": "Evidence extract kept when the stale Nemotron partial sweep was deleted 2026-09-17. The run is void: the llama-server died after two tasks and the harness scored 32 of 34 tasks against an untouched workspace.",
+  "baseline": {
+    "rows": [
+      {
+        "task": "wf1_crossfile",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 2/5\n  total qty=3: got 5 want 15\n  total mixed: got 12 want 14\n  line_price direct: got 5 want 20"
+      },
+      {
+        "task": "wf2_retry",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 0/5\n  success first try: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  succeed on 2nd try: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  exhaust then re-raise last: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  retries=0 is one attempt: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  returns fn value: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")"
+      },
+      {
+        "task": "wf3_refactor",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": true,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 5/5"
+      },
+      {
+        "task": "wf3_refactor_witnessed",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price"
+      },
+      {
+        "task": "wf3_refactor_blindview",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price"
+      },
+      {
+        "task": "wf4_assumption",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": true,
+        "declined_correctly": false,
+        "decline_expected": true,
+        "tail": "SUBTESTS 5/5"
+      },
+      {
+        "task": "wf5_partial",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 0/7\n  minutes: raised NotImplementedError()\n  hours: raised NotImplementedError()\n  h+m: raised NotImplementedError()\n  seconds: raised NotImplementedError()\n  h+m+s: raised NotImplementedError()\n  empty is zero: raised NotImplementedError()\n  whitespace: raised NotImplementedError()"
+      },
+      {
+        "task": "wf6_multi",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 2/6\n  topo chain raised NotImplementedError()\n  topo diamond raised NotImplementedError()\n  topo cycle: still NotImplementedError\n  topo empty raised NotImplementedError()\nDOCSCORE 0/4\n  no module docstring\n  build_graph docstring missing Args/Returns\n  topo_sort docstring missing Args/Returns/Raises\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present"
+      },
+      {
+        "task": "hf_extract_fn",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": true,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/3\n  process not split (helpers: [])\n  process body still 15 lines"
+      },
+      {
+        "task": "hf_dict_dispatch",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": true,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain"
+      },
+      {
+        "task": "hf_rename",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 4/6\n  compute exists and works: raised AttributeError(\"module 'billing' has no attribute 'compute'\")\n  calc name is gone: got True want False\nSTRUCTSCORE 2/3"
+      },
+      {
+        "task": "hf_rec_to_iter",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 4/5\n  deep chain 5000: raised RecursionError('maximum recursion depth exceeded while calling a Python object')\nSTRUCTSCORE 0/1\n  count_nodes still calls itself"
+      },
+      {
+        "task": "hf_already_optimal",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": true,
+        "declined_correctly": false,
+        "decline_expected": true,
+        "tail": "SUBTESTS 6/6"
+      },
+      {
+        "task": "hf_dead_code",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": true,
+        "declined_correctly": false,
+        "decline_expected": true,
+        "tail": "SUBTESTS 4/4"
+      },
+      {
+        "task": "hf_remove_validation",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": true,
+        "declined_correctly": false,
+        "decline_expected": true,
+        "tail": "SUBTESTS 5/5"
+      },
+      {
+        "task": "hf_cache_nondeterministic",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": true,
+        "declined_correctly": false,
+        "decline_expected": true,
+        "tail": "SUBTESTS 4/4"
+      },
+      {
+        "task": "hf_multi_recipient",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 3/5\n  list of recipients fans out: got [(['a', 'b'], 'hi')] want [('a', 'hi'), ('b', 'hi')]\n  tuple of recipients fans out: got [(('x', 'y'), 'm')] want [('x', 'm'), ('y', 'm')]"
+      },
+      {
+        "task": "hf_return_shape",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 3/5\n  email attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'email'\")\n  name attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'name'\")"
+      },
+      {
+        "task": "hf_deprecate",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: got False want True\n  old_parse matches new_parse: got False want True\n  old_parse strips like new_parse: got [' one '] want ['one']"
+      },
+      {
+        "task": "hf_json_field",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 2/5\n  tier from record: raised KeyError('tier')\n  old record defaults to free: raised KeyError('tier')\n  no extra keys: got {'name', 'id'} want {'name', 'id', 'tier'}"
+      },
+      {
+        "task": "hf_timeout_param",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 2/6\n  positive timeout, fast ok: raised TypeError(\"fetch() got an unexpected keyword argument 'timeout'\")\n  positive timeout, slow raises: got False want True\n  timeout=0 still times out: got False want True\n  timeout=0, fast still ok: raised TypeError(\"fetch() got an unexpected keyword argument 'timeout'\")"
+      },
+      {
+        "task": "hf_cache_decorator",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1"
+      },
+      {
+        "task": "hf_csv",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 3/6\n  quoted comma: got [['x', '\"a', 'b\"', 'y']] want [['x', 'a,b', 'y']]\n  quoted newline: got [['x', '\"l1'], ['l2\"', 'y']] want [['x', 'l1\\nl2', 'y']]\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]"
+      },
+      {
+        "task": "hf_path_sanitize",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 1/8\n  parent traversal rejected: got False want True\n  nested traversal rejected: got False want True\n  absolute path rejected: got False want True\n  null byte rejected: got False want True\n  reserved name rejected: got False want True\n  trailing dot stripped: got 'report.' want 'report'\n  trailing space stripped: got 'data.csv  ' want 'data.csv'"
+      },
+      {
+        "task": "hf_merge_config",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 3/6\n  nested dict merges: got {'x': {'q': 9}} want {'x': {'p': 1, 'q': 9}}\n  None deletes the key: got {'a': 1, 'b': None} want {'a': 1}\n  deep merge plus delete: got {'s': {'drop': None, 'add': 3}} want {'s': {'keep': 1, 'add': 3}}"
+      },
+      {
+        "task": "hf_misfiled_bug",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'"
+      },
+      {
+        "task": "hf_pagination",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 1/5\n  page 1 is the first items: got [3, 4, 5] want [0, 1, 2]\n  page 2: got [6, 7, 8] want [3, 4, 5]\n  last partial page: got [] want [9]\n  exact multiple last page: got [] want [8, 9]"
+      },
+      {
+        "task": "hf_suppress",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 3/4\n  non-numeric value is skipped, not fatal: raised ValueError(\"invalid literal for int() with base 10: 'x'\")"
+      },
+      {
+        "task": "hf_validate_withdraw",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 4/6\n  negative amount rejected: got False want True\n  overdraw rejected: got False want True"
+      },
+      {
+        "task": "hf_retry_backoff",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 2/4\n  recovers after 2 transients: got ('transient', 1) want ('ok', 'ok', 3)\n  gives up after 4 attempts: got ('transient', 1) want ('transient', 4)"
+      },
+      {
+        "task": "hf_json_serialize",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 2/5\n  datetime to ISO: raised TypeError('Object of type datetime is not JSON serializable')\n  set to sorted list: raised TypeError('Object of type set is not JSON serializable')\n  Decimal to string: raised TypeError('Object of type Decimal is not JSON serializable')\nSTRUCTSCORE 0/2"
+      },
+      {
+        "task": "hf_counter_race",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 2/3\n  concurrent increments do not lose updates: got 717 want 4000"
+      },
+      {
+        "task": "hf_audit_perf",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 2/2\nPERFSCORE 0/1\n  the audit line is still built one character at a time\nAUDITSCORE 1/1"
+      },
+      {
+        "task": "hf_wrong_spec",
+        "terminal": "done",
+        "wall_s": 0.0,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": true,
+        "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4"
+      }
+    ],
+    "terminal_distribution": {
+      "done": 34
+    },
+    "wall_under_10s": 34
+  },
+  "test_synth": {
+    "rows": [
+      {
+        "task": "wf1_crossfile",
+        "terminal": "answered",
+        "wall_s": 68.7,
+        "objective_pass": true,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 5/5"
+      },
+      {
+        "task": "wf2_retry",
+        "terminal": "error:RemoteDisconnected('Remote end closed connection without response')",
+        "wall_s": 199.3,
+        "objective_pass": true,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 5/5"
+      },
+      {
+        "task": "wf3_refactor",
+        "terminal": "declined",
+        "wall_s": 8.7,
+        "objective_pass": true,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 5/5"
+      },
+      {
+        "task": "wf3_refactor_witnessed",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.4,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price"
+      },
+      {
+        "task": "wf3_refactor_blindview",
+        "terminal": "declined",
+        "wall_s": 8.5,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price"
+      },
+      {
+        "task": "wf4_assumption",
+        "terminal": "declined",
+        "wall_s": 8.4,
+        "objective_pass": true,
+        "declined_correctly": true,
+        "decline_expected": true,
+        "tail": "SUBTESTS 5/5"
+      },
+      {
+        "task": "wf5_partial",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.3,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 0/7\n  minutes: raised NotImplementedError()\n  hours: raised NotImplementedError()\n  h+m: raised NotImplementedError()\n  seconds: raised NotImplementedError()\n  h+m+s: raised NotImplementedError()\n  empty is zero: raised NotImplementedError()\n  whitespace: raised NotImplementedError()"
+      },
+      {
+        "task": "wf6_multi",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.4,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 2/6\n  topo chain raised NotImplementedError()\n  topo diamond raised NotImplementedError()\n  topo cycle: still NotImplementedError\n  topo empty raised NotImplementedError()\nDOCSCORE 0/4\n  no module docstring\n  build_graph docstring missing Args/Returns\n  topo_sort docstring missing Args/Returns/Raises\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present"
+      },
+      {
+        "task": "hf_extract_fn",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.4,
+        "objective_pass": true,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/3\n  process not split (helpers: [])\n  process body still 15 lines"
+      },
+      {
+        "task": "hf_dict_dispatch",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.4,
+        "objective_pass": true,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain"
+      },
+      {
+        "task": "hf_rename",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.3,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 4/6\n  compute exists and works: raised AttributeError(\"module 'billing' has no attribute 'compute'\")\n  calc name is gone: got True want False\nSTRUCTSCORE 2/3"
+      },
+      {
+        "task": "hf_rec_to_iter",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.4,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 4/5\n  deep chain 5000: raised RecursionError('maximum recursion depth exceeded while calling a Python object')\nSTRUCTSCORE 0/1\n  count_nodes still calls itself"
+      },
+      {
+        "task": "hf_already_optimal",
+        "terminal": "declined",
+        "wall_s": 8.4,
+        "objective_pass": true,
+        "declined_correctly": true,
+        "decline_expected": true,
+        "tail": "SUBTESTS 6/6"
+      },
+      {
+        "task": "hf_dead_code",
+        "terminal": "declined",
+        "wall_s": 8.4,
+        "objective_pass": true,
+        "declined_correctly": true,
+        "decline_expected": true,
+        "tail": "SUBTESTS 4/4"
+      },
+      {
+        "task": "hf_remove_validation",
+        "terminal": "declined",
+        "wall_s": 8.4,
+        "objective_pass": true,
+        "declined_correctly": true,
+        "decline_expected": true,
+        "tail": "SUBTESTS 5/5"
+      },
+      {
+        "task": "hf_cache_nondeterministic",
+        "terminal": "declined",
+        "wall_s": 8.4,
+        "objective_pass": true,
+        "declined_correctly": true,
+        "decline_expected": true,
+        "tail": "SUBTESTS 4/4"
+      },
+      {
+        "task": "hf_multi_recipient",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.3,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 3/5\n  list of recipients fans out: got [(['a', 'b'], 'hi')] want [('a', 'hi'), ('b', 'hi')]\n  tuple of recipients fans out: got [(('x', 'y'), 'm')] want [('x', 'm'), ('y', 'm')]"
+      },
+      {
+        "task": "hf_return_shape",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.3,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 3/5\n  email attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'email'\")\n  name attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'name'\")"
+      },
+      {
+        "task": "hf_deprecate",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.3,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: got False want True\n  old_parse matches new_parse: got False want True\n  old_parse strips like new_parse: got [' one '] want ['one']"
+      },
+      {
+        "task": "hf_json_field",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.3,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 2/5\n  tier from record: raised KeyError('tier')\n  old record defaults to free: raised KeyError('tier')\n  no extra keys: got {'name', 'id'} want {'name', 'id', 'tier'}"
+      },
+      {
+        "task": "hf_timeout_param",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.2,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 2/6\n  positive timeout, fast ok: raised TypeError(\"fetch() got an unexpected keyword argument 'timeout'\")\n  positive timeout, slow raises: got False want True\n  timeout=0 still times out: got False want True\n  timeout=0, fast still ok: raised TypeError(\"fetch() got an unexpected keyword argument 'timeout'\")"
+      },
+      {
+        "task": "hf_cache_decorator",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.4,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1"
+      },
+      {
+        "task": "hf_csv",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.3,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 3/6\n  quoted comma: got [['x', '\"a', 'b\"', 'y']] want [['x', 'a,b', 'y']]\n  quoted newline: got [['x', '\"l1'], ['l2\"', 'y']] want [['x', 'l1\\nl2', 'y']]\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]"
+      },
+      {
+        "task": "hf_path_sanitize",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.3,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 1/8\n  parent traversal rejected: got False want True\n  nested traversal rejected: got False want True\n  absolute path rejected: got False want True\n  null byte rejected: got False want True\n  reserved name rejected: got False want True\n  trailing dot stripped: got 'report.' want 'report'\n  trailing space stripped: got 'data.csv  ' want 'data.csv'"
+      },
+      {
+        "task": "hf_merge_config",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.3,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 3/6\n  nested dict merges: got {'x': {'q': 9}} want {'x': {'p': 1, 'q': 9}}\n  None deletes the key: got {'a': 1, 'b': None} want {'a': 1}\n  deep merge plus delete: got {'s': {'drop': None, 'add': 3}} want {'s': {'keep': 1, 'add': 3}}"
+      },
+      {
+        "task": "hf_misfiled_bug",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.3,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'"
+      },
+      {
+        "task": "hf_pagination",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.3,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 1/5\n  page 1 is the first items: got [3, 4, 5] want [0, 1, 2]\n  page 2: got [6, 7, 8] want [3, 4, 5]\n  last partial page: got [] want [9]\n  exact multiple last page: got [] want [8, 9]"
+      },
+      {
+        "task": "hf_suppress",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.2,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 3/4\n  non-numeric value is skipped, not fatal: raised ValueError(\"invalid literal for int() with base 10: 'x'\")"
+      },
+      {
+        "task": "hf_validate_withdraw",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.3,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 4/6\n  negative amount rejected: got False want True\n  overdraw rejected: got False want True"
+      },
+      {
+        "task": "hf_retry_backoff",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.3,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 2/4\n  recovers after 2 transients: got ('transient', 1) want ('ok', 'ok', 3)\n  gives up after 4 attempts: got ('transient', 1) want ('transient', 4)"
+      },
+      {
+        "task": "hf_json_serialize",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.3,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 2/5\n  datetime to ISO: raised TypeError('Object of type datetime is not JSON serializable')\n  set to sorted list: raised TypeError('Object of type set is not JSON serializable')\n  Decimal to string: raised TypeError('Object of type Decimal is not JSON serializable')\nSTRUCTSCORE 0/2"
+      },
+      {
+        "task": "hf_counter_race",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.4,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 2/3\n  concurrent increments do not lose updates: got 606 want 4000"
+      },
+      {
+        "task": "hf_audit_perf",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.4,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": false,
+        "tail": "SUBTESTS 2/2\nPERFSCORE 0/1\n  the audit line is still built one character at a time\nAUDITSCORE 1/1"
+      },
+      {
+        "task": "hf_wrong_spec",
+        "terminal": "error:OllamaError('request to http://localhost:8090 failed: <urlopen error [WinError 10061] Aucune connexion n\u2019a pu \u00eatre",
+        "wall_s": 8.3,
+        "objective_pass": false,
+        "declined_correctly": false,
+        "decline_expected": true,
+        "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4"
+      }
+    ],
+    "terminal_distribution": {
+      "answered": 1,
+      "error:RemoteDisconnected('Remote end closed connection witho": 1,
+      "declined": 7,
+      "error:OllamaError('request to http://localhost:8090 failed: ": 25
+    },
+    "wall_under_10s": 32
+  },
+  "qwen_judge_bypass": {
+    "rows": 102,
+    "error_rows": 90,
+    "error_rows_scored_pass": 51,
+    "terminal_distribution": {
+      "error:AttributeError(\"'list' object has no attribute 'get'\")": 81,
+      "error:AttributeError(\"'bool' object has no attribute 'append'\")": 9,
+      "declined": 12
+    }
+  }
+}

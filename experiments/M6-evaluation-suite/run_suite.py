@@ -20,6 +20,7 @@ import subprocess
 import sys
 import tempfile
 import time
+import traceback
 from collections import defaultdict
 from pathlib import Path
 
@@ -122,10 +123,18 @@ def run_task(task, arm_name, rep, cmd, protected):
     # the other. Cheap to carry, so carry it.
     os.environ["M6_TASK"] = task["id"]
     os.environ["M6_REP"] = str(rep)
+    # A raising arm produced NO attempt, so the workspace below is untouched and
+    # scoring it measures the fixture, not the model. Both facts are recorded:
+    # `run_ok` gates every downstream read, and the traceback is kept because the
+    # repr alone ("'list' object has no attribute 'get'") cost a day of confusion
+    # on 2026-09-17 -- 90 of judge_bypass's 102 rows were this, scored as results.
+    run_ok, trace = True, None
     try:
         terminal = ARMS[arm_name](task["objective"], ws)
     except Exception as e:  # noqa: BLE001
         terminal = f"error:{e!r}"[:120]
+        run_ok = False
+        trace = traceback.format_exc()
     finally:
         os.environ.pop("M6_WORKER_VIEW", None)
         os.environ.pop("M6_TASK", None)
@@ -146,11 +155,21 @@ def run_task(task, arm_name, rep, cmd, protected):
         "stresses": task["stresses"], "rep": rep, "arm": arm_name, "terminal": terminal,
         "baseline_sub": [bsub, btot], "final_sub": [fsub, ftot],
         "struct": {k: v for k, v in fin["scores"].items() if k != "SUBTESTS"},
-        "objective_pass": fin["exit"] == 0 and not fin["crashed"],
-        "regressed": bool(new_fails), "new_fails": sorted(new_fails),
+        # None, not False, when the arm raised: the run produced no attempt, so
+        # neither "passed" nor "failed" is true of it. None makes a downstream
+        # reader that forgot to filter raise instead of quietly counting it.
+        "objective_pass": (fin["exit"] == 0 and not fin["crashed"]) if run_ok else None,
+        "run_ok": run_ok, "error_trace": trace,
+        "regressed": bool(new_fails) if run_ok else None,
+        "new_fails": sorted(new_fails),
         "check_crashed": fin["crashed"],
         "decline_expected": task["expect"]["decline_correct"],
-        "declined_correctly": task["expect"]["decline_correct"] and terminal == "declined"
+        # `run_ok` first: an unreachable model leaves the workspace untouched,
+        # which is indistinguishable from a correct decline on any task whose
+        # source already passes. Five false-premise tasks were credited with a
+        # correct decline during a total outage before this guard existed.
+        "declined_correctly": run_ok and task["expect"]["decline_correct"]
+                              and terminal == "declined"
                               and fsub == bsub and not fin["fails"] - base["fails"],
         "wall_s": wall, "tail": fin["out"],
     }
@@ -171,18 +190,28 @@ def summarise(rows, arm, suite_version):
                  f"{r['final_sub'][0]}/{r['final_sub'][1]} | {st} | {r['objective_pass']} | "
                  f"{'YES' if r['regressed'] else '-'} | {dec} | {r['wall_s']} |")
 
-    # aggregate
-    npass = sum(r["objective_pass"] for r in rows)
-    nreg = sum(r["regressed"] for r in rows)
-    ncrash = sum(r["check_crashed"] for r in rows)
-    dec_rows = [r for r in rows if r["decline_expected"]]
+    # aggregate. Rows whose arm raised produced no attempt, so they are counted
+    # separately and excluded from every rate -- a denominator that includes them
+    # reports the fixture, not the model.
+    ok_rows = [r for r in rows if r.get("run_ok", True)]
+    nfail = len(rows) - len(ok_rows)
+    npass = sum(r["objective_pass"] for r in ok_rows)
+    nreg = sum(r["regressed"] for r in ok_rows)
+    ncrash = sum(r["check_crashed"] for r in ok_rows)
+    dec_rows = [r for r in ok_rows if r["decline_expected"]]
     dec_ok = sum(r["declined_correctly"] for r in dec_rows)
-    L += ["", f"**objective pass {npass}/{len(rows)} - regressions {nreg} - "
+    L += ["", f"**objective pass {npass}/{len(ok_rows)} - regressions {nreg} - "
               f"check crashes {ncrash} - decline accuracy {dec_ok}/{len(dec_rows)}**", ""]
+    if nfail:
+        L += [f"> **{nfail} of {len(rows)} runs did not execute** (the arm raised; "
+              f"`run_ok: false`). They are excluded from every figure above. See "
+              f"`error_trace` in the JSON.", ""]
 
-    # stresses slices - mean final subtest fraction per capability tag
+    # stresses slices - mean final subtest fraction per capability tag.
+    # ok_rows, not rows: a run that never executed scores the untouched fixture,
+    # which would drag every tag it carries toward the baseline.
     by_tag = defaultdict(list)
-    for r in rows:
+    for r in ok_rows:
         f = r["final_sub"][0] / max(1, r["final_sub"][1])
         for tag in r["stresses"]:
             by_tag[tag].append(f)

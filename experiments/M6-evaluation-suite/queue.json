@@ -1,80 +1,199 @@
 {
-  "_note": "Ordered by information, not convenience. If the queue does not finish, what ran is what mattered most. Every arm runs on suite 0.4.0 so the table is comparable on one version -- the reference arms are re-run for that reason alone, since their existing N=5 figures are on 0.1.0 and predate the two most discriminating tasks.",
+  "_note": "Ordered by information, not convenience. If the queue does not finish, what ran is what mattered most. Every arm runs on suite 0.4.0 so the table is comparable on one version.",
+  "_backends": "A job's `env` is applied to that job's subprocess only, which is what lets one queue hold both backends: the backend is bound at import time in ollama_client, and every job is already its own process. The two backends CANNOT run together -- llama-server holds ~7.6GB of the 8GB card and Ollama needs its own allocation, so whichever loads second falls off the GPU onto the 10-20x offload cliff M0 measured. No lifecycle automation is attempted: the health gate skips any job whose backend is not serving, and the queue is resumable, so the operator runs it twice. With llama-server up, the nemotron jobs run and the qwen jobs skip; bring Ollama up in its place and re-run, and the reverse happens while the finished nemotron jobs report done.",
+  "_reruns_2026-09-17": "Everything nemotron is a rerun from zero: the 2026-09-15 sweep is void (llama-server died two tasks in and the harness scored 32 untouched workspaces as results). qwen/judge_bypass is a rerun because the arm never executed at all -- a rotated argument list crashed 90 of its 102 rows, fixed the same day in judge_bypass_workflow.py.",
   "jobs": [
     {
+      "label": "nemotron-baseline",
       "arm": "baseline",
       "reps": 1,
-      "why": "free, no model calls. The floor on 0.4.0, and it is what every other number is read against"
+      "why": "free, no model calls. Identical by construction to the qwen baseline, which makes it the harness sanity check: if these two disagree the backend switch changed something it should not have",
+      "env": {
+        "LATTICE_BACKEND": "llamacpp",
+        "LATTICE_EVAL_MODEL": "nemotron",
+        "LATTICE_BASE_URL": "http://localhost:8090",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+      }
     },
     {
-      "arm": "test_synth",
-      "reps": 5,
-      "why": "the only arm that changes mechanism rather than framing: the model writes an executable witness instead of reading a diff, so its verdict depends on no reading of the worker's code"
-    },
-    {
-      "arm": "judge_anchored",
-      "reps": 5,
-      "why": "half of the pair that lifts the anchor confound. At N=1 the comparison had two variables at once"
-    },
-    {
-      "arm": "m7f",
-      "reps": 5,
-      "why": "the other half. judge_anchored is m7f plus the expectation, so the pair isolates the anchor alone"
-    },
-    {
-      "arm": "judge_fullctx",
-      "reps": 5,
-      "why": "tests the operator ruling that a same-context judge becomes a second sample of the worker. Scored against the worker's self-report, not only against the check"
-    },
-    {
-      "arm": "test_synth_retry",
-      "reps": 5,
-      "why": "the witness reviews its own test against the output of running it, and chooses to rewrite or emit VALIDATE. The loop never says the test is weak -- it shows the model what its own file printed on code that does not satisfy the request, so any tightening is the model's own reading. Execution should rise; discrimination must not move unless something leaked"
-    },
-    {
-      "arm": "m7b",
-      "reps": 5,
-      "why": "keeper-strict on 0.4.0. hf_audit_perf is the first task ever built that discriminates a set-comparing keeper from a count-comparing one"
-    },
-    {
-      "arm": "m7",
-      "reps": 5,
-      "why": "the count-comparing keeper, on the same suite. With m7b above this is the only attributable R1 comparison available"
-    },
-    {
-      "arm": "dloop",
-      "reps": 5,
-      "why": "the spine, re-run on 0.4.0. Its 23.6 is on 0.1.0 and cannot be compared across suite versions"
-    },
-    {
-      "arm": "judge_bypass",
-      "reps": 5,
-      "why": "the corrected routing rule: call the judge when the check is satisfied, nothing improved, and the premise was NOT doubted"
-    },
-    {
-      "arm": "judge_staged",
-      "reps": 5,
-      "why": "the only design that can show a note effect, by asking the same task twice without and with the note"
-    },
-    {
-      "arm": "m7e",
-      "reps": 5,
-      "why": "register. Weakened by m7c showing no narration at all, so it ranks low"
-    },
-    {
-      "arm": "judge_caveat",
-      "reps": 5,
-      "why": "a remedy for a defect that is itself unestablished. Lowest value of the judge arms and ordered accordingly"
-    },
-    {
+      "label": "nemotron-monolith",
       "arm": "monolith",
-      "reps": 5,
-      "why": "cheap reference, and the only arm with a regression rate worth measuring at N=5"
+      "reps": 1,
+      "why": "one model call, no scaffolding. The cheapest arm that exercises the whole path, so it fails fastest if the backend is wrong -- and the only clean read on what this model does unaided",
+      "env": {
+        "LATTICE_BACKEND": "llamacpp",
+        "LATTICE_EVAL_MODEL": "nemotron",
+        "LATTICE_BASE_URL": "http://localhost:8090",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+      }
     },
     {
+      "label": "nemotron-test_synth",
+      "arm": "test_synth",
+      "reps": 1,
+      "why": "the only arm that changes mechanism rather than framing: the model writes an executable witness instead of reading a diff, so its verdict depends on no reading of the worker's code",
+      "env": {
+        "LATTICE_BACKEND": "llamacpp",
+        "LATTICE_EVAL_MODEL": "nemotron",
+        "LATTICE_BASE_URL": "http://localhost:8090",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+      }
+    },
+    {
+      "label": "nemotron-judge_anchored",
+      "arm": "judge_anchored",
+      "reps": 1,
+      "why": "half of the pair that lifts the anchor confound",
+      "env": {
+        "LATTICE_BACKEND": "llamacpp",
+        "LATTICE_EVAL_MODEL": "nemotron",
+        "LATTICE_BASE_URL": "http://localhost:8090",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+      }
+    },
+    {
+      "label": "nemotron-dloop",
+      "arm": "dloop",
+      "reps": 1,
+      "why": "the retry-with-failing-lines arm, and the one whose qwen figures move most between the gated and folded metrics (5th to 15th). Worth knowing whether that is the arm or the model",
+      "env": {
+        "LATTICE_BACKEND": "llamacpp",
+        "LATTICE_EVAL_MODEL": "nemotron",
+        "LATTICE_BASE_URL": "http://localhost:8090",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+      }
+    },
+    {
+      "label": "nemotron-m7",
+      "arm": "m7",
+      "reps": 1,
+      "why": "the static workflow this project is actually building. Second-largest gated-to-folded drop on qwen",
+      "env": {
+        "LATTICE_BACKEND": "llamacpp",
+        "LATTICE_EVAL_MODEL": "nemotron",
+        "LATTICE_BASE_URL": "http://localhost:8090",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+      }
+    },
+    {
+      "label": "nemotron-m7f",
+      "arm": "m7f",
+      "reps": 1,
+      "why": "the m7 variant with the largest qwen sample, so the comparison has the firmest other side",
+      "env": {
+        "LATTICE_BACKEND": "llamacpp",
+        "LATTICE_EVAL_MODEL": "nemotron",
+        "LATTICE_BASE_URL": "http://localhost:8090",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+      }
+    },
+    {
+      "label": "nemotron-judge_fullctx",
+      "arm": "judge_fullctx",
+      "reps": 1,
+      "why": "the arm most likely to feel a context ceiling, and this model's ceiling is characterised (M0 entry 1: the wall sits in (65536, 73728] on this card, and the server is sized 2x16384)",
+      "env": {
+        "LATTICE_BACKEND": "llamacpp",
+        "LATTICE_EVAL_MODEL": "nemotron",
+        "LATTICE_BASE_URL": "http://localhost:8090",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+      }
+    },
+    {
+      "label": "nemotron-staged",
       "arm": "staged",
-      "reps": 5,
-      "why": "last. Its result is a large effect already decisive at N=1, so repetition adds least here"
+      "reps": 1,
+      "why": "decomposed pipeline, the other end of the scaffolding range from monolith",
+      "env": {
+        "LATTICE_BACKEND": "llamacpp",
+        "LATTICE_EVAL_MODEL": "nemotron",
+        "LATTICE_BASE_URL": "http://localhost:8090",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+      }
+    },
+    {
+      "label": "nemotron-judge_bypass",
+      "arm": "judge_bypass",
+      "reps": 1,
+      "why": "first execution of this arm on any model -- the rotated-argument crash meant it had never run. No prior figures exist for it that are worth anything",
+      "env": {
+        "LATTICE_BACKEND": "llamacpp",
+        "LATTICE_EVAL_MODEL": "nemotron",
+        "LATTICE_BASE_URL": "http://localhost:8090",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+      }
+    },
+    {
+      "label": "nemotron-judge_staged",
+      "arm": "judge_staged",
+      "reps": 1,
+      "why": "completes the judge family for this model",
+      "env": {
+        "LATTICE_BACKEND": "llamacpp",
+        "LATTICE_EVAL_MODEL": "nemotron",
+        "LATTICE_BASE_URL": "http://localhost:8090",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+      }
+    },
+    {
+      "label": "nemotron-judge_caveat",
+      "arm": "judge_caveat",
+      "reps": 1,
+      "why": "completes the judge family for this model",
+      "env": {
+        "LATTICE_BACKEND": "llamacpp",
+        "LATTICE_EVAL_MODEL": "nemotron",
+        "LATTICE_BASE_URL": "http://localhost:8090",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+      }
+    },
+    {
+      "label": "nemotron-m7b",
+      "arm": "m7b",
+      "reps": 1,
+      "why": "m7 variant",
+      "env": {
+        "LATTICE_BACKEND": "llamacpp",
+        "LATTICE_EVAL_MODEL": "nemotron",
+        "LATTICE_BASE_URL": "http://localhost:8090",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+      }
+    },
+    {
+      "label": "nemotron-m7e",
+      "arm": "m7e",
+      "reps": 1,
+      "why": "m7 variant",
+      "env": {
+        "LATTICE_BACKEND": "llamacpp",
+        "LATTICE_EVAL_MODEL": "nemotron",
+        "LATTICE_BASE_URL": "http://localhost:8090",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+      }
+    },
+    {
+      "label": "nemotron-test_synth_retry",
+      "arm": "test_synth_retry",
+      "reps": 1,
+      "why": "last, because it is the most expensive and the least discriminating of the synth pair",
+      "env": {
+        "LATTICE_BACKEND": "llamacpp",
+        "LATTICE_EVAL_MODEL": "nemotron",
+        "LATTICE_BASE_URL": "http://localhost:8090",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+      }
+    },
+    {
+      "label": "qwen-judge_bypass",
+      "arm": "judge_bypass",
+      "reps": 3,
+      "why": "REQUIRES OLLAMA, not llama-server -- it will skip until Ollama is the live backend. The arm's 102 recorded rows were 90 crashes and were discarded on 2026-09-17; reps=3 matches the rest of the judge family so the comparison holds on one sample size",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "qwen2.5-coder:7b-instruct-q4_K_M",
+        "LATTICE_BASE_URL": "http://localhost:11434",
+        "LATTICE_RESULTS_SUBDIR": "results"
+      }
     }
   ]
 }
