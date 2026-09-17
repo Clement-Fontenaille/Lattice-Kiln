@@ -2,6 +2,9 @@
 
 **Status:** **partially answered 2026-09-14** from runs already recorded — three defects found, see below. The item-analysis half has still not been run.
 **Gates:** E4, and the interpretation of every arm comparison on the M6 suite.
+**Protocol:** [`experiments/E0-suite-construct-validation/PROTOCOL.md`](../../../../experiments/E0-suite-construct-validation/PROTOCOL.md)
+— the untouched-source test, the cost of defect 1, the item analysis, and the
+repair decision this sheet is still waiting on.
 
 ## The question
 
@@ -170,6 +173,24 @@ sheet, arrived at from the metric rather than from item analysis.
 exit code is a one-line change per check and would restore what the suite already
 measures. Whether the M4/M5/M6/M7 comparisons should be re-scored against it is a
 separate decision, and it is the one with consequences.
+
+## Operator note, 2026-09-15 — what the early suite was for
+
+The early test suite (`monolith`/`dloop`/`staged`, M4–M7) was never a hypothesis-testing
+framework, and it was never a benchmark. Its results were gathered by reading the
+model's actual output across scenarios, probing its limits, and falsifying a number of
+intuitions about what a sound cognition framework would look like.
+
+Its job was to **fail usefully**: show where the naive approach breaks, raise the
+questions that a naive read would not have raised, and force the documentation and
+litreview effort that followed. Push the naive approach until it shows *how* it fails,
+not just whether it does.
+
+A few hypotheses that need a proper testing framework got formulated along that road —
+and this research-and-evaluation roadmap, E0 included, is the answer to that need. The
+early suite is not. Reading defects 1–3 above as flaws in a benchmark misreads what the
+instrument was for; read as flaws in an exploratory probe, they are exactly the kind of
+finding it was built to surface.
 
 ## Cost
 

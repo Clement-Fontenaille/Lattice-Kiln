@@ -1,6 +1,7 @@
 # E7 — Which scenarios flipped between the M4 and M5 arms?
 
 **Status:** not run. **Needs no new runs and no decisions.**
+**Protocol:** [`experiments/E7-paired-reanalysis/PROTOCOL.md`](../../../../experiments/E7-paired-reanalysis/PROTOCOL.md)
 
 ## The question
 
