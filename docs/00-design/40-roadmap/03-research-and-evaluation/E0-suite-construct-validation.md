@@ -1,9 +1,12 @@
 # E0 — Is the evaluation suite measuring one coherent thing?
 
 **Status:** **answered 2026-09-17.** The item analysis has now run. The suite is
-**not unidimensional** — parallel analysis retains **two** factors. Three earlier
-defects (2026-09-14) stand, and folding the structural dimensions into the gate
-**changes arm ordering**. See "Item analysis, 2026-09-17" below.
+**not unidimensional** — parallel analysis retains **two** factors. Folding the
+structural dimensions into the gate **changes arm ordering**. Of the three
+defects found 2026-09-14: **defect 3 was repaired the same day** (annotated
+2026-09-18), defect 2 is a property of the suite rather than a fault, and
+**defect 1 is open and its repair decision is still unmade**. See "Item
+analysis, 2026-09-17" below.
 **Gates:** E4, and the interpretation of every arm comparison on the M6 suite.
 **Protocol:** [`experiments/E0-suite-construct-validation/PROTOCOL.md`](../../../../experiments/E0-suite-construct-validation/PROTOCOL.md)
 — the untouched-source test, the cost of defect 1, the item analysis, and the
@@ -92,7 +95,29 @@ earned. Reading 24/30 against 18/30 is reading 16 against 10 of what was in play
 the relative gap between arms is therefore **larger** than the totals suggest, not
 smaller.
 
-### 3. `wf3_refactor` has no structural dimension at all
+### 3. `wf3_refactor` has no structural dimension at all — **repaired the same day**
+
+> **Status, annotated 2026-09-18.** This was repaired on 2026-09-14 at `b986ba4`,
+> hours after it was written, and the sheet never said so. The repair added a
+> **witnessed twin** (`wf3_refactor_witnessed`) rather than changing this task:
+> the blind original is kept deliberately as the control half of a matched pair,
+> *"so the cost of an unwitnessed clause is measurable rather than anecdotal"*
+> (the twin's own docstring). A third variant, `wf3_refactor_blindview`, varies
+> the worker's view rather than the check.
+>
+> **What the pair has now measured**, from the 2026-09-17/18 runs: across 49 qwen
+> arm-reps the blind check and the witnessed check agree everywhere except
+> `monolith`, where blind reads 3/3 and witnessed reads 1/3 (`STRUCTSCORE` 0/3,
+> 0/3, 3/3). **An unwitnessed clause overstates by ~4%, concentrated entirely in
+> the arm with no scaffolding** — every scaffolded arm scores `STRUCTSCORE 3/3`
+> on every rep, so there was nothing to overstate. `baseline` behaves as the
+> control requires: blind 1/1, witnessed 0/1.
+>
+> Note also that the blind task adds **+1 to every arm equally**, `baseline`
+> included, so it shifts absolute scores by 1/34 and does **not** distort
+> arm-versus-arm comparison, which is what the suite is for.
+>
+> The description below is kept as written, because it is why the pair exists.
 
 Its objective asks for a shared helper to be extracted. Its check verifies only the
 returned prices, and its own comments show what the author guarded against:
@@ -115,6 +140,12 @@ structural dimension, but its check has an explicit discriminator subtest
 adequate; only the separate score line is missing. One task in thirty, not two.
 
 ### The remedy, and what it is not
+
+**Shipped 2026-09-14 at `b986ba4`** — the criterion below is not a proposal, it is
+what `wf3_refactor_witnessed/test_task.py` implements, as an `ast` walk over
+`discounts.py` looking for the `0.8` literal still written out in each function
+versus a call into a shared third one. Read the rest of this section as the
+rationale for a repair that exists, not as work outstanding.
 
 Operator ruling, 2026-09-14. **The repair for defect 3 is in the objective, not in the
 checking apparatus.** Restate the task until its completion has a mechanical witness:
@@ -223,9 +254,12 @@ to any factor structure computed on outcomes. Four of the nine ceiling items are
 false-premise tasks — consistent with defect 2, where doing nothing is the
 correct answer and every arm manages it.
 
-`wf3_refactor` sitting at the ceiling is **defect 3 confirmed from a third
-direction**: it has no structural witness, so every attempt passes whether the
-refactor happened or not.
+`wf3_refactor` sitting at the ceiling is **the control half of the wf3 pair
+behaving as designed**, not a defect: it is deliberately blind, so every attempt
+passes whether the refactor happened or not, and its witnessed twin is what
+carries the signal. Zero variance is the expected reading for it. (First written
+here as "defect 3 confirmed from a third direction" — corrected 2026-09-18 once
+the repair history was checked.)
 
 ### Seven items where better pipelines do worse
 
