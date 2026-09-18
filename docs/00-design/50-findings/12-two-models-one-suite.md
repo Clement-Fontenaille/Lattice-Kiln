@@ -223,3 +223,95 @@ document was produced by the implementation stage alone.**
 No figure here establishes what Nemotron scores with its audit and judge stages
 functioning. Raising `num_predict` on those two calls, or reading the `thinking`
 field, would produce that; neither has been done.
+
+## Addendum 2, 2026-09-18 — the reproduction, and two separate constraints
+
+Probe: `experiments/M6-evaluation-suite/probe_reasoning_budget.py`,
+results in `experiments/M6-evaluation-suite/results/reasoning_budget.json`.
+The audit prompt is read from `judge_anchored_workflow.py` rather than retyped,
+and the objectives and sources come from the suite fixtures.
+
+### The answer exists; the budget never reaches it
+
+Eight real objectives, `num_predict=2048`, Nemotron:
+
+| task | `done_reason` | eval tokens | thinking chars | response chars | `{…}` |
+|---|---|---|---|---|---|
+| `wf1_crossfile` | `stop` | 330 | 867 | 574 | yes |
+| `hf_csv` | `stop` | 620 | 1900 | 742 | yes |
+| `wf5_partial` | `stop` | 868 | 2500 | 631 | yes |
+| `hf_timeout_param` | `stop` | 735 | 2608 | 631 | yes |
+| `hf_merge_config` | `stop` | 713 | 2111 | 995 | yes |
+| `hf_path_sanitize` | `stop` | 774 | 2437 | 903 | yes |
+| `hf_rename` | `stop` | 817 | 2759 | 603 | yes |
+| `wf4_assumption` | `stop` | 1105 | 4892 | 440 | yes |
+
+**Eight of eight produce valid JSON when allowed to finish.** The arms allow 200.
+
+### The requirement is not a constant
+
+Same prompt (`hf_timeout_param`), same temperature 0.3, ten reps at
+`num_predict=4096`:
+
+```
+eval_count: min 609  median 1166  max 2635  mean 1348
+```
+
+A 4.3× spread on identical input. Completion rate by cap, over those ten:
+**200 → 0/10, 800 → 3/10, 1536 → 7/10, 2048 → 8/10.** Raising the cap does not
+make this reliable; the reasoning expands to use what it is given.
+
+### `/no_think` does not work through this path
+
+At the arm's own cap, three variants:
+
+| variant | `done_reason` | thinking | response |
+|---|---|---|---|
+| baseline | `length` | 884 | **0** |
+| `/no_think` as system message | `length` | 836 | **0** |
+| `/no_think` as prompt prefix | `stop` | 729 | **0** |
+
+The prefix changes the stop reason and still returns nothing.
+
+### qwen control
+
+Same prompt, `qwen2.5-coder:7b-instruct-q4_K_M`: `thinking` is 0 chars at both
+200 and 1536, response 820/839 chars, JSON found at the arm's own cap. **The
+prompts are not the problem.**
+
+### Two constraints, not one
+
+**Ollama's API-level `think` parameter turns the reasoning channel off**, which
+neither `/think` control token did:
+
+| request | `done_reason` | thinking | response |
+|---|---|---|---|
+| default | `length` | 926 | `''` |
+| `"think": false` | `stop` | **0** | `{"ok": true}` |
+| `"think": true` | `stop` | 435 | `{"ok": true}` |
+
+With reasoning off, a second constraint appears: **the answer alone overruns
+200 tokens.** At `think=false, cap=200`, five of eight runs still return
+`done_reason=length` with 715–872 chars of response truncated mid-object — 3/8
+parse. The audit answer for this prompt costs a median of 212 tokens.
+
+Raising the cap with reasoning off is reliable:
+
+| setting | parsed |
+|---|---|
+| `think=false`, cap 300 | **8/8** |
+| `think=false`, cap 400 | **8/8** |
+| `think=false`, cap 600 | **8/8** |
+
+Against 0/34 in production.
+
+### The invisible part
+
+`ollama_client.generate()` checks `if "response" not in payload: raise`. The key
+*is* present; its value is the empty string. Nothing in the harness distinguishes
+"the model returned nothing" from "the model returned something unparseable", so
+thirteen arms recorded `parsed: False, error: None` and were read as a model
+that judges badly.
+
+`done_reason == "length"` with an empty `response` is an unambiguous signature of
+truncation before any answer, and is available on every call.
