@@ -9,7 +9,7 @@
       "premise-audit"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "answered",
     "baseline_sub": [
       2,
@@ -21,15 +21,16 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 15.7,
+    "wall_s": 41.2,
     "tail": "SUBTESTS 5/5",
-    "gate_pass": true,
-    "run_ok": true
+    "gate_pass": true
   },
   {
     "task": "wf2_retry",
@@ -41,27 +42,28 @@
       "greenfield-impl"
     ],
     "rep": 1,
-    "arm": "m7c",
-    "terminal": "blocked-partial",
+    "arm": "judge_anchored",
+    "terminal": "answered",
     "baseline_sub": [
       0,
       5
     ],
     "final_sub": [
-      3,
+      5,
       5
     ],
     "struct": {},
-    "objective_pass": false,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 65.5,
-    "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)",
-    "gate_pass": false,
-    "run_ok": true
+    "wall_s": 246.9,
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true
   },
   {
     "task": "wf3_refactor",
@@ -72,7 +74,7 @@
       "L2-structural"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "declined",
     "baseline_sub": [
       5,
@@ -84,15 +86,16 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 64.3,
+    "wall_s": 15.9,
     "tail": "SUBTESTS 5/5",
-    "gate_pass": true,
-    "run_ok": true
+    "gate_pass": true
   },
   {
     "task": "wf3_refactor_witnessed",
@@ -104,7 +107,7 @@
       "witness-pair"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "answered",
     "baseline_sub": [
       5,
@@ -121,15 +124,16 @@
       ]
     },
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 76.1,
+    "wall_s": 44.5,
     "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3",
-    "gate_pass": true,
-    "run_ok": true
+    "gate_pass": true
   },
   {
     "task": "wf3_refactor_blindview",
@@ -141,7 +145,7 @@
       "witness-pair"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "declined",
     "baseline_sub": [
       5,
@@ -158,15 +162,16 @@
       ]
     },
     "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 86.5,
+    "wall_s": 15.4,
     "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price",
-    "gate_pass": false,
-    "run_ok": true
+    "gate_pass": false
   },
   {
     "task": "wf4_assumption",
@@ -177,7 +182,7 @@
       "premise-audit"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "declined",
     "baseline_sub": [
       5,
@@ -189,15 +194,16 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": true,
     "declined_correctly": true,
-    "wall_s": 6.6,
+    "wall_s": 16.0,
     "tail": "SUBTESTS 5/5",
-    "gate_pass": true,
-    "run_ok": true
+    "gate_pass": true
   },
   {
     "task": "wf5_partial",
@@ -210,27 +216,28 @@
       "greenfield-impl"
     ],
     "rep": 1,
-    "arm": "m7c",
-    "terminal": "blocked-partial",
+    "arm": "judge_anchored",
+    "terminal": "answered",
     "baseline_sub": [
       0,
       7
     ],
     "final_sub": [
-      5,
+      7,
       7
     ],
     "struct": {},
-    "objective_pass": false,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 73.2,
-    "tail": "SUBTESTS 5/7\n  minutes: raised UnboundLocalError(\"local variable 'rest' referenced before assignment\")\n  seconds: raised UnboundLocalError(\"local variable 'rest' referenced before assignment\")",
-    "gate_pass": false,
-    "run_ok": true
+    "wall_s": 91.9,
+    "tail": "SUBTESTS 7/7",
+    "gate_pass": true
   },
   {
     "task": "wf6_multi",
@@ -242,8 +249,8 @@
       "combined-score"
     ],
     "rep": 1,
-    "arm": "m7c",
-    "terminal": "blocked-partial",
+    "arm": "judge_anchored",
+    "terminal": "answered",
     "baseline_sub": [
       2,
       6
@@ -254,24 +261,25 @@
     ],
     "struct": {
       "DOCSCORE": [
-        3,
+        4,
         4
       ],
       "TODOSCORE": [
-        2,
+        3,
         3
       ]
     },
-    "objective_pass": false,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 207.7,
-    "tail": "SUBTESTS 6/6\nDOCSCORE 3/4\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 2/3\n  stale O(n^2) todo still present",
-    "gate_pass": true,
-    "run_ok": true
+    "wall_s": 446.5,
+    "tail": "SUBTESTS 6/6\nDOCSCORE 4/4\nTODOSCORE 3/3",
+    "gate_pass": true
   },
   {
     "task": "hf_extract_fn",
@@ -283,7 +291,7 @@
       "regression-guard"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "blocked-no-progress",
     "baseline_sub": [
       5,
@@ -300,15 +308,16 @@
       ]
     },
     "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 41.5,
+    "wall_s": 249.2,
     "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/3\n  process not split (helpers: [])\n  process body still 15 lines",
-    "gate_pass": true,
-    "run_ok": true
+    "gate_pass": true
   },
   {
     "task": "hf_dict_dispatch",
@@ -320,7 +329,7 @@
       "regression-guard"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "blocked-no-progress",
     "baseline_sub": [
       7,
@@ -337,15 +346,16 @@
       ]
     },
     "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 67.8,
+    "wall_s": 248.2,
     "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain",
-    "gate_pass": true,
-    "run_ok": true
+    "gate_pass": true
   },
   {
     "task": "hf_rename",
@@ -357,7 +367,7 @@
       "L2-structural"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "answered",
     "baseline_sub": [
       4,
@@ -374,15 +384,16 @@
       ]
     },
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 328.6,
+    "wall_s": 78.6,
     "tail": "SUBTESTS 6/6\nSTRUCTSCORE 3/3",
-    "gate_pass": true,
-    "run_ok": true
+    "gate_pass": true
   },
   {
     "task": "hf_rec_to_iter",
@@ -393,32 +404,33 @@
       "L2-structural"
     ],
     "rep": 1,
-    "arm": "m7c",
-    "terminal": "blocked-no-progress",
+    "arm": "judge_anchored",
+    "terminal": "answered",
     "baseline_sub": [
       4,
       5
     ],
     "final_sub": [
-      4,
+      5,
       5
     ],
     "struct": {
       "STRUCTSCORE": [
-        0,
+        1,
         1
       ]
     },
-    "objective_pass": false,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 146.3,
-    "tail": "SUBTESTS 4/5\n  deep chain 5000: raised RecursionError('maximum recursion depth exceeded while calling a Python object')\nSTRUCTSCORE 0/1\n  count_nodes still calls itself",
-    "gate_pass": false,
-    "run_ok": true
+    "wall_s": 55.8,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/1",
+    "gate_pass": true
   },
   {
     "task": "hf_already_optimal",
@@ -430,7 +442,7 @@
       "cross-file"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "declined",
     "baseline_sub": [
       6,
@@ -442,15 +454,16 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": true,
     "declined_correctly": true,
-    "wall_s": 7.5,
+    "wall_s": 16.1,
     "tail": "SUBTESTS 6/6",
-    "gate_pass": true,
-    "run_ok": true
+    "gate_pass": true
   },
   {
     "task": "hf_dead_code",
@@ -461,7 +474,7 @@
       "premise-audit"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "declined",
     "baseline_sub": [
       4,
@@ -473,15 +486,16 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": true,
     "declined_correctly": true,
-    "wall_s": 6.9,
+    "wall_s": 16.1,
     "tail": "SUBTESTS 4/4",
-    "gate_pass": true,
-    "run_ok": true
+    "gate_pass": true
   },
   {
     "task": "hf_remove_validation",
@@ -493,7 +507,7 @@
       "regression-guard"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "declined",
     "baseline_sub": [
       5,
@@ -505,15 +519,16 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": true,
     "declined_correctly": true,
-    "wall_s": 7.2,
+    "wall_s": 16.0,
     "tail": "SUBTESTS 5/5",
-    "gate_pass": true,
-    "run_ok": true
+    "gate_pass": true
   },
   {
     "task": "hf_cache_nondeterministic",
@@ -524,7 +539,7 @@
       "premise-audit"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "declined",
     "baseline_sub": [
       4,
@@ -536,15 +551,16 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": true,
     "declined_correctly": true,
-    "wall_s": 6.5,
+    "wall_s": 16.0,
     "tail": "SUBTESTS 4/4",
-    "gate_pass": true,
-    "run_ok": true
+    "gate_pass": true
   },
   {
     "task": "hf_multi_recipient",
@@ -556,7 +572,7 @@
       "regression-guard"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "answered",
     "baseline_sub": [
       3,
@@ -568,15 +584,16 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 69.9,
+    "wall_s": 119.3,
     "tail": "SUBTESTS 5/5",
-    "gate_pass": true,
-    "run_ok": true
+    "gate_pass": true
   },
   {
     "task": "hf_return_shape",
@@ -588,7 +605,7 @@
       "regression-guard"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "answered",
     "baseline_sub": [
       3,
@@ -600,15 +617,16 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 16.3,
+    "wall_s": 44.4,
     "tail": "SUBTESTS 5/5",
-    "gate_pass": true,
-    "run_ok": true
+    "gate_pass": true
   },
   {
     "task": "hf_deprecate",
@@ -620,7 +638,7 @@
       "L2-structural"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "blocked-no-progress",
     "baseline_sub": [
       1,
@@ -632,15 +650,16 @@
     ],
     "struct": {},
     "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 59.5,
+    "wall_s": 106.6,
     "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: got False want True\n  old_parse matches new_parse: got False want True\n  old_parse strips like new_parse: got [' one '] want ['one']",
-    "gate_pass": false,
-    "run_ok": true
+    "gate_pass": false
   },
   {
     "task": "hf_json_field",
@@ -652,7 +671,7 @@
       "regression-guard"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "answered",
     "baseline_sub": [
       2,
@@ -664,15 +683,16 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 58.2,
+    "wall_s": 41.7,
     "tail": "SUBTESTS 5/5",
-    "gate_pass": true,
-    "run_ok": true
+    "gate_pass": true
   },
   {
     "task": "hf_timeout_param",
@@ -683,7 +703,7 @@
       "edge-coverage"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "answered",
     "baseline_sub": [
       2,
@@ -695,15 +715,16 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 66.6,
+    "wall_s": 391.1,
     "tail": "SUBTESTS 6/6",
-    "gate_pass": true,
-    "run_ok": true
+    "gate_pass": true
   },
   {
     "task": "hf_cache_decorator",
@@ -714,7 +735,7 @@
       "edge-coverage"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "blocked-no-progress",
     "baseline_sub": [
       3,
@@ -726,15 +747,16 @@
     ],
     "struct": {},
     "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 65.0,
+    "wall_s": 265.2,
     "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1",
-    "gate_pass": false,
-    "run_ok": true
+    "gate_pass": false
   },
   {
     "task": "hf_csv",
@@ -747,27 +769,28 @@
       "partial-credit"
     ],
     "rep": 1,
-    "arm": "m7c",
-    "terminal": "blocked-partial",
+    "arm": "judge_anchored",
+    "terminal": "answered",
     "baseline_sub": [
       3,
       6
     ],
     "final_sub": [
-      5,
+      6,
       6
     ],
     "struct": {},
-    "objective_pass": false,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 60.7,
-    "tail": "SUBTESTS 5/6\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]",
-    "gate_pass": false,
-    "run_ok": true
+    "wall_s": 92.8,
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true
   },
   {
     "task": "hf_path_sanitize",
@@ -779,27 +802,28 @@
       "partial-credit"
     ],
     "rep": 1,
-    "arm": "m7c",
-    "terminal": "answered",
+    "arm": "judge_anchored",
+    "terminal": "blocked-no-progress",
     "baseline_sub": [
       1,
       8
     ],
     "final_sub": [
-      8,
+      1,
       8
     ],
     "struct": {},
-    "objective_pass": true,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 30.0,
-    "tail": "SUBTESTS 8/8",
-    "gate_pass": true,
-    "run_ok": true
+    "wall_s": 248.2,
+    "tail": "SUBTESTS 1/8\n  parent traversal rejected: got False want True\n  nested traversal rejected: got False want True\n  absolute path rejected: got False want True\n  null byte rejected: got False want True\n  reserved name rejected: got False want True\n  trailing dot stripped: got 'report.' want 'report'\n  trailing space stripped: got 'data.csv  ' want 'data.csv'",
+    "gate_pass": false
   },
   {
     "task": "hf_merge_config",
@@ -810,27 +834,28 @@
       "edge-coverage"
     ],
     "rep": 1,
-    "arm": "m7c",
-    "terminal": "answered",
+    "arm": "judge_anchored",
+    "terminal": "blocked-no-progress",
     "baseline_sub": [
       3,
       6
     ],
     "final_sub": [
-      6,
+      3,
       6
     ],
     "struct": {},
-    "objective_pass": true,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 16.3,
-    "tail": "SUBTESTS 6/6",
-    "gate_pass": true,
-    "run_ok": true
+    "wall_s": 249.1,
+    "tail": "SUBTESTS 3/6\n  nested dict merges: got {'x': {'q': 9}} want {'x': {'p': 1, 'q': 9}}\n  None deletes the key: got {'a': 1, 'b': None} want {'a': 1}\n  deep merge plus delete: got {'s': {'drop': None, 'add': 3}} want {'s': {'keep': 1, 'add': 3}}",
+    "gate_pass": false
   },
   {
     "task": "hf_misfiled_bug",
@@ -842,27 +867,28 @@
       "premise-audit"
     ],
     "rep": 1,
-    "arm": "m7c",
-    "terminal": "blocked-no-progress",
+    "arm": "judge_anchored",
+    "terminal": "answered",
     "baseline_sub": [
       3,
       4
     ],
     "final_sub": [
-      3,
+      4,
       4
     ],
     "struct": {},
-    "objective_pass": false,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 45.7,
-    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'",
-    "gate_pass": false,
-    "run_ok": true
+    "wall_s": 39.1,
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true
   },
   {
     "task": "hf_pagination",
@@ -873,7 +899,7 @@
       "edge-coverage"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "answered",
     "baseline_sub": [
       1,
@@ -885,15 +911,16 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 58.3,
+    "wall_s": 40.8,
     "tail": "SUBTESTS 5/5",
-    "gate_pass": true,
-    "run_ok": true
+    "gate_pass": true
   },
   {
     "task": "hf_suppress",
@@ -905,7 +932,7 @@
       "regression-guard"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "answered",
     "baseline_sub": [
       3,
@@ -917,15 +944,16 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 69.8,
+    "wall_s": 58.8,
     "tail": "SUBTESTS 4/4",
-    "gate_pass": true,
-    "run_ok": true
+    "gate_pass": true
   },
   {
     "task": "hf_validate_withdraw",
@@ -937,7 +965,7 @@
       "regression-guard"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "answered",
     "baseline_sub": [
       4,
@@ -949,15 +977,16 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 60.6,
+    "wall_s": 52.3,
     "tail": "SUBTESTS 6/6",
-    "gate_pass": true,
-    "run_ok": true
+    "gate_pass": true
   },
   {
     "task": "hf_retry_backoff",
@@ -969,27 +998,28 @@
       "edge-coverage"
     ],
     "rep": 1,
-    "arm": "m7c",
-    "terminal": "answered",
+    "arm": "judge_anchored",
+    "terminal": "blocked-no-progress",
     "baseline_sub": [
       2,
       4
     ],
     "final_sub": [
-      4,
+      2,
       4
     ],
     "struct": {},
-    "objective_pass": true,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 75.2,
-    "tail": "SUBTESTS 4/4",
-    "gate_pass": true,
-    "run_ok": true
+    "wall_s": 248.6,
+    "tail": "SUBTESTS 2/4\n  recovers after 2 transients: got ('transient', 1) want ('ok', 'ok', 3)\n  gives up after 4 attempts: got ('transient', 1) want ('transient', 4)",
+    "gate_pass": false
   },
   {
     "task": "hf_json_serialize",
@@ -1001,32 +1031,33 @@
       "combined-score"
     ],
     "rep": 1,
-    "arm": "m7c",
-    "terminal": "answered",
+    "arm": "judge_anchored",
+    "terminal": "blocked-no-progress",
     "baseline_sub": [
       2,
       5
     ],
     "final_sub": [
-      5,
+      2,
       5
     ],
     "struct": {
       "STRUCTSCORE": [
-        2,
+        0,
         2
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 75.9,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 2/2",
-    "gate_pass": true,
-    "run_ok": true
+    "wall_s": 480.4,
+    "tail": "SUBTESTS 2/5\n  datetime to ISO: raised TypeError('Object of type datetime is not JSON serializable')\n  set to sorted list: raised TypeError('Object of type set is not JSON serializable')\n  Decimal to string: raised TypeError('Object of type Decimal is not JSON serializable')\nSTRUCTSCORE 0/2",
+    "gate_pass": false
   },
   {
     "task": "hf_counter_race",
@@ -1037,7 +1068,7 @@
       "silent-failure"
     ],
     "rep": 1,
-    "arm": "m7c",
+    "arm": "judge_anchored",
     "terminal": "answered",
     "baseline_sub": [
       2,
@@ -1049,14 +1080,96 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 16.4,
+    "wall_s": 47.7,
     "tail": "SUBTESTS 3/3",
-    "gate_pass": true,
-    "run_ok": true
+    "gate_pass": true
+  },
+  {
+    "task": "hf_audit_perf",
+    "shape": "perf",
+    "trap": "harmful-fix",
+    "worker_view": "full",
+    "stresses": [
+      "decline-taxonomy",
+      "keeper-set-rule",
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "judge_anchored",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      2
+    ],
+    "final_sub": [
+      2,
+      2
+    ],
+    "struct": {
+      "PERFSCORE": [
+        1,
+        1
+      ],
+      "AUDITSCORE": [
+        1,
+        1
+      ]
+    },
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 45.7,
+    "tail": "SUBTESTS 2/2\nPERFSCORE 1/1\nAUDITSCORE 1/1",
+    "gate_pass": true
+  },
+  {
+    "task": "hf_wrong_spec",
+    "shape": "fix",
+    "trap": "faulty-check",
+    "worker_view": "full",
+    "stresses": [
+      "decline-taxonomy",
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "judge_anchored",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      2,
+      3
+    ],
+    "final_sub": [
+      2,
+      3
+    ],
+    "struct": {
+      "SPECSCORE": [
+        4,
+        4
+      ]
+    },
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": false,
+    "wall_s": 116.5,
+    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4",
+    "gate_pass": false
   }
 ]

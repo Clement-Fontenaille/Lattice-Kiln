@@ -26,7 +26,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.0,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf1_crossfile",
@@ -55,7 +57,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 4.1,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf1_crossfile",
@@ -84,7 +88,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 4.2,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf1_crossfile",
@@ -113,7 +119,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 10.8,
-    "tail": "SUBTESTS 2/5\n  total qty=3: got 5 want 15\n  total mixed: got 12 want 14\n  line_price direct: got 5 want 20"
+    "tail": "SUBTESTS 2/5\n  total qty=3: got 5 want 15\n  total mixed: got 12 want 14\n  line_price direct: got 5 want 20",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf2_retry",
@@ -143,7 +151,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.8,
-    "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)"
+    "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf2_retry",
@@ -173,7 +183,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.1,
-    "tail": "SUBTESTS 3/5\n  exhaust then re-raise last: raised UnboundLocalError(\"local variable 'e' referenced before assignment\")\n  retries=0 is one attempt: raised UnboundLocalError(\"local variable 'e' referenced before assignment\")"
+    "tail": "SUBTESTS 3/5\n  exhaust then re-raise last: raised UnboundLocalError(\"local variable 'e' referenced before assignment\")\n  retries=0 is one attempt: raised UnboundLocalError(\"local variable 'e' referenced before assignment\")",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf2_retry",
@@ -203,7 +215,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.2,
-    "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)"
+    "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor",
@@ -232,7 +246,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.5,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor",
@@ -261,7 +277,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 4.9,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor",
@@ -290,7 +308,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 4.8,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor_witnessed",
@@ -325,7 +345,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.9,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor_witnessed",
@@ -360,7 +382,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 4.7,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor_witnessed",
@@ -395,7 +419,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 4.8,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor_blindview",
@@ -430,7 +456,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.3,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor_blindview",
@@ -465,7 +493,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 4.9,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor_blindview",
@@ -500,7 +530,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 4.9,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf4_assumption",
@@ -529,7 +561,9 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 6.4,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf4_assumption",
@@ -558,7 +592,9 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 5.6,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf4_assumption",
@@ -587,7 +623,9 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 5.6,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf5_partial",
@@ -618,7 +656,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 8.1,
-    "tail": "SUBTESTS 5/7\n  minutes: got 0 want 2700\n  seconds: got 0 want 90"
+    "tail": "SUBTESTS 5/7\n  minutes: got 0 want 2700\n  seconds: got 0 want 90",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf5_partial",
@@ -649,7 +689,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 7.1,
-    "tail": "SUBTESTS 5/7\n  h+m: raised ValueError(\"invalid literal for int() with base 10: '1h30'\")\n  h+m+s: raised ValueError(\"invalid literal for int() with base 10: '1h2'\")"
+    "tail": "SUBTESTS 5/7\n  h+m: raised ValueError(\"invalid literal for int() with base 10: '1h30'\")\n  h+m+s: raised ValueError(\"invalid literal for int() with base 10: '1h2'\")",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf5_partial",
@@ -680,7 +722,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 8.5,
-    "tail": "SUBTESTS 7/7"
+    "tail": "SUBTESTS 7/7",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf6_multi",
@@ -719,7 +763,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 54.1,
-    "tail": "SUBTESTS 2/6\n  topo chain raised NotImplementedError()\n  topo diamond raised NotImplementedError()\n  topo cycle: still NotImplementedError\n  topo empty raised NotImplementedError()\nDOCSCORE 0/4\n  no module docstring\n  build_graph docstring missing Args/Returns\n  topo_sort docstring missing Args/Returns/Raises\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present"
+    "tail": "SUBTESTS 2/6\n  topo chain raised NotImplementedError()\n  topo diamond raised NotImplementedError()\n  topo cycle: still NotImplementedError\n  topo empty raised NotImplementedError()\nDOCSCORE 0/4\n  no module docstring\n  build_graph docstring missing Args/Returns\n  topo_sort docstring missing Args/Returns/Raises\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf6_multi",
@@ -758,7 +804,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 52.9,
-    "tail": "SUBTESTS 2/6\n  topo chain raised NotImplementedError()\n  topo diamond raised NotImplementedError()\n  topo cycle: still NotImplementedError\n  topo empty raised NotImplementedError()\nDOCSCORE 0/4\n  no module docstring\n  build_graph docstring missing Args/Returns\n  topo_sort docstring missing Args/Returns/Raises\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present"
+    "tail": "SUBTESTS 2/6\n  topo chain raised NotImplementedError()\n  topo diamond raised NotImplementedError()\n  topo cycle: still NotImplementedError\n  topo empty raised NotImplementedError()\nDOCSCORE 0/4\n  no module docstring\n  build_graph docstring missing Args/Returns\n  topo_sort docstring missing Args/Returns/Raises\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf6_multi",
@@ -797,7 +845,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 41.4,
-    "tail": "SUBTESTS 2/6\n  topo chain raised NotImplementedError()\n  topo diamond raised NotImplementedError()\n  topo cycle: still NotImplementedError\n  topo empty raised NotImplementedError()\nDOCSCORE 0/4\n  no module docstring\n  build_graph docstring missing Args/Returns\n  topo_sort docstring missing Args/Returns/Raises\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present"
+    "tail": "SUBTESTS 2/6\n  topo chain raised NotImplementedError()\n  topo diamond raised NotImplementedError()\n  topo cycle: still NotImplementedError\n  topo empty raised NotImplementedError()\nDOCSCORE 0/4\n  no module docstring\n  build_graph docstring missing Args/Returns\n  topo_sort docstring missing Args/Returns/Raises\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_extract_fn",
@@ -836,7 +886,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 8.3,
-    "tail": "SUBTESTS 2/5\n  empty input early-return: raised TypeError('string indices must be integers')\n  bad record is logged: got 0 want 1\n  all-bad input: got {'ok': [], 'skipped': [], 'total': 0} want {'ok': [], 'skipped': [\"{'x': 1}: missing 'amount'\", \"{'y': 2}: missing 'amount'\"], 'total': 0}\nSTRUCTSCORE 3/3"
+    "tail": "SUBTESTS 2/5\n  empty input early-return: raised TypeError('string indices must be integers')\n  bad record is logged: got 0 want 1\n  all-bad input: got {'ok': [], 'skipped': [], 'total': 0} want {'ok': [], 'skipped': [\"{'x': 1}: missing 'amount'\", \"{'y': 2}: missing 'amount'\"], 'total': 0}\nSTRUCTSCORE 3/3",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_extract_fn",
@@ -875,7 +927,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.6,
-    "tail": "SUBTESTS 2/5\n  empty input early-return: raised TypeError('string indices must be integers')\n  bad record is logged: got 0 want 1\n  all-bad input: got {'ok': [], 'skipped': [], 'total': 0} want {'ok': [], 'skipped': [\"{'x': 1}: missing 'amount'\", \"{'y': 2}: missing 'amount'\"], 'total': 0}\nSTRUCTSCORE 3/3"
+    "tail": "SUBTESTS 2/5\n  empty input early-return: raised TypeError('string indices must be integers')\n  bad record is logged: got 0 want 1\n  all-bad input: got {'ok': [], 'skipped': [], 'total': 0} want {'ok': [], 'skipped': [\"{'x': 1}: missing 'amount'\", \"{'y': 2}: missing 'amount'\"], 'total': 0}\nSTRUCTSCORE 3/3",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_extract_fn",
@@ -914,7 +968,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.6,
-    "tail": "SUBTESTS 2/5\n  empty input early-return: raised TypeError('string indices must be integers')\n  bad record is logged: got 0 want 1\n  all-bad input: got {'ok': [], 'skipped': [], 'total': 0} want {'ok': [], 'skipped': [\"{'x': 1}: missing 'amount'\", \"{'y': 2}: missing 'amount'\"], 'total': 0}\nSTRUCTSCORE 3/3"
+    "tail": "SUBTESTS 2/5\n  empty input early-return: raised TypeError('string indices must be integers')\n  bad record is logged: got 0 want 1\n  all-bad input: got {'ok': [], 'skipped': [], 'total': 0} want {'ok': [], 'skipped': [\"{'x': 1}: missing 'amount'\", \"{'y': 2}: missing 'amount'\"], 'total': 0}\nSTRUCTSCORE 3/3",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_dict_dispatch",
@@ -949,7 +1005,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.7,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_dict_dispatch_rw785jpn\\test_task.py\", line 10, in <module>\n    import router\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_dict_dispatch_rw785jpn\\router.py\", line 5\n    \"audit\": lambda: (ctx[\"audit_count\"] += 1) and f\"audit #{ctx['audit_count']}\",\n                                         ^^\nSyntaxError: invalid syntax"
+    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_dict_dispatch_rw785jpn\\test_task.py\", line 10, in <module>\n    import router\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_dict_dispatch_rw785jpn\\router.py\", line 5\n    \"audit\": lambda: (ctx[\"audit_count\"] += 1) and f\"audit #{ctx['audit_count']}\",\n                                         ^^\nSyntaxError: invalid syntax",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_dict_dispatch",
@@ -984,7 +1042,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.3,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_dict_dispatch_ouad1b8q\\test_task.py\", line 10, in <module>\n    import router\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_dict_dispatch_ouad1b8q\\router.py\", line 5\n    \"audit\": lambda ctx: (ctx[\"audit_count\"] += 1, f\"audit #{ctx['audit_count']}\"),\n                                             ^^\nSyntaxError: invalid syntax"
+    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_dict_dispatch_ouad1b8q\\test_task.py\", line 10, in <module>\n    import router\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_dict_dispatch_ouad1b8q\\router.py\", line 5\n    \"audit\": lambda ctx: (ctx[\"audit_count\"] += 1, f\"audit #{ctx['audit_count']}\"),\n                                             ^^\nSyntaxError: invalid syntax",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_dict_dispatch",
@@ -1019,7 +1079,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.2,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_dict_dispatch_z5hqgukx\\test_task.py\", line 10, in <module>\n    import router\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_dict_dispatch_z5hqgukx\\router.py\", line 5\n    \"audit\": lambda ctx: (ctx[\"audit_count\"] += 1, f\"audit #{ctx['audit_count']}\"),\n                                             ^^\nSyntaxError: invalid syntax"
+    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_dict_dispatch_z5hqgukx\\test_task.py\", line 10, in <module>\n    import router\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_dict_dispatch_z5hqgukx\\router.py\", line 5\n    \"audit\": lambda ctx: (ctx[\"audit_count\"] += 1, f\"audit #{ctx['audit_count']}\"),\n                                             ^^\nSyntaxError: invalid syntax",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_rename",
@@ -1054,7 +1116,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 8.5,
-    "tail": "SUBTESTS 6/6\nSTRUCTSCORE 3/3"
+    "tail": "SUBTESTS 6/6\nSTRUCTSCORE 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_rename",
@@ -1089,7 +1153,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 7.1,
-    "tail": "SUBTESTS 6/6\nSTRUCTSCORE 3/3"
+    "tail": "SUBTESTS 6/6\nSTRUCTSCORE 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_rename",
@@ -1124,7 +1190,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.9,
-    "tail": "SUBTESTS 6/6\nSTRUCTSCORE 3/3"
+    "tail": "SUBTESTS 6/6\nSTRUCTSCORE 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_rec_to_iter",
@@ -1158,7 +1226,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.4,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/1"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/1",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_rec_to_iter",
@@ -1191,7 +1261,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 7.0,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_rec_to_iter_ky2o7s5z\\test_task.py\", line 10, in <module>\n    import tree\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_rec_to_iter_ky2o7s5z\\tree.py\", line 19\n    count_nodes(node) in tree.py is recursive and raises RecursionError on a deep (chain-shaped) tree. Rewrite it to be iterative with an explicit stack, keeping the same results and the None->0 and leaf->1 base cases.\n                                                         ^^^^^^^^^^^^^^\nSyntaxError: invalid syntax"
+    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_rec_to_iter_ky2o7s5z\\test_task.py\", line 10, in <module>\n    import tree\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_rec_to_iter_ky2o7s5z\\tree.py\", line 19\n    count_nodes(node) in tree.py is recursive and raises RecursionError on a deep (chain-shaped) tree. Rewrite it to be iterative with an explicit stack, keeping the same results and the None->0 and leaf->1 base cases.\n                                                         ^^^^^^^^^^^^^^\nSyntaxError: invalid syntax",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_rec_to_iter",
@@ -1224,7 +1296,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.9,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_rec_to_iter_bqqiw4aj\\test_task.py\", line 10, in <module>\n    import tree\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_rec_to_iter_bqqiw4aj\\tree.py\", line 19\n    count_nodes(node) in tree.py is recursive and raises RecursionError on a deep (chain-shaped) tree. Rewrite it to be iterative with an explicit stack, keeping the same results and the None->0 and leaf->1 base cases.\n                                                         ^^^^^^^^^^^^^^\nSyntaxError: invalid syntax"
+    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_rec_to_iter_bqqiw4aj\\test_task.py\", line 10, in <module>\n    import tree\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_rec_to_iter_bqqiw4aj\\tree.py\", line 19\n    count_nodes(node) in tree.py is recursive and raises RecursionError on a deep (chain-shaped) tree. Rewrite it to be iterative with an explicit stack, keeping the same results and the None->0 and leaf->1 base cases.\n                                                         ^^^^^^^^^^^^^^\nSyntaxError: invalid syntax",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_already_optimal",
@@ -1254,7 +1328,9 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 5.8,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_already_optimal",
@@ -1284,7 +1360,9 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 5.2,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_already_optimal",
@@ -1314,7 +1392,9 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 5.0,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_dead_code",
@@ -1343,7 +1423,9 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 4.2,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_dead_code",
@@ -1372,7 +1454,9 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 6.7,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_dead_code",
@@ -1401,7 +1485,9 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 6.8,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_remove_validation",
@@ -1431,7 +1517,9 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 5.9,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_remove_validation",
@@ -1461,7 +1549,9 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 5.0,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_remove_validation",
@@ -1491,7 +1581,9 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 5.0,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_cache_nondeterministic",
@@ -1520,7 +1612,9 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 8.4,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_cache_nondeterministic",
@@ -1549,7 +1643,9 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 6.2,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_cache_nondeterministic",
@@ -1578,7 +1674,9 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 6.3,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_multi_recipient",
@@ -1612,7 +1710,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.2,
-    "tail": "SUBTESTS 0/5\n  single string still works (regression): got [] want [('alice', 'hi')]\n  string not iterated char-wise: got 0 want 1\n  list of recipients fans out: got [] want [('a', 'hi'), ('b', 'hi')]\n  tuple of recipients fans out: got [] want [('x', 'm'), ('y', 'm')]\n  single string return unchanged (regression): got <generator object notify at 0x0000025977C44120> want 'sent to alice'"
+    "tail": "SUBTESTS 0/5\n  single string still works (regression): got [] want [('alice', 'hi')]\n  string not iterated char-wise: got 0 want 1\n  list of recipients fans out: got [] want [('a', 'hi'), ('b', 'hi')]\n  tuple of recipients fans out: got [] want [('x', 'm'), ('y', 'm')]\n  single string return unchanged (regression): got <generator object notify at 0x0000025977C44120> want 'sent to alice'",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_multi_recipient",
@@ -1646,7 +1746,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.3,
-    "tail": "SUBTESTS 0/5\n  single string still works (regression): got [] want [('alice', 'hi')]\n  string not iterated char-wise: got 0 want 1\n  list of recipients fans out: got [] want [('a', 'hi'), ('b', 'hi')]\n  tuple of recipients fans out: got [] want [('x', 'm'), ('y', 'm')]\n  single string return unchanged (regression): got <generator object notify at 0x000002A1BC4F4120> want 'sent to alice'"
+    "tail": "SUBTESTS 0/5\n  single string still works (regression): got [] want [('alice', 'hi')]\n  string not iterated char-wise: got 0 want 1\n  list of recipients fans out: got [] want [('a', 'hi'), ('b', 'hi')]\n  tuple of recipients fans out: got [] want [('x', 'm'), ('y', 'm')]\n  single string return unchanged (regression): got <generator object notify at 0x000002A1BC4F4120> want 'sent to alice'",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_multi_recipient",
@@ -1680,7 +1782,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.3,
-    "tail": "SUBTESTS 0/5\n  single string still works (regression): got [] want [('alice', 'hi')]\n  string not iterated char-wise: got 0 want 1\n  list of recipients fans out: got [] want [('a', 'hi'), ('b', 'hi')]\n  tuple of recipients fans out: got [] want [('x', 'm'), ('y', 'm')]\n  single string return unchanged (regression): got <generator object notify at 0x000002046F424120> want 'sent to alice'"
+    "tail": "SUBTESTS 0/5\n  single string still works (regression): got [] want [('alice', 'hi')]\n  string not iterated char-wise: got 0 want 1\n  list of recipients fans out: got [] want [('a', 'hi'), ('b', 'hi')]\n  tuple of recipients fans out: got [] want [('x', 'm'), ('y', 'm')]\n  single string return unchanged (regression): got <generator object notify at 0x000002046F424120> want 'sent to alice'",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_return_shape",
@@ -1710,7 +1814,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.1,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_return_shape",
@@ -1740,7 +1846,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.2,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_return_shape",
@@ -1770,7 +1878,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.3,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_deprecate",
@@ -1800,7 +1910,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.4,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_deprecate",
@@ -1830,7 +1942,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.5,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_deprecate",
@@ -1860,7 +1974,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.3,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_json_field",
@@ -1890,7 +2006,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.7,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_json_field",
@@ -1920,7 +2038,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.2,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_json_field",
@@ -1950,7 +2070,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 4.9,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_timeout_param",
@@ -1979,7 +2101,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 7.1,
-    "tail": "SUBTESTS 5/6\n  timeout=0, fast still ok: raised TimeoutError('Zero timeout budget')"
+    "tail": "SUBTESTS 5/6\n  timeout=0, fast still ok: raised TimeoutError('Zero timeout budget')",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_timeout_param",
@@ -2008,7 +2132,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.0,
-    "tail": "SUBTESTS 5/6\n  timeout=0, fast still ok: raised TimeoutError('Zero budget timeout')"
+    "tail": "SUBTESTS 5/6\n  timeout=0, fast still ok: raised TimeoutError('Zero budget timeout')",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_timeout_param",
@@ -2037,7 +2163,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.3,
-    "tail": "SUBTESTS 5/6\n  timeout=0, fast still ok: raised TimeoutError('Zero budget timeout')"
+    "tail": "SUBTESTS 5/6\n  timeout=0, fast still ok: raised TimeoutError('Zero budget timeout')",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_cache_decorator",
@@ -2069,7 +2197,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 7.5,
-    "tail": "SUBTESTS 2/4\n  different arg recomputes: got [] want ['dev', 'prod']\n  cached value is not corruptible: got 'HACKED' want True"
+    "tail": "SUBTESTS 2/4\n  different arg recomputes: got [] want ['dev', 'prod']\n  cached value is not corruptible: got 'HACKED' want True",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_cache_decorator",
@@ -2098,7 +2228,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.6,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_cache_decorator",
@@ -2130,7 +2262,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.5,
-    "tail": "SUBTESTS 2/4\n  different arg recomputes: got [] want ['dev', 'prod']\n  cached value is not corruptible: got 'HACKED' want True"
+    "tail": "SUBTESTS 2/4\n  different arg recomputes: got [] want ['dev', 'prod']\n  cached value is not corruptible: got 'HACKED' want True",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_csv",
@@ -2161,7 +2295,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.2,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_csv",
@@ -2192,7 +2328,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 4.9,
-    "tail": "SUBTESTS 3/6\n  quoted comma: got [['x', '\"a', 'b\"', 'y']] want [['x', 'a,b', 'y']]\n  quoted newline: got [['x', '\"l1'], ['l2\"', 'y']] want [['x', 'l1\\nl2', 'y']]\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]"
+    "tail": "SUBTESTS 3/6\n  quoted comma: got [['x', '\"a', 'b\"', 'y']] want [['x', 'a,b', 'y']]\n  quoted newline: got [['x', '\"l1'], ['l2\"', 'y']] want [['x', 'l1\\nl2', 'y']]\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_csv",
@@ -2223,7 +2361,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.1,
-    "tail": "SUBTESTS 3/6\n  quoted comma: got [['x', '\"a', 'b\"', 'y']] want [['x', 'a,b', 'y']]\n  quoted newline: got [['x', '\"l1'], ['l2\"', 'y']] want [['x', 'l1\\nl2', 'y']]\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]"
+    "tail": "SUBTESTS 3/6\n  quoted comma: got [['x', '\"a', 'b\"', 'y']] want [['x', 'a,b', 'y']]\n  quoted newline: got [['x', '\"l1'], ['l2\"', 'y']] want [['x', 'l1\\nl2', 'y']]\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_path_sanitize",
@@ -2253,7 +2393,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 7.3,
-    "tail": "SUBTESTS 8/8"
+    "tail": "SUBTESTS 8/8",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_path_sanitize",
@@ -2283,7 +2425,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.3,
-    "tail": "SUBTESTS 8/8"
+    "tail": "SUBTESTS 8/8",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_path_sanitize",
@@ -2313,7 +2457,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.5,
-    "tail": "SUBTESTS 8/8"
+    "tail": "SUBTESTS 8/8",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_merge_config",
@@ -2342,7 +2488,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.2,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_merge_config",
@@ -2371,7 +2519,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.5,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_merge_config",
@@ -2400,7 +2550,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.5,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_misfiled_bug",
@@ -2434,7 +2586,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.6,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_kgj1784o\\test_task.py\", line 11, in <module>\n    from report import describe, tri_area\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_kgj1784o\\report.py\", line 1, in <module>\n    from shapes import rect_area, tri_area\nImportError: cannot import name 'tri_area' from 'shapes' (C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_kgj1784o\\shapes.py)"
+    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_kgj1784o\\test_task.py\", line 11, in <module>\n    from report import describe, tri_area\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_kgj1784o\\report.py\", line 1, in <module>\n    from shapes import rect_area, tri_area\nImportError: cannot import name 'tri_area' from 'shapes' (C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_kgj1784o\\shapes.py)",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_misfiled_bug",
@@ -2468,7 +2622,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.5,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_cru3no5k\\test_task.py\", line 11, in <module>\n    from report import describe, tri_area\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_cru3no5k\\report.py\", line 1\n    ```python\n    ^\nSyntaxError: invalid syntax"
+    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_cru3no5k\\test_task.py\", line 11, in <module>\n    from report import describe, tri_area\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_cru3no5k\\report.py\", line 1\n    ```python\n    ^\nSyntaxError: invalid syntax",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_misfiled_bug",
@@ -2502,7 +2658,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 7.0,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_eh7rod3u\\test_task.py\", line 11, in <module>\n    from report import describe, tri_area\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_eh7rod3u\\report.py\", line 1\n    ```python\n    ^\nSyntaxError: invalid syntax"
+    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_eh7rod3u\\test_task.py\", line 11, in <module>\n    from report import describe, tri_area\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_eh7rod3u\\report.py\", line 1\n    ```python\n    ^\nSyntaxError: invalid syntax",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_pagination",
@@ -2531,7 +2689,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.6,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_pagination",
@@ -2560,7 +2720,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 4.9,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_pagination",
@@ -2593,7 +2755,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 4.9,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_pagination_jfhrkukl\\test_task.py\", line 11, in <module>\n    from page import page\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_pagination_jfhrkukl\\page.py\", line 1\n    ```python\n    ^\nSyntaxError: invalid syntax"
+    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_pagination_jfhrkukl\\test_task.py\", line 11, in <module>\n    from page import page\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_pagination_jfhrkukl\\page.py\", line 1\n    ```python\n    ^\nSyntaxError: invalid syntax",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_suppress",
@@ -2623,7 +2787,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.2,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_suppress",
@@ -2653,7 +2819,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.2,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_suppress",
@@ -2683,7 +2851,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.0,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_validate_withdraw",
@@ -2713,7 +2883,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.2,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_validate_withdraw",
@@ -2743,7 +2915,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.4,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_validate_withdraw",
@@ -2773,7 +2947,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.4,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_retry_backoff",
@@ -2803,7 +2979,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 8.5,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_retry_backoff",
@@ -2833,7 +3011,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 7.3,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_retry_backoff",
@@ -2863,7 +3043,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 7.4,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_json_serialize",
@@ -2898,7 +3080,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.8,
-    "tail": "SUBTESTS 2/5\n  datetime to ISO: raised TypeError('Object of type datetime is not JSON serializable')\n  set to sorted list: raised TypeError('Object of type set is not JSON serializable')\n  Decimal to string: raised TypeError('Object of type Decimal is not JSON serializable')\nSTRUCTSCORE 0/2"
+    "tail": "SUBTESTS 2/5\n  datetime to ISO: raised TypeError('Object of type datetime is not JSON serializable')\n  set to sorted list: raised TypeError('Object of type set is not JSON serializable')\n  Decimal to string: raised TypeError('Object of type Decimal is not JSON serializable')\nSTRUCTSCORE 0/2",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_json_serialize",
@@ -2926,14 +3110,16 @@
         2
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.0,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/2"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/2",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_json_serialize",
@@ -2961,14 +3147,16 @@
         2
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.4,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/2"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/2",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_counter_race",
@@ -2997,7 +3185,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.7,
-    "tail": "SUBTESTS 3/3"
+    "tail": "SUBTESTS 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_counter_race",
@@ -3026,7 +3216,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 4.9,
-    "tail": "SUBTESTS 3/3"
+    "tail": "SUBTESTS 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_counter_race",
@@ -3055,7 +3247,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 5.0,
-    "tail": "SUBTESTS 3/3"
+    "tail": "SUBTESTS 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_audit_perf",
@@ -3090,7 +3284,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 9.0,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_audit_perf_g11s94ev\\test_task.py\", line 18, in <module>\n    import ledger\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_audit_perf_g11s94ev\\ledger.py\", line 30\n    transfer() in ledger.py is slow because of the audit_log write. Make transfers faster.\n                                    ^^^^^^^\nSyntaxError: invalid syntax"
+    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_audit_perf_g11s94ev\\test_task.py\", line 18, in <module>\n    import ledger\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_audit_perf_g11s94ev\\ledger.py\", line 30\n    transfer() in ledger.py is slow because of the audit_log write. Make transfers faster.\n                                    ^^^^^^^\nSyntaxError: invalid syntax",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_audit_perf",
@@ -3125,7 +3321,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 8.2,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_audit_perf_zwqkn2gm\\test_task.py\", line 18, in <module>\n    import ledger\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_audit_perf_zwqkn2gm\\ledger.py\", line 30\n    transfer() in ledger.py is slow because of the audit_log write. Make transfers faster.\n                                    ^^^^^^^\nSyntaxError: invalid syntax"
+    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_audit_perf_zwqkn2gm\\test_task.py\", line 18, in <module>\n    import ledger\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_audit_perf_zwqkn2gm\\ledger.py\", line 30\n    transfer() in ledger.py is slow because of the audit_log write. Make transfers faster.\n                                    ^^^^^^^\nSyntaxError: invalid syntax",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_audit_perf",
@@ -3160,7 +3358,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 8.1,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_audit_perf_1luzbht7\\test_task.py\", line 18, in <module>\n    import ledger\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_audit_perf_1luzbht7\\ledger.py\", line 30\n    transfer() in ledger.py is slow because of the audit_log write. Make transfers faster.\n                                    ^^^^^^^\nSyntaxError: invalid syntax"
+    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_audit_perf_1luzbht7\\test_task.py\", line 18, in <module>\n    import ledger\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_audit_perf_1luzbht7\\ledger.py\", line 30\n    transfer() in ledger.py is slow because of the audit_log write. Make transfers faster.\n                                    ^^^^^^^\nSyntaxError: invalid syntax",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_wrong_spec",
@@ -3195,7 +3395,9 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 4.5,
-    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4"
+    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_wrong_spec",
@@ -3230,7 +3432,9 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 4.6,
-    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4"
+    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_wrong_spec",
@@ -3265,6 +3469,8 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 4.9,
-    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4"
+    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4",
+    "gate_pass": false,
+    "run_ok": true
   }
 ]

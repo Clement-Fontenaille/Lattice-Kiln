@@ -27,7 +27,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 54.5,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf1_crossfile",
@@ -57,7 +59,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 49.3,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf1_crossfile",
@@ -87,7 +91,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 43.7,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf1_crossfile",
@@ -117,7 +123,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 27.4,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf1_crossfile",
@@ -147,7 +155,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 13.1,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf2_retry",
@@ -177,7 +187,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 89.4,
-    "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)"
+    "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf2_retry",
@@ -207,7 +219,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 62.0,
-    "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)"
+    "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf2_retry",
@@ -237,7 +251,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 64.6,
-    "tail": "SUBTESTS 2/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: raised UnboundLocalError(\"local variable 'e' referenced before assignment\")\n  retries=0 is one attempt: raised UnboundLocalError(\"local variable 'e' referenced before assignment\")"
+    "tail": "SUBTESTS 2/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: raised UnboundLocalError(\"local variable 'e' referenced before assignment\")\n  retries=0 is one attempt: raised UnboundLocalError(\"local variable 'e' referenced before assignment\")",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf2_retry",
@@ -267,7 +283,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 61.9,
-    "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)"
+    "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf2_retry",
@@ -297,7 +315,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 59.2,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor",
@@ -326,7 +346,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 113.0,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor",
@@ -355,7 +377,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 7.1,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor",
@@ -384,7 +408,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 7.5,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor",
@@ -413,7 +439,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.8,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor",
@@ -442,7 +470,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 58.6,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor_witnessed",
@@ -477,7 +507,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 16.2,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor_witnessed",
@@ -512,7 +544,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 15.2,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor_witnessed",
@@ -547,7 +581,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 95.9,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor_witnessed",
@@ -582,7 +618,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 84.2,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor_witnessed",
@@ -617,7 +655,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 76.2,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor_blindview",
@@ -652,7 +692,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.9,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor_blindview",
@@ -687,7 +729,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.8,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor_blindview",
@@ -722,7 +766,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 71.2,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor_blindview",
@@ -757,7 +803,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 94.2,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf3_refactor_blindview",
@@ -792,7 +840,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 6.9,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf4_assumption",
@@ -821,7 +871,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 70.1,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf4_assumption",
@@ -850,7 +902,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 6.1,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf4_assumption",
@@ -879,7 +933,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 6.3,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf4_assumption",
@@ -908,7 +964,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 6.2,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf4_assumption",
@@ -937,7 +995,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 65.1,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "wf5_partial",
@@ -968,7 +1028,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 69.2,
-    "tail": "SUBTESTS 5/7\n  minutes: raised UnboundLocalError(\"local variable 'rest' referenced before assignment\")\n  seconds: raised UnboundLocalError(\"local variable 'rest' referenced before assignment\")"
+    "tail": "SUBTESTS 5/7\n  minutes: raised UnboundLocalError(\"local variable 'rest' referenced before assignment\")\n  seconds: raised UnboundLocalError(\"local variable 'rest' referenced before assignment\")",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf5_partial",
@@ -999,7 +1061,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 69.2,
-    "tail": "SUBTESTS 5/7\n  minutes: raised UnboundLocalError(\"local variable 'rest' referenced before assignment\")\n  seconds: raised UnboundLocalError(\"local variable 'rest' referenced before assignment\")"
+    "tail": "SUBTESTS 5/7\n  minutes: raised UnboundLocalError(\"local variable 'rest' referenced before assignment\")\n  seconds: raised UnboundLocalError(\"local variable 'rest' referenced before assignment\")",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf5_partial",
@@ -1030,7 +1094,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 90.0,
-    "tail": "SUBTESTS 3/7\n  minutes: raised ValueError('not enough values to unpack (expected 2, got 1)')\n  hours: raised ValueError(\"invalid literal for int() with base 10: ''\")\n  h+m+s: got 3720 want 3723\n  whitespace: raised ValueError(\"invalid literal for int() with base 10: ''\")"
+    "tail": "SUBTESTS 3/7\n  minutes: raised ValueError('not enough values to unpack (expected 2, got 1)')\n  hours: raised ValueError(\"invalid literal for int() with base 10: ''\")\n  h+m+s: got 3720 want 3723\n  whitespace: raised ValueError(\"invalid literal for int() with base 10: ''\")",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf5_partial",
@@ -1061,7 +1127,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 88.2,
-    "tail": "SUBTESTS 3/7\n  minutes: raised ValueError('not enough values to unpack (expected 2, got 1)')\n  hours: raised ValueError(\"invalid literal for int() with base 10: ''\")\n  h+m+s: got 3720 want 3723\n  whitespace: raised ValueError(\"invalid literal for int() with base 10: ''\")"
+    "tail": "SUBTESTS 3/7\n  minutes: raised ValueError('not enough values to unpack (expected 2, got 1)')\n  hours: raised ValueError(\"invalid literal for int() with base 10: ''\")\n  h+m+s: got 3720 want 3723\n  whitespace: raised ValueError(\"invalid literal for int() with base 10: ''\")",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf5_partial",
@@ -1092,7 +1160,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 75.5,
-    "tail": "SUBTESTS 5/7\n  minutes: raised UnboundLocalError(\"local variable 'rest' referenced before assignment\")\n  seconds: raised UnboundLocalError(\"local variable 'rest' referenced before assignment\")"
+    "tail": "SUBTESTS 5/7\n  minutes: raised UnboundLocalError(\"local variable 'rest' referenced before assignment\")\n  seconds: raised UnboundLocalError(\"local variable 'rest' referenced before assignment\")",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf6_multi",
@@ -1131,7 +1201,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 212.7,
-    "tail": "SUBTESTS 2/6\n  topo chain raised NotImplementedError()\n  topo diamond raised NotImplementedError()\n  topo cycle: still NotImplementedError\n  topo empty raised NotImplementedError()\nDOCSCORE 0/4\n  no module docstring\n  build_graph docstring missing Args/Returns\n  topo_sort docstring missing Args/Returns/Raises\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present"
+    "tail": "SUBTESTS 2/6\n  topo chain raised NotImplementedError()\n  topo diamond raised NotImplementedError()\n  topo cycle: still NotImplementedError\n  topo empty raised NotImplementedError()\nDOCSCORE 0/4\n  no module docstring\n  build_graph docstring missing Args/Returns\n  topo_sort docstring missing Args/Returns/Raises\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf6_multi",
@@ -1172,7 +1244,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 203.4,
-    "tail": "SUBTESTS 5/6\n  topo cycle: still NotImplementedError\nDOCSCORE 3/4\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 3/3"
+    "tail": "SUBTESTS 5/6\n  topo cycle: still NotImplementedError\nDOCSCORE 3/4\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 3/3",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf6_multi",
@@ -1213,7 +1287,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 195.6,
-    "tail": "SUBTESTS 5/6\n  topo cycle: still NotImplementedError\nDOCSCORE 2/4\n  no module docstring\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present"
+    "tail": "SUBTESTS 5/6\n  topo cycle: still NotImplementedError\nDOCSCORE 2/4\n  no module docstring\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf6_multi",
@@ -1252,7 +1328,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 182.9,
-    "tail": "SUBTESTS 2/6\n  topo chain raised NotImplementedError()\n  topo diamond raised NotImplementedError()\n  topo cycle: still NotImplementedError\n  topo empty raised NotImplementedError()\nDOCSCORE 2/4\n  no module docstring\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present"
+    "tail": "SUBTESTS 2/6\n  topo chain raised NotImplementedError()\n  topo diamond raised NotImplementedError()\n  topo cycle: still NotImplementedError\n  topo empty raised NotImplementedError()\nDOCSCORE 2/4\n  no module docstring\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "wf6_multi",
@@ -1291,7 +1369,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 246.9,
-    "tail": "SUBTESTS 2/6\n  topo chain raised NotImplementedError()\n  topo diamond raised NotImplementedError()\n  topo cycle: still NotImplementedError\n  topo empty raised NotImplementedError()\nDOCSCORE 2/4\n  no module docstring\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present"
+    "tail": "SUBTESTS 2/6\n  topo chain raised NotImplementedError()\n  topo diamond raised NotImplementedError()\n  topo cycle: still NotImplementedError\n  topo empty raised NotImplementedError()\nDOCSCORE 2/4\n  no module docstring\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_extract_fn",
@@ -1319,14 +1399,16 @@
         3
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 48.9,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/3\n  process not split (helpers: [])\n  process body still 15 lines"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/3\n  process not split (helpers: [])\n  process body still 15 lines",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_extract_fn",
@@ -1354,14 +1436,16 @@
         3
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 39.7,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/3\n  process not split (helpers: [])\n  process body still 15 lines"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/3\n  process not split (helpers: [])\n  process body still 15 lines",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_extract_fn",
@@ -1389,14 +1473,16 @@
         3
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 39.2,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/3\n  process not split (helpers: [])\n  process body still 15 lines"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/3\n  process not split (helpers: [])\n  process body still 15 lines",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_extract_fn",
@@ -1424,14 +1510,16 @@
         3
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 38.5,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/3\n  process not split (helpers: [])\n  process body still 15 lines"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/3\n  process not split (helpers: [])\n  process body still 15 lines",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_extract_fn",
@@ -1459,14 +1547,16 @@
         3
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 39.3,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/3\n  process not split (helpers: [])\n  process body still 15 lines"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/3\n  process not split (helpers: [])\n  process body still 15 lines",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_dict_dispatch",
@@ -1494,14 +1584,16 @@
         3
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 72.5,
-    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain"
+    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_dict_dispatch",
@@ -1529,14 +1621,16 @@
         3
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 69.0,
-    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain"
+    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_dict_dispatch",
@@ -1564,14 +1658,16 @@
         3
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 69.2,
-    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain"
+    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_dict_dispatch",
@@ -1599,14 +1695,16 @@
         3
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 66.6,
-    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain"
+    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_dict_dispatch",
@@ -1634,14 +1732,16 @@
         3
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 64.4,
-    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain"
+    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_rename",
@@ -1676,7 +1776,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 79.5,
-    "tail": "SUBTESTS 6/6\nSTRUCTSCORE 3/3"
+    "tail": "SUBTESTS 6/6\nSTRUCTSCORE 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_rename",
@@ -1711,7 +1813,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 306.5,
-    "tail": "SUBTESTS 6/6\nSTRUCTSCORE 3/3"
+    "tail": "SUBTESTS 6/6\nSTRUCTSCORE 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_rename",
@@ -1746,7 +1850,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 89.8,
-    "tail": "SUBTESTS 6/6\nSTRUCTSCORE 3/3"
+    "tail": "SUBTESTS 6/6\nSTRUCTSCORE 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_rename",
@@ -1781,7 +1887,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 86.9,
-    "tail": "SUBTESTS 6/6\nSTRUCTSCORE 3/3"
+    "tail": "SUBTESTS 6/6\nSTRUCTSCORE 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_rename",
@@ -1816,7 +1924,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 78.0,
-    "tail": "SUBTESTS 6/6\nSTRUCTSCORE 3/3"
+    "tail": "SUBTESTS 6/6\nSTRUCTSCORE 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_rec_to_iter",
@@ -1850,7 +1960,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 63.4,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/1"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/1",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_rec_to_iter",
@@ -1884,7 +1996,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 62.1,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/1"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/1",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_rec_to_iter",
@@ -1918,7 +2032,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 57.9,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/1"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/1",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_rec_to_iter",
@@ -1952,7 +2068,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 74.9,
-    "tail": "SUBTESTS 4/5\n  deep chain 5000: raised RecursionError('maximum recursion depth exceeded while calling a Python object')\nSTRUCTSCORE 0/1\n  count_nodes still calls itself"
+    "tail": "SUBTESTS 4/5\n  deep chain 5000: raised RecursionError('maximum recursion depth exceeded while calling a Python object')\nSTRUCTSCORE 0/1\n  count_nodes still calls itself",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_rec_to_iter",
@@ -1986,7 +2104,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 78.7,
-    "tail": "SUBTESTS 4/5\n  deep chain 5000: raised RecursionError('maximum recursion depth exceeded while calling a Python object')\nSTRUCTSCORE 0/1\n  count_nodes still calls itself"
+    "tail": "SUBTESTS 4/5\n  deep chain 5000: raised RecursionError('maximum recursion depth exceeded while calling a Python object')\nSTRUCTSCORE 0/1\n  count_nodes still calls itself",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_already_optimal",
@@ -2016,7 +2136,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 87.3,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_already_optimal",
@@ -2046,7 +2168,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 6.8,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_already_optimal",
@@ -2076,7 +2200,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 75.3,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_already_optimal",
@@ -2106,7 +2232,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 7.1,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_already_optimal",
@@ -2136,7 +2264,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 69.1,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_dead_code",
@@ -2165,7 +2295,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 6.3,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_dead_code",
@@ -2194,7 +2326,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 6.2,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_dead_code",
@@ -2223,7 +2357,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 6.2,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_dead_code",
@@ -2252,7 +2388,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 6.3,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_dead_code",
@@ -2281,7 +2419,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 84.2,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_remove_validation",
@@ -2311,7 +2451,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 6.5,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_remove_validation",
@@ -2341,7 +2483,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 6.6,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_remove_validation",
@@ -2371,7 +2515,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 6.5,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_remove_validation",
@@ -2401,7 +2547,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 6.6,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_remove_validation",
@@ -2431,7 +2579,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 7.1,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_cache_nondeterministic",
@@ -2460,7 +2610,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 6.5,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_cache_nondeterministic",
@@ -2489,7 +2641,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 6.2,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_cache_nondeterministic",
@@ -2518,7 +2672,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 6.4,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_cache_nondeterministic",
@@ -2547,7 +2703,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 6.0,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_cache_nondeterministic",
@@ -2576,7 +2734,9 @@
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 6.1,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_multi_recipient",
@@ -2606,7 +2766,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 73.6,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_multi_recipient",
@@ -2636,7 +2798,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 66.6,
-    "tail": "SUBTESTS 3/5\n  list of recipients fans out: got [(['a', 'b'], 'hi')] want [('a', 'hi'), ('b', 'hi')]\n  tuple of recipients fans out: got [(('x', 'y'), 'm')] want [('x', 'm'), ('y', 'm')]"
+    "tail": "SUBTESTS 3/5\n  list of recipients fans out: got [(['a', 'b'], 'hi')] want [('a', 'hi'), ('b', 'hi')]\n  tuple of recipients fans out: got [(('x', 'y'), 'm')] want [('x', 'm'), ('y', 'm')]",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_multi_recipient",
@@ -2666,7 +2830,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 61.2,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_multi_recipient",
@@ -2696,7 +2862,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 63.3,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_multi_recipient",
@@ -2726,7 +2894,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 77.5,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_return_shape",
@@ -2756,7 +2926,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 68.4,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_return_shape",
@@ -2786,7 +2958,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 61.5,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_return_shape",
@@ -2816,7 +2990,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 58.7,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_return_shape",
@@ -2846,7 +3022,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 66.8,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_return_shape",
@@ -2876,7 +3054,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 71.0,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_deprecate",
@@ -2906,7 +3086,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 61.1,
-    "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: got False want True\n  old_parse matches new_parse: got False want True\n  old_parse strips like new_parse: got [' one '] want ['one']"
+    "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: got False want True\n  old_parse matches new_parse: got False want True\n  old_parse strips like new_parse: got [' one '] want ['one']",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_deprecate",
@@ -2936,7 +3118,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 59.4,
-    "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: got False want True\n  old_parse matches new_parse: got False want True\n  old_parse strips like new_parse: got [' one '] want ['one']"
+    "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: got False want True\n  old_parse matches new_parse: got False want True\n  old_parse strips like new_parse: got [' one '] want ['one']",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_deprecate",
@@ -2966,7 +3150,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 58.2,
-    "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: got False want True\n  old_parse matches new_parse: got False want True\n  old_parse strips like new_parse: got [' one '] want ['one']"
+    "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: got False want True\n  old_parse matches new_parse: got False want True\n  old_parse strips like new_parse: got [' one '] want ['one']",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_deprecate",
@@ -2996,7 +3182,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 57.5,
-    "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: got False want True\n  old_parse matches new_parse: got False want True\n  old_parse strips like new_parse: got [' one '] want ['one']"
+    "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: got False want True\n  old_parse matches new_parse: got False want True\n  old_parse strips like new_parse: got [' one '] want ['one']",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_deprecate",
@@ -3026,7 +3214,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 63.0,
-    "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: got False want True\n  old_parse matches new_parse: got False want True\n  old_parse strips like new_parse: got [' one '] want ['one']"
+    "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: got False want True\n  old_parse matches new_parse: got False want True\n  old_parse strips like new_parse: got [' one '] want ['one']",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_json_field",
@@ -3056,7 +3246,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 54.9,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_json_field",
@@ -3086,7 +3278,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 55.8,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_json_field",
@@ -3116,7 +3310,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 54.1,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_json_field",
@@ -3146,7 +3342,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 55.4,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_json_field",
@@ -3176,7 +3374,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 55.8,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_timeout_param",
@@ -3205,7 +3405,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 76.1,
-    "tail": "SUBTESTS 5/6\n  timeout=0, fast still ok: raised TimeoutError('Zero budget timeout')"
+    "tail": "SUBTESTS 5/6\n  timeout=0, fast still ok: raised TimeoutError('Zero budget timeout')",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_timeout_param",
@@ -3234,7 +3436,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 73.4,
-    "tail": "SUBTESTS 5/6\n  timeout=0, fast still ok: raised TimeoutError('Timeout budget must be greater than zero')"
+    "tail": "SUBTESTS 5/6\n  timeout=0, fast still ok: raised TimeoutError('Timeout budget must be greater than zero')",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_timeout_param",
@@ -3263,7 +3467,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 68.2,
-    "tail": "SUBTESTS 5/6\n  timeout=0 still times out: got False want True"
+    "tail": "SUBTESTS 5/6\n  timeout=0 still times out: got False want True",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_timeout_param",
@@ -3292,7 +3498,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 71.6,
-    "tail": "SUBTESTS 5/6\n  timeout=0, fast still ok: raised TimeoutError('Zero budget timeout')"
+    "tail": "SUBTESTS 5/6\n  timeout=0, fast still ok: raised TimeoutError('Zero budget timeout')",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_timeout_param",
@@ -3321,7 +3529,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 95.4,
-    "tail": "SUBTESTS 5/6\n  timeout=0, fast still ok: raised TimeoutError('Timeout budget must be greater than zero')"
+    "tail": "SUBTESTS 5/6\n  timeout=0, fast still ok: raised TimeoutError('Timeout budget must be greater than zero')",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_cache_decorator",
@@ -3350,7 +3560,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 73.7,
-    "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1"
+    "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_cache_decorator",
@@ -3379,7 +3591,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 72.0,
-    "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1"
+    "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_cache_decorator",
@@ -3408,7 +3622,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 65.7,
-    "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1"
+    "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_cache_decorator",
@@ -3437,7 +3653,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 64.2,
-    "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1"
+    "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_cache_decorator",
@@ -3466,7 +3684,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 61.1,
-    "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1"
+    "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_csv",
@@ -3497,7 +3717,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 76.2,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_csv",
@@ -3528,7 +3750,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 64.3,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_csv",
@@ -3559,7 +3783,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 69.2,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_csv",
@@ -3590,7 +3816,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 16.8,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_csv",
@@ -3621,7 +3849,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 62.5,
-    "tail": "SUBTESTS 5/6\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]"
+    "tail": "SUBTESTS 5/6\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_path_sanitize",
@@ -3651,7 +3881,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 17.4,
-    "tail": "SUBTESTS 8/8"
+    "tail": "SUBTESTS 8/8",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_path_sanitize",
@@ -3681,7 +3913,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 17.9,
-    "tail": "SUBTESTS 8/8"
+    "tail": "SUBTESTS 8/8",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_path_sanitize",
@@ -3711,7 +3945,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 18.8,
-    "tail": "SUBTESTS 8/8"
+    "tail": "SUBTESTS 8/8",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_path_sanitize",
@@ -3741,7 +3977,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 18.2,
-    "tail": "SUBTESTS 8/8"
+    "tail": "SUBTESTS 8/8",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_path_sanitize",
@@ -3771,7 +4009,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 17.8,
-    "tail": "SUBTESTS 8/8"
+    "tail": "SUBTESTS 8/8",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_merge_config",
@@ -3800,7 +4040,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 65.0,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_merge_config",
@@ -3829,7 +4071,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 56.5,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_merge_config",
@@ -3858,7 +4102,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 57.3,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_merge_config",
@@ -3887,7 +4133,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 64.4,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_merge_config",
@@ -3916,7 +4164,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 66.5,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_misfiled_bug",
@@ -3946,7 +4196,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 34.0,
-    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'"
+    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_misfiled_bug",
@@ -3976,7 +4228,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 35.4,
-    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'"
+    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_misfiled_bug",
@@ -4006,7 +4260,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 34.3,
-    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'"
+    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_misfiled_bug",
@@ -4036,7 +4292,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 35.2,
-    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'"
+    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_misfiled_bug",
@@ -4066,7 +4324,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 33.9,
-    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'"
+    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_pagination",
@@ -4095,7 +4355,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 15.1,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_pagination",
@@ -4124,7 +4386,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 56.0,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_pagination",
@@ -4153,7 +4417,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 14.0,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_pagination",
@@ -4182,7 +4448,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 14.6,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_pagination",
@@ -4211,7 +4479,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 14.5,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_suppress",
@@ -4241,7 +4511,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 58.7,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_suppress",
@@ -4271,7 +4543,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 73.0,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_suppress",
@@ -4301,7 +4575,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 65.2,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_suppress",
@@ -4331,7 +4607,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 66.4,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_suppress",
@@ -4361,7 +4639,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 64.3,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_validate_withdraw",
@@ -4391,7 +4671,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 72.8,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_validate_withdraw",
@@ -4421,7 +4703,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 74.1,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_validate_withdraw",
@@ -4451,7 +4735,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 73.1,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_validate_withdraw",
@@ -4481,7 +4767,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 71.5,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_validate_withdraw",
@@ -4511,7 +4799,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 74.1,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_retry_backoff",
@@ -4541,7 +4831,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 77.9,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_retry_backoff",
@@ -4571,7 +4863,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 73.7,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_retry_backoff",
@@ -4601,7 +4895,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 88.3,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_retry_backoff",
@@ -4631,7 +4927,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 99.0,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_retry_backoff",
@@ -4661,7 +4959,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 68.9,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_json_serialize",
@@ -4689,14 +4989,16 @@
         2
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 81.8,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/2"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/2",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_json_serialize",
@@ -4724,14 +5026,16 @@
         2
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 69.1,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/2"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/2",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_json_serialize",
@@ -4759,14 +5063,16 @@
         2
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 85.5,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/2"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/2",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_json_serialize",
@@ -4794,14 +5100,16 @@
         2
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 96.5,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/2"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/2",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_json_serialize",
@@ -4836,7 +5144,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 81.0,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 2/2"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 2/2",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_counter_race",
@@ -4865,7 +5175,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 16.1,
-    "tail": "SUBTESTS 3/3"
+    "tail": "SUBTESTS 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_counter_race",
@@ -4894,7 +5206,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 16.8,
-    "tail": "SUBTESTS 3/3"
+    "tail": "SUBTESTS 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_counter_race",
@@ -4923,7 +5237,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 73.2,
-    "tail": "SUBTESTS 3/3"
+    "tail": "SUBTESTS 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_counter_race",
@@ -4952,7 +5268,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 68.0,
-    "tail": "SUBTESTS 3/3"
+    "tail": "SUBTESTS 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_counter_race",
@@ -4981,7 +5299,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 17.0,
-    "tail": "SUBTESTS 3/3"
+    "tail": "SUBTESTS 3/3",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_audit_perf",
@@ -5021,7 +5341,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 122.7,
-    "tail": "SUBTESTS 2/2\nPERFSCORE 1/1\nAUDITSCORE 1/1"
+    "tail": "SUBTESTS 2/2\nPERFSCORE 1/1\nAUDITSCORE 1/1",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_audit_perf",
@@ -5061,7 +5383,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 18.6,
-    "tail": "SUBTESTS 2/2\nPERFSCORE 1/1\nAUDITSCORE 1/1"
+    "tail": "SUBTESTS 2/2\nPERFSCORE 1/1\nAUDITSCORE 1/1",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_audit_perf",
@@ -5101,7 +5425,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 45.1,
-    "tail": "SUBTESTS 2/2\nPERFSCORE 1/1\nAUDITSCORE 1/1"
+    "tail": "SUBTESTS 2/2\nPERFSCORE 1/1\nAUDITSCORE 1/1",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_audit_perf",
@@ -5141,7 +5467,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 94.7,
-    "tail": "SUBTESTS 2/2\nPERFSCORE 1/1\nAUDITSCORE 1/1"
+    "tail": "SUBTESTS 2/2\nPERFSCORE 1/1\nAUDITSCORE 1/1",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_audit_perf",
@@ -5181,7 +5509,9 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 18.2,
-    "tail": "SUBTESTS 2/2\nPERFSCORE 1/1\nAUDITSCORE 1/1"
+    "tail": "SUBTESTS 2/2\nPERFSCORE 1/1\nAUDITSCORE 1/1",
+    "gate_pass": true,
+    "run_ok": true
   },
   {
     "task": "hf_wrong_spec",
@@ -5216,7 +5546,9 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 86.2,
-    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4"
+    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_wrong_spec",
@@ -5251,7 +5583,9 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 49.8,
-    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4"
+    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_wrong_spec",
@@ -5286,7 +5620,9 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 52.1,
-    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4"
+    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_wrong_spec",
@@ -5321,7 +5657,9 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 44.6,
-    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4"
+    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4",
+    "gate_pass": false,
+    "run_ok": true
   },
   {
     "task": "hf_wrong_spec",
@@ -5356,6 +5694,8 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 41.0,
-    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4"
+    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4",
+    "gate_pass": false,
+    "run_ok": true
   }
 ]

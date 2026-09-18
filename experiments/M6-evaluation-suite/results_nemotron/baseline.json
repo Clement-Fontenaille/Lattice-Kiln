@@ -29,7 +29,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 2/5\n  total qty=3: got 5 want 15\n  total mixed: got 12 want 14\n  line_price direct: got 5 want 20"
+    "tail": "SUBTESTS 2/5\n  total qty=3: got 5 want 15\n  total mixed: got 12 want 14\n  line_price direct: got 5 want 20",
+    "gate_pass": false
   },
   {
     "task": "wf2_retry",
@@ -61,7 +62,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 0/5\n  success first try: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  succeed on 2nd try: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  exhaust then re-raise last: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  retries=0 is one attempt: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  returns fn value: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")"
+    "tail": "SUBTESTS 0/5\n  success first try: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  succeed on 2nd try: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  exhaust then re-raise last: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  retries=0 is one attempt: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  returns fn value: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")",
+    "gate_pass": false
   },
   {
     "task": "wf3_refactor",
@@ -92,7 +94,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true
   },
   {
     "task": "wf3_refactor_witnessed",
@@ -129,7 +132,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price",
+    "gate_pass": false
   },
   {
     "task": "wf3_refactor_blindview",
@@ -166,7 +170,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price",
+    "gate_pass": false
   },
   {
     "task": "wf4_assumption",
@@ -197,7 +202,8 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true
   },
   {
     "task": "wf5_partial",
@@ -230,7 +236,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 0/7\n  minutes: raised NotImplementedError()\n  hours: raised NotImplementedError()\n  h+m: raised NotImplementedError()\n  seconds: raised NotImplementedError()\n  h+m+s: raised NotImplementedError()\n  empty is zero: raised NotImplementedError()\n  whitespace: raised NotImplementedError()"
+    "tail": "SUBTESTS 0/7\n  minutes: raised NotImplementedError()\n  hours: raised NotImplementedError()\n  h+m: raised NotImplementedError()\n  seconds: raised NotImplementedError()\n  h+m+s: raised NotImplementedError()\n  empty is zero: raised NotImplementedError()\n  whitespace: raised NotImplementedError()",
+    "gate_pass": false
   },
   {
     "task": "wf6_multi",
@@ -271,7 +278,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 2/6\n  topo chain raised NotImplementedError()\n  topo diamond raised NotImplementedError()\n  topo cycle: still NotImplementedError\n  topo empty raised NotImplementedError()\nDOCSCORE 0/4\n  no module docstring\n  build_graph docstring missing Args/Returns\n  topo_sort docstring missing Args/Returns/Raises\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present"
+    "tail": "SUBTESTS 2/6\n  topo chain raised NotImplementedError()\n  topo diamond raised NotImplementedError()\n  topo cycle: still NotImplementedError\n  topo empty raised NotImplementedError()\nDOCSCORE 0/4\n  no module docstring\n  build_graph docstring missing Args/Returns\n  topo_sort docstring missing Args/Returns/Raises\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present",
+    "gate_pass": false
   },
   {
     "task": "hf_extract_fn",
@@ -299,7 +307,7 @@
         3
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
     "run_ok": true,
     "error_trace": null,
     "regressed": false,
@@ -308,7 +316,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/3\n  process not split (helpers: [])\n  process body still 15 lines"
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/3\n  process not split (helpers: [])\n  process body still 15 lines",
+    "gate_pass": true
   },
   {
     "task": "hf_dict_dispatch",
@@ -336,7 +345,7 @@
         3
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
     "run_ok": true,
     "error_trace": null,
     "regressed": false,
@@ -345,7 +354,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain"
+    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain",
+    "gate_pass": true
   },
   {
     "task": "hf_rename",
@@ -382,7 +392,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 4/6\n  compute exists and works: raised AttributeError(\"module 'billing' has no attribute 'compute'\")\n  calc name is gone: got True want False\nSTRUCTSCORE 2/3"
+    "tail": "SUBTESTS 4/6\n  compute exists and works: raised AttributeError(\"module 'billing' has no attribute 'compute'\")\n  calc name is gone: got True want False\nSTRUCTSCORE 2/3",
+    "gate_pass": false
   },
   {
     "task": "hf_rec_to_iter",
@@ -418,7 +429,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 4/5\n  deep chain 5000: raised RecursionError('maximum recursion depth exceeded while calling a Python object')\nSTRUCTSCORE 0/1\n  count_nodes still calls itself"
+    "tail": "SUBTESTS 4/5\n  deep chain 5000: raised RecursionError('maximum recursion depth exceeded while calling a Python object')\nSTRUCTSCORE 0/1\n  count_nodes still calls itself",
+    "gate_pass": false
   },
   {
     "task": "hf_already_optimal",
@@ -450,7 +462,8 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 6/6",
+    "gate_pass": true
   },
   {
     "task": "hf_dead_code",
@@ -481,7 +494,8 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true
   },
   {
     "task": "hf_remove_validation",
@@ -513,7 +527,8 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 5/5"
+    "tail": "SUBTESTS 5/5",
+    "gate_pass": true
   },
   {
     "task": "hf_cache_nondeterministic",
@@ -544,7 +559,8 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 4/4"
+    "tail": "SUBTESTS 4/4",
+    "gate_pass": true
   },
   {
     "task": "hf_multi_recipient",
@@ -576,7 +592,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 3/5\n  list of recipients fans out: got [(['a', 'b'], 'hi')] want [('a', 'hi'), ('b', 'hi')]\n  tuple of recipients fans out: got [(('x', 'y'), 'm')] want [('x', 'm'), ('y', 'm')]"
+    "tail": "SUBTESTS 3/5\n  list of recipients fans out: got [(['a', 'b'], 'hi')] want [('a', 'hi'), ('b', 'hi')]\n  tuple of recipients fans out: got [(('x', 'y'), 'm')] want [('x', 'm'), ('y', 'm')]",
+    "gate_pass": false
   },
   {
     "task": "hf_return_shape",
@@ -608,7 +625,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 3/5\n  email attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'email'\")\n  name attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'name'\")"
+    "tail": "SUBTESTS 3/5\n  email attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'email'\")\n  name attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'name'\")",
+    "gate_pass": false
   },
   {
     "task": "hf_deprecate",
@@ -640,7 +658,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: got False want True\n  old_parse matches new_parse: got False want True\n  old_parse strips like new_parse: got [' one '] want ['one']"
+    "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: got False want True\n  old_parse matches new_parse: got False want True\n  old_parse strips like new_parse: got [' one '] want ['one']",
+    "gate_pass": false
   },
   {
     "task": "hf_json_field",
@@ -672,7 +691,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 2/5\n  tier from record: raised KeyError('tier')\n  old record defaults to free: raised KeyError('tier')\n  no extra keys: got {'id', 'name'} want {'id', 'name', 'tier'}"
+    "tail": "SUBTESTS 2/5\n  tier from record: raised KeyError('tier')\n  old record defaults to free: raised KeyError('tier')\n  no extra keys: got {'id', 'name'} want {'id', 'name', 'tier'}",
+    "gate_pass": false
   },
   {
     "task": "hf_timeout_param",
@@ -703,7 +723,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 2/6\n  positive timeout, fast ok: raised TypeError(\"fetch() got an unexpected keyword argument 'timeout'\")\n  positive timeout, slow raises: got False want True\n  timeout=0 still times out: got False want True\n  timeout=0, fast still ok: raised TypeError(\"fetch() got an unexpected keyword argument 'timeout'\")"
+    "tail": "SUBTESTS 2/6\n  positive timeout, fast ok: raised TypeError(\"fetch() got an unexpected keyword argument 'timeout'\")\n  positive timeout, slow raises: got False want True\n  timeout=0 still times out: got False want True\n  timeout=0, fast still ok: raised TypeError(\"fetch() got an unexpected keyword argument 'timeout'\")",
+    "gate_pass": false
   },
   {
     "task": "hf_cache_decorator",
@@ -734,7 +755,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1"
+    "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1",
+    "gate_pass": false
   },
   {
     "task": "hf_csv",
@@ -767,7 +789,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 3/6\n  quoted comma: got [['x', '\"a', 'b\"', 'y']] want [['x', 'a,b', 'y']]\n  quoted newline: got [['x', '\"l1'], ['l2\"', 'y']] want [['x', 'l1\\nl2', 'y']]\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]"
+    "tail": "SUBTESTS 3/6\n  quoted comma: got [['x', '\"a', 'b\"', 'y']] want [['x', 'a,b', 'y']]\n  quoted newline: got [['x', '\"l1'], ['l2\"', 'y']] want [['x', 'l1\\nl2', 'y']]\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]",
+    "gate_pass": false
   },
   {
     "task": "hf_path_sanitize",
@@ -799,7 +822,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 1/8\n  parent traversal rejected: got False want True\n  nested traversal rejected: got False want True\n  absolute path rejected: got False want True\n  null byte rejected: got False want True\n  reserved name rejected: got False want True\n  trailing dot stripped: got 'report.' want 'report'\n  trailing space stripped: got 'data.csv  ' want 'data.csv'"
+    "tail": "SUBTESTS 1/8\n  parent traversal rejected: got False want True\n  nested traversal rejected: got False want True\n  absolute path rejected: got False want True\n  null byte rejected: got False want True\n  reserved name rejected: got False want True\n  trailing dot stripped: got 'report.' want 'report'\n  trailing space stripped: got 'data.csv  ' want 'data.csv'",
+    "gate_pass": false
   },
   {
     "task": "hf_merge_config",
@@ -830,7 +854,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 3/6\n  nested dict merges: got {'x': {'q': 9}} want {'x': {'p': 1, 'q': 9}}\n  None deletes the key: got {'a': 1, 'b': None} want {'a': 1}\n  deep merge plus delete: got {'s': {'drop': None, 'add': 3}} want {'s': {'keep': 1, 'add': 3}}"
+    "tail": "SUBTESTS 3/6\n  nested dict merges: got {'x': {'q': 9}} want {'x': {'p': 1, 'q': 9}}\n  None deletes the key: got {'a': 1, 'b': None} want {'a': 1}\n  deep merge plus delete: got {'s': {'drop': None, 'add': 3}} want {'s': {'keep': 1, 'add': 3}}",
+    "gate_pass": false
   },
   {
     "task": "hf_misfiled_bug",
@@ -862,7 +887,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'"
+    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'",
+    "gate_pass": false
   },
   {
     "task": "hf_pagination",
@@ -893,7 +919,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 1/5\n  page 1 is the first items: got [3, 4, 5] want [0, 1, 2]\n  page 2: got [6, 7, 8] want [3, 4, 5]\n  last partial page: got [] want [9]\n  exact multiple last page: got [] want [8, 9]"
+    "tail": "SUBTESTS 1/5\n  page 1 is the first items: got [3, 4, 5] want [0, 1, 2]\n  page 2: got [6, 7, 8] want [3, 4, 5]\n  last partial page: got [] want [9]\n  exact multiple last page: got [] want [8, 9]",
+    "gate_pass": false
   },
   {
     "task": "hf_suppress",
@@ -925,7 +952,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 3/4\n  non-numeric value is skipped, not fatal: raised ValueError(\"invalid literal for int() with base 10: 'x'\")"
+    "tail": "SUBTESTS 3/4\n  non-numeric value is skipped, not fatal: raised ValueError(\"invalid literal for int() with base 10: 'x'\")",
+    "gate_pass": false
   },
   {
     "task": "hf_validate_withdraw",
@@ -957,7 +985,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 4/6\n  negative amount rejected: got False want True\n  overdraw rejected: got False want True"
+    "tail": "SUBTESTS 4/6\n  negative amount rejected: got False want True\n  overdraw rejected: got False want True",
+    "gate_pass": false
   },
   {
     "task": "hf_retry_backoff",
@@ -989,7 +1018,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 2/4\n  recovers after 2 transients: got ('transient', 1) want ('ok', 'ok', 3)\n  gives up after 4 attempts: got ('transient', 1) want ('transient', 4)"
+    "tail": "SUBTESTS 2/4\n  recovers after 2 transients: got ('transient', 1) want ('ok', 'ok', 3)\n  gives up after 4 attempts: got ('transient', 1) want ('transient', 4)",
+    "gate_pass": false
   },
   {
     "task": "hf_json_serialize",
@@ -1026,7 +1056,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 2/5\n  datetime to ISO: raised TypeError('Object of type datetime is not JSON serializable')\n  set to sorted list: raised TypeError('Object of type set is not JSON serializable')\n  Decimal to string: raised TypeError('Object of type Decimal is not JSON serializable')\nSTRUCTSCORE 0/2"
+    "tail": "SUBTESTS 2/5\n  datetime to ISO: raised TypeError('Object of type datetime is not JSON serializable')\n  set to sorted list: raised TypeError('Object of type set is not JSON serializable')\n  Decimal to string: raised TypeError('Object of type Decimal is not JSON serializable')\nSTRUCTSCORE 0/2",
+    "gate_pass": false
   },
   {
     "task": "hf_counter_race",
@@ -1057,7 +1088,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 2/3\n  concurrent increments do not lose updates: got 622 want 4000"
+    "tail": "SUBTESTS 2/3\n  concurrent increments do not lose updates: got 622 want 4000",
+    "gate_pass": false
   },
   {
     "task": "hf_audit_perf",
@@ -1099,7 +1131,8 @@
     "decline_expected": false,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 2/2\nPERFSCORE 0/1\n  the audit line is still built one character at a time\nAUDITSCORE 1/1"
+    "tail": "SUBTESTS 2/2\nPERFSCORE 0/1\n  the audit line is still built one character at a time\nAUDITSCORE 1/1",
+    "gate_pass": false
   },
   {
     "task": "hf_wrong_spec",
@@ -1136,6 +1169,7 @@
     "decline_expected": true,
     "declined_correctly": false,
     "wall_s": 0.0,
-    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4"
+    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4",
+    "gate_pass": false
   }
 ]

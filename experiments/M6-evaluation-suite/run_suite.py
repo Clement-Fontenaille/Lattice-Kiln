@@ -149,16 +149,27 @@ def run_task(task, arm_name, rep, cmd, protected):
     bsub, btot = frac(base)
     fsub, ftot = frac(fin)
     new_fails = fin["fails"] - base["fails"]
+    # Two readings, kept side by side. `gate_pass` is what the check's exit code
+    # says, and several checks deliberately keep their structural dimensions out
+    # of it -- wf6_multi's docstring calls them "quality signal, does not gate".
+    # `objective_pass` is what that name has always been read to mean and now
+    # does: the gate AND every recorded dimension at full marks. Operator ruling
+    # 2026-09-18, E0 defect 1. Both are kept so old figures stay reproducible and
+    # any analysis can say which reading it used.
+    struct = {k: v for k, v in fin["scores"].items() if k != "SUBTESTS"}
+    gate = fin["exit"] == 0 and not fin["crashed"]
+    met = gate and all(e == t for e, t in struct.values())
     row = {
         "task": task["id"], "shape": task["shape"], "trap": task["trap"],
         "worker_view": view,
         "stresses": task["stresses"], "rep": rep, "arm": arm_name, "terminal": terminal,
         "baseline_sub": [bsub, btot], "final_sub": [fsub, ftot],
-        "struct": {k: v for k, v in fin["scores"].items() if k != "SUBTESTS"},
+        "struct": struct,
         # None, not False, when the arm raised: the run produced no attempt, so
         # neither "passed" nor "failed" is true of it. None makes a downstream
         # reader that forgot to filter raise instead of quietly counting it.
-        "objective_pass": (fin["exit"] == 0 and not fin["crashed"]) if run_ok else None,
+        "gate_pass": gate if run_ok else None,
+        "objective_pass": met if run_ok else None,
         "run_ok": run_ok, "error_trace": trace,
         "regressed": bool(new_fails) if run_ok else None,
         "new_fails": sorted(new_fails),
