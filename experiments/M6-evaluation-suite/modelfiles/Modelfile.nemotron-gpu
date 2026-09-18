@@ -1,0 +1,20 @@
+# Nemotron Nano 9B v2 Q4_K_L, with layer placement forced rather than inferred.
+#
+# Why this exists: Ollama's automatic placement left 15% of this model's layers
+# on CPU and delivered 12.7 tok/s, where llama.cpp with `-ngl 99` on the same
+# file, same quant, same host reached 42.65 tok/s -- a 3.4x difference that was
+# entirely placement, not hardware (M0 findings entry 1, addendum 3, 2026-09-15).
+#
+# The llama.cpp route was then abandoned for a different reason: llama-server
+# runs under WSL, whose `.wslconfig` cap is 4.3 GiB against a 6.7 GB model, and
+# it was killed mid-sweep twice. Ollama runs natively on Windows and has no such
+# cap, so forcing placement here removes the WSL dependency entirely -- if the
+# residency actually lands.
+#
+# num_gpu 99 = offload every layer. Ollama clamps to what fits, so this is a
+# request, not a guarantee: check `ollama ps` for size_vram against size and do
+# not assume it worked.
+FROM nemotron-nano-9b-v2-q4kl:latest
+
+PARAMETER num_gpu 99
+PARAMETER num_ctx 8192

@@ -10,7 +10,7 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       2,
       5
@@ -21,12 +21,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 10.5,
+    "wall_s": 140.8,
     "tail": "SUBTESTS 5/5"
   },
   {
@@ -40,7 +42,7 @@
     ],
     "rep": 2,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       2,
       5
@@ -51,12 +53,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 9.0,
+    "wall_s": 64.4,
     "tail": "SUBTESTS 5/5"
   },
   {
@@ -70,7 +74,7 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       2,
       5
@@ -81,12 +85,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 10.1,
+    "wall_s": 124.5,
     "tail": "SUBTESTS 5/5"
   },
   {
@@ -100,7 +106,7 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-partial",
     "baseline_sub": [
       0,
       5
@@ -111,12 +117,14 @@
     ],
     "struct": {},
     "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 11.0,
+    "wall_s": 93.3,
     "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)"
   },
   {
@@ -130,24 +138,26 @@
     ],
     "rep": 2,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-partial",
     "baseline_sub": [
       0,
       5
     ],
     "final_sub": [
-      0,
+      3,
       5
     ],
     "struct": {},
     "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 10.4,
-    "tail": "SUBTESTS 0/5\n  success first try: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  succeed on 2nd try: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  exhaust then re-raise last: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  retries=0 is one attempt: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  returns fn value: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")"
+    "wall_s": 134.1,
+    "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)"
   },
   {
     "task": "wf2_retry",
@@ -160,7 +170,7 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-partial",
     "baseline_sub": [
       0,
       5
@@ -171,12 +181,14 @@
     ],
     "struct": {},
     "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 10.2,
+    "wall_s": 96.1,
     "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)"
   },
   {
@@ -189,7 +201,7 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'bool' object has no attribute 'append'\")",
+    "terminal": "declined",
     "baseline_sub": [
       5,
       5
@@ -200,12 +212,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 14.0,
+    "wall_s": 158.6,
     "tail": "SUBTESTS 5/5"
   },
   {
@@ -218,7 +232,7 @@
     ],
     "rep": 2,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'bool' object has no attribute 'append'\")",
+    "terminal": "declined",
     "baseline_sub": [
       5,
       5
@@ -229,12 +243,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 8.6,
+    "wall_s": 77.9,
     "tail": "SUBTESTS 5/5"
   },
   {
@@ -247,7 +263,7 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'bool' object has no attribute 'append'\")",
+    "terminal": "declined",
     "baseline_sub": [
       5,
       5
@@ -258,12 +274,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 36.7,
+    "wall_s": 129.3,
     "tail": "SUBTESTS 5/5"
   },
   {
@@ -277,7 +295,7 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       5,
       5
@@ -293,12 +311,14 @@
       ]
     },
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 11.7,
+    "wall_s": 90.3,
     "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3"
   },
   {
@@ -312,7 +332,7 @@
     ],
     "rep": 2,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       5,
       5
@@ -328,12 +348,14 @@
       ]
     },
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 11.9,
+    "wall_s": 94.0,
     "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3"
   },
   {
@@ -347,7 +369,7 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       5,
       5
@@ -363,12 +385,14 @@
       ]
     },
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 11.4,
+    "wall_s": 83.1,
     "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3"
   },
   {
@@ -382,7 +406,7 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'bool' object has no attribute 'append'\")",
+    "terminal": "declined",
     "baseline_sub": [
       5,
       5
@@ -393,18 +417,20 @@
     ],
     "struct": {
       "STRUCTSCORE": [
-        3,
+        0,
         3
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 14.6,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3"
+    "wall_s": 110.5,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price"
   },
   {
     "task": "wf3_refactor_blindview",
@@ -433,12 +459,14 @@
       ]
     },
     "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 8.4,
+    "wall_s": 14.3,
     "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price"
   },
   {
@@ -452,7 +480,7 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'bool' object has no attribute 'append'\")",
+    "terminal": "declined",
     "baseline_sub": [
       5,
       5
@@ -468,12 +496,14 @@
       ]
     },
     "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 10.6,
+    "wall_s": 210.7,
     "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price"
   },
   {
@@ -486,66 +516,6 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'bool' object has no attribute 'append'\")",
-    "baseline_sub": [
-      5,
-      5
-    ],
-    "final_sub": [
-      4,
-      5
-    ],
-    "struct": {},
-    "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "unsorted first"
-    ],
-    "check_crashed": false,
-    "decline_expected": true,
-    "declined_correctly": false,
-    "wall_s": 12.1,
-    "tail": "SUBTESTS 4/5\n  unsorted first: got -1 want 0"
-  },
-  {
-    "task": "wf4_assumption",
-    "shape": "perf",
-    "trap": "false-premise",
-    "worker_view": "full",
-    "stresses": [
-      "premise-audit"
-    ],
-    "rep": 2,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'bool' object has no attribute 'append'\")",
-    "baseline_sub": [
-      5,
-      5
-    ],
-    "final_sub": [
-      5,
-      5
-    ],
-    "struct": {},
-    "objective_pass": true,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": true,
-    "declined_correctly": false,
-    "wall_s": 10.5,
-    "tail": "SUBTESTS 5/5"
-  },
-  {
-    "task": "wf4_assumption",
-    "shape": "perf",
-    "trap": "false-premise",
-    "worker_view": "full",
-    "stresses": [
-      "premise-audit"
-    ],
-    "rep": 3,
-    "arm": "judge_bypass",
     "terminal": "declined",
     "baseline_sub": [
       5,
@@ -557,12 +527,76 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": true,
     "declined_correctly": true,
-    "wall_s": 8.7,
+    "wall_s": 210.6,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "wf4_assumption",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 2,
+    "arm": "judge_bypass",
+    "terminal": "declined",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "wall_s": 9.5,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "wf4_assumption",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 3,
+    "arm": "judge_bypass",
+    "terminal": "declined",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "wall_s": 32.2,
     "tail": "SUBTESTS 5/5"
   },
   {
@@ -577,7 +611,7 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-partial",
     "baseline_sub": [
       0,
       7
@@ -588,12 +622,14 @@
     ],
     "struct": {},
     "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 12.8,
+    "wall_s": 194.2,
     "tail": "SUBTESTS 5/7\n  minutes: raised UnboundLocalError(\"local variable 'rest' referenced before assignment\")\n  seconds: raised UnboundLocalError(\"local variable 'rest' referenced before assignment\")"
   },
   {
@@ -608,7 +644,7 @@
     ],
     "rep": 2,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-partial",
     "baseline_sub": [
       0,
       7
@@ -619,13 +655,15 @@
     ],
     "struct": {},
     "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 12.5,
-    "tail": "SUBTESTS 5/7\n  h+m: got 3600 want 5400\n  h+m+s: got 3600 want 3723"
+    "wall_s": 110.9,
+    "tail": "SUBTESTS 5/7\n  minutes: raised UnboundLocalError(\"local variable 'rest' referenced before assignment\")\n  seconds: raised UnboundLocalError(\"local variable 'rest' referenced before assignment\")"
   },
   {
     "task": "wf5_partial",
@@ -639,7 +677,7 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-partial",
     "baseline_sub": [
       0,
       7
@@ -650,13 +688,15 @@
     ],
     "struct": {},
     "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 12.2,
-    "tail": "SUBTESTS 5/7\n  minutes: raised UnboundLocalError(\"local variable 'rest' referenced before assignment\")\n  seconds: raised UnboundLocalError(\"local variable 'rest' referenced before assignment\")"
+    "wall_s": 278.5,
+    "tail": "SUBTESTS 5/7\n  h+m: got 3600 want 5400\n  h+m+s: got 3600 want 3723"
   },
   {
     "task": "wf6_multi",
@@ -669,7 +709,7 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-partial",
     "baseline_sub": [
       2,
       6
@@ -681,6 +721,47 @@
     "struct": {
       "DOCSCORE": [
         0,
+        4
+      ],
+      "TODOSCORE": [
+        0,
+        3
+      ]
+    },
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 330.8,
+    "tail": "SUBTESTS 6/6\nDOCSCORE 0/4\n  no module docstring\n  build_graph docstring missing Args/Returns\n  topo_sort docstring missing Args/Returns/Raises\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present"
+  },
+  {
+    "task": "wf6_multi",
+    "shape": "migration",
+    "trap": "multi-concern",
+    "worker_view": "full",
+    "stresses": [
+      "concern-split",
+      "combined-score"
+    ],
+    "rep": 2,
+    "arm": "judge_bypass",
+    "terminal": "blocked-partial",
+    "baseline_sub": [
+      2,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {
+      "DOCSCORE": [
+        3,
         4
       ],
       "TODOSCORE": [
@@ -689,13 +770,15 @@
       ]
     },
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 13.8,
-    "tail": "SUBTESTS 6/6\nDOCSCORE 0/4\n  no module docstring\n  build_graph docstring missing Args/Returns\n  topo_sort docstring missing Args/Returns/Raises\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 2/3\n  stale O(n^2) todo still present"
+    "wall_s": 290.2,
+    "tail": "SUBTESTS 6/6\nDOCSCORE 3/4\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 2/3\n  stale O(n^2) todo still present"
   },
   {
     "task": "wf6_multi",
@@ -706,9 +789,9 @@
       "concern-split",
       "combined-score"
     ],
-    "rep": 2,
+    "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-no-progress",
     "baseline_sub": [
       2,
       6
@@ -728,47 +811,15 @@
       ]
     },
     "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 21.3,
+    "wall_s": 263.2,
     "tail": "SUBTESTS 2/6\n  topo chain raised NotImplementedError()\n  topo diamond raised NotImplementedError()\n  topo cycle: still NotImplementedError\n  topo empty raised NotImplementedError()\nDOCSCORE 0/4\n  no module docstring\n  build_graph docstring missing Args/Returns\n  topo_sort docstring missing Args/Returns/Raises\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present"
-  },
-  {
-    "task": "wf6_multi",
-    "shape": "migration",
-    "trap": "multi-concern",
-    "worker_view": "full",
-    "stresses": [
-      "concern-split",
-      "combined-score"
-    ],
-    "rep": 3,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      2,
-      6
-    ],
-    "final_sub": [
-      0,
-      1
-    ],
-    "struct": {},
-    "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "File \"C",
-      "^^^\nSyntaxError",
-      "import graphlib\n  File \"C"
-    ],
-    "check_crashed": true,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 17.0,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_wf6_multi_mnejgnof\\test_task.py\", line 11, in <module>\n    import graphlib\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_wf6_multi_mnejgnof\\graphlib.py\", line 39\n    Implement the topo_sort function to return a valid topological order and raise an exception on a cycle.\n              ^^^\nSyntaxError: invalid syntax"
   },
   {
     "task": "hf_extract_fn",
@@ -781,7 +832,7 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       5,
       5
@@ -797,12 +848,14 @@
       ]
     },
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 12.8,
+    "wall_s": 88.9,
     "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3"
   },
   {
@@ -816,13 +869,13 @@
     ],
     "rep": 2,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       5,
       5
     ],
     "final_sub": [
-      4,
+      5,
       5
     ],
     "struct": {
@@ -831,16 +884,16 @@
         3
       ]
     },
-    "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "empty input early-return"
-    ],
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 14.0,
-    "tail": "SUBTESTS 4/5\n  empty input early-return: raised TypeError('string indices must be integers')\nSTRUCTSCORE 3/3"
+    "wall_s": 157.5,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3"
   },
   {
     "task": "hf_extract_fn",
@@ -853,13 +906,13 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       5,
       5
     ],
     "final_sub": [
-      2,
+      5,
       5
     ],
     "struct": {
@@ -868,18 +921,16 @@
         3
       ]
     },
-    "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "all-bad input",
-      "bad record is logged",
-      "empty input early-return"
-    ],
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 13.3,
-    "tail": "SUBTESTS 2/5\n  empty input early-return: raised TypeError('string indices must be integers')\n  bad record is logged: got 0 want 1\n  all-bad input: got {'ok': [], 'skipped': [], 'total': 0} want {'ok': [], 'skipped': [\"{'x': 1}: missing 'amount'\", \"{'y': 2}: missing 'amount'\"], 'total': 0}\nSTRUCTSCORE 3/3"
+    "wall_s": 156.4,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3"
   },
   {
     "task": "hf_dict_dispatch",
@@ -892,29 +943,31 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-no-progress",
     "baseline_sub": [
       7,
       7
     ],
     "final_sub": [
-      0,
-      1
+      7,
+      7
     ],
-    "struct": {},
-    "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "\"audit\"",
-      "File \"C",
-      "^^\nSyntaxError",
-      "import router\n  File \"C"
-    ],
-    "check_crashed": true,
+    "struct": {
+      "STRUCTSCORE": [
+        0,
+        3
+      ]
+    },
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 11.8,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_dict_dispatch_zzkx1b4i\\test_task.py\", line 10, in <module>\n    import router\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_dict_dispatch_zzkx1b4i\\router.py\", line 5\n    \"audit\": lambda: (ctx[\"audit_count\"] += 1) or f\"audit #{ctx['audit_count']}\",\n                                         ^^\nSyntaxError: invalid syntax"
+    "wall_s": 121.7,
+    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain"
   },
   {
     "task": "hf_dict_dispatch",
@@ -927,29 +980,31 @@
     ],
     "rep": 2,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-no-progress",
     "baseline_sub": [
       7,
       7
     ],
     "final_sub": [
-      0,
-      1
+      7,
+      7
     ],
-    "struct": {},
-    "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "\"audit\"",
-      "File \"C",
-      "^^\nSyntaxError",
-      "import router\n  File \"C"
-    ],
-    "check_crashed": true,
+    "struct": {
+      "STRUCTSCORE": [
+        0,
+        3
+      ]
+    },
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 10.9,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_dict_dispatch_x7ydep97\\test_task.py\", line 10, in <module>\n    import router\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_dict_dispatch_x7ydep97\\router.py\", line 5\n    \"audit\": lambda: (ctx[\"audit_count\"] += 1) or f\"audit #{ctx['audit_count']}\",\n                                         ^^\nSyntaxError: invalid syntax"
+    "wall_s": 108.5,
+    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain"
   },
   {
     "task": "hf_dict_dispatch",
@@ -962,29 +1017,31 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-no-progress",
     "baseline_sub": [
       7,
       7
     ],
     "final_sub": [
-      0,
-      1
+      7,
+      7
     ],
-    "struct": {},
-    "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "\"audit\"",
-      "File \"C",
-      "^^\nSyntaxError",
-      "import router\n  File \"C"
-    ],
-    "check_crashed": true,
+    "struct": {
+      "STRUCTSCORE": [
+        0,
+        3
+      ]
+    },
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 12.8,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_dict_dispatch_wh85yzl6\\test_task.py\", line 10, in <module>\n    import router\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_dict_dispatch_wh85yzl6\\router.py\", line 5\n    \"audit\": lambda ctx: (ctx[\"audit_count\"] += 1, f\"audit #{ctx['audit_count']}\"),\n                                             ^^\nSyntaxError: invalid syntax"
+    "wall_s": 103.2,
+    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain"
   },
   {
     "task": "hf_rename",
@@ -997,29 +1054,31 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-no-progress",
     "baseline_sub": [
       4,
       6
     ],
     "final_sub": [
-      6,
+      4,
       6
     ],
     "struct": {
       "STRUCTSCORE": [
-        3,
+        2,
         3
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 12.6,
-    "tail": "SUBTESTS 6/6\nSTRUCTSCORE 3/3"
+    "wall_s": 109.0,
+    "tail": "SUBTESTS 4/6\n  compute exists and works: raised AttributeError(\"module 'billing' has no attribute 'compute'\")\n  calc name is gone: got True want False\nSTRUCTSCORE 2/3"
   },
   {
     "task": "hf_rename",
@@ -1032,29 +1091,31 @@
     ],
     "rep": 2,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-no-progress",
     "baseline_sub": [
       4,
       6
     ],
     "final_sub": [
-      6,
+      4,
       6
     ],
     "struct": {
       "STRUCTSCORE": [
-        3,
+        2,
         3
       ]
     },
-    "objective_pass": true,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 12.2,
-    "tail": "SUBTESTS 6/6\nSTRUCTSCORE 3/3"
+    "wall_s": 108.1,
+    "tail": "SUBTESTS 4/6\n  compute exists and works: raised AttributeError(\"module 'billing' has no attribute 'compute'\")\n  calc name is gone: got True want False\nSTRUCTSCORE 2/3"
   },
   {
     "task": "hf_rename",
@@ -1067,28 +1128,31 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-no-progress",
     "baseline_sub": [
       4,
       6
     ],
     "final_sub": [
-      0,
-      1
+      4,
+      6
     ],
-    "struct": {},
+    "struct": {
+      "STRUCTSCORE": [
+        2,
+        3
+      ]
+    },
     "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "File \"C",
-      "^^^\nSyntaxError",
-      "import billing\n  File \"C"
-    ],
-    "check_crashed": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 14.5,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_rename_h49qk6kv\\test_task.py\", line 11, in <module>\n    import billing\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_rename_h49qk6kv\\billing.py\", line 29\n    Rename the public function `calc` to `compute`.\n           ^^^\nSyntaxError: invalid syntax"
+    "wall_s": 109.0,
+    "tail": "SUBTESTS 4/6\n  compute exists and works: raised AttributeError(\"module 'billing' has no attribute 'compute'\")\n  calc name is gone: got True want False\nSTRUCTSCORE 2/3"
   },
   {
     "task": "hf_rec_to_iter",
@@ -1100,40 +1164,7 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      4,
-      5
-    ],
-    "final_sub": [
-      0,
-      1
-    ],
-    "struct": {},
-    "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "File \"C",
-      "^^^\nSyntaxError",
-      "import tree\n  File \"C"
-    ],
-    "check_crashed": true,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 14.2,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_rec_to_iter_yejjdpg3\\test_task.py\", line 10, in <module>\n    import tree\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_rec_to_iter_yejjdpg3\\tree.py\", line 20\n    Replace the recursive function with an iterative function using an explicit stack.\n            ^^^\nSyntaxError: invalid syntax"
-  },
-  {
-    "task": "hf_rec_to_iter",
-    "shape": "refactor",
-    "trap": "behaviour-preserving",
-    "worker_view": "full",
-    "stresses": [
-      "L2-structural"
-    ],
-    "rep": 2,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       4,
       5
@@ -1149,12 +1180,50 @@
       ]
     },
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 11.6,
+    "wall_s": 95.2,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/1"
+  },
+  {
+    "task": "hf_rec_to_iter",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural"
+    ],
+    "rep": 2,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      4,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        1,
+        1
+      ]
+    },
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 105.8,
     "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/1"
   },
   {
@@ -1167,28 +1236,31 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-no-progress",
     "baseline_sub": [
       4,
       5
     ],
     "final_sub": [
-      0,
-      1
+      4,
+      5
     ],
-    "struct": {},
+    "struct": {
+      "STRUCTSCORE": [
+        0,
+        1
+      ]
+    },
     "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "File \"C",
-      "^^^\nSyntaxError",
-      "import tree\n  File \"C"
-    ],
-    "check_crashed": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 13.6,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_rec_to_iter_p2mcp723\\test_task.py\", line 10, in <module>\n    import tree\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_rec_to_iter_p2mcp723\\tree.py\", line 19\n    Rewrite the count_nodes function to use an iterative approach with an explicit stack.\n            ^^^\nSyntaxError: invalid syntax"
+    "wall_s": 112.6,
+    "tail": "SUBTESTS 4/5\n  deep chain 5000: raised RecursionError('maximum recursion depth exceeded while calling a Python object')\nSTRUCTSCORE 0/1\n  count_nodes still calls itself"
   },
   {
     "task": "hf_already_optimal",
@@ -1212,159 +1284,171 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "wall_s": 11.3,
+    "tail": "SUBTESTS 6/6"
+  },
+  {
+    "task": "hf_already_optimal",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit",
+      "cross-file"
+    ],
+    "rep": 2,
+    "arm": "judge_bypass",
+    "terminal": "declined",
+    "baseline_sub": [
+      6,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "wall_s": 10.0,
+    "tail": "SUBTESTS 6/6"
+  },
+  {
+    "task": "hf_already_optimal",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit",
+      "cross-file"
+    ],
+    "rep": 3,
+    "arm": "judge_bypass",
+    "terminal": "declined",
+    "baseline_sub": [
+      6,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "wall_s": 146.7,
+    "tail": "SUBTESTS 6/6"
+  },
+  {
+    "task": "hf_dead_code",
+    "shape": "cleanup",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "declined",
+    "baseline_sub": [
+      4,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 8.9,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 4/4"
   },
   {
-    "task": "hf_already_optimal",
-    "shape": "perf",
+    "task": "hf_dead_code",
+    "shape": "cleanup",
     "trap": "false-premise",
     "worker_view": "full",
     "stresses": [
-      "premise-audit",
-      "cross-file"
+      "premise-audit"
     ],
     "rep": 2,
     "arm": "judge_bypass",
     "terminal": "declined",
     "baseline_sub": [
-      6,
-      6
+      4,
+      4
     ],
     "final_sub": [
-      6,
-      6
+      4,
+      4
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "wall_s": 10.0,
+    "tail": "SUBTESTS 4/4"
+  },
+  {
+    "task": "hf_dead_code",
+    "shape": "cleanup",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 3,
+    "arm": "judge_bypass",
+    "terminal": "declined",
+    "baseline_sub": [
+      4,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": true,
     "declined_correctly": true,
     "wall_s": 7.5,
-    "tail": "SUBTESTS 6/6"
-  },
-  {
-    "task": "hf_already_optimal",
-    "shape": "perf",
-    "trap": "false-premise",
-    "worker_view": "full",
-    "stresses": [
-      "premise-audit",
-      "cross-file"
-    ],
-    "rep": 3,
-    "arm": "judge_bypass",
-    "terminal": "declined",
-    "baseline_sub": [
-      6,
-      6
-    ],
-    "final_sub": [
-      6,
-      6
-    ],
-    "struct": {},
-    "objective_pass": true,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": true,
-    "declined_correctly": true,
-    "wall_s": 8.0,
-    "tail": "SUBTESTS 6/6"
-  },
-  {
-    "task": "hf_dead_code",
-    "shape": "cleanup",
-    "trap": "false-premise",
-    "worker_view": "full",
-    "stresses": [
-      "premise-audit"
-    ],
-    "rep": 1,
-    "arm": "judge_bypass",
-    "terminal": "declined",
-    "baseline_sub": [
-      4,
-      4
-    ],
-    "final_sub": [
-      4,
-      4
-    ],
-    "struct": {},
-    "objective_pass": true,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": true,
-    "declined_correctly": true,
-    "wall_s": 7.9,
-    "tail": "SUBTESTS 4/4"
-  },
-  {
-    "task": "hf_dead_code",
-    "shape": "cleanup",
-    "trap": "false-premise",
-    "worker_view": "full",
-    "stresses": [
-      "premise-audit"
-    ],
-    "rep": 2,
-    "arm": "judge_bypass",
-    "terminal": "declined",
-    "baseline_sub": [
-      4,
-      4
-    ],
-    "final_sub": [
-      4,
-      4
-    ],
-    "struct": {},
-    "objective_pass": true,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": true,
-    "declined_correctly": true,
-    "wall_s": 7.6,
-    "tail": "SUBTESTS 4/4"
-  },
-  {
-    "task": "hf_dead_code",
-    "shape": "cleanup",
-    "trap": "false-premise",
-    "worker_view": "full",
-    "stresses": [
-      "premise-audit"
-    ],
-    "rep": 3,
-    "arm": "judge_bypass",
-    "terminal": "declined",
-    "baseline_sub": [
-      4,
-      4
-    ],
-    "final_sub": [
-      4,
-      4
-    ],
-    "struct": {},
-    "objective_pass": true,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": true,
-    "declined_correctly": true,
-    "wall_s": 8.0,
     "tail": "SUBTESTS 4/4"
   },
   {
@@ -1389,12 +1473,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": true,
     "declined_correctly": true,
-    "wall_s": 8.5,
+    "wall_s": 13.0,
     "tail": "SUBTESTS 5/5"
   },
   {
@@ -1419,756 +1505,776 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": true,
     "declined_correctly": true,
-    "wall_s": 8.1,
-    "tail": "SUBTESTS 5/5"
-  },
-  {
-    "task": "hf_remove_validation",
-    "shape": "cleanup",
-    "trap": "false-premise",
-    "worker_view": "full",
-    "stresses": [
-      "premise-audit",
-      "regression-guard"
-    ],
-    "rep": 3,
-    "arm": "judge_bypass",
-    "terminal": "declined",
-    "baseline_sub": [
-      5,
-      5
-    ],
-    "final_sub": [
-      5,
-      5
-    ],
-    "struct": {},
-    "objective_pass": true,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": true,
-    "declined_correctly": true,
-    "wall_s": 8.2,
-    "tail": "SUBTESTS 5/5"
-  },
-  {
-    "task": "hf_cache_nondeterministic",
-    "shape": "perf",
-    "trap": "false-premise",
-    "worker_view": "full",
-    "stresses": [
-      "premise-audit"
-    ],
-    "rep": 1,
-    "arm": "judge_bypass",
-    "terminal": "declined",
-    "baseline_sub": [
-      4,
-      4
-    ],
-    "final_sub": [
-      4,
-      4
-    ],
-    "struct": {},
-    "objective_pass": true,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": true,
-    "declined_correctly": true,
-    "wall_s": 4.2,
-    "tail": "SUBTESTS 4/4"
-  },
-  {
-    "task": "hf_cache_nondeterministic",
-    "shape": "perf",
-    "trap": "false-premise",
-    "worker_view": "full",
-    "stresses": [
-      "premise-audit"
-    ],
-    "rep": 2,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'bool' object has no attribute 'append'\")",
-    "baseline_sub": [
-      4,
-      4
-    ],
-    "final_sub": [
-      4,
-      4
-    ],
-    "struct": {},
-    "objective_pass": true,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": true,
-    "declined_correctly": false,
-    "wall_s": 9.7,
-    "tail": "SUBTESTS 4/4"
-  },
-  {
-    "task": "hf_cache_nondeterministic",
-    "shape": "perf",
-    "trap": "false-premise",
-    "worker_view": "full",
-    "stresses": [
-      "premise-audit"
-    ],
-    "rep": 3,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'bool' object has no attribute 'append'\")",
-    "baseline_sub": [
-      4,
-      4
-    ],
-    "final_sub": [
-      4,
-      4
-    ],
-    "struct": {},
-    "objective_pass": true,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": true,
-    "declined_correctly": false,
-    "wall_s": 10.4,
-    "tail": "SUBTESTS 4/4"
-  },
-  {
-    "task": "hf_multi_recipient",
-    "shape": "compat",
-    "trap": "backward-compat",
-    "worker_view": "full",
-    "stresses": [
-      "backward-compat",
-      "regression-guard"
-    ],
-    "rep": 1,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      3,
-      5
-    ],
-    "final_sub": [
-      0,
-      1
-    ],
-    "struct": {},
-    "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "File \"C",
-      "^^^\nSyntaxError",
-      "import notify as N\n  File \"C"
-    ],
-    "check_crashed": true,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 12.7,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_multi_recipient_tti2oxvj\\test_task.py\", line 8, in <module>\n    import notify as N\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_multi_recipient_tti2oxvj\\notify.py\", line 17\n    Modify the `notify` function to accept a list or tuple of recipients.\n           ^^^\nSyntaxError: invalid syntax"
-  },
-  {
-    "task": "hf_multi_recipient",
-    "shape": "compat",
-    "trap": "backward-compat",
-    "worker_view": "full",
-    "stresses": [
-      "backward-compat",
-      "regression-guard"
-    ],
-    "rep": 2,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      3,
-      5
-    ],
-    "final_sub": [
-      0,
-      1
-    ],
-    "struct": {},
-    "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "File \"C",
-      "^^^\nSyntaxError",
-      "import notify as N\n  File \"C"
-    ],
-    "check_crashed": true,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 13.8,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_multi_recipient_0vigleuq\\test_task.py\", line 8, in <module>\n    import notify as N\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_multi_recipient_0vigleuq\\notify.py\", line 17\n    Modify the `notify` function to accept either a single recipient string or a list or tuple of recipients.\n           ^^^\nSyntaxError: invalid syntax"
-  },
-  {
-    "task": "hf_multi_recipient",
-    "shape": "compat",
-    "trap": "backward-compat",
-    "worker_view": "full",
-    "stresses": [
-      "backward-compat",
-      "regression-guard"
-    ],
-    "rep": 3,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      3,
-      5
-    ],
-    "final_sub": [
-      0,
-      1
-    ],
-    "struct": {},
-    "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "File \"C",
-      "^^^\nSyntaxError",
-      "import notify as N\n  File \"C"
-    ],
-    "check_crashed": true,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 12.6,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_multi_recipient_jqxjt6d4\\test_task.py\", line 8, in <module>\n    import notify as N\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_multi_recipient_jqxjt6d4\\notify.py\", line 17\n    Modify the `notify` function to accept a list or tuple of recipients.\n           ^^^\nSyntaxError: invalid syntax"
-  },
-  {
-    "task": "hf_return_shape",
-    "shape": "compat",
-    "trap": "backward-compat",
-    "worker_view": "full",
-    "stresses": [
-      "backward-compat",
-      "regression-guard"
-    ],
-    "rep": 1,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      3,
-      5
-    ],
-    "final_sub": [
-      5,
-      5
-    ],
-    "struct": {},
-    "objective_pass": true,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 11.9,
-    "tail": "SUBTESTS 5/5"
-  },
-  {
-    "task": "hf_return_shape",
-    "shape": "compat",
-    "trap": "backward-compat",
-    "worker_view": "full",
-    "stresses": [
-      "backward-compat",
-      "regression-guard"
-    ],
-    "rep": 2,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      3,
-      5
-    ],
-    "final_sub": [
-      5,
-      5
-    ],
-    "struct": {},
-    "objective_pass": true,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 11.4,
-    "tail": "SUBTESTS 5/5"
-  },
-  {
-    "task": "hf_return_shape",
-    "shape": "compat",
-    "trap": "backward-compat",
-    "worker_view": "full",
-    "stresses": [
-      "backward-compat",
-      "regression-guard"
-    ],
-    "rep": 3,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      3,
-      5
-    ],
-    "final_sub": [
-      5,
-      5
-    ],
-    "struct": {},
-    "objective_pass": true,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 11.1,
-    "tail": "SUBTESTS 5/5"
-  },
-  {
-    "task": "hf_deprecate",
-    "shape": "compat",
-    "trap": "backward-compat",
-    "worker_view": "full",
-    "stresses": [
-      "backward-compat",
-      "L2-structural"
-    ],
-    "rep": 1,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      1,
-      4
-    ],
-    "final_sub": [
-      1,
-      4
-    ],
-    "struct": {},
-    "objective_pass": false,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 10.7,
-    "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: raised NameError(\"name 'warnings' is not defined\")\n  old_parse matches new_parse: raised NameError(\"name 'warnings' is not defined\")\n  old_parse strips like new_parse: raised NameError(\"name 'warnings' is not defined\")"
-  },
-  {
-    "task": "hf_deprecate",
-    "shape": "compat",
-    "trap": "backward-compat",
-    "worker_view": "full",
-    "stresses": [
-      "backward-compat",
-      "L2-structural"
-    ],
-    "rep": 2,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      1,
-      4
-    ],
-    "final_sub": [
-      1,
-      4
-    ],
-    "struct": {},
-    "objective_pass": false,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 11.0,
-    "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: raised NameError(\"name 'warnings' is not defined\")\n  old_parse matches new_parse: raised NameError(\"name 'warnings' is not defined\")\n  old_parse strips like new_parse: raised NameError(\"name 'warnings' is not defined\")"
-  },
-  {
-    "task": "hf_deprecate",
-    "shape": "compat",
-    "trap": "backward-compat",
-    "worker_view": "full",
-    "stresses": [
-      "backward-compat",
-      "L2-structural"
-    ],
-    "rep": 3,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      1,
-      4
-    ],
-    "final_sub": [
-      1,
-      4
-    ],
-    "struct": {},
-    "objective_pass": false,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 10.4,
-    "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: raised NameError(\"name 'warnings' is not defined\")\n  old_parse matches new_parse: raised NameError(\"name 'warnings' is not defined\")\n  old_parse strips like new_parse: raised NameError(\"name 'warnings' is not defined\")"
-  },
-  {
-    "task": "hf_json_field",
-    "shape": "feature",
-    "trap": "backward-compat",
-    "worker_view": "full",
-    "stresses": [
-      "backward-compat",
-      "regression-guard"
-    ],
-    "rep": 1,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      2,
-      5
-    ],
-    "final_sub": [
-      5,
-      5
-    ],
-    "struct": {},
-    "objective_pass": true,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 10.4,
-    "tail": "SUBTESTS 5/5"
-  },
-  {
-    "task": "hf_json_field",
-    "shape": "feature",
-    "trap": "backward-compat",
-    "worker_view": "full",
-    "stresses": [
-      "backward-compat",
-      "regression-guard"
-    ],
-    "rep": 2,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      2,
-      5
-    ],
-    "final_sub": [
-      5,
-      5
-    ],
-    "struct": {},
-    "objective_pass": true,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 10.1,
-    "tail": "SUBTESTS 5/5"
-  },
-  {
-    "task": "hf_json_field",
-    "shape": "feature",
-    "trap": "backward-compat",
-    "worker_view": "full",
-    "stresses": [
-      "backward-compat",
-      "regression-guard"
-    ],
-    "rep": 3,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      2,
-      5
-    ],
-    "final_sub": [
-      5,
-      5
-    ],
-    "struct": {},
-    "objective_pass": true,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 10.6,
-    "tail": "SUBTESTS 5/5"
-  },
-  {
-    "task": "hf_timeout_param",
-    "shape": "feature",
-    "trap": "edge-coverage",
-    "worker_view": "full",
-    "stresses": [
-      "edge-coverage"
-    ],
-    "rep": 1,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      2,
-      6
-    ],
-    "final_sub": [
-      4,
-      6
-    ],
-    "struct": {},
-    "objective_pass": false,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 12.7,
-    "tail": "SUBTESTS 4/6\n  positive timeout, slow raises: got False want True\n  timeout=0, fast still ok: raised TimeoutError('Zero budget timeout')"
-  },
-  {
-    "task": "hf_timeout_param",
-    "shape": "feature",
-    "trap": "edge-coverage",
-    "worker_view": "full",
-    "stresses": [
-      "edge-coverage"
-    ],
-    "rep": 2,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      2,
-      6
-    ],
-    "final_sub": [
-      0,
-      1
-    ],
-    "struct": {},
-    "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "File \"C",
-      "^\nSyntaxError",
-      "from fetch import fetch\n  File \"C"
-    ],
-    "check_crashed": true,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 15.7,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_timeout_param_7w7u8ozp\\test_task.py\", line 8, in <module>\n    from fetch import fetch\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_timeout_param_7w7u8ozp\\fetch.py\", line 17\n    Add a timeout parameter to fetch(url, timeout=None). None means no timeout and existing fetch(url) callers keep working. A positive budget raises TimeoutError for a slow URL. timeout=0 is a zero budget - it must also time out a slow URL, not be treated as 'no timeout'.\n        ^\nSyntaxError: invalid syntax"
-  },
-  {
-    "task": "hf_timeout_param",
-    "shape": "feature",
-    "trap": "edge-coverage",
-    "worker_view": "full",
-    "stresses": [
-      "edge-coverage"
-    ],
-    "rep": 3,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      2,
-      6
-    ],
-    "final_sub": [
-      0,
-      1
-    ],
-    "struct": {},
-    "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "File \"C",
-      "^\nSyntaxError",
-      "from fetch import fetch\n  File \"C"
-    ],
-    "check_crashed": true,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 15.1,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_timeout_param_tgxjue0h\\test_task.py\", line 8, in <module>\n    from fetch import fetch\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_timeout_param_tgxjue0h\\fetch.py\", line 17\n    Add a timeout parameter to fetch(url, timeout=None). None means no timeout and existing fetch(url) callers keep working. A positive budget raises TimeoutError for a slow URL. timeout=0 is a zero budget - it must also time out a slow URL, not be treated as 'no timeout'.\n        ^\nSyntaxError: invalid syntax"
-  },
-  {
-    "task": "hf_cache_decorator",
-    "shape": "feature",
-    "trap": "edge-coverage",
-    "worker_view": "full",
-    "stresses": [
-      "edge-coverage"
-    ],
-    "rep": 1,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      3,
-      4
-    ],
-    "final_sub": [
-      2,
-      4
-    ],
-    "struct": {},
-    "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "cached value is not corruptible",
-      "different arg recomputes"
-    ],
-    "check_crashed": false,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 11.3,
-    "tail": "SUBTESTS 2/4\n  different arg recomputes: got [] want ['dev', 'prod']\n  cached value is not corruptible: got 'HACKED' want True"
-  },
-  {
-    "task": "hf_cache_decorator",
-    "shape": "feature",
-    "trap": "edge-coverage",
-    "worker_view": "full",
-    "stresses": [
-      "edge-coverage"
-    ],
-    "rep": 2,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      3,
-      4
-    ],
-    "final_sub": [
-      2,
-      4
-    ],
-    "struct": {},
-    "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "cached value is not corruptible",
-      "different arg recomputes"
-    ],
-    "check_crashed": false,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 11.2,
-    "tail": "SUBTESTS 2/4\n  different arg recomputes: got [] want ['dev', 'prod']\n  cached value is not corruptible: got 'HACKED' want True"
-  },
-  {
-    "task": "hf_cache_decorator",
-    "shape": "feature",
-    "trap": "edge-coverage",
-    "worker_view": "full",
-    "stresses": [
-      "edge-coverage"
-    ],
-    "rep": 3,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      3,
-      4
-    ],
-    "final_sub": [
-      0,
-      1
-    ],
-    "struct": {},
-    "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "File \"C",
-      "^\nSyntaxError",
-      "import compute\n  File \"C"
-    ],
-    "check_crashed": true,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 12.6,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_cache_decorator_qrcvo3ax\\test_task.py\", line 12, in <module>\n    import compute\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_cache_decorator_qrcvo3ax\\compute.py\", line 16\n    Create a dictionary to store the cached results of `config_for`.\n           ^\nSyntaxError: invalid syntax"
-  },
-  {
-    "task": "hf_csv",
-    "shape": "data",
-    "trap": "edge-coverage",
-    "worker_view": "full",
-    "stresses": [
-      "edge-coverage",
-      "kway-synth",
-      "partial-credit"
-    ],
-    "rep": 1,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      3,
-      6
-    ],
-    "final_sub": [
-      6,
-      6
-    ],
-    "struct": {},
-    "objective_pass": true,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": false,
-    "declined_correctly": false,
-    "wall_s": 14.4,
-    "tail": "SUBTESTS 6/6"
-  },
-  {
-    "task": "hf_csv",
-    "shape": "data",
-    "trap": "edge-coverage",
-    "worker_view": "full",
-    "stresses": [
-      "edge-coverage",
-      "kway-synth",
-      "partial-credit"
-    ],
-    "rep": 2,
-    "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
-    "baseline_sub": [
-      3,
-      6
-    ],
-    "final_sub": [
-      6,
-      6
-    ],
-    "struct": {},
-    "objective_pass": true,
-    "regressed": false,
-    "new_fails": [],
-    "check_crashed": false,
-    "decline_expected": false,
-    "declined_correctly": false,
     "wall_s": 12.1,
-    "tail": "SUBTESTS 6/6"
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "hf_remove_validation",
+    "shape": "cleanup",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit",
+      "regression-guard"
+    ],
+    "rep": 3,
+    "arm": "judge_bypass",
+    "terminal": "declined",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "wall_s": 10.7,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "hf_cache_nondeterministic",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "declined",
+    "baseline_sub": [
+      4,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "wall_s": 107.2,
+    "tail": "SUBTESTS 4/4"
+  },
+  {
+    "task": "hf_cache_nondeterministic",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 2,
+    "arm": "judge_bypass",
+    "terminal": "declined",
+    "baseline_sub": [
+      4,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "wall_s": 105.5,
+    "tail": "SUBTESTS 4/4"
+  },
+  {
+    "task": "hf_cache_nondeterministic",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 3,
+    "arm": "judge_bypass",
+    "terminal": "declined",
+    "baseline_sub": [
+      4,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "wall_s": 137.3,
+    "tail": "SUBTESTS 4/4"
+  },
+  {
+    "task": "hf_multi_recipient",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 87.5,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "hf_multi_recipient",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 2,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 90.3,
+    "tail": "sent to a\nsent to b\nsent to x\nsent to y\nSUBTESTS 5/5"
+  },
+  {
+    "task": "hf_multi_recipient",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 3,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 88.8,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "hf_return_shape",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 59.5,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "hf_return_shape",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 2,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 90.1,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "hf_return_shape",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 3,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 35.8,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "hf_deprecate",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      1,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 91.9,
+    "tail": "SUBTESTS 4/4"
+  },
+  {
+    "task": "hf_deprecate",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "L2-structural"
+    ],
+    "rep": 2,
+    "arm": "judge_bypass",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      1,
+      4
+    ],
+    "final_sub": [
+      1,
+      4
+    ],
+    "struct": {},
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 101.4,
+    "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: got False want True\n  old_parse matches new_parse: got False want True\n  old_parse strips like new_parse: got [' one '] want ['one']"
+  },
+  {
+    "task": "hf_deprecate",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "L2-structural"
+    ],
+    "rep": 3,
+    "arm": "judge_bypass",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      1,
+      4
+    ],
+    "final_sub": [
+      1,
+      4
+    ],
+    "struct": {},
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 101.7,
+    "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: got False want True\n  old_parse matches new_parse: got False want True\n  old_parse strips like new_parse: got [' one '] want ['one']"
+  },
+  {
+    "task": "hf_json_field",
+    "shape": "feature",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 85.0,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "hf_json_field",
+    "shape": "feature",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 2,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 80.6,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "hf_json_field",
+    "shape": "feature",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 3,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 77.3,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "hf_timeout_param",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "blocked-partial",
+    "baseline_sub": [
+      2,
+      6
+    ],
+    "final_sub": [
+      5,
+      6
+    ],
+    "struct": {},
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 72.7,
+    "tail": "SUBTESTS 5/6\n  timeout=0, fast still ok: raised TimeoutError('Timeout budget must be greater than zero')"
+  },
+  {
+    "task": "hf_timeout_param",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 2,
+    "arm": "judge_bypass",
+    "terminal": "blocked-partial",
+    "baseline_sub": [
+      2,
+      6
+    ],
+    "final_sub": [
+      5,
+      6
+    ],
+    "struct": {},
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 72.4,
+    "tail": "SUBTESTS 5/6\n  timeout=0 still times out: got False want True"
+  },
+  {
+    "task": "hf_timeout_param",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 3,
+    "arm": "judge_bypass",
+    "terminal": "blocked-partial",
+    "baseline_sub": [
+      2,
+      6
+    ],
+    "final_sub": [
+      5,
+      6
+    ],
+    "struct": {},
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 130.4,
+    "tail": "SUBTESTS 5/6\n  timeout=0, fast still ok: raised TimeoutError('Zero budget timeout')"
+  },
+  {
+    "task": "hf_cache_decorator",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      3,
+      4
+    ],
+    "struct": {},
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 119.3,
+    "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1"
+  },
+  {
+    "task": "hf_cache_decorator",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 2,
+    "arm": "judge_bypass",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      3,
+      4
+    ],
+    "struct": {},
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 106.4,
+    "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1"
+  },
+  {
+    "task": "hf_cache_decorator",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 3,
+    "arm": "judge_bypass",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      3,
+      4
+    ],
+    "struct": {},
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 109.9,
+    "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1"
+  },
+  {
+    "task": "hf_csv",
+    "shape": "data",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "kway-synth",
+      "partial-credit"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "blocked-partial",
+    "baseline_sub": [
+      3,
+      6
+    ],
+    "final_sub": [
+      5,
+      6
+    ],
+    "struct": {},
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 108.5,
+    "tail": "SUBTESTS 5/6\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]"
+  },
+  {
+    "task": "hf_csv",
+    "shape": "data",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "kway-synth",
+      "partial-credit"
+    ],
+    "rep": 2,
+    "arm": "judge_bypass",
+    "terminal": "blocked-partial",
+    "baseline_sub": [
+      3,
+      6
+    ],
+    "final_sub": [
+      5,
+      6
+    ],
+    "struct": {},
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 87.8,
+    "tail": "SUBTESTS 5/6\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]"
   },
   {
     "task": "hf_csv",
@@ -2182,7 +2288,7 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-partial",
     "baseline_sub": [
       3,
       6
@@ -2193,12 +2299,14 @@
     ],
     "struct": {},
     "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 10.2,
+    "wall_s": 93.8,
     "tail": "SUBTESTS 5/6\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]"
   },
   {
@@ -2212,24 +2320,26 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       1,
       8
     ],
     "final_sub": [
-      7,
+      8,
       8
     ],
     "struct": {},
-    "objective_pass": false,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 13.1,
-    "tail": "SUBTESTS 7/8\n  trailing dot stripped: raised ValueError('Invalid filename')"
+    "wall_s": 27.5,
+    "tail": "SUBTESTS 8/8"
   },
   {
     "task": "hf_path_sanitize",
@@ -2242,7 +2352,7 @@
     ],
     "rep": 2,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       1,
       8
@@ -2253,12 +2363,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 12.7,
+    "wall_s": 39.7,
     "tail": "SUBTESTS 8/8"
   },
   {
@@ -2272,7 +2384,7 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       1,
       8
@@ -2283,12 +2395,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 12.2,
+    "wall_s": 94.2,
     "tail": "SUBTESTS 8/8"
   },
   {
@@ -2301,7 +2415,7 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-partial",
     "baseline_sub": [
       3,
       6
@@ -2312,12 +2426,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 11.3,
+    "wall_s": 110.6,
     "tail": "SUBTESTS 6/6"
   },
   {
@@ -2330,7 +2446,7 @@
     ],
     "rep": 2,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       3,
       6
@@ -2341,12 +2457,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 11.3,
+    "wall_s": 90.8,
     "tail": "SUBTESTS 6/6"
   },
   {
@@ -2359,7 +2477,7 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       3,
       6
@@ -2370,12 +2488,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 11.2,
+    "wall_s": 79.9,
     "tail": "SUBTESTS 6/6"
   },
   {
@@ -2389,28 +2509,26 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-no-progress",
     "baseline_sub": [
       3,
       4
     ],
     "final_sub": [
-      0,
-      1
+      3,
+      4
     ],
     "struct": {},
     "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "File \"C",
-      "from report import describe, tri_area\n  File \"C",
-      "from shapes import rect_area, tri_area\nImportError"
-    ],
-    "check_crashed": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 10.2,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_sy_oyyzr\\test_task.py\", line 11, in <module>\n    from report import describe, tri_area\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_sy_oyyzr\\report.py\", line 3, in <module>\n    from shapes import rect_area, tri_area\nImportError: cannot import name 'tri_area' from 'shapes' (C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_sy_oyyzr\\shapes.py)"
+    "wall_s": 49.7,
+    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'"
   },
   {
     "task": "hf_misfiled_bug",
@@ -2423,28 +2541,26 @@
     ],
     "rep": 2,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-no-progress",
     "baseline_sub": [
       3,
       4
     ],
     "final_sub": [
-      0,
-      1
+      3,
+      4
     ],
     "struct": {},
     "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "File \"C",
-      "from report import describe, tri_area\n  File \"C",
-      "from shapes import rect_area, tri_area\nImportError"
-    ],
-    "check_crashed": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 11.5,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_mzde0s8i\\test_task.py\", line 11, in <module>\n    from report import describe, tri_area\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_mzde0s8i\\report.py\", line 3, in <module>\n    from shapes import rect_area, tri_area\nImportError: cannot import name 'tri_area' from 'shapes' (C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_mzde0s8i\\shapes.py)"
+    "wall_s": 52.0,
+    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'"
   },
   {
     "task": "hf_misfiled_bug",
@@ -2457,29 +2573,26 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-no-progress",
     "baseline_sub": [
       3,
       4
     ],
     "final_sub": [
-      0,
-      1
+      3,
+      4
     ],
     "struct": {},
     "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "File \"C",
-      "^^^\nSyntaxError",
-      "from report import describe, tri_area\n  File \"C",
-      "from shapes import rect_area\n  File \"C"
-    ],
-    "check_crashed": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 13.2,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_bk6obw9w\\test_task.py\", line 11, in <module>\n    from report import describe, tri_area\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_bk6obw9w\\report.py\", line 3, in <module>\n    from shapes import rect_area\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_misfiled_bug_bk6obw9w\\shapes.py\", line 16\n    Move the area calculation logic from `describe` to a new function `area` in `shapes.py`.\n         ^^^\nSyntaxError: invalid syntax"
+    "wall_s": 52.0,
+    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'"
   },
   {
     "task": "hf_pagination",
@@ -2491,7 +2604,7 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       1,
       5
@@ -2502,12 +2615,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 10.5,
+    "wall_s": 26.4,
     "tail": "SUBTESTS 5/5"
   },
   {
@@ -2520,7 +2635,7 @@
     ],
     "rep": 2,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       1,
       5
@@ -2531,12 +2646,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 9.7,
+    "wall_s": 24.1,
     "tail": "SUBTESTS 5/5"
   },
   {
@@ -2549,7 +2666,7 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       1,
       5
@@ -2560,12 +2677,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 9.9,
+    "wall_s": 19.6,
     "tail": "SUBTESTS 5/5"
   },
   {
@@ -2579,7 +2698,7 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       3,
       4
@@ -2590,12 +2709,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 10.1,
+    "wall_s": 99.4,
     "tail": "SUBTESTS 4/4"
   },
   {
@@ -2609,7 +2730,7 @@
     ],
     "rep": 2,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       3,
       4
@@ -2620,12 +2741,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 11.2,
+    "wall_s": 94.6,
     "tail": "SUBTESTS 4/4"
   },
   {
@@ -2639,7 +2762,7 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       3,
       4
@@ -2650,12 +2773,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 10.5,
+    "wall_s": 72.5,
     "tail": "SUBTESTS 4/4"
   },
   {
@@ -2669,7 +2794,7 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       4,
       6
@@ -2680,12 +2805,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 11.8,
+    "wall_s": 105.8,
     "tail": "SUBTESTS 6/6"
   },
   {
@@ -2699,7 +2826,7 @@
     ],
     "rep": 2,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       4,
       6
@@ -2710,12 +2837,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 12.3,
+    "wall_s": 98.7,
     "tail": "SUBTESTS 6/6"
   },
   {
@@ -2729,7 +2858,7 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       4,
       6
@@ -2740,12 +2869,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 11.3,
+    "wall_s": 91.1,
     "tail": "SUBTESTS 6/6"
   },
   {
@@ -2759,7 +2890,7 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       2,
       4
@@ -2770,12 +2901,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 13.6,
+    "wall_s": 124.3,
     "tail": "SUBTESTS 4/4"
   },
   {
@@ -2789,7 +2922,7 @@
     ],
     "rep": 2,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       2,
       4
@@ -2800,12 +2933,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 14.1,
+    "wall_s": 101.7,
     "tail": "SUBTESTS 4/4"
   },
   {
@@ -2819,7 +2954,7 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       2,
       4
@@ -2830,12 +2965,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 13.3,
+    "wall_s": 108.4,
     "tail": "SUBTESTS 4/4"
   },
   {
@@ -2849,7 +2986,7 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       2,
       5
@@ -2860,18 +2997,20 @@
     ],
     "struct": {
       "STRUCTSCORE": [
-        0,
+        2,
         2
       ]
     },
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 12.2,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/2"
+    "wall_s": 85.9,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 2/2"
   },
   {
     "task": "hf_json_serialize",
@@ -2884,7 +3023,7 @@
     ],
     "rep": 2,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-partial",
     "baseline_sub": [
       2,
       5
@@ -2895,18 +3034,20 @@
     ],
     "struct": {
       "STRUCTSCORE": [
-        0,
+        1,
         2
       ]
     },
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 39.1,
-    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/2"
+    "wall_s": 95.4,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/2"
   },
   {
     "task": "hf_json_serialize",
@@ -2919,28 +3060,31 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-partial",
     "baseline_sub": [
       2,
       5
     ],
     "final_sub": [
-      0,
-      1
+      5,
+      5
     ],
-    "struct": {},
-    "objective_pass": false,
-    "regressed": true,
-    "new_fails": [
-      "File \"C",
-      "^^^^\nSyntaxError",
-      "import ser\n  File \"C"
-    ],
-    "check_crashed": true,
+    "struct": {
+      "STRUCTSCORE": [
+        1,
+        2
+      ]
+    },
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 12.5,
-    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_json_serialize_lbhpyidf\\test_task.py\", line 12, in <module>\n    import ser\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_json_serialize_lbhpyidf\\ser.py\", line 16\n    (1) make to_json handle datetime (ISO string), set (sorted list) and Decimal (string), while an unknown custom type still raises;\n        ^^^^\nSyntaxError: invalid syntax"
+    "wall_s": 109.3,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/2"
   },
   {
     "task": "hf_counter_race",
@@ -2952,7 +3096,7 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       2,
       3
@@ -2963,12 +3107,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 10.7,
+    "wall_s": 103.5,
     "tail": "SUBTESTS 3/3"
   },
   {
@@ -2981,7 +3127,7 @@
     ],
     "rep": 2,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       2,
       3
@@ -2992,12 +3138,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 10.7,
+    "wall_s": 45.6,
     "tail": "SUBTESTS 3/3"
   },
   {
@@ -3010,7 +3158,7 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       2,
       3
@@ -3021,12 +3169,14 @@
     ],
     "struct": {},
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 10.9,
+    "wall_s": 129.0,
     "tail": "SUBTESTS 3/3"
   },
   {
@@ -3041,7 +3191,7 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       2,
       2
@@ -3061,12 +3211,14 @@
       ]
     },
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 12.1,
+    "wall_s": 106.6,
     "tail": "SUBTESTS 2/2\nPERFSCORE 1/1\nAUDITSCORE 1/1"
   },
   {
@@ -3081,7 +3233,7 @@
     ],
     "rep": 2,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       2,
       2
@@ -3101,12 +3253,14 @@
       ]
     },
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 12.5,
+    "wall_s": 86.9,
     "tail": "SUBTESTS 2/2\nPERFSCORE 1/1\nAUDITSCORE 1/1"
   },
   {
@@ -3121,7 +3275,7 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       2,
       2
@@ -3141,12 +3295,14 @@
       ]
     },
     "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": false,
     "declined_correctly": false,
-    "wall_s": 11.9,
+    "wall_s": 108.6,
     "tail": "SUBTESTS 2/2\nPERFSCORE 1/1\nAUDITSCORE 1/1"
   },
   {
@@ -3160,7 +3316,7 @@
     ],
     "rep": 1,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-no-progress",
     "baseline_sub": [
       2,
       3
@@ -3176,12 +3332,14 @@
       ]
     },
     "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": true,
     "declined_correctly": false,
-    "wall_s": 30.1,
+    "wall_s": 44.2,
     "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4"
   },
   {
@@ -3195,7 +3353,7 @@
     ],
     "rep": 2,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "blocked-no-progress",
     "baseline_sub": [
       2,
       3
@@ -3211,12 +3369,14 @@
       ]
     },
     "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": true,
     "declined_correctly": false,
-    "wall_s": 9.4,
+    "wall_s": 34.8,
     "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4"
   },
   {
@@ -3230,7 +3390,7 @@
     ],
     "rep": 3,
     "arm": "judge_bypass",
-    "terminal": "error:AttributeError(\"'list' object has no attribute 'get'\")",
+    "terminal": "answered",
     "baseline_sub": [
       2,
       3
@@ -3246,12 +3406,14 @@
       ]
     },
     "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
     "regressed": false,
     "new_fails": [],
     "check_crashed": false,
     "decline_expected": true,
     "declined_correctly": false,
-    "wall_s": 9.6,
+    "wall_s": 99.2,
     "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4"
   }
 ]
