@@ -280,3 +280,62 @@ assumed to tolerate past 73,728 — whether concurrent serving genuinely
 tolerates more *combined* context than one solo stream at the same total,
 or whether this pair simply stayed under the wall by chance of prompt
 length, is not yet distinguished.
+
+## Addendum, 2026-09-18 — the residency problem was Ollama's *default*, not Ollama
+
+Addendum 3 (2026-09-15) concluded that llama.cpp with `-ngl 99` was needed to get
+Nemotron Nano 9B v2 fully GPU-resident, because Ollama left 15% of its layers on
+CPU and delivered 12.7 tok/s against llama.cpp's 42.65. **The first half of that
+was right and the second half was a wrong inference.** The gap was Ollama's
+automatic placement heuristic, not Ollama, and it is one Modelfile parameter
+away.
+
+`PARAMETER num_gpu 99` (`experiments/M6-evaluation-suite/modelfiles/Modelfile.nemotron-gpu`):
+
+| configuration | gen tok/s | residency | host |
+|---|---|---|---|
+| Ollama, automatic placement | 12.7 | 85% | Windows |
+| llama.cpp `llama-bench -ngl 99` | 42.65 | 100% | WSL |
+| **Ollama `num_gpu 99`** | **48.87** | **100%** (6.56 of 6.56 GB, 6933 MiB on card) | Windows |
+
+Same file, same quant, same host. Forcing the placement not only closes the gap
+but passes the tool adopted to escape it.
+
+### Why this mattered more than throughput
+
+llama-server runs under WSL, and WSL's `.wslconfig` cap on this host is
+**4.3 GiB against a 6.7 GB model**. That cap was set on 2026-09-15 to stop a
+host reboot, and it is the direct cause of llama-server being killed mid-sweep
+twice — 2026-09-15, and again 2026-09-17 four minutes into a queued run.
+
+**The kill signature is worth recording because it is silent:** the server logs
+normal slot timings at ~34 tok/s and then simply stops. No OOM message, no
+assert, no abort — the process is gone and its own log ends mid-stride. Nothing
+in the log distinguishes it from a clean shutdown, which is why the first death
+was misread as the model being fast (34 tasks in 8 minutes) rather than as 32
+tasks never running.
+
+Raising the cap is not available: the host has 11.9 GB total with ~10.4 GB
+committed, and the cap exists because the default ~50% allocation already
+rebooted the machine once. Running the model natively on Windows removes the
+constraint instead of negotiating with it.
+
+### What this revises
+
+- **Addendum 3's operational conclusion is superseded.** Its *measurement*
+  stands — llama.cpp at `-ngl 99` really did reach 42.65 tok/s where Ollama's
+  default reached 12.7 — but "therefore use llama.cpp" does not follow. The
+  correct reading is narrower and more useful: **automatic layer placement is a
+  variable to control, not a property of the runtime.** M0 entry 1's original
+  finding was that residency is a hard binary with a 10–20x cliff; this adds
+  that a runtime can put you on the wrong side of that cliff by default, and
+  that the default is worth checking on every runtime rather than attributing
+  the result to the runtime.
+- **The 2x16k llama-server configuration is retired from the evaluation
+  pipeline.** Its concurrency measurements (addendum 5) are unaffected and
+  remain the record for what that server does on this card. It is the *host*
+  that cannot sustain it, not the configuration that was wrong.
+- **What is not revised:** the context wall at (65,536, 73,728], the KV growth
+  rate of 16.3 KiB/token, and the weight-sharing result across slots. Those were
+  measured on llama.cpp and are properties of the model and card, not of the
+  serving choice.
