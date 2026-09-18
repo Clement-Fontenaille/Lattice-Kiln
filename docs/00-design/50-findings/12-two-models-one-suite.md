@@ -153,3 +153,73 @@ place only: qwen `monolith`, blind 3/3 against witnessed 1/3.
 - The two subjects differ in parameter count (7B / 9B), architecture
   (transformer / hybrid Mamba-2), quantisation (Q4_K_M / Q4_K_L) and training
   lineage simultaneously. Nothing here attributes a difference to any one of them.
+
+## Addendum, 2026-09-18 — Nemotron ran with two of its three stages dark
+
+Everything above was produced with Nemotron's **premise-audit stage and judge
+stage returning empty text on every call, in every arm.**
+
+### The measurement
+
+Structured-output parse rates, per arm, with each Nemotron block verified
+against its results file by terminal match (34/34, or 22/22 for `m7b`):
+
+| arm | audit parsed, Nemotron | audit parsed, qwen | judge parsed, Nemotron | judge parsed, qwen |
+|---|---|---|---|---|
+| `judge_anchored` | **0/34** | 160/190 | **0/34** | 174/189 |
+| `judge_bypass` | **0/34** | 273/311 | **0/34** | 204/220 |
+| `judge_caveat` | **0/34** | 84/102 | **0/34** | 102/102 |
+| `judge_fullctx` | **0/34** | 150/170 | **0/34** | 169/170 |
+| `judge_staged` | **0/34** | 89/102 | 0/34 | 0/102 |
+| `m7f` | **0/34** | 148/170 | 3/34 | 170/170 |
+| `m7b` | **0/22** | 100/114 | — | — |
+| `test_synth` | **0/34** | 155/239 | — | — |
+
+No exception was recorded on any of them: `error` is `None` and `parsed` is
+`False`, so `re.compile(r"\{.*\}", re.S)` found no object in the returned text.
+
+### The cause
+
+`NVIDIA-Nemotron-Nano-9B-v2` is a reasoning model. Ollama returns its reasoning
+in a separate `thinking` field and leaves `response` empty until the model exits
+the thinking block. `ollama_client.generate()` reads `payload["response"]`.
+
+Reproduced directly against the `judge_anchored` audit prompt:
+
+| `num_predict` | `done_reason` | `thinking` | `response` | `{…}` present |
+|---|---|---|---|---|
+| 200 | `length` | 922 chars | **0 chars** | no |
+| 800 | `length` | 3439 chars | 266 chars | no |
+| 1536 | `stop` | 1345 chars | 565 chars | **yes** |
+
+The audit and judge calls are issued at `num_predict=200` and `220`
+(`judge_anchored_workflow.py`, and the same two values in `judge_bypass`,
+`judge_caveat`, `judge_fullctx`, `m7e`, `m7f`, `m7b`). At those budgets the model
+is still inside its thinking block when generation is cut, so `response` is the
+empty string.
+
+The implementer calls use `generate()`'s default `num_predict=1536` and are
+unaffected. That is why work still lands: **every Nemotron figure in this
+document was produced by the implementation stage alone.**
+
+### What this does to the sections above
+
+- **§3 stands and is sharpened.** The judge arms match on `answered` within
+  0.059 and on `declined` to three decimals — with qwen's judge parsing 92–100%
+  and Nemotron's parsing 0%. The judge stage was not merely unhelpful on one
+  model; it was absent, and the scores did not move.
+- **§1 stands.** The seven-task decline set is produced without the audit stage
+  on the Nemotron side, so it is not audit-driven.
+- **§4 is not a comparison of judging.** `judge_anchored` +3 compares qwen with
+  a working judge against Nemotron with none.
+- **§2 is unaffected by this.** `staged` is an `m6_arms` arm; the eight extra
+  qwen declines and the unmoved subtest counts do not depend on the audit or
+  judge stages.
+- **The totals table is not a model comparison at equal footing.** It is
+  qwen-with-three-stages against Nemotron-with-one.
+
+### Open
+
+No figure here establishes what Nemotron scores with its audit and judge stages
+functioning. Raising `num_predict` on those two calls, or reading the `thinking`
+field, would produce that; neither has been done.
