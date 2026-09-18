@@ -76,7 +76,25 @@ def state(job, ntasks):
     return ("partial" if have else "todo"), have, want
 
 
-def backend_ready(job, timeout_s=10.0):
+_READY_CACHE = {}
+
+
+def backend_ready(job, timeout_s=10.0, cache=False):
+    """`cache` is for --status, which asks once per job over a whole queue and
+    otherwise spends a timeout per row. The runner itself never caches: a
+    backend that was up when the queue started is exactly what must be
+    re-checked before each job."""
+    env = job.get("env", {})
+    key = (env.get("LATTICE_BACKEND"), env.get("LATTICE_BASE_URL"))
+    if cache and key in _READY_CACHE:
+        return _READY_CACHE[key]
+    r = _backend_ready(job, timeout_s)
+    if cache:
+        _READY_CACHE[key] = r
+    return r
+
+
+def _backend_ready(job, timeout_s=10.0):
     """Is the backend this job needs actually up and serving?
 
     The check that was missing on 2026-09-15: llama-server died two tasks into a
@@ -157,7 +175,7 @@ def main():
         for i, j in enumerate(jobs, 1):
             st, have, want = state(j, ntasks)
             be = j.get("env", {}).get("LATTICE_BACKEND", "ollama")
-            ready, why = backend_ready(j, timeout_s=3.0)
+            ready, why = backend_ready(j, timeout_s=3.0, cache=True)
             print(f"| {i} | {j.get('label') or j['arm']} | `{j['arm']}` | {j['reps']} "
                   f"| {be} | {st} | {have}/{want} | {'yes' if ready else why} |")
         return

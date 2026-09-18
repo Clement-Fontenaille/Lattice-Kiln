@@ -37,6 +37,26 @@ DEFAULT_BASE_URL = os.environ.get(
     "LATTICE_BASE_URL",
     "http://localhost:8090" if BACKEND == "llamacpp" else "http://localhost:11434")
 
+# LATTICE_THINK: unset sends no `think` key at all, which is the behaviour every
+# run before 2026-09-19 had. "0" sends think=false, "1" sends think=true.
+#
+# It exists because a reasoning model silently produced nothing for thirteen
+# arms. Ollama returns reasoning in a separate `thinking` field and leaves
+# `response` empty until the model exits the thinking block; the audit and judge
+# calls cap generation at 200 and 220 tokens, and Nemotron Nano 9B v2 needs
+# 609-2635 (median 1166, one prompt, ten reps) to get out of it. Every one of
+# those calls returned "". `/think` and `/no_think` control tokens do not work
+# through this path; this parameter does. See 50-findings/12, addendum 2.
+_THINK_ENV = os.environ.get("LATTICE_THINK")
+THINK = None if _THINK_ENV is None else _THINK_ENV not in ("0", "false", "False", "")
+
+# LATTICE_MIN_PREDICT: a floor under every caller's num_predict. The arms
+# hardcode 200 and 220, which is below what some models need for the ANSWER
+# alone -- with reasoning off, Nemotron's audit answer costs a median 212 tokens
+# and 5 of 8 runs truncate mid-object at 200. A floor raises them without
+# editing eight workflow files, and is a no-op for a model that stops earlier.
+MIN_PREDICT = int(os.environ.get("LATTICE_MIN_PREDICT", "0"))
+
 
 class OllamaError(RuntimeError):
     pass
@@ -71,12 +91,15 @@ def generate(prompt: str, *, model: str = DEFAULT_MODEL, base_url: str = DEFAULT
         return _generate_llamacpp(prompt, base_url=base_url, model=model,
                                   temperature=temperature, num_predict=num_predict,
                                   timeout_s=timeout_s, system=system)
+    num_predict = max(num_predict, MIN_PREDICT)
     body = {
         "model": model,
         "prompt": prompt,
         "stream": False,
         "options": {"temperature": temperature, "num_ctx": num_ctx, "num_predict": num_predict},
     }
+    if THINK is not None:
+        body["think"] = THINK
     if system:
         body["system"] = system
     data = json.dumps(body).encode("utf-8")
@@ -92,6 +115,17 @@ def generate(prompt: str, *, model: str = DEFAULT_MODEL, base_url: str = DEFAULT
         raise OllamaError(f"bad JSON from Ollama: {e}") from e
     if "response" not in payload:
         raise OllamaError(f"no 'response' field in Ollama reply: {payload!r}")
+    # The key is present and empty. This is what thirteen arms recorded as
+    # `parsed: False, error: None` and what was read as a model that judges
+    # badly: a reasoning model spent the whole budget in its `thinking` channel
+    # and never reached an answer. It must never be silent again -- an empty
+    # response with done_reason "length" is truncation before any output.
+    if not payload["response"] and payload.get("done_reason") == "length":
+        raise OllamaError(
+            f"empty response, truncated at num_predict={num_predict} "
+            f"(done_reason=length, {len(payload.get('thinking') or '')} chars of "
+            f"thinking, eval_count={payload.get('eval_count')}). The model did not "
+            f"reach an answer. Raise num_predict, or set LATTICE_THINK=0.")
     return Generation(
         text=payload["response"],
         model=payload.get("model", model),

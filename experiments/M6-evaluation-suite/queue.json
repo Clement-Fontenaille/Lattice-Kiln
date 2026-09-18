@@ -1,190 +1,431 @@
 {
-  "_note": "Ordered by information, not convenience. If the queue does not finish, what ran is what mattered most. Every arm runs on suite 0.4.0 so the table is comparable on one version.",
-  "_backends": "Both models now run on Ollama, so no backend dance is needed. Nemotron uses the `nemotron-gpu` Modelfile (modelfiles/Modelfile.nemotron-gpu), which forces num_gpu 99: Ollama's automatic placement left 15% of its layers on CPU at 12.7 tok/s, and forcing full residency gives 48.9 tok/s at 100% VRAM -- past llama.cpp's 42.65 on the same file. llama-server is retired from this queue: it runs under WSL, whose 4.3 GiB cap cannot hold a 6.7 GB model, and it was killed mid-sweep on 2026-09-15 and again on 2026-09-17.",
-  "_grouping": "Nemotron jobs first, then qwen, so Ollama swaps models once rather than per job. A swap costs a full load.",
-  "_reruns_2026-09-18": "Every nemotron arm is a rerun from zero: the 2026-09-15 llama-server sweep is void, and the single monolith row from 2026-09-17 was produced on llama.cpp and discarded so that every model-call row in results_nemotron comes from one backend. baseline is kept -- it makes no model call, and it was verified identical to the qwen baseline across all 34 tasks. The qwen jobs are coverage top-ups, not reruns: those arms were recorded before the suite gained its last two tasks.",
+  "_note": "Ordered by information, not convenience. Every arm runs on suite 0.4.0.",
+  "_design_2026-09-19": "A matched pair of Nemotron sweeps, varying ONE thing: whether the model reasons. Sweep `nothink` sends think=false and floors num_predict at 400; sweep `think` sends think=true and floors it at 4096. Same model, same arms, same suite, same rep count. The pair exists because the 2026-09-18 sweep ran with Nemotron's audit and judge stages returning empty text on every call -- reasoning consumed the 200-token cap before any answer appeared (50-findings/12, addenda 1 and 2), so that sweep measured the implementation stage alone and neither half of this pair reproduces it.",
+  "_floors": "400 for nothink: with reasoning off the audit answer alone costs a median 212 tokens and 5 of 8 runs truncate at 200; 300, 400 and 600 all parse 8/8. 4096 for think: ten reps of one prompt span 609-2635 eval tokens, and 2048 completed only 8 of 10.",
+  "_control": "monolith makes one model call with no audit and no judge stage. It is the arm where the two sweeps should agree; a difference there is a difference in the implementer, not in judging.",
+  "_grouping": "Each sweep runs its 16 arms together so Ollama swaps models once. The qwen top-ups run last and are unaffected by any of this.",
   "jobs": [
     {
-      "label": "nemotron-baseline",
+      "label": "nemo-nothink-baseline",
       "arm": "baseline",
       "reps": 1,
-      "why": "free, no model calls. Identical by construction to the qwen baseline, which makes it the harness sanity check",
+      "why": "free, no model calls. Identical in both sweeps by construction, and the harness sanity check against the qwen baseline [reasoning off, floor 400]",
       "env": {
         "LATTICE_BACKEND": "ollama",
         "LATTICE_EVAL_MODEL": "nemotron-gpu",
-        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_nothink"
       }
     },
     {
-      "label": "nemotron-monolith",
+      "label": "nemo-nothink-monolith",
       "arm": "monolith",
       "reps": 1,
-      "why": "one model call, no scaffolding. The cheapest arm that exercises the whole path, and the only clean read on what this model does unaided",
+      "why": "one model call, no audit and no judge. The control for the pair: whatever differs between the sweeps elsewhere should NOT differ here [reasoning off, floor 400]",
       "env": {
         "LATTICE_BACKEND": "ollama",
         "LATTICE_EVAL_MODEL": "nemotron-gpu",
-        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_nothink"
       }
     },
     {
-      "label": "nemotron-test_synth",
-      "arm": "test_synth",
-      "reps": 1,
-      "why": "the only arm that changes mechanism rather than framing: the model writes an executable witness instead of reading a diff",
-      "env": {
-        "LATTICE_BACKEND": "ollama",
-        "LATTICE_EVAL_MODEL": "nemotron-gpu",
-        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
-      }
-    },
-    {
-      "label": "nemotron-judge_anchored",
+      "label": "nemo-nothink-judge_anchored",
       "arm": "judge_anchored",
       "reps": 1,
-      "why": "half of the pair that lifts the anchor confound",
+      "why": "largest task-level disagreement with qwen in the dark-stage sweep (+3). The first place a working judge should show [reasoning off, floor 400]",
       "env": {
         "LATTICE_BACKEND": "ollama",
         "LATTICE_EVAL_MODEL": "nemotron-gpu",
-        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_nothink"
       }
     },
     {
-      "label": "nemotron-dloop",
-      "arm": "dloop",
+      "label": "nemo-nothink-test_synth",
+      "arm": "test_synth",
       "reps": 1,
-      "why": "retry-with-failing-lines, and the arm whose qwen figures move most between the gated and folded metrics (5th to 15th). Worth knowing whether that is the arm or the model",
+      "why": "the arm that writes an executable witness rather than reading a diff [reasoning off, floor 400]",
       "env": {
         "LATTICE_BACKEND": "ollama",
         "LATTICE_EVAL_MODEL": "nemotron-gpu",
-        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_nothink"
       }
     },
     {
-      "label": "nemotron-m7",
-      "arm": "m7",
-      "reps": 1,
-      "why": "the static workflow this project is building. Second-largest gated-to-folded drop on qwen",
-      "env": {
-        "LATTICE_BACKEND": "ollama",
-        "LATTICE_EVAL_MODEL": "nemotron-gpu",
-        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
-      }
-    },
-    {
-      "label": "nemotron-m7f",
-      "arm": "m7f",
-      "reps": 1,
-      "why": "the m7 variant with the largest qwen sample, so the comparison has the firmest other side",
-      "env": {
-        "LATTICE_BACKEND": "ollama",
-        "LATTICE_EVAL_MODEL": "nemotron-gpu",
-        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
-      }
-    },
-    {
-      "label": "nemotron-judge_fullctx",
-      "arm": "judge_fullctx",
-      "reps": 1,
-      "why": "the arm most likely to feel a context ceiling",
-      "env": {
-        "LATTICE_BACKEND": "ollama",
-        "LATTICE_EVAL_MODEL": "nemotron-gpu",
-        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
-      }
-    },
-    {
-      "label": "nemotron-staged",
-      "arm": "staged",
-      "reps": 1,
-      "why": "decomposed pipeline, the other end of the scaffolding range from monolith",
-      "env": {
-        "LATTICE_BACKEND": "ollama",
-        "LATTICE_EVAL_MODEL": "nemotron-gpu",
-        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
-      }
-    },
-    {
-      "label": "nemotron-judge_bypass",
+      "label": "nemo-nothink-judge_bypass",
       "arm": "judge_bypass",
       "reps": 1,
-      "why": "second execution ever of this arm -- the rotated-argument crash meant it had never run before 2026-09-17",
+      "why": "the isolated judge -- sees the diff and no check output [reasoning off, floor 400]",
       "env": {
         "LATTICE_BACKEND": "ollama",
         "LATTICE_EVAL_MODEL": "nemotron-gpu",
-        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_nothink"
       }
     },
     {
-      "label": "nemotron-judge_staged",
-      "arm": "judge_staged",
+      "label": "nemo-nothink-judge_fullctx",
+      "arm": "judge_fullctx",
       "reps": 1,
-      "why": "completes the judge family",
+      "why": "the judge given everything, against judge_bypass's isolation [reasoning off, floor 400]",
       "env": {
         "LATTICE_BACKEND": "ollama",
         "LATTICE_EVAL_MODEL": "nemotron-gpu",
-        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_nothink"
       }
     },
     {
-      "label": "nemotron-judge_caveat",
+      "label": "nemo-nothink-judge_caveat",
       "arm": "judge_caveat",
       "reps": 1,
-      "why": "completes the judge family",
+      "why": "judge family [reasoning off, floor 400]",
       "env": {
         "LATTICE_BACKEND": "ollama",
         "LATTICE_EVAL_MODEL": "nemotron-gpu",
-        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_nothink"
       }
     },
     {
-      "label": "nemotron-m7b",
+      "label": "nemo-nothink-judge_staged",
+      "arm": "judge_staged",
+      "reps": 1,
+      "why": "judge family [reasoning off, floor 400]",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_nothink"
+      }
+    },
+    {
+      "label": "nemo-nothink-m7",
+      "arm": "m7",
+      "reps": 1,
+      "why": "the static workflow being built [reasoning off, floor 400]",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_nothink"
+      }
+    },
+    {
+      "label": "nemo-nothink-m7f",
+      "arm": "m7f",
+      "reps": 1,
+      "why": "largest qwen sample of the m7 variants [reasoning off, floor 400]",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_nothink"
+      }
+    },
+    {
+      "label": "nemo-nothink-m7b",
       "arm": "m7b",
       "reps": 1,
-      "why": "m7 variant",
+      "why": "m7 variant [reasoning off, floor 400]",
       "env": {
         "LATTICE_BACKEND": "ollama",
         "LATTICE_EVAL_MODEL": "nemotron-gpu",
-        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_nothink"
       }
     },
     {
-      "label": "nemotron-m7c",
+      "label": "nemo-nothink-m7c",
       "arm": "m7c",
       "reps": 1,
-      "why": "m7 variant, and the only arm with no nemotron figure of any kind",
+      "why": "m7 variant, no nemotron figure of any kind yet [reasoning off, floor 400]",
       "env": {
         "LATTICE_BACKEND": "ollama",
         "LATTICE_EVAL_MODEL": "nemotron-gpu",
-        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_nothink"
       }
     },
     {
-      "label": "nemotron-m7e",
+      "label": "nemo-nothink-m7e",
       "arm": "m7e",
       "reps": 1,
-      "why": "m7 variant",
+      "why": "m7 variant [reasoning off, floor 400]",
       "env": {
         "LATTICE_BACKEND": "ollama",
         "LATTICE_EVAL_MODEL": "nemotron-gpu",
-        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_nothink"
       }
     },
     {
-      "label": "nemotron-test_synth_retry",
-      "arm": "test_synth_retry",
+      "label": "nemo-nothink-dloop",
+      "arm": "dloop",
       "reps": 1,
-      "why": "last: most expensive, least discriminating of the synth pair",
+      "why": "retry-with-failing-lines [reasoning off, floor 400]",
       "env": {
         "LATTICE_BACKEND": "ollama",
         "LATTICE_EVAL_MODEL": "nemotron-gpu",
-        "LATTICE_RESULTS_SUBDIR": "results_nemotron"
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_nothink"
+      }
+    },
+    {
+      "label": "nemo-nothink-staged",
+      "arm": "staged",
+      "reps": 1,
+      "why": "decomposed pipeline; qwen's weakest arm, and the one real difference in the dark-stage sweep [reasoning off, floor 400]",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_nothink"
+      }
+    },
+    {
+      "label": "nemo-nothink-test_synth_retry",
+      "arm": "test_synth_retry",
+      "reps": 1,
+      "why": "last: most expensive of the synth pair [reasoning off, floor 400]",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_nothink"
+      }
+    },
+    {
+      "label": "nemo-think-baseline",
+      "arm": "baseline",
+      "reps": 1,
+      "why": "free, no model calls. Identical in both sweeps by construction, and the harness sanity check against the qwen baseline [reasoning on, floor 4096]",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "1",
+        "LATTICE_MIN_PREDICT": "4096",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_think"
+      }
+    },
+    {
+      "label": "nemo-think-monolith",
+      "arm": "monolith",
+      "reps": 1,
+      "why": "one model call, no audit and no judge. The control for the pair: whatever differs between the sweeps elsewhere should NOT differ here [reasoning on, floor 4096]",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "1",
+        "LATTICE_MIN_PREDICT": "4096",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_think"
+      }
+    },
+    {
+      "label": "nemo-think-judge_anchored",
+      "arm": "judge_anchored",
+      "reps": 1,
+      "why": "largest task-level disagreement with qwen in the dark-stage sweep (+3). The first place a working judge should show [reasoning on, floor 4096]",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "1",
+        "LATTICE_MIN_PREDICT": "4096",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_think"
+      }
+    },
+    {
+      "label": "nemo-think-test_synth",
+      "arm": "test_synth",
+      "reps": 1,
+      "why": "the arm that writes an executable witness rather than reading a diff [reasoning on, floor 4096]",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "1",
+        "LATTICE_MIN_PREDICT": "4096",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_think"
+      }
+    },
+    {
+      "label": "nemo-think-judge_bypass",
+      "arm": "judge_bypass",
+      "reps": 1,
+      "why": "the isolated judge -- sees the diff and no check output [reasoning on, floor 4096]",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "1",
+        "LATTICE_MIN_PREDICT": "4096",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_think"
+      }
+    },
+    {
+      "label": "nemo-think-judge_fullctx",
+      "arm": "judge_fullctx",
+      "reps": 1,
+      "why": "the judge given everything, against judge_bypass's isolation [reasoning on, floor 4096]",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "1",
+        "LATTICE_MIN_PREDICT": "4096",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_think"
+      }
+    },
+    {
+      "label": "nemo-think-judge_caveat",
+      "arm": "judge_caveat",
+      "reps": 1,
+      "why": "judge family [reasoning on, floor 4096]",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "1",
+        "LATTICE_MIN_PREDICT": "4096",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_think"
+      }
+    },
+    {
+      "label": "nemo-think-judge_staged",
+      "arm": "judge_staged",
+      "reps": 1,
+      "why": "judge family [reasoning on, floor 4096]",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "1",
+        "LATTICE_MIN_PREDICT": "4096",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_think"
+      }
+    },
+    {
+      "label": "nemo-think-m7",
+      "arm": "m7",
+      "reps": 1,
+      "why": "the static workflow being built [reasoning on, floor 4096]",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "1",
+        "LATTICE_MIN_PREDICT": "4096",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_think"
+      }
+    },
+    {
+      "label": "nemo-think-m7f",
+      "arm": "m7f",
+      "reps": 1,
+      "why": "largest qwen sample of the m7 variants [reasoning on, floor 4096]",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "1",
+        "LATTICE_MIN_PREDICT": "4096",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_think"
+      }
+    },
+    {
+      "label": "nemo-think-m7b",
+      "arm": "m7b",
+      "reps": 1,
+      "why": "m7 variant [reasoning on, floor 4096]",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "1",
+        "LATTICE_MIN_PREDICT": "4096",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_think"
+      }
+    },
+    {
+      "label": "nemo-think-m7c",
+      "arm": "m7c",
+      "reps": 1,
+      "why": "m7 variant, no nemotron figure of any kind yet [reasoning on, floor 4096]",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "1",
+        "LATTICE_MIN_PREDICT": "4096",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_think"
+      }
+    },
+    {
+      "label": "nemo-think-m7e",
+      "arm": "m7e",
+      "reps": 1,
+      "why": "m7 variant [reasoning on, floor 4096]",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "1",
+        "LATTICE_MIN_PREDICT": "4096",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_think"
+      }
+    },
+    {
+      "label": "nemo-think-dloop",
+      "arm": "dloop",
+      "reps": 1,
+      "why": "retry-with-failing-lines [reasoning on, floor 4096]",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "1",
+        "LATTICE_MIN_PREDICT": "4096",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_think"
+      }
+    },
+    {
+      "label": "nemo-think-staged",
+      "arm": "staged",
+      "reps": 1,
+      "why": "decomposed pipeline; qwen's weakest arm, and the one real difference in the dark-stage sweep [reasoning on, floor 4096]",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "1",
+        "LATTICE_MIN_PREDICT": "4096",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_think"
+      }
+    },
+    {
+      "label": "nemo-think-test_synth_retry",
+      "arm": "test_synth_retry",
+      "reps": 1,
+      "why": "last: most expensive of the synth pair [reasoning on, floor 4096]",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "1",
+        "LATTICE_MIN_PREDICT": "4096",
+        "LATTICE_RESULTS_SUBDIR": "results_nemotron_think"
       }
     },
     {
       "label": "qwen-m7c",
       "arm": "m7c",
       "reps": 1,
-      "why": "32 of 34 tasks recorded. Cheapest gap to close. Top-up via --resume: existing rows are kept",
+      "why": "32 of 34 tasks recorded. Top-up via --resume; unaffected by the reasoning fault",
       "env": {
         "LATTICE_BACKEND": "ollama",
         "LATTICE_EVAL_MODEL": "qwen2.5-coder:7b-instruct-q4_K_M",
@@ -195,7 +436,7 @@
       "label": "qwen-dloop",
       "arm": "dloop",
       "reps": 5,
-      "why": "30 of 34 tasks at N=5. Missing the two most discriminating tasks the suite gained. Top-up via --resume: existing rows are kept",
+      "why": "30 of 34 tasks at N=5, missing the two most discriminating tasks the suite gained. Top-up via --resume; unaffected by the reasoning fault",
       "env": {
         "LATTICE_BACKEND": "ollama",
         "LATTICE_EVAL_MODEL": "qwen2.5-coder:7b-instruct-q4_K_M",
@@ -206,7 +447,7 @@
       "label": "qwen-m7",
       "arm": "m7",
       "reps": 5,
-      "why": "30 of 34 tasks at N=5. Same gap as dloop, and it is the arm being built. Top-up via --resume: existing rows are kept",
+      "why": "30 of 34 tasks at N=5. Top-up via --resume; unaffected by the reasoning fault",
       "env": {
         "LATTICE_BACKEND": "ollama",
         "LATTICE_EVAL_MODEL": "qwen2.5-coder:7b-instruct-q4_K_M",
@@ -217,7 +458,7 @@
       "label": "qwen-m7b",
       "arm": "m7b",
       "reps": 5,
-      "why": "32 of 34 tasks, and only 114 of 170 rows. Top-up via --resume: existing rows are kept",
+      "why": "32 of 34 tasks, 114 of 170 rows. Top-up via --resume; unaffected by the reasoning fault",
       "env": {
         "LATTICE_BACKEND": "ollama",
         "LATTICE_EVAL_MODEL": "qwen2.5-coder:7b-instruct-q4_K_M",
@@ -228,7 +469,7 @@
       "label": "qwen-test_synth_retry",
       "arm": "test_synth_retry",
       "reps": 5,
-      "why": "34 tasks but 124 of 170 rows -- uneven rep coverage. Top-up via --resume: existing rows are kept",
+      "why": "34 tasks but 124 of 170 rows. Top-up via --resume; unaffected by the reasoning fault",
       "env": {
         "LATTICE_BACKEND": "ollama",
         "LATTICE_EVAL_MODEL": "qwen2.5-coder:7b-instruct-q4_K_M",
