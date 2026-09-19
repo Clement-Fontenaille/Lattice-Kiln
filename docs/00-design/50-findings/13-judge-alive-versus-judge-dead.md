@@ -112,3 +112,86 @@ then on, and the rejection rate of already-passing candidates stated directly.
   two arms behave differently from the rest.
 - The `think` sweep, which would separate reasoning from judging on this model,
   has not run.
+
+## Correction, 2026-09-19 — "rejects passing work" is the wrong summary
+
+The section above counts rejections of check-passing candidates and reports
+21–31%. Reading what the judge actually wrote on each one splits those 41
+rejections into three kinds, and the judge is not the faulty component in any of
+them.
+
+| kind | count |
+|---|---|
+| 1. the judge is right and the check is blind | **19** |
+| 2. the audit authored a condition the judge cannot observe | **11** |
+| 3. the objective is underspecified and the judge picked a reading | **11** |
+
+### 1. The judge is right and the check is blind (19)
+
+All nineteen are `wf3_refactor` and `wf3_refactor_blindview`. The judge writes:
+
+```
+checked: ["no - no change made", "no - no change made", ... ×5]
+said:    "Implement the shared helper function to replace duplicated logic
+          in both staff_price and clearance_price."
+```
+
+`check_comb` is 5 — full marks — because that check tests only the returned
+prices and the untouched source passes 5/5. This is E0's defect 3, and **the
+judge detects it.** Counting these as the judge rejecting good work inverts what
+happened.
+
+### 2. The audit authored a condition the judge cannot observe (11)
+
+`hf_audit_perf`, whose objective is *"transfer() in ledger.py is slow because of
+the audit_log write. Make transfers faster."* The audit stage turned that into:
+
+> "The total time taken for 1000 transfers is reduced by at least 40%"
+
+The judge then reports exactly what its input supports:
+
+```
+"yes - _audit_line now uses f-string for O(n) construction"   <- the fix landed
+"no  - the diff does not provide timing data"                 <- and cannot
+said: "Measure and compare execution time of 1000 transfers..."
+```
+
+The candidate had replaced O(n²) concatenation with an f-string; the judge says
+so itself. It is being asked for a runtime measurement, and it is shown a static
+diff. The instruction repeats across rounds 0, 1, 2 and 3 because no code change
+can satisfy it through that channel.
+
+**The defect is upstream of the judge**: a condition was written whose witness
+does not exist in what the judge is given. That is the same authoring rule E0
+states for tasks — completion needs a mechanical witness — applied to a stage
+that generates conditions at runtime.
+
+### 3. The objective is underspecified and the judge picked a reading (11)
+
+`wf2_retry` and `hf_retry_backoff`. The judge asks for a counter to reflect total
+attempts:
+
+> "Update the calls attribute to increment by the total number of attempts made."
+
+**Both attributes are real.** `Client.__init__` sets `self.calls = 0` and
+`call()` increments it; `Sender.__init__` sets `self.attempts = 0` and `_try()`
+increments it. Neither objective says what the counter should mean once retries
+exist — whether `calls` counts invocations of `call()` or attempts of `fn()` is
+open — and the check tests neither reading. The judge chose one; the implementer
+chose the other.
+
+### What the score drop therefore means
+
+`objective_pass` *is* the check. The judge is stricter than the check. Measuring
+a stricter pipeline with the weaker criterion shows a fall, and 19 of the 41
+disagreements are cases where the stricter reading is the correct one.
+
+So the measured result stands — four arms of six score lower with the judge
+live, and the retry counts double — while the reading changes: **this is not
+evidence that the judge is wrong. It is evidence that the judge and the check
+disagree, that the check is not ground truth, and that one stage in the pipeline
+(the audit) can author conditions nothing downstream can verify.**
+
+What would separate the remaining question — whether the judge's strictness is
+worth its cost — is scoring these runs against something neither stage produced.
+That does not exist yet.
