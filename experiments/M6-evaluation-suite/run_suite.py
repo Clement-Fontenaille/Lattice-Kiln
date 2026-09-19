@@ -36,6 +36,7 @@ SUITE = HERE / "suite"
 # skip-as-already-done the existing rows (added 2026-09-15 alongside
 # ollama_client.py's LATTICE_EVAL_MODEL, for the first Nemotron Nano 9B v2 pass).
 RESULTS = HERE / os.environ.get("LATTICE_RESULTS_SUBDIR", "results")
+SUITE_VERSION = json.loads((HERE / "tasks.json").read_text(encoding="utf-8"))["suite_version"]
 RUNS = HERE / "runs"
 _SCORE = re.compile(r"^([A-Z]+SCORE|SUBTESTS)\s+(\d+)\s*/\s*(\d+)", re.M)
 _FAIL_LABEL = re.compile(r"^\s{2,}([^:]{2,70}):", re.M)
@@ -182,6 +183,11 @@ def run_task(task, arm_name, rep, cmd, protected):
         "declined_correctly": run_ok and task["expect"]["decline_correct"]
                               and terminal == "declined"
                               and fsub == bsub and not fin["fails"] - base["fails"],
+        # Which fixture version produced this row. Added 2026-09-19: the 0.4.1
+        # repair changed two fixtures, and nothing on a row said whether it came
+        # from before or after, so reuse of recorded rows had to be argued from
+        # file dates instead of read off the data.
+        "suite_version": SUITE_VERSION,
         "wall_s": wall, "tail": fin["out"],
     }
     shutil.rmtree(ws, ignore_errors=True)

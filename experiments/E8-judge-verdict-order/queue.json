@@ -9,7 +9,7 @@
     {
       "label": "qwen-decision_first-judge_anchored",
       "arm": "judge_anchored",
-      "reps": 1,
+      "reps": 5,
       "why": "judge_anchored judged by qwen with the verdict token written first",
       "env": {
         "LATTICE_BACKEND": "ollama",
@@ -21,7 +21,7 @@
     {
       "label": "qwen-reason_first-judge_anchored",
       "arm": "judge_anchored",
-      "reps": 1,
+      "reps": 5,
       "why": "judge_anchored judged by qwen with the verdict token written last",
       "env": {
         "LATTICE_BACKEND": "ollama",
@@ -33,7 +33,7 @@
     {
       "label": "nemo-decision_first-judge_anchored",
       "arm": "judge_anchored",
-      "reps": 1,
+      "reps": 5,
       "why": "judge_anchored judged by nemo with the verdict token written first",
       "env": {
         "LATTICE_BACKEND": "ollama",
@@ -47,7 +47,7 @@
     {
       "label": "nemo-reason_first-judge_anchored",
       "arm": "judge_anchored",
-      "reps": 1,
+      "reps": 5,
       "why": "judge_anchored judged by nemo with the verdict token written last",
       "env": {
         "LATTICE_BACKEND": "ollama",
@@ -61,7 +61,7 @@
     {
       "label": "qwen-decision_first-judge_bypass",
       "arm": "judge_bypass",
-      "reps": 1,
+      "reps": 5,
       "why": "judge_bypass judged by qwen with the verdict token written first",
       "env": {
         "LATTICE_BACKEND": "ollama",
@@ -73,7 +73,7 @@
     {
       "label": "qwen-reason_first-judge_bypass",
       "arm": "judge_bypass",
-      "reps": 1,
+      "reps": 5,
       "why": "judge_bypass judged by qwen with the verdict token written last",
       "env": {
         "LATTICE_BACKEND": "ollama",
@@ -85,7 +85,7 @@
     {
       "label": "nemo-decision_first-judge_bypass",
       "arm": "judge_bypass",
-      "reps": 1,
+      "reps": 5,
       "why": "judge_bypass judged by nemo with the verdict token written first",
       "env": {
         "LATTICE_BACKEND": "ollama",
@@ -99,7 +99,7 @@
     {
       "label": "nemo-reason_first-judge_bypass",
       "arm": "judge_bypass",
-      "reps": 1,
+      "reps": 5,
       "why": "judge_bypass judged by nemo with the verdict token written last",
       "env": {
         "LATTICE_BACKEND": "ollama",
@@ -113,7 +113,7 @@
     {
       "label": "qwen-decision_first-judge_caveat",
       "arm": "judge_caveat",
-      "reps": 1,
+      "reps": 5,
       "why": "judge_caveat judged by qwen with the verdict token written first",
       "env": {
         "LATTICE_BACKEND": "ollama",
@@ -125,7 +125,7 @@
     {
       "label": "qwen-reason_first-judge_caveat",
       "arm": "judge_caveat",
-      "reps": 1,
+      "reps": 5,
       "why": "judge_caveat judged by qwen with the verdict token written last",
       "env": {
         "LATTICE_BACKEND": "ollama",
@@ -137,7 +137,7 @@
     {
       "label": "nemo-decision_first-judge_caveat",
       "arm": "judge_caveat",
-      "reps": 1,
+      "reps": 5,
       "why": "judge_caveat judged by nemo with the verdict token written first",
       "env": {
         "LATTICE_BACKEND": "ollama",
@@ -151,7 +151,7 @@
     {
       "label": "nemo-reason_first-judge_caveat",
       "arm": "judge_caveat",
-      "reps": 1,
+      "reps": 5,
       "why": "judge_caveat judged by nemo with the verdict token written last",
       "env": {
         "LATTICE_BACKEND": "ollama",
@@ -162,5 +162,6 @@
         "LATTICE_RESULTS_SUBDIR": "../E8-judge-verdict-order/results/nemo_reason_first"
       }
     }
-  ]
+  ],
+  "_reps": "N=5. Effect size is the point: the decision_first rejection rate of 21-31% was measured at N=1 on Nemotron and N=3-5 on qwen, and a difference between formats cannot be sized against a single draw. Cells already recorded at this exact setup are seeded by seed_from_existing.py and topped up by --resume rather than re-run: qwen judge_anchored is already N=5 and costs nothing, qwen judge_bypass and judge_caveat are N=3 and need 2 more, the three nemotron decision_first cells are N=1 and need 4 more, and all six reason_first cells run from zero."
 }
