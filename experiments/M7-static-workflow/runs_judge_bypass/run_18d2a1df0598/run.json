@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_18d2a1df0598",
+  "started": "2026-09-15T02:18:11.365227+00:00",
+  "intent_text": "Add retry to Sender.send: retry a Transient failure up to 3 extra times (4 attempts total) then re-raise the last Transient. A Permanent failure is raised on the first attempt and never retried.",
+  "meta": {
+    "arm": "judge_bypass",
+    "suite": "m6"
+  },
+  "ended": "2026-09-15T02:18:24.935821+00:00",
+  "outcome": "completed",
+  "event_count": 8
+}

@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_a8238ec9fbb6",
+  "started": "2026-09-18T11:20:39.240393+00:00",
+  "intent_text": "notify(to, msg) currently takes a single recipient string. Make it also accept a list or tuple of recipients (one delivery per recipient), without breaking callers that pass a single string.",
+  "meta": {
+    "arm": "m7f",
+    "suite": "m6"
+  },
+  "ended": "2026-09-18T11:23:28.257748+00:00",
+  "outcome": "completed",
+  "event_count": 22
+}

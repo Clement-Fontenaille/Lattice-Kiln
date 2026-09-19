@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_871fbff5fd40",
+  "started": "2026-09-15T05:13:24.655521+00:00",
+  "intent_text": "merge.merge(base, override) does a shallow merge. Make it a proper config merge: nested dicts merge recursively, a None value in override deletes that key, lists replace (not concatenate). Do not mutate base.",
+  "meta": {
+    "arm": "m7e",
+    "suite": "m6"
+  },
+  "ended": "2026-09-15T05:14:30.766811+00:00",
+  "outcome": "completed",
+  "event_count": 33
+}

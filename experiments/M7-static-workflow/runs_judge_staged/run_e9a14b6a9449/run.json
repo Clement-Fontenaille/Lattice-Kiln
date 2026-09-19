@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_e9a14b6a9449",
+  "started": "2026-09-18T16:08:22.721920+00:00",
+  "intent_text": "plugins._legacy_export has no callers anywhere in the codebase. Remove the dead function.",
+  "meta": {
+    "arm": "judge_staged",
+    "suite": "m6"
+  },
+  "ended": "2026-09-18T16:08:45.529309+00:00",
+  "outcome": "completed",
+  "event_count": 1
+}

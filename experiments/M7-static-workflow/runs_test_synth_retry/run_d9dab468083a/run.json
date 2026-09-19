@@ -1,0 +1,10 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_d9dab468083a",
+  "started": "2026-09-15T00:45:50.751459+00:00",
+  "intent_text": "count_nodes(node) in tree.py is recursive and raises RecursionError on a deep (chain-shaped) tree. Rewrite it to be iterative with an explicit stack, keeping the same results and the None->0 and leaf->1 base cases.",
+  "meta": {
+    "arm": "test_synth_retry",
+    "suite": "m6"
+  }
+}

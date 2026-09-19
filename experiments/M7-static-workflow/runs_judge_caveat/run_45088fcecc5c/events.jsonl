@@ -1,0 +1,1 @@
+{"schema": "m2-event/0", "run_id": "run_45088fcecc5c", "seq": 1, "ts": "2026-09-15T06:34:58.717223+00:00", "kind": "invocation", "invocation_id": "inv_0b773cf11a4f", "parent_invocation_id": null, "intent_ref": "m7", "role": "judge-caveat-workflow", "model_identity": {"name": "harness"}, "context_ref": null, "config_ref": "m7"}

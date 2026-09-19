@@ -1,0 +1,1175 @@
+[
+  {
+    "task": "wf1_crossfile",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 27.1,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "answered",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 124.4,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "wf3_refactor",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "declined",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 75.7,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "wf3_refactor_witnessed",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural",
+      "witness-pair"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "answered",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        3,
+        3
+      ]
+    },
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 91.6,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3"
+  },
+  {
+    "task": "wf3_refactor_blindview",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "truncated",
+    "stresses": [
+      "L2-structural",
+      "witness-pair"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "declined",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        0,
+        3
+      ]
+    },
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 81.9,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price"
+  },
+  {
+    "task": "wf4_assumption",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "declined",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "wall_s": 13.5,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "wf5_partial",
+    "shape": "implement",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "kway-synth",
+      "partial-credit",
+      "greenfield-impl"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "blocked-partial",
+    "baseline_sub": [
+      0,
+      7
+    ],
+    "final_sub": [
+      1,
+      7
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 179.8,
+    "tail": "SUBTESTS 1/7\n  minutes: raised ValueError(\"invalid literal for int() with base 10: 'm'\")\n  hours: raised ValueError(\"invalid literal for int() with base 10: 'h'\")\n  h+m: raised ValueError(\"invalid literal for int() with base 10: 'h30'\")\n  seconds: raised ValueError(\"invalid literal for int() with base 10: 's'\")\n  h+m+s: raised ValueError(\"invalid literal for int() with base 10: 'h2'\")\n  whitespace: raised ValueError(\"invalid literal for int() with base 10: 'h'\")"
+  },
+  {
+    "task": "wf6_multi",
+    "shape": "migration",
+    "trap": "multi-concern",
+    "worker_view": "full",
+    "stresses": [
+      "concern-split",
+      "combined-score"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "blocked-partial",
+    "baseline_sub": [
+      2,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {
+      "DOCSCORE": [
+        3,
+        4
+      ],
+      "TODOSCORE": [
+        3,
+        3
+      ]
+    },
+    "gate_pass": true,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 213.6,
+    "tail": "SUBTESTS 6/6\nDOCSCORE 3/4\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 3/3"
+  },
+  {
+    "task": "hf_extract_fn",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "answered",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        3,
+        3
+      ]
+    },
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 138.1,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3"
+  },
+  {
+    "task": "hf_dict_dispatch",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      7,
+      7
+    ],
+    "final_sub": [
+      7,
+      7
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        0,
+        3
+      ]
+    },
+    "gate_pass": true,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 105.3,
+    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain"
+  },
+  {
+    "task": "hf_rename",
+    "shape": "compat",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "regression-guard",
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "answered",
+    "baseline_sub": [
+      4,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        3,
+        3
+      ]
+    },
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 98.8,
+    "tail": "SUBTESTS 6/6\nSTRUCTSCORE 3/3"
+  },
+  {
+    "task": "hf_rec_to_iter",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "answered",
+    "baseline_sub": [
+      4,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        1,
+        1
+      ]
+    },
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 104.4,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/1"
+  },
+  {
+    "task": "hf_already_optimal",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit",
+      "cross-file"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "declined",
+    "baseline_sub": [
+      6,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "wall_s": 12.5,
+    "tail": "SUBTESTS 6/6"
+  },
+  {
+    "task": "hf_dead_code",
+    "shape": "cleanup",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "declined",
+    "baseline_sub": [
+      4,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "wall_s": 11.2,
+    "tail": "SUBTESTS 4/4"
+  },
+  {
+    "task": "hf_remove_validation",
+    "shape": "cleanup",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "declined",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "wall_s": 13.6,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "hf_cache_nondeterministic",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "declined",
+    "baseline_sub": [
+      4,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "wall_s": 11.7,
+    "tail": "SUBTESTS 4/4"
+  },
+  {
+    "task": "hf_multi_recipient",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      3,
+      5
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 45.1,
+    "tail": "SUBTESTS 3/5\n  list of recipients fans out: got [(['a', 'b'], 'hi')] want [('a', 'hi'), ('b', 'hi')]\n  tuple of recipients fans out: got [(('x', 'y'), 'm')] want [('x', 'm'), ('y', 'm')]"
+  },
+  {
+    "task": "hf_return_shape",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      3,
+      5
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 45.1,
+    "tail": "SUBTESTS 3/5\n  email attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'email'\")\n  name attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'name'\")"
+  },
+  {
+    "task": "hf_deprecate",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      1,
+      4
+    ],
+    "final_sub": [
+      1,
+      4
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 70.0,
+    "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: got False want True\n  old_parse matches new_parse: got False want True\n  old_parse strips like new_parse: got [' one '] want ['one']"
+  },
+  {
+    "task": "hf_json_field",
+    "shape": "feature",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 29.6,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "hf_timeout_param",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 154.7,
+    "tail": "SUBTESTS 6/6"
+  },
+  {
+    "task": "hf_cache_decorator",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      3,
+      4
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 38.9,
+    "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1"
+  },
+  {
+    "task": "hf_csv",
+    "shape": "data",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "kway-synth",
+      "partial-credit"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "blocked-partial",
+    "baseline_sub": [
+      3,
+      6
+    ],
+    "final_sub": [
+      4,
+      6
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 117.9,
+    "tail": "SUBTESTS 4/6\n  quoted newline: got [['x', 'l1l2', 'y']] want [['x', 'l1\\nl2', 'y']]\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]"
+  },
+  {
+    "task": "hf_path_sanitize",
+    "shape": "robustness",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "partial-credit"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "answered",
+    "baseline_sub": [
+      1,
+      8
+    ],
+    "final_sub": [
+      8,
+      8
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 165.5,
+    "tail": "SUBTESTS 8/8"
+  },
+  {
+    "task": "hf_merge_config",
+    "shape": "data",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 96.8,
+    "tail": "SUBTESTS 6/6"
+  },
+  {
+    "task": "hf_misfiled_bug",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      3,
+      4
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 39.5,
+    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'"
+  },
+  {
+    "task": "hf_pagination",
+    "shape": "fix",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "answered",
+    "baseline_sub": [
+      1,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 30.5,
+    "tail": "SUBTESTS 5/5"
+  },
+  {
+    "task": "hf_suppress",
+    "shape": "robustness",
+    "trap": "silent-failure",
+    "worker_view": "full",
+    "stresses": [
+      "silent-failure",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 22.7,
+    "tail": "SUBTESTS 4/4"
+  },
+  {
+    "task": "hf_validate_withdraw",
+    "shape": "robustness",
+    "trap": "silent-failure",
+    "worker_view": "full",
+    "stresses": [
+      "silent-failure",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "answered",
+    "baseline_sub": [
+      4,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 96.0,
+    "tail": "SUBTESTS 6/6"
+  },
+  {
+    "task": "hf_retry_backoff",
+    "shape": "robustness",
+    "trap": "silent-failure",
+    "worker_view": "full",
+    "stresses": [
+      "silent-failure",
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 83.4,
+    "tail": "SUBTESTS 4/4"
+  },
+  {
+    "task": "hf_json_serialize",
+    "shape": "feature",
+    "trap": "multi-concern",
+    "worker_view": "full",
+    "stresses": [
+      "concern-split",
+      "combined-score"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "blocked-partial",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      2,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        1,
+        2
+      ]
+    },
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 111.9,
+    "tail": "SUBTESTS 2/5\n  datetime to ISO: raised TypeError('Object of type datetime is not JSON serializable')\n  set to sorted list: raised TypeError('Object of type set is not JSON serializable')\n  Decimal to string: raised TypeError('Object of type Decimal is not JSON serializable')\nSTRUCTSCORE 1/2"
+  },
+  {
+    "task": "hf_counter_race",
+    "shape": "concurrency",
+    "trap": "silent-failure",
+    "worker_view": "full",
+    "stresses": [
+      "silent-failure"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      3
+    ],
+    "final_sub": [
+      3,
+      3
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 23.4,
+    "tail": "SUBTESTS 3/3"
+  },
+  {
+    "task": "hf_audit_perf",
+    "shape": "perf",
+    "trap": "harmful-fix",
+    "worker_view": "full",
+    "stresses": [
+      "decline-taxonomy",
+      "keeper-set-rule",
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      2,
+      2
+    ],
+    "final_sub": [
+      2,
+      2
+    ],
+    "struct": {
+      "PERFSCORE": [
+        0,
+        1
+      ],
+      "AUDITSCORE": [
+        1,
+        1
+      ]
+    },
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "wall_s": 79.6,
+    "tail": "SUBTESTS 2/2\nPERFSCORE 0/1\n  the audit line is still built one character at a time\nAUDITSCORE 1/1"
+  },
+  {
+    "task": "hf_wrong_spec",
+    "shape": "fix",
+    "trap": "faulty-check",
+    "worker_view": "full",
+    "stresses": [
+      "decline-taxonomy",
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "test_synth",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      2,
+      3
+    ],
+    "final_sub": [
+      2,
+      3
+    ],
+    "struct": {
+      "SPECSCORE": [
+        4,
+        4
+      ]
+    },
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": false,
+    "wall_s": 44.0,
+    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4"
+  }
+]

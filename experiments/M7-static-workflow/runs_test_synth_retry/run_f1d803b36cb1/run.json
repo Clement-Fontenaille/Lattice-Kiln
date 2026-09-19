@@ -1,0 +1,10 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_f1d803b36cb1",
+  "started": "2026-09-14T22:34:14.308486+00:00",
+  "intent_text": "orders.total() returns the wrong amount when an order line's qty is greater than 1. Fix the code so every subtest in test_task.py passes. Note that one subtest calls pricing.line_price directly.",
+  "meta": {
+    "arm": "test_synth_retry",
+    "suite": "m6"
+  }
+}

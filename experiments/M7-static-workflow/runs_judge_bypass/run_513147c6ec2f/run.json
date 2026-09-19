@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_513147c6ec2f",
+  "started": "2026-09-19T08:14:57.038604+00:00",
+  "intent_text": "page(items, num, size) takes 1-indexed page numbers (page 1 is the first `size` items) but returns the wrong slice - page 1 skips the first page and every page is off. Fix it so all subtests pass.",
+  "meta": {
+    "arm": "judge_bypass",
+    "suite": "m6"
+  },
+  "ended": "2026-09-19T08:15:52.395110+00:00",
+  "outcome": "completed",
+  "event_count": 8
+}

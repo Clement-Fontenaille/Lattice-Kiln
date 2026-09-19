@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_90ed6dd9fba7",
+  "started": "2026-09-19T09:38:38.504137+00:00",
+  "intent_text": "Add a `tier` field to the dict that resp.build() returns. Records that lack a \"tier\" key (they predate the field) must default to \"free\", not raise.",
+  "meta": {
+    "arm": "judge_caveat",
+    "suite": "m6"
+  },
+  "ended": "2026-09-19T09:39:12.071881+00:00",
+  "outcome": "completed",
+  "event_count": 8
+}

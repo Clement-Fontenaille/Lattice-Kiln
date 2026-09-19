@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_5c03111afb9e",
+  "started": "2026-09-17T22:13:20.278729+00:00",
+  "intent_text": "Counter.incr loses updates under concurrent use (read-modify-write with a yield point). Make it thread-safe with a lock around the whole operation, without breaking single-threaded use or deadlocking.",
+  "meta": {
+    "arm": "judge_bypass",
+    "suite": "m6"
+  },
+  "ended": "2026-09-17T22:14:57.905591+00:00",
+  "outcome": "completed",
+  "event_count": 43
+}

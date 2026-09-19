@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_1525b87348b7",
+  "started": "2026-09-19T07:25:00.874327+00:00",
+  "intent_text": "loader.load(raw) raises when a value is not an integer string. Make it not crash on that (skip the bad entry). A genuinely broken input, like raw being None, must still surface as an error - do not swallow everything.",
+  "meta": {
+    "arm": "test_synth",
+    "suite": "m6"
+  },
+  "ended": "2026-09-19T07:25:23.525805+00:00",
+  "outcome": "completed",
+  "event_count": 8
+}

@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_163ff3c72dc3",
+  "started": "2026-09-17T22:17:16.745072+00:00",
+  "intent_text": "In ser.py: (1) make to_json handle datetime (ISO string), set (sorted list) and Decimal (string), while an unknown custom type still raises; (2) add a from_json round-trip helper; (3) give the module a proper docstring.",
+  "meta": {
+    "arm": "judge_bypass",
+    "suite": "m6"
+  },
+  "ended": "2026-09-17T22:19:06.088158+00:00",
+  "outcome": "completed",
+  "event_count": 37
+}

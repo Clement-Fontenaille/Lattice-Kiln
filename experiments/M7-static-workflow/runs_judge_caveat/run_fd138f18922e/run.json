@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_fd138f18922e",
+  "started": "2026-09-15T06:05:39.771209+00:00",
+  "intent_text": "In graphlib.py: (1) implement topo_sort(graph) to return a valid topological order and raise on a cycle (build_graph already works); (2) add proper docstrings - a module docstring, Args:/Returns: on build_graph, and Args:/Returns:/Raises: on topo_sort - and create NOTES.md with a 'Design decisions' entry explaining the cycle handling; (3) tidy the TODO comments: resolve the 'implement topo_sort' one, and delete the stale 'TODO(2019): migrate to networkx' and the wrong 'O(n^2)' comment (the loop is O(n)). Make test_task.py's SUBTESTS pass and raise DOCSCORE and TODOSCORE.",
+  "meta": {
+    "arm": "judge_caveat",
+    "suite": "m6"
+  },
+  "ended": "2026-09-15T06:08:22.972310+00:00",
+  "outcome": "completed",
+  "event_count": 43
+}

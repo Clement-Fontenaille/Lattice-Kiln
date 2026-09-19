@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_42529b24ae55",
+  "started": "2026-09-15T02:55:22.044939+00:00",
+  "intent_text": "Replace the if/elif/else chain in route(cmd, ctx) in router.py with a dict dispatch, without changing behaviour. Unknown commands must still return 'unknown command: <cmd>' and the 'audit' command must still increment ctx['audit_count'].",
+  "meta": {
+    "arm": "judge_staged",
+    "suite": "m6"
+  },
+  "ended": "2026-09-15T02:56:36.065906+00:00",
+  "outcome": "completed",
+  "event_count": 64
+}

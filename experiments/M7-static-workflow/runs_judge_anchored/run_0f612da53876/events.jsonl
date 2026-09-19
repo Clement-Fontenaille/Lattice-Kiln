@@ -1,0 +1,1 @@
+{"schema": "m2-event/0", "run_id": "run_0f612da53876", "seq": 1, "ts": "2026-09-18T07:58:43.877826+00:00", "kind": "invocation", "invocation_id": "inv_3cdc1eac32ea", "parent_invocation_id": null, "intent_ref": "m7", "role": "judge-anchored-workflow", "model_identity": {"name": "harness"}, "context_ref": null, "config_ref": "m7"}

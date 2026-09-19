@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_de97036f01ed",
+  "started": "2026-09-15T01:28:03.490984+00:00",
+  "intent_text": "Implement safepath.safe_name(name): return a cleaned basename, or raise ValueError for irrecoverable input - path traversal (..), absolute paths, null bytes, Windows reserved names. Strip trailing dots and spaces. An ordinary name like my.file.txt passes through unchanged.",
+  "meta": {
+    "arm": "test_synth_retry",
+    "suite": "m6"
+  },
+  "ended": "2026-09-15T01:28:22.139596+00:00",
+  "outcome": "completed",
+  "event_count": 8
+}

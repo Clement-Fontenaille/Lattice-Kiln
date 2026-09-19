@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_7762a69a9aba",
+  "started": "2026-09-15T01:57:43.034344+00:00",
+  "intent_text": "transfer() in ledger.py is slow because of the audit_log write. Make transfers faster.",
+  "meta": {
+    "arm": "test_synth_retry",
+    "suite": "m6"
+  },
+  "ended": "2026-09-15T01:59:10.173710+00:00",
+  "outcome": "completed",
+  "event_count": 31
+}

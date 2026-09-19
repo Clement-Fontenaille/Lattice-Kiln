@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_da17bfe9af9b",
+  "started": "2026-09-15T04:17:12.567952+00:00",
+  "intent_text": "Implement durations.parse_duration(s) so every subtest in test_task.py passes. It parses strings like '1h30m', '45m', '2h', '90s', '1h2m3s', handles the empty string as 0, and tolerates surrounding whitespace.",
+  "meta": {
+    "arm": "m7e",
+    "suite": "m6"
+  },
+  "ended": "2026-09-15T04:18:24.264244+00:00",
+  "outcome": "completed",
+  "event_count": 43
+}

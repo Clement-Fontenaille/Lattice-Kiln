@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_548620d775a7",
+  "started": "2026-09-15T18:22:15.731612+00:00",
+  "intent_text": "plugins._legacy_export has no callers anywhere in the codebase. Remove the dead function.",
+  "meta": {
+    "arm": "test_synth",
+    "suite": "m6"
+  },
+  "ended": "2026-09-15T18:22:24.126465+00:00",
+  "outcome": "completed",
+  "event_count": 1
+}

@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_518dbb8691ec",
+  "started": "2026-09-15T06:58:00.653305+00:00",
+  "intent_text": "csvparse.parse(text) currently does line.split(','). Parse CSV properly: quoted fields may contain commas and newlines; tolerate a leading BOM, CRLF line endings, and a trailing blank line.",
+  "meta": {
+    "arm": "judge_caveat",
+    "suite": "m6"
+  },
+  "ended": "2026-09-15T06:59:16.457696+00:00",
+  "outcome": "completed",
+  "event_count": 41
+}

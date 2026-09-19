@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_ab1fa23de6d1",
+  "started": "2026-09-15T02:32:42.211699+00:00",
+  "intent_text": "staff_price and clearance_price both apply 20% off. Remove the duplication by extracting a shared helper, without changing what either function returns.",
+  "meta": {
+    "arm": "judge_staged",
+    "suite": "m6"
+  },
+  "ended": "2026-09-15T02:32:50.136504+00:00",
+  "outcome": "completed",
+  "event_count": 1
+}

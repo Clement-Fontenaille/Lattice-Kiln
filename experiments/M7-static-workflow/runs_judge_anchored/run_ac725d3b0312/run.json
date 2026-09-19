@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_ac725d3b0312",
+  "started": "2026-09-19T06:20:34.069822+00:00",
+  "intent_text": "The `if amount < 0` check in account.set_balance never fires in practice and is just noise. Remove it.",
+  "meta": {
+    "arm": "judge_anchored",
+    "suite": "m6"
+  },
+  "ended": "2026-09-19T06:20:46.029448+00:00",
+  "outcome": "completed",
+  "event_count": 1
+}
