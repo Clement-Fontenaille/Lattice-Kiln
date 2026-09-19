@@ -111,6 +111,8 @@ M6 = HERE.parent / "M6-evaluation-suite"
 sys.path.insert(0, str(M6))
 from _m6bridge import Gate, RunRecorder, assemble, generate, run_processor  # noqa: E402
 
+import judge_format as _judge_format
+
 RUNS = HERE / "runs_judge_caveat"
 STAGE_LOG = HERE / "stage_influence_judge_caveat.jsonl"
 CMD = ["python", "test_task.py"]
@@ -509,6 +511,12 @@ CONDITIONS, written before any work existed:
 
 DIFF:
 {diff}"""
+
+# E8: the per-condition output order is a variable, not a constant. See
+# judge_format.py -- decision_first opens each entry with the verdict token,
+# reason_first ends with it. Applied here so the prompt below stays readable as
+# the format every run before 2026-09-19 used.
+JUDGE = _judge_format.apply(JUDGE)
 
 _VERDICTS = {"met", "not_met", "unsound_request"}
 

@@ -1,0 +1,166 @@
+{
+  "_experiment": "E8 - does the judge decide before it reasons?",
+  "_variable": "LATTICE_JUDGE_FORMAT. decision_first is the contract every run before 2026-09-19 used: each `checked` entry opens with the verdict token and justifies it afterwards. reason_first states the observation and ends with the token. The reason_first variant also corrects the prompt's worked example, whose first entry labels a satisfied condition 'no' while its prose says 'so that one is satisfied' -- so the two changes are tested together, not separately.",
+  "_measure": "Rejections of check-passing candidates: candidates whose deterministic check was already full and which the judge returned not_met on. 21-31% in the decision_first condition (15/54, 17/55, 9/42, 50-findings/13). Earned score over the 28 non-floor tasks is the downstream consequence, reported beside it.",
+  "_order": "Grouped by arm, then model, then format, so a queue that stops early still yields complete 2x2 cells rather than half of each.",
+  "_reused": "baseline and monolith are NOT in this queue. Neither has a judge stage, so neither can move with this variable. Read them from M6-evaluation-suite/results/ (qwen) and M6-evaluation-suite/results_nemotron_nothink/ (nemotron) for the floor and the no-judge reference.",
+  "_nemotron_reasoning": "off in both format arms, holding it comparable to qwen, which has no reasoning channel. On the same audit prompt both emit a ```json fence then the object -- 8 characters before the verdict. Neither model deliberates in either condition; that is a separate question from this one.",
+  "jobs": [
+    {
+      "label": "qwen-decision_first-judge_anchored",
+      "arm": "judge_anchored",
+      "reps": 1,
+      "why": "judge_anchored judged by qwen with the verdict token written first",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "qwen2.5-coder:7b-instruct-q4_K_M",
+        "LATTICE_JUDGE_FORMAT": "decision_first",
+        "LATTICE_RESULTS_SUBDIR": "../E8-judge-verdict-order/results/qwen_decision_first"
+      }
+    },
+    {
+      "label": "qwen-reason_first-judge_anchored",
+      "arm": "judge_anchored",
+      "reps": 1,
+      "why": "judge_anchored judged by qwen with the verdict token written last",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "qwen2.5-coder:7b-instruct-q4_K_M",
+        "LATTICE_JUDGE_FORMAT": "reason_first",
+        "LATTICE_RESULTS_SUBDIR": "../E8-judge-verdict-order/results/qwen_reason_first"
+      }
+    },
+    {
+      "label": "nemo-decision_first-judge_anchored",
+      "arm": "judge_anchored",
+      "reps": 1,
+      "why": "judge_anchored judged by nemo with the verdict token written first",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_JUDGE_FORMAT": "decision_first",
+        "LATTICE_RESULTS_SUBDIR": "../E8-judge-verdict-order/results/nemo_decision_first"
+      }
+    },
+    {
+      "label": "nemo-reason_first-judge_anchored",
+      "arm": "judge_anchored",
+      "reps": 1,
+      "why": "judge_anchored judged by nemo with the verdict token written last",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_JUDGE_FORMAT": "reason_first",
+        "LATTICE_RESULTS_SUBDIR": "../E8-judge-verdict-order/results/nemo_reason_first"
+      }
+    },
+    {
+      "label": "qwen-decision_first-judge_bypass",
+      "arm": "judge_bypass",
+      "reps": 1,
+      "why": "judge_bypass judged by qwen with the verdict token written first",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "qwen2.5-coder:7b-instruct-q4_K_M",
+        "LATTICE_JUDGE_FORMAT": "decision_first",
+        "LATTICE_RESULTS_SUBDIR": "../E8-judge-verdict-order/results/qwen_decision_first"
+      }
+    },
+    {
+      "label": "qwen-reason_first-judge_bypass",
+      "arm": "judge_bypass",
+      "reps": 1,
+      "why": "judge_bypass judged by qwen with the verdict token written last",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "qwen2.5-coder:7b-instruct-q4_K_M",
+        "LATTICE_JUDGE_FORMAT": "reason_first",
+        "LATTICE_RESULTS_SUBDIR": "../E8-judge-verdict-order/results/qwen_reason_first"
+      }
+    },
+    {
+      "label": "nemo-decision_first-judge_bypass",
+      "arm": "judge_bypass",
+      "reps": 1,
+      "why": "judge_bypass judged by nemo with the verdict token written first",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_JUDGE_FORMAT": "decision_first",
+        "LATTICE_RESULTS_SUBDIR": "../E8-judge-verdict-order/results/nemo_decision_first"
+      }
+    },
+    {
+      "label": "nemo-reason_first-judge_bypass",
+      "arm": "judge_bypass",
+      "reps": 1,
+      "why": "judge_bypass judged by nemo with the verdict token written last",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_JUDGE_FORMAT": "reason_first",
+        "LATTICE_RESULTS_SUBDIR": "../E8-judge-verdict-order/results/nemo_reason_first"
+      }
+    },
+    {
+      "label": "qwen-decision_first-judge_caveat",
+      "arm": "judge_caveat",
+      "reps": 1,
+      "why": "judge_caveat judged by qwen with the verdict token written first",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "qwen2.5-coder:7b-instruct-q4_K_M",
+        "LATTICE_JUDGE_FORMAT": "decision_first",
+        "LATTICE_RESULTS_SUBDIR": "../E8-judge-verdict-order/results/qwen_decision_first"
+      }
+    },
+    {
+      "label": "qwen-reason_first-judge_caveat",
+      "arm": "judge_caveat",
+      "reps": 1,
+      "why": "judge_caveat judged by qwen with the verdict token written last",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "qwen2.5-coder:7b-instruct-q4_K_M",
+        "LATTICE_JUDGE_FORMAT": "reason_first",
+        "LATTICE_RESULTS_SUBDIR": "../E8-judge-verdict-order/results/qwen_reason_first"
+      }
+    },
+    {
+      "label": "nemo-decision_first-judge_caveat",
+      "arm": "judge_caveat",
+      "reps": 1,
+      "why": "judge_caveat judged by nemo with the verdict token written first",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_JUDGE_FORMAT": "decision_first",
+        "LATTICE_RESULTS_SUBDIR": "../E8-judge-verdict-order/results/nemo_decision_first"
+      }
+    },
+    {
+      "label": "nemo-reason_first-judge_caveat",
+      "arm": "judge_caveat",
+      "reps": 1,
+      "why": "judge_caveat judged by nemo with the verdict token written last",
+      "env": {
+        "LATTICE_BACKEND": "ollama",
+        "LATTICE_EVAL_MODEL": "nemotron-gpu",
+        "LATTICE_THINK": "0",
+        "LATTICE_MIN_PREDICT": "400",
+        "LATTICE_JUDGE_FORMAT": "reason_first",
+        "LATTICE_RESULTS_SUBDIR": "../E8-judge-verdict-order/results/nemo_reason_first"
+      }
+    }
+  ]
+}

@@ -165,7 +165,12 @@ def log(msg):
 
 
 def main():
-    jobs = json.loads(QUEUE.read_text(encoding="utf-8"))["jobs"]
+    # --queue lets another experiment drive this runner with its own job list
+    # while run_suite, the suite and the arms stay where they are.
+    qpath = QUEUE
+    if "--queue" in sys.argv:
+        qpath = Path(sys.argv[sys.argv.index("--queue") + 1]).resolve()
+    jobs = json.loads(qpath.read_text(encoding="utf-8"))["jobs"]
     ntasks, sv = suite_size()
 
     if "--status" in sys.argv or "--plan" in sys.argv:
