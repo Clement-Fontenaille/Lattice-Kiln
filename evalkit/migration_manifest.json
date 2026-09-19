@@ -1,0 +1,49 @@
+{
+  "_what": "What each legacy results tree actually was. None of this is recorded on the rows; it is declared here, and every entry migrated from it is marked provenance=declared so a reader can tell a stated setup from a recorded one.",
+  "_arm_rev": "The git revision whose arm sources produced that tree's rows. Hashing the working tree instead would claim the rows came from code that did not exist when they ran -- the three judge arms were edited on 2026-09-19 at 654ac97, after every row in every tree here.",
+  "_suite_before": "The fixture version for rows that do not carry one. Rows recorded after run_suite gained the field carry it and are believed over this value, which splits a partially re-run tree correctly instead of labelling it uniformly.",
+  "_exclude": "Files in a tree that are not independent observations. Checked, not assumed: n5_dloop holds 140 rows against dloop's 150, and on the 140 they share NOT ONE outcome differs. It is a subset copy of the same draws, so migrating it would raise N from 5 to 10 on those tasks using duplicated data. Same for n5_m7 against m7. Row-level de-duplication would not have caught this, because the copies differ in incidental fields while the outcomes are identical.",
+  "trees": [
+    {
+      "tree": "experiments/M6-evaluation-suite/results",
+      "backend": "ollama",
+      "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "params": {},
+      "judge_format": "decision_first",
+      "arm_rev": "654ac97~1",
+      "suite_before": "0.4.0",
+      "exclude": [
+        "n5_dloop",
+        "n5_m7"
+      ],
+      "why": "The default tree. No LATTICE_THINK was ever set for it, so no think key was sent; qwen has no reasoning channel in any case. decision_first is the only contract that existed before 2026-09-19.",
+      "fixture_rev": "f28b453~1"
+    },
+    {
+      "tree": "experiments/M6-evaluation-suite/results_nemotron",
+      "backend": "ollama",
+      "model": "nemotron-gpu",
+      "params": {},
+      "judge_format": "decision_first",
+      "arm_rev": "654ac97~1",
+      "suite_before": "0.4.0",
+      "why": "The dark-stage condition: no think key was sent, so the model reasoned by default and consumed the 200-token audit and judge caps before reaching an answer. Its audit and judge stages returned the empty string on every call (50-findings/12 addendum 1). Kept as its own cells rather than merged with results_nemotron_nothink, because an empty judge is a different setup, not a noisier one.",
+      "fixture_rev": "f28b453~1"
+    },
+    {
+      "tree": "experiments/M6-evaluation-suite/results_nemotron_nothink",
+      "backend": "ollama",
+      "model": "nemotron-gpu",
+      "params": {
+        "think": false,
+        "min_predict": 400
+      },
+      "judge_format": "decision_first",
+      "arm_rev": "654ac97~1",
+      "suite_before": "0.4.0",
+      "why": "Reasoning off with a 400-token floor, the condition that first made this model's audit and judge stages parse (32-34/34 and 33-34/34 against 0/34).",
+      "fixture_rev": "f28b453~1"
+    }
+  ],
+  "_fixture_rev": "The revision whose FIXTURES produced rows that do not carry the current suite version. Separate from arm_rev: the 0.4.1 fixture repair (f28b453) and the E8 arm edit (654ac97) are different commits, and a row can predate one without predating the other."
+}

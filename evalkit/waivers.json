@@ -1,0 +1,39 @@
+{
+  "_what": "Recorded equivalences between setup-key values. A waiver is how a human says 'these two hashes are the same setup, and here is the evidence'. Without one, a hash difference refuses reuse, which is the default and the safe direction.",
+  "_scope": "A waiver names ONE field. Every other field still has to match exactly, so waiving arm_sha cannot smuggle in a different model, fixture or judge format.",
+  "waivers": [
+    {
+      "field": "arm_sha",
+      "equivalent": [
+        "dcfd277cb8eb6b9e",
+        "58f75764c9b811de"
+      ],
+      "arm": "judge_anchored",
+      "date": "2026-09-19",
+      "reason": "654ac97 added `import judge_format` and one line applying it. Under LATTICE_JUDGE_FORMAT=decision_first, judge_format.apply() returns the prompt unchanged, so behaviour is identical. Verified by diffing the file against 654ac97~1: the only hunks are the import and the hook. Rows under reason_first are NOT admitted by this waiver -- prompt_sha differs there and still blocks.",
+      "diffstat": "1 file changed, 8 insertions(+)"
+    },
+    {
+      "field": "arm_sha",
+      "equivalent": [
+        "12e355c9a71a8549",
+        "88430ef0d722cd05"
+      ],
+      "arm": "judge_bypass",
+      "date": "2026-09-19",
+      "reason": "654ac97 added `import judge_format` and one line applying it. Under LATTICE_JUDGE_FORMAT=decision_first, judge_format.apply() returns the prompt unchanged, so behaviour is identical. Verified by diffing the file against 654ac97~1: the only hunks are the import and the hook. Rows under reason_first are NOT admitted by this waiver -- prompt_sha differs there and still blocks.",
+      "diffstat": "1 file changed, 8 insertions(+)"
+    },
+    {
+      "field": "arm_sha",
+      "equivalent": [
+        "32aaa58144d1cf53",
+        "c8858943fec0a8b4"
+      ],
+      "arm": "judge_caveat",
+      "date": "2026-09-19",
+      "reason": "654ac97 added `import judge_format` and one line applying it. Under LATTICE_JUDGE_FORMAT=decision_first, judge_format.apply() returns the prompt unchanged, so behaviour is identical. Verified by diffing the file against 654ac97~1: the only hunks are the import and the hook. Rows under reason_first are NOT admitted by this waiver -- prompt_sha differs there and still blocks.",
+      "diffstat": "1 file changed, 8 insertions(+)"
+    }
+  ]
+}
