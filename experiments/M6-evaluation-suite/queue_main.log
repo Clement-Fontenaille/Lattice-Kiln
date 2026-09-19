@@ -3,3 +3,31 @@
 15:55:01  [2/14] test_synth reps=5 - partial, 160/170
 16:00:42        -> exit 0, 170/170 rows, 6 min elapsed overall
 16:00:42  [3/14] judge_anchored reps=5 - partial, 35/170
+18:51:24        -> exit 0, 170/170 rows, 177 min elapsed overall
+18:51:24  [4/14] m7f reps=5 - todo, 0/170
+21:38:02        -> exit 0, 170/170 rows, 343 min elapsed overall
+21:38:02  [5/14] judge_fullctx reps=5 - todo, 0/170
+00:39:07        -> exit 0, 170/170 rows, 524 min elapsed overall
+00:39:07  [6/14] m7b reps=5 - partial, 31/170
+02:47:33  [1/15] baseline already complete (34 rows) - skip
+02:47:33  [2/15] test_synth already complete (170 rows) - skip
+02:47:33  [3/15] judge_anchored already complete (170 rows) - skip
+02:47:33  [4/15] m7f already complete (170 rows) - skip
+02:47:33  [5/15] judge_fullctx already complete (170 rows) - skip
+02:47:33  [6/15] test_synth_retry reps=3 - partial, 56/102
+04:00:49        -> exit 0, 124/102 rows, 73 min elapsed overall
+04:00:49  [7/15] m7b already complete (114 rows) - skip
+04:00:49  [8/15] m7 already complete (150 rows) - skip
+04:00:49  [9/15] dloop already complete (150 rows) - skip
+04:00:49  [10/15] judge_bypass reps=3 - todo, 0/102
+04:21:58        -> exit 0, 102/102 rows, 94 min elapsed overall
+04:21:58  [11/15] judge_staged reps=3 - todo, 0/102
+06:02:34        -> exit 0, 102/102 rows, 195 min elapsed overall
+06:02:34  [12/15] m7e reps=3 - todo, 0/102
+07:42:15        -> exit 0, 102/102 rows, 295 min elapsed overall
+07:42:15  [13/15] judge_caveat reps=3 - todo, 0/102
+09:35:38        -> exit 0, 102/102 rows, 408 min elapsed overall
+09:35:38  [14/15] monolith reps=3 - partial, 4/102
+09:48:20        -> exit 0, 103/102 rows, 421 min elapsed overall
+09:48:20  [15/15] staged already complete (102 rows) - skip
+09:48:20  QUEUE DONE in 421 min

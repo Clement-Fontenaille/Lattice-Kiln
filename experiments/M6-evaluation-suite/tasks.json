@@ -1,6 +1,6 @@
 {
   "schema": "eval-suite-tasks/0",
-  "suite_version": "0.4.0",
+  "suite_version": "0.4.1",
   "note": "M6 evaluation task suite. Request-shape x trap taxonomy. Each task: a realistic dev request, a deterministic partial-credit check (SUBTESTS gates; DOCSCORE/TODOSCORE/STRUCTSCORE are non-gating quality dimensions), a documented discriminator subtest, and a pre-existing passing test. See docs/10-technical/10-evaluation-task-suite.md.",
   "check_command": "python test_task.py",
   "protected_files": [

@@ -3,3 +3,112 @@
 15:55:01  [2/14] test_synth reps=5 - partial, 160/170
 16:00:42        -> exit 0, 170/170 rows, 6 min elapsed overall
 16:00:42  [3/14] judge_anchored reps=5 - partial, 35/170
+18:51:24        -> exit 0, 170/170 rows, 177 min elapsed overall
+18:51:24  [4/14] m7f reps=5 - todo, 0/170
+21:38:02        -> exit 0, 170/170 rows, 343 min elapsed overall
+21:38:02  [5/14] judge_fullctx reps=5 - todo, 0/170
+00:39:07        -> exit 0, 170/170 rows, 524 min elapsed overall
+00:39:07  [6/14] m7b reps=5 - partial, 31/170
+02:47:33  [1/15] baseline already complete (34 rows) - skip
+02:47:33  [2/15] test_synth already complete (170 rows) - skip
+02:47:33  [3/15] judge_anchored already complete (170 rows) - skip
+02:47:33  [4/15] m7f already complete (170 rows) - skip
+02:47:33  [5/15] judge_fullctx already complete (170 rows) - skip
+02:47:33  [6/15] test_synth_retry reps=3 - partial, 56/102
+04:00:49        -> exit 0, 124/102 rows, 73 min elapsed overall
+04:00:49  [7/15] m7b already complete (114 rows) - skip
+04:00:49  [8/15] m7 already complete (150 rows) - skip
+04:00:49  [9/15] dloop already complete (150 rows) - skip
+04:00:49  [10/15] judge_bypass reps=3 - todo, 0/102
+04:21:58        -> exit 0, 102/102 rows, 94 min elapsed overall
+04:21:58  [11/15] judge_staged reps=3 - todo, 0/102
+06:02:34        -> exit 0, 102/102 rows, 195 min elapsed overall
+06:02:34  [12/15] m7e reps=3 - todo, 0/102
+07:42:15        -> exit 0, 102/102 rows, 295 min elapsed overall
+07:42:15  [13/15] judge_caveat reps=3 - todo, 0/102
+09:35:38        -> exit 0, 102/102 rows, 408 min elapsed overall
+09:35:38  [14/15] monolith reps=3 - partial, 4/102
+09:48:20        -> exit 0, 103/102 rows, 421 min elapsed overall
+09:48:20  [15/15] staged already complete (102 rows) - skip
+09:48:20  QUEUE DONE in 421 min
+21:41:51  [1/16] nemotron-baseline reps=1 - todo, 0/34 (llamacpp at http://localhost:8090: ready, sole occupant)
+21:42:00        -> exit 0, 34/34 rows, 0 min elapsed overall
+21:42:04  [2/16] nemotron-monolith reps=1 - todo, 0/34 (llamacpp at http://localhost:8090: ready, sole occupant)
+21:42:12  [1/16] nemotron-baseline already complete (34 rows) - skip
+21:42:16  [2/16] nemotron-monolith reps=1 - todo, 0/34 (llamacpp at http://localhost:8090: ready, sole occupant)
+21:46:56        -> exit 0, 1/34 rows, 5 min elapsed overall
+21:46:56        -> exit 0, 1/34 rows, 5 min elapsed overall
+21:47:00  [3/16] nemotron-test_synth SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:00  [3/16] nemotron-test_synth SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:04  [4/16] nemotron-judge_anchored SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:04  [4/16] nemotron-judge_anchored SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:08  [5/16] nemotron-dloop SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:08  [5/16] nemotron-dloop SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:12  [6/16] nemotron-m7 SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:12  [6/16] nemotron-m7 SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:16  [7/16] nemotron-m7f SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:16  [7/16] nemotron-m7f SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:20  [8/16] nemotron-judge_fullctx SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:20  [8/16] nemotron-judge_fullctx SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:24  [9/16] nemotron-staged SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:24  [9/16] nemotron-staged SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:28  [10/16] nemotron-judge_bypass SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:28  [10/16] nemotron-judge_bypass SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:33  [11/16] nemotron-judge_staged SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:33  [11/16] nemotron-judge_staged SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:37  [12/16] nemotron-judge_caveat SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:37  [12/16] nemotron-judge_caveat SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:41  [13/16] nemotron-m7b SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:41  [13/16] nemotron-m7b SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:45  [14/16] nemotron-m7e SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:45  [14/16] nemotron-m7e SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:49  [15/16] nemotron-test_synth_retry SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:49  [15/16] nemotron-test_synth_retry SKIPPED - llamacpp at http://localhost:8090: unreachable ([WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+21:47:55  [16/16] qwen-judge_bypass reps=3 - todo, 0/102 (ollama at http://localhost:11434: ready, sole occupant)
+21:47:55  [16/16] qwen-judge_bypass reps=3 - todo, 0/102 (ollama at http://localhost:11434: ready, sole occupant)
+00:24:56        -> exit 0, 102/102 rows, 163 min elapsed overall
+00:24:56  QUEUE DONE in 163 min
+00:31:49        -> exit 0, 102/102 rows, 170 min elapsed overall
+00:31:49  QUEUE DONE in 170 min
+08:09:05  [1/21] nemotron-baseline already complete (34 rows) - skip
+08:09:11  [2/21] nemotron-monolith reps=1 - todo, 0/34 (ollama at http://localhost:11434: ready, sole occupant)
+08:34:52        -> exit 0, 34/34 rows, 26 min elapsed overall
+08:34:59  [3/21] nemotron-test_synth reps=1 - todo, 0/34 (ollama at http://localhost:11434: ready, sole occupant)
+09:52:44        -> exit 0, 34/34 rows, 104 min elapsed overall
+09:52:50  [4/21] nemotron-judge_anchored reps=1 - todo, 0/34 (ollama at http://localhost:11434: ready, sole occupant)
+11:04:50        -> exit 0, 34/34 rows, 176 min elapsed overall
+11:04:56  [5/21] nemotron-dloop reps=1 - todo, 0/34 (ollama at http://localhost:11434: ready, sole occupant)
+11:44:58        -> exit 0, 34/34 rows, 216 min elapsed overall
+11:45:05  [6/21] nemotron-m7 reps=1 - todo, 0/34 (ollama at http://localhost:11434: ready, sole occupant)
+12:52:30        -> exit 0, 34/34 rows, 283 min elapsed overall
+12:52:36  [7/21] nemotron-m7f reps=1 - todo, 0/34 (ollama at http://localhost:11434: ready, sole occupant)
+14:07:24        -> exit 0, 34/34 rows, 358 min elapsed overall
+14:07:30  [8/21] nemotron-judge_fullctx reps=1 - todo, 0/34 (ollama at http://localhost:11434: ready, sole occupant)
+15:17:37        -> exit 0, 34/34 rows, 429 min elapsed overall
+15:17:44  [9/21] nemotron-staged reps=1 - todo, 0/34 (ollama at http://localhost:11434: ready, sole occupant)
+16:17:44        -> exit 0, 34/34 rows, 489 min elapsed overall
+16:17:51  [10/21] nemotron-judge_bypass reps=1 - todo, 0/34 (ollama at http://localhost:11434: ready, sole occupant)
+17:31:53        -> exit 0, 34/34 rows, 563 min elapsed overall
+17:31:59  [11/21] nemotron-judge_staged reps=1 - todo, 0/34 (ollama at http://localhost:11434: ready, sole occupant)
+18:51:11        -> exit 0, 34/34 rows, 642 min elapsed overall
+18:51:18  [12/21] nemotron-judge_caveat reps=1 - todo, 0/34 (ollama at http://localhost:11434: ready, sole occupant)
+20:00:17        -> exit 0, 34/34 rows, 711 min elapsed overall
+20:00:23  [13/21] nemotron-m7b reps=1 - todo, 0/34 (ollama at http://localhost:11434: ready, sole occupant)
+00:56:25  [1/37] nemo-nothink-baseline reps=1 - todo, 0/34 (ollama at http://localhost:11434: ready, sole occupant)
+00:56:37        -> exit 0, 34/34 rows, 0 min elapsed overall
+00:56:43  [2/37] nemo-nothink-monolith reps=1 - todo, 0/34 (ollama at http://localhost:11434: ready, sole occupant)
+01:03:11        -> exit 0, 34/34 rows, 7 min elapsed overall
+01:03:17  [3/37] nemo-nothink-judge_anchored reps=1 - todo, 0/34 (ollama at http://localhost:11434: ready, sole occupant)
+08:10:27  [1/37] nemo-nothink-baseline already complete (34 rows) - skip
+08:10:27  [2/37] nemo-nothink-monolith already complete (34 rows) - skip
+08:10:33  [3/37] nemo-nothink-judge_anchored reps=1 - partial, 7/34 (ollama at http://localhost:11434: ready, sole occupant)
+08:49:02        -> exit 0, 34/34 rows, 39 min elapsed overall
+08:49:08  [4/37] nemo-nothink-test_synth reps=1 - todo, 0/34 (ollama at http://localhost:11434: ready, sole occupant)
+09:32:45        -> exit 0, 34/34 rows, 82 min elapsed overall
+09:32:51  [5/37] nemo-nothink-judge_bypass reps=1 - todo, 0/34 (ollama at http://localhost:11434: ready, sole occupant)
+10:28:26        -> exit 0, 34/34 rows, 138 min elapsed overall
+10:28:33  [6/37] nemo-nothink-judge_fullctx reps=1 - todo, 0/34 (ollama at http://localhost:11434: ready, sole occupant)
+11:15:21        -> exit 0, 34/34 rows, 185 min elapsed overall
+11:15:27  [7/37] nemo-nothink-judge_caveat reps=1 - todo, 0/34 (ollama at http://localhost:11434: ready, sole occupant)
+12:00:02        -> exit 0, 34/34 rows, 230 min elapsed overall
+12:00:08  [8/37] nemo-nothink-judge_staged reps=1 - todo, 0/34 (ollama at http://localhost:11434: ready, sole occupant)

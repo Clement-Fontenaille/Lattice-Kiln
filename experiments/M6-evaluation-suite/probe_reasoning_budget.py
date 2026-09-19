@@ -12,7 +12,7 @@ This measures the shape of it across real suite objectives:
   C. whether the reasoning can be turned off (`/no_think`)
   D. qwen on the same prompts, as the control
 
-Writes results/reasoning_budget.json and prints a table.
+Writes probe_results/reasoning_budget.json and prints a table.
 """
 from __future__ import annotations
 
@@ -117,8 +117,8 @@ def main():
         print(f"cap={cap:5d} done={r['done_reason']:7s} think={r['thinking_chars']:6d} "
               f"resp={r['response_chars']:5d} json={r['json_found']}")
 
-    (HERE / "results").mkdir(exist_ok=True)
-    (HERE / "results" / "reasoning_budget.json").write_text(
+    (HERE / "probe_results").mkdir(exist_ok=True)
+    (HERE / "probe_results" / "reasoning_budget.json").write_text(
         json.dumps(out, indent=2) + "\n", encoding="utf-8")
     print("\nwrote results/reasoning_budget.json")
 
