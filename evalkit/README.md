@@ -94,11 +94,36 @@ A waiver is an artifact. `store.have()` applies one; it decides nothing.
 
 ```bash
 python migrate.py --dry-run          # legacy trees -> store, report only
-python migrate.py                    # 1209 cells, 2574 rows
+python migrate.py                    # 1210 cells, 2581 rows
+
 python plan.py <declaration.json>              # needed - have = run
 python plan.py <declaration.json> --explain    # and why cells do not match
 python plan.py <declaration.json> --no-waivers # hashes alone
+
+python run_plan.py <declaration.json> --dry-run   # the commands it would issue
+python run_plan.py <declaration.json>             # run the deficit, nothing else
 ```
+
+`run_plan.py` closes the loop: it groups the deficit by (arm, model, format) --
+the unit `run_suite` takes -- and passes only the tasks still short, so a group
+that is nine-tenths complete costs a tenth of a run. On E8 it issues **11** runs
+rather than 12, because `qwen/decision_first/judge_anchored` is already
+satisfied.
+
+`run_suite --store-resume` is what makes that safe at rep granularity. Plain
+`--resume` sees only the results directory it is writing to, so a rep another
+experiment already paid for would be run again; `--store-resume` counts what the
+store holds for this exact setup, wherever it was produced. Demonstrated:
+
+```
+store already holds 3 rep(s) across 1 task(s) for this setup
+[4/5] wf1_crossfile rep4 (judge_bypass) ...
+[5/5] wf1_crossfile rep5 (judge_bypass) ...
+```
+
+Three `declared` reps and two `recorded` ones now sit in one cell, and the plan
+drops that task from the deficit. Rep numbers are per-series labels, not
+identities -- N reps held anywhere satisfy the first N of a target.
 
 A declaration names arms, models, judge formats, a task set and a target rep
 count — see `experiments/E8-judge-verdict-order/declaration.json`. The planner

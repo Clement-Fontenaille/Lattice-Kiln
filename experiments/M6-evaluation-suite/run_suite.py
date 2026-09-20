@@ -309,6 +309,15 @@ def main():
                     help="keep rows already recorded for this arm and run only the "
                          "(task, rep) pairs that are missing. Makes a long queue "
                          "survive being interrupted, which it otherwise does not.")
+    ap.add_argument("--store-resume", action="store_true",
+                    help="also count reps the evalkit store already holds for "
+                         "this exact setup, wherever they were produced. --resume "
+                         "alone only sees this results directory, so a rep another "
+                         "experiment already paid for would be run again.")
+    ap.add_argument("--params-any", nargs="*", default=[],
+                    help="param names to treat as `any` when asking the store "
+                         "what it has, e.g. --params-any num_ctx. Affects "
+                         "matching only; the run still records concrete values.")
     args = ap.parse_args()
     if args.arm not in ("baseline",) and not health():
         print("Ollama not reachable", file=sys.stderr)
@@ -327,12 +336,34 @@ def main():
         rows = json.loads(out_json.read_text(encoding="utf-8"))
         done = {(r["task"], r["rep"]) for r in rows}
         print(f"resuming: {len(done)} rows already recorded", flush=True)
+    # What the store already holds for this exact setup, counted as reps that do
+    # not need running again. Rep numbers are per-series labels, not identities,
+    # so N reps held anywhere satisfy the first N of the target.
+    held = {}
+    if args.store_resume and _STORE is not None:
+        wpath = HERE.parent.parent / "evalkit" / "waivers.json"
+        wv = (json.loads(wpath.read_text(encoding="utf-8"))["waivers"]
+              if wpath.is_file() else [])
+        for t in tasks:
+            cell = _cell_for(t["id"], args.arm)
+            q = dict(json.loads(cell.params))
+            for name in args.params_any:
+                q[name] = "any"
+            n = _STORE.have(cell, waivers=wv, params_query=q)
+            if n:
+                held[t["id"]] = n
+        if held:
+            print(f"store already holds {sum(held.values())} rep(s) across "
+                  f"{len(held)} task(s) for this setup", flush=True)
+
     total = len(tasks) * args.reps
     i = 0
     for task in tasks:
         for rep in range(1, args.reps + 1):
             i += 1
             if (task["id"], rep) in done:
+                continue
+            if rep <= held.get(task["id"], 0):
                 continue
             print(f"[{i}/{total}] {task['id']} rep{rep} ({args.arm}) ...", flush=True)
             row = run_task(task, args.arm, rep, cmd, protected)
