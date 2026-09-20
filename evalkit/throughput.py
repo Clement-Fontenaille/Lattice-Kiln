@@ -126,6 +126,45 @@ def concurrency(rows: list[dict]) -> None:
         r["_conc"] = peak
 
 
+def detail(rows: list[dict], label: str) -> None:
+    """Where a rep's wall time actually goes, per rep and per model call.
+
+    The suite rate alone misleads across models. Nemotron decoded FASTER per
+    stream than qwen (45.2 against 38.5 tok/s) while delivering a third of the
+    throughput, because only 18% of its wall was decoding. Splitting decode,
+    prompt evaluation and the remainder is what turns "it is slow" into a
+    statement about which part is slow -- and the remainder, being the harness's
+    own fixture setup and scoring, is the part more slots cannot touch.
+    """
+    if not rows:
+        return
+    concurrency(rows)
+    buckets = defaultdict(list)
+    for r in rows:
+        buckets[r["_conc"]].append(r)
+    print(f"where the time goes{label}")
+    print()
+    print(f"{'workers':>7} {'reps':>5} {'wall/rep':>9} {'decode':>8} {'prompt':>8} "
+          f"{'other':>8} {'calls':>6} {'ptok/call':>10}")
+    print("-" * 70)
+    for c in sorted(buckets):
+        rs = buckets[c]
+        n = len(rs)
+        wall = sum(r["t_end"] - r["t_start"] for r in rs) / n
+        gen = sum(r["gen_s"] for r in rs) / n
+        # Rows written before prompt_s existed report 0, which would read as
+        # instant prompt evaluation. Say so instead.
+        have_p = [r for r in rs if r.get("prompt_s") is not None]
+        pr = (sum(r["prompt_s"] for r in have_p) / len(have_p)) if have_p else None
+        calls = sum(r["llm_calls"] for r in rs) / n
+        ptok = sum(r["prompt_tok"] for r in rs) / n
+        ps = f"{pr:7.1f}s" if pr is not None else "      --"
+        other = f"{wall - gen - (pr or 0):7.1f}s" if pr is not None else "      --"
+        print(f"{c:>7} {n:>5} {wall:8.1f}s {gen:7.1f}s {ps} {other} "
+              f"{calls:6.1f} {ptok/calls if calls else 0:10,.0f}")
+    print()
+
+
 def report(rows: list[dict], untimed: int, label: str) -> None:
     if not rows:
         print(f"no timed reps{label}"
@@ -203,6 +242,8 @@ def main():
                     help="same forms. A phase boundary is a MINUTE, not a day: "
                          "two phases run hours apart on the same date, and a "
                          "date-only bound silently pools them.")
+    ap.add_argument("--detail", action="store_true",
+                    help="split each rep's wall time into decode, prompt and the rest")
     ap.add_argument("--by-arm", action="store_true",
                     help="one table per arm as well as the whole selection")
     args = ap.parse_args()
@@ -221,6 +262,9 @@ def main():
              ("until", args.until)) if v]
     label = f"  [{', '.join(bits)}]" if bits else ""
     report(rows, untimed, label)
+    if args.detail:
+        print()
+        detail(rows, label)
 
     if args.by_arm:
         for arm in sorted({r["_arm"] for r in rows}):

@@ -99,11 +99,18 @@ class Generation:
 # sharing one GPU push it DOWN. tokens/wall_s is throughput, and two workers
 # push it UP exactly insofar as one's gaps cover the other's decoding. Reporting
 # one as the other is how a real speedup gets mistaken for a regression.
-_METER = {"calls": 0, "gen_tok": 0, "prompt_tok": 0, "gen_s": 0.0}
+#   prompt_s  prompt-evaluation seconds the backend reports -- reading the
+#             input before a single token comes out. Separate from gen_s
+#             because they scale with different things and can differ by an
+#             order of magnitude between models at the SAME prompt size:
+#             nemotron showed 19 s per call outside decode against qwen's 3 s
+#             on 1,170-token prompts, and without this field there was no way
+#             to tell prompt evaluation from queueing.
+_METER = {"calls": 0, "gen_tok": 0, "prompt_tok": 0, "gen_s": 0.0, "prompt_s": 0.0}
 
 
 def meter_reset() -> None:
-    _METER.update(calls=0, gen_tok=0, prompt_tok=0, gen_s=0.0)
+    _METER.update(calls=0, gen_tok=0, prompt_tok=0, gen_s=0.0, prompt_s=0.0)
 
 
 def meter_read() -> dict:
@@ -111,14 +118,17 @@ def meter_read() -> dict:
 
 
 def _meter(g: "Generation") -> "Generation":
-    if "timings" in g.raw:
-        d = g.raw.get("timings", {}).get("predicted_ms", 0) / 1000
-    else:
+    if "timings" in g.raw:                       # llama-server: milliseconds
+        t = g.raw.get("timings", {})
+        d, pd = t.get("predicted_ms", 0) / 1000, t.get("prompt_ms", 0) / 1000
+    else:                                        # Ollama: nanoseconds
         d = g.raw.get("eval_duration", 0) / 1e9
+        pd = g.raw.get("prompt_eval_duration", 0) / 1e9
     _METER["calls"] += 1
     _METER["gen_tok"] += g.eval_count
     _METER["prompt_tok"] += g.prompt_eval_count
     _METER["gen_s"] += d
+    _METER["prompt_s"] += pd
     return g
 
 

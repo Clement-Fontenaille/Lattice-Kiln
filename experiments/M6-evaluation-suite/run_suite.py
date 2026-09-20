@@ -269,6 +269,7 @@ def run_task(task, arm_name, rep, cmd, protected):
         "gen_tok": used["gen_tok"],
         "prompt_tok": used["prompt_tok"],
         "gen_s": round(used["gen_s"], 2),
+        "prompt_s": round(used.get("prompt_s", 0.0), 2),
         "runner": RUNNER,
         "t_start": round(t_start, 3),
         "t_end": round(t_end, 3),
