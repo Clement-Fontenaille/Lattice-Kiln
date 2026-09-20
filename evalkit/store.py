@@ -60,17 +60,34 @@ class Store:
         if provenance not in ("recorded", "declared"):
             raise ValueError(f"provenance must be recorded|declared, got {provenance!r}")
         self.rows_dir.mkdir(parents=True, exist_ok=True)
-        seen = {(e["rep"], e["row_sha"]) for e in self._index_entries()
-                if e["cell_id"] == cell.id}
+        mine = [e for e in self._index_entries() if e["cell_id"] == cell.id]
+        seen = {(e["rep"], e["row_sha"]) for e in mine}
+        taken = {e["rep"] for e in mine}
         added = 0
+        self.renumbered = []
         with (self.rows_dir / f"{cell.id}.jsonl").open("a", encoding="utf-8") as rf, \
              self.index_path.open("a", encoding="utf-8") as xf:
             for r in rows:
                 rep = int(r.get("rep", 1))
                 sha = _row_sha(r)
                 if (rep, sha) in seen:
-                    continue
+                    continue                      # same draw, already held
+                if rep in taken:
+                    # A DIFFERENT row already carries this rep number. Two
+                    # concurrent runs of the same cell both produce "rep 4", and
+                    # they are genuinely two draws -- discarding one would throw
+                    # away real compute, keeping both under one number makes
+                    # have() undercount while rows() over-delivers. So renumber
+                    # to the next free index and say so: no data lost, no
+                    # collision, and the duplicate is visible rather than
+                    # silently folded in.
+                    new = max(taken) + 1
+                    self.renumbered.append((rep, new))
+                    rep = new
+                    r = {**r, "rep": rep, "rep_original": int(r.get("rep", 1))}
+                    sha = _row_sha(r)
                 seen.add((rep, sha))
+                taken.add(rep)
                 rf.write(json.dumps(r, default=str) + "\n")
                 entry = {"cell_id": cell.id, "rep": rep, "row_sha": sha,
                          "provenance": provenance, "source": source,

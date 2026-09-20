@@ -65,6 +65,36 @@ the default and must match it exactly; only `any` waives the comparison. And
 requiring one would refuse everything recorded before today. The rule is
 *known-different blocks, unknown abstains*.
 
+## Queueing the same run twice
+
+Three cases, and they are not the same.
+
+| | what happens |
+|---|---|
+| **sequentially** | the second invocation asks the store, finds the reps, and runs nothing: *"nothing to run: the store already satisfies this declaration"* |
+| **the identical row re-ingested** | de-duplicated on `(cell_id, rep, row_sha)`. `add` returns 0. Re-running `migrate.py` is a no-op, not a doubling |
+| **concurrently** | both plan against the same store state, both run, both write "rep 4" — **a rep collision** |
+
+The third was a real hole. The two draws are genuine, so discarding one wastes
+compute; keeping both under one rep number makes `have()` undercount while
+`rows()` over-delivers, which is sample-size inflation arriving by a different
+door than the `n5_*` copies.
+
+So a colliding rep is **renumbered to the next free index and reported**:
+
+```
+!! rep 4 already held for this cell, stored as rep 6 -- concurrent run?
+```
+
+Nothing is lost, nothing collides, and the row keeps `rep_original` so the race
+is legible afterwards. Rep numbers were never identities — they are per-series
+labels — which is what makes renumbering sound rather than a fudge.
+
+What is *not* defended: two processes appending to `index.jsonl` at the same
+instant. Line appends are small and effectively atomic on both platforms in
+practice, but there is no lock. Don't run two sweeps against one store on
+purpose; if you do, the renumbering above is what catches it.
+
 ## Provenance, and why it is two words
 
 Every entry carries one:

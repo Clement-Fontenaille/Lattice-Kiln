@@ -377,6 +377,13 @@ def main():
                     _STORE.add(_cell_for(task["id"], args.arm), [row],
                                provenance="recorded", source="run_suite",
                                meta=_eval_meta())
+                    for was, now in getattr(_STORE, "renumbered", []):
+                        # Another run of this exact cell already used that rep
+                        # number. Both draws are kept; the operator is told,
+                        # because it means two runs raced on one cell.
+                        print(f"      !! rep {was} already held for this cell, "
+                              f"stored as rep {now} -- concurrent run?",
+                              flush=True)
                 except Exception as e:  # noqa: BLE001
                     print(f"      !! evalkit store write failed: {e!r}", flush=True)
             print(f"      {row['terminal']} base={row['baseline_sub']} final={row['final_sub']} "
