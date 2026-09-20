@@ -21,12 +21,16 @@ import sys
 import tempfile
 import time
 import traceback
+import socket
 from collections import defaultdict
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from _m6bridge import Gate, RunRecorder, assemble, health, run_processor  # noqa: E402
+RUNNER = f"{socket.gethostname()}-{os.getpid()}"
+
+from _m6bridge import (Gate, RunRecorder, assemble, health,  # noqa: E402
+                       meter_read, meter_reset, run_processor)
 
 SUITE = HERE / "suite"
 # LATTICE_RESULTS_SUBDIR lets a run against a different model land in its own
@@ -170,6 +174,8 @@ def _setup_of(task_id: str, arm_name: str):
 def run_task(task, arm_name, rep, cmd, protected):
     ws = fresh_ws(task)
     base = score(ws, cmd)          # always the complete check
+    meter_reset()
+    t_start = time.time()
     t0 = time.monotonic()
     # The worker may be shown less than the check measures. Set only around
     # the arm, never around scoring, so ground truth is identical for every
@@ -200,6 +206,8 @@ def run_task(task, arm_name, rep, cmd, protected):
         os.environ.pop("M6_TASK", None)
         os.environ.pop("M6_REP", None)
     wall = round(time.monotonic() - t0, 1)
+    t_end = time.time()
+    used = meter_read()
     restore_protected(ws, task, protected)
     fin = score(ws, cmd)
 
@@ -250,6 +258,20 @@ def run_task(task, arm_name, rep, cmd, protected):
         "setup": _setup_of(task["id"], arm_name),
         "setup_meta": _eval_meta(),
         "wall_s": wall, "tail": fin["out"],
+        # What was actually generated inside that wall time, and when. `gen_s`
+        # is the backend's decode time; `wall_s` is decode plus prompt plus
+        # scoring plus every gap. The pair is what lets throughput be compared
+        # across one worker and several: tokens/gen_s falls when two workers
+        # share a card, tokens/wall_s rises if one's gaps cover the other's
+        # decoding. `runner` and the timestamps let concurrency be reconstructed
+        # from the rows themselves rather than declared alongside them.
+        "llm_calls": used["calls"],
+        "gen_tok": used["gen_tok"],
+        "prompt_tok": used["prompt_tok"],
+        "gen_s": round(used["gen_s"], 2),
+        "runner": RUNNER,
+        "t_start": round(t_start, 3),
+        "t_end": round(t_end, 3),
     }
     shutil.rmtree(ws, ignore_errors=True)
     return row

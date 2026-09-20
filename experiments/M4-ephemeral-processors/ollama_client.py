@@ -83,6 +83,45 @@ class Generation:
         return (self.eval_count / d) if d else 0.0
 
 
+# ---------------------------------------------------------------- the meter
+#
+# Every generation's token counts, accumulated per process. Rows carried
+# `wall_s` and nothing about what was generated inside it, so a slow rep and a
+# long rep were the same number and neither could be compared across hosts,
+# models or degrees of concurrency. Two separate quantities, and keeping them
+# apart is the whole point:
+#
+#   gen_s   generation-phase seconds the BACKEND reports -- decode time only
+#   wall_s  the rep's own clock -- decode plus prompt, plus scoring, plus
+#           fixture setup, plus every gap
+#
+# tokens/gen_s is what the card does while it is decoding, and two workers
+# sharing one GPU push it DOWN. tokens/wall_s is throughput, and two workers
+# push it UP exactly insofar as one's gaps cover the other's decoding. Reporting
+# one as the other is how a real speedup gets mistaken for a regression.
+_METER = {"calls": 0, "gen_tok": 0, "prompt_tok": 0, "gen_s": 0.0}
+
+
+def meter_reset() -> None:
+    _METER.update(calls=0, gen_tok=0, prompt_tok=0, gen_s=0.0)
+
+
+def meter_read() -> dict:
+    return dict(_METER)
+
+
+def _meter(g: "Generation") -> "Generation":
+    if "timings" in g.raw:
+        d = g.raw.get("timings", {}).get("predicted_ms", 0) / 1000
+    else:
+        d = g.raw.get("eval_duration", 0) / 1e9
+    _METER["calls"] += 1
+    _METER["gen_tok"] += g.eval_count
+    _METER["prompt_tok"] += g.prompt_eval_count
+    _METER["gen_s"] += d
+    return g
+
+
 def generate(prompt: str, *, model: str = DEFAULT_MODEL, base_url: str = DEFAULT_BASE_URL,
              num_ctx: int = DEFAULT_NUM_CTX, temperature: float = 0.2,
              num_predict: int = 1536, timeout_s: float = 600.0,
@@ -126,7 +165,7 @@ def generate(prompt: str, *, model: str = DEFAULT_MODEL, base_url: str = DEFAULT
             f"(done_reason=length, {len(payload.get('thinking') or '')} chars of "
             f"thinking, eval_count={payload.get('eval_count')}). The model did not "
             f"reach an answer. Raise num_predict, or set LATTICE_THINK=0.")
-    return Generation(
+    return _meter(Generation(
         text=payload["response"],
         model=payload.get("model", model),
         prompt_eval_count=payload.get("prompt_eval_count", 0),
@@ -134,7 +173,7 @@ def generate(prompt: str, *, model: str = DEFAULT_MODEL, base_url: str = DEFAULT
         total_duration_s=payload.get("total_duration", 0) / 1e9 or (time.monotonic() - t0),
         load_duration_s=payload.get("load_duration", 0) / 1e9,
         raw=payload,
-    )
+    ))
 
 
 def _generate_llamacpp(prompt: str, *, base_url: str, model: str, temperature: float,
@@ -165,7 +204,7 @@ def _generate_llamacpp(prompt: str, *, base_url: str, model: str, temperature: f
     if "content" not in payload:
         raise OllamaError(f"no 'content' field in llama-server reply: {payload!r}")
     t = payload.get("timings", {})
-    return Generation(
+    return _meter(Generation(
         text=payload["content"],
         model=payload.get("model", model),
         prompt_eval_count=int(t.get("prompt_n", 0)),
@@ -174,7 +213,7 @@ def _generate_llamacpp(prompt: str, *, base_url: str, model: str, temperature: f
                          or (time.monotonic() - t0),
         load_duration_s=0.0,   # llama-server loads once at startup, not per-request
         raw=payload,
-    )
+    ))
 
 
 def health(base_url: str = DEFAULT_BASE_URL, timeout_s: float = 5.0) -> bool:
