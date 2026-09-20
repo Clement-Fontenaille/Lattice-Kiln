@@ -145,3 +145,42 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# -------------------------------------------------------------- slot ceilings
+#
+# OLLAMA_NUM_PARALLEL is a MAXIMUM, not a request, and two separate things can
+# silently reduce it. Neither is visible through the API -- `/api/ps` reports a
+# model 100% resident whether it holds one slot or three. Only the load lines in
+# server.log distinguish them:
+#
+#     Qwen2.5 Coder 7B     n_ctx = 24576   slot id 0 / id 1 / id 2    3 slots
+#     NVIDIA Nemotron 9B   n_ctx =  8192   slot id 0                  1 slot
+#
+# 1. ARCHITECTURE. Ollama 0.34.2 refuses parallelism for nemotron_h outright:
+#
+#      sched.go:514 "model architecture does not currently support parallel
+#      requests" architecture=nemotron_h
+#
+#    Confirmed downstream: "138.80 MiB (1 cells, 56 layers, 1 seqs 0 rs_seq)".
+#    Mamba-2 recurrent state is single-sequence here. No setting changes this,
+#    so workers beyond the first can only fill the gaps between calls -- they
+#    never decode concurrently. Measured cost: 82% of nemotron's wall time was
+#    non-decode at three workers, against 34% for qwen at three real slots,
+#    while nemotron's per-stream decode was FASTER (45.2 vs 38.5 tok/s).
+#
+# 2. MEMORY. LLAMA_ARG_FIT_TARGET is a free-VRAM margin in MiB, default 1024,
+#    and the fitter will shed GPU layers to meet it:
+#
+#      "projected to use 6260 MiB vs. 6981 MiB free"
+#      "cannot meet free memory target of 1024 MiB, need to reduce device
+#       memory by 303 MiB"
+#      "n_gpu_layers already set by user to 99, abort"
+#
+#    It wanted to offload 303 MiB of nemotron and was overruled only because
+#    `PARAMETER num_gpu 99` is pinned in the Modelfile. Unpinned, this is how a
+#    model lands on the wrong side of finding 01's residency cliff without
+#    anything in the API saying so.
+#
+# Diagnosing a slot count therefore means reading server.log, not the API. Both
+# failure modes -- an architecture that cannot batch, and a fitter quietly
+# shedding layers -- present identically as "it is slower than expected".
