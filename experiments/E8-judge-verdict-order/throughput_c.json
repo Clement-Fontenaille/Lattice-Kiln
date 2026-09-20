@@ -1,0 +1,51 @@
+{
+  "name": "throughput - judge_caveat, qwen, reason_first",
+  "reps": 2,
+  "arms": [
+    "judge_caveat"
+  ],
+  "judge_formats": [
+    "reason_first"
+  ],
+  "models": {
+    "qwen": {
+      "backend": "ollama",
+      "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "params": {
+        "num_ctx": "any"
+      }
+    }
+  },
+  "_why": "One of the three arm-suites used to measure what a second worker does to throughput. Phase 1 runs reps 1-2 with ONE worker, phase 2 raises `reps` to 4 and runs reps 3-4 with TWO. Both phases are the same arms over the same tasks for the same number of reps, so wall time compares directly and not only through a token rate.",
+  "_chosen": "Chosen because the store holds nothing for it once waivers are honoured. That matters: an arm-suite with partial coverage gives the two phases different amounts of work, because the planner skips what it already has. Restricted to its 27 zero-data tasks: the other 7 already hold rows, and one of them (wf6_multi, 1 rep) would need one more rep in phase 1 and two in phase 2, which is exactly the asymmetry this comparison cannot have.",
+  "_num_ctx_any": "as E8: this varies worker count, not the context ceiling.",
+  "tasks": [
+    "hf_already_optimal",
+    "hf_audit_perf",
+    "hf_cache_decorator",
+    "hf_csv",
+    "hf_dead_code",
+    "hf_dict_dispatch",
+    "hf_extract_fn",
+    "hf_json_field",
+    "hf_json_serialize",
+    "hf_misfiled_bug",
+    "hf_multi_recipient",
+    "hf_pagination",
+    "hf_path_sanitize",
+    "hf_rec_to_iter",
+    "hf_remove_validation",
+    "hf_retry_backoff",
+    "hf_return_shape",
+    "hf_suppress",
+    "hf_timeout_param",
+    "hf_wrong_spec",
+    "wf1_crossfile",
+    "wf2_retry",
+    "wf3_refactor",
+    "wf3_refactor_blindview",
+    "wf3_refactor_witnessed",
+    "wf4_assumption",
+    "wf5_partial"
+  ]
+}

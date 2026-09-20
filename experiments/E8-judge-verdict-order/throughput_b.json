@@ -1,0 +1,22 @@
+{
+  "name": "throughput - judge_bypass, qwen, reason_first",
+  "reps": 2,
+  "arms": [
+    "judge_bypass"
+  ],
+  "judge_formats": [
+    "reason_first"
+  ],
+  "models": {
+    "qwen": {
+      "backend": "ollama",
+      "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "params": {
+        "num_ctx": "any"
+      }
+    }
+  },
+  "_why": "One of the three arm-suites used to measure what a second worker does to throughput. Phase 1 runs reps 1-2 with ONE worker, phase 2 raises `reps` to 4 and runs reps 3-4 with TWO. Both phases are the same arms over the same tasks for the same number of reps, so wall time compares directly and not only through a token rate.",
+  "_chosen": "Chosen because the store holds nothing for it once waivers are honoured. That matters: an arm-suite with partial coverage gives the two phases different amounts of work, because the planner skips what it already has.",
+  "_num_ctx_any": "as E8: this varies worker count, not the context ceiling."
+}
