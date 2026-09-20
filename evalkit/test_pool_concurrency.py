@@ -7,6 +7,9 @@ is why they are assertions and not prose:
      enqueue took a delta and each computed its own deficit before any wrote.
   B  twelve workers double-claimed: `os.rename` succeeded twice for the same
      source on Windows, twelve renames from seven sources.
+  C  a second worker on a one-GPU host claimed by cell id, which is effectively
+     random across models, so it evicted the model the first was mid-item on and
+     the two of them ran slower than one.
 
     python test_pool_concurrency.py
 """
@@ -23,13 +26,18 @@ sys.path.insert(0, str(HERE))
 
 from setup_key import Cell  # noqa: E402
 from pool import Pool  # noqa: E402
+from worker import HOLD, pick  # noqa: E402
 
 TMP = HERE.parent / ".pool_selftest"
 
 
-def cell():
-    return Cell.make(task="wf1_crossfile", arm="baseline", backend="ollama",
-                     model="selftest", params={}, defaults={"num_ctx": 8192})
+def cell(model="selftest", task="wf1_crossfile", arm="baseline"):
+    return Cell.make(task=task, arm=arm, backend="ollama",
+                     model=model, params={}, defaults={"num_ctx": 8192})
+
+
+def env(model):
+    return {"LATTICE_BACKEND": "ollama", "LATTICE_EVAL_MODEL": model}
 
 
 def fresh() -> Pool:
@@ -84,12 +92,62 @@ def test_release_keeps_the_rep_reserved():
     print("ok  release: unfinished work returns, its rep still reserved")
 
 
+def test_second_worker_prefers_the_resident_model():
+    """Both models have work pending; the card holds one of them."""
+    p = fresh()
+    p.enqueue(cell("mA", arm="baseline"), 2, env=env("mA"), requested_by="r")
+    p.enqueue(cell("mB", arm="monolith"), 2, env=env("mB"), requested_by="r")
+    got = pick(p, "w2", None, {"mB"})
+    assert got.env["LATTICE_EVAL_MODEL"] == "mB", got.env
+    print("ok  pick: work for two models, one resident -> takes the resident one")
+
+
+def test_second_worker_holds_rather_than_evicting():
+    """The resident model's work is exhausted and worker one is still on it.
+    Claiming the other model here would evict it mid-item."""
+    p = fresh()
+    p.enqueue(cell("mA", arm="baseline"), 1, env=env("mA"), requested_by="r")
+    p.enqueue(cell("mB", arm="monolith"), 2, env=env("mB"), requested_by="r")
+    p.claim(who="w1", match=lambda d: d["cell"]["model"] == "mA")   # w1 busy on mA
+    assert pick(p, "w2", None, {"mA"}) is HOLD
+    assert p.counts()["pending"] == 2, p.counts()
+    print("ok  pick: resident work exhausted, neighbour busy -> holds, evicts nothing")
+
+
+def test_a_lone_worker_may_swap():
+    """Same pool, nobody else mid-item: a swap costs one load and nothing else."""
+    p = fresh()
+    p.enqueue(cell("mB", arm="monolith"), 2, env=env("mB"), requested_by="r")
+    got = pick(p, "w1", None, {"mA"})
+    assert got is not None and got.env["LATTICE_EVAL_MODEL"] == "mB"
+    print("ok  pick: alone on the host -> free to swap the model")
+
+
+def test_sticky_beats_resident():
+    """Both arms use the resident model, so rule 2 would take either. Rule 1
+    keeps the worker inside the group it is already set up for, whichever way
+    cell ids happen to sort."""
+    p = fresh()
+    p.enqueue(cell("mA", arm="baseline"), 2, env=env("mA"), requested_by="r")
+    p.enqueue(cell("mA", arm="monolith"), 2, env=env("mA"), requested_by="r")
+    import json as _json
+    first = pick(p, "w1", None, {"mA"})
+    key = (first.cell["arm"], _json.dumps(first.env, sort_keys=True))
+    nxt = pick(p, "w1", key, {"mA"})
+    assert nxt.cell["arm"] == first.cell["arm"], (first.cell["arm"], nxt.cell["arm"])
+    print("ok  pick: sticky group is tried before anything else")
+
+
 if __name__ == "__main__":
     for fn in (test_enqueue_is_idempotent_under_concurrency,
                test_no_double_claim,
                test_held_reps_are_not_requested,
                test_lease_reaps_a_dead_worker,
-               test_release_keeps_the_rep_reserved):
+               test_release_keeps_the_rep_reserved,
+               test_second_worker_prefers_the_resident_model,
+               test_second_worker_holds_rather_than_evicting,
+               test_a_lone_worker_may_swap,
+               test_sticky_beats_resident):
         fn()
     shutil.rmtree(TMP, ignore_errors=True)
     print("\nall pool concurrency properties hold")

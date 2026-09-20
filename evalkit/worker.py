@@ -8,6 +8,13 @@ only thing any of them touch.
     python worker.py --follow        # keep waiting for new work
     python worker.py --batch 8       # claim up to 8 compatible items at a time
 
+Several workers are safe together. A worker takes work that uses a model already
+resident on the card in preference to anything else, and when another worker is
+mid-item it will take ONLY such work -- waiting rather than claiming something
+that would evict the model its neighbour is using. On a single-GPU host that is
+the difference between a second worker helping and a second worker halving
+throughput for both.
+
 Claims are batched by what `run_suite` takes -- one arm under one environment --
 because a process start costs a few seconds and a rep costs thirty to ninety.
 Claiming eight compatible items and running them in one invocation removes most
@@ -58,9 +65,69 @@ def backend_live(env: dict) -> tuple[bool, str]:
         return False, f"{backend} unreachable ({e})"
 
 
+def loaded_models(base_url: str = "http://localhost:11434") -> set[str]:
+    """What the backend currently holds resident. Empty means an idle card, and
+    an idle card is free to be filled with anything."""
+    try:
+        with urllib.request.urlopen(f"{base_url}/api/ps", timeout=5) as r:
+            d = json.loads(r.read().decode("utf-8", "replace"))
+        return {m.get("name", "") for m in (d.get("models") or [])}
+    except Exception:  # noqa: BLE001
+        return set()
+
+
+def others_working(pool, who: str) -> bool:
+    """Is anyone else mid-item? Their model is the one on the card, and taking
+    work that would evict it is how two workers turn into half of one."""
+    for p in pool.claimed.glob("*.json"):
+        try:
+            d = json.loads(p.read_text(encoding="utf-8"))
+        except Exception:  # noqa: BLE001
+            continue
+        if d.get("claimed_by") and d["claimed_by"] != who:
+            return True
+    return False
+
+
+def wants_loaded(d: dict, loaded: set[str]) -> bool:
+    return d.get("env", {}).get("LATTICE_EVAL_MODEL") in loaded
+
+
 def group_key(item) -> tuple:
     """What may share one run_suite invocation: same arm, same environment."""
     return (item.cell["arm"], json.dumps(item.env, sort_keys=True))
+
+
+HOLD = object()
+"""Returned by `pick` for: there is work, but taking any of it would evict the
+model another worker is mid-item on. Distinct from None, which means the pool
+has nothing this worker could take at all."""
+
+
+def pick(pool, who: str, sticky, loaded: set[str]):
+    """Choose the next item, in the order that costs the card least.
+
+      1. more of the group just run       -- no model change at all
+      2. anything using a resident model  -- no model change either
+      3. anything, but only when a swap is safe
+
+    A swap is safe only when nobody else is mid-item. This card holds one model;
+    claiming work that evicts the model a neighbour is using turns two workers
+    into rather less than one. So a second worker started while the first is
+    busy takes ONLY work fitting the resident model, and otherwise HOLDs.
+    """
+    if sticky is not None:
+        got = pool.claim(who, match=lambda d, k=sticky: (
+            d["cell"]["arm"], json.dumps(d.get("env", {}), sort_keys=True)) == k)
+        if got is not None:
+            return got
+    if loaded:
+        got = pool.claim(who, match=lambda d: wants_loaded(d, loaded))
+        if got is not None:
+            return got
+        if others_working(pool, who):
+            return HOLD if pool.counts()["pending"] else None
+    return pool.claim(who)
 
 
 def run_batch(items, log_dir: Path) -> int:
@@ -89,6 +156,8 @@ def main():
     ap.add_argument("--batch", type=int, default=8)
     ap.add_argument("--follow", action="store_true")
     ap.add_argument("--idle-s", type=float, default=30.0)
+    ap.add_argument("--base-url", default="http://localhost:11434",
+                    help="where to ask which model is resident")
     ap.add_argument("--reap", action="store_true",
                     help="return items whose worker died before starting")
     args = ap.parse_args()
@@ -105,17 +174,17 @@ def main():
     done = failed = 0
     sticky = None          # keep working one group while it lasts
     while True:
-        # Prefer more of what we just ran. Claim order is by cell id, which is
-        # effectively random across models, and every switch between them costs
-        # a full model load and evicts the other -- on an 8GB card that is the
-        # difference between a sweep and a thrash.
-        first = None
-        if sticky is not None:
-            first = pool.claim(who, match=lambda d, k=sticky: (
-                d["cell"]["arm"],
-                json.dumps(d.get("env", {}), sort_keys=True)) == k)
-        if first is None:
-            first = pool.claim(who)
+        loaded = loaded_models(args.base_url)
+        first = pick(pool, who, sticky, loaded)
+        if first is HOLD:
+            if args.follow:
+                print(f"[{who}] holding: {sorted(loaded)} resident and in use by "
+                      f"another worker; nothing pending fits it", flush=True)
+                time.sleep(args.idle_s)
+                continue
+            print(f"[{who}] stopping: nothing pending fits the resident model "
+                  f"and another worker is using it", flush=True)
+            break
         if first is None:
             if args.follow:
                 time.sleep(args.idle_s)
