@@ -143,7 +143,8 @@ def migrate(entry: dict, store: Store, dry: bool) -> tuple[int, int, list[str]]:
                 cell = Cell.make(
                     task=task, arm=arm, backend=entry["backend"],
                     model=entry["model"], judge_format=entry["judge_format"],
-                    params=entry["params"], fixture_hash=f_sha,
+                    params=entry.get("arm_params", {}).get(arm, entry["params"]),
+                    fixture_hash=f_sha,
                     arm_hash=a_sha, prompt_hash=p_sha)
                 trows = [r for r in group if r["task"] == task]
                 cells += 1

@@ -8,7 +8,9 @@
       "tree": "experiments/M6-evaluation-suite/results",
       "backend": "ollama",
       "model": "qwen2.5-coder:7b-instruct-q4_K_M",
-      "params": {},
+      "params": {
+        "num_ctx": 8192
+      },
       "judge_format": "decision_first",
       "arm_rev": "654ac97~1",
       "suite_before": "0.4.0",
@@ -17,13 +19,32 @@
         "n5_m7"
       ],
       "why": "The default tree. No LATTICE_THINK was ever set for it, so no think key was sent; qwen has no reasoning channel in any case. decision_first is the only contract that existed before 2026-09-19.",
-      "fixture_rev": "f28b453~1"
+      "fixture_rev": "f28b453~1",
+      "arm_params": {
+        "baseline": {
+          "num_ctx": 16384
+        },
+        "test_synth": {
+          "num_ctx": 16384
+        },
+        "judge_anchored": {
+          "num_ctx": 16384
+        },
+        "m7f": {
+          "num_ctx": 16384
+        },
+        "judge_fullctx": {
+          "num_ctx": 16384
+        }
+      }
     },
     {
       "tree": "experiments/M6-evaluation-suite/results_nemotron",
       "backend": "ollama",
       "model": "nemotron-gpu",
-      "params": {},
+      "params": {
+        "num_ctx": 8192
+      },
       "judge_format": "decision_first",
       "arm_rev": "654ac97~1",
       "suite_before": "0.4.0",
@@ -36,7 +57,8 @@
       "model": "nemotron-gpu",
       "params": {
         "think": false,
-        "min_predict": 400
+        "min_predict": 400,
+        "num_ctx": 8192
       },
       "judge_format": "decision_first",
       "arm_rev": "654ac97~1",
@@ -45,5 +67,6 @@
       "fixture_rev": "f28b453~1"
     }
   ],
-  "_fixture_rev": "The revision whose FIXTURES produced rows that do not carry the current suite version. Separate from arm_rev: the 0.4.1 fixture repair (f28b453) and the E8 arm edit (654ac97) are different commits, and a row can predate one without predating the other."
+  "_fixture_rev": "The revision whose FIXTURES produced rows that do not carry the current suite version. Separate from arm_rev: the 0.4.1 fixture repair (f28b453) and the E8 arm edit (654ac97) are different commits, and a row can predate one without predating the other.",
+  "_arm_params": "Per-arm overrides of `params`. DEFAULT_NUM_CTX was cut from 16384 to 8192 on 2026-09-15 mid-queue, and ollama_client's own docstring names the arms that had already run at 16384: baseline, test_synth, judge_anchored, m7f, judge_fullctx. That boundary was flagged in prose and invisible in the data; here it is in the key, so rows either side of it are different cells and will not be silently pooled."
 }

@@ -27,7 +27,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from setup_key import Cell, M6, suite_version  # noqa: E402
+from setup_key import Cell, M6, ROOT, suite_version  # noqa: E402
 from store import Store  # noqa: E402
 
 
@@ -36,8 +36,19 @@ def all_tasks() -> list[str]:
     return [t["id"] for t in d["tasks"]]
 
 
+def _client_defaults() -> dict:
+    """Settings a run would pick up without being told, so a declaration need
+    not restate them. Mirrors run_suite._eval_params: the client is what turns
+    an unset variable into a default, and the default is part of the setup."""
+    import sys as _s
+    _s.path.insert(0, str(ROOT / "experiments" / "M4-ephemeral-processors"))
+    import ollama_client as _oc
+    return {"num_ctx": _oc.DEFAULT_NUM_CTX}
+
+
 def resolve(decl: dict) -> list[tuple[Cell, int]]:
     """Declaration -> concrete cells bound to the current environment."""
+    defaults = _client_defaults()
     tasks = decl.get("tasks") or all_tasks()
     reps = int(decl["reps"])
     out = []
@@ -48,7 +59,7 @@ def resolve(decl: dict) -> list[tuple[Cell, int]]:
                     out.append((Cell.make(
                         task=task, arm=arm, backend=m["backend"],
                         model=m["model"], judge_format=fmt,
-                        params=m.get("params", {})), reps))
+                        params={**defaults, **m.get("params", {})}), reps))
     return out
 
 

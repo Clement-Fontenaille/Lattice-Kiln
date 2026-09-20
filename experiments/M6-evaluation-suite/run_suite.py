@@ -37,6 +37,23 @@ SUITE = HERE / "suite"
 # ollama_client.py's LATTICE_EVAL_MODEL, for the first Nemotron Nano 9B v2 pass).
 RESULTS = HERE / os.environ.get("LATTICE_RESULTS_SUBDIR", "results")
 SUITE_VERSION = json.loads((HERE / "tasks.json").read_text(encoding="utf-8"))["suite_version"]
+
+# evalkit: every row records the setup that produced it, and lands in the
+# setup-keyed store as `recorded`. Until 2026-09-20 a row's setup lived in the
+# name of the directory it was written to, so reuse by another experiment meant
+# reading directory names and diffing arm files against git history. Rows
+# written from here need none of that.
+#
+# The legacy per-arm JSON is still written. Analysis scripts read it, and a
+# transition that breaks every reader on day one is not a transition.
+sys.path.insert(0, str(HERE.parent.parent / "evalkit"))
+try:
+    from setup_key import Cell            # noqa: E402
+    from store import Store               # noqa: E402
+    _STORE = Store()
+except Exception as _e:                   # noqa: BLE001
+    _STORE = None
+    print(f"evalkit store unavailable, rows will not be keyed: {_e!r}", flush=True)
 RUNS = HERE / "runs"
 _SCORE = re.compile(r"^([A-Z]+SCORE|SUBTESTS)\s+(\d+)\s*/\s*(\d+)", re.M)
 _FAIL_LABEL = re.compile(r"^\s{2,}([^:]{2,70}):", re.M)
@@ -107,6 +124,35 @@ for _mod in ("m7_workflow", "m7b_workflow", "m7c_workflow", "m7e_workflow", "m7f
 
 
 # --------------------------------------------------------------- driver
+
+def _eval_params() -> dict:
+    """The generation settings actually in force, read off the client rather
+    than off the environment -- the client is what turns an unset variable into
+    a default, and the default is part of the setup."""
+    import ollama_client as _oc
+    p = {"num_ctx": _oc.DEFAULT_NUM_CTX}
+    if _oc.THINK is not None:
+        p["think"] = _oc.THINK
+    if _oc.MIN_PREDICT:
+        p["min_predict"] = _oc.MIN_PREDICT
+    return p
+
+
+def _cell_for(task_id: str, arm_name: str):
+    if _STORE is None:
+        return None
+    import ollama_client as _oc
+    return Cell.make(task=task_id, arm=arm_name, backend=_oc.BACKEND,
+                     model=_oc.DEFAULT_MODEL,
+                     judge_format=os.environ.get("LATTICE_JUDGE_FORMAT",
+                                                 "decision_first"),
+                     params=_eval_params())
+
+
+def _setup_of(task_id: str, arm_name: str):
+    c = _cell_for(task_id, arm_name)
+    return c.as_dict() if c else None
+
 
 def run_task(task, arm_name, rep, cmd, protected):
     ws = fresh_ws(task)
@@ -188,6 +234,7 @@ def run_task(task, arm_name, rep, cmd, protected):
         # from before or after, so reuse of recorded rows had to be argued from
         # file dates instead of read off the data.
         "suite_version": SUITE_VERSION,
+        "setup": _setup_of(task["id"], arm_name),
         "wall_s": wall, "tail": fin["out"],
     }
     shutil.rmtree(ws, ignore_errors=True)
@@ -276,6 +323,16 @@ def main():
             print(f"[{i}/{total}] {task['id']} rep{rep} ({args.arm}) ...", flush=True)
             row = run_task(task, args.arm, rep, cmd, protected)
             rows.append(row)
+            # Into the setup-keyed store as well, as `recorded`: the harness
+            # knows its own setup, so this row never needs a migration manifest
+            # to say what produced it. A store failure must not lose a run that
+            # already cost real time, so it is reported and stepped over.
+            if _STORE is not None:
+                try:
+                    _STORE.add(_cell_for(task["id"], args.arm), [row],
+                               provenance="recorded", source="run_suite")
+                except Exception as e:  # noqa: BLE001
+                    print(f"      !! evalkit store write failed: {e!r}", flush=True)
             print(f"      {row['terminal']} base={row['baseline_sub']} final={row['final_sub']} "
                   f"pass={row['objective_pass']} regr={row['regressed']} "
                   f"crash={row['check_crashed']}", flush=True)

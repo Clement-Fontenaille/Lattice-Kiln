@@ -46,6 +46,7 @@ class Store:
         self.path = Path(path or DEFAULT_STORE)
         self.index_path = self.path / "index.jsonl"
         self.rows_dir = self.path / "rows"
+        self._cache: list[dict] | None = None
 
     # ---------------------------------------------------------------- writing
 
@@ -71,24 +72,28 @@ class Store:
                     continue
                 seen.add((rep, sha))
                 rf.write(json.dumps(r, default=str) + "\n")
-                xf.write(json.dumps({
-                    "cell_id": cell.id, "rep": rep, "row_sha": sha,
-                    "provenance": provenance, "source": source,
-                    **cell.as_dict(),
-                }) + "\n")
+                entry = {"cell_id": cell.id, "rep": rep, "row_sha": sha,
+                         "provenance": provenance, "source": source,
+                         **cell.as_dict()}
+                xf.write(json.dumps(entry) + "\n")
+                if self._cache is not None:
+                    self._cache.append(entry)   # keep the cache truthful
                 added += 1
         return added
 
     # ---------------------------------------------------------------- reading
 
     def _index_entries(self):
-        if not self.index_path.is_file():
-            return []
-        out = []
-        for line in self.index_path.read_text(encoding="utf-8").splitlines():
-            if line.strip():
-                out.append(json.loads(line))
-        return out
+        """Cached in memory. run_suite adds a cell per task, so re-reading the
+        whole index on every add made ingest quadratic in the store's size."""
+        if self._cache is None:
+            if not self.index_path.is_file():
+                self._cache = []
+            else:
+                self._cache = [json.loads(l) for l
+                               in self.index_path.read_text(encoding="utf-8").splitlines()
+                               if l.strip()]
+        return self._cache
 
     def summary(self):
         """(cell_id -> {cell fields, reps, provenance counts})."""
