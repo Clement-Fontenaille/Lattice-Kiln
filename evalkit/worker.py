@@ -103,8 +103,19 @@ def main():
             print(f"reaped {len(got)} abandoned item(s)", flush=True)
 
     done = failed = 0
+    sticky = None          # keep working one group while it lasts
     while True:
-        first = pool.claim(who)
+        # Prefer more of what we just ran. Claim order is by cell id, which is
+        # effectively random across models, and every switch between them costs
+        # a full model load and evicts the other -- on an 8GB card that is the
+        # difference between a sweep and a thrash.
+        first = None
+        if sticky is not None:
+            first = pool.claim(who, match=lambda d, k=sticky: (
+                d["cell"]["arm"],
+                json.dumps(d.get("env", {}), sort_keys=True)) == k)
+        if first is None:
+            first = pool.claim(who)
         if first is None:
             if args.follow:
                 time.sleep(args.idle_s)
@@ -114,7 +125,7 @@ def main():
         # Fill the batch with items that can share one invocation. Each is still
         # claimed individually; batching is about process startup, not locking.
         batch = [first]
-        key = group_key(first)
+        key = sticky = group_key(first)
         while len(batch) < args.batch:
             nxt = pool.claim(who, match=lambda d, k=key: (
                 d["cell"]["arm"], json.dumps(d.get("env", {}), sort_keys=True)) == k)
