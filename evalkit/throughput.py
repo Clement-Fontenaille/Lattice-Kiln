@@ -2,7 +2,7 @@
 
     python throughput.py                      # everything the store has timed
     python throughput.py --model qwen2.5-coder:7b-instruct-q4_K_M
-    python throughput.py --arm judge_bypass --since 2026-09-20
+    python throughput.py --arm judge_bypass --since "2026-09-20 14:05"
 
 Two rates, and confusing them is how a real speedup gets read as a regression:
 
@@ -41,6 +41,15 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
 from store import Store  # noqa: E402
+
+
+def _when(text: str) -> float:
+    for fmt in ("%Y-%m-%d %H:%M", "%Y-%m-%dT%H:%M", "%Y-%m-%d"):
+        try:
+            return datetime.strptime(text, fmt).astimezone().timestamp()
+        except ValueError:
+            continue
+    raise SystemExit(f"cannot read {text!r} as a date or a date and time")
 
 
 def load(store: Store, want: dict) -> tuple[list[dict], int]:
@@ -170,7 +179,12 @@ def main():
     ap.add_argument("--model")
     ap.add_argument("--arm")
     ap.add_argument("--judge-format")
-    ap.add_argument("--since", help="YYYY-MM-DD, local time")
+    ap.add_argument("--since", metavar="WHEN",
+                    help="YYYY-MM-DD or 'YYYY-MM-DD HH:MM', local time")
+    ap.add_argument("--until", metavar="WHEN",
+                    help="same forms. A phase boundary is a MINUTE, not a day: "
+                         "two phases run hours apart on the same date, and a "
+                         "date-only bound silently pools them.")
     ap.add_argument("--by-arm", action="store_true",
                     help="one table per arm as well as the whole selection")
     args = ap.parse_args()
@@ -179,12 +193,14 @@ def main():
     rows, untimed = load(store, {"model": args.model, "arm": args.arm,
                                  "judge_format": args.judge_format})
     if args.since:
-        t = datetime.strptime(args.since, "%Y-%m-%d").astimezone().timestamp()
-        rows = [r for r in rows if r["t_start"] >= t]
+        rows = [r for r in rows if r["t_start"] >= _when(args.since)]
+    if args.until:
+        rows = [r for r in rows if r["t_end"] <= _when(args.until)]
 
     bits = [f"{k}={v}" for k, v in
             (("model", args.model), ("arm", args.arm),
-             ("format", args.judge_format), ("since", args.since)) if v]
+             ("format", args.judge_format), ("since", args.since),
+             ("until", args.until)) if v]
     label = f"  [{', '.join(bits)}]" if bits else ""
     report(rows, untimed, label)
 
