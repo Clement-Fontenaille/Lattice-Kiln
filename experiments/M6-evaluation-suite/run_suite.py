@@ -314,6 +314,11 @@ def main():
                          "this exact setup, wherever they were produced. --resume "
                          "alone only sees this results directory, so a rep another "
                          "experiment already paid for would be run again.")
+    ap.add_argument("--work", default=None,
+                    help="a JSON file of [{task, rep}, ...] to run exactly, with "
+                         "each row labelled with the rep given. This is how a "
+                         "pool worker hands over a claimed batch: the pool owns "
+                         "the rep numbers, so the runner must not invent its own.")
     ap.add_argument("--params-any", nargs="*", default=[],
                     help="param names to treat as `any` when asking the store "
                          "what it has, e.g. --params-any num_ctx. Affects "
@@ -356,14 +361,24 @@ def main():
             print(f"store already holds {sum(held.values())} rep(s) across "
                   f"{len(held)} task(s) for this setup", flush=True)
 
-    total = len(tasks) * args.reps
+    # A work list replaces the (tasks x reps) cross product entirely: the pool
+    # decided what runs and under which rep number, and nothing here may
+    # second-guess it.
+    if args.work:
+        work = json.loads(Path(args.work).read_text(encoding="utf-8"))
+        by_id = {t["id"]: t for t in tasks}
+        plan_items = [(by_id[w["task"]], int(w["rep"])) for w in work
+                      if w["task"] in by_id]
+    else:
+        plan_items = [(t, r) for t in tasks for r in range(1, args.reps + 1)]
+
+    total = len(plan_items)
     i = 0
-    for task in tasks:
-        for rep in range(1, args.reps + 1):
+    for task, rep in plan_items:
             i += 1
-            if (task["id"], rep) in done:
+            if not args.work and (task["id"], rep) in done:
                 continue
-            if rep <= held.get(task["id"], 0):
+            if not args.work and rep <= held.get(task["id"], 0):
                 continue
             print(f"[{i}/{total}] {task['id']} rep{rep} ({args.arm}) ...", flush=True)
             row = run_task(task, args.arm, rep, cmd, protected)

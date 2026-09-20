@@ -65,6 +65,40 @@ the default and must match it exactly; only `any` waives the comparison. And
 requiring one would refuse everything recorded before today. The rule is
 *known-different blocks, unknown abstains*.
 
+## The pool, and why the queue is not a plan
+
+A declaration is a **request**. A worker is a **pair of hands**. Neither is the
+authority on what should run — the pool is, and it is the only thing both touch.
+
+```bash
+python run_plan.py <declaration.json> --enqueue   # request -> intended work
+python worker.py                                  # drain it
+python worker.py --follow --batch 8               # keep going, batch claims
+```
+
+```
+evalkit_pool/
+  pending/<cell>.<rep>.json   intended, unclaimed
+  claimed/<cell>.<rep>.json   being worked, worker named inside the file
+  done/<cell>.<rep>.json      finished
+```
+
+Rep numbers are reserved at **enqueue** time by exclusive create, so two people
+enqueuing the same declaration produce one set of work rather than two racing
+plans. Workers claim one item at a time, also by exclusive create, then batch
+compatible items into a single `run_suite` invocation — batching is about
+process startup, never about locking. `run_suite --work` takes the claimed
+(task, rep) pairs verbatim: **the pool owns the rep numbers and the runner may
+not invent its own.**
+
+Failure releases rather than completes, so a rep stays reserved and returns to
+pending. A worker that dies without releasing is covered by the lease —
+`pool.reap()` returns anything held longer than it could plausibly still be
+running.
+
+`test_pool_concurrency.py` keeps the five properties honest. Every one of them
+failed at least once while the pool was being built.
+
 ## Queueing the same run twice
 
 Three cases, and they are not the same.

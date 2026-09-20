@@ -1,11 +1,16 @@
-"""Run an experiment from its declaration, executing only the deficit.
+"""Turn a declaration into intended work, or run the deficit directly.
 
-This is the piece that closes the loop. `plan.py` says what is missing;
-this runs exactly that and nothing else, asking the store rather than a
-directory what already exists.
+    python run_plan.py <declaration.json> --enqueue   # into the pool (preferred)
+    python run_plan.py <declaration.json>             # run it here and now
 
-    python run_plan.py <declaration.json>            # run the deficit
-    python run_plan.py <declaration.json> --dry-run  # print the commands
+`--enqueue` is the one to use when anything else might be running. It adds the
+deficit to the pool, where rep numbers are reserved by exclusive create, and
+workers claim from there -- so two people enqueuing the same declaration produce
+one set of work rather than two racing plans. Without it this runs the deficit
+itself, which is fine alone and unsafe alongside a worker.
+
+`plan.py` says what is missing; this acts on exactly that and nothing else,
+asking the store rather than a directory what already exists.
 
 Work is grouped by (arm, model, judge_format), because that is the unit
 `run_suite` takes. Within a group the tasks still needing reps are passed
@@ -62,6 +67,9 @@ def main():
     ap.add_argument("declaration")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--require-recorded", action="store_true")
+    ap.add_argument("--enqueue", action="store_true",
+                    help="put the deficit in the pool instead of running it")
+    ap.add_argument("--pool", default=None)
     args = ap.parse_args()
 
     decl = json.loads(Path(args.declaration).read_text(encoding="utf-8"))
@@ -69,6 +77,40 @@ def main():
     wpath = HERE / "waivers.json"
     waivers = (json.loads(wpath.read_text(encoding="utf-8"))["waivers"]
                if wpath.is_file() else [])
+
+    if args.enqueue:
+        from pool import Pool
+        pool = Pool(Path(args.pool) if args.pool else None)
+        made = 0
+        for cell, query, reps in resolve(decl):
+            mname = next(n for n, m in decl["models"].items()
+                         if m["model"] == cell.model)
+            m = decl["models"][mname]
+            held = store.have(cell, args.require_recorded, waivers,
+                              params_query=query)
+            if held >= reps:
+                continue
+            env = {"LATTICE_BACKEND": m["backend"],
+                   "LATTICE_EVAL_MODEL": m["model"],
+                   "LATTICE_JUDGE_FORMAT": cell.judge_format,
+                   "LATTICE_RESULTS_SUBDIR": decl.get(
+                       "results_subdir_template",
+                       "../{experiment}/results/{model}_{format}").format(
+                           experiment=Path(args.declaration).parent.name,
+                           model=mname, format=cell.judge_format)}
+            for k, v in (m.get("params") or {}).items():
+                if v == ANY:
+                    continue
+                if k == "think":
+                    env["LATTICE_THINK"] = "1" if v else "0"
+                elif k == "min_predict":
+                    env["LATTICE_MIN_PREDICT"] = str(v)
+            made += len(pool.enqueue(cell, reps, env=env, held=held,
+                                     requested_by=decl.get("name", "unnamed")))
+        print(f"{decl.get('name','experiment')}\n")
+        print(f"enqueued {made} item(s) -> {pool.counts()}")
+        print("\nrun `python worker.py` (as many as the host can feed) to work it")
+        return
 
     # deficit per (arm, model-name, format): which tasks, and to what depth
     groups: dict[tuple, dict] = defaultdict(lambda: {"tasks": {}, "reps": 0})
