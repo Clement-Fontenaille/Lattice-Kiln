@@ -19,7 +19,22 @@ Reps are draws from a cell, so `rep` is not part of cell identity.
     prompt_sha      sha256 of the effective prompts that arm will send
     backend         ollama | llamacpp
     model           the model tag
-    params          think, min_predict, num_ctx, temperature
+    params          the EFFECTIVE generation settings. A default expands to
+                    the concrete value it had, so a cell is always a complete
+                    statement of what ran -- never "whatever the default was
+                    that week".
+
+A cell is a fact; a declaration is a query, and only the query may be vague.
+A declaration may give a param the value `"any"`, which means two different
+things on the two sides:
+
+    running   -> use the ambient default, and record the concrete result
+    matching  -> accept a stored row whatever value it has there
+
+That is what keeps num_ctx honest without making it tyrannical. An experiment
+that does not care writes `"num_ctx": "any"` and reuses rows recorded at 16384
+and at 8192 alike; one that does care states a value and gets exactly it. The
+difference is declared by the experiment rather than guessed by the key.
     judge_format    decision_first | reason_first
 
 `model_digest` is recorded but is NOT part of identity, for a reason worth
@@ -57,6 +72,11 @@ _M7_ARMS = {"m7", "m7b", "m7c", "m7e", "m7f", "judge_staged", "judge_anchored",
             "judge_fullctx"}
 _M6_ARM_FILES = {"baseline": "run_suite.py", "monolith": "run_suite.py",
                  "dloop": "m6_arms.py", "staged": "m6_arms.py"}
+
+
+ANY = "any"
+"""Declaration-only. In a query it matches any recorded value; when a run is
+actually executed it resolves to the ambient default. Never appears in a Cell."""
 
 
 def _sha(text: str) -> str:
@@ -170,9 +190,15 @@ class Cell:
     @staticmethod
     def make(*, task: str, arm: str, backend: str, model: str,
              judge_format: str = "decision_first", params: dict | None = None,
+             defaults: dict | None = None,
              fixture_hash: str | None = None, arm_hash: str | None = None,
              prompt_hash: str | None = None) -> "Cell":
-        p = dict(params or {})
+        # Effective values, with ANY and anything unstated expanded from the
+        # ambient defaults. A cell never carries a wildcard.
+        d = dict(defaults or {})
+        p = dict(d)
+        for k, v in (params or {}).items():
+            p[k] = d.get(k) if v == ANY else v
         return Cell(
             fixture_sha=fixture_hash or fixture_sha(task),
             task=task, arm=arm,
@@ -188,6 +214,24 @@ class Cell:
 
     def as_dict(self) -> dict:
         return asdict(self)
+
+
+def params_match(stored: str, query: dict) -> bool:
+    """Per-key, so one wildcard does not wave through the whole dict.
+
+    A key the query omits must still match exactly: omission means "the default,
+    expanded", not "don't care". Only ANY means don't care.
+    """
+    have = json.loads(stored or "{}")
+    for k, want in query.items():
+        if want == ANY:
+            continue
+        if have.get(k) != want:
+            return False
+    for k in have:
+        if k not in query:
+            return False
+    return True
 
 
 def compatible(a: Cell, b: Cell, waivers: list[dict] | None = None) -> tuple[bool, str]:

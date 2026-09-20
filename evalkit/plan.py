@@ -37,17 +37,26 @@ def all_tasks() -> list[str]:
 
 
 def _client_defaults() -> dict:
-    """Settings a run would pick up without being told, so a declaration need
-    not restate them. Mirrors run_suite._eval_params: the client is what turns
-    an unset variable into a default, and the default is part of the setup."""
+    """The ambient defaults a run would pick up here and now.
+
+    Not injected into the key -- passed as `defaults`, so a declared value equal
+    to one of them collapses to unspecified and matches rows that never stated
+    it. Only a deliberate departure survives into the cell.
+    """
     import sys as _s
     _s.path.insert(0, str(ROOT / "experiments" / "M4-ephemeral-processors"))
     import ollama_client as _oc
     return {"num_ctx": _oc.DEFAULT_NUM_CTX}
 
 
-def resolve(decl: dict) -> list[tuple[Cell, int]]:
-    """Declaration -> concrete cells bound to the current environment."""
+def resolve(decl: dict) -> list[tuple[Cell, dict, int]]:
+    """Declaration -> (cell to run, params query, target reps).
+
+    The cell is concrete: ANY and anything unstated expand to the ambient
+    default, because that is what a run would actually use. The query keeps ANY
+    as written, because that is what the experiment said it does not care
+    about.
+    """
     defaults = _client_defaults()
     tasks = decl.get("tasks") or all_tasks()
     reps = int(decl["reps"])
@@ -55,11 +64,14 @@ def resolve(decl: dict) -> list[tuple[Cell, int]]:
     for arm in decl["arms"]:
         for mname, m in decl["models"].items():
             for fmt in decl["judge_formats"]:
+                declared = m.get("params", {})
+                query = {**{k: v for k, v in defaults.items() if k not in declared},
+                         **declared}
                 for task in tasks:
                     out.append((Cell.make(
                         task=task, arm=arm, backend=m["backend"],
                         model=m["model"], judge_format=fmt,
-                        params={**defaults, **m.get("params", {})}), reps))
+                        params=declared, defaults=defaults), query, reps))
     return out
 
 
@@ -115,8 +127,9 @@ def main():
     print(f"store holds {len(summary)} cells\n")
 
     group = defaultdict(lambda: {"need": 0, "have": 0, "cells": 0, "short": []})
-    for cell, reps in cells:
-        have = min(store.have(cell, args.require_recorded, waivers), reps)
+    for cell, query, reps in cells:
+        have = min(store.have(cell, args.require_recorded, waivers,
+                              params_query=query), reps)
         key = (cell.arm, cell.model, cell.judge_format)
         g = group[key]
         g["cells"] += 1

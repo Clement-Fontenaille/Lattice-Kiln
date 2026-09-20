@@ -126,16 +126,29 @@ for _mod in ("m7_workflow", "m7b_workflow", "m7c_workflow", "m7e_workflow", "m7f
 # --------------------------------------------------------------- driver
 
 def _eval_params() -> dict:
-    """The generation settings actually in force, read off the client rather
-    than off the environment -- the client is what turns an unset variable into
-    a default, and the default is part of the setup."""
+    """Generation settings that were EXPLICITLY SET, and only those.
+
+    num_ctx is deliberately absent. It is a ceiling, not a setting: it moved
+    16384 -> 8192 on 2026-09-15 while observed usage stayed around 900-950
+    tokens per call and nothing was ever seen to truncate. Keying on it refuses
+    valid rows for a bound that never bound -- the same over-strictness as
+    keying on a suite version when two fixtures of thirty-four changed. It is
+    recorded in _eval_meta() instead, so an analysis that suspects truncation
+    can still check it.
+    """
     import ollama_client as _oc
-    p = {"num_ctx": _oc.DEFAULT_NUM_CTX}
+    p = {}
     if _oc.THINK is not None:
         p["think"] = _oc.THINK
     if _oc.MIN_PREDICT:
         p["min_predict"] = _oc.MIN_PREDICT
     return p
+
+
+def _eval_meta() -> dict:
+    """Recorded, not keyed: the effective settings a run actually had."""
+    import ollama_client as _oc
+    return {"num_ctx": _oc.DEFAULT_NUM_CTX}
 
 
 def _cell_for(task_id: str, arm_name: str):
@@ -146,7 +159,7 @@ def _cell_for(task_id: str, arm_name: str):
                      model=_oc.DEFAULT_MODEL,
                      judge_format=os.environ.get("LATTICE_JUDGE_FORMAT",
                                                  "decision_first"),
-                     params=_eval_params())
+                     params=_eval_params(), defaults=_eval_meta())
 
 
 def _setup_of(task_id: str, arm_name: str):
@@ -235,6 +248,7 @@ def run_task(task, arm_name, rep, cmd, protected):
         # file dates instead of read off the data.
         "suite_version": SUITE_VERSION,
         "setup": _setup_of(task["id"], arm_name),
+        "setup_meta": _eval_meta(),
         "wall_s": wall, "tail": fin["out"],
     }
     shutil.rmtree(ws, ignore_errors=True)
@@ -330,7 +344,8 @@ def main():
             if _STORE is not None:
                 try:
                     _STORE.add(_cell_for(task["id"], args.arm), [row],
-                               provenance="recorded", source="run_suite")
+                               provenance="recorded", source="run_suite",
+                               meta=_eval_meta())
                 except Exception as e:  # noqa: BLE001
                     print(f"      !! evalkit store write failed: {e!r}", flush=True)
             print(f"      {row['terminal']} base={row['baseline_sub']} final={row['final_sub']} "

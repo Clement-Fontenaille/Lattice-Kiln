@@ -1,20 +1,34 @@
 {
   "name": "E8 - does the judge decide before it reasons?",
   "reps": 5,
-  "arms": ["judge_anchored", "judge_bypass", "judge_caveat"],
-  "judge_formats": ["decision_first", "reason_first"],
+  "arms": [
+    "judge_anchored",
+    "judge_bypass",
+    "judge_caveat"
+  ],
+  "judge_formats": [
+    "decision_first",
+    "reason_first"
+  ],
   "models": {
     "qwen": {
       "backend": "ollama",
       "model": "qwen2.5-coder:7b-instruct-q4_K_M",
-      "params": {}
+      "params": {
+        "num_ctx": "any"
+      }
     },
     "nemo": {
       "backend": "ollama",
       "model": "nemotron-gpu",
-      "params": {"think": false, "min_predict": 400}
+      "params": {
+        "think": false,
+        "min_predict": 400,
+        "num_ctx": "any"
+      }
     }
   },
   "_tasks": "omitted, so the whole suite. baseline and monolith are deliberately absent from `arms`: neither has a judge stage, so neither can move with this variable, and they are read from the store as the floor and the no-judge reference rather than re-run.",
-  "_measure": "Rejections of check-passing candidates -- candidates whose deterministic check was already full and whose verdict is not_met. Earned score over the non-floor tasks is the downstream consequence, reported beside it."
+  "_measure": "Rejections of check-passing candidates -- candidates whose deterministic check was already full and whose verdict is not_met. Earned score over the non-floor tasks is the downstream consequence, reported beside it.",
+  "_num_ctx_any": "E8 varies the judge's output order, not the context ceiling. `any` means: use the ambient default when running, and match a recorded row whatever ceiling it had. That readmits judge_anchored's qwen rows, which were recorded at 16384 before the 2026-09-15 cut, without pretending 16384 and 8192 are the same number. If truncation is ever suspected, the cells still say which is which."
 }

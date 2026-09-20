@@ -51,7 +51,7 @@ class Store:
     # ---------------------------------------------------------------- writing
 
     def add(self, cell: Cell, rows: list[dict], provenance: str,
-            source: str = "") -> int:
+            source: str = "", meta: dict | None = None) -> int:
         """Add rows for one cell. Returns how many were new.
 
         De-duplicates on (cell_id, rep, row_sha), so re-ingesting a tree is a
@@ -74,6 +74,8 @@ class Store:
                 rf.write(json.dumps(r, default=str) + "\n")
                 entry = {"cell_id": cell.id, "rep": rep, "row_sha": sha,
                          "provenance": provenance, "source": source,
+                         # recorded, never keyed -- see setup_key on `params`
+                         "meta": meta or {},
                          **cell.as_dict()}
                 xf.write(json.dumps(entry) + "\n")
                 if self._cache is not None:
@@ -111,15 +113,30 @@ class Store:
         return agg
 
     def have(self, cell: Cell, require_recorded: bool = False,
-             waivers: list[dict] | None = None) -> int:
+             waivers: list[dict] | None = None,
+             params_query: dict | None = None) -> int:
         """How many reps this store holds for this cell.
 
-        Exact on cell id when there are no waivers, which is the fast and strict
-        path. With waivers it compares field by field through `compatible()`, so
-        a recorded equivalence -- "this arm_sha is the same behaviour as that
-        one, here is why" -- can admit rows the hash alone would refuse. The
-        waiver is the artifact; this function does not decide anything.
+        Exact on cell id when there are no waivers and no wildcards, which is
+        the fast and strict path. Otherwise it compares field by field:
+        `compatible()` applies recorded waivers, and `params_query` -- the
+        declaration's own params, which may contain ANY -- decides the params
+        per key. A cell is always concrete; only the query may be vague.
         """
+        if params_query is not None:
+            from setup_key import compatible, params_match
+            reps = set()
+            for e in self._index_entries():
+                if require_recorded and e["provenance"] != "recorded":
+                    continue
+                other = Cell(**{k: e[k] for k in Cell.__dataclass_fields__})
+                # every field but params, via compatible(); params via the query
+                probe = Cell(**{**cell.as_dict(), "params": other.params})
+                ok, _ = compatible(probe, other, waivers)
+                if ok and params_match(other.params, params_query):
+                    reps.add(e["rep"])
+            return len(reps)
+
         if not waivers:
             reps = {e["rep"] for e in self._index_entries()
                     if e["cell_id"] == cell.id

@@ -33,6 +33,34 @@ are draws from a cell, so `rep` is not part of cell identity.
 | `backend`, `model`, `params` | `think`, `min_predict`, `num_ctx` |
 | `judge_format` | `decision_first` \| `reason_first` |
 
+## A cell is a fact; a declaration is a query
+
+A cell never carries a wildcard. `params` holds what actually ran, so a default
+expands to its concrete value rather than standing for "whatever was usual that
+week". That is strict on purpose: `num_ctx` was 16384 for the arms queued before
+the 2026-09-15 cut and 8192 after, and a cell says which.
+
+Vagueness belongs to the experiment, not the key. A declaration may give a param
+the value **`"any"`**, which means two different things on the two sides:
+
+| | |
+|---|---|
+| **running** | use the ambient default, and record the concrete result |
+| **matching** | accept a stored row whatever value it has there |
+
+E8 varies the judge's output order, not the context ceiling, so it declares
+`"num_ctx": "any"` and reuses rows from either side of that cut. The effect is
+measurable rather than rhetorical:
+
+| E8 declaration | `judge_anchored`/qwen/`decision_first` | total reuse |
+|---|---|---|
+| silent — default expands to 8192 | 0 of 170 | 15% |
+| `"num_ctx": "any"` | 170 of 170 | 23% |
+
+Omission is **not** `any`. A param the declaration leaves out still expands to
+the default and must match it exactly; only `any` waives the comparison. And
+`any` is per key — one wildcard does not wave through the rest of the dict.
+
 `model_digest` is recorded but **not** in the key: legacy rows have none, and
 requiring one would refuse everything recorded before today. The rule is
 *known-different blocks, unknown abstains*.

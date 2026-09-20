@@ -140,17 +140,21 @@ def migrate(entry: dict, store: Store, dry: bool) -> tuple[int, int, list[str]]:
             frev = None if sv == suite_version() else entry["fixture_rev"]
             for task in sorted({r["task"] for r in group}):
                 f_sha = fixture_sha(task) if frev is None else fixture_sha_at(frev, task)
+                # Effective params for THIS arm: num_ctx was 16384 for the
+                # arms queued before the 2026-09-15 cut, and the cell records
+                # what ran rather than what was typical.
+                eff = entry.get("arm_params", {}).get(arm, entry["params"])
                 cell = Cell.make(
                     task=task, arm=arm, backend=entry["backend"],
                     model=entry["model"], judge_format=entry["judge_format"],
-                    params=entry.get("arm_params", {}).get(arm, entry["params"]),
+                    params=eff, defaults=eff,
                     fixture_hash=f_sha,
                     arm_hash=a_sha, prompt_hash=p_sha)
                 trows = [r for r in group if r["task"] == task]
                 cells += 1
                 if not dry:
                     added += store.add(cell, trows, provenance="declared",
-                                       source=entry["tree"])
+                                       source=entry["tree"], meta={})
                 else:
                     added += len(trows)
     return cells, added, notes
