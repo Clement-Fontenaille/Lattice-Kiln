@@ -156,19 +156,37 @@ def report(rows: list[dict], untimed: int, label: str) -> None:
         print(f"{c:>7} {len(rs):>5} {tok:>9,} {tok/len(rs):>8,.0f} "
               f"{decode:>9.1f} {suite:>10,.0f} {gap:>6.0f} {span/60:>8.1f}")
 
-    if len(buckets) > 1:
-        lo, hi = min(buckets), max(buckets)
+    # Compare only buckets substantial enough to mean something. A worker
+    # between batches leaves one or two reps briefly alone, and that sliver
+    # lands in a lower bucket as though it were a measured condition: at three
+    # workers it produced "x3.34 suite" off a SINGLE rep. A ratio against a
+    # tail artifact reads exactly like a result, so it is not printed at all.
+    MIN = 10
+    solid = sorted(c for c in buckets if len(buckets[c]) >= MIN)
+    thin = sorted(c for c in buckets if len(buckets[c]) < MIN)
+    if len(solid) > 1:
+        lo, hi = solid[0], solid[-1]
+
         def rate(c, key):
             rs = buckets[c]
             tok = sum(r["gen_tok"] for r in rs)
             if key == "suite":
-                s = union_seconds([(r["t_start"], r["t_end"]) for r in rs])
-                return 60 * tok / s if s else 0.0
+                sp = union_seconds([(r["t_start"], r["t_end"]) for r in rs])
+                return 60 * tok / sp if sp else 0.0
             g = sum(r["gen_s"] for r in rs)
             return tok / g if g else 0.0
-        print(f"\n{hi} workers vs {lo}: "
+
+        print()
+        print(f"{hi} workers vs {lo}: "
               f"suite x{rate(hi,'suite')/rate(lo,'suite'):.2f}, "
               f"decode per stream x{rate(hi,'decode')/rate(lo,'decode'):.2f}")
+    elif len(buckets) > 1:
+        print()
+        print(f"no comparison: only one bucket has {MIN}+ reps")
+    if thin:
+        which = ", ".join(f"{c} worker(s): {len(buckets[c])} rep(s)" for c in thin)
+        print(f"too thin to compare ({which}) -- a worker between batches "
+              f"leaves reps briefly alone")
 
     if untimed:
         print(f"\n{untimed} rep(s) skipped: recorded before the meter existed")
