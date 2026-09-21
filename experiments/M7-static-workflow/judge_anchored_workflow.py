@@ -651,6 +651,21 @@ def run_m7(objective: str, ws: Path) -> str:
                       "check_dims": fin["dims"], "escalation_payload": payload})
         return terminal
     finally:
+        # Which setup produced this record. Without these the file is a
+        # pool of verdicts from every model and both judge formats,
+        # indistinguishable: STAGE_LOG is a fixed per-arm path and ignores
+        # LATTICE_RESULTS_SUBDIR, so E8 -- whose entire variable IS the
+        # judge format -- could not have separated its own primary
+        # measure. `t_end` additionally lets a record be joined to its
+        # store row where the stamps are absent, as they are on
+        # everything written before 2026-09-21.
+        stage.update({
+            "model": os.environ.get("LATTICE_EVAL_MODEL"),
+            "judge_format": os.environ.get("LATTICE_JUDGE_FORMAT",
+                                           "decision_first"),
+            "results_subdir": os.environ.get("LATTICE_RESULTS_SUBDIR"),
+            "t_end": time.time(),
+        })
         STAGE_LOG.parent.mkdir(parents=True, exist_ok=True)
         with STAGE_LOG.open("a", encoding="utf-8") as fh:
             fh.write(json.dumps(stage) + "\n")
