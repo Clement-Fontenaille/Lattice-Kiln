@@ -27,26 +27,46 @@ of condition assessments, too rare to explain the rate — so it was a cause to
 test, not a demonstrated one. E8 tests the more general form: does committing to
 a verdict before writing the reason for it change the verdict?
 
-## Result 1 — the judge does not refuse unsound requests, in eight cells of eleven
+## Result 1 — the engineer refuses correctly; the judge then punishes it for doing so
 
-The suite contains tasks whose correct outcome is to refuse the work. On those,
-the right verdict is `unsound_request`:
+This is the largest result in the experiment, and the first version of this
+finding got it half wrong by looking only at the judge.
 
-| arm | model | format | n | right |
+**The engineer stage refuses unsound requests, at the same rate on both models:**
+
+| model | format | false-premise reps | declined correctly |
+|---|---|---|---|
+| nemo | `decision_first` | 108 | 83% |
+| nemo | `reason_first` | 90 | 83% |
+| qwen | `decision_first` | 90 | 83% |
+| qwen | `reason_first` | 97 | 85% |
+
+So the capability is present upstream and is not the bottleneck. What happens
+next is: on tasks where refusing was the correct engineering move, and where the
+engineer did refuse (empty diff, deterministic check still full), the judge
+returns `not_met` — **punishing the correct refusal**:
+
+| arm | model | format | n | judge wrong |
+|---|---|---|---|---|
+| `judge_anchored` | qwen | `reason_first` | 15 | 93% |
+| `judge_caveat` | qwen | `decision_first` | 21 | 86% |
+| `judge_caveat` | qwen | **`reason_first`** | 55 | **45%** |
+
+And the judge's own final verdict almost never names the request as unsound:
+
+| arm | model | format | n | called it unsound |
 |---|---|---|---|---|
 | `judge_caveat` | qwen | `reason_first` | 29 | **48%** |
 | `judge_caveat` | qwen | `decision_first` | 24 | 12% |
 | `judge_bypass` | qwen | `reason_first` | 24 | 12% |
 | *the other eight cells* | | | 19–29 | **0%** |
 
-Zero. Not low — zero, in eight of eleven cells, across both models and all three
-arms. This is a **capability floor, not a format effect**, and it is the largest
-single result in the experiment. The judge stage as currently built does not
-detect false premises; it evaluates conditions and reports whether they are met.
-
-It also bears on `50-findings/07`'s census result (3/3 implement an impossible
-`O(log n)`; 0/3 flag it): the failure survives being moved into a dedicated
-judging seat with the conditions laid out explicitly.
+**The failure is located in the judging stage, not in the model's ability to
+spot a bad premise.** That is a different and more actionable claim than "the
+system cannot detect false premises", which is what a judge-only reading gives.
+It also qualifies how `50-findings/07`'s census result (3/3 implement an
+impossible `O(log n)`, 0/3 flag it) should be carried forward: given a dedicated
+engineering stage, refusal happens 83% of the time.
 
 ## Result 2 — one configuration escapes it, and its prompt says why
 
@@ -60,7 +80,9 @@ tokens:
 > evidence for either one.** Decide from the request itself, not from the count
 > of unmet conditions.
 
-**The block is worth 12% under `decision_first` and 48% under `reason_first`.**
+**The block is worth 12% under `decision_first` and 48% under `reason_first`**,
+and it roughly halves the rate at which correct refusals are punished, 86% →
+45%.
 
 The mechanism is ordering-dependent by construction. The caveat tells the judge
 not to infer the verdict from the token column. Under `decision_first` that
@@ -72,28 +94,38 @@ caveat has something to act on while the verdict is still open.
 **The format change did not merely reorder the output. It activated an
 instruction that was already in the prompt and inert.**
 
-## Result 3 — the effect lands exactly where the block says it should
+## Result 3 — the empty-diff split, and why the first version of it said nothing
 
 The caveat block names one case: an empty diff, where every condition reads "no"
-whether the engineer failed or correctly refused. Rejection rate among
-check-passing candidates, split on `diff_empty`:
+whether the engineer failed or correctly refused. Splitting on `diff_empty`
+tests whether the arm's effect lands where its prompt says.
 
-| arm | model | empty: dec → rsn | non-empty: dec → rsn |
-|---|---|---|---|
-| `judge_caveat` | qwen | **89% → 46%** | 58% → 28% |
-| `judge_bypass` | qwen | 100% → – | 46% → 34% |
-| `judge_anchored` | qwen | – → 95% | 94%* → 32% |
-| `judge_caveat` | nemo | 100% → 100% | 18% → 32% |
-| `judge_bypass` | nemo | 100% → 100% | 18% → 22% |
-| `judge_anchored` | nemo | 100% → 100% | 18% → 18% |
+**It does — but only once the split is read in terms of correct and incorrect.**
+The first version of this section reported a rejection *rate* by `diff_empty`
+and was uninterpretable, because it never said whether rejecting an empty diff
+is right. It is two questions with opposite answers:
 
-`judge_caveat` / qwen / `reason_first` is the **only cell in the matrix** where
-empty-diff rejection falls below 89%. Every other cell sits at 95–100%
-regardless of arm, model or format. The prediction was made from the prompt text
-before the split was computed, and it holds.
+| the rep | is `not_met` on an empty diff correct? |
+|---|---|
+| **the request was unsound** (`decline_expected`) | **no** — it punishes a correct refusal |
+| the request was sound | **yes, defensible** — the check passes only because the baseline already did, so the conditions really are unmet |
 
-(*`judge_anchored` / qwen / `decision_first` rests on 31 candidates from 9 reps
-— see Limits.)
+Pooled, the two are indistinguishable, and a correct 100% sits beside a wrong
+100%. That is exactly what the first version printed, and it led to nemotron's
+empty-diff behaviour being presented as the same failure qwen has.
+
+**It is not.** Split:
+
+- **Every nemotron empty-diff candidate falls in the second category** — 18–25
+  per cell, 100% `not_met`, all on tasks where the request was sound. **Correct
+  behaviour, not a defect.**
+- **qwen's fall largely in the first** — and that is where `judge_caveat` +
+  `reason_first` takes the error rate from 86% to 45%, the only cell in the
+  matrix below 86%.
+
+**Correction, recorded because it was published wrong:** the table in the first
+version of this finding showed nemotron at "100% → 100%" alongside qwen's
+89–100% as though they were the same phenomenon. They are opposite ones.
 
 ## Result 4 — on qwen, the format trades one error for the other
 

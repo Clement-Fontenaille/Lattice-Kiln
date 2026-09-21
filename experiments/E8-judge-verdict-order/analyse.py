@@ -30,12 +30,27 @@ Three measures, reported together because the first one alone misleads.
    acceptance, which move in opposite directions under this variable and are
    not interchangeable.
 
-3. THE EMPTY-DIFF SPLIT (added 2026-09-22). judge_caveat is the only arm whose
-   JUDGE prompt carries a block about how to weigh the per-condition tokens,
-   and that block names one case explicitly: an empty diff, where every
-   condition reads "no" whether the engineer failed or correctly refused.
-   Splitting on `diff_empty` tests whether the arm's effect lands where its
-   prompt says it should. It does.
+3. THE EMPTY-DIFF SPLIT (added 2026-09-22, corrected same day). judge_caveat
+   is the only arm whose JUDGE prompt carries a block about how to weigh the
+   per-condition tokens, and that block names one case explicitly: an empty
+   diff, where every condition reads "no" whether the engineer failed or
+   correctly refused. Splitting on `diff_empty` tests whether the arm's effect
+   lands where its prompt says it should.
+
+   The first version of this split reported a rejection RATE and was therefore
+   uninterpretable -- it did not say whether rejecting an empty diff is right.
+   It is not one question but two, and they have opposite answers:
+
+       decline_expected  the request was unsound and doing nothing was the
+                         correct engineering move. `not_met` punishes a correct
+                         refusal and is WRONG; `unsound_request` is right.
+       otherwise         the check passes only because the baseline already
+                         did. The conditions really are unmet, so `not_met` is
+                         DEFENSIBLE.
+
+   Pooled, the two look identical and a correct 100% sits beside a wrong 100%.
+   Split, nemotron's empty-diff rejections turn out to be entirely the second
+   kind and are not a failure at all, while qwen's are largely the first.
 
 WHY THIS NEEDS A JOIN AT ALL
 ----------------------------
@@ -196,7 +211,8 @@ def attribute(index: dict, records: list[dict]):
 
 def collect(index, records):
     rej = collections.defaultdict(lambda: {"full": 0, "rej": 0, "reps": 0})
-    split = collections.defaultdict(lambda: {"full": 0, "rej": 0})
+    split = collections.defaultdict(
+        lambda: {"n": 0, "not_met": 0, "unsound": 0})
     corr = collections.defaultdict(collections.Counter)
     how = None
     for d, m, fmt, row in attribute(index, records):
@@ -211,9 +227,14 @@ def collect(index, records):
             rej[k]["full"] += 1
             bad = c.get("verdict") == "not_met"
             rej[k]["rej"] += bad
-            sk = k + (bool(c.get("diff_empty")),)
-            split[sk]["full"] += 1
-            split[sk]["rej"] += bad
+            # The split needs the task's ground truth, which only the store row
+            # carries; a stamped record with no matching row is skipped here and
+            # still counted in measure 1.
+            if row is not None and c.get("diff_empty"):
+                sk = k + (bool(row.get("decline_expected")),)
+                split[sk]["n"] += 1
+                split[sk]["not_met"] += bad
+                split[sk]["unsound"] += (c.get("verdict") == "unsound_request")
 
         # measure 2 needs ground truth, which only the store row carries
         if row is None or not row.get("run_ok"):
@@ -341,29 +362,44 @@ def report_correctness(corr):
 
 
 def report_split(split):
-    print("3. THE EMPTY-DIFF SPLIT   (rejection rate, by whether anything was written)")
+    print("3. THE EMPTY-DIFF SPLIT   (was rejecting the empty diff correct?)")
     print()
     print("The judge_caveat prompt names this case: on an empty diff every")
     print("condition reads 'no' whether the engineer failed or correctly refused.")
     print()
-    print(f"{'arm':16s} {'model':5s} {'EMPTY diff':>22s}   {'non-empty diff':>22s}")
-    print(f"{'':16s} {'':5s} {'decision':>11}{'reason':>11}   "
-          f"{'decision':>11}{'reason':>11}")
+    print("A. THE REQUEST WAS UNSOUND -- doing nothing was the right move.")
+    print("   `not_met` punishes a correct refusal. Lower is better.")
+    print(f"{'arm':16s} {'model':5s} {'format':15s} {'n':>4} {'not_met':>8} "
+          f"{'unsound':>8} {'judge wrong':>12}")
     print("-" * 74)
-    for arm in ARMS:
-        for m in ("qwen", "nemo"):
-            cells = {}
-            for empty in (True, False):
-                for f in FORMATS:
-                    v = split.get((arm, m, f, empty))
-                    cells[(empty, f)] = (
-                        f"{100*v['rej']/v['full']:.0f}% ({v['full']})"
-                        if v and v["full"] >= MIN_SPLIT else "--")
-            if all(x == "--" for x in cells.values()):
-                continue
-            print(f"{arm:16s} {m:5s} "
-                  f"{cells[(True, FORMATS[0])]:>11}{cells[(True, FORMATS[1])]:>11}   "
-                  f"{cells[(False, FORMATS[0])]:>11}{cells[(False, FORMATS[1])]:>11}")
+    any_a = False
+    for k in sorted(split):
+        if not k[3]:
+            continue
+        c = split[k]
+        n = c["n"]
+        if n < MIN_SPLIT:
+            continue
+        any_a = True
+        print(f"{k[0]:16s} {k[1]:5s} {k[2]:15s} {n:4d} {c['not_met']:8d} "
+              f"{c['unsound']:8d} {100*c['not_met']/n:11.0f}%")
+    if not any_a:
+        print("(no cell reaches the floor)")
+    print()
+    print("B. THE REQUEST WAS SOUND -- the check passes only because the baseline")
+    print("   already did, so the conditions really are unmet and `not_met` is")
+    print("   defensible. A high rate here is NOT a defect.")
+    print(f"{'arm':16s} {'model':5s} {'format':15s} {'n':>4} {'not_met':>8}")
+    print("-" * 58)
+    for k in sorted(split):
+        if k[3]:
+            continue
+        c = split[k]
+        n = c["n"]
+        if n < MIN_SPLIT:
+            continue
+        print(f"{k[0]:16s} {k[1]:5s} {k[2]:15s} {n:4d} "
+              f"{100*c['not_met']/n:7.0f}%")
 
 
 def main():
