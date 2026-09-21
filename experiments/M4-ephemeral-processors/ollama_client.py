@@ -15,6 +15,7 @@ full-context judge arms are the ones most likely to feel it first.
 """
 from __future__ import annotations
 
+import gzip
 import hashlib
 import socket
 import json
@@ -137,14 +138,23 @@ def _transcript_dir() -> Path | None:
     calls under one format and 2% under another, 1,513 reps were on disk, and
     the cause was not recoverable from any of them.
 
-    The trade is not close. A full sweep's transcripts are tens of megabytes
-    against thirty to forty hours of GPU time, so the default is to keep them.
+    The trade is not close, and gzip makes it absurd. Filing by cell groups
+    same-task, same-arm generations into one file, so the ~2.3 KB judge prompt
+    repeats identically down the whole stream: measured at 51x on a realistic
+    cell, which puts a sweep of E8's shape at 68 MiB raw and about 1 MiB on
+    disk, against thirty to forty hours of GPU. Keeping them is the default.
+
+    (That ratio assumes the prompt template dominates, which it does here --
+    only the diff varies between reps of a task. A workload with genuinely
+    distinct prompts per call would compress far less.)
 
         LATTICE_TRANSCRIPT=<dir>   write somewhere else
         LATTICE_TRANSCRIPT=0       off, for a throwaway run
 
     Records are filed under the cell id `run_suite` exports, so they address the
-    same way store rows do and need no heuristic join to be read back.
+    same way store rows do and need no heuristic join to be read back. Read
+    them with `evalkit/transcripts.py`, which tolerates the truncated final
+    member a killed worker leaves behind.
     """
     v = os.environ.get("LATTICE_TRANSCRIPT")
     if v in ("0", "off", "false", "no"):
@@ -165,12 +175,16 @@ def _transcript(prompt: str, g: "Generation") -> None:
         return
     try:
         cell = os.environ.get("LATTICE_CELL") or "uncelled"
-        want = d / f"{cell}.jsonl"
+        want = d / f"{cell}.jsonl.gz"
         if _TSINK_PATH != want:
             if _TSINK is not None:
                 _TSINK.close()
             d.mkdir(parents=True, exist_ok=True)
-            _TSINK, _TSINK_PATH = want.open("a", encoding="utf-8"), want
+            # Append mode on gzip produces a multi-member file, which is
+            # valid and readable straight through. compresslevel 6 costs
+            # microseconds against a generation that costs seconds.
+            _TSINK = gzip.open(want, "at", encoding="utf-8", compresslevel=6)
+            _TSINK_PATH = want
         _TSINK.write(json.dumps({
             "t": time.time(),
             "cell": os.environ.get("LATTICE_CELL"),
