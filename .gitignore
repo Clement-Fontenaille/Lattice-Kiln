@@ -39,3 +39,6 @@ __pycache__/
 
 ### Queue runner operational logs (regenerated, never read by analysis scripts) ###
 experiments/**/queue*.log
+
+# raw generation transcripts are large and regenerate per run
+evalkit_store/transcripts/

@@ -174,6 +174,14 @@ def _setup_of(task_id: str, arm_name: str):
 def run_task(task, arm_name, rep, cmd, protected):
     ws = fresh_ws(task)
     base = score(ws, cmd)          # always the complete check
+    # Name the cell this rep belongs to before the arm runs, so the client can
+    # file its raw generations under it. Without this the transcript is a loose
+    # pile that has to be joined back heuristically -- and this session spent
+    # most of itself learning what a heuristic join costs.
+    _c = _cell_for(task["id"], arm_name)
+    if _c is not None:
+        os.environ["LATTICE_CELL"] = _c.id
+    os.environ["LATTICE_REP"] = str(rep)
     meter_reset()
     t_start = time.time()
     t0 = time.monotonic()
@@ -205,6 +213,8 @@ def run_task(task, arm_name, rep, cmd, protected):
         os.environ.pop("M6_WORKER_VIEW", None)
         os.environ.pop("M6_TASK", None)
         os.environ.pop("M6_REP", None)
+        os.environ.pop("LATTICE_CELL", None)
+        os.environ.pop("LATTICE_REP", None)
     wall = round(time.monotonic() - t0, 1)
     t_end = time.time()
     used = meter_read()

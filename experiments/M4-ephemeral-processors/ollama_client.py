@@ -120,49 +120,72 @@ def meter_read() -> dict:
     return dict(_METER)
 
 
-TRANSCRIPT = os.environ.get("LATTICE_TRANSCRIPT")
-"""Directory for raw generation transcripts, or unset for none.
+def _transcript_dir() -> Path | None:
+    """Where raw generations go. ON by default, and that default is the point.
 
-Nothing in this project stored what a model actually said. Stage records keep
-only parsed fields, store rows keep scores and timings, and the M2 event log
-records effects by reference. So a generation was discarded the moment it was
-parsed, and when parsing FAILED there was nothing left at all -- which is
-exactly the case worth looking at. Nemotron's judge produced no JSON in 18% of
-calls under one format and 2% under another, and the cause is undiagnosable
-from anything on disk.
+    Nothing in this project stored what a model actually said. Stage records
+    keep parsed fields only, store rows keep scores and timings, and the M2
+    event log records effects by reference -- so a generation was discarded the
+    moment it was parsed, and when parsing FAILED all of those came back empty
+    and nothing survived at all.
 
-Off by default because it is bulky and most runs never need it. Turn it on for
-any sweep whose outputs will be argued about:
+    That breaks the store's whole premise. A result gathered for one experiment
+    is supposed to be reusable by another, but a row can only answer questions
+    whose answers were parsed out when it was written. Every NEW question about
+    an old run then needs a re-run, which is the cost the store exists to avoid.
+    This session hit it directly: nemotron's judge produced no JSON in 18% of
+    calls under one format and 2% under another, 1,513 reps were on disk, and
+    the cause was not recoverable from any of them.
 
-    LATTICE_TRANSCRIPT=<dir> python run_suite.py ...
+    The trade is not close. A full sweep's transcripts are tens of megabytes
+    against thirty to forty hours of GPU time, so the default is to keep them.
 
-One file per process, so concurrent workers do not interleave.
-"""
+        LATTICE_TRANSCRIPT=<dir>   write somewhere else
+        LATTICE_TRANSCRIPT=0       off, for a throwaway run
+
+    Records are filed under the cell id `run_suite` exports, so they address the
+    same way store rows do and need no heuristic join to be read back.
+    """
+    v = os.environ.get("LATTICE_TRANSCRIPT")
+    if v in ("0", "off", "false", "no"):
+        return None
+    if v:
+        return Path(v)
+    return Path(__file__).resolve().parents[2] / "evalkit_store" / "transcripts"
+
+
 _TSINK = None
+_TSINK_PATH = None
 
 
 def _transcript(prompt: str, g: "Generation") -> None:
-    global _TSINK
-    if not TRANSCRIPT:
+    global _TSINK, _TSINK_PATH
+    d = _transcript_dir()
+    if d is None:
         return
     try:
-        if _TSINK is None:
-            d = Path(TRANSCRIPT)
+        cell = os.environ.get("LATTICE_CELL") or "uncelled"
+        want = d / f"{cell}.jsonl"
+        if _TSINK_PATH != want:
+            if _TSINK is not None:
+                _TSINK.close()
             d.mkdir(parents=True, exist_ok=True)
-            _TSINK = (d / f"gen_{socket.gethostname()}_{os.getpid()}.jsonl").open(
-                "a", encoding="utf-8")
+            _TSINK, _TSINK_PATH = want.open("a", encoding="utf-8"), want
         _TSINK.write(json.dumps({
             "t": time.time(),
-            "model": g.model,
+            "cell": os.environ.get("LATTICE_CELL"),
+            "rep": os.environ.get("LATTICE_REP") or os.environ.get("M6_REP"),
             "task": os.environ.get("M6_TASK"),
-            "rep": os.environ.get("M6_REP"),
+            "runner": f"{socket.gethostname()}-{os.getpid()}",
+            "model": g.model,
             "judge_format": os.environ.get("LATTICE_JUDGE_FORMAT"),
             "prompt_sha": hashlib.sha256(prompt.encode("utf-8")).hexdigest()[:16],
+            "prompt": prompt,
             "prompt_tok": g.prompt_eval_count,
             "eval_count": g.eval_count,
             "done_reason": g.raw.get("done_reason"),
             "text": g.text,
-            "thinking": (g.raw.get("thinking") or "")[:2000],
+            "thinking": g.raw.get("thinking") or "",
         }) + "\n")
         _TSINK.flush()
     except Exception:  # noqa: BLE001
