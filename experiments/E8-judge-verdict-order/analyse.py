@@ -1,14 +1,41 @@
-"""E8's primary measure: rejections of check-passing candidates, per cell.
+"""E8: what changes when the judge states its reasons before its verdict.
 
-    python analyse.py                 # the measure, with the join self-validated
+    python analyse.py                 # all three measures, join self-validated
     python analyse.py --validate      # only the join's accuracy against truth
     python analyse.py --unresolved    # what could not be attributed, and why
 
-A rejection is a judge candidate whose deterministic check was already full
-(`check_full`) and whose verdict is nonetheless `not_met`. The rate is over
-check-passing candidates, not over reps: a rep may put several candidates to
-the judge, and a format that changes how many candidates survive to be judged
-would otherwise move the denominator for a reason unrelated to the verdict.
+Three measures, reported together because the first one alone misleads.
+
+1. REJECTIONS OF CHECK-PASSING CANDIDATES (PROTOCOL.md's primary measure).
+   A candidate whose deterministic check was already full (`check_full`) and
+   whose verdict is nonetheless `not_met`. Rate over check-passing candidates,
+   not over reps: a rep may put several candidates to the judge, and a format
+   that changes how many survive to be judged would otherwise move the
+   denominator for a reason unrelated to the verdict.
+
+2. CORRECT CHOICE (added 2026-09-22). Measure 1 counts every `not_met` on
+   check-passing work as a defect, and some rejections are right -- the
+   deterministic check is not the whole truth, since structural dimensions are
+   non-gating (E0 defect 1). So this asks the question measure 1 only appears
+   to: per rep, did the judge's FINAL verdict match what was actually
+   delivered?
+
+       normal task        truth = objective_pass (gate AND every structural
+                          dimension). Correct = `met` when true, `not_met`
+                          when false.
+       false-premise task the right call is to refuse the work outright, so
+                          correct = `unsound_request`.
+
+   It splits measure 1's single number into false rejection and false
+   acceptance, which move in opposite directions under this variable and are
+   not interchangeable.
+
+3. THE EMPTY-DIFF SPLIT (added 2026-09-22). judge_caveat is the only arm whose
+   JUDGE prompt carries a block about how to weigh the per-condition tokens,
+   and that block names one case explicitly: an empty diff, where every
+   condition reads "no" whether the engineer failed or correctly refused.
+   Splitting on `diff_empty` tests whether the arm's effect lands where its
+   prompt says it should. It does.
 
 WHY THIS NEEDS A JOIN AT ALL
 ----------------------------
@@ -30,18 +57,17 @@ while run_suite times the whole arm call, so the two differ by 0.0-0.3s almost
 always, and exact matching discarded most true pairs. Worse, a key stays
 ambiguous precisely when both formats produced the same terminal for the same
 task and rep -- the agreement case -- so dropping unresolved records removed
-evidence of the formats behaving alike and manufactured differences. It put
-nemotron's judge_bypass at +22.7 points when the answer is +4.3.
+evidence of the formats AGREEING and manufactured differences. It put
+nemotron's judge_bypass at +22.7 points where the answer is +4.3.
 
-A 0.5s tolerance fixes both. Validated against the 856 records that carry real
-stamps, holding those stamps back and asking the join to recover them:
+A 0.5s tolerance plus call-count agreement fixes both, and `--validate` proves
+it rather than asserting it: the records that carry real stamps have them held
+back, and the join is asked to recover them. At 2026-09-22: 94.2% resolved, 0
+wrong, 100.00% accurate among resolved.
 
-    94.2% resolved | 0 wrong | 100.00% accurate among resolved
-
-`--validate` re-runs that check. It is not decoration: the join is the only
-reason the pre-2026-09-21 rows are usable, and a change to the suite, the store
-or the workflows could silently break it. If accuracy is not 100%, no number
-below this line can be trusted.
+That check runs on every invocation. The join is the only thing making the
+older rows usable, and a change to the suite, the store or the workflows could
+break it silently.
 
 UNRESOLVED RECORDS ARE NOT A RESIDUAL
 -------------------------------------
@@ -50,9 +76,9 @@ stamped ones, because the file also holds runs from M7 experiments that predate
 the store entirely. Those are correctly excluded. But the loss is uneven, and
 one cell is destroyed by it: judge_anchored / qwen / decision_first resolves 9
 reps out of 170 stored, because those rows were migrated from older M7 runs by
-`seed_from_existing.py` and their stage records do not correspond. Cells below
-`MIN_CANDIDATES` are withheld rather than printed with a wide interval, because
-a rate on 31 candidates formats exactly like a rate on 400.
+`seed_from_existing.py` and their stage records do not correspond. Cells under
+the floors below are withheld rather than printed, because a rate on 31
+candidates formats exactly like a rate on 400.
 """
 from __future__ import annotations
 
@@ -73,15 +99,24 @@ M7 = ROOT / "experiments" / "M7-static-workflow"
 ARMS = ("judge_anchored", "judge_bypass", "judge_caveat")
 FORMATS = ("decision_first", "reason_first")
 WALL_TOL_S = 0.5
-MIN_CANDIDATES = 50
+MIN_CANDIDATES = 50      # measure 1
+MIN_REPS = 40            # measure 2, normal tasks
+MIN_DECLINE = 15         # measure 2, false-premise tasks
+MIN_SPLIT = 15           # measure 3
 
 
 def short(model: str) -> str:
     return "nemo" if "nemo" in model else "qwen"
 
 
+def ci(hits: int, n: int) -> tuple[float, float]:
+    p = hits / n
+    se = math.sqrt(p * (1 - p) / n)
+    return 100 * max(0.0, p - 1.96 * se), 100 * min(1.0, p + 1.96 * se)
+
+
 def store_index() -> dict:
-    """(arm, task, rep, terminal) -> candidate store rows."""
+    """(arm, task, rep, terminal) -> candidate store rows, tagged with setup."""
     s = Store()
     cells = {}
     with (s.path / "index.jsonl").open(encoding="utf-8") as fh:
@@ -98,9 +133,8 @@ def store_index() -> dict:
             if not line.strip():
                 continue
             r = json.loads(line)
-            out[(e["arm"], r["task"], int(r["rep"]), r.get("terminal"))].append(
-                {"model": e["model"], "fmt": e["judge_format"],
-                 "wall": r.get("wall_s"), "calls": r.get("llm_calls")})
+            r["_model"], r["_fmt"] = e["model"], e["judge_format"]
+            out[(e["arm"], r["task"], int(r["rep"]), r.get("terminal"))].append(r)
     return out
 
 
@@ -119,8 +153,8 @@ def stage_records() -> list[dict]:
     return out
 
 
-def join(index: dict, arm: str, d: dict) -> tuple | None:
-    """(model, judge_format) for a stage record, or None when not certain.
+def join(index: dict, arm: str, d: dict) -> dict | None:
+    """The store row for a stage record, or None when not certain.
 
     None covers two cases deliberately not distinguished by the caller: no
     store row within tolerance, and several rows within tolerance disagreeing
@@ -132,64 +166,204 @@ def join(index: dict, arm: str, d: dict) -> tuple | None:
     if w is None:
         return None
     ok = [r for r in cand
-          if r["wall"] is not None and abs(r["wall"] - w) <= WALL_TOL_S
-          and (r["calls"] is None or c is None or r["calls"] == c)]
-    tags = {(r["model"], r["fmt"]) for r in ok}
-    return tags.pop() if len(tags) == 1 else None
+          if r.get("wall_s") is not None and abs(r["wall_s"] - w) <= WALL_TOL_S
+          and (r.get("llm_calls") is None or c is None or r["llm_calls"] == c)]
+    if len({(r["_model"], r["_fmt"]) for r in ok}) != 1:
+        return None
+    return ok[0]
 
 
-def attribute(index: dict, records: list[dict]) -> tuple[dict, collections.Counter]:
-    t = collections.defaultdict(lambda: {"full": 0, "rej": 0, "reps": 0})
+def attribute(index: dict, records: list[dict]):
+    """Yield (stage record, model short name, judge format, store row or None).
+
+    A stamped record needs no store row for measures 1 and 3, so its row may be
+    None there; measure 2 requires one and skips what it cannot get.
+    """
     how = collections.Counter()
     for d in records:
+        row = join(index, d["_arm"], d)
         if d.get("judge_format") and d.get("model"):
-            tag, how_ = (d["model"], d["judge_format"]), "stamped"
+            model, fmt, how_ = d["model"], d["judge_format"], "stamped"
+        elif row is not None:
+            model, fmt, how_ = row["_model"], row["_fmt"], "joined"
         else:
-            tag = join(index, d["_arm"], d)
-            how_ = "joined" if tag else "unresolved"
-        how[how_] += 1
-        if tag is None:
+            how["unresolved"] += 1
             continue
-        k = (d["_arm"], short(tag[0]), tag[1])
-        t[k]["reps"] += 1
+        how[how_] += 1
+        yield d, short(model), fmt, row
+    yield None, None, None, how
+
+
+def collect(index, records):
+    rej = collections.defaultdict(lambda: {"full": 0, "rej": 0, "reps": 0})
+    split = collections.defaultdict(lambda: {"full": 0, "rej": 0})
+    corr = collections.defaultdict(collections.Counter)
+    how = None
+    for d, m, fmt, row in attribute(index, records):
+        if d is None:
+            how = row
+            break
+        k = (d["_arm"], m, fmt)
+        rej[k]["reps"] += 1
         for c in (d.get("judge_candidates") or []):
-            if c.get("check_full"):
-                t[k]["full"] += 1
-                if c.get("verdict") == "not_met":
-                    t[k]["rej"] += 1
-    return t, how
+            if not c.get("check_full"):
+                continue
+            rej[k]["full"] += 1
+            bad = c.get("verdict") == "not_met"
+            rej[k]["rej"] += bad
+            sk = k + (bool(c.get("diff_empty")),)
+            split[sk]["full"] += 1
+            split[sk]["rej"] += bad
+
+        # measure 2 needs ground truth, which only the store row carries
+        if row is None or not row.get("run_ok"):
+            continue
+        v = (d.get("judge") or {}).get("verdict")
+        if v is None:
+            corr[k]["unparseable"] += 1
+            continue
+        if row.get("decline_expected"):
+            corr[k]["decline_n"] += 1
+            corr[k]["decline_right"] += (v == "unsound_request")
+        else:
+            good = bool(row.get("objective_pass"))
+            corr[k]["n"] += 1
+            corr[k]["truth_good"] += good
+            if good and v == "met":
+                corr[k]["correct_accept"] += 1
+            elif good:
+                corr[k]["FALSE_REJECT"] += 1
+            elif v == "not_met":
+                corr[k]["correct_reject"] += 1
+            else:
+                corr[k]["FALSE_ACCEPT"] += 1
+    return rej, corr, split, how
 
 
-def ci(rej: int, n: int) -> tuple[float, float]:
-    p = rej / n
-    se = math.sqrt(p * (1 - p) / n)
-    return 100 * max(0.0, p - 1.96 * se), 100 * min(1.0, p + 1.96 * se)
-
-
-def validate(index: dict, records: list[dict]) -> bool:
-    """Hold back the real stamps and ask the join to recover them."""
+def validate(index, records) -> bool:
     truth = [d for d in records if d.get("judge_format") and d.get("model")]
     right = wrong = unres = 0
     for d in truth:
-        got = join(index, d["_arm"], d)
-        if got is None:
+        row = join(index, d["_arm"], d)
+        if row is None:
             unres += 1
-        elif got == (d["model"], d["judge_format"]):
+        elif (row["_model"], row["_fmt"]) == (d["model"], d["judge_format"]):
             right += 1
         else:
             wrong += 1
-    n = len(truth)
-    if not n:
-        print("no stamped records: the join cannot be validated, so nothing below"
-              " this line is trustworthy")
+    if not truth:
+        print("no stamped records: the join cannot be validated, so nothing "
+              "below this line is trustworthy")
         return False
     acc = 100 * right / (right + wrong) if (right + wrong) else 0.0
-    print(f"join validated on {n} stamped records: {100*right/n:.1f}% resolved, "
-          f"{wrong} wrong, {acc:.2f}% accurate among resolved")
+    print(f"join validated on {len(truth)} stamped records: "
+          f"{100*right/len(truth):.1f}% resolved, {wrong} wrong, "
+          f"{acc:.2f}% accurate among resolved")
     if wrong:
-        print("  *** the join is producing WRONG attributions; the measure below"
-              " is not usable ***")
+        print("  *** the join is producing WRONG attributions; nothing below "
+              "is usable ***")
     return wrong == 0
+
+
+def delta(label, cells, key, fmt_row):
+    print()
+    print(f"{label}:")
+    for m in ("qwen", "nemo"):
+        for arm in ARMS:
+            a, b = cells.get((arm, m, FORMATS[0])), cells.get((arm, m, FORMATS[1]))
+            line = fmt_row(arm, m, a, b)
+            if line:
+                print("  " + line)
+
+
+def report_rejections(rej):
+    print("1. REJECTIONS OF CHECK-PASSING CANDIDATES   (PROTOCOL.md primary)")
+    print()
+    print(f"{'arm':16s} {'model':5s} {'format':15s} {'reps':>5} {'cand':>5} "
+          f"{'rate':>7}  95% CI")
+    print("-" * 72)
+    withheld = []
+    for k in sorted(rej):
+        v = rej[k]
+        if v["full"] < MIN_CANDIDATES:
+            withheld.append((k, v))
+            continue
+        lo, hi = ci(v["rej"], v["full"])
+        print(f"{k[0]:16s} {k[1]:5s} {k[2]:15s} {v['reps']:5d} {v['full']:5d} "
+              f"{100*v['rej']/v['full']:6.1f}%  [{lo:4.1f}, {hi:4.1f}]")
+    for k, v in withheld:
+        print(f"withheld: {k[0]} / {k[1]} / {k[2]} -- {v['full']} candidates "
+              f"from {v['reps']} rep(s), under the {MIN_CANDIDATES} floor")
+
+    def row(arm, m, a, b):
+        if not (a and b and a["full"] >= MIN_CANDIDATES
+                and b["full"] >= MIN_CANDIDATES):
+            return None
+        ra, rb = 100*a["rej"]/a["full"], 100*b["rej"]/b["full"]
+        la, ha = ci(a["rej"], a["full"])
+        lb, hb = ci(b["rej"], b["full"])
+        sep = ha < lb or hb < la
+        return (f"{m:5s} {arm:16s} {ra:5.1f}% -> {rb:5.1f}%  "
+                f"delta {rb-ra:+5.1f} pts   "
+                f"CIs {'SEPARATE' if sep else 'overlap'}")
+    delta("decision_first -> reason_first", rej, None, row)
+
+
+def report_correctness(corr):
+    print("2. CORRECT CHOICE   (did the final verdict match what was delivered?)")
+    print()
+    print("normal tasks -- truth is objective_pass: the gate AND every "
+          "structural dimension")
+    print(f"{'arm':16s} {'model':5s} {'format':15s} {'n':>4} {'good':>5} "
+          f"{'correct':>8} {'false rej':>10} {'false acc':>10} {'unparsed':>9}")
+    print("-" * 88)
+    for k in sorted(corr):
+        c = corr[k]
+        if c["n"] < MIN_REPS:
+            continue
+        n = c["n"]
+        ok = c["correct_accept"] + c["correct_reject"]
+        tot = n + c["decline_n"] + c["unparseable"]
+        print(f"{k[0]:16s} {k[1]:5s} {k[2]:15s} {n:4d} {c['truth_good']:5d} "
+              f"{100*ok/n:7.0f}% {100*c['FALSE_REJECT']/n:9.0f}% "
+              f"{100*c['FALSE_ACCEPT']/n:9.0f}% "
+              f"{100*c['unparseable']/tot if tot else 0:8.0f}%")
+    print()
+    print("false-premise tasks -- the right call is `unsound_request`")
+    print(f"{'arm':16s} {'model':5s} {'format':15s} {'n':>4} {'right':>7}")
+    print("-" * 56)
+    for k in sorted(corr):
+        c = corr[k]
+        if c["decline_n"] < MIN_DECLINE:
+            continue
+        print(f"{k[0]:16s} {k[1]:5s} {k[2]:15s} {c['decline_n']:4d} "
+              f"{100*c['decline_right']/c['decline_n']:6.0f}%")
+
+
+def report_split(split):
+    print("3. THE EMPTY-DIFF SPLIT   (rejection rate, by whether anything was written)")
+    print()
+    print("The judge_caveat prompt names this case: on an empty diff every")
+    print("condition reads 'no' whether the engineer failed or correctly refused.")
+    print()
+    print(f"{'arm':16s} {'model':5s} {'EMPTY diff':>22s}   {'non-empty diff':>22s}")
+    print(f"{'':16s} {'':5s} {'decision':>11}{'reason':>11}   "
+          f"{'decision':>11}{'reason':>11}")
+    print("-" * 74)
+    for arm in ARMS:
+        for m in ("qwen", "nemo"):
+            cells = {}
+            for empty in (True, False):
+                for f in FORMATS:
+                    v = split.get((arm, m, f, empty))
+                    cells[(empty, f)] = (
+                        f"{100*v['rej']/v['full']:.0f}% ({v['full']})"
+                        if v and v["full"] >= MIN_SPLIT else "--")
+            if all(x == "--" for x in cells.values()):
+                continue
+            print(f"{arm:16s} {m:5s} "
+                  f"{cells[(True, FORMATS[0])]:>11}{cells[(True, FORMATS[1])]:>11}   "
+                  f"{cells[(False, FORMATS[0])]:>11}{cells[(False, FORMATS[1])]:>11}")
 
 
 def main():
@@ -202,45 +376,15 @@ def main():
     ok = validate(index, records)
     if args.validate:
         return
-    print()
 
-    t, how = attribute(index, records)
-    print(f"attribution: " + ", ".join(f"{k} {v}" for k, v in sorted(how.items())))
+    rej, corr, split, how = collect(index, records)
+    print("attribution: " + ", ".join(f"{k} {v}" for k, v in sorted(how.items())))
     print()
-
-    print(f"{'arm':16s} {'model':5s} {'format':15s} {'reps':>5} {'cand':>5} "
-          f"{'rate':>7}  95% CI")
-    print("-" * 72)
-    withheld = []
-    for k in sorted(t):
-        v = t[k]
-        if v["full"] < MIN_CANDIDATES:
-            withheld.append((k, v))
-            continue
-        lo, hi = ci(v["rej"], v["full"])
-        print(f"{k[0]:16s} {k[1]:5s} {k[2]:15s} {v['reps']:5d} {v['full']:5d} "
-              f"{100*v['rej']/v['full']:6.1f}%  [{lo:4.1f}, {hi:4.1f}]")
-    if withheld:
-        print()
-        for k, v in withheld:
-            print(f"withheld: {k[0]} / {k[1]} / {k[2]} -- {v['full']} candidates "
-                  f"from {v['reps']} rep(s), under the {MIN_CANDIDATES} floor")
-
-    print()
-    print("decision_first -> reason_first, same arm and model:")
-    for m in ("qwen", "nemo"):
-        for arm in ARMS:
-            a, b = t.get((arm, m, FORMATS[0])), t.get((arm, m, FORMATS[1]))
-            if not (a and b and a["full"] >= MIN_CANDIDATES
-                    and b["full"] >= MIN_CANDIDATES):
-                continue
-            ra, rb = 100*a["rej"]/a["full"], 100*b["rej"]/b["full"]
-            la, ha = ci(a["rej"], a["full"])
-            lb, hb = ci(b["rej"], b["full"])
-            sep = ha < lb or hb < la
-            print(f"  {m:5s} {arm:16s} {ra:5.1f}% -> {rb:5.1f}%  "
-                  f"delta {rb-ra:+5.1f} pts   "
-                  f"CIs {'SEPARATE' if sep else 'overlap'}")
+    report_rejections(rej)
+    print("\n" + "=" * 88 + "\n")
+    report_correctness(corr)
+    print("\n" + "=" * 88 + "\n")
+    report_split(split)
 
     if args.unresolved:
         print()
