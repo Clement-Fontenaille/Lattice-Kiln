@@ -151,10 +151,19 @@ def _transcript_dir() -> Path | None:
         LATTICE_TRANSCRIPT=<dir>   write somewhere else
         LATTICE_TRANSCRIPT=0       off, for a throwaway run
 
-    Records are filed under the cell id `run_suite` exports, so they address the
-    same way store rows do and need no heuristic join to be read back. Read
-    them with `evalkit/transcripts.py`, which tolerates the truncated final
-    member a killed worker leaves behind.
+    ONE FILE PER REP, never shared: `<cell>/<rep>.jsonl.gz`. The first version
+    appended every rep of a cell into one archive, so a worker killed mid-write
+    truncated a file holding OTHER reps' records -- and this project kills
+    workers routinely, since the pool's lease exists for exactly that. A reader
+    that tolerates the damage is the wrong fix; not sharing the file is the
+    right one. A dead attempt now damages only its own rep, which the pool
+    releases and re-runs anyway, and the retry truncates the file rather than
+    appending to the corpse.
+
+    Compaction into a single per-cell archive is a separate offline step
+    (`transcripts.py --compact`), run when nothing is writing. That is also
+    where the compression lands: 51x measured, because a cell's reps share the
+    same prompt template.
     """
     v = os.environ.get("LATTICE_TRANSCRIPT")
     if v in ("0", "off", "false", "no"):
@@ -165,30 +174,31 @@ def _transcript_dir() -> Path | None:
 
 
 _TSINK = None
-_TSINK_PATH = None
+_TSINK_KEY = None
 
 
 def _transcript(prompt: str, g: "Generation") -> None:
-    global _TSINK, _TSINK_PATH
+    global _TSINK, _TSINK_KEY
     d = _transcript_dir()
     if d is None:
         return
     try:
         cell = os.environ.get("LATTICE_CELL") or "uncelled"
-        want = d / f"{cell}.jsonl.gz"
-        if _TSINK_PATH != want:
+        rep = os.environ.get("LATTICE_REP") or os.environ.get("M6_REP") or "0"
+        key = (cell, rep)
+        if _TSINK_KEY != key:
             if _TSINK is not None:
                 _TSINK.close()
-            d.mkdir(parents=True, exist_ok=True)
-            # Append mode on gzip produces a multi-member file, which is
-            # valid and readable straight through. compresslevel 6 costs
-            # microseconds against a generation that costs seconds.
-            _TSINK = gzip.open(want, "at", encoding="utf-8", compresslevel=6)
-            _TSINK_PATH = want
+            (d / cell).mkdir(parents=True, exist_ok=True)
+            # "wt", not "at": a retry of this rep overwrites whatever a killed
+            # attempt left behind, rather than appending to a partial member.
+            _TSINK = gzip.open(d / cell / f"{rep}.jsonl.gz", "wt",
+                               encoding="utf-8", compresslevel=6)
+            _TSINK_KEY = key
         _TSINK.write(json.dumps({
             "t": time.time(),
-            "cell": os.environ.get("LATTICE_CELL"),
-            "rep": os.environ.get("LATTICE_REP") or os.environ.get("M6_REP"),
+            "cell": cell,
+            "rep": rep,
             "task": os.environ.get("M6_TASK"),
             "runner": f"{socket.gethostname()}-{os.getpid()}",
             "model": g.model,
@@ -204,6 +214,17 @@ def _transcript(prompt: str, g: "Generation") -> None:
         _TSINK.flush()
     except Exception:  # noqa: BLE001
         pass          # observability must never break the run it observes
+
+
+def transcript_close() -> None:
+    """Finish the current rep's file. Called when a rep's row is committed."""
+    global _TSINK, _TSINK_KEY
+    if _TSINK is not None:
+        try:
+            _TSINK.close()
+        except Exception:  # noqa: BLE001
+            pass
+    _TSINK, _TSINK_KEY = None, None
 
 
 def _meter(g: "Generation", prompt: str = "") -> "Generation":

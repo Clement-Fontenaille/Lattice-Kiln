@@ -30,7 +30,8 @@ sys.path.insert(0, str(HERE))
 RUNNER = f"{socket.gethostname()}-{os.getpid()}"
 
 from _m6bridge import (Gate, RunRecorder, assemble, health,  # noqa: E402
-                       meter_read, meter_reset, run_processor)
+                       meter_read, meter_reset, run_processor,
+                       transcript_close)
 
 SUITE = HERE / "suite"
 # LATTICE_RESULTS_SUBDIR lets a run against a different model land in its own
@@ -218,6 +219,9 @@ def run_task(task, arm_name, rep, cmd, protected):
     wall = round(time.monotonic() - t0, 1)
     t_end = time.time()
     used = meter_read()
+    # Finish this rep's transcript file. One file per rep, never shared, so a
+    # worker killed mid-rep damages only the rep the pool will re-run anyway.
+    transcript_close()
     restore_protected(ws, task, protected)
     fin = score(ws, cmd)
 

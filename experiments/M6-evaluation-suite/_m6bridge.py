@@ -22,6 +22,7 @@ from event_model import RunRecorder  # noqa: E402,F401
 from capabilities import CapabilitySet  # noqa: E402,F401
 from gate import Gate  # noqa: E402,F401
 from ollama_client import (DEFAULT_MODEL, generate, health,  # noqa: E402,F401
-                           meter_read, meter_reset)  # noqa: E402,F401
+                           meter_read, meter_reset,  # noqa: E402,F401
+                           transcript_close)  # noqa: E402,F401
 from context_assembly import assemble  # noqa: E402,F401
 from processor import run_processor  # noqa: E402,F401
