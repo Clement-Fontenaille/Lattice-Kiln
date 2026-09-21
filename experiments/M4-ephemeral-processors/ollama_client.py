@@ -15,8 +15,11 @@ full-context judge arms are the ones most likely to feel it first.
 """
 from __future__ import annotations
 
+import hashlib
+import socket
 import json
 import os
+from pathlib import Path
 import time
 import urllib.error
 import urllib.request
@@ -117,7 +120,56 @@ def meter_read() -> dict:
     return dict(_METER)
 
 
-def _meter(g: "Generation") -> "Generation":
+TRANSCRIPT = os.environ.get("LATTICE_TRANSCRIPT")
+"""Directory for raw generation transcripts, or unset for none.
+
+Nothing in this project stored what a model actually said. Stage records keep
+only parsed fields, store rows keep scores and timings, and the M2 event log
+records effects by reference. So a generation was discarded the moment it was
+parsed, and when parsing FAILED there was nothing left at all -- which is
+exactly the case worth looking at. Nemotron's judge produced no JSON in 18% of
+calls under one format and 2% under another, and the cause is undiagnosable
+from anything on disk.
+
+Off by default because it is bulky and most runs never need it. Turn it on for
+any sweep whose outputs will be argued about:
+
+    LATTICE_TRANSCRIPT=<dir> python run_suite.py ...
+
+One file per process, so concurrent workers do not interleave.
+"""
+_TSINK = None
+
+
+def _transcript(prompt: str, g: "Generation") -> None:
+    global _TSINK
+    if not TRANSCRIPT:
+        return
+    try:
+        if _TSINK is None:
+            d = Path(TRANSCRIPT)
+            d.mkdir(parents=True, exist_ok=True)
+            _TSINK = (d / f"gen_{socket.gethostname()}_{os.getpid()}.jsonl").open(
+                "a", encoding="utf-8")
+        _TSINK.write(json.dumps({
+            "t": time.time(),
+            "model": g.model,
+            "task": os.environ.get("M6_TASK"),
+            "rep": os.environ.get("M6_REP"),
+            "judge_format": os.environ.get("LATTICE_JUDGE_FORMAT"),
+            "prompt_sha": hashlib.sha256(prompt.encode("utf-8")).hexdigest()[:16],
+            "prompt_tok": g.prompt_eval_count,
+            "eval_count": g.eval_count,
+            "done_reason": g.raw.get("done_reason"),
+            "text": g.text,
+            "thinking": (g.raw.get("thinking") or "")[:2000],
+        }) + "\n")
+        _TSINK.flush()
+    except Exception:  # noqa: BLE001
+        pass          # observability must never break the run it observes
+
+
+def _meter(g: "Generation", prompt: str = "") -> "Generation":
     if "timings" in g.raw:                       # llama-server: milliseconds
         t = g.raw.get("timings", {})
         d, pd = t.get("predicted_ms", 0) / 1000, t.get("prompt_ms", 0) / 1000
@@ -129,6 +181,7 @@ def _meter(g: "Generation") -> "Generation":
     _METER["prompt_tok"] += g.prompt_eval_count
     _METER["gen_s"] += d
     _METER["prompt_s"] += pd
+    _transcript(prompt, g)
     return g
 
 
@@ -183,7 +236,7 @@ def generate(prompt: str, *, model: str = DEFAULT_MODEL, base_url: str = DEFAULT
         total_duration_s=payload.get("total_duration", 0) / 1e9 or (time.monotonic() - t0),
         load_duration_s=payload.get("load_duration", 0) / 1e9,
         raw=payload,
-    ))
+    ), prompt)
 
 
 def _generate_llamacpp(prompt: str, *, base_url: str, model: str, temperature: float,
@@ -223,7 +276,7 @@ def _generate_llamacpp(prompt: str, *, base_url: str, model: str, temperature: f
                          or (time.monotonic() - t0),
         load_duration_s=0.0,   # llama-server loads once at startup, not per-request
         raw=payload,
-    ))
+    ), prompt)
 
 
 def health(base_url: str = DEFAULT_BASE_URL, timeout_s: float = 5.0) -> bool:
