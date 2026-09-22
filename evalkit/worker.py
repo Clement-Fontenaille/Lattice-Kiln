@@ -75,6 +75,95 @@ def loaded_models(base_url: str = "http://localhost:11434") -> set[str]:
         return set()
 
 
+def gpu_budget_mib(reserve_mib: int = 700) -> int | None:
+    """Usable VRAM, or None when it cannot be read.
+
+    `reserve_mib` is for the desktop and the driver, which held 464-650 MiB on
+    the reference host with nothing else running.
+    """
+    try:
+        out = subprocess.check_output(
+            ["nvidia-smi", "--query-gpu=memory.total", "--format=csv,noheader,nounits"],
+            text=True, timeout=10, stderr=subprocess.DEVNULL)
+        return int(out.strip().splitlines()[0]) - reserve_mib
+    except Exception:  # noqa: BLE001
+        return None
+
+
+SIZES = ROOT / "evalkit_store" / "model_sizes.json"
+DISK_TO_VRAM = 1.08
+"""Fallback factor for a model never yet seen loaded.
+
+There is no reliable constant. Measured on this host, the ratio of resident
+VRAM to blob size on disk is 0.97 for nemotron-gpu (6,433 MiB on disk, 6,261
+resident), 1.05 for nemotron3-nano-4b and 1.15 for qwen2.5-coder 7B -- it
+depends on quant, on how much of the blob is actually mapped, and on the KV
+layout, which for a hybrid Mamba model is nothing like a transformer's.
+
+A factor high enough for qwen refuses nemotron-gpu outright, which would strand
+its work. 1.08 is chosen to get every pairing on this card right, and is only
+a bootstrap: the moment a model is observed resident its true size is recorded
+and used instead, so the estimate matters once per model and then never again.
+"""
+
+
+def learn_sizes(urls) -> dict:
+    """Record what loaded models actually cost, and return everything known."""
+    known = {}
+    try:
+        known = json.loads(SIZES.read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        pass
+    seen = {}
+    for u in urls:
+        try:
+            with urllib.request.urlopen(f"{u}/api/ps", timeout=5) as r:
+                d = json.loads(r.read().decode("utf-8", "replace"))
+            for m in (d.get("models") or []):
+                if m.get("size_vram"):
+                    seen[m["name"]] = int(m["size_vram"] / 2**20)
+        except Exception:  # noqa: BLE001
+            continue
+    if seen and seen != {k: known.get(k) for k in seen}:
+        known.update(seen)
+        try:
+            SIZES.parent.mkdir(parents=True, exist_ok=True)
+            SIZES.write_text(json.dumps(known, indent=2, sort_keys=True),
+                             encoding="utf-8")
+        except Exception:  # noqa: BLE001
+            pass
+    return known
+
+
+def catalogue_mib(base_url: str, known: dict | None = None) -> dict:
+    """Model name -> resident size in MiB: measured where known, else estimated.
+
+    The estimate is only ever used to REFUSE a load, and it is replaced by a
+    measurement the first time the model is seen resident.
+    """
+    known = known or {}
+    try:
+        with urllib.request.urlopen(f"{base_url}/api/tags", timeout=5) as r:
+            d = json.loads(r.read().decode("utf-8", "replace"))
+        out = {}
+        for m in (d.get("models") or []):
+            n = m["name"]
+            out[n] = known.get(n, int(m.get("size", 0) / 2**20 * DISK_TO_VRAM))
+        return out
+    except Exception:  # noqa: BLE001
+        return dict(known)
+
+
+def resident_mib(url: str) -> int:
+    """What one instance is holding, in MiB."""
+    try:
+        with urllib.request.urlopen(f"{url}/api/ps", timeout=5) as r:
+            d = json.loads(r.read().decode("utf-8", "replace"))
+        return int(sum(m.get("size_vram", 0) for m in (d.get("models") or [])) / 2**20)
+    except Exception:  # noqa: BLE001
+        return 0
+
+
 def card_models(urls) -> set[str]:
     """What the CARD holds, across every instance on it.
 
@@ -135,7 +224,8 @@ def env_key(env: dict) -> str:
     return json.dumps(env or {}, sort_keys=True)
 
 
-def pick(pool, who: str, sticky, loaded: set[str], card: set[str] | None = None):
+def pick(pool, who: str, sticky, loaded: set[str], card: set[str] | None = None,
+         fits=None):
     """Choose the next item, in the order that costs least and mixes least.
 
       1. more of the group just run        -- same arm, same setup
@@ -172,15 +262,19 @@ def pick(pool, who: str, sticky, loaded: set[str], card: set[str] | None = None)
         if others_working(pool, who):
             return HOLD if pool.counts()["pending"] else None
 
-    # Swapping inside THIS instance is safe: ollama evicts the old model, so
-    # the card never holds both. What is not safe is loading a model beside one
-    # a PEER instance is holding, because those do co-exist and share the same
-    # VRAM -- nemotron3-nano-4b at 2,865 MiB alongside qwen 7B at 5,200 MiB
-    # overruns an 8 GiB card. So the constraint is on what the peers hold, not
-    # on what this worker holds.
-    peers = (card - loaded) if card is not None else set()
-    if peers:
-        got = pool.claim(who, match=lambda d: wants_loaded(d, peers))
+    # A swap replaces what THIS instance holds -- ollama evicts -- but leaves
+    # every peer instance holding whatever it has. So the question is whether
+    # the candidate fits beside the peers, and that is a question about bytes.
+    #
+    # Names are not enough, and an earlier version of this guard proved it in
+    # two ways. It admitted only work matching a peer's model, which deadlocked
+    # the moment the resident model's work ran out and something else was
+    # pending: every worker held, forever. And it would still have allowed two
+    # instances to load qwen 7B at 5,204 MiB each, which is 10.4 GiB on an 8 GiB
+    # card -- same name, does not fit.
+    if fits is not None:
+        got = pool.claim(who, match=lambda d: fits(
+            d.get("env", {}).get("LATTICE_EVAL_MODEL")))
         if got is not None:
             return got
         return HOLD if pool.counts()["pending"] else None
@@ -232,6 +326,9 @@ def main():
                          "Residency is a property of the CARD, not of one server "
                          "process, and a worker blind to its peers will pair two "
                          "models that do not fit together.")
+    ap.add_argument("--reserve-mib", type=int, default=700,
+                    help="VRAM left to the desktop and driver when deciding "
+                         "whether a model fits")
     ap.add_argument("--reap", action="store_true",
                     help="return items whose worker died before starting")
     args = ap.parse_args()
@@ -251,7 +348,22 @@ def main():
     while True:
         loaded = loaded_models(args.base_url)
         card = card_models([args.base_url, *args.peer])
-        first = pick(pool, who, sticky, loaded, card)
+
+        # What can this worker load without overrunning the card? Peers keep
+        # what they hold; this instance's own share is freed by the swap.
+        budget = gpu_budget_mib(args.reserve_mib)
+        sizes = catalogue_mib(args.base_url,
+                              learn_sizes([args.base_url, *args.peer]))
+        peer_mib = sum(resident_mib(u) for u in args.peer)
+
+        def fits(model, _b=budget, _s=sizes, _p=peer_mib):
+            if not model:
+                return False
+            if _b is None:
+                return True          # cannot measure: do not pretend to know
+            return _p + _s.get(model, 0) <= _b
+
+        first = pick(pool, who, sticky, loaded, card, fits)
         if first is HOLD:
             if args.follow:
                 print(f"[{who}] holding: {sorted(loaded)} resident and in use by "

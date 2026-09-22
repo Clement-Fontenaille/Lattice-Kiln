@@ -140,24 +140,37 @@ def test_sticky_beats_resident():
     print("ok  pick: sticky group is tried before anything else")
 
 
-def test_peer_instance_blocks_an_unfittable_pairing():
-    """Two servers on one GPU share its VRAM and each reports only its own
-    models. A worker blind to its peer pairs two models that do not fit."""
+def test_a_model_that_does_not_fit_beside_a_peer_is_refused():
+    """Peers keep what they hold; only this instance's share is freed by a swap.
+
+    qwen 7B is 5,204 MiB resident and nemotron3-nano-4b is 2,865. Either beside
+    the other overruns an 8 GiB card, and so does qwen beside a second copy of
+    itself -- which a name-based guard would have allowed, since the names match.
+    """
     p = fresh()
-    p.enqueue(cell("mB", arm="monolith"), 2, env=env("mB"), requested_by="r")
-    # this worker's instance is empty; a PEER holds mA
-    assert pick(p, "w1", None, set(), card={"mA"}) is HOLD
+    p.enqueue(cell("big", arm="monolith"), 2, env=env("big"), requested_by="r")
+    assert pick(p, "w1", None, set(), card={"small"},
+                fits=lambda m: m != "big") is HOLD
     assert p.counts()["pending"] == 2, p.counts()
-    # same pool, no peer: swapping inside one instance evicts, so it is free
-    assert pick(p, "w1", None, set(), card=set()) is not None
-    print("ok  pick: a peer instance's model blocks the pairing, alone does not")
+    print("ok  pick: a model that will not fit beside a peer is refused")
+
+
+def test_the_guard_does_not_deadlock_when_something_fits():
+    """The first guard admitted only work matching a peer's model, so when the
+    resident model's work ran out and something else was pending, every worker
+    held forever. Fitting is the condition, not matching."""
+    p = fresh()
+    p.enqueue(cell("small", arm="monolith"), 2, env=env("small"), requested_by="r")
+    got = pick(p, "w1", None, set(), card={"other"}, fits=lambda m: m == "small")
+    assert got is not None and got is not HOLD, "held while work that fits was pending"
+    print("ok  pick: work that fits is taken, even when a peer holds something else")
 
 
 def test_swap_within_my_own_instance_is_allowed():
     """The card never holds both when one instance replaces its own model."""
     p = fresh()
     p.enqueue(cell("mB", arm="monolith"), 1, env=env("mB"), requested_by="r")
-    got = pick(p, "w1", None, {"mA"}, card={"mA"})      # only I hold mA
+    got = pick(p, "w1", None, {"mA"}, card={"mA"}, fits=lambda m: True)
     assert got is not None and got.env["LATTICE_EVAL_MODEL"] == "mB"
     print("ok  pick: a worker may replace the model in its own instance")
 
@@ -220,7 +233,8 @@ if __name__ == "__main__":
                test_second_worker_holds_rather_than_evicting,
                test_a_lone_worker_may_swap,
                test_sticky_beats_resident,
-               test_peer_instance_blocks_an_unfittable_pairing,
+               test_a_model_that_does_not_fit_beside_a_peer_is_refused,
+               test_the_guard_does_not_deadlock_when_something_fits,
                test_swap_within_my_own_instance_is_allowed,
                test_same_setup_beats_same_model,
                test_setup_affinity_partitions_workers):
