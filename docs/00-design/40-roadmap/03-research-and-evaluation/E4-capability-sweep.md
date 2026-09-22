@@ -1,15 +1,22 @@
-# E4 — How does the suite behave across model size and tuning?
+# E4 — Does each role's mechanism work, and how far?
 
-**Status:** not run. Preparation opened 2026-09-22.
+**Status:** not run. Preparation opened 2026-09-22; re-scoped to the mechanism
+layer the same day.
+**Layer:** 2 of 3 — **mechanism**. See [`README`](README.md) for the layer split.
 **Gated on:** E0 — **satisfied 2026-09-17**, and the answer constrains this sheet
 rather than merely unblocking it: the suite is **not unidimensional**, parallel
 analysis retains **two** factors, and E0 defect 1 is still open. A sweep across
 sizes on a two-factor instrument reports movement on a composite, so arm
 ordering here is read per factor or not at all.
+**Related:** [`E5`](E5-skill-scales.md) asks whether skills predict these
+mechanisms; [`E3`](E3-functional-requests.md) asks whether these mechanisms
+compose into a system that serves a request.
 
 ## The question
 
-The existing suite across models. **Size and tuning, not size alone.**
+A **mechanism** is what one role does that the architecture depends on. This
+sheet asks, per role and per mechanism: does it work, how far does it go, and
+how does that move with **size and tuning — not size alone**.
 
 ## Why the design must vary both
 
@@ -21,12 +28,51 @@ in the result says which part.
 ## What a null means
 
 Flat across sizes, with the instrument validated, is a strong result: it says the
-suite measures something the models under test do not differ on, which bounds what the
-suite can ever discriminate.
+mechanism under test is one the models do not differ on, which bounds what any
+scaffold built on it can ever buy.
+
+## What is held constant, and therefore what this layer is blind to
+
+The former `E5-population-spread` measured the operator and made the general
+point: *every experiment that holds the operator constant scores the system
+minus the person using it.* Each layer must now state what it fixes.
+
+This layer fixes **the rest of the system** and varies demand on one mechanism.
+It is therefore blind to **composition** — mechanisms can each score well and
+the assembly still fail, which is what `70-THINKING/02` predicts if aggregation
+rather than execution is the binding constraint. That gap is E3's to find, and
+nothing measured here would reveal it.
+
+## The roles and their mechanisms
+
+One subsection per role, one subsubsection per mechanism. First inventory,
+2026-09-22, taken from what M7 actually runs plus the roles the architecture
+needs and does not yet have. **Three of nine are not implemented, and the
+firing rules consume their outputs.**
+
+| role | mechanisms | evidence status |
+|---|---|---|
+| implementer | execution; convention inference; scope adherence | measured functionally only |
+| premise auditor | premise evaluation; unsoundness depth | `s1` fires; parse rate measured |
+| concern splitter | decomposition; sub-objective authoring; objective preservation | wf6 2/6 → 6/6, never isolated |
+| judge | evidence weighing; verdict calibration; instruction formulation | `50-findings/14` measured the *contract*, not the judgement |
+| test synthesiser | discriminator authoring | `test_synth` arm exists |
+| orchestrator | **fit self-assessment**; firing decision; termination | **firing rule is hand-set — NYI**, and gated on E5 |
+| context assembler | relevance discrimination; sufficiency estimation | M9, partial — dloop took cross-file 0.47 → 0.92 |
+| aggregator | recombination under imperfect inputs | **NYI** — `70-THINKING/02` calls it the binding constraint |
+| knowledge curator | retention; retrieval; use of knowledge not derived in session | **NYI** — M8, E6 |
+
+Each subsection is still to be written, one per discussion. The inventory is
+the settled part; the per-mechanism designs are not.
 
 ---
 
 # Preparation
+
+*The sections below were written for the sweep as a whole and apply to all
+three layers. They stay here because this is the layer whose items are most
+expensive to author; [`E3`](E3-functional-requests.md) and
+[`E5`](E5-skill-scales.md) refer to them rather than restating them.*
 
 ## Preflight — the one run that can cancel the rest
 

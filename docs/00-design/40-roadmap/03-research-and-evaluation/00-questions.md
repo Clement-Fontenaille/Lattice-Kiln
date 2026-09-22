@@ -31,9 +31,9 @@ specification that requires them, not here.
 | **E0** | Is the evaluation suite measuring one coherent thing? | [`E0-suite-construct-validation.md`](E0-suite-construct-validation.md) |
 | **E1** | Can context pathology be detected from processing? | [`E1-context-pathology-probe.md`](E1-context-pathology-probe.md) |
 | **E2** | Does grain matter independently of quantity? | [`E2-grain-versus-quantity.md`](E2-grain-versus-quantity.md) |
-| **E3** | Does a graded ladder of relational demand behave monotonically? | [`E3-first-ladder.md`](E3-first-ladder.md) |
-| **E4** | How does the suite behave across model size and tuning? | [`E4-capability-sweep.md`](E4-capability-sweep.md) |
-| **E5** | How much does the operator account for the outcome? | [`E5-population-spread.md`](E5-population-spread.md) |
+| **E3** | Does a full system serve a request a user would actually make? | [`E3-functional-requests.md`](E3-functional-requests.md) |
+| **E4** | Does each role's mechanism work, and how far? | [`E4-capability-sweep.md`](E4-capability-sweep.md) |
+| **E5** | Do basic skills have measurable scales, and does skill capability transfer upward? | [`E5-skill-scales.md`](E5-skill-scales.md) |
 | **E6** | Does the system hold and use knowledge it did not derive itself? | [`E6-corpus-digestion.md`](E6-corpus-digestion.md) |
 | **E7** | Which scenarios flipped between the M4 and M5 arms? | [`E7-paired-reanalysis.md`](E7-paired-reanalysis.md) |
 
@@ -51,7 +51,9 @@ verdict. *Missing: a scope check to run, which is M17.*
 **Does recording a derived scope with its derivation change whether it gets
 contested?** The whole derive-record-contest requirement rests on the claim that an
 uncontested derivation is ratified rather than caught. *Missing: an operator
-population, which is the same gap E5 has.*
+population, which E5 no longer covers -- the operator sheet dissolved into a
+blindness requirement on every layer (see the README), so an operator
+population is now unowned.*
 
 **Does splitting a processor's output measurably help?** The reasoning/conclusion cut
 is argued from four consequences and measured in none. *Missing: the cut to be
@@ -86,8 +88,9 @@ a lineage and transfer is a separate measurement
 - **E0 says the suite is incoherent.** Most of this loses its instrument and reorders
   around building one.
 - **E2 returns null.** The decomposition account retires to *relevant context beats
-  maximal context*, and E3 loses its motivation — though a ladder may survive as a
-  difficulty scale without it.
+  maximal context*. The ladder that this once threatened now lives in E5 as S1,
+  and survives as a difficulty scale without the grain claim — but S1's own
+  transfer pair is what would then be carrying it, not the hypothesis.
 - **A materially stronger model arrives before E0–E2 run.** The comparisons are then
   against a moving target, and the ageing rules applied to external evidence
   (findings entry 9) apply to this project's own results too.

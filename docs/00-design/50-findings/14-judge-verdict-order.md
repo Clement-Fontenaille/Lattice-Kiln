@@ -257,3 +257,48 @@ leaving 856 records with ground truth to validate the join against. Without that
 overlap the biased numbers would have been reported. **An instrument needs a
 channel that can tell you it is lying, and that channel has to be built before
 the measurement rather than recovered from a lucky overlap.**
+
+---
+
+## Addendum, 2026-09-22 — the 83% and the 0% do not belong in one sentence
+
+Result 1 sets the engineer's 83% correct refusal beside the judge's 0%
+unsound-request rate, and reads the pair as *the capability is present upstream
+and the judge destroys it.* **The operator did not trust that number, and was
+right not to.** The two figures have different provenance and different
+reliability, and pairing them implied a comparison the data does not support.
+
+**The 0% is solid.** It is the judge's own verdict token, read from the stage
+record, present or absent. Eight cells of eleven, 19–29 reps each.
+
+**The 83% is not, and its weakness is specifically the one that matters here.**
+It is `declined_correctly`, a field the harness computes from a conjunction:
+`run_ok` and `decline_expected` and `terminal == "declined"` and the final
+sub-count equal to the baseline and no new failures. Every clause is
+harness-side inference about what the run *meant*, and the field has been wrong
+in exactly this direction before — `50-findings/12` records **five
+false-premise tasks credited with a correct decline during a total backend
+outage**, because an unreachable model leaves the workspace untouched, which is
+indistinguishable from a correct refusal on any task whose source already
+passes. The `run_ok` guard was added for that, and it closes the outage case.
+It does not establish that every remaining `declined_correctly` is a *reasoned*
+refusal rather than an absence of action that happens to satisfy the
+conjunction.
+
+So the honest statement is narrower:
+
+> The judge does not produce `unsound_request`, in eight cells of eleven. What
+> the engineer stage does on those same tasks is **not measured by anything
+> this experiment recorded** — `declined_correctly` reports that nothing was
+> changed and the check still passes, which is compatible with a reasoned
+> refusal and with several other things.
+
+**What would settle it**, and it is cheap now that transcripts exist: read the
+engineer's own output on the false-premise tasks and ask whether the refusal is
+argued. That distinction is exactly what was thrown away before 2026-09-22 and
+is retained by default after it. Until then, Result 1's location claim — that
+the failure sits in the judging stage rather than in the model — is **a
+hypothesis consistent with the data, not a finding.**
+
+The rest of the sheet is unaffected. Results 2 through 6 rest on judge verdicts
+and store outcomes, neither of which depends on `declined_correctly`.
