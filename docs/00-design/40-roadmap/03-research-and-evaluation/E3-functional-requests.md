@@ -74,71 +74,36 @@ This project's asset is not the tasks. It is the instrumented comparison: setup
 keys, the setup-keyed results store, per-cell transcripts, the judge arms, reps
 with intervals, a pool that survives being killed.
 
-**What is borrowed is the scenario, not the item.** The perturbation and the
-held-out check are authored here in every case. A borrowed task is not a
-borrowed check, and for the reason in the next section it is not a borrowed
-measurement either.
+**What is borrowed is the task, not the check.** The held-out check is authored
+here in every case, because it is what makes direction 3 a measurement rather
+than a lookup — and because a check that travels with a task has usually been
+seen alongside it.
 
-### Contamination, which is not the simple objection it looks like
+### Contamination: a recorded caveat, not a question this sheet asks
 
-The reflex is to treat a contaminated item as invalid. That reflex is wrong,
-and thinking it through changes what to build rather than which corpus to pick.
+Borrowed items are contaminated to an unknown degree, and **this sheet does not
+adjudicate what that means.** Whether a fast correct answer from a practiced
+pattern match differs usefully from one arrived at by reasoning is a real
+question and not one that has to be answered to use these items — the line
+between retrieved and derived is not clean in people either.
 
-**Contamination is not cheating.** A developer who has seen a bug pattern a
-hundred times fixes it in a minute, and nobody calls that fraud — it is
-experience, and it is most of what makes a senior engineer fast. The line
-between *retrieved* and *derived* is not clean in people either, and there is
-no principled reason to expect it to be clean in a model. A fast correct answer
-from a practiced pattern match may be tangentially indistinguishable from a
-fast correct answer from reasoning, and for the work in front of you, it may
-not matter which it was.
+What has to be recorded is where it lands:
 
-**What breaks is not the performance. It is the measurement's use.**
-Everything measured here is measured in order to **predict** — what a model can
-be expected to provide, where a firing rule should fire, how far an assembly
-reaches on work that is not in any training set. A contaminated item measures
-recall of that item, and **recall does not extrapolate.**
+> Contamination **inflates the estimated effective ceiling**, and the
+> decomposition firing rule consumes that estimate. An inflated ceiling biases
+> the assembly toward decomposing **less** than it should, on work that was
+> never in training — which is the operator's own repository.
 
-The concrete damage runs through the firing rule:
+So the bias has a known direction, and it is the unhelpful one.
 
-> A contaminated anchor **inflates the estimated effective ceiling.** The
-> decomposition trigger consumes that estimate. An inflated ceiling means the
-> assembly decomposes **less** than it should, and fails on the operator's own
-> repository, which is exactly the work that was never in training.
+**It is not being measured.** No perturbed variants, no study of how much
+surface change defeats recall, no effect size across degrees of item
+modification. That is a research programme of its own and it is not this one.
 
-So the cost is not an inflated score on a leaderboard nobody here reads. It is
-a firing rule that is wrong in a specific direction, on the work that matters.
-
-**It is invisible in the outcome channel.** Two subjects passing the same item,
-one by recall and one by derivation, produce identical rows. Nothing in
-`objective_pass` distinguishes them, and no amount of reps will.
-
-#### The technique: perturbed twins
-
-For every borrowed item, author a **semantically identical variant** — renamed
-symbols, reordered definitions, a restated but equivalent test, different
-fixture data with the same structure. Both are run.
-
-| original | twin | reading |
-|---|---|---|
-| pass | pass | derivation, or memorisation deep enough not to care |
-| pass | **fail** | **recall.** The item measures retrieval of that item |
-| fail | pass | the perturbation changed the difficulty; the twin is mis-built |
-| fail | fail | beyond reach either way |
-
-Perturbation is mostly mechanical, which is what makes this affordable at the
-item counts this layer needs.
-
-**The honest limit:** a twin that also passes could be memorisation robust to
-surface change rather than derivation. It is a better bet, not a proof. What it
-does establish is a **bound** — the gap between original and twin is recall
-that the surface change defeats, and that bound is more than the outcome
-channel alone can give.
-
-**This is the same mechanism as the held-out check, pointed at a different
-failure.** The held-out check defeats cheating within a run; the perturbed twin
-defeats recall from before the run. Both work by making the thing that would
-pass for the wrong reason fail.
+**Standing caveat: any effective-ceiling estimate resting on borrowed items is
+an upper bound, not an estimate.** Directions 4–8 are authored here and do not
+carry it, which is one more reason the built directions are where the weight
+should sit.
 
 ### Why 1 and 2 are anchors rather than discriminators
 
