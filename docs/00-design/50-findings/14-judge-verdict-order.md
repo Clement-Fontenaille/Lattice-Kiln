@@ -302,3 +302,76 @@ hypothesis consistent with the data, not a finding.**
 
 The rest of the sheet is unaffected. Results 2 through 6 rest on judge verdicts
 and store outcomes, neither of which depends on `declined_correctly`.
+
+
+---
+
+## Addendum 2, 2026-09-23 — a third subject, and the comparator that was missing
+
+`nemotron3-nano-4b` was added at full parity — same three arms, both formats,
+34 tasks, 5 reps, 1,020 runs. It is compressed from the `nemo9` row's own
+parent by NVIDIA's Nemotron Elastic framework, and was fetched because
+`50-findings/14` located that model's weaknesses in instruction following
+rather than judgement.
+
+### The result only makes sense against a base rate
+
+| model | reps | objectively good | base rate | **always-reject would score** | measured |
+|---|---|---|---|---|---|
+| qwen 7B | 666 | 434 | 65.2% | 34.8% | **60.5%** |
+| nemotron 9B | 790 | 438 | 55.4% | 44.6% | **75.1%** |
+| **nemotron3 4B** | 461 | **17** | **3.7%** | **96.3%** | **86.3%** |
+
+**The 4B produces almost no objectively correct work** — 17 reps of 461, against
+55–65% for the other two. Same arms, same tasks, same checks.
+
+**And on that distribution its judging is worse than a constant.** A judge that
+answered `not_met` every time would score 96.3%. It scores 86.3%. The other two
+beat their own always-reject baselines by 26 and 31 points; this one **loses to
+it by ten.**
+
+Read without the base-rate column, 86.3% is the highest correctness figure in
+the matrix and the 4B looks like the best judge tested. It is the worst, and the
+number that says so is the one the earlier passes of this sheet never computed.
+
+**The always-reject baseline is now required** wherever a correctness rate is
+reported here. A correctness figure on a skewed outcome distribution is
+uninterpretable without it, and outcome distributions differ by subject — which
+is exactly what makes the comparison across subjects invalid without it.
+
+### What this does to the experiment's question
+
+E8 asks what changes when the judge states its reasons before its verdict. On
+this subject the question barely applies: with 3.7% of work correct there is
+almost nothing to accept, so the verdict-ordering variable has nearly no
+purchase. Its rejection rates on check-passing candidates run 57–98% against
+the 9B's 24%, and `judge_caveat`/`decision_first` reaches **98.0%** — near-total
+rejection.
+
+**So the parity run answered a different question than it was built for.** It
+was meant to test whether the 9B's instruction-following defects were the
+model's or the scaffold's. It instead found that the smaller model cannot do
+the underlying work, which makes its judging behaviour a property of that
+rather than of the format. The instruction-following comparison the run was for
+is **not answerable from this data.**
+
+Parse failures also did not improve as the health gate suggested: 1–29%
+unparseable across cells, against a gate that returned 8/8 on a clean case.
+**A gate on one easy prompt does not predict the distribution.**
+
+### Two instrument defects found while producing this
+
+**The model-label function pooled two subjects.** `short()` returned `"nemo"`
+for anything containing it, so `nemotron-gpu` and `nemotron3-nano-4b` were
+merged the moment the second produced rows — one label, two models, rep counts
+silently doubling. It is the collision this experiment exists to detect,
+committed inside the tool that reports it. Labels are now per subject.
+
+**The join's error rate is no longer zero, and the guard now states a bound.**
+With two subjects it was exact: 94.2% resolved, 0 wrong. A third raises
+collision density, and a stage record whose own store row falls just outside
+the wall tolerance can find a different model's row just inside it. Measured
+across tolerances — 0.15s: 2 wrong; 0.25s: 2 wrong; 0.5s: 5 wrong — tightening
+trades resolution without reaching zero. The tolerance is now 0.25s, the
+measured misattribution is **0.13%**, and the tool refuses above 0.5% rather
+than degrading quietly.
