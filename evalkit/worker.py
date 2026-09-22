@@ -130,9 +130,16 @@ def pick(pool, who: str, sticky, loaded: set[str]):
     return pool.claim(who)
 
 
-def run_batch(items, log_dir: Path) -> int:
+def run_batch(items, log_dir: Path, base_url: str | None = None) -> int:
     first = items[0]
     env = {**os.environ, **{k: str(v) for k, v in first.env.items()}}
+    # The WORKER owns which backend instance it talks to, not the queue item.
+    # Pinning an instance at enqueue time would split the pool into per-instance
+    # halves and let one sit idle while the other has a backlog; this way any
+    # worker can claim any item. It is deliberately not in the setup key either:
+    # two servers running the same weights are the same setup.
+    if base_url and "LATTICE_BASE_URL" not in first.env:
+        env["LATTICE_BASE_URL"] = base_url
     work = [{"task": it.cell["task"], "rep": it.rep} for it in items]
     with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False,
                                      encoding="utf-8") as fh:
@@ -157,14 +164,20 @@ def main():
     ap.add_argument("--follow", action="store_true")
     ap.add_argument("--idle-s", type=float, default=30.0)
     ap.add_argument("--base-url", default="http://localhost:11434",
-                    help="where to ask which model is resident")
+                    help="the backend instance THIS worker uses -- for residency "
+                         "checks, liveness, and the runs themselves. Several "
+                         "instances on one host give several decode streams "
+                         "where OLLAMA_NUM_PARALLEL cannot: it is a maximum, and "
+                         "ollama refuses it outright for some architectures "
+                         "(nemotron_h). Items stay instance-agnostic.")
     ap.add_argument("--reap", action="store_true",
                     help="return items whose worker died before starting")
     args = ap.parse_args()
 
     pool = Pool(Path(args.pool) if args.pool else None)
     who = _who()
-    print(f"worker {who} | pool {pool.path} | {pool.counts()}", flush=True)
+    print(f"worker {who} | pool {pool.path} | backend {args.base_url} | "
+          f"{pool.counts()}", flush=True)
 
     if args.reap:
         got = pool.reap()
@@ -202,7 +215,9 @@ def main():
                 break
             batch.append(nxt)
 
-        ok, why = backend_live(first.env)
+        ok, why = backend_live({**first.env,
+                                **({"LATTICE_BASE_URL": args.base_url}
+                                   if args.base_url else {})})
         if not ok:
             for it in batch:
                 pool.release(it, note=why)
@@ -214,7 +229,8 @@ def main():
 
         label = f"{first.cell['arm']}/{first.cell['model']}/{first.cell['judge_format']}"
         print(f"[{who}] {len(batch)} item(s)  {label}", flush=True)
-        rc = run_batch(batch, Path(args.pool or pool.path) / "logs")
+        rc = run_batch(batch, Path(args.pool or pool.path) / "logs",
+                       base_url=args.base_url)
         for it in batch:
             if rc == 0:
                 pool.complete(it, "ok")
