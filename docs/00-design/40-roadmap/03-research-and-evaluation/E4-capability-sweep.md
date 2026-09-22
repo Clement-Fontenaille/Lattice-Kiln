@@ -138,14 +138,44 @@ execution is primitive and has no skill beneath it. **Unresolved**, and it is
 the first thing unfolding these roles has produced that the skill sheet did not
 already contain.
 
-### R1.2 Convention inference
+### R1.2 Convention inference — placement and nomenclature
 
-- **does** — match the surrounding code's conventions without being told them.
-- **varied** — how strongly the fixture states its conventions: enforced by a linter, visible in neighbouring code, or present only by implication.
-- **held** — the functional requirement, which is satisfiable while ignoring every convention.
-- **read** — structural dimensions, which is what they were added for.
-- **null** — flat says conventions are followed or ignored regardless of how they are signalled, which makes the signalling work pointless and is worth knowing.
-- **draws on** — `E5` S2 relevance discrimination.
+- **does** — put a new artifact where the codebase's organising principle says it goes, and call it what that principle implies.
+- **varied** — how explicitly the principle is available: stated in a README, visible in the shape of the existing tree, or present only in the pattern and never written down.
+- **held** — the functional requirement, which is satisfiable with the file in any directory under any name.
+- **read** — location and name against what the convention implies. Deterministic wherever the convention is expressible as a rule, which is more often than it looks: numbered prefixes, sibling naming, a directory whose contents share a kind.
+- **null** — flat says placement does not respond to how clearly the principle is stated, which would mean stating it is wasted effort and that the only route is enforcement.
+- **draws on** — `E5` S1 grain closing. Inferring where a thing belongs is reading an organising principle off instances of it, which is a move from fine to coarse.
+
+**Code layout is deliberately excluded, and that is the point of the entry.**
+Indentation, brace style, line length and import order are **linter-enforced,
+mechanical, and uninteresting** — a subject that gets them wrong reveals
+nothing, because the fix is a formatter. Measuring them would produce a number
+that moves and means nothing.
+
+**Placement and naming are neither enforced nor mechanical.** They require
+working out what the directories *mean* — what kind of thing lives here, what
+distinguishes this folder from its sibling, what the numbering encodes — and
+then locating a new thing inside that scheme. A linter cannot check it because
+the rule is not written down anywhere; it is implied by the arrangement.
+
+**Getting it wrong is invisible to every check and permanent.** The file is in
+the wrong directory under the wrong name, the tests pass, and the codebase is
+worse. This is the **clean fix versus cheap workaround** distinction
+(`E3`) applied to structure rather than repair: the work is done and the thing
+it was done to is degraded.
+
+**In this architecture it is not an aesthetic concern, it is an input to
+retrieval.** Processors run on bounded context and a context assembler has to
+find what they need (R7.1). A well-placed, well-named artifact is findable by
+the organising principle; a misplaced one is findable only by full search.
+**Bad placement degrades R7.1 directly**, which makes this one of the few
+mechanisms whose failures compound into another role rather than staying local.
+
+**This repository is its own worked example.** Numbered documents, findings
+append-only, `experiments/<E-number>-<slug>/`, `docs/00-design/40-roadmap/
+03-research-and-evaluation/` — the arrangement carries meaning, none of it is
+linted, and a new sheet placed wrongly would still read correctly and be lost.
 
 ### R1.3 Scope adherence
 
