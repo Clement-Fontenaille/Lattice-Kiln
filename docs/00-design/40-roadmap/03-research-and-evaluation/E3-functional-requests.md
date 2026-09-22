@@ -60,8 +60,9 @@ settled; the specifications are not, and each gets its own discussion.
 | 5 | dig a large corpus, then implement | retrieval under volume | feature works | **build** |
 | 6 | diagnose a failure from logs | inference from evidence | structured claim, exact match | **build** |
 | 7 | apply one decision across many sites | **internal consistency**, drift | agreement across sites, first ten against last ten | **build** |
+| 8 | a fault the failing evidence points away from | **locating a fault against misleading evidence** | red → green **+ held-out** | **build, from this project's own history** |
 
-### Why 1–3 are borrowed
+### Why 1–3 are borrowed, and what is actually borrowed
 
 They are SWE-bench-shaped. Building them here means fewer items and unproven
 checks, and **a wrong check is worse than a missing item** — it injects
@@ -70,11 +71,74 @@ indistinguishable from a factor (`70-THINKING/02`). A cluster of subtly broken
 checks presents as a clean, spurious dimension.
 
 This project's asset is not the tasks. It is the instrumented comparison: setup
-keys, the setup-keyed results store, per-cell transcripts, the judge arms, reps with intervals, a
-pool that survives being killed.
+keys, the setup-keyed results store, per-cell transcripts, the judge arms, reps
+with intervals, a pool that survives being killed.
 
-Borrowed items still have to pass the air-gap rule in E4 and be re-checked
-against our own held-out mechanism. **A borrowed task is not a borrowed check.**
+**What is borrowed is the scenario, not the item.** The perturbation and the
+held-out check are authored here in every case. A borrowed task is not a
+borrowed check, and for the reason in the next section it is not a borrowed
+measurement either.
+
+### Contamination, which is not the simple objection it looks like
+
+The reflex is to treat a contaminated item as invalid. That reflex is wrong,
+and thinking it through changes what to build rather than which corpus to pick.
+
+**Contamination is not cheating.** A developer who has seen a bug pattern a
+hundred times fixes it in a minute, and nobody calls that fraud — it is
+experience, and it is most of what makes a senior engineer fast. The line
+between *retrieved* and *derived* is not clean in people either, and there is
+no principled reason to expect it to be clean in a model. A fast correct answer
+from a practiced pattern match may be tangentially indistinguishable from a
+fast correct answer from reasoning, and for the work in front of you, it may
+not matter which it was.
+
+**What breaks is not the performance. It is the measurement's use.**
+Everything measured here is measured in order to **predict** — what a model can
+be expected to provide, where a firing rule should fire, how far an assembly
+reaches on work that is not in any training set. A contaminated item measures
+recall of that item, and **recall does not extrapolate.**
+
+The concrete damage runs through the firing rule:
+
+> A contaminated anchor **inflates the estimated effective ceiling.** The
+> decomposition trigger consumes that estimate. An inflated ceiling means the
+> assembly decomposes **less** than it should, and fails on the operator's own
+> repository, which is exactly the work that was never in training.
+
+So the cost is not an inflated score on a leaderboard nobody here reads. It is
+a firing rule that is wrong in a specific direction, on the work that matters.
+
+**It is invisible in the outcome channel.** Two subjects passing the same item,
+one by recall and one by derivation, produce identical rows. Nothing in
+`objective_pass` distinguishes them, and no amount of reps will.
+
+#### The technique: perturbed twins
+
+For every borrowed item, author a **semantically identical variant** — renamed
+symbols, reordered definitions, a restated but equivalent test, different
+fixture data with the same structure. Both are run.
+
+| original | twin | reading |
+|---|---|---|
+| pass | pass | derivation, or memorisation deep enough not to care |
+| pass | **fail** | **recall.** The item measures retrieval of that item |
+| fail | pass | the perturbation changed the difficulty; the twin is mis-built |
+| fail | fail | beyond reach either way |
+
+Perturbation is mostly mechanical, which is what makes this affordable at the
+item counts this layer needs.
+
+**The honest limit:** a twin that also passes could be memorisation robust to
+surface change rather than derivation. It is a better bet, not a proof. What it
+does establish is a **bound** — the gap between original and twin is recall
+that the surface change defeats, and that bound is more than the outcome
+channel alone can give.
+
+**This is the same mechanism as the held-out check, pointed at a different
+failure.** The held-out check defeats cheating within a run; the perturbed twin
+defeats recall from before the run. Both work by making the thing that would
+pass for the wrong reason fail.
 
 ### Why 1 and 2 are anchors rather than discriminators
 
@@ -160,6 +224,58 @@ training data, which is fixable by choosing an obscure or synthetic source.
 **Build the convention change; keep the port as the anchor.** The port is the
 more realistic item and the one worth having when it is affordable; the
 convention change is the one that gets built and answers the question sooner.
+
+### 8 — when the evidence points somewhere other than the fault
+
+Requested 2026-09-22, for a reason that is a design input rather than a
+preference: **the operator wants an item family recognisable from their own
+work**, in order to read a failure and judge what was missing and which
+mechanism would have helped. An item nobody recognises cannot be reasoned about
+that way, however well it scores.
+
+**Directions 1–3 share a shape that real debugging often does not have.** The
+failing test points at the fault. Localisation is a search over a space the
+evidence narrows for you. That is a real and common kind of work, and it is not
+the kind that consumes the hours.
+
+The family proposed here inverts it:
+
+> **The failing evidence is accurate, and it points somewhere other than the
+> fault.** The defect is not in the code under the assertion; it is in the
+> relation between that code and something not visible from it.
+
+**The source is this repository's own history**, which is what makes the items
+recognisable and the ground truth exact. Four instances from 2026-09-22 alone:
+
+| symptom | where the fault was |
+|---|---|
+| a claim aborts with `PermissionError` on unlink | the claim had already succeeded; removing the pending file is tidying, and a losing thread still held it open. Windows only, twelve threads only |
+| two models loaded on one card, 7,897 of 8,192 MiB | the guard read residency and decided *before* any load happened. Four workers each read zero and each concluded it fit |
+| a model appears to exceed VRAM and OOM | three orphaned `llama-server` processes from earlier restarts were holding 5,830 MiB. The configuration was innocent |
+| a judge emits no JSON in 18% of calls | undiagnosable — nothing stored what the model said. The fault is in what was not recorded |
+
+They share a structure. **The evidence is local and the cause is relational** —
+to the operating system's atomicity guarantees, to another process, to a
+decision made before the observation, to data that was never captured.
+
+**Why this is worth building rather than borrowing.** Corpora are assembled
+from resolved issues with a failing test attached, which selects for the shape
+in directions 1–3. A fault whose evidence misdirects tends to be resolved with
+a commit message rather than a test, so it is under-represented in exactly the
+corpora available.
+
+**How it is checked.** As direction 3: red → green on the visible check, plus a
+held-out check that the obvious local fix fails. Here the held-out check writes
+itself — the obvious fix is *repair the thing the evidence points at*, and the
+held-out check is the one that still fails when you do.
+
+**What it measures, and the caution.** The named demand is locating a fault
+against misleading evidence. That is a functional-layer label, and this layer
+does not attribute, so it may also be measuring tool use, patience, or a
+willingness to disbelieve a test. **It is drawn from one project's history and
+therefore from one engineer's habits** — a population of one, with all that
+implies, and the transfer question is whether these items behave like each
+other at all.
 
 ## The held-out check does three jobs
 
