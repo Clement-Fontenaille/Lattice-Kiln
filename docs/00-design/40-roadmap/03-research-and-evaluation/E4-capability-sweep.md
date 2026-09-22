@@ -62,8 +62,317 @@ firing rules consume their outputs.**
 | aggregator | recombination under imperfect inputs | **NYI** — `70-THINKING/02` calls it the binding constraint |
 | knowledge curator | retention; retrieval; use of knowledge not derived in session | **NYI** — M8, E6 |
 
-Each subsection is still to be written, one per discussion. The inventory is
-the settled part; the per-mechanism designs are not.
+### How a mechanism is exercised without being isolated
+
+The standing assumption in `70-THINKING/02` forbids probing an operation in
+isolation — supplying fixed correct sub-results to measure recombination
+constructs a situation that never occurs. This layer stays inside it by a rule
+that is easy to state and easy to violate by accident:
+
+> **The role runs in its real position in a working assembly. What varies is
+> what the assembly hands it.**
+
+Nothing is stubbed, no stage is replaced by an oracle, and the deliverable is
+always the assembly's deliverable. The M7 arms are already built this way —
+each is a workflow with named stages, and a stage's input can be varied without
+removing the stage.
+
+**A mechanism entry that cannot be exercised this way does not get built.** It
+goes on the list with the obstruction written down, which is what happened to
+three of the nine below.
+
+### What each entry carries
+
+| field | means |
+|---|---|
+| **does** | the role's job in the assembly, in one sentence |
+| **varied** | what the assembly hands it, and along what |
+| **held** | what stays fixed, and therefore what the entry is blind to |
+| **read** | the observable, and where it already exists if it does |
+| **null** | what a flat result would mean, written before data |
+| **draws on** | the `E5` entries expected to predict it — the skill-to-mechanism transfer test |
+
+---
+
+## R1 — Implementer
+
+The only role in `10-technical/06-processor-contract.md` that M4 and M7 both
+instantiate directly. Everything else on this sheet either wraps it or is not
+built.
+
+### R1.1 Execution
+
+- **does** — turn an objective plus a scope into a change that satisfies it.
+- **varied** — the objective's distance from a single coherent edit.
+- **held** — context assembly, the check, the scope.
+- **read** — `objective_pass` and the structural dimensions, already recorded per rep.
+- **null** — flat across the range says execution is not where this assembly's limit is, which would move attention to every other role on this sheet.
+- **draws on** — `E5` S6 decomposition, since an objective past one coherent edit is S6's own ladder seen from inside a role.
+
+### R1.2 Convention inference
+
+- **does** — match the surrounding code's conventions without being told them.
+- **varied** — how strongly the fixture states its conventions: enforced by a linter, visible in neighbouring code, or present only by implication.
+- **held** — the functional requirement, which is satisfiable while ignoring every convention.
+- **read** — structural dimensions, which is what they were added for.
+- **null** — flat says conventions are followed or ignored regardless of how they are signalled, which makes the signalling work pointless and is worth knowing.
+- **draws on** — `E5` S2 relevance discrimination.
+
+### R1.3 Scope adherence
+
+- **does** — change what was asked and not more.
+- **varied** — how much adjacent code invites improvement while being out of scope.
+- **held** — the objective.
+- **read** — diff extent against the minimal correct diff; currently unrecorded.
+- **null** — flat says scope is respected or not as a disposition rather than a response to temptation.
+- **draws on** — `E5` S4 objective retention.
+
+---
+
+## R2 — Premise auditor
+
+M7 stage `s1_premise_audit`. Advisory: it fires on every task and does not gate.
+
+### R2.1 Premise evaluation
+
+- **does** — judge whether the request is worth carrying out before any work begins.
+- **varied** — the depth at which the unsoundness is discoverable, exactly `E5` S3's ladder.
+- **held** — everything downstream; the audit's verdict is recorded and the work proceeds regardless, which is what makes this measurable at all.
+- **read** — the audit's own output, parsed per rep. Parse rates are already recorded per arm and model.
+- **null** — flat says the auditor's output does not track how hard the premise is to fault, which would mean it is producing a disposition rather than an assessment.
+- **draws on** — `E5` S3 premise evaluation, directly. **This is the cleanest skill-to-mechanism pair on the sheet** — same demand, one graded end-to-end, one in position — and therefore the first place to run that comparison.
+
+**Standing evidence, and the caution attached.** `50-findings/14` addendum
+withdrew the claim that the engineer stage refuses correctly at 83%. That
+figure is `declined_correctly`, a harness-side conjunction which
+`50-findings/12` records being wrong in this exact direction during an outage.
+**What the auditor actually does on false-premise tasks is unmeasured**, and
+transcripts now make it cheap to settle by reading whether the refusal is
+argued.
+
+---
+
+## R3 — Concern splitter
+
+M7 stage `s2_concern_split`, fired by a hand-set rule.
+
+### R3.1 Decomposition
+
+- **does** — turn one objective into sub-objectives that fit.
+- **varied** — how far the objective exceeds a single pass.
+- **held** — the executor, the check, and the firing decision, which is R6's.
+- **read** — the assembly's deliverable, never the decomposition itself. Grading the artifact requires knowing the right decomposition, which is authorship above the target's effective ceiling.
+- **null** — flat says splitting is not what is buying the improvement where improvement is seen.
+- **draws on** — `E5` S6.
+
+**Standing evidence:** concern-split took `wf6` from 2/6 to 6/6 and cost 252
+seconds to help two tasks in thirty. That is a large effect on one task and a
+poor average, and it has never been separated into *when it fires* and *how
+well it splits* — which is the R3/R6 division this sheet draws.
+
+### R3.2 Sub-objective authoring
+
+- **does** — write a sub-objective an executor can act on without the parent.
+- **varied** — how much of the parent's context the sub-objective must carry to stand alone.
+- **held** — the split itself, as produced.
+- **read** — executor success per sub-objective, which separates *a bad split* from *a good split badly written*.
+- **null** — flat says the writing does not matter once the split is right, which would simplify the role considerably.
+- **draws on** — `E5` S1 grain closing.
+
+### R3.3 Objective preservation
+
+- **does** — keep the parent's intent alive across the split.
+- **varied** — the number of sub-objectives and the distance between them.
+- **held** — executor competence, so that each part can be done well while the whole misses.
+- **read** — parent objective satisfied while every sub-objective was; **tangential success made countable.**
+- **null** — flat says intent survives splitting for free, which would remove a failure mode `70-THINKING/02` treats as characteristic.
+- **draws on** — `E5` S4.
+
+---
+
+## R4 — Judge
+
+The most-measured role here, and `50-findings/14` measured the **contract**
+rather than the judgement.
+
+### R4.1 Evidence weighing
+
+- **does** — decide whether a change satisfies a condition, from the change and the condition.
+- **varied** — how much the diff resembles a correct change without being one.
+- **held** — the conditions, the diff, the format.
+- **read** — per-condition `checked` entries against the deterministic check.
+- **null** — flat says the judge is reading surface resemblance, which `50-findings/11` already suspects.
+- **draws on** — `E5` S1.
+
+### R4.2 Verdict calibration
+
+- **does** — convert per-condition assessments into one verdict.
+- **varied** — the mix of met and unmet conditions, and whether the unmet ones matter.
+- **held** — the assessments, as the judge produced them.
+- **read** — false rejection and false acceptance separately, **never a single correctness figure** — `50-findings/14` found them moving in opposite directions under one variable, and a combined score hides that entirely.
+- **null** — flat says the verdict is a function of the count of unmet conditions and nothing else, which is precisely what `judge_caveat`'s prompt block tells it not to do.
+- **draws on** — `E5` S3.
+
+### R4.3 Instruction formulation
+
+- **does** — say what to change, when the verdict is `not_met`.
+- **varied** — how far the fix is from the condition that failed.
+- **held** — the verdict.
+- **read** — whether the next round's executor succeeds given the instruction. **Unmeasured**, and it is the only one of R4's three mechanisms with a downstream consequence that can be scored.
+- **null** — flat says instruction quality does not move the loop, which would make the judge's authority question moot.
+- **draws on** — `E5` S1.
+
+---
+
+## R5 — Test synthesiser
+
+M7 `test_synth`. Writes a discriminating test rather than judging one.
+
+### R5.1 Discriminator authoring
+
+- **does** — write a test that passes on correct work and fails on plausible-but-wrong work.
+- **varied** — how close the plausible-wrong variant is to correct.
+- **held** — the objective and the implementation under test.
+- **read** — the synthesised test run against both a correct and an incorrect implementation; a test passing both discriminates nothing.
+- **null** — flat says synthesised tests do not discriminate at any distance, which would retire the role.
+- **draws on** — `E5` S3, since authoring a discriminator and faulting a premise both require holding what *would* be true if the claim were false.
+
+**This is the mechanism form of E3's held-out check**, and the two should be
+read together: a role that cannot author a discriminator cannot be trusted to
+author the check that scores it.
+
+---
+
+## R6 — Orchestrator — **not implemented**
+
+The firing rule is hand-set. `70-THINKING/02`'s candidate contribution is to
+replace ADaPT's `max_depth` constant with a measured bound, and this is the
+role that would consume it.
+
+### R6.1 Ceiling self-location
+
+- **does** — judge whether an objective is within reach before attempting it.
+- **varied** — nothing. **This is `E5` S8, and S8 is mapped rather than laddered** — the question asked is *can you do this, or do you need help*, and what comes out is two boundaries in task space rather than a score.
+- **held** — everything.
+- **read** — the shape relation between where the assembly says it stops and where it does.
+- **null** — different boundary shapes with no transformation relating them means the firing threshold cannot come from the running assembly and must be supplied from outside, re-measured per model and per scaffold.
+- **draws on** — `E5` S8 entirely. This entry exists to consume S8's map, not to duplicate it.
+
+### R6.2 Firing decision
+
+- **does** — decide whether to decompose.
+- **varied** — objectives spanning the assembly's measured boundary.
+- **held** — the decomposer and the executor, so the decision is separable from its execution.
+- **read** — outcome against the counterfactual arm: decomposed when it should not have been, and the reverse. **`70-THINKING/02` is explicit that decomposing below the ceiling is pure cost**, so both directions are errors.
+- **null** — flat says the firing rule is not responding to demand, which is the current hand-set state and would say the measurement bought nothing.
+- **draws on** — R6.1, and through it S8.
+
+### R6.3 Termination
+
+- **does** — stop.
+- **varied** — how clearly done the work is when it becomes done.
+- **held** — everything.
+- **read** — rounds after the last productive one. **Unmeasured**, and named in `10-technical/08-orchestrator-contract.md` as a required behaviour the runtime does not implement — a defect against a written contract rather than an open question.
+- **null** — flat says termination is insensitive to whether the work is finished.
+- **draws on** — `E5` S8.
+
+---
+
+## R7 — Context assembler
+
+M9. Partially built: `10-technical/07-naive-context-assembly.md` is the naive
+form, `14-context-manager.md` the intended one.
+
+### R7.1 Relevance discrimination
+
+- **does** — put the needed material in front of the role and leave the rest out.
+- **varied** — the ratio of irrelevant to relevant material available.
+- **held** — the role consuming it.
+- **read** — downstream role success. **Standing evidence: dloop's retry-with-failing-lines took the cross-file slice from 0.47 to 0.92 at fixed model size**, which is the largest assembly effect this project has recorded.
+- **null** — flat says assembly does not move outcomes, contradicting that measurement.
+- **draws on** — `E5` S2.
+
+### R7.2 Sufficiency estimation
+
+- **does** — know whether what it has assembled is enough.
+- **varied** — how detectably something needed is missing.
+- **held** — the assembly strategy.
+- **read** — whether the gap is flagged rather than filled by confabulation. **Standing evidence: M4 gave processors an explicit affordance to request missing context and it went unused across 16 runs, including on a task deliberately starved of a needed file.**
+- **null** — already close to a measured null. The open question is whether the capability is absent or merely never invoked, and `E3`'s direction on ungrounded references (`00-questions.md` OQ-0) answers a large part of it deterministically, without a model.
+- **draws on** — `E5` S5 absence detection.
+
+---
+
+## R8 — Aggregator — **not implemented**
+
+`70-THINKING/02` argues this bounds the integrated system ceiling and that
+improving executors cannot raise it. Nothing in this project has measured it.
+
+### R8.1 Recombination under imperfect inputs
+
+- **does** — produce the answer to the original objective from partial work toward it.
+- **varied** — the number of sub-results, how many are wrong, and whether they conflict.
+- **held** — the original objective and its check.
+- **read** — the original check, never a judgement about the merge.
+- **null** — flat says aggregation is not the binding constraint, which would contradict the argument this sheet's most consequential claim rests on, and is therefore the most valuable null available here.
+- **draws on** — `E5` S7.
+
+**The design constraint is inherited whole from S7: harvest, do not author.**
+Sub-results come from real runs in the setup-keyed results store — the wrong
+ones, the partial ones and the mutually contradictory ones included — because
+authored inputs construct the situation the standing assumption says never
+occurs. Transcripts make this buildable and did not before 2026-09-22.
+
+---
+
+## R9 — Knowledge curator — **not implemented**
+
+M8. `E6` is its experiment and is gated on M8 having something to run.
+
+### R9.1 Retention
+
+- **does** — keep a claim past the session that produced it.
+- **varied** — time and intervening work.
+- **held** — the claim.
+- **read** — recoverable and unaltered.
+- **null** — flat is expected and uninteresting until R9.2 works; retention without retrieval is storage.
+- **draws on** — nothing in `E5`. **This is a property of the store rather than of the model**, and it is on this sheet only because the role owns it.
+
+### R9.2 Retrieval
+
+- **does** — surface the right stored claim at the moment it bears.
+- **varied** — corpus size, and how obliquely the claim bears on the work.
+- **held** — the corpus.
+- **read** — a processor reusing one stored finding against one starting cold. `E6` requires the small test before the corpus sweep, for the reason that sheet gives: a corpus sweep that fails says nothing about which of ingestion, retention or retrieval failed.
+- **null** — flat says curated memory does not beat starting cold, which would overturn a core hypothesis.
+- **draws on** — `E5` S2.
+
+### R9.3 Use of knowledge not derived in session
+
+- **does** — act correctly on a claim it did not work out itself.
+- **varied** — how far the stored claim is from the current work.
+- **held** — retrieval, so the claim is in hand.
+- **read** — graded against M9's metrics — validity, reliability, pertinence, scope — **not task success alone**, since the corpus was not produced to serve any one task.
+- **null** — flat says retrieved knowledge is present and inert.
+- **draws on** — `E5` S1.
+
+---
+
+## What this inventory says about the architecture
+
+**Three of nine roles are not implemented, and the firing rules consume their
+outputs.** R6 decides when to decompose and does not exist; R8 is argued to be
+the binding constraint and does not exist; R9 is a core hypothesis and does not
+exist.
+
+**Two mechanisms are already close to measured nulls** — R7.2 sufficiency
+estimation, from M4's 16 unused affordances, and R6.3 termination, which
+`10-technical/08` requires and the runtime does not implement.
+
+**One pair is the cleanest transfer test available** — `E5` S3 against R2.1,
+the same demand graded end-to-end and in position — and it should be run first
+for that reason rather than because premise evaluation is the most important
+mechanism.
 
 ---
 
