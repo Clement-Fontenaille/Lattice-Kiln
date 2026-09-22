@@ -62,12 +62,12 @@ as hard as the situation it is drawn from.
 |---|---|---|---|---|
 | 1 | add a basic feature | navigation, convention-following | new tests pass | **borrow** |
 | 2 | fix a basic error | localisation | red → green | **borrow** |
-| 3 | fix a harder bug | depth of understanding | red → green **+ held-out** | **borrow the task, author the held-out check** |
+| 3 | fix a harder bug | **what counts as fixed** — location is given | red → green **+ held-out** | **borrow the task, author the held-out check** |
 | 4 | change + docs + CI | objective retention, **aggregation** | three independent structural checks | **build** |
 | 5 | dig a large corpus, then implement | retrieval under volume | feature works | **build** |
 | 6 | diagnose a failure from logs | inference from evidence | structured claim, exact match | **build** |
 | 7 | apply one decision across many sites | **internal consistency**, drift | agreement across sites, first ten against last ten | **build** |
-| 8 | a fault the failing evidence points away from | **locating a fault against misleading evidence** | red → green **+ held-out** | **build, from this project's own history** |
+| 8 | a fault the failing evidence points away from | **where the fault is** — the fix may be easy | red → green **+ held-out** | **build, from this project's own history** |
 
 ### Why 1–3 are borrowed, and what is actually borrowed
 
@@ -216,16 +216,28 @@ work**, in order to read a failure and judge what was missing and which
 mechanism would have helped. An item nobody recognises cannot be reasoned about
 that way, however well it scores.
 
-**Directions 1–3 share a shape that real debugging often does not have.** The
-failing test points at the fault. Localisation is a search over a space the
-evidence narrows for you. That is a real and common kind of work, and it is not
-the kind that consumes the hours.
+**Directions 1 and 2 share a shape that real debugging often does not have.**
+The failing test points at the fault, so localisation is a search over a space
+the evidence narrows for you. That is real and common work, and it is not the
+work that consumes the hours.
 
-The family proposed here inverts it:
+**Direction 3 is already past that shape, and it is hard in a different place
+from this one.** Its difficulty sits in the **fix**: the obvious repair passes
+the visible check and fails the held-out one, so the work is knowing what
+*fixed* means. The location may be perfectly well signposted and the item is
+still hard.
+
+This direction moves the difficulty to the **location**:
 
 > **The failing evidence is accurate, and it points somewhere other than the
 > fault.** The defect is not in the code under the assertion; it is in the
 > relation between that code and something not visible from it.
+
+So 3 and 8 are the two halves of *harder*, and they can be failed
+independently. A subject that locates a misdirecting fault and then applies the
+obvious repair fails 8 on the held-out check having done the hard part; a
+subject that is handed the location and still cannot tell a real fix from a
+plausible one fails 3 having been given it.
 
 **The source is this repository's own history**, which is what makes the items
 recognisable and the ground truth exact. Four instances from 2026-09-22 alone:
