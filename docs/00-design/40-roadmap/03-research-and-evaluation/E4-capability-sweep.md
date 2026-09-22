@@ -232,7 +232,15 @@ composite.
 - **Directions 4 and 6** cost new check machinery and are third in line.
 - **Reps do not get cut to buy items.** Fewer tasks at the same reps, never more
   tasks at n=1. On 2026-09-22 an effect read **+22.7 points at n≈19** and
-  **+4.3 at n≈200**; at rented-hardware prices, n=1 buys anecdote.
+  **+4.3 at n≈200** — the same cell, the same data, forty times the reps.
+  The budget here is a **window of wall-clock time on a machine that is not the
+  development host**, so the cost of getting n wrong is not a larger invoice:
+  it is the whole window, spent producing a number that has to be produced
+  again. An anecdote is not cheaper than a measurement when the machine has to
+  be set up either way.
 - **Blocked on** the air-gapped packaging item (`00-backlog.md`, 2026-09-15),
   which is the operator's own stated prerequisite rather than a parallel
-  concern.
+  concern. Note the backlog entry frames it around a **rented** H100; the
+  constraint it describes — archive in, artifacts out, no network in between —
+  is a property of the host being separate and offline, not of how it was
+  obtained, and this sheet assumes only the latter.
