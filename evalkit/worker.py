@@ -246,17 +246,21 @@ def pick(pool, who: str, sticky, loaded: set[str], card: set[str] | None = None,
     each finishes the one it is on before touching another, without being told
     which to take.
     """
+    def allow(d):
+        return fits is None or fits(d.get("env", {}).get("LATTICE_EVAL_MODEL"))
+
     if sticky is not None:
-        got = pool.claim(who, match=lambda d, k=sticky: (
+        got = pool.claim(who, match=lambda d, k=sticky: allow(d) and (
             d["cell"]["arm"], env_key(d.get("env"))) == k)
         if got is not None:
             return got
         # Same setup, different arm: no model load and no parameter change.
-        got = pool.claim(who, match=lambda d, k=sticky[1]: env_key(d.get("env")) == k)
+        got = pool.claim(who, match=lambda d, k=sticky[1]:
+                         allow(d) and env_key(d.get("env")) == k)
         if got is not None:
             return got
     if loaded:
-        got = pool.claim(who, match=lambda d: wants_loaded(d, loaded))
+        got = pool.claim(who, match=lambda d: allow(d) and wants_loaded(d, loaded))
         if got is not None:
             return got
         if others_working(pool, who):
@@ -321,6 +325,10 @@ def main():
                          "where OLLAMA_NUM_PARALLEL cannot: it is a maximum, and "
                          "ollama refuses it outright for some architectures "
                          "(nemotron_h). Items stay instance-agnostic.")
+    ap.add_argument("--model", action="append", default=[],
+                    help="only claim work for this model, repeatable. A static "
+                         "allocation the operator can get right, where four "
+                         "workers negotiating from an empty card cannot.")
     ap.add_argument("--peer", action="append", default=[],
                     help="another backend instance sharing this GPU, repeatable. "
                          "Residency is a property of the CARD, not of one server "
@@ -376,6 +384,24 @@ def main():
             if any(m.split(":")[0] == model.split(":")[0] for m in _card):
                 return True          # already on the card; using it adds nothing
             return _c + _s.get(model, 0) <= _b
+
+        # `--model` is a hard filter, applied before anything else. The
+        # dynamic guard below cannot solve the allocation on its own: four
+        # workers starting against an EMPTY card each read zero residency, each
+        # conclude their model fits, and all four claim before any load
+        # happens. Read-then-decide loses that race however carefully the
+        # arithmetic is done -- measured twice at 7,900 MiB of 8,192.
+        #
+        # Which model runs where is a decision the operator can make correctly
+        # and statically, because the sizes are known and the card is not. So
+        # when it is given, it decides, and `fits` stays as a backstop for the
+        # case where it is not.
+        if args.model:
+            want = set(args.model)
+            base = fits
+
+            def fits(model, _w=want, _b=base):    # noqa: F811
+                return bool(model) and model.split(":")[0] in _w and _b(model)
 
         first = pick(pool, who, sticky, loaded, card, fits)
         if first is HOLD:
