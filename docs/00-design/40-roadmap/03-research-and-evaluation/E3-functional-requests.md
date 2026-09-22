@@ -324,17 +324,64 @@ therefore from one engineer's habits** — a population of one, with all that
 implies, and the transfer question is whether these items behave like each
 other at all.
 
-## The held-out check does three jobs
+## The held-out check does four jobs
 
-Specified in full in [`E4`](E4-capability-sweep.md); restated here only because
-it is what makes direction 3 buildable.
+Specified in full in [`E4`](E4-capability-sweep.md); restated here because it
+is what makes directions 3 and 8 buildable.
 
 > **Author the bug so that the obvious fix passes the visible test and fails
 > the held-out one.**
 
-It operationalises "harder", it catches every form of cheating identically, and
-it is the only check that survives a model having shell access to the
-workspace.
+Three of its jobs are already recorded: it **operationalises "harder"**, so the
+word stops meaning *the author found it difficult*; it **catches every form of
+cheating identically**, whether the test was edited, skipped or monkeypatched;
+and it is the **only check that survives a model having shell access** to the
+workspace, because it is the only one that was never in it.
+
+### The fourth: it separates a clean fix from a cheap workaround
+
+This is the one worth stating on its own, because it is not an integrity
+mechanism and gets mistaken for one.
+
+**A cheap workaround is not cheating.** An engineer who adds a guard where the
+stack trace lands, catches the exception and returns a default, or widens a
+buffer until the crash stops, may sincerely believe the work is done. Nothing
+is being concealed. The repair is **shallow, not dishonest** — and it is the
+most common failure in real maintenance work, because it removes the evidence
+that anything is still wrong.
+
+**The two are invisible to the visible check by construction.** Both turn it
+green. That is what a workaround is *for*.
+
+| repair | visible check | held-out check |
+|---|---|---|
+| the fault is gone | green | green |
+| the symptom is gone | **green** | **red** |
+
+**This project has already hit it and patched around it.** E0's structural
+dimensions exist because `hf_extract_fn` and `wf3_refactor` scored identically
+whether the work was done or not — the deterministic check passed either way,
+and a check for new function definitions and their call sites had to be added
+to tell them apart. That was the right repair for those two tasks. The held-out
+check is the general form of it, and it does not need a bespoke structural
+dimension per task.
+
+It also bears on **E0 defect 1**, which is still open: structural dimensions
+are non-gating, so a run that satisfies the deterministic check while missing
+the structural requirement is currently recorded as a pass. A held-out check
+makes the same distinction *gating*, without deciding the defect-1 question
+one way or the other.
+
+**What it buys as a measure, rather than as a guard.** The gap between visible
+and held-out pass rates is a **workaround rate**, and it is a number this
+project cannot currently produce. Two subjects can be identical on every
+existing metric and differ entirely in how often their repairs are shallow —
+which is exactly the difference that matters when the work is going to be
+maintained rather than scored.
+
+Whether a shallow repair rate is a *capability* measure or a *disposition* one
+is left open here. It is the same ambiguity H3 raises about approval bias, and
+the same evidence would be needed to settle it.
 
 ## What a null means
 
