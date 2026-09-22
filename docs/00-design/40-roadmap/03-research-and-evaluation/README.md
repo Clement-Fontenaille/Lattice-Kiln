@@ -33,11 +33,22 @@ a **layer** each, and the comparisons between them are the point.
 | [`E4`](E4-capability-sweep.md) | 2 — mechanism | one role's mechanism, the rest of the system held | to the mechanism |
 | [`E5`](E5-skill-scales.md) | 3 — skill | one demand, everything else held | to the demand |
 
-**The comparisons carry the result, not the layers.** E5 against E4 asks whether
-skill capability predicts mechanism capability; E4 against E3 asks whether
-mechanism capability composes into a system that serves a request. A null on the
-second is the more interesting one, and `70-THINKING/02` predicts it if
-aggregation rather than execution is what bounds the assembly.
+**The comparisons carry the result, not the layers.** Two of them, each with its
+own name so neither gets called "the transfer test":
+
+- **skill-to-mechanism transfer** — E5 exit rungs predicting E4 mechanism scores.
+  A null says the candidate skill list is wrong, not that the mechanisms are.
+- **mechanism-to-function transfer** — E4 mechanism scores predicting E3
+  outcomes. A null says mechanism capability does not compose, and locates the
+  constraint *between* mechanisms rather than inside any of them.
+
+The second null is the more consequential, and `70-THINKING/02` predicts it if
+aggregation rather than execution is what bounds the integrated system ceiling.
+
+Terms that look generic — demand ladder, exit rung, item family, subject,
+visible and held-out check — are defined once in
+[`E5`](E5-skill-scales.md#terms-used-on-this-sheet) and used the same way in all
+three sheets.
 
 **Each sheet states what it holds constant and is therefore blind to.** That
 requirement is what survives of `E5-population-spread`, whose real argument was

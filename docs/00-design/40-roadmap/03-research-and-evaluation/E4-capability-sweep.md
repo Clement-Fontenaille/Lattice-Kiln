@@ -4,7 +4,7 @@
 layer the same day.
 **Layer:** 2 of 3 — **mechanism**. See [`README`](README.md) for the layer split.
 **Gated on:** E0 — **satisfied 2026-09-17**, and the answer constrains this sheet
-rather than merely unblocking it: the suite is **not unidimensional**, parallel
+rather than merely unblocking it: the M6 evaluation suite is **not unidimensional**, parallel
 analysis retains **two** factors, and E0 defect 1 is still open. A sweep across
 sizes on a two-factor instrument reports movement on a composite, so arm
 ordering here is read per factor or not at all.
@@ -79,7 +79,7 @@ expensive to author; [`E3`](E3-functional-requests.md) and
 **Before any of the below is built, run the existing 34 tasks once, n=1, on the
 largest model available.**
 
-If it passes 32 of 34, the suite is **exhausted at that scale** and every
+If it passes 32 of 34, the M6 evaluation suite is **exhausted at that scale** and every
 comparison run on it afterwards is noise: a scaffold buying three rungs and one
 buying six both read as "passed everything." That is a ceiling effect on the
 *instrument*, named in `70-THINKING/02` as the thing that would silently cap
@@ -87,7 +87,7 @@ this project's own output metric, and it collapses both of E0's factors at once.
 
 This costs one run and it decides what the rest of this sheet is for. A high
 score means new items are required and tuning the old ones is wasted effort; a
-middling score means the suite still discriminates and extension is the cheaper
+middling score means the M6 evaluation suite still discriminates and extension is the cheaper
 path. **Do not skip it because the answer seems obvious** — the whole point of
 the two-population design below is that the answer determines which population
 needs building.
@@ -108,7 +108,7 @@ What that forces, in the order it bites:
   registry copy worked. On an air-gapped host neither route exists, so the
   blobs and the Modelfiles ship together and the archive is verified by loading
   them, not by listing them.
-- **The pool and the store travel as directories**, which is why they are
+- **The pool and the setup-keyed results store travel as directories**, which is why they are
   directories (`evalkit/pool.py`). No daemon, no database, no service to stand
   up on the far side. An interrupted sweep repatriates and resumes.
 - **Everything the run needs to identify itself travels with it.** The setup
@@ -169,7 +169,7 @@ indistinguishable from a factor (`70-THINKING/02`). A cluster of subtly broken
 checks presents as a clean, spurious dimension.
 
 This project's asset is not the tasks. It is the instrumented comparison: setup
-keys, the store, per-cell transcripts, the judge arms, reps with intervals, a
+keys, the setup-keyed results store, per-cell transcripts, the judge arms, reps with intervals, a
 pool that survives being killed. **Borrow 1–3 as anchors; spend the authoring
 effort on 4–6, which no corpus covers and which test things this project's own
 design documents call load-bearing and unmeasured.**

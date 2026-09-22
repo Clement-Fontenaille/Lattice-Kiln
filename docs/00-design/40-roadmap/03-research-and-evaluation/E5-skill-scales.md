@@ -15,14 +15,14 @@ This sheet is a **working set**, not a settled design. Its shape is expected to
 change, and that is not licence for it to stay vague indefinitely. It converges
 when all four of these hold:
 
-1. every candidate carries a **rung ladder**, with its ordering and its
+1. every candidate carries a **demand ladder**, with its ordering and its
    non-monotonicity tolerance written down beforehand;
 2. every candidate carries a **transfer pair**, named before any data exists;
 3. the identifiability literature (`70-THINKING/02` OQ-B) has been read, and
    says whether a family of this size is recoverable at all, and from how many
    items and subjects;
-4. **one scale has been built end to end**, so the cost of a scale is a
-   measured number rather than an estimate.
+4. **one demand ladder has been built end to end**, so the cost of a
+   ladder is a measured number rather than an estimate.
 
 Until all four hold, entries here are provisional and may be demoted, merged or
 split.
@@ -77,33 +77,58 @@ the two item families it must predict across, written before any data exists.
 
 ### How this stays inside the standing assumption
 
-`70-THINKING/02` holds that the ceiling does **not** decompose into separable
+`70-THINKING/02` holds that the **bare ceiling** does **not** decompose into separable
 operations, and forbids designing separability into the instrument. A family of
 per-skill scales is exactly the shape it warns about.
 
 It stays licensed by the distinction that document draws itself: what is wanted
-is **item-level demand variation**, not skill isolation. Every scale below is
+is **item-level demand variation**, not skill isolation. Every ladder below is
 **end-to-end** — same deliverable, same check, one demand varying by
 construction. None supplies fixed sub-results, none measures an operation in
 isolation, and none claims the underlying abilities are separable.
 
 Factor structure is a **result** of running these, never a premise. If exit
-rungs correlate across scales once tuning is controlled, the ceiling is unitary
-and this family collapses to one number — which is a real finding and the
+rungs correlate across ladders once tuning is controlled, the bare ceiling is unitary and this
+family collapses to one number — which is a real finding and the
 standing assumption survives. If they diverge *stably across differently-tuned
 models*, it is dimensional. That is move 3 of the falsifiability audit in
-`70-THINKING/02`, and it cannot be run until several scales exist, so building
+`70-THINKING/02`, and it cannot be run until several ladders exist, so building
 the family is simultaneously the experiment about whether the family means
 anything.
 
+## Terms used on this sheet
+
+Several of these words mean other things elsewhere in the project or in the
+literature. Where a term is used below, it means this and not the other thing.
+
+| term | means here | not |
+|---|---|---|
+| **demand ladder** | the instrument: rungs of one increasing demand, same deliverable and same check at every rung | a difficulty ordering over unrelated tasks |
+| **capability scale** | what a demand ladder measures: the ordered dimension a subject has a position on | the ladder itself, or a score |
+| **running assembly** | a configuration executing work, as opposed to one being measured | the M6 evaluation suite, or the harness |
+| **exit rung** | the rung at which a subject stops producing correct work | a score, a percentage, or a pass rate |
+| **transfer criterion** | the rule that admits a candidate to this list: it predicts across two item families | any statistical significance test |
+| **transfer pair** | the two item families a candidate must predict across, named before data exists | the two arms of an experiment |
+| **skill-to-mechanism transfer** | E5 exit rungs predicting E4 mechanism scores | transfer learning, in the training sense |
+| **mechanism-to-function transfer** | E4 mechanism scores predicting E3 outcomes | the same thing at a different layer |
+| **item family** | a set of objectives sharing a surface form — code, prose, configuration | a task suite or a benchmark |
+| **subject** | whatever is under test at this layer: here a model under a fixed scaffold, in E4 a role, in E3 an assembly | the person operating it |
+| **visible check** | the deterministic check the subject may see and run | the held-out check |
+| **held-out check** | a deterministic check never present in the workspace | a hidden test the subject could discover |
+| **bare / effective / integrated system ceiling** | as defined in `70-THINKING/02`: model alone / model under a named scaffold / the whole configuration still achieving the original objective | "the ceiling" unqualified, which names none of them |
+
+**"The ceiling" unqualified does not appear on this sheet.** `70-THINKING/02`
+records that it names four different layers depending on context, and that an
+unqualified use is a mistake wherever the layer is not obvious.
+
 ## The candidate skills
 
-Working set, 2026-09-22. Seven entries. Each carries what varies along its
+Working set, 2026-09-22. Eight entries. Each carries what varies along its
 scale and the transfer pair it must survive, and several are expected to merge
 or be demoted once the criterion is applied to data rather than to argument.
 
 Entries are written down where they are awkward rather than left out — see the
-working rule above. S6 and S7 in particular are here **despite** the standing
+working rule above. S6, S7 and S8 are here **despite** the standing
 assumption making them hard to probe, with the objection stated inside each and
 designed around.
 
@@ -112,7 +137,7 @@ designed around.
 Bridging from the representation handed over to the representation the question
 requires. The central quantity of `70-THINKING/02`.
 
-**Scale:** the *level* of the handed representation, token-matched and
+**Ladder:** the *level* of the handed representation, token-matched and
 sufficiency-matched at every rung. R1 the failing function and its assertion →
 R3 the module as names, signatures and one-line intents → R5 a prose statement
 of what the system is for. Sufficient at every rung by construction.
@@ -131,7 +156,7 @@ into "relevant context beats maximal context" and that document says so itself.
 
 Finding the needed item among many that are not.
 
-**Scale:** ratio of irrelevant to relevant material, 1:1 → 1:1000, with the
+**Ladder:** ratio of irrelevant to relevant material, 1:1 → 1:1000, with the
 needed fact and the deliverable fixed.
 
 **Transfer pair:** finding an API fact among N documents; finding the
@@ -146,7 +171,7 @@ and it should be read as replacing that claim rather than rescuing it.
 
 Deciding whether a request is sound before doing it.
 
-**Scale:** the depth at which the unsoundness is discoverable.
+**Ladder:** the depth at which the unsoundness is discoverable.
 
 | rung | the request is contradicted by |
 |---|---|
@@ -174,7 +199,7 @@ distinguishes them; the current instrument cannot.
 
 Holding what was asked across intervening work.
 
-**Scale:** number and heterogeneity of intervening steps between receiving the
+**Ladder:** number and heterogeneity of intervening steps between receiving the
 objective and the point where it binds — 1, 3, 8, 20, 40.
 
 **Transfer pair:** a multi-file code change; a multi-step document revision.
@@ -190,7 +215,7 @@ sub-task done well, the objective dissolved.
 
 Noticing that something needed was not supplied, rather than confabulating it.
 
-**Scale:** how detectable the gap is. R1 a reference to a file never provided →
+**Ladder:** how detectable the gap is. R1 a reference to a file never provided →
 R2 a convention referenced but never stated → R3 an invariant assumed but never
 given.
 
@@ -237,7 +262,7 @@ scores.
 **Transfer pair:** a code objective too large for one pass; an analysis or
 document objective too large for one pass.
 
-**What a flat scale means:** if the exit rung tracks context occupancy rather
+**What a flat ladder means:** if the exit rung tracks context occupancy rather
 than structural part-count — R3 and R4 differing little while R2 and R3 differ a
 lot — this is not decomposition, it is S2 or a window limit, and it merges.
 
@@ -252,7 +277,7 @@ wrong in interacting ways. Such a measurement can be perfectly reliable and mean
 nothing, and the direction in which it misleads is not predictable in advance.
 
 **The design around it: harvest, do not author.** Sub-results come from **real
-runs already in the store** — the wrong ones, the partial ones and the mutually
+runs already in the setup-keyed results store** — the wrong ones, the partial ones and the mutually
 contradictory ones included — which is precisely the situation the objection
 says authored inputs cannot reproduce. Transcripts make this buildable now and
 did not before 2026-09-22.
@@ -283,30 +308,81 @@ behind them. That is a weaker form of the objection, not its absence, and it is
 why R5 mixes provenance — an aggregator in a real assembly also receives work it
 did not commission.
 
-### Demoted — consistency under repetition
+### S8 — Ceiling self-location
 
-Same input, same answer. Proposed and **rejected as a skill**: it has no demand
+Judging whether a given objective sits above or below the subject's own
+measured exit rung, before attempting it.
+
+**Named "ceiling self-location" rather than "self-assessment"**, which could
+mean confidence in an answer, quality review of finished work, or this. This is
+only the third: a prediction about fit, made before the work.
+
+**The ordering problem, stated first.** This is **second-order**. It is scored
+against the exit rungs S1–S7 produce, so it cannot be built before them. In the
+first draft that was treated as grounds for leaving it out, which was wrong for
+the same reason S6 and S7 were: a dependency is a sequence, not a disqualification.
+
+**Ladder:** signed distance between the objective and the subject's own measured
+exit rung on whichever demand ladder the objective loads.
+
+| rung | the objective sits |
+|---|---|
+| R1 | far below the subject's exit rung |
+| R2 | one rung below |
+| R3 | **at** the exit rung |
+| R4 | one rung above |
+| R5 | far above |
+
+At each, the subject is asked one question before any work: *can you complete
+this?* The deliverable is the prediction, and the check is whether it matched
+what the subject then actually did on the same item.
+
+**The measure is discrimination, not accuracy, and this is the part most easily
+got wrong.** A subject that answers "yes" to everything scores perfectly at R1
+and R2 and zero at R4 and R5, and its overall accuracy depends only on how the
+rungs were sampled. What is wanted is whether the **predicted-yes rate falls as
+the rung rises**, and how sharply it falls at R3 — a flat line is uniform
+optimism wearing calibration's clothes.
+
+**Transfer pair:** predicting its own completion on code objectives; predicting
+its own completion on analysis or document objectives.
+
+**Why it is worth the dependency.** Every firing rule in the architecture
+consumes this. `decompose when demand exceeds the effective ceiling` is a comparison
+between two numbers, and this is the only one of the two a running assembly can
+produce for itself — the other comes from measurement done in advance. Without
+it, the decomposition trigger stays a hand-set constant, which is precisely
+what `70-THINKING/02`'s candidate contribution proposes to replace.
+
+**What a null means here is unusually specific.** Flat discrimination across
+R1–R5, with the exit rungs themselves well established, would say the subject
+has no usable access to its own limits. That does not merely remove one
+mechanism; it removes the input the self-directed decomposition strategy
+depends on, and the firing rule would then have to be supplied from outside the
+running assembly permanently rather than provisionally.
+
+### Demoted — repetition variance
+
+Same objective twice, same answer. Proposed and **rejected as a skill**: it has no demand
 to vary, so it cannot have a rung. It is a *variance measure taken on the other
 scales* at fixed demand, and it belongs in the method rather than the list.
 Recorded here because it is the first thing the criterion above disqualified,
 which is the criterion doing its job.
 
-### Absent, and the reason has to be an ordering one
+### Nothing is deliberately absent, and that is recent
 
-**Fit self-assessment** — *can the model tell whether a task is above its own
-ceiling* — is the only candidate deliberately without a scale here, and the
-reason is sequence rather than discomfort. It is **second-order**: it is scored
-as the correlation between predicted and actual competence, so it cannot be
-measured until the first-order ceilings this sheet produces exist. It belongs to
-the orchestrator role in [`E4`](E4-capability-sweep.md), gated on E5's results.
+Two candidates were cut from the first draft of this list and both have been
+restored — S6 and S7 on the grounds that the standing assumption constrains how
+a demand is probed rather than whether it is named, S8 on the grounds that a
+dependency is a sequence rather than a disqualification.
 
-**Every firing rule in the architecture consumes its output**, which is why the
-ordering is worth stating rather than assuming.
+Both cuts were made for the same bad reason: the entry was awkward to design,
+so it was left out, and leaving it out looked like a judgement about the
+entry rather than about the designer. That is what the working rule at the top
+of this sheet exists to prevent.
 
-*Decomposition and aggregation were listed here in the first draft, on the
-grounds that the standing assumption forbids probing them in isolation. That was
-the wrong call: the assumption constrains how they are probed, not whether they
-are named. They are S6 and S7 above.*
+**If something is missing from S1–S8, it is missing by oversight and not by
+decision.**
 
 ## The transfer tests
 
@@ -343,7 +419,7 @@ subject that tops out at R4 on all five scales and fails every functional task
 is not a contradiction; it is the composition failing, and no amount of
 resolution at this layer would show it.
 
-## What would falsify a scale
+## What would falsify a demand ladder
 
 **Inherited from the former E3, unchanged, and the load-bearing part of this
 sheet:**
@@ -365,19 +441,20 @@ size alone**. Tuning reshapes results unevenly across domains, so a size-only
 design reports a capability curve that is partly a tuning curve with nothing in
 the result saying which part. At this layer it does double duty — divergence
 that tracks the tuning domain is an artifact, divergence stable across
-differently-tuned models is the evidence that the ceiling is dimensional.
+differently-tuned models is the evidence that the bare ceiling is
+dimensional.
 
 ## Open
 
-- **The list is a working set.** Seven entries, one already demoted on the
-  criterion, two restored after being wrongly cut. Which of S1–S7 survives its
+- **The candidate skill list is a working set.** Eight entries, one demoted
+  by the transfer criterion, three restored after being wrongly cut. Which of S1–S7 survives its
   transfer pair is the first thing this sheet produces, and S4 and S6 are the
-  two most likely to merge into something else.
+  two most likely to merge into another entry.
 - **The identifiability question is unresolved** and is the same one
   `70-THINKING/02` defers to under OQ-B: how many items and how many subjects
   does recovering latent structure take, and when is it recoverable at all.
-  Reading that literature is cheaper than running a scale family that cannot
+  Reading that literature is cheaper than running a ladder family that cannot
   identify anything.
-- **Cost is unknown** until the item-authoring effort for one scale is real.
+- **Cost is unknown** until the item-authoring effort for one ladder is real.
   S1 or S3 first, on the argument that S1 carries the grain-match test and S3
   extends a measurement that already exists.

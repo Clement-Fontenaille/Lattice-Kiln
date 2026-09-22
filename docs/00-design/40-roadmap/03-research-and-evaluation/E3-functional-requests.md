@@ -18,7 +18,8 @@ would phrase it.** No stage is isolated, no demand is graded, nothing is held at
 a chosen level. The subject is the assembly, and the score is whether the
 request was served.
 
-This is the layer that is worth having and the layer that explains nothing.
+This is the layer whose result is worth having and whose result explains
+nothing.
 
 ## Why it cannot attribute, and why that is the design
 
@@ -30,14 +31,15 @@ the very things a real request does not hold constant.
 Its job is to be **the thing the other two layers are checked against.** If
 mechanism scores (E4) rise and functional outcomes here do not, the composition
 is the constraint — which is what `70-THINKING/02` predicts if aggregation
-rather than execution bounds the system. That gap is only visible because this
+rather than execution bounds the integrated system ceiling. That gap is
+visible only because this
 layer refuses to attribute.
 
 ## What is held constant, and therefore what this layer is blind to
 
 Almost nothing is held constant, which is the point. What *is* fixed is the
 **operator** — and the former `E5-population-spread` is the sheet that named
-the cost: *every experiment that holds the operator constant scores the system
+the cost: *every experiment that holds the operator constant scores the assembly
 minus the person using it.* This layer is the one where that bites hardest,
 because a real request is exactly where an operator would be intervening.
 
@@ -67,7 +69,7 @@ indistinguishable from a factor (`70-THINKING/02`). A cluster of subtly broken
 checks presents as a clean, spurious dimension.
 
 This project's asset is not the tasks. It is the instrumented comparison: setup
-keys, the store, per-cell transcripts, the judge arms, reps with intervals, a
+keys, the setup-keyed results store, per-cell transcripts, the judge arms, reps with intervals, a
 pool that survives being killed.
 
 Borrowed items still have to pass the air-gap rule in E4 and be re-checked
@@ -76,8 +78,9 @@ against our own held-out mechanism. **A borrowed task is not a borrowed check.**
 ### Why 1 and 2 are anchors rather than discriminators
 
 They will saturate on a large model, and that is their job: they hold the
-bottom of the difficulty scale so that ability and lift stay estimable above
-it. An item set that tops out near the subject's ceiling cannot tell a good
+bottom of the difficulty range so that ability and lift stay estimable above
+it. An item set that tops out near the subject's effective ceiling cannot tell a
+good
 scaffold from a great one, and the preflight in E4 exists to find out whether
 the current suite already has that problem.
 
@@ -126,7 +129,7 @@ capability does not compose, and it locates the constraint between mechanisms
 rather than inside any of them.
 
 Flat outcomes with E4 *also* flat says the subjects do not differ on anything
-these tasks demand, which bounds the suite rather than the systems.
+these tasks demand, which bounds the M6 evaluation suite rather than the systems.
 
 ## Open
 
