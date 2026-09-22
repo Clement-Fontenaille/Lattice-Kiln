@@ -66,14 +66,33 @@ def backend_live(env: dict) -> tuple[bool, str]:
 
 
 def loaded_models(base_url: str = "http://localhost:11434") -> set[str]:
-    """What the backend currently holds resident. Empty means an idle card, and
-    an idle card is free to be filled with anything."""
+    """What one backend instance holds resident. Empty means it holds nothing."""
     try:
         with urllib.request.urlopen(f"{base_url}/api/ps", timeout=5) as r:
             d = json.loads(r.read().decode("utf-8", "replace"))
         return {m.get("name", "") for m in (d.get("models") or [])}
     except Exception:  # noqa: BLE001
         return set()
+
+
+def card_models(urls) -> set[str]:
+    """What the CARD holds, across every instance on it.
+
+    Several server processes on one GPU share one pool of VRAM, and each one
+    only reports its own models. A worker asking just its own instance is
+    therefore blind to the thing most likely to hurt it: two instances holding
+    two different models at once. With nemotron3-nano-4b at 2,865 MiB per
+    instance and qwen 7B at 5,200 MiB, any pairing of the two overruns an 8 GiB
+    card, and the first version of `pick` would have walked into it at the tail
+    of a sweep -- the moment `others_working` goes false and the swap guard
+    opens.
+
+    Residency is a property of the card, so this is the set to reason about.
+    """
+    out = set()
+    for u in urls:
+        out |= loaded_models(u)
+    return out
 
 
 def others_working(pool, who: str) -> bool:
@@ -104,7 +123,7 @@ model another worker is mid-item on. Distinct from None, which means the pool
 has nothing this worker could take at all."""
 
 
-def pick(pool, who: str, sticky, loaded: set[str]):
+def pick(pool, who: str, sticky, loaded: set[str], card: set[str] | None = None):
     """Choose the next item, in the order that costs the card least.
 
       1. more of the group just run       -- no model change at all
@@ -127,6 +146,19 @@ def pick(pool, who: str, sticky, loaded: set[str]):
             return got
         if others_working(pool, who):
             return HOLD if pool.counts()["pending"] else None
+
+    # Swapping inside THIS instance is safe: ollama evicts the old model, so
+    # the card never holds both. What is not safe is loading a model beside one
+    # a PEER instance is holding, because those do co-exist and share the same
+    # VRAM -- nemotron3-nano-4b at 2,865 MiB alongside qwen 7B at 5,200 MiB
+    # overruns an 8 GiB card. So the constraint is on what the peers hold, not
+    # on what this worker holds.
+    peers = (card - loaded) if card is not None else set()
+    if peers:
+        got = pool.claim(who, match=lambda d: wants_loaded(d, peers))
+        if got is not None:
+            return got
+        return HOLD if pool.counts()["pending"] else None
     return pool.claim(who)
 
 
@@ -170,6 +202,11 @@ def main():
                          "where OLLAMA_NUM_PARALLEL cannot: it is a maximum, and "
                          "ollama refuses it outright for some architectures "
                          "(nemotron_h). Items stay instance-agnostic.")
+    ap.add_argument("--peer", action="append", default=[],
+                    help="another backend instance sharing this GPU, repeatable. "
+                         "Residency is a property of the CARD, not of one server "
+                         "process, and a worker blind to its peers will pair two "
+                         "models that do not fit together.")
     ap.add_argument("--reap", action="store_true",
                     help="return items whose worker died before starting")
     args = ap.parse_args()
@@ -188,7 +225,8 @@ def main():
     sticky = None          # keep working one group while it lasts
     while True:
         loaded = loaded_models(args.base_url)
-        first = pick(pool, who, sticky, loaded)
+        card = card_models([args.base_url, *args.peer])
+        first = pick(pool, who, sticky, loaded, card)
         if first is HOLD:
             if args.follow:
                 print(f"[{who}] holding: {sorted(loaded)} resident and in use by "

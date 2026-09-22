@@ -138,6 +138,28 @@ def test_sticky_beats_resident():
     print("ok  pick: sticky group is tried before anything else")
 
 
+def test_peer_instance_blocks_an_unfittable_pairing():
+    """Two servers on one GPU share its VRAM and each reports only its own
+    models. A worker blind to its peer pairs two models that do not fit."""
+    p = fresh()
+    p.enqueue(cell("mB", arm="monolith"), 2, env=env("mB"), requested_by="r")
+    # this worker's instance is empty; a PEER holds mA
+    assert pick(p, "w1", None, set(), card={"mA"}) is HOLD
+    assert p.counts()["pending"] == 2, p.counts()
+    # same pool, no peer: swapping inside one instance evicts, so it is free
+    assert pick(p, "w1", None, set(), card=set()) is not None
+    print("ok  pick: a peer instance's model blocks the pairing, alone does not")
+
+
+def test_swap_within_my_own_instance_is_allowed():
+    """The card never holds both when one instance replaces its own model."""
+    p = fresh()
+    p.enqueue(cell("mB", arm="monolith"), 1, env=env("mB"), requested_by="r")
+    got = pick(p, "w1", None, {"mA"}, card={"mA"})      # only I hold mA
+    assert got is not None and got.env["LATTICE_EVAL_MODEL"] == "mB"
+    print("ok  pick: a worker may replace the model in its own instance")
+
+
 if __name__ == "__main__":
     for fn in (test_enqueue_is_idempotent_under_concurrency,
                test_no_double_claim,
@@ -147,7 +169,9 @@ if __name__ == "__main__":
                test_second_worker_prefers_the_resident_model,
                test_second_worker_holds_rather_than_evicting,
                test_a_lone_worker_may_swap,
-               test_sticky_beats_resident):
+               test_sticky_beats_resident,
+               test_peer_instance_blocks_an_unfittable_pairing,
+               test_swap_within_my_own_instance_is_allowed):
         fn()
     shutil.rmtree(TMP, ignore_errors=True)
     print("\nall pool concurrency properties hold")

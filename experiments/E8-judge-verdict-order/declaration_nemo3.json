@@ -1,0 +1,29 @@
+{
+  "name": "E8 - judge verdict order, Nemotron 3 Nano 4B at parity",
+  "reps": 5,
+  "arms": [
+    "judge_anchored",
+    "judge_bypass",
+    "judge_caveat"
+  ],
+  "judge_formats": [
+    "decision_first",
+    "reason_first"
+  ],
+  "models": {
+    "nemo3": {
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b",
+      "params": {
+        "think": false,
+        "min_predict": 400,
+        "num_ctx": "any"
+      }
+    }
+  },
+  "_tasks": "omitted, so the whole suite. baseline and monolith are deliberately absent from `arms`: neither has a judge stage, so neither can move with this variable, and they are read from the store as the floor and the no-judge reference rather than re-run.",
+  "_measure": "Rejections of check-passing candidates -- candidates whose deterministic check was already full and whose verdict is not_met. Earned score over the non-floor tasks is the downstream consequence, reported beside it.",
+  "_num_ctx_any": "E8 varies the judge's output order, not the context ceiling. `any` means: use the ambient default when running, and match a recorded row whatever ceiling it had. That readmits judge_anchored's qwen rows, which were recorded at 16384 before the 2026-09-15 cut, without pretending 16384 and 8192 are the same number. If truncation is ever suspected, the cells still say which is which.",
+  "_nemo3": "Added 2026-09-22 at full parity with the other two subjects: same arms, same formats, same 34 tasks, same 5 reps. Nemotron 3 Nano 4B is compressed from Nemotron Nano 9B v2 (the `nemo` row) via NVIDIA's Nemotron Elastic framework, and NVIDIA claims state-of-the-art IFEval/IFBench in its size class. 50-findings/14 found the 9B's two weaknesses to be instruction following rather than judgement -- no parseable verdict in 17-21% of decision_first judge calls, and `unsound_request` used 16x less often than qwen -- so a parent/child pair differing mainly on that axis is the cheapest test of whether those belong to the model or to the scaffold. `think=false` and `min_predict 400` carried over from the 9B; the health gate (probe_nemotron3.py) checks they actually apply, because this model steers reasoning by system prompt rather than by that parameter.",
+  "_scope": "The same declaration restricted to one subject, because the models cannot share this card. Two ollama instances hold nemotron3-nano-4b at 2,865 MiB each, 6,465 of 8,192 MiB; a worker swapping to qwen 7B (5.2 GB) would not fit beside the other instance's copy. The full declaration's remaining qwen (978) and nemo (186) deficits are a separate run, to be made when the card is not holding two instances of something else."
+}
