@@ -48,8 +48,15 @@ the assembly, or it may be the absence of anyone steering it.
 
 ## The directions
 
-Six, from the operator's own list, 2026-09-22. The **borrow-or-build** call is
-settled; the specifications are not, and each gets its own discussion.
+Eight. Six from the operator's list of 2026-09-22, plus 7 and 8 added in the
+discussions that followed. The **borrow-or-build** call is settled; the
+specifications are not, and each gets its own discussion.
+
+**None of them carries a difficulty dial**, and two drafts wrongly gave one to
+directions 5 and 7. Grading a demand while holding everything else constant is
+what a *demand ladder* does, and demand ladders belong to
+[`E4`](E4-capability-sweep.md) and [`E5`](E5-skill-scales.md). An item here is
+as hard as the situation it is drawn from.
 
 | # | direction | measures | check | source |
 |---|---|---|---|---|
@@ -124,12 +131,23 @@ here, because every existing task is too short to drift. Scoring stays
 structural: does the docstring name the new parameter, does the changelog carry
 an entry, does CI actually run the new test. No judge required.
 
-**5 — dig a corpus, then implement** is the only direction with a
-**controllable difficulty dial**: hold the task fixed, vary how much material
-surrounds the fact needed to do it. Everything else is authored at a difficulty
-and hoped over. The dial scales to the next model without re-authoring, and it
-is the functional form of [`E5`](E5-skill-scales.md)'s S2 — which makes this
-pair the first place to look for skill-to-function transfer.
+**5 — dig a corpus, then implement** is here because it happens, and because
+it is **genuinely hard for a person to navigate**. Not hard by construction —
+hard the way a large unfamiliar body of documentation is hard, where the fact
+needed exists, is findable in principle, and finding it is most of the work.
+
+**It does not carry a difficulty dial, and an earlier draft wrongly gave it
+one.** Varying how much material surrounds the needed fact is a *demand ladder*,
+and demand ladders belong to the mechanism and skill layers
+([`E4`](E4-capability-sweep.md), [`E5`](E5-skill-scales.md)) where holding
+everything else constant is the design. Importing one here would make the item
+synthetic in exactly the way this layer exists not to be: a real request does
+not arrive with its irrelevant material dialled to a setting.
+
+Its relation to [`E5`](E5-skill-scales.md)'s S2 survives and is the useful part
+— S2 grades the same demand under control, this direction meets it at whatever
+level reality supplies, and the pair is where **mechanism-to-function transfer**
+is first checkable.
 
 **6 — diagnose from logs** needs its scoring inverted to be checkable at all.
 An explanation as output puts the measurement back on prose judging, which
@@ -158,8 +176,8 @@ are the **same** decision.
 
 - scored by **AST-matching each site against the intended pattern**, so
   agreement is a count rather than a judgement;
-- it has a **dial** — ten sites, forty, two hundred — so it scales to a larger
-  model without re-authoring;
+- the number of sites is whatever the change actually touches, not a setting —
+  a convention worth introducing lands where it lands;
 - the fixture is ours, so there is no contamination;
 - and failure means inconsistency rather than four other things, which is rare
   at this layer.
@@ -270,5 +288,6 @@ these tasks demand, which bounds the M6 evaluation suite rather than the systems
   must satisfy is in E4; what is not settled is the fixture, the protected set
   and the held-out check for each.
 - Which corpus supplies 1–3, and whether its items survive the air-gap rule.
-- Whether direction 5's dial can be built at all — E2 has not managed the
-  token-matched version, and the note in its folder says why.
+- What corpus direction 5 uses, and whether a body of documentation exists that
+  is large and unfamiliar enough to be hard for a person without being
+  synthetic. The difficulty has to come from the material, not from a setting.

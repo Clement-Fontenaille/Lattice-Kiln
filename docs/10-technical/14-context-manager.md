@@ -567,6 +567,19 @@ is a change `02-observability-event-model.md` owes.
 
 ## Open contracts
 
+- **Relational causes are the thing to picture (2026-09-22, operator).** Both
+  this component and the knowledge consolidation pass are to work primarily
+  toward **picturing relational causes** — a fault, a claim or a dependency
+  whose evidence is local while its cause sits in the relation between that
+  evidence and something not visible from it. The shape was noticed from
+  `40-roadmap/03-research-and-evaluation/E3`'s direction 8, whose items are
+  drawn from this repository's own bugs and share exactly it.
+
+  Recorded as an orientation, not a design. The operator's route to it was
+  graph, then graphrag after initially declining to look at it; that lead is
+  **parked, not adopted**, and how this component should actually be built is
+  explicitly open.
+
 - **What a split's child starts with — narrowed to one question.** Three things are
   settled (`70-THINKING/18-task-artifact-edges.md`, Splitting). Continuation within a
   task needs nothing, since the set belongs to the task and a second instance finds it

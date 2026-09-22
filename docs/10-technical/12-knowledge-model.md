@@ -401,6 +401,19 @@ by hand.
 
 ## Open contracts
 
+- **Relational causes are the thing to picture (2026-09-22, operator).** Both
+  this component and the knowledge consolidation pass are to work primarily
+  toward **picturing relational causes** — a fault, a claim or a dependency
+  whose evidence is local while its cause sits in the relation between that
+  evidence and something not visible from it. The shape was noticed from
+  `40-roadmap/03-research-and-evaluation/E3`'s direction 8, whose items are
+  drawn from this repository's own bugs and share exactly it.
+
+  Recorded as an orientation, not a design. The operator's route to it was
+  graph, then graphrag after initially declining to look at it; that lead is
+  **parked, not adopted**, and how this component should actually be built is
+  explicitly open.
+
 - **Who promotes, and on what.** Promotion is an act rather than a property, which
   leaves open which actors hold it and what they weigh. The natural reading is a
   thinking processor at the moment it proposes a claim worth keeping, but a claim
