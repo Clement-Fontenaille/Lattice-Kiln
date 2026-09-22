@@ -1,0 +1,39 @@
+# Nemotron 3 Nano 4B Q4_K_M, with layer placement forced rather than inferred.
+#
+# Why this model is here. `50-findings/14` measured Nemotron Nano 9B v2 as the
+# better judge on the M6 suite (74-76% correct calls against qwen's 52-68%) with
+# two specific defects: it failed to emit a parseable verdict in 17-21% of judge
+# calls under `decision_first`, and it used the `unsound_request` verdict 16x
+# less often than qwen, which is why the judge_caveat prompt block bought it
+# nothing. Both are instruction-following defects rather than judgement ones.
+#
+# This model is compressed from that exact parent via NVIDIA's Nemotron Elastic
+# framework, and NVIDIA claims state-of-the-art IFEval / IFBench in its size
+# class -- instruction following specifically. So it is the cheapest available
+# test of whether those two defects are the model's or the scaffold's.
+#
+# num_gpu 99 = offload every layer, for the reason recorded in
+# Modelfile.nemotron-gpu: Ollama's automatic placement put 15% of the 9B's
+# layers on CPU and cost 3.4x throughput, and the fitter will still shed layers
+# to meet LLAMA_ARG_FIT_TARGET's 1024 MiB free-VRAM margin unless overruled.
+# It is a request, not a guarantee -- check size_vram against size in
+# `ollama ps` and do not assume it worked.
+#
+# num_ctx 8192 matches every other subject on this suite. Changing it would put
+# this model in different cells and make the comparison a different experiment.
+#
+# NOT SET HERE: anything about reasoning. The 9B needed `think=false` because it
+# spent the whole 220-token judge budget inside its thinking block and returned
+# an empty string for thirteen arms (50-findings/12, addendum 2). This model's
+# card says reasoning is steered by system prompt rather than by that parameter,
+# so the same control may not apply. `probe_nemotron3.py` checks it before any
+# sweep is queued, because an empty response is the one failure this project has
+# already paid for twice.
+# Pulled from Ollama's own registry, not Hugging Face: both the nvidia and
+# unsloth GGUF repos are xet-backed, and ollama refuses their CDN redirect
+# with "blocked redirect to a different host". The registry copy is the
+# same Q4_K_M weights without that hop.
+FROM nemotron-3-nano:4b
+
+PARAMETER num_gpu 99
+PARAMETER num_ctx 8192
