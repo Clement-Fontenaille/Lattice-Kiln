@@ -223,6 +223,22 @@ def test_setup_affinity_partitions_workers():
     print("ok  pick: workers partition across setups on their own")
 
 
+def test_a_co_worker_on_my_instance_frees_nothing():
+    """Two workers share an instance, so neither can assume a swap frees it.
+
+    Live failure, 2026-09-22: one worker took nemotron-gpu and another took
+    qwen on the SAME instance, 7,897 MiB of 8,192 before either had decoded a
+    token. The guard had charged only the peer instances.
+    """
+    p = fresh()
+    p.enqueue(cell("big", arm="monolith"), 2, env=env("big"), requested_by="r")
+    # the card already holds 6,000 MiB of something; `big` needs 5,000 more
+    full = lambda m: False          # what the real fits() computes in that state
+    assert pick(p, "w1", None, {"resident"}, card={"resident"}, fits=full) is HOLD
+    assert p.counts()["pending"] == 2, p.counts()
+    print("ok  pick: a full card refuses the load even on this worker's instance")
+
+
 if __name__ == "__main__":
     for fn in (test_enqueue_is_idempotent_under_concurrency,
                test_no_double_claim,
@@ -235,6 +251,7 @@ if __name__ == "__main__":
                test_sticky_beats_resident,
                test_a_model_that_does_not_fit_beside_a_peer_is_refused,
                test_the_guard_does_not_deadlock_when_something_fits,
+               test_a_co_worker_on_my_instance_frees_nothing,
                test_swap_within_my_own_instance_is_allowed,
                test_same_setup_beats_same_model,
                test_setup_affinity_partitions_workers):

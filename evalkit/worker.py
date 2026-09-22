@@ -349,19 +349,33 @@ def main():
         loaded = loaded_models(args.base_url)
         card = card_models([args.base_url, *args.peer])
 
-        # What can this worker load without overrunning the card? Peers keep
-        # what they hold; this instance's own share is freed by the swap.
+        # What can this worker load without overrunning the card?
+        #
+        # An earlier version assumed a swap frees this instance's share, which
+        # is true only when this worker is alone on its instance. It is not:
+        # two workers per instance is the whole point of gap-filling, and with
+        # both free to choose, one took nemotron-gpu while the other took qwen
+        # ON THE SAME INSTANCE -- 7,897 MiB of 8,192 before anything was even
+        # decoding. Nothing frees anything when a co-worker is mid-item.
+        #
+        # So: already resident anywhere costs nothing to use. Anything else is
+        # charged in full ON TOP of everything the card currently holds. That
+        # refuses some swaps that would in fact have fit, and the refusal is
+        # self-clearing -- the worker HOLDs, ollama's keep_alive unloads the
+        # idle model, residency drops, and the next loop admits the work.
         budget = gpu_budget_mib(args.reserve_mib)
-        sizes = catalogue_mib(args.base_url,
-                              learn_sizes([args.base_url, *args.peer]))
-        peer_mib = sum(resident_mib(u) for u in args.peer)
+        urls = [args.base_url, *args.peer]
+        sizes = catalogue_mib(args.base_url, learn_sizes(urls))
+        card_mib = sum(resident_mib(u) for u in urls)
 
-        def fits(model, _b=budget, _s=sizes, _p=peer_mib):
+        def fits(model, _b=budget, _s=sizes, _c=card_mib, _card=card):
             if not model:
                 return False
             if _b is None:
                 return True          # cannot measure: do not pretend to know
-            return _p + _s.get(model, 0) <= _b
+            if any(m.split(":")[0] == model.split(":")[0] for m in _card):
+                return True          # already on the card; using it adds nothing
+            return _c + _s.get(model, 0) <= _b
 
         first = pick(pool, who, sticky, loaded, card, fits)
         if first is HOLD:
