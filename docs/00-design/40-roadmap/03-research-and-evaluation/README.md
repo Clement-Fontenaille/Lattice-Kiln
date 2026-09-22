@@ -32,40 +32,63 @@ and the sequence ends somewhere none of them reach:
 3. **Actually test them** — not reason about which ought to work.
 4. **See what sticks.**
 5. **Assemble a system** out of what survived.
-6. **Validate that the process climbs a score not yet measured: user
-   satisfaction.**
+6. **Validate that the process raises the system+user ceiling.**
 
-Steps 1 and 2 are what E5 and E4 are for. Step 3 is the whole folder's motto —
-*run the arm you expect to lose*. Step 4 is why entries carry demotion criteria
+Steps 1 and 2 are what E5 and E4 are for. Step 3 is the folder's motto — *run
+the arm you expect to lose*. Step 4 is why entries carry demotion criteria
 written before the data. Step 5 is not an experiment and has no sheet.
 
-### Step 6 is not measured anywhere, and that needs saying plainly
+### Step 6 is the fourth ceiling, and it is not satisfaction
 
-**No sheet in this folder measures user satisfaction, and no metric in the
-project is a proxy for it that survives inspection.**
+The terminal quantity is `70-THINKING/02`'s **system+user ceiling**: *the
+integrated system with the human operator in the loop — the grain the
+operator-plus-system pair can still reach together.* It is measured in the
+same unit as every other lift in this project, **rungs**, and it is the only
+one of the four ceilings that has never been measured.
 
-E3 is the closest, and it is not close. It scores whether a request was
-*served* — the deterministic check passed, the structural dimensions were met.
-A request can be served and the person still dissatisfied: it took four hours,
-the explanation was unreadable, the correction cost more than doing it by hand,
-or the result was right and arrived after the need for it passed. None of that
-is visible to any check written here.
+**It was briefly written here as "user satisfaction", and that was wrong in a
+way worth recording.** Contentment is a byproduct of work being good, not the
+target, and naming it as the target inverts the programme:
 
-Three consequences worth holding:
+- A score that rewards satisfaction rewards **agreeableness**, which is H3 —
+  the competing hypothesis this folder carries precisely because it cannot yet
+  be told apart from a capability limit.
+- `50-findings/14` measured the judge producing `unsound_request` in **zero of
+  eight cells**. A satisfaction metric would score that failure as a success,
+  because refusing is the unsatisfying move.
+- The design stance is the opposite one: **be unpleasantly reluctant to carry
+  out obviously erroneous requests.** A system that is pleasant about a bad
+  premise is failing, and the whole false-premise apparatus — `decline_expected`,
+  E5's S3, the `unsound_request` verdict — exists to catch exactly that.
 
-- **Every score in this folder is a proxy**, and the distance between the proxy
-  and the thing is unmeasured rather than small. A layer can climb while the
-  terminal quantity does not.
+So the quantity is the grain of work the pair can reach, not how the person
+feels about reaching it.
+
+### What is still unmeasured, and what the restructure cost
+
+The **measure** exists and is in the project's own vocabulary. The
+**instrument** does not.
+
+Raising the system+user ceiling means varying the operator, and the sheet that
+would have done it was `E5-population-spread` — dissolved on 2026-09-22 into a
+blindness requirement on every layer. That dissolution was correct for what it
+fixed and it removed the only sheet pointing at step 6, which is a consequence
+of the restructure rather than a pre-existing gap.
+
+It was blocked anyway, on the same thing it is still blocked on: an **operator
+population**. `70-THINKING/01-use-cases.md` §2 is empty.
+
+Two things follow, and they are separable:
+
+- **Every score in this folder measures the assembly with the operator held
+  constant**, which scores the system minus the person using it. The distance
+  between that and the system+user ceiling is unmeasured rather than small.
 - **Step 5's assembly cannot be validated by steps 1–4.** Passing every layer
-  is consistent with an assembly nobody wants to use, which is the
-  accessibility argument the former `E5-population-spread` made about the
-  operator, generalised past the operator to whoever the work is for.
-- **The gap is an owned piece of work, not an acknowledgement.** Something has
-  to define what user satisfaction means here, whether it is measurable at all
-  at this scale, and what it would take to measure it once. Until that exists,
-  step 6 is an intention rather than a plan.
+  is consistent with an assembly that raises no ceiling once a person is in the
+  loop.
 
-**Owner: none. This is the largest unowned gap in the evaluation programme.**
+**Owner: none.** The largest unowned gap in the evaluation programme, and it
+needs an operator population before it needs a design.
 
 ## The three sweep layers
 
