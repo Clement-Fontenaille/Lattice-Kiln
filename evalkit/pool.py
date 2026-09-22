@@ -133,7 +133,20 @@ class Pool:
             d["claimed_by"], d["claimed_at"] = who, time.time()
             with os.fdopen(fd, "w", encoding="utf-8") as fh:
                 json.dump(d, fh, indent=2)
-            p.unlink(missing_ok=True)          # the intent is now a claim
+            # The intent is now a claim. Removing the pending file is tidying,
+            # NOT part of the claim -- the exclusive create above already
+            # settled who owns this item. On Windows the unlink raises
+            # PermissionError if a losing thread still has the file open for
+            # reading, which under twelve racing claimers happens; letting that
+            # propagate would abort a claim that had already succeeded. A stale
+            # pending file is harmless: enqueue skips names present in claimed
+            # or done, and the next claimer finds the item already taken.
+            for _ in range(3):
+                try:
+                    p.unlink(missing_ok=True)
+                    break
+                except OSError:
+                    time.sleep(0.01)
             return Item(self.claimed / p.name, d["cell"], d["rep"],
                         d.get("env", {}), d.get("requested_by", ""),
                         d.get("meta", {}))

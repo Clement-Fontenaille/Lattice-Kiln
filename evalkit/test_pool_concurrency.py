@@ -26,18 +26,20 @@ sys.path.insert(0, str(HERE))
 
 from setup_key import Cell  # noqa: E402
 from pool import Pool  # noqa: E402
-from worker import HOLD, pick  # noqa: E402
+from worker import HOLD, env_key, pick  # noqa: E402
 
 TMP = HERE.parent / ".pool_selftest"
 
 
-def cell(model="selftest", task="wf1_crossfile", arm="baseline"):
-    return Cell.make(task=task, arm=arm, backend="ollama",
-                     model=model, params={}, defaults={"num_ctx": 8192})
+def cell(model="selftest", task="wf1_crossfile", arm="baseline", params=None,
+         judge_format="decision_first"):
+    return Cell.make(task=task, arm=arm, backend="ollama", model=model,
+                     judge_format=judge_format, params=params or {},
+                     defaults={"num_ctx": 8192})
 
 
-def env(model):
-    return {"LATTICE_BACKEND": "ollama", "LATTICE_EVAL_MODEL": model}
+def env(model, **extra):
+    return {"LATTICE_BACKEND": "ollama", "LATTICE_EVAL_MODEL": model, **extra}
 
 
 def fresh() -> Pool:
@@ -160,6 +162,54 @@ def test_swap_within_my_own_instance_is_allowed():
     print("ok  pick: a worker may replace the model in its own instance")
 
 
+def test_same_setup_beats_same_model():
+    """The model is one field of the setup key, not the setup.
+
+    think=1 and think=0 run the same weights and produce different cells. A
+    worker leaving one must not fall into the other just because no model load
+    is needed -- that interleaves a 538-token setup with a 41-token one.
+    """
+    p = fresh()
+    slow = env("mA", LATTICE_THINK="1", LATTICE_MIN_PREDICT="2048")
+    fast = env("mA", LATTICE_THINK="0", LATTICE_MIN_PREDICT="400")
+    S, F = {"think": True, "min_predict": 2048}, {"think": False}
+    p.enqueue(cell("mA", arm="baseline", params=S), 1, env=slow, requested_by="r")
+    p.enqueue(cell("mA", arm="monolith", params=S), 1, env=slow, requested_by="r")
+    p.enqueue(cell("mA", arm="baseline", params=F), 1, env=fast, requested_by="r")
+
+    first = pick(p, "w1", None, {"mA"})
+    key = (first.cell["arm"], env_key(first.env))
+    nxt = pick(p, "w1", key, {"mA"})
+    assert env_key(nxt.env) == env_key(first.env), (
+        f"crossed setups: {first.env} -> {nxt.env}")
+    print("ok  pick: a worker finishes its SETUP before touching another")
+
+
+def test_setup_affinity_partitions_workers():
+    """Two setups, two workers: each settles on one without being told."""
+    p = fresh()
+    a = env("mA", LATTICE_JUDGE_FORMAT="decision_first")
+    b = env("mA", LATTICE_JUDGE_FORMAT="reason_first")
+    for arm in ("baseline", "monolith"):
+        p.enqueue(cell("mA", arm=arm, judge_format="decision_first"), 2,
+                  env=a, requested_by="r")
+        p.enqueue(cell("mA", arm=arm, judge_format="reason_first"), 2,
+                  env=b, requested_by="r")
+    seen = {}
+    for w in ("w1", "w2"):
+        it = pick(p, w, None, {"mA"})
+        k = (it.cell["arm"], env_key(it.env))
+        for _ in range(3):
+            nxt = pick(p, w, k, {"mA"})
+            if nxt is None or nxt is HOLD:
+                break
+            seen.setdefault(w, set()).add(env_key(nxt.env))
+            k = (nxt.cell["arm"], env_key(nxt.env))
+    for w, envs in seen.items():
+        assert len(envs) == 1, f"{w} mixed setups: {envs}"
+    print("ok  pick: workers partition across setups on their own")
+
+
 if __name__ == "__main__":
     for fn in (test_enqueue_is_idempotent_under_concurrency,
                test_no_double_claim,
@@ -171,7 +221,9 @@ if __name__ == "__main__":
                test_a_lone_worker_may_swap,
                test_sticky_beats_resident,
                test_peer_instance_blocks_an_unfittable_pairing,
-               test_swap_within_my_own_instance_is_allowed):
+               test_swap_within_my_own_instance_is_allowed,
+               test_same_setup_beats_same_model,
+               test_setup_affinity_partitions_workers):
         fn()
     shutil.rmtree(TMP, ignore_errors=True)
     print("\nall pool concurrency properties hold")

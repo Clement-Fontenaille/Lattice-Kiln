@@ -113,8 +113,8 @@ def wants_loaded(d: dict, loaded: set[str]) -> bool:
 
 
 def group_key(item) -> tuple:
-    """What may share one run_suite invocation: same arm, same environment."""
-    return (item.cell["arm"], json.dumps(item.env, sort_keys=True))
+    """What may share one run_suite invocation: same arm, same setup."""
+    return (item.cell["arm"], env_key(item.env))
 
 
 HOLD = object()
@@ -123,21 +123,46 @@ model another worker is mid-item on. Distinct from None, which means the pool
 has nothing this worker could take at all."""
 
 
+def env_key(env: dict) -> str:
+    """The whole setup a run happens under, as one comparable string.
+
+    Not just the model. `LATTICE_THINK`, `LATTICE_MIN_PREDICT`,
+    `LATTICE_JUDGE_FORMAT` and the backend all land in the env, and every one of
+    them is part of the cell the results key under -- two items differing in any
+    of them are different setups producing different cells, however identical
+    the weights on the card.
+    """
+    return json.dumps(env or {}, sort_keys=True)
+
+
 def pick(pool, who: str, sticky, loaded: set[str], card: set[str] | None = None):
-    """Choose the next item, in the order that costs the card least.
+    """Choose the next item, in the order that costs least and mixes least.
 
-      1. more of the group just run       -- no model change at all
-      2. anything using a resident model  -- no model change either
-      3. anything, but only when a swap is safe
+      1. more of the group just run        -- same arm, same setup
+      2. the same SETUP, any arm           -- same model AND same parameters
+      3. anything using a resident model   -- no model load, but a setup change
+      4. anything, if no peer instance blocks it
 
-    A swap is safe only when nobody else is mid-item. This card holds one model;
-    claiming work that evicts the model a neighbour is using turns two workers
-    into rather less than one. So a second worker started while the first is
-    busy takes ONLY work fitting the resident model, and otherwise HOLDs.
+    Rung 2 is not an optimisation, it is the one that keeps runs coherent. The
+    model is only one field of the setup key: think, min_predict, judge_format
+    and the backend are all in there too, and items differing in any of them
+    produce different cells. Without rung 2 a worker leaving a think=1 group
+    falls straight into think=0 work, because rung 3 matches on the model alone
+    and the weights are identical. That interleaves a 538-token setup with a
+    41-token one on the same card, which muddles throughput measurement and
+    makes each setup finish later than if they had been run in sequence.
+
+    With it, workers partition themselves across whatever setups are pending --
+    each finishes the one it is on before touching another, without being told
+    which to take.
     """
     if sticky is not None:
         got = pool.claim(who, match=lambda d, k=sticky: (
-            d["cell"]["arm"], json.dumps(d.get("env", {}), sort_keys=True)) == k)
+            d["cell"]["arm"], env_key(d.get("env"))) == k)
+        if got is not None:
+            return got
+        # Same setup, different arm: no model load and no parameter change.
+        got = pool.claim(who, match=lambda d, k=sticky[1]: env_key(d.get("env")) == k)
         if got is not None:
             return got
     if loaded:
@@ -248,7 +273,7 @@ def main():
         key = sticky = group_key(first)
         while len(batch) < args.batch:
             nxt = pool.claim(who, match=lambda d, k=key: (
-                d["cell"]["arm"], json.dumps(d.get("env", {}), sort_keys=True)) == k)
+                d["cell"]["arm"], env_key(d.get("env"))) == k)
             if nxt is None:
                 break
             batch.append(nxt)
