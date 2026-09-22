@@ -100,14 +100,43 @@ The only role in `10-technical/06-processor-contract.md` that M4 and M7 both
 instantiate directly. Everything else on this sheet either wraps it or is not
 built.
 
-### R1.1 Execution
+### R1.1 Execution — breadth of correct work
 
-- **does** — turn an objective plus a scope into a change that satisfies it.
-- **varied** — the objective's distance from a single coherent edit.
-- **held** — context assembly, the check, the scope.
-- **read** — `objective_pass` and the structural dimensions, already recorded per rep.
-- **null** — flat across the range says execution is not where this assembly's limit is, which would move attention to every other role on this sheet.
-- **draws on** — `E5` S6 decomposition, since an objective past one coherent edit is S6's own ladder seen from inside a role.
+- **does** — satisfy a set of specifications that are each correct, unambiguous and individually easy.
+- **varied** — **the number of them.** One, three, ten, thirty, a hundred. Nothing else moves.
+- **held** — the difficulty of any single specification, deliberately floored. No traps, no ambiguity, no false premises, nothing needing a decision. Just work.
+- **read** — how many are satisfied as the count grows, **and which ones are dropped.**
+- **null** — flat across the range says breadth is not a limit in the measured span, and the limit is somewhere else on this sheet.
+- **draws on** — *nothing in `E5` as it stands.* See below; this is a finding about the skill list rather than an omission in this entry.
+
+**An earlier draft had this varying "the objective's distance from a single
+coherent edit", which is the decomposition problem wearing an execution
+label.** It duplicated R3.1 and made the role's first mechanism the hardest
+question in the sheet. Raw execution is the opposite: every specification is
+already atomic, nothing needs splitting, and the only variable is how many
+there are.
+
+**What it isolates.** Doing many correct things, separated from working out
+what to do. A subject can be excellent at deciding and still drop requirements
+once there are enough of them, and no existing measurement here separates the
+two.
+
+**The failure it is built to catch is already recorded.** M5's workflow suite
+found the monolith **dropping docs and TODO requirements under load** —
+`wf6` at 0/4 and 0/3. That is not failure; it is **selective silent omission,
+biased toward the low-salience requirement**, and it is the shape
+`70-THINKING/02` describes as *"probably not important, skip"*. Scoring only
+the count satisfied would miss it. **Which requirements go dark, and in what
+order, is the observable worth having.**
+
+**It has no partner in `E5`, and that is worth flagging rather than patching.**
+S4 objective retention is *temporal* — how far the objective survives across
+intervening steps. This is *simultaneous* — how many requirements survive being
+held at once. They are different quantities and only one of them is on the
+skill list. Either a skill is missing from `E5`, or breadth of correct
+execution is primitive and has no skill beneath it. **Unresolved**, and it is
+the first thing unfolding these roles has produced that the skill sheet did not
+already contain.
 
 ### R1.2 Convention inference
 
@@ -373,6 +402,13 @@ estimation, from M4's 16 unused affordances, and R6.3 termination, which
 the same demand graded end-to-end and in position — and it should be run first
 for that reason rather than because premise evaluation is the most important
 mechanism.
+
+**And unfolding produced one gap in the other direction.** R1.1 breadth of
+correct execution has no partner on the skill sheet: `E5` S4 is retention
+across steps, which is temporal, and this is how many requirements survive
+being held at once, which is not. Either `E5` is missing an entry or breadth is
+primitive. That is the only place so far where the mechanism layer has asked
+the skill layer for something it does not have.
 
 ---
 
