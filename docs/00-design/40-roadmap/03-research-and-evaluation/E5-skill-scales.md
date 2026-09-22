@@ -9,6 +9,35 @@ layer; and the former E4's size-and-tuning question, asked at this layer.
 argument survives as a constraint on every layer rather than as an experiment —
 see "What each layer is blind to" below.
 
+## Status: WIP, and what convergence means
+
+This sheet is a **working set**, not a settled design. Its shape is expected to
+change, and that is not licence for it to stay vague indefinitely. It converges
+when all four of these hold:
+
+1. every candidate carries a **rung ladder**, with its ordering and its
+   non-monotonicity tolerance written down beforehand;
+2. every candidate carries a **transfer pair**, named before any data exists;
+3. the identifiability literature (`70-THINKING/02` OQ-B) has been read, and
+   says whether a family of this size is recoverable at all, and from how many
+   items and subjects;
+4. **one scale has been built end to end**, so the cost of a scale is a
+   measured number rather than an estimate.
+
+Until all four hold, entries here are provisional and may be demoted, merged or
+split.
+
+### The working rule, which is why this list is longer than is comfortable
+
+> **A candidate that is awkward for the current framework gets written down,
+> not left out.**
+
+Omitting a demand because the standing assumption makes it hard to probe
+settles by intuition what this folder exists to settle by evidence.
+Decomposition and aggregation were left off the first draft for exactly that
+reason, and are restored below with the objection stated and designed around
+rather than used as grounds for silence.
+
 ## The question
 
 A **skill** is the narrowest demand that can be varied on its own. This sheet
@@ -69,8 +98,14 @@ anything.
 
 ## The candidate skills
 
-First cut, 2026-09-22. **Expect this list to shrink.** Each entry carries what
-varies along its scale and the transfer pair it must survive.
+Working set, 2026-09-22. Seven entries. Each carries what varies along its
+scale and the transfer pair it must survive, and several are expected to merge
+or be demoted once the criterion is applied to data rather than to argument.
+
+Entries are written down where they are awkward rather than left out — see the
+working rule above. S6 and S7 in particular are here **despite** the standing
+assumption making them hard to probe, with the objection stated inside each and
+designed around.
 
 ### S1 — Grain closing
 
@@ -173,6 +208,81 @@ is absent.
 missing context and it went **unused across 16 runs, including on a task
 deliberately starved of a needed file.**
 
+### S6 — Decomposition
+
+Producing work whose size exceeds what a single pass can carry.
+
+**The objection, stated first.** Asking for a decomposition and grading it
+requires knowing the right decomposition, which is authorship above the
+subject's own ceiling — `70-THINKING/02` OQ-7 — and that cost reappears at every
+item. It also measures the artifact instead of the work.
+
+**The design around it: never ask for a decomposition, and never grade one.**
+The deliverable at every rung is **the finished work**, checked the same way.
+What varies is how far the objective exceeds what fits in one pass, so that
+splitting stops being optional.
+
+| rung | the objective |
+|---|---|
+| R1 | fits one pass comfortably |
+| R2 | fits, with nothing to spare |
+| R3 | does not fit; two obvious parts |
+| R4 | does not fit; the parts are not obvious |
+| R5 | cannot fit under any single-pass framing |
+
+The exit rung is where correct work stops appearing. Nothing is asked about
+method, so a subject that gets through by a route nobody anticipated still
+scores.
+
+**Transfer pair:** a code objective too large for one pass; an analysis or
+document objective too large for one pass.
+
+**What a flat scale means:** if the exit rung tracks context occupancy rather
+than structural part-count — R3 and R4 differing little while R2 and R3 differ a
+lot — this is not decomposition, it is S2 or a window limit, and it merges.
+
+### S7 — Aggregation
+
+Producing the answer to the original objective from partial work toward it.
+
+**The objection, stated first, and it is the sharpest in this folder.**
+`70-THINKING/02` rejects supplying fixed correct sub-results: it *constructs a
+situation that never occurs*, since real sub-results are partial, wrong, and
+wrong in interacting ways. Such a measurement can be perfectly reliable and mean
+nothing, and the direction in which it misleads is not predictable in advance.
+
+**The design around it: harvest, do not author.** Sub-results come from **real
+runs already in the store** — the wrong ones, the partial ones and the mutually
+contradictory ones included — which is precisely the situation the objection
+says authored inputs cannot reproduce. Transcripts make this buildable now and
+did not before 2026-09-22.
+
+| rung | the sub-results supplied |
+|---|---|
+| R1 | two, both correct, no conflict |
+| R2 | three, one partial |
+| R3 | four, one wrong, with nothing flagging it |
+| R4 | four, two mutually contradictory |
+| R5 | six, provenance mixed, one addressing a superseded objective |
+
+Deliverable at every rung: the answer to the **original** objective, against the
+original check.
+
+**Transfer pair:** merging code sub-results; merging findings or analysis
+sub-results.
+
+**Why it is worth the trouble:** `70-THINKING/02` argues that aggregation rather
+than execution bounds the integrated system ceiling, and that improving
+executors cannot raise it. Nothing in this project has measured it. If that
+argument is right this is the most consequential scale on the sheet; if it is
+wrong, this is the cheapest way to find out.
+
+**Residual risk, not resolved.** Harvested sub-results are still *supplied*
+rather than produced by the subject, so the subject did not form the intent
+behind them. That is a weaker form of the objection, not its absence, and it is
+why R5 mixes provenance — an aggregator in a real assembly also receives work it
+did not commission.
+
 ### Demoted — consistency under repetition
 
 Same input, same answer. Proposed and **rejected as a skill**: it has no demand
@@ -181,20 +291,22 @@ scales* at fixed demand, and it belongs in the method rather than the list.
 Recorded here because it is the first thing the criterion above disqualified,
 which is the criterion doing its job.
 
-### Deliberately absent
-
-**Decomposition** and **aggregation** are not on this list. They are mechanisms
-(E4), and the standing assumption specifically forbids probing them in
-isolation: supplying fixed correct sub-results to measure recombination
-constructs a situation that never occurs.
+### Absent, and the reason has to be an ordering one
 
 **Fit self-assessment** — *can the model tell whether a task is above its own
-ceiling* — is also absent, and its absence is the interesting one. It is
-second-order: it cannot be measured until the first-order ceilings from this
-sheet exist, because it is scored as the correlation between predicted and
-actual competence. It belongs to the orchestrator role in E4, gated on E5.
+ceiling* — is the only candidate deliberately without a scale here, and the
+reason is sequence rather than discomfort. It is **second-order**: it is scored
+as the correlation between predicted and actual competence, so it cannot be
+measured until the first-order ceilings this sheet produces exist. It belongs to
+the orchestrator role in [`E4`](E4-capability-sweep.md), gated on E5's results.
+
 **Every firing rule in the architecture consumes its output**, which is why the
-ordering matters.
+ordering is worth stating rather than assuming.
+
+*Decomposition and aggregation were listed here in the first draft, on the
+grounds that the standing assumption forbids probing them in isolation. That was
+the wrong call: the assumption constrains how they are probed, not whether they
+are named. They are S6 and S7 above.*
 
 ## The transfer tests
 
@@ -203,6 +315,14 @@ Two comparisons, and they are the point of the three-layer split:
 | | compares | a null means |
 |---|---|---|
 | **skill → mechanism** | E5 exit rungs against E4 mechanism scores | the skills are not the ones the mechanisms use; the list is wrong, not the mechanisms |
+
+Two entries — S6 decomposition and S7 aggregation — carry names that also appear
+as mechanisms in E4. **That is deliberate, and it is the cleanest transfer test
+available**, because one word is being measured two ways: here as a demand on an
+end-to-end deliverable, there as a role's output inside a working assembly. If
+the two disagree, the disagreement is the finding — and it is the one place
+where *is this a skill or a mechanism?* gets an answer from data rather than
+from definition.
 | **mechanism → functional** | E4 scores against E3 outcomes | mechanism competence does not compose; the binding constraint is between mechanisms, not inside them |
 
 The second null is the more interesting one and it is predicted by
@@ -249,9 +369,10 @@ differently-tuned models is the evidence that the ceiling is dimensional.
 
 ## Open
 
-- **The list is a first cut and is expected to shrink.** Five entries, one
-  already demoted on the criterion. Which of S1–S5 survives its transfer pair is
-  the first thing this sheet produces.
+- **The list is a working set.** Seven entries, one already demoted on the
+  criterion, two restored after being wrongly cut. Which of S1–S7 survives its
+  transfer pair is the first thing this sheet produces, and S4 and S6 are the
+  two most likely to merge into something else.
 - **The identifiability question is unresolved** and is the same one
   `70-THINKING/02` defers to under OQ-B: how many items and how many subjects
   does recovering latent structure take, and when is it recoverable at all.
