@@ -112,6 +112,55 @@ an upper bound, not an estimate.** Directions 4–8 are authored here and do not
 carry it, which is one more reason the built directions are where the weight
 should sit.
 
+### 3 — the worked example, and what it costs to have one
+
+Given by the operator, 2026-09-22, as what direction 3's items should look
+like:
+
+> **A buffer overflow that does not appear under ICC and segfaults under GCC.
+> The segfault triggers at the next `free`/`malloc`, not where the overflow
+> was.**
+
+Three things are true of it at once, and each one is a design consequence.
+
+**The evidence misdirects.** The stack trace points into the allocator. The
+fault is a write that happened earlier, possibly much earlier, to memory the
+allocator later walks. Nothing at the crash site is wrong.
+
+**The plausible fix is wrong and passes.** Guarding at the crash site, or
+adding a check where the trace lands, makes the symptom disappear and leaves
+the overflow in place. This is precisely what a held-out check has to catch,
+and here it writes itself: **build under a sanitiser the subject does not
+have**. ASan or valgrind reports the overflow at its actual site, so a repair
+that only silences the crash fails it exactly and deterministically.
+
+**Whether it manifests at all is a property of the toolchain.** ICC and GCC
+lay out the heap differently, so the same source is clean under one and fatal
+under the other. That makes the build configuration part of the item rather
+than part of the harness, and it means the visible check and the held-out check
+can legitimately be *the same test under different builds*.
+
+**The cost: this is not Python.** Every fixture in the M6 evaluation suite is
+Python, where this class of fault does not exist — no undefined behaviour, no
+heap metadata to corrupt, no toolchain-dependent manifestation. Direction 3 as
+specified here needs a **compiled-language fixture family**, with a build step
+inside the check, and that is new ground for this project rather than an
+extension of what it has. It is worth stating plainly before the item count is
+estimated.
+
+**What it does to the 3-and-8 split.** The previous revision of this sheet
+separated them by where the difficulty sits — 3 in the fix, 8 in the location.
+This example has **both**, and it was offered as an example of 3. So the split
+is weaker than that revision claimed, and rather than force it:
+
+| | possible reading | weakness |
+|---|---|---|
+| keep the split | 3's cause is relational **inside one program's execution** — a write and the allocator that later reads it. 8's is relational to something **outside** it — another process's memory, the operating system's guarantees, data never recorded | thin, and it may be a distinction only this project's history makes |
+| merge them | one family: *the evidence does not point at the fault, and the obvious repair passes* | loses the borrowed-versus-built difference, which is real |
+
+**Unresolved, and left to the operator.** Recorded rather than decided, because
+picking now would settle by convenience a question the example just opened.
+
 ### Why 1 and 2 are anchors rather than discriminators
 
 They will saturate on a large model, and that is their job: they hold the
@@ -233,11 +282,14 @@ This direction moves the difficulty to the **location**:
 > fault.** The defect is not in the code under the assertion; it is in the
 > relation between that code and something not visible from it.
 
-So 3 and 8 are the two halves of *harder*, and they can be failed
-independently. A subject that locates a misdirecting fault and then applies the
-obvious repair fails 8 on the held-out check having done the hard part; a
-subject that is handed the location and still cannot tell a real fix from a
-plausible one fails 3 having been given it.
+Those two failures are distinguishable in principle: a subject can locate a
+misdirecting fault and then apply the obvious repair — failing on the held-out
+check having done the hard part — or be handed the location and still not tell
+a real fix from a plausible one.
+
+**Whether that distinguishes 3 from 8 is now open.** The worked example given
+for direction 3 above has both halves, so the clean split this paragraph
+originally claimed does not survive it. See that section.
 
 **The source is this repository's own history**, which is what makes the items
 recognisable and the ground truth exact. Four instances from 2026-09-22 alone:
