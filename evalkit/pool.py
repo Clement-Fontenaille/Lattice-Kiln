@@ -41,6 +41,20 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_POOL = ROOT / "evalkit_pool"
 LEASE_S = 3 * 3600          # a task running longer than this is presumed dead
+BEAT_S = 15 * 60
+"""How stale a worker's heartbeat may get before its claims are reclaimed.
+
+LEASE_S has to be hours, because a long batch and a dead worker look identical
+from the claim file alone -- the claim was written when work started and says
+nothing since. That is the right bound when there is no other signal, and it
+cost 32 items eighty minutes of idleness three separate times: a worker killed
+without releasing holds its claims for the full lease while the pool has work
+and the card has room.
+
+A heartbeat is the other signal. A live worker refreshes one file per loop, so
+"dead" stops being a guess about duration and becomes an observation about
+silence. One file per worker, not per item: a worker holding eight items writes
+once."""
 
 
 @dataclass
@@ -71,7 +85,8 @@ class Pool:
         self.pending = self.path / "pending"
         self.claimed = self.path / "claimed"
         self.done = self.path / "done"
-        for d in (self.pending, self.claimed, self.done):
+        self.workers = self.path / "workers"
+        for d in (self.pending, self.claimed, self.done, self.workers):
             d.mkdir(parents=True, exist_ok=True)
 
     # ------------------------------------------------------------- requesting
@@ -170,7 +185,23 @@ class Pool:
             json.dumps(d, indent=2), encoding="utf-8")
         item.path.unlink(missing_ok=True)
 
-    def reap(self, lease_s: int = LEASE_S) -> list[str]:
+    def beat(self, who: str) -> None:
+        """Say this worker is still alive. Cheap enough to call every loop."""
+        try:
+            (self.workers / f"{who}.json").write_text(
+                json.dumps({"who": who, "at": time.time()}), encoding="utf-8")
+        except OSError:
+            pass          # liveness reporting must not break the work
+
+    def _silent_since(self, who: str) -> float:
+        """Seconds since this worker last spoke, or inf if it never did."""
+        p = self.workers / f"{who}.json"
+        try:
+            return time.time() - json.loads(p.read_text(encoding="utf-8"))["at"]
+        except Exception:  # noqa: BLE001
+            return float("inf")
+
+    def reap(self, lease_s: int = LEASE_S, beat_s: int = BEAT_S) -> list[str]:
         """Return items whose worker went away. A crashed worker must not hold a
         rep number forever, and a lease is the only thing that distinguishes
         slow from dead without asking the worker."""
@@ -180,7 +211,13 @@ class Pool:
                 d = json.loads(p.read_text(encoding="utf-8"))
             except Exception:  # noqa: BLE001
                 continue
-            if now - d.get("claimed_at", now) > lease_s:
+            who = d.get("claimed_by")
+            # Two independent reasons to reclaim. The lease covers a worker that
+            # is alive but wedged; the heartbeat covers one that is gone, which
+            # the lease alone cannot see for hours.
+            too_long = now - d.get("claimed_at", now) > lease_s
+            too_quiet = bool(who) and self._silent_since(who) > beat_s
+            if too_long or too_quiet:
                 stem = p.name[:-5]
                 d.pop("claimed_by", None)
                 d["reaped_from"] = d.pop("claimed_at", None)

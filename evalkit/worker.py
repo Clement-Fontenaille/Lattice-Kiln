@@ -354,6 +354,7 @@ def main():
     done = failed = 0
     sticky = None          # keep working one group while it lasts
     while True:
+        pool.beat(who)     # so a reap can tell "gone" from "still working"
         loaded = loaded_models(args.base_url)
         card = card_models([args.base_url, *args.peer])
 
