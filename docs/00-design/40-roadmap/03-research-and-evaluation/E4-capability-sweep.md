@@ -45,10 +45,11 @@ nothing measured here would reveal it.
 
 ## The roles and their mechanisms
 
-One subsection per role, one subsubsection per mechanism. First inventory,
-2026-09-22, taken from what M7 actually runs plus the roles the architecture
-needs and does not yet have. **Three of nine are not implemented, and the
-firing rules consume their outputs.**
+One subsection per role, one subsubsection per mechanism. Inventory opened
+2026-09-22 from what M7 actually runs plus the roles the architecture needs and
+does not have; **R10 scout was added 2026-09-23 and was missing from the first
+pass entirely**, which is a reason to expect the list is still short. **Four of
+ten are not implemented, and the firing rules consume their outputs.**
 
 | role | mechanisms | evidence status |
 |---|---|---|
@@ -61,6 +62,7 @@ firing rules consume their outputs.**
 | context assembler | relevance discrimination; sufficiency estimation | M9, partial — dloop took cross-file 0.47 → 0.92 |
 | aggregator | recombination under imperfect inputs | **NYI** — `70-THINKING/02` calls it the binding constraint |
 | knowledge curator | retention; retrieval; use of knowledge not derived in session | **NYI** — M8, E6 |
+| scout | reading through alarming noise; reporting without acting | **NYI** — added 2026-09-23; the role behind `E3` directions 5 and 6 |
 
 ### How a mechanism is exercised without being isolated
 
@@ -185,6 +187,13 @@ linted, and a new sheet placed wrongly would still read correctly and be lost.
 - **read** — diff extent against the minimal correct diff; currently unrecorded.
 - **null** — flat says scope is respected or not as a disposition rather than a response to temptation.
 - **draws on** — `E5` S4 objective retention.
+
+**It shares its discrimination with R10.1**, and the pair is worth reading
+together. Both fail by **acting on a signal that is real but does not bear** —
+adjacent code that genuinely could be improved, an error in a log that is
+genuinely an error. The difference is direction: this one is **output
+restraint**, R10.1 is **input filtering**. Whether they are one mechanism seen
+from two sides is open, and the two entries are the cheapest way to find out.
 
 ---
 
@@ -417,12 +426,73 @@ M8. `E6` is its experiment and is gated on M8 having something to run.
 
 ---
 
+## R10 — Scout — **not implemented**
+
+Added 2026-09-23, on the operator's observation that reading through a log full
+of errors is probably the same mechanism as scope adherence. It has no entry in
+`10-technical/06-processor-contract.md`, whose role vocabulary is deliberately
+open, and nothing in M4 or M7 instantiates it.
+
+**What it is:** a processor sent to look at something and report what is there,
+**without authority to act on it.** That distinguishes it from the judge, which
+assesses a candidate it is given, and from the premise auditor, which assesses
+a request. A scout is given a *place* and comes back with an account of it.
+
+**It is the role behind two of `E3`'s directions** — 5, digging a corpus before
+implementing, and 6, diagnosing a failure from logs — and until now those two
+had no mechanism-layer entry. That is the gap this fills.
+
+### R10.1 Reading through alarming noise
+
+- **does** — find what bears, in a source where most of what is present is both irrelevant and alarming.
+- **varied** — the ratio of bearing to non-bearing material, where **the non-bearing material is itself errors** — real ones, recent ones, with stack traces.
+- **held** — the question being answered, and the fact that an answer exists in the source.
+- **read** — whether the reported cause is the injected one; exact-match against ground truth, as `E3` direction 6 specifies.
+- **null** — flat says the ratio does not matter, which would be surprising and would make `E3` direction 6 much cheaper to build.
+- **draws on** — `E5` S2 relevance discrimination, **but not cleanly.** See below.
+
+**Why this is not S2 with a bigger denominator.** S2 varies the ratio of
+irrelevant to relevant material, and its distractors are *neutral* — documents
+that simply do not bear. Here **every distractor is alarming.** A log full of
+errors is not a haystack; it is a haystack in which every straw looks like a
+needle, and each one carries its own invitation to act. The demand is not
+*find the signal in the volume* but **decline the signals that are real and do
+not bear.**
+
+That may be a second skill the skill sheet does not have, or S2 may need a
+variant where distractor salience is the variable rather than count. **It is
+the second gap running upward from this layer** — R1.1 breadth was the first —
+and both are recorded unresolved rather than patched by inventing an entry.
+
+### R10.2 Reporting without acting
+
+- **does** — come back with an account, having changed nothing.
+- **varied** — how obviously fixable the thing found is.
+- **held** — the absence of authority, which is a property of the role rather than of the model.
+- **read** — whether any effect was proposed. The runtime already records proposed effects (`10-technical/02`), so this is observable with no new instrumentation.
+- **null** — flat says the restraint is a disposition rather than a response to temptation, which is the same null R1.3 carries and is why the two should be read together.
+- **draws on** — `E5` S4, and R1.3.
+
+**A scout that starts fixing things has stopped scouting**, and the failure is
+worse than it looks: the account it returns is now of a place it has altered.
+
+### R10.3 Reporting that there is nothing — *candidate, not specified*
+
+Returning *"I looked and there is nothing here"* is a valid and hard output,
+and it is the one a scout is least likely to produce. Listed because the
+omission would be conspicuous; **not specified**, because it needs the same
+treatment as `E5` S5 absence detection and should probably be measured there
+rather than duplicated here.
+
+---
+
 ## What this inventory says about the architecture
 
-**Three of nine roles are not implemented, and the firing rules consume their
+**Four of ten roles are not implemented, and the firing rules consume their
 outputs.** R6 decides when to decompose and does not exist; R8 is argued to be
 the binding constraint and does not exist; R9 is a core hypothesis and does not
-exist.
+exist; R10 is the role behind two of `E3`'s directions and was not in the
+inventory at all until 2026-09-23.
 
 **Two mechanisms are already close to measured nulls** — R7.2 sufficiency
 estimation, from M4's 16 unused affordances, and R6.3 termination, which
@@ -433,12 +503,21 @@ the same demand graded end-to-end and in position — and it should be run first
 for that reason rather than because premise evaluation is the most important
 mechanism.
 
-**And unfolding produced one gap in the other direction.** R1.1 breadth of
-correct execution has no partner on the skill sheet: `E5` S4 is retention
-across steps, which is temporal, and this is how many requirements survive
-being held at once, which is not. Either `E5` is missing an entry or breadth is
-primitive. That is the only place so far where the mechanism layer has asked
-the skill layer for something it does not have.
+**Unfolding has produced two gaps running the other way, and they are becoming
+a pattern.**
+
+- **R1.1 breadth of correct execution** has no partner: `E5` S4 is retention
+  across steps, which is temporal, and this is how many requirements survive
+  being held at once, which is not.
+- **R10.1 reading through alarming noise** is not `E5` S2 with a bigger
+  denominator: S2's distractors are neutral, and here every distractor is a
+  real error carrying its own invitation to act. Distractor *salience* is the
+  variable, not count.
+
+Both are recorded unresolved rather than patched by adding entries to `E5`.
+**Two in a row suggests the skill sheet was drafted from the top down and is
+missing whatever the mechanism layer needs from below**, which is an argument
+for unfolding the remaining roles before revising it.
 
 ---
 
