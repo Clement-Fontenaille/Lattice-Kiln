@@ -90,6 +90,63 @@ Two things follow, and they are separable:
 **Owner: none.** The largest unowned gap in the evaluation programme, and it
 needs an operator population before it needs a design.
 
+## Standing rules
+
+Accumulated across the sheets, gathered here so they are applied rather than
+rediscovered. Each was adopted after something went wrong.
+
+| rule | why it exists |
+|---|---|
+| **Write the null before the data.** | Every entry on every sheet carries what a flat result would mean. Written afterwards, a null becomes a reason to rebuild the instrument. |
+| **State what you hold constant, and therefore what you are blind to.** | The former `E5-population-spread`'s real argument, generalised: holding the operator constant scores the assembly minus the person using it. Each layer now answers it. |
+| **A candidate awkward for the framework gets written down, not left out.** | Decomposition, aggregation and ceiling self-location were each cut once for being hard to probe. That is a judgement about the designer, not the candidate. |
+| **Transfer is the criterion, not narrowness.** | There is no positive definition of skill and none is needed. A candidate earns the name when its level on one item family predicts another. A subdivision that buys no transfer is a task feature. |
+| **Roles run in position. Nothing is stubbed.** | `70-THINKING/02`'s standing assumption forbids isolating an operation. What varies is what the assembly hands the role, never whether the role is there. |
+| **No difficulty dials at the functional layer.** | Grading a demand while holding everything else constant is what `E4` and `E5` do. An `E3` item is as hard as the situation it came from; two drafts wrongly dialled directions 5 and 7. |
+| **Borrow the task, author the check.** | A check that travels with a task has usually been seen alongside it. |
+| **Data is eligible only if its setup was recorded, never inferred.** | Recovering setup by joining on `wall_s` put one cell at +22.7 points where the answer was +4.3. |
+| **Report false rejection and false acceptance separately.** | `50-findings/14` found them moving in opposite directions under one variable. A combined correctness figure hides the entire effect. |
+| **Run the arm you expect to lose.** | The folder's motto, and the reason an ordering is a claim rather than a schedule. |
+
+## Status, 2026-09-23
+
+| sheet | layer | state |
+|---|---|---|
+| [`E0`](E0-suite-construct-validation.md) | — | **answered 2026-09-17.** Two factors, not unidimensional. Defect 1 open, repair undecided. Gates `E4`. |
+| [`E1`](E1-context-pathology-probe.md) | — | first move run, **negative**. Probe battery blocked on an unspecified feature space. |
+| [`E2`](E2-grain-versus-quantity.md) | — | forecast move run, **prediction failed**. Token-matched design not buildable yet. |
+| [`E3`](E3-functional-requests.md) | 1 functional | **8 directions**, borrow/build settled, direction 3 has a worked example. Per-direction specs not written. |
+| [`E4`](E4-capability-sweep.md) | 2 mechanism | **10 roles, ~22 mechanisms**, each with its null. R10 added late. Shared preparation for all three layers lives here. |
+| [`E5`](E5-skill-scales.md) | 3 skill | **WIP with 4 convergence conditions.** 8 entries in three kinds — laddered, mapped, derived. No ladder built. |
+| [`E6`](E6-corpus-digestion.md) | — | not run, gated on M8 having something to run. |
+| [`E7`](E7-paired-reanalysis.md) | — | run over recorded data. |
+
+**Nothing at any of the three layers has been run.** The preparation is the
+work done so far.
+
+## What is outstanding
+
+Ordered by whether it blocks something else.
+
+1. **Preflight** (`E4`) — run the 34 existing tasks once on the largest model.
+   One run, and it decides whether the M6 evaluation suite still discriminates
+   at that scale. Everything downstream assumes it does.
+2. **`E5` revision after the mechanism unfold completes.** Two gaps have run
+   upward from `E4` already — R1.1 breadth of correct execution has no partner,
+   and R10.1 reading through alarming noise is not S2 with a bigger
+   denominator. Two in a row suggests `E5` was drafted top-down. **Do not patch
+   it entry by entry; finish unfolding and revise once.**
+3. **The 3-and-8 split in `E3`**, left open when direction 3's worked example
+   turned out to have both halves. Two readings recorded, neither adopted.
+4. **An operator population.** Blocks the system+user ceiling, which is step 6
+   of the arc and the only one of `70-THINKING/02`'s four ceilings never
+   measured. `70-THINKING/01-use-cases.md` §2 is empty. **Unowned.**
+5. **A compiled-language fixture family.** Direction 3's worked example is a
+   heap overflow under one compiler and not another; every M6 fixture is
+   Python, where the class does not exist. New ground, not an extension.
+6. **The identifiability literature** (`70-THINKING/02` OQ-B), which `E5`'s
+   convergence depends on and which is reading rather than building.
+
 ## The three sweep layers
 
 Reorganised 2026-09-22. E3, E4 and E5 no longer carry a theme each; they carry

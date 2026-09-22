@@ -186,9 +186,31 @@ into each as it is decomposed.*
   re-characterisation, plus a statement of what in the design set depends on
   host-specific numbers. Owner: the bootstrapper design, at the latest M16.
 - **Editor-agent frontend choice.** Owner: the bootstrapper design.
-- **Experiments E1–E5 and E-corpus.**
-  One sheet each in [`03-research-and-evaluation/`](03-research-and-evaluation/).
-  E4 gated on E0.
+- **Experiments E0–E7.** One sheet each in
+  [`03-research-and-evaluation/`](03-research-and-evaluation/). **Reorganised
+  2026-09-22:** E3, E4 and E5 no longer carry a theme each, they carry a
+  *layer* each — functional, mechanism, skill — and the comparisons between
+  them are where the result lives. E0 is answered and gates E4's
+  interpretation. `E3-first-ladder` and `E5-population-spread` were dissolved
+  into the new structure rather than deleted; see that folder's README for
+  where each went.
+- **An operator population, and with it the system+user ceiling
+  (2026-09-22).** `70-THINKING/02` names four ceilings and the fourth — the
+  grain an operator-plus-system pair reaches together — has never been
+  measured. It is step 6 of the evaluation arc and the terminal quantity the
+  other three layers are proxies for. Measuring it means varying the operator,
+  which needs a population, and `70-THINKING/01-use-cases.md` §2 is empty. The
+  sheet that would have done it, `E5-population-spread`, was dissolved on
+  2026-09-22 into a blindness requirement on every layer — correct for what it
+  fixed, and it left step 6 without a sheet. **No owner. The largest unowned
+  gap in the evaluation programme.**
+- **A compiled-language fixture family (2026-09-23).** `E3` direction 3's
+  worked example is a buffer overflow that does not appear under ICC and
+  segfaults under GCC at the next `free`, with a sanitiser build as the
+  held-out check. Every M6 fixture is Python, where undefined behaviour, heap
+  metadata and toolchain-dependent manifestation do not exist. This is new
+  ground with a build step inside the check, not an extension of the existing
+  suite. No owner.
 - **Repetition stop unimplemented.** [`08-orchestrator-contract.md`](../../10-technical/08-orchestrator-contract.md)
   requires it; `run_orchestrated` does not implement it. A defect against a
   written contract, not an open question — owner is whatever milestone next drives
