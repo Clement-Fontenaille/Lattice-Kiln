@@ -375,3 +375,97 @@ across tolerances — 0.15s: 2 wrong; 0.25s: 2 wrong; 0.5s: 5 wrong — tighteni
 trades resolution without reaching zero. The tolerance is now 0.25s, the
 measured misattribution is **0.13%**, and the tool refuses above 0.5% rather
 than degrading quietly.
+
+
+---
+
+## Addendum 3, 2026-09-23 — why the base rates differ, and what addendum 2 read into them
+
+Addendum 2's table sets three base rates side by side — 65.2%, 55.4%, 3.7% —
+and treats the third as a property of the 4B's *judging*. **The operator asked
+why a base rate would differ that much between models, which is the right
+question, and the answer is that it is not a judging fact at all.**
+
+### The three subjects are not doing comparable amounts of work
+
+From the setup-keyed results store, all three judge arms, `run_ok` runs only:
+
+| model | rows | gate | objective | **runs that changed nothing** | `answered` | `blocked-no-progress` |
+|---|---|---|---|---|---|---|
+| qwen 7B | 1,167 | 76.7% | 67.6% | 45.0% | 580 | 187 |
+| nemotron 9B | 1,136 | 66.7% | 61.9% | 56.0% | 501 | 302 |
+| **nemotron3 4B** | 1,032 | **24.6%** | **18.6%** | **99.3%** | **5** | **802** |
+
+**The 4B changed nothing in 99.3% of runs and reached `answered` five times in
+a thousand.** That is not a capability gradient between a 4B and a 7B; it is a
+different mode of failure, and it is upstream of every judging number in this
+sheet.
+
+### Split by task kind, the 18.6% resolves
+
+| model | normal tasks | objective pass | false-premise tasks | objective pass |
+|---|---|---|---|---|
+| qwen | 960 | 63.8% | 207 | 85.5% |
+| nemotron 9B | 938 | 57.4% | 198 | 83.3% |
+| nemotron3 4B | 840 | **4.2%** | 186 | **83.9%** |
+
+**The 4B's store-wide 18.6% is carried entirely by false-premise tasks, where
+doing nothing is what the check rewards.** Its rate on tasks that require work
+is 4.2%. Addendum 2's 3.7% was the same quantity computed on the joined,
+verdict-bearing subset, so that figure was right and its *interpretation* was
+not.
+
+### What the transcripts say, and what they do not
+
+Available for the first time, and the reason this is answerable at all rather
+than a matter of argument. Across **5,096** implementer-protocol calls:
+
+| | |
+|---|---|
+| emitted a `<<<FILE>>>` block | 100.0% |
+| emitted the required `<<<CONTROL>>>` block | **66.8%** |
+| **file content but no control block** | **33.2%** |
+| prompts that were harness retries after a malformed reply | 4.9% |
+| truncated at the token cap | 2.8% |
+
+So **a third of its implementer calls fail the output protocol outright** — the
+harness cannot accept work it cannot parse, and retries, and is refused again.
+That is an instruction-following defect of exactly the kind this subject was
+fetched to test.
+
+**But it does not account for the 99.3%.** Two thirds of the calls are
+protocol-compliant, their files are written, and the check still does not move.
+So the picture is a **protocol tax on top of a capability floor**, and this data
+does not separate their sizes.
+
+### What addendum 2 got wrong, and what survives
+
+**Wrong:** *"on that distribution its judging is worse than a constant"*,
+offered as a fact about the judge. The comparison is arithmetically correct and
+attributes to judging something produced upstream of it. A judge shown work
+that is almost never good is not being measured as a judge.
+
+**Also wrong:** *"the smaller model cannot do the underlying work."* Too strong
+for the evidence. A third of its attempts never reach the workspace, and what
+the remainder would score under a protocol it could satisfy is unknown.
+
+**Survives, and is strengthened:** the **always-reject baseline is required**
+wherever a correctness rate appears here. Base rates differ by a factor of
+fifteen between subjects, so a bare correctness figure is not comparable across
+them — which is what makes the column load-bearing rather than decorative.
+
+**Survives:** the two instrument defects, the pooled model label and the join's
+non-zero error rate under three subjects.
+
+**Unchanged:** the parity run did not answer the question it was built for, and
+now for a sharper reason — the comparison it was meant to make is **blocked by
+an output-protocol failure that has to be fixed before the subject can be
+measured at all.**
+
+### What would settle it
+
+Re-run the 4B's implementer arm with an output contract it can satisfy — the
+protocol is the harness's choice, not the task's — and compare against this
+run. If the capability floor persists at 100% protocol compliance, the original
+reading was right for the wrong reason. If it lifts, the suite was measuring
+its own output format.
