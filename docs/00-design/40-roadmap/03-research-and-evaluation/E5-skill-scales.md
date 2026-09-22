@@ -128,9 +128,21 @@ scale and the transfer pair it must survive, and several are expected to merge
 or be demoted once the criterion is applied to data rather than to argument.
 
 Entries are written down where they are awkward rather than left out — see the
-working rule above. S6, S7 and S8 are here **despite** the standing
-assumption making them hard to probe, with the objection stated inside each and
-designed around.
+working rule above. S6, S7 and S8 are here **despite** the standing assumption
+making them hard to probe, with the objection stated inside each and designed
+around.
+
+**Not every entry is a ladder, and the list should stop implying otherwise.**
+Three kinds appear below:
+
+| kind | instrument | output | which |
+|---|---|---|---|
+| **laddered** | a demand ladder | an exit rung | S1–S7 |
+| **mapped** | one question, asked before the work, over many items | two boundaries in task space and the relation between them | S8 |
+| **derived** | none of its own — computed from other entries' data | a dispersion figure | repetition variance |
+
+Forcing the second and third kinds into the first is what produced two bad
+drafts of S8 and one wrong demotion.
 
 ### S1 — Grain closing
 
@@ -308,66 +320,84 @@ behind them. That is a weaker form of the objection, not its absence, and it is
 why R5 mixes provenance — an aggregator in a real assembly also receives work it
 did not commission.
 
-### S8 — Ceiling self-location
+### S8 — Ceiling self-location — **mapped, not scored**
 
-Judging whether a given objective sits above or below the subject's own
-measured exit rung, before attempting it.
+Whether the subject can tell, before starting, that an objective is beyond what
+it can do alone.
 
-**Named "ceiling self-location" rather than "self-assessment"**, which could
-mean confidence in an answer, quality review of finished work, or this. This is
-only the third: a prediction about fit, made before the work.
+**This entry has no demand ladder, and forcing one on it was an error.** An
+earlier draft scored it as prediction accuracy across rungs of signed distance
+from the subject's exit rung. That design inherits every weakness of the
+ladders it depends on, and worse, it presumes the interesting structure is
+one-dimensional — which is exactly what `70-THINKING/02` says capability is
+not.
 
-**The ordering problem, stated first.** This is **second-order**. It is scored
-against the exit rungs S1–S7 produce, so it cannot be built before them. In the
-first draft that was treated as grounds for leaving it out, which was wrong for
-the same reason S6 and S7 were: a dependency is a sequence, not a disqualification.
+**The question asked of the subject is simpler than any ladder:**
 
-**Ladder:** signed distance between the objective and the subject's own measured
-exit rung on whichever demand ladder the objective loads.
+> *Can you do this, or do you need help?*
 
-| rung | the objective sits |
-|---|---|
-| R1 | far below the subject's exit rung |
-| R2 | one rung below |
-| R3 | **at** the exit rung |
-| R4 | one rung above |
-| R5 | far above |
+Asked once, before any work. The work is then attempted regardless, so the
+outcome is known for every item whether the subject asked for help or not.
 
-At each, the subject is asked one question before any work: *can you complete
-this?* The deliverable is the prediction, and the check is whether it matched
-what the subject then actually did on the same item.
+**What is produced is a map, not a score.** Every item yields three things: its
+position in whatever task features are computable in advance, the subject's
+answer, and what actually happened. Two boundaries can then be drawn in the
+same space — where the subject *says* it stops, and where it *does* stop — and
+the comparison between their shapes is the result.
 
-**The measure is discrimination, not accuracy, and this is the part most easily
-got wrong.** A subject that answers "yes" to everything scores perfectly at R1
-and R2 and zero at R4 and R5, and its overall accuracy depends only on how the
-rungs were sampled. What is wanted is whether the **predicted-yes rate falls as
-the rung rises**, and how sharply it falls at R3 — a flat line is uniform
-optimism wearing calibration's clothes.
+| what the two boundaries look like | what it means | is it usable? |
+|---|---|---|
+| same shape, same place | self-location tracks capability | yes, directly |
+| same shape, displaced | uniformly optimistic or pessimistic | **yes** — one offset corrects it |
+| different shape | the answer keys on surface features rather than on what makes the item hard | **no** — no constant repairs it |
 
-**Transfer pair:** predicting its own completion on code objectives; predicting
-its own completion on analysis or document objectives.
+**The middle row is why this is worth running even if the subject is badly
+calibrated.** A model that says yes to everything except the obviously
+enormous is not useless to a firing rule; it is useless *at its stated
+threshold*, and a measured offset makes it useful. Scoring accuracy would have
+reported that case and the bottom row as the same failure.
 
-**Why it is worth the dependency.** Every firing rule in the architecture
-consumes this. `decompose when demand exceeds the effective ceiling` is a comparison
-between two numbers, and this is the only one of the two a running assembly can
-produce for itself — the other comes from measurement done in advance. Without
-it, the decomposition trigger stays a hand-set constant, which is precisely
-what `70-THINKING/02`'s candidate contribution proposes to replace.
+**No transfer pair, because there is nothing to transfer.** The transfer
+criterion admits candidates to the laddered list by asking whether a measured
+level predicts across item families. This entry produces no level. It is kept
+here rather than in [`E4`](E4-capability-sweep.md) because it is a property of
+the model rather than of a role, and it is flagged as a different instrument
+so that nobody later reads a rung count into it.
 
-**What a null means here is unusually specific.** Flat discrimination across
-R1–R5, with the exit rungs themselves well established, would say the subject
-has no usable access to its own limits. That does not merely remove one
-mechanism; it removes the input the self-directed decomposition strategy
-depends on, and the firing rule would then have to be supplied from outside the
-running assembly permanently rather than provisionally.
+**What it feeds.** Every firing rule in the architecture compares an estimate
+of demand against an estimate of what the assembly can carry.
+`70-THINKING/02`'s candidate contribution is to replace ADaPT's hand-set
+`max_depth` with a measured bound, and the measurement has to come from
+somewhere. A boundary map is a weaker input than a calibrated predictor and a
+much stronger one than a constant.
 
-### Demoted — repetition variance
+**What a null means.** If the two boundaries have different shapes and no
+transformation relates them, the running assembly cannot be given its own
+firing rule from its own self-report, and the threshold has to be supplied
+from outside — measured in advance, per model and per scaffold, and re-measured
+whenever either changes. That is a materially worse position than the
+contribution assumes, and it is worth knowing early.
 
-Same objective twice, same answer. Proposed and **rejected as a skill**: it has no demand
-to vary, so it cannot have a rung. It is a *variance measure taken on the other
-scales* at fixed demand, and it belongs in the method rather than the list.
-Recorded here because it is the first thing the criterion above disqualified,
-which is the criterion doing its job.
+### Derived — repetition variance
+
+Same objective, repeated, and how far the outcome moves.
+
+**Reclassified, not demoted.** An earlier draft rejected it as "not a skill"
+because it has no demand to vary and therefore no rung. That reasoning was
+sound and the conclusion was wrong: having no ladder makes it a different kind
+of entry, not a non-entry.
+
+It needs **no instrument of its own.** Every laddered entry above is run at
+several reps, so the dispersion is already in the data; this is a way of
+reading that data, not a thing to build. `50-findings/14` is the worked
+example — the same cell read **+22.7 points at n≈19 and +4.3 at n≈200**, which
+is repetition variance deciding the finding rather than decorating it.
+
+**Where the scenario went.** Consistency *within a single deliverable* — many
+related decisions that must agree with each other — is a genuinely different
+quantity and is not measured by reps. It is a functional requirement rather
+than a graded demand, and it lives in [`E3`](E3-functional-requests.md) as
+direction 7.
 
 ### Nothing is deliberately absent, and that is recent
 

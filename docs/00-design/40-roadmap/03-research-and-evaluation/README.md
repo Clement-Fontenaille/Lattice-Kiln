@@ -22,6 +22,51 @@ exists. **The design** — arms, what is held constant, what varies. **What a nu
 means**, which is not the same for every experiment and is the thing most often left
 unstated. **Cost and gating.** **Status**, and where the result went if it has run.
 
+## What the layers are for
+
+Stated by the operator, 2026-09-22. The three layers are steps in one sequence,
+and the sequence ends somewhere none of them reach:
+
+1. **Work out the boundary of what a model can be expected to provide.**
+2. **Work out which roles are likely to help and which are not.**
+3. **Actually test them** — not reason about which ought to work.
+4. **See what sticks.**
+5. **Assemble a system** out of what survived.
+6. **Validate that the process climbs a score not yet measured: user
+   satisfaction.**
+
+Steps 1 and 2 are what E5 and E4 are for. Step 3 is the whole folder's motto —
+*run the arm you expect to lose*. Step 4 is why entries carry demotion criteria
+written before the data. Step 5 is not an experiment and has no sheet.
+
+### Step 6 is not measured anywhere, and that needs saying plainly
+
+**No sheet in this folder measures user satisfaction, and no metric in the
+project is a proxy for it that survives inspection.**
+
+E3 is the closest, and it is not close. It scores whether a request was
+*served* — the deterministic check passed, the structural dimensions were met.
+A request can be served and the person still dissatisfied: it took four hours,
+the explanation was unreadable, the correction cost more than doing it by hand,
+or the result was right and arrived after the need for it passed. None of that
+is visible to any check written here.
+
+Three consequences worth holding:
+
+- **Every score in this folder is a proxy**, and the distance between the proxy
+  and the thing is unmeasured rather than small. A layer can climb while the
+  terminal quantity does not.
+- **Step 5's assembly cannot be validated by steps 1–4.** Passing every layer
+  is consistent with an assembly nobody wants to use, which is the
+  accessibility argument the former `E5-population-spread` made about the
+  operator, generalised past the operator to whoever the work is for.
+- **The gap is an owned piece of work, not an acknowledgement.** Something has
+  to define what user satisfaction means here, whether it is measurable at all
+  at this scale, and what it would take to measure it once. Until that exists,
+  step 6 is an intention rather than a plan.
+
+**Owner: none. This is the largest unowned gap in the evaluation programme.**
+
 ## The three sweep layers
 
 Reorganised 2026-09-22. E3, E4 and E5 no longer carry a theme each; they carry

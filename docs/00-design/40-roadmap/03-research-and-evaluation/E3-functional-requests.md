@@ -59,6 +59,7 @@ settled; the specifications are not, and each gets its own discussion.
 | 4 | change + docs + CI | objective retention, **aggregation** | three independent structural checks | **build** |
 | 5 | dig a large corpus, then implement | retrieval under volume | feature works | **build** |
 | 6 | diagnose a failure from logs | inference from evidence | structured claim, exact match | **build** |
+| 7 | apply one decision across many sites | **internal consistency**, drift | agreement across sites, first ten against last ten | **build** |
 
 ### Why 1–3 are borrowed
 
@@ -108,6 +109,57 @@ of eleven. Instead: **synthesise the failure so the true cause is known**, and
 score a structured claim — which service, which call, which line, what cause —
 by exact match. Different faculty from everything else here, and the one no
 existing corpus serves.
+
+### 7 — one decision, many sites, and the two senses of consistency
+
+Added 2026-09-22. It exists because "consistency" was being used for two
+quantities that need different treatment:
+
+| sense | what it is | where it is measured |
+|---|---|---|
+| **repetition variance** | the same objective run again, and how far the outcome moves | already in the data — every cell is run at several reps. See `E5`, *Derived* |
+| **internal consistency** | many related decisions inside **one** deliverable that must agree with each other | **nowhere yet.** This direction |
+
+Only the second needs a scenario, and nothing in this project has measured it.
+
+**The buildable instance: a cross-cutting convention change.** *Every public
+function must validate its inputs and raise a domain-specific error*, across
+forty call sites. Each site is a small decision; the requirement is that they
+are the **same** decision.
+
+- scored by **AST-matching each site against the intended pattern**, so
+  agreement is a count rather than a judgement;
+- it has a **dial** — ten sites, forty, two hundred — so it scales to a larger
+  model without re-authoring;
+- the fixture is ours, so there is no contamination;
+- and failure means inconsistency rather than four other things, which is rare
+  at this layer.
+
+**It measures drift, which is the part worth having.** Score the first ten
+sites against the last ten. A convention that holds early and decays late is
+`70-THINKING/02`'s **tangential success** showing up in miniature — each
+decision locally defensible, the whole no longer coherent. That makes this
+direction the functional partner of [`E5`](E5-skill-scales.md)'s **S4 objective
+retention**, the way direction 5 partners with S2, and therefore a
+mechanism-to-function transfer probe rather than only a task.
+
+**The anchor instance: port a codebase to another language.** The operator's
+own candidate, and it demands consistency far harder — every construct
+translated the same way, a helper introduced in file 3 still used in file 40,
+naming holding across hundreds of sites. It also has an elegant held-out check
+available: port the implementation, keep **language-agnostic test vectors**
+(data in, data out) that the subject never sees, and run them against both
+sides.
+
+Two costs, one fixable. It **conflates** — a failed port may be inconsistency,
+translation competence, target-library knowledge or build-system work, and
+while this layer does not attribute by design, an item with four failure routes
+is weak even here. And any well-known library has already been ported into the
+training data, which is fixable by choosing an obscure or synthetic source.
+
+**Build the convention change; keep the port as the anchor.** The port is the
+more realistic item and the one worth having when it is affordable; the
+convention change is the one that gets built and answers the question sooner.
 
 ## The held-out check does three jobs
 
