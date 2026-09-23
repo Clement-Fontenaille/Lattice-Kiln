@@ -105,11 +105,38 @@ model that is readable straight out of the GGUF's token table:
 <SPECIAL_18> ... <SPECIAL_39>
 ```
 
-Every delimiter the tuning uses is a **reserved single token**: turn boundaries
-(`[INST]`, `<|im_start|>`), reasoning (`<think>`, id 12), tools
-(`[TOOL_CALLS]`, `<tool_call>`). NVIDIA's own note is that tool calling uses
-XML-style tags **"to reduce character escaping"** — the format was designed so
-that content inside a region is raw, not escaped.
+**Vocabulary presence is not trained usage, and reading that list as the tuning
+format was an error.** Probed directly with `raw: true`, so ollama's renderer is
+bypassed and the model sees exactly the bytes sent:
+
+| wire format offered | response |
+|---|---|
+| `[AVAILABLE_TOOLS]…[/AVAILABLE_TOOLS][INST]…[/INST]` | **2 tokens, empty** |
+| `<|im_start|>role … <|im_end|>` | 110 tokens, a real answer |
+
+`[INST]`, `[AVAILABLE_TOOLS]`, `[TOOL_RESULTS]` and `[TOOL_CALLS]` are
+**inherited tokenizer slots the model was not tuned on** — in the table, dead in
+use. The live interface is **ChatML**:
+
+```
+<|im_start|>user
+Create hello.py containing a main() that prints 'hi'. Use the tool.<|im_end|>
+<|im_start|>assistant
+We need to create a file hello.py ... Use write_file tool.
+</think>
+{"path": "hello.py",
+ "content": "def main():
+    print('hi')
+if __name__ == '__main__':
+    main()"}
+```
+
+So what the tuning actually uses: **ChatML turn markers, `</think>` closing a
+reasoning span, and tool arguments as JSON with content newline-escaped.**
+NVIDIA's note that tool calling uses XML-style tags **"to reduce character
+escaping"** describes `<tool_call>`, which ollama's parser decoded on the
+rendered path but which this raw probe did not elicit — the tool-definition
+injection format the renderer uses was not observed.
 
 **`<<<` and `<FILE` do not appear.** The harness's delimiters are ordinary text,
 several BPE pieces each, carrying no learned state change.
@@ -118,7 +145,7 @@ That gives three tiers rather than the two the earlier note implied:
 
 | delimiter | status in this model | what it signals |
 |---|---|---|
-| `<tool_call>`, `<think>` | **reserved token**, learned in post-training | a state change: what follows is of a known kind |
+| `<|im_start|>`, `</think>` | **reserved token, verified live** — the model answers under it and is silent under the unused slots | a state change: what follows is of a known kind |
 | ` ``` ` | ordinary text, enormous **pretraining** mass | a strong prior that code follows, laid out as code |
 | `<<<FILE path=...>>>` | ordinary text, **no mass at either stage** | nothing |
 
