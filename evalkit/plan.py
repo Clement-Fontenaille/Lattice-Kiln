@@ -46,7 +46,8 @@ def _client_defaults() -> dict:
     import sys as _s
     _s.path.insert(0, str(ROOT / "experiments" / "M4-ephemeral-processors"))
     import ollama_client as _oc
-    return {"num_ctx": _oc.DEFAULT_NUM_CTX}
+    import processor as _proc
+    return {"num_ctx": _oc.DEFAULT_NUM_CTX, "protocol": _proc.PROTOCOL}
 
 
 def resolve(decl: dict) -> list[tuple[Cell, dict, int]]:

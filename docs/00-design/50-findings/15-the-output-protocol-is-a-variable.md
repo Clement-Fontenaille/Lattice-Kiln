@@ -268,3 +268,94 @@ invisible in the data.
 capture the arm's source and its prompts, so a protocol change inside an arm
 would move them — but the protocol is shared boilerplate across arms, and
 nothing records it as the variable it has now been shown to be.
+
+---
+
+## Addendum, 2026-09-23 — the protocol is now a keyed variable, and the tool
+## path is not a drop-in
+
+The sheet above closes by saying the protocol stays as it is, because changing
+it mid-programme would put every new row in a different regime from every old
+one **invisibly**, the protocol not being in the setup key. The operator then
+asked for the swap directly. It has been built, and the invisibility was fixed
+first rather than accepted.
+
+### What is keyed now
+
+`params.protocol` is `tools` or `markers`, recorded **unconditionally** on every
+row — unlike `think`, `min_predict`, `temperature` and `top_p`, which are keyed
+only when explicitly set. The protocol is not an optional departure from a
+default; it is a choice every run makes.
+
+Rows recorded before today carry no such key, and `params_match` reads an absent
+one as `markers`. That is a **declared backfill of a fact**, not a wildcard: the
+marker protocol was the only one that existed, every legacy row ran under it,
+and a row that genuinely ran under tools always carries the key explicitly.
+Without the backfill, keying the protocol would have orphaned the entire
+existing corpus. Verified in both directions — a legacy row matches a `markers`
+query and is refused by a `tools` query.
+
+Two further gaps closed on the way, both the same defect as the one the sheet
+names: `temperature` and `top_p` were made settable earlier today but were
+**never added to `_eval_params`**, so the high-temperature Nemotron runs were
+keyed identically to the runs they were meant to be compared against.
+
+### Three things the build established that the measurement had not
+
+**1. The tool protocol is inherently multi-turn. The marker protocol was not.**
+
+Measured on `nemotron3-nano-4b`: turn one returns `write_file` and stops. It
+does not emit `conclude` until a tool *result* has been appended and it is asked
+again. A call is a turn boundary — that is how the format was tuned — so a
+single-shot request gets one call and no conclusion.
+
+This is the substantive structural difference, and it was not visible from the
+vocabulary or from the one-shot probes. `run_processor` now drives a loop
+(`MAX_TOOL_TURNS = 6`) that feeds back `"recorded"` per call and stops on
+`conclude`. Nothing is realized inside the loop; every proposed effect still
+goes through the gate afterwards, exactly as FILE blocks did. The model is told
+its call was received, never that it was permitted.
+
+**2. Ollama's parser is not uniformly reliable, and its failure looks exactly
+like a model failure.**
+
+`qwen2.5-coder:7b` emitted a **perfectly well-formed**
+`{"name": "write_file", "arguments": {...}}` with correctly escaped newlines,
+and Ollama returned it as plain `content` with `tool_calls` empty. The model
+complied; the server-side extraction did not fire.
+
+Scoring that as a model failure would be precisely the confusion this sheet is
+about, so the client now recovers such calls from the text by brace-matching
+(`_calls_from_text`). **This weakens the "native channel" framing**: the tool
+path is a channel whose reliability varies per model *and per Ollama template*,
+not a uniformly trained one. Anything comparing models across this protocol must
+report the recovery rate, or it will attribute a template gap to a model.
+
+**3. First directional evidence on the real check, not on cleanliness.**
+
+The sheet's fourth open item was that every figure in it is a property of the
+text rather than of the work. One matched pair, `monolith` / `wf2_retry` /
+`nemotron3-nano-4b` / `min_predict 2048`:
+
+| protocol | subtests base → final |
+|---|---|
+| markers | 0/5 → **0/5** |
+| tools | 0/5 → **3/5** |
+
+**n=1 per side. This earns nothing.** It is one draw on one task on the model
+that was already known to sit at the floor, and it is reported here only because
+it is the first figure in this sheet that touches `objective_pass` rather than
+the shape of the text. If it survives the suite at n=5 it also *falsifies the
+layout explanation* above — layout was predicted to leave correctness roughly
+alone, and this moved it.
+
+### What is not done
+
+- **No cross-model run.** The falsifier the sheet asks for first.
+- **The recovery rate is not recorded per row.** It should be, before any
+  cross-model comparison uses this path.
+- **The unified diff remains untested**, and still carries the most training
+  mass of any option.
+- **M5's `roles_v2.py` still hardcodes the marker protocol.** It is outside the
+  M6/M7 arm path, so no live arm uses it, but it is a second copy of a format
+  now known to be a variable.

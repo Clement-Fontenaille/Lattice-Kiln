@@ -20,6 +20,7 @@ import hashlib
 import socket
 import json
 import os
+import re
 from pathlib import Path
 import time
 import urllib.error
@@ -97,6 +98,10 @@ class Generation:
     total_duration_s: float
     load_duration_s: float
     raw: dict[str, Any] = field(repr=False, default_factory=dict)
+    # Populated only on the /api/chat path. Ollama's PARSER lifts these OUT of
+    # the response text, so `text` is what is left over once they are removed --
+    # usually empty. Each entry is {"name": str, "arguments": dict}.
+    tool_calls: list[dict[str, Any]] = field(repr=False, default_factory=list)
 
     @property
     def tokens_per_s(self) -> float:
@@ -270,7 +275,24 @@ def _meter(g: "Generation", prompt: str = "") -> "Generation":
 def generate(prompt: str, *, model: str = DEFAULT_MODEL, base_url: str = DEFAULT_BASE_URL,
              num_ctx: int = DEFAULT_NUM_CTX, temperature: float = 0.2,
              num_predict: int = 1536, timeout_s: float = 600.0,
-             system: str | None = None) -> Generation:
+             system: str | None = None,
+             tools: list[dict[str, Any]] | None = None) -> Generation:
+    """`tools` switches to /api/chat, the only endpoint that accepts them.
+
+    /api/generate has no tools parameter -- it is the raw completion endpoint.
+    On the chat path Ollama's RENDERER serialises the definitions into the
+    prompt in the model's own tuned dialect, and its PARSER extracts any calls
+    back out into a structured field. Neither runs on /api/generate.
+    """
+    if tools:
+        if BACKEND == "llamacpp":
+            raise OllamaError("tools= requires the ollama backend (/api/chat); "
+                              "llama-server's /completion has no tool channel")
+        msgs = ([{"role": "system", "content": system}] if system else [])
+        msgs.append({"role": "user", "content": prompt})
+        return chat(msgs, base_url=base_url, model=model, num_ctx=num_ctx,
+                    temperature=temperature, num_predict=num_predict,
+                    timeout_s=timeout_s, tools=tools)
     if BACKEND == "llamacpp":
         return _generate_llamacpp(prompt, base_url=base_url, model=model,
                                   temperature=temperature, num_predict=num_predict,
@@ -320,6 +342,134 @@ def generate(prompt: str, *, model: str = DEFAULT_MODEL, base_url: str = DEFAULT
         load_duration_s=payload.get("load_duration", 0) / 1e9,
         raw=payload,
     ), prompt)
+
+
+_TEXT_CALL = re.compile(
+    r'\{\s*"name"\s*:\s*"(?P<name>[A-Za-z_][A-Za-z0-9_]*)"\s*,'
+    r'\s*"(?:arguments|parameters)"\s*:\s*(?P<args>\{)', re.S)
+
+
+def _calls_from_text(text: str) -> list[dict[str, Any]]:
+    """Tool calls Ollama's PARSER did not lift out of the text.
+
+    Not a nicety. qwen2.5-coder emits a perfectly well-formed
+    {"name": ..., "arguments": {...}} and Ollama hands it back as plain
+    `content` with `tool_calls` empty -- the model complied and the server-side
+    extraction did not fire. Discarding that would score a parser gap as a
+    model failure, which is the exact confusion Findings 15 is about.
+
+    Brace-matched rather than regex-captured, because file content routinely
+    contains braces.
+    """
+    out = []
+    for m in _TEXT_CALL.finditer(text):
+        i, depth, esc, instr = m.start("args"), 0, False, False
+        for j in range(i, len(text)):
+            ch = text[j]
+            if instr:
+                if esc:
+                    esc = False
+                elif ch == chr(92):
+                    esc = True
+                elif ch == '"':
+                    instr = False
+                continue
+            if ch == '"':
+                instr = True
+            elif ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth == 0:
+                    try:
+                        args = json.loads(text[i:j + 1])
+                    except json.JSONDecodeError:
+                        break
+                    if isinstance(args, dict):
+                        out.append({"name": m.group("name"), "arguments": args})
+                    break
+    return out
+
+
+def chat(messages: list[dict[str, Any]], *, model: str = DEFAULT_MODEL,
+         base_url: str = DEFAULT_BASE_URL, num_ctx: int = DEFAULT_NUM_CTX,
+         temperature: float = 0.2, num_predict: int = 1536,
+         timeout_s: float = 600.0,
+         tools: list[dict[str, Any]] | None = None) -> Generation:
+    """/api/chat over a full message list, so a tool loop can carry history.
+
+    A loop is not optional on this endpoint. Measured 2026-09-23 on
+    nemotron3-nano-4b: turn one returns write_file and stops, and conclude only
+    arrives on turn two, after a tool result has been appended. Asking for both
+    in one shot gets one. That is how the format was tuned -- a call is a turn
+    boundary -- and it is the substantive difference from the marker protocol,
+    which was single-shot by construction.
+
+    Same options and timing fields as /api/generate, so the meter and the
+    transcript need no special case.
+    """
+    num_predict = max(num_predict, MIN_PREDICT)
+    if TEMPERATURE is not None:
+        temperature = TEMPERATURE
+    opts = {"temperature": temperature, "num_ctx": num_ctx,
+            "num_predict": num_predict}
+    if TOP_P is not None:
+        opts["top_p"] = TOP_P
+    body = {"model": model, "messages": messages, "stream": False,
+            "options": opts}
+    if tools:
+        body["tools"] = tools
+    if THINK is not None:
+        body["think"] = THINK
+    data = json.dumps(body).encode("utf-8")
+    req = urllib.request.Request(f"{base_url}/api/chat", data=data,
+                                 headers={"Content-Type": "application/json"})
+    t0 = time.monotonic()
+    try:
+        with urllib.request.urlopen(req, timeout=timeout_s) as resp:
+            payload = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.URLError as e:
+        raise OllamaError(f"request to {base_url} failed: {e}") from e
+    except json.JSONDecodeError as e:
+        raise OllamaError(f"bad JSON from Ollama: {e}") from e
+    msg = payload.get("message")
+    if not isinstance(msg, dict):
+        raise OllamaError(f"no 'message' field in Ollama reply: {payload!r}")
+    calls = []
+    for c in msg.get("tool_calls") or []:
+        fn = (c or {}).get("function") or {}
+        args = fn.get("arguments")
+        if isinstance(args, str):          # some renderers hand back a string
+            try:
+                args = json.loads(args)
+            except json.JSONDecodeError:
+                args = {"_raw": args}
+        calls.append({"name": fn.get("name", ""),
+                      "arguments": args if isinstance(args, dict) else {}})
+    text = msg.get("content") or ""
+    if not calls and text:
+        calls = _calls_from_text(text)
+    # Same failure as on /api/generate: a reasoning model that spends the whole
+    # budget thinking and reaches no answer. With tools it is worse, because an
+    # empty content field is ALSO the normal shape of a pure tool-call reply --
+    # so silence only counts as truncation when no call came back either.
+    if not text and not calls and payload.get("done_reason") == "length":
+        raise OllamaError(
+            f"empty response and no tool calls, truncated at "
+            f"num_predict={num_predict} (done_reason=length, "
+            f"{len(msg.get('thinking') or '')} chars of thinking, "
+            f"eval_count={payload.get('eval_count')}). Raise num_predict, "
+            f"or set LATTICE_THINK=0.")
+    return _meter(Generation(
+        text=text,
+        model=payload.get("model", model),
+        prompt_eval_count=payload.get("prompt_eval_count", 0),
+        eval_count=payload.get("eval_count", 0),
+        total_duration_s=payload.get("total_duration", 0) / 1e9 or (time.monotonic() - t0),
+        load_duration_s=payload.get("load_duration", 0) / 1e9,
+        raw=payload,
+        tool_calls=calls,
+    ), messages[-1].get("content", "") if messages else "")
 
 
 def _generate_llamacpp(prompt: str, *, base_url: str, model: str, temperature: float,

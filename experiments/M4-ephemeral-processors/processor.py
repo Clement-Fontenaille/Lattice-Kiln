@@ -8,6 +8,7 @@ RunRecorder, and realizes only what the floor passes. No resume.
 from __future__ import annotations
 
 import json
+import os
 import re
 import shlex
 import subprocess
@@ -17,8 +18,26 @@ from typing import Any
 
 from _bridge import CapabilitySet, Gate, submit_effect
 from context_assembly import ContextBundle
-from ollama_client import DEFAULT_MODEL, generate
-from roles import ROLE_GRANTS, prompt_for
+from ollama_client import DEFAULT_MODEL, chat, generate
+from roles import PROTOCOL_TOOLS, ROLE_GRANTS, TOOLS, prompt_for
+
+# LATTICE_PROTOCOL: how the model is asked to hand back its work.
+#
+#   "tools"    -- write_file / conclude as tool definitions, sent through
+#                 /api/chat so Ollama's per-model RENDERER serialises them into
+#                 whatever dialect the model was tuned on.
+#   "markers"  -- the bespoke FILE / CONTROL blocks, every row before today.
+#
+# This is a variable, not a constant, and it is in the setup key. Findings 15
+# showed the marker form is a measured cause of failure on at least one model
+# while carrying no trained state change in its vocabulary -- so a score under
+# it is a joint measurement of capability and of familiarity with a dialect
+# this harness invented. Flipping the default without keying it would have put
+# every new row in a different regime from every old one, invisibly. That was
+# the defect the finding closed on; this is the fix.
+PROTOCOL = os.environ.get("LATTICE_PROTOCOL", "tools").strip().lower()
+if PROTOCOL not in ("tools", "markers"):
+    raise ValueError(f"LATTICE_PROTOCOL must be tools|markers, got {PROTOCOL!r}")
 
 _FILE = re.compile(r"<<<FILE\s+path=(.+?)>>>\r?\n(.*?)\r?\n<<<ENDFILE>>>", re.DOTALL)
 _CTRL = re.compile(r"<<<CONTROL>>>\s*(.*?)\s*<<<ENDCONTROL>>>", re.DOTALL)
@@ -82,6 +101,58 @@ def _extract(text: str) -> dict[str, Any] | None:
     return {"control": ctrl, "files": files}
 
 
+MAX_TOOL_TURNS = 6
+"""Turns a tool-mode processor may take before it is called unparseable.
+
+Six, because a turn costs a call and the contract needs at most: one turn per
+file, plus conclude. No observed role writes more than a few files, and a
+runaway loop is a cost, not a result.
+"""
+
+
+def _run_tools(prompt: str, *, model: str, num_predict: int = 1536
+               ) -> tuple[Any, dict[str, Any] | None, str]:
+    """Drive the tool loop until `conclude` arrives. -> (gen, parsed, log).
+
+    The model emits one call, stops, and waits for a result before emitting the
+    next. Measured, not assumed: on nemotron3-nano-4b turn one is write_file
+    and conclude does not appear until turn two.
+
+    The result fed back is "recorded", which is the truth at that moment and no
+    more. Nothing is realized here -- every proposed effect still goes through
+    the gate afterwards, exactly as the marker protocol's FILE blocks did. The
+    model is told its call was received, never that it was permitted.
+    """
+    msgs: list[dict[str, Any]] = [{"role": "user", "content": prompt}]
+    files: dict[str, str] = {}
+    ctrl: dict[str, Any] | None = None
+    log: list[str] = []
+    gen = None
+    for _ in range(MAX_TOOL_TURNS):
+        gen = chat(msgs, model=model, tools=TOOLS, num_predict=num_predict)
+        log.append(gen.text)
+        if not gen.tool_calls:
+            break
+        raw_msg = (gen.raw.get("message") or {})
+        msgs.append({"role": "assistant",
+                     "content": raw_msg.get("content", ""),
+                     "tool_calls": raw_msg.get("tool_calls") or []})
+        for c in gen.tool_calls:
+            args = c.get("arguments") or {}
+            if c.get("name") == "write_file":
+                path = str(args.get("path", "")).strip()
+                if path:
+                    files[path] = str(args.get("content", ""))
+            elif c.get("name") == "conclude":
+                ctrl = dict(args)
+            msgs.append({"role": "tool", "tool_name": c.get("name", ""),
+                         "content": "recorded"})
+        if ctrl is not None:
+            break
+    parsed = None if ctrl is None else {"control": ctrl, "files": files}
+    return gen, parsed, "\n".join(t for t in log if t)
+
+
 def _norm_abs(workspace_root: Path, rel: str) -> Path:
     return (workspace_root / rel).resolve()
 
@@ -104,30 +175,43 @@ def run_processor(*, role: str, objective: str, context: ContextBundle,
         context_ref=f"bundle:{context.token_estimate}tok:{len(context.entries)}src",
         config_ref=config_ref)
 
+    use_tools = PROTOCOL == "tools"
     if prompt is None:  # callers (e.g. M5 roles_v2) may supply a tuned prompt
-        prompt = prompt_for(role, context.render(), objective, extra=extra_input)
-    gen = generate(prompt, model=model)
-    out = gen.text
-    parsed = _extract(out)
-    if parsed is None:
-        gen = generate(prompt + "\n\nYour previous reply had no valid <<<CONTROL>>> block. "
-                                "Reply again following the OUTPUT FORMAT exactly: FILE blocks "
-                                "then one <<<CONTROL>>> block with valid JSON.",
-                       model=model)
+        prompt = prompt_for(role, context.render(), objective, extra=extra_input,
+                            protocol=PROTOCOL_TOOLS if use_tools else None)
+    if use_tools:
+        nudge = ("\n\nYou did not call conclude. Do the work, then call "
+                 "conclude exactly once.")
+        gen, parsed, out = _run_tools(prompt, model=model)
+        if parsed is None:
+            gen, parsed, out = _run_tools(prompt + nudge, model=model)
+    else:
+        nudge = ("\n\nYour previous reply had no valid <<<CONTROL>>> block. "
+                 "Reply again following the OUTPUT FORMAT exactly: FILE blocks "
+                 "then one <<<CONTROL>>> block with valid JSON.")
+        gen = generate(prompt, model=model)
         out = gen.text
         parsed = _extract(out)
+        if parsed is None:
+            gen = generate(prompt + nudge, model=model)
+            out = gen.text
+            parsed = _extract(out)
 
     res = ProcessorResult(invocation_id=inv, role=role, terminal_state="blocked",
                           summary="", parse_ok=parsed is not None,
                           gen_tokens_per_s=round(gen.tokens_per_s, 1), raw_output=out)
     if parsed is None:
-        res.summary = "no valid control block in model output"
+        res.summary = ("model never called conclude" if use_tools
+                   else "no valid control block in model output")
         _record_conclusion(recorder, gate, actor, inv, ws, res)
         return res
 
     ctrl = parsed["control"]
     res.control = ctrl
-    res.body_text = re.split(r"<<<CONTROL>>>|\{[^{}]*\"terminal_state\"", out, maxsplit=1)[0].strip()
+    # On the tool path the parser already lifted the calls out, so whatever is
+    # left in `text` IS the body -- there is nothing to split off.
+    res.body_text = out.strip() if use_tools else re.split(
+        r"<<<CONTROL>>>|\{[^{}]*\"terminal_state\"", out, maxsplit=1)[0].strip()
     res.terminal_state = str(ctrl.get("terminal_state", "blocked"))
     res.summary = str(ctrl.get("summary", "")).strip()
     creqs = ctrl.get("context_requests") or []

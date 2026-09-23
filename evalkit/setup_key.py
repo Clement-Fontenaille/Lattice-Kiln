@@ -36,6 +36,11 @@ that does not care writes `"num_ctx": "any"` and reuses rows recorded at 16384
 and at 8192 alike; one that does care states a value and gets exactly it. The
 difference is declared by the experiment rather than guessed by the key.
     judge_format    decision_first | reason_first
+    params.protocol tools | markers -- how the model is asked to hand back its
+                    work. Findings 15 showed the marker protocol is itself a
+                    cause of failure on some models, so it is a variable and
+                    belongs in the key. Rows recorded before it existed are
+                    read as "markers", which is what they were.
 
 `model_digest` is recorded but is NOT part of identity, for a reason worth
 stating: legacy rows have no digest, so requiring one would block every reuse of
@@ -223,6 +228,13 @@ def params_match(stored: str, query: dict) -> bool:
     expanded", not "don't care". Only ANY means don't care.
     """
     have = json.loads(stored or "{}")
+    # Every row recorded before 2026-09-23 ran the marker protocol, because it
+    # was the only one that existed. Reading an absent key as "markers" is a
+    # declared backfill of a fact, not a wildcard: it is exactly as strict as
+    # any other key afterwards, and a row that really did run under tools will
+    # always carry the key explicitly. Without it the protocol becoming a
+    # keyed param would orphan the entire existing corpus.
+    have.setdefault("protocol", "markers")
     for k, want in query.items():
         if want == ANY:
             continue

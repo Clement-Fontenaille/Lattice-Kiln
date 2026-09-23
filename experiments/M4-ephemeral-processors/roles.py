@@ -38,6 +38,68 @@ Rules:
 - You cannot execute anything yourself; the runtime runs permitted commands.
 """
 
+# --------------------------------------------------------------- tools mode
+#
+# The same contract as PROTOCOL above, expressed as tool definitions instead of
+# bespoke markers. Findings 15 measured the marker form degenerating on
+# nemotron3-nano-4b -- newlines collapsing to spaces inside a FILE block -- and
+# established that "<<<" carries no trained state change in that model's
+# vocabulary, while its tuned tool channel emitted the same content with
+# newlines correctly escaped.
+#
+# Two tools cover everything the markers did:
+#   write_file(path, content)  <- one FILE block
+#   conclude(...)              <- the single CONTROL block
+#
+# Shapes follow the OpenAI function-calling convention, which is what Ollama's
+# per-model RENDERER takes as input and re-serialises into whatever dialect the
+# model was actually tuned on.
+TOOLS = [
+    {"type": "function", "function": {
+        "name": "write_file",
+        "description": ("Create or replace one file. Give the WHOLE file "
+                        "content, never a diff. Call once per file changed."),
+        "parameters": {"type": "object", "properties": {
+            "path": {"type": "string",
+                     "description": "Path relative to the repository root."},
+            "content": {"type": "string",
+                        "description": "The complete new file content."},
+        }, "required": ["path", "content"]}}},
+    {"type": "function", "function": {
+        "name": "conclude",
+        "description": ("End your turn. Call this exactly once, after any "
+                        "write_file calls. Required on every turn."),
+        "parameters": {"type": "object", "properties": {
+            "terminal_state": {"type": "string",
+                               "enum": ["answered", "blocked", "declined"]},
+            "summary": {"type": "string",
+                        "description": "One or two sentences on what you "
+                                       "concluded or did."},
+            "verdict": {"type": "string", "enum": ["approve", "needs-change"],
+                        "description": "Reviewer role only; omit otherwise."},
+            "run": {"type": "array", "items": {"type": "string"},
+                    "description": "Commands for the runtime to execute."},
+            "context_requests": {"type": "array", "items": {"type": "string"}},
+        }, "required": ["terminal_state", "summary"]}}},
+]
+
+PROTOCOL_TOOLS = """\
+OUTPUT FORMAT - use the provided tools, not prose.
+
+For every file you create or change, call write_file with the path and the
+WHOLE new file content (never a diff).
+
+Then call conclude exactly once, as the last thing you do.
+
+Rules:
+- conclude is required on every turn, including when you write no files.
+- "verdict" is only for the reviewer role; other roles may omit it.
+- terminal_state = "declined" if the right answer is NOT to do the task (false
+  premise, wrong problem, already satisfied, needs investigation first) -
+  explain in "summary" and call write_file zero times.
+- You cannot execute anything yourself; the runtime runs permitted commands.
+"""
+
 IMPLEMENTER = """\
 You are an implementer. You are given an objective and some repository context.
 Make the smallest correct change that achieves the objective. Prefer editing
@@ -82,9 +144,11 @@ ROLE_GRANTS: dict[str, dict[int, dict]] = {
 
 
 def prompt_for(role: str, rendered_context: str, objective: str,
-               extra: str | None = None) -> str:
+               extra: str | None = None, protocol: str | None = None) -> str:
+    """`protocol` overrides the OUTPUT FORMAT section; defaults to markers."""
     parts = [ROLE_INSTRUCTIONS[role].strip(), "", "# CONTEXT", rendered_context, ""]
     if extra:
         parts += ["# ADDITIONAL INPUT", extra, ""]
-    parts += ["# OBJECTIVE", objective, "", PROTOCOL]
+    parts += ["# OBJECTIVE", objective, "",
+              PROTOCOL if protocol is None else protocol]
     return "\n".join(parts)

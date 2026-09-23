@@ -142,11 +142,26 @@ def _eval_params() -> dict:
     can still check it.
     """
     import ollama_client as _oc
+    import processor as _proc
     p = {}
     if _oc.THINK is not None:
         p["think"] = _oc.THINK
     if _oc.MIN_PREDICT:
         p["min_predict"] = _oc.MIN_PREDICT
+    # Sampling, when it was actually chosen. Conditional like the two above, so
+    # a run that left the arms' own values alone still matches rows recorded
+    # before these were settable.
+    if _oc.TEMPERATURE is not None:
+        p["temperature"] = _oc.TEMPERATURE
+    if _oc.TOP_P is not None:
+        p["top_p"] = _oc.TOP_P
+    # UNCONDITIONAL, unlike everything above it. The output protocol is not an
+    # optional departure from a default -- it is a choice every run makes, and
+    # Findings 15 measured it changing outcomes on its own. A row that does not
+    # say which protocol produced it cannot be compared with one that does.
+    # Rows predating this key are read as "markers" by setup_key.params_match,
+    # which is what they were.
+    p["protocol"] = _proc.PROTOCOL
     return p
 
 
