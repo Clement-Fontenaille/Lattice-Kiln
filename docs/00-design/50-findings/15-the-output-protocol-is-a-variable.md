@@ -92,6 +92,53 @@ fence constrains and `<<<FILE path=...>>>` does not. The marker says *a file
 follows*; it carries no prior about how source is shaped, because no such prior
 was ever formed for it.
 
+### What the fine-tuning format actually is — read from the vocabulary
+
+Pretraining mass was the wrong thing to reason about. What decides how a model
+behaves when *instructed* is what post-training taught it to emit, and for this
+model that is readable straight out of the GGUF's token table:
+
+```
+<unk>  </s>  [INST]  [/INST]  [AVAILABLE_TOOLS]  [/AVAILABLE_TOOLS]
+[TOOL_RESULTS]  [/TOOL_RESULTS]  [TOOL_CALLS]  <|im_start|>  <|im_end|>
+<think>  </think>  <tool_call>  </tool_call>  <tool_response>  </tool_response>
+<SPECIAL_18> ... <SPECIAL_39>
+```
+
+Every delimiter the tuning uses is a **reserved single token**: turn boundaries
+(`[INST]`, `<|im_start|>`), reasoning (`<think>`, id 12), tools
+(`[TOOL_CALLS]`, `<tool_call>`). NVIDIA's own note is that tool calling uses
+XML-style tags **"to reduce character escaping"** — the format was designed so
+that content inside a region is raw, not escaped.
+
+**`<<<` and `<FILE` do not appear.** The harness's delimiters are ordinary text,
+several BPE pieces each, carrying no learned state change.
+
+That gives three tiers rather than the two the earlier note implied:
+
+| delimiter | status in this model | what it signals |
+|---|---|---|
+| `<tool_call>`, `<think>` | **reserved token**, learned in post-training | a state change: what follows is of a known kind |
+| ` ``` ` | ordinary text, enormous **pretraining** mass | a strong prior that code follows, laid out as code |
+| `<<<FILE path=...>>>` | ordinary text, **no mass at either stage** | nothing |
+
+**The harness's format is structurally right and lexically unknown.** It does
+exactly what NVIDIA's design intends — a delimited region holding raw,
+unescaped content — using delimiters the model has never been trained to treat
+as a boundary. That is a narrower and more plausible account than "the format is
+alien": the *shape* matches the tuning, the *tokens* do not.
+
+**Consistent with the tool-call check.** Asked to write a file through its
+native tool interface, the model produced a clean call with the content's
+newlines correctly escaped in the JSON string — the exact structure that
+collapses under `<<<FILE>>>`.
+
+**Still inference.** That `<<<` is absent from the vocabulary is verified. That
+its absence *causes* the degeneration is not; a delimiter can be unfamiliar
+without being harmful, and the fence is unreserved too yet did not degenerate.
+What the vocabulary establishes is that the three formats sit at three
+different distances, which is what the comparison needs.
+
 ### The prediction this makes, which the measurement did not test
 
 If the fence works by supplying **layout** rather than by explaining the task,
