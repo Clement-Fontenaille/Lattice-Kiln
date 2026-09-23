@@ -359,3 +359,185 @@ alone, and this moved it.
 - **M5's `roles_v2.py` still hardcodes the marker protocol.** It is outside the
   M6/M7 arm path, so no live arm uses it, but it is a second copy of a format
   now known to be a variable.
+
+---
+
+## Addendum 2, 2026-09-23 — correction: Ollama did its job, qwen broke the
+## contract
+
+**Addendum 1's item 2 is wrong and is corrected here rather than edited out.**
+
+It claimed: *"Ollama's parser is not uniformly reliable... The model complied;
+the server-side extraction did not fire."* That reading survived because the
+observable — a well-formed call sitting in `content` with `tool_calls` empty —
+is consistent with both explanations, and only one of them was checked.
+
+**Reading the template settles it.** `qwen2.5-coder`'s Ollama template renders:
+
+```
+For each function call, return a json object with function name and arguments
+within <tool_call></tool_call> with NO other text.
+<tool_call>
+{"name": <function-name>, "arguments": <args-json-object>}
+</tool_call>
+```
+
+The wrapper is specified, in the prompt, by Ollama, in the model's own dialect.
+The model emitted the JSON and omitted the wrapper. **The parser had nothing to
+match.** Ollama rendered its half correctly; the model did not honour it.
+
+### How far the non-compliance goes
+
+Bare JSON, never wrapped, on every draw:
+
+| variant | draws | wrapped |
+|---|---|---|
+| 7B q4, objective only | 3 | 0 |
+| 7B q4, objective + this harness's PROTOCOL_TOOLS | 3 | 0 |
+| 7B q4, bare objective, no role line | 3 | 0 |
+| 7B q8 | 3 | 0 |
+| 14B q4 | 3 | 0 |
+| 3B q4 | 3 | 0 |
+
+**18 of 18.** Not our prompt — it fails identically with no protocol text at
+all. Not quantisation, and not size. It is a property of `qwen2.5-coder` as
+packaged here.
+
+### What actually renders and parses, all three models
+
+Ollama 0.34.2. Render cost is prompt tokens for an identical one-word message
+with and without the `tools` array — the difference IS the injected definition.
+
+| model | family | render | parse | template demands wrapper |
+|---|---|---|---|---|
+| nemotron3-nano-4b | nemotron_h | +654 tok | **native** | no |
+| nemotron-gpu (9B) | nemotron_h | +577 tok | **native** | no |
+| qwen2.5-coder 7B | qwen2 | +313 tok | bare, recovered | **yes** |
+
+Both Nemotrons go through Ollama's Go RENDERER/PARSER pair (`.Tools` absent from
+their Go template); qwen goes through the legacy template path. All three
+rendered. Two of three parsed.
+
+### What this changes
+
+**The correction runs in the opposite direction to the sheet's own thesis, and
+that is why it is worth recording.** This sheet exists because a harness-side
+format was being scored as a model property. Addendum 1 then scored a *model*
+compliance failure as a *harness-side* one. Same error, mirrored — and it was
+caught by reading the primary artifact, the template, rather than by a better
+measurement.
+
+The client's text recovery (`_calls_from_text`) stays, because the work is
+correct and discarding it would lose a usable result. But it is now understood
+as **compensating for a model that ignores its own tuned wrapper**, not for a
+broken server. That distinction decides who to fix.
+
+`tool_turns`, `tool_native` and `tool_recovered` are now recorded per row, so a
+cross-model comparison over this protocol can state its recovery rate instead of
+absorbing it. On present evidence qwen's rate is 100% and both Nemotrons' is 0%,
+which is exactly the kind of systematic difference that would otherwise be read
+as capability.
+
+### Still standing from addendum 1
+
+The multi-turn finding is unaffected and was directly observed: a call is a turn
+boundary, and `conclude` does not arrive until a tool result has been appended.
+So is the n=1 marker-vs-tools pair, which still earns nothing.
+
+---
+
+## Addendum 3, 2026-09-23 — all three models, and a renderer paired with the
+## wrong model
+
+Addendum 2 corrected one misattribution. Running the same probe across all
+three subjects turned up a second, in the opposite direction again: a failure
+that looked like the model was **ours**.
+
+### `nemotron-gpu` runs a parser built for a different model
+
+`nemotron-gpu` is **Nemotron Nano 9B v2**. Ollama pairs it with
+`RENDERER nemotron-3-nano` and `PARSER nemotron-3-nano` — the pair for the
+**4B Nemotron 3**. Different generation, different tool-call dialect.
+
+Under that mismatch the 9B splits its own contract across two formats **in a
+single turn**: `write_file` arrives as a real parsed tool call, and `conclude`
+arrives as tags the parser does not recognise. Two shapes, captured verbatim:
+
+```
+<conclude>
+<terminal_state>answered</terminal_state>
+<summary>...</summary>
+</conclude>
+```
+
+```
+conclude
+<parameter=terminal_state>
+answered
+</parameter>
+```
+
+The second also leaks `<|im_end|><|im_start|>assistant` into the content —
+generation did not stop at the turn boundary, which is what a wrong template
+looks like from outside.
+
+**The obvious fix was tried and failed.** The hypothesis was that our raw-GGUF
+import had lost the model's chat template. A tag was built from the bartowski
+GGUF, which ships the real Jinja template with its own tool rendering.
+Identical on every measure: same +577-token injection, same `.Tools` absent
+from the Go template, same split. **Ollama assigns RENDERER/PARSER from the
+architecture (`nemotron_h`), not from the source template**, so no Modelfile
+can reach this. The tag was removed; `modelfiles/Modelfile.nemotron-gpu-v2`
+is kept as the record of a ruled-out cause.
+
+What was done instead: `_calls_from_xml` recovers both shapes, keyed to the
+names actually offered so an XML-looking span in a file body cannot be mistaken
+for a call. Recovery now runs **even when some calls parsed natively**, because
+this model proves that a native call in a turn is not evidence the turn was
+understood.
+
+### All three, after the fix
+
+| model | render | `write_file` | `conclude` | verdict |
+|---|---|---|---|---|
+| nemotron3-nano-4b | +654 tok | native | native | OK, native end to end |
+| nemotron-gpu (9B) | +577 tok | native | native **or XML** | OK, variable |
+| qwen2.5-coder 7B | +313 tok | recovered | recovered | OK, model ignores its wrapper |
+
+Every one completes the contract. **None of the three does it the same way**,
+and two of three need client-side recovery to do it at all.
+
+The 9B is genuinely variable rather than consistently broken: across draws it
+returned both calls natively, `write_file` native with `conclude` as XML, and
+once nothing at all. That is why `tool_native` and `tool_recovered` are counted
+per row and not per model.
+
+### End to end through the real harness
+
+`monolith`, `wf2_retry`, `min_predict 2048`, tools protocol, one rep each:
+
+| model | subtests |
+|---|---|
+| nemotron3-nano-4b | 0/5 |
+| nemotron-gpu (9B) | **5/5** |
+| qwen2.5-coder 7B | 0/5 |
+
+**n=1. These are not results.** The 4B returned 3/5 on this same task earlier
+today and 0/5 here, which is the whole point: single draws on one task are
+noise, and the table is here only to show the path runs on all three.
+
+### What the three-model picture actually establishes
+
+Not a ranking. **A methodological problem with the tools protocol itself.**
+
+The marker protocol was uniform: every model got the same bytes and was parsed
+by the same regex. The tool protocol is not. Each model gets a *different*
+rendered prompt, costing a different number of tokens, and is read by a
+*different* parser — one of which is paired with the wrong model. A
+cross-model comparison over this protocol is comparing three different
+pipelines, and the differences are systematic rather than noise.
+
+That does not make it worse than the markers. It makes it **differently
+biased**, and the bias is now measurable — `tool_native` against
+`tool_recovered`, per row — where the marker protocol's bias was invisible.
+Which was the original complaint.

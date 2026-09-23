@@ -144,7 +144,13 @@ def _run_tools(prompt: str, *, model: str, num_predict: int = 1536
                 if path:
                     files[path] = str(args.get("content", ""))
             elif c.get("name") == "conclude":
-                ctrl = dict(args)
+                # Drop empty slots. The XML recovery path returns every
+                # parameter the model listed, including ones it left blank, so
+                # `verdict` arrives as "" rather than absent -- and "" is not a
+                # valid verdict, it is the absence of one. Keeping it would let
+                # a reviewer that declined to judge read as a reviewer that
+                # judged badly.
+                ctrl = {k: v for k, v in args.items() if v not in ("", [], None)}
             msgs.append({"role": "tool", "tool_name": c.get("name", ""),
                          "content": "recorded"})
         if ctrl is not None:

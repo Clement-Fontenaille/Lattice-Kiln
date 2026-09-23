@@ -137,11 +137,21 @@ class Generation:
 #             nemotron showed 19 s per call outside decode against qwen's 3 s
 #             on 1,170-token prompts, and without this field there was no way
 #             to tell prompt evaluation from queueing.
-_METER = {"calls": 0, "gen_tok": 0, "prompt_tok": 0, "gen_s": 0.0, "prompt_s": 0.0}
+# tool_turns / tool_native / tool_recovered exist because Ollama's PARSER is
+# not uniformly reliable and its failure is indistinguishable from the model
+# refusing to call a tool. qwen2.5-coder emits a well-formed call and Ollama
+# hands it back as plain content with tool_calls empty; the call is recovered
+# from the text here. Without a per-row count, a cross-model comparison over
+# this protocol would silently score an Ollama template gap as a model
+# property -- the exact confusion 50-findings/15 is about.
+_TOOL_KEYS = {"tool_turns": 0, "tool_native": 0, "tool_recovered": 0}
+_METER = {"calls": 0, "gen_tok": 0, "prompt_tok": 0, "gen_s": 0.0,
+          "prompt_s": 0.0, **_TOOL_KEYS}
 
 
 def meter_reset() -> None:
-    _METER.update(calls=0, gen_tok=0, prompt_tok=0, gen_s=0.0, prompt_s=0.0)
+    _METER.update(calls=0, gen_tok=0, prompt_tok=0, gen_s=0.0, prompt_s=0.0,
+                  **_TOOL_KEYS)
 
 
 def meter_read() -> dict:
@@ -344,6 +354,10 @@ def generate(prompt: str, *, model: str = DEFAULT_MODEL, base_url: str = DEFAULT
     ), prompt)
 
 
+SP, TAB, NL = '\\s', '\\t', '\\n'
+"""Regex escape sequences as literals, so building a pattern by
+concatenation does not need a backslash inside an f-string."""
+
 _TEXT_CALL = re.compile(
     r'\{\s*"name"\s*:\s*"(?P<name>[A-Za-z_][A-Za-z0-9_]*)"\s*,'
     r'\s*"(?:arguments|parameters)"\s*:\s*(?P<args>\{)', re.S)
@@ -388,6 +402,62 @@ def _calls_from_text(text: str) -> list[dict[str, Any]]:
                     if isinstance(args, dict):
                         out.append({"name": m.group("name"), "arguments": args})
                     break
+    return out
+
+
+def _calls_from_xml(text: str, names: list[str]) -> list[dict[str, Any]]:
+    """Tool calls emitted as XML rather than JSON, which Ollama does not parse.
+
+    Nemotron Nano 9B v2 runs under Ollama's `nemotron-3-nano` RENDERER/PARSER,
+    assigned by architecture (`nemotron_h`). That pair belongs to a different
+    generation, and under it the 9B emits `write_file` as a real tool call and
+    `conclude` as tags the parser does not recognise -- so half the contract
+    arrives structured and half arrives as prose. Rebuilding the model from a
+    GGUF carrying its own Jinja chat template changed nothing, measured
+    2026-09-23: Ollama assigns the pair from the architecture regardless of the
+    source template, so this cannot be fixed in a Modelfile.
+
+    Two shapes, both captured verbatim before this was written:
+
+        <conclude>
+        <terminal_state>answered</terminal_state>
+        <summary>...</summary>
+        </conclude>
+
+        conclude
+        <parameter=terminal_state>
+        answered
+        </parameter>
+
+    `names` is required rather than inferred, so an arbitrary XML-looking span
+    in a file body cannot be mistaken for a call. Only tools we actually
+    offered are recognised.
+
+    NVIDIA describe their tool calling as XML-style deliberately, "to reduce
+    character escaping" -- so this is the model using its own dialect, not
+    malfunctioning. The mismatch is in which parser Ollama pairs with it.
+    """
+    out: list[dict[str, Any]] = []
+    for name in names:
+        n = re.escape(name)
+        # Shape 1: <name> ... </name>, arguments as <key>value</key>
+        for m in re.finditer(rf"<{n}>(.*?)</{n}>", text, re.S):
+            args = {k: v.strip() for k, v in
+                    re.findall(r"<([A-Za-z_][A-Za-z0-9_]*)>(.*?)</\1>",
+                               m.group(1), re.S)}
+            if args:
+                out.append({"name": name, "arguments": args})
+        # Shape 2: a bare name line, then <parameter=key>value</parameter>.
+        # A <parameter>key</parameter> with no `=` is an unfilled slot the
+        # model listed and left empty; it carries no value, so it is skipped.
+        pat = ("(?:^|[>" + SP + "]){n}[ " + TAB + "]*" + NL +
+               "((?:" + SP + "*<parameter[=>].*?</parameter>)+)")
+        for m in re.finditer(pat.replace("{n}", n), text, re.S):
+            args = {k: v.strip() for k, v in
+                    re.findall(r"<parameter=([A-Za-z_][A-Za-z0-9_]*)>(.*?)</parameter>",
+                               m.group(1), re.S)}
+            if args:
+                out.append({"name": name, "arguments": args})
     return out
 
 
@@ -447,8 +517,21 @@ def chat(messages: list[dict[str, Any]], *, model: str = DEFAULT_MODEL,
         calls.append({"name": fn.get("name", ""),
                       "arguments": args if isinstance(args, dict) else {}})
     text = msg.get("content") or ""
-    if not calls and text:
-        calls = _calls_from_text(text)
+    _METER["tool_turns"] += 1
+    _METER["tool_native"] += len(calls)
+    # Recovery runs even when SOME calls parsed natively. The 9B returns
+    # write_file structured and conclude as XML in the same turn, so "any
+    # native call" is not evidence the turn was fully understood.
+    if text:
+        seen = {c["name"] for c in calls}
+        names = [((t.get("function") or {}).get("name") or "")
+                 for t in (tools or [])]
+        extra = [c for c in (_calls_from_text(text)
+                             + _calls_from_xml(text, [n for n in names if n]))
+                 if c["name"] not in seen]
+        if extra:
+            _METER["tool_recovered"] += len(extra)
+            calls = calls + extra
     # Same failure as on /api/generate: a reasoning model that spends the whole
     # budget thinking and reaches no answer. With tools it is worse, because an
     # empty content field is ALSO the normal shape of a pure tool-call reply --

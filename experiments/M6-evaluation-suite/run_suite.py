@@ -298,6 +298,12 @@ def run_task(task, arm_name, rep, cmd, protected):
         "gen_tok": used["gen_tok"],
         "prompt_tok": used["prompt_tok"],
         "gen_s": round(used["gen_s"], 2),
+        # Tool-channel health, recorded per row so a cross-model comparison
+        # over the tools protocol can separate a model that did not call from
+        # an Ollama template that did not parse. Zero on the marker protocol.
+        "tool_turns": used["tool_turns"],
+        "tool_native": used["tool_native"],
+        "tool_recovered": used["tool_recovered"],
         "prompt_s": round(used.get("prompt_s", 0.0), 2),
         "runner": RUNNER,
         "t_start": round(t_start, 3),
