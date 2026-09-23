@@ -7,6 +7,7 @@ RunRecorder, and realizes only what the floor passes. No resume.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import re
@@ -19,6 +20,7 @@ from typing import Any
 from _bridge import CapabilitySet, Gate, submit_effect
 from context_assembly import ContextBundle
 from ollama_client import DEFAULT_MODEL, chat, generate
+from roles import PROTOCOL as PROTOCOL_MARKERS  # the marker text
 from roles import PROTOCOL_TOOLS, ROLE_GRANTS, TOOLS, prompt_for
 
 # LATTICE_PROTOCOL: how the model is asked to hand back its work.
@@ -101,6 +103,95 @@ def _extract(text: str) -> dict[str, Any] | None:
     return {"control": ctrl, "files": files}
 
 
+def adapter_fingerprint() -> str:
+    """Hash of the MODEL-FACING surface, as distinct from the arm's.
+
+    Two different things were being conflated under one absent key.
+
+    ARM-DEPENDENT text varies with the experiment -- the AUDIT and JUDGE
+    prompts, the workflow's shape. `arm_sha` and `prompt_sha` already cover it,
+    and a change there means a different question is being asked.
+
+    MODEL-DEPENDENT text varies with the adapter -- the output protocol, the
+    tool schemas, the wire format of a tool result. It is IDENTICAL across
+    every arm, and it changes when we point at a different model or fix a
+    renderer quirk, not when we change the experiment. Folding it into
+    `arm_sha` would make an adapter fix look like a new arm, which is the same
+    conflation running the other way.
+
+    So it gets its own hash, and it hashes the TEXT THE MODEL SEES rather than
+    the file that produces it -- comments and docstrings move constantly and
+    never reach the model, while a one-word change inside the protocol block
+    changes everything and would not move a file hash any more than a typo fix
+    in a comment does.
+
+    The occasion for this: a tool result briefly ended with "then call conclude
+    exactly once to finish". That is an instruction, present in every tool-mode
+    run, and under the old key it would have been invisible -- same cell id
+    before and after. Cf. 50-findings/15, which closes on precisely this defect
+    one layer up.
+    """
+    parts = [f"protocol={PROTOCOL}"]
+    if PROTOCOL == "tools":
+        parts.append(PROTOCOL_TOOLS)
+        parts.append(json.dumps(TOOLS, sort_keys=True))
+        # Representative results, so a change to their WORDING moves the hash.
+        sample = {"a.py": "x"}
+        for call in ({"name": "write_file",
+                      "arguments": {"path": "a.py", "content": "x"}},
+                     {"name": "write_file", "arguments": {"path": ""}},
+                     {"name": "conclude", "arguments": {}},
+                     {"name": "_unknown", "arguments": {}}):
+            parts.append(_tool_result(call, sample))
+    else:
+        parts.append(PROTOCOL_MARKERS)
+    return hashlib.sha256(chr(10).join(parts).encode("utf-8")).hexdigest()[:12]
+
+
+def _tool_result(call: dict[str, Any], files: dict[str, str]) -> str:
+    """What the runtime tells the model after one of its calls.
+
+    A tool result is the model's only evidence that its turn had an effect. An
+    uninformative one leaves it to infer the state of the world, which is the
+    single most expensive thing a reasoning model can be asked to do.
+
+    STATE ONLY. NO INSTRUCTION. An earlier version ended every result with
+    "then call conclude exactly once to finish", which is wrong twice over.
+    It presumes concluding is what comes next, when it is only true at the end
+    -- after the first of five files the model needs to keep working, and being
+    pointed at the exit each time biases it toward stopping early. And it makes
+    the runtime a second voice giving directions: the obligation to conclude is
+    stated once, in PROTOCOL_TOOLS, and a protocol repeated after every call is
+    a prompt, not a protocol.
+
+    It also quietly contaminated measurement. The same text would have been
+    present in every tool-mode run, so any later comparison of prompt wording
+    would have been measuring this line as well, with nothing recording that it
+    was there.
+
+    So: what happened, and nothing else. "accepted" and not "applied", because
+    the gate has not ruled yet.
+    """
+    name = call.get("name", "")
+    args = call.get("arguments") or {}
+    if name == "write_file":
+        path = str(args.get("path", "")).strip()
+        body = str(args.get("content", ""))
+        if not path:
+            return json.dumps({"status": "error",
+                               "detail": "write_file requires a non-empty path"})
+        return json.dumps({
+            "status": "accepted",
+            "path": path,
+            "bytes": len(body),
+            "lines": body.count(chr(10)) + 1,
+            "files_so_far": sorted(files),
+        })
+    if name == "conclude":
+        return json.dumps({"status": "accepted"})
+    return json.dumps({"status": "error", "detail": f"unknown tool {name!r}"})
+
+
 _LIST_FIELDS = ("run", "context_requests")
 
 
@@ -152,10 +243,21 @@ def _run_tools(prompt: str, *, model: str, num_predict: int = 1536
     next. Measured, not assumed: on nemotron3-nano-4b turn one is write_file
     and conclude does not appear until turn two.
 
-    The result fed back is "recorded", which is the truth at that moment and no
-    more. Nothing is realized here -- every proposed effect still goes through
-    the gate afterwards, exactly as the marker protocol's FILE blocks did. The
-    model is told its call was received, never that it was permitted.
+    The result fed back says WHAT HAPPENED and WHAT IS LEFT TO DO, and that is
+    load-bearing rather than cosmetic. The first version returned the bare word
+    "recorded", and the single truncated call in the whole corpus turned out to
+    be a turn whose only new input was that word: the model had just written a
+    file, was told nothing about the outcome, and reasoned in circles working
+    out what had become of it. 4,466 characters of thinking and no answer.
+
+    That failure was read at first as Nemotron being unable to stop. It was the
+    loop starving it. The marker protocol never had the problem because it was
+    single-shot -- there was no second turn to under-inform.
+
+    Nothing is realized here. Every proposed effect still goes through the gate
+    afterwards, exactly as the marker protocol's FILE blocks did, so the result
+    says "accepted", never "applied" -- the model is told its call was received
+    and well-formed, never that it was permitted.
     """
     msgs: list[dict[str, Any]] = [{"role": "user", "content": prompt}]
     files: dict[str, str] = {}
@@ -186,7 +288,7 @@ def _run_tools(prompt: str, *, model: str, num_predict: int = 1536
                 # judged badly.
                 ctrl = _clean_conclude(args)
             msgs.append({"role": "tool", "tool_name": c.get("name", ""),
-                         "content": "recorded"})
+                         "content": _tool_result(c, files)})
         if ctrl is not None:
             break
     parsed = None if ctrl is None else {"control": ctrl, "files": files}

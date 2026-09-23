@@ -162,6 +162,12 @@ def _eval_params() -> dict:
     # Rows predating this key are read as "markers" by setup_key.params_match,
     # which is what they were.
     p["protocol"] = _proc.PROTOCOL
+    # The MODEL-FACING surface, hashed: protocol text, tool schemas, tool-result
+    # wire format. Separate from arm_sha/prompt_sha on purpose -- those move
+    # when the EXPERIMENT changes, this moves when the ADAPTER does, and the
+    # two are independent. Every arm sends the same adapter; none of them owns
+    # it. See processor.adapter_fingerprint.
+    p["adapter"] = _proc.adapter_fingerprint()
     return p
 
 

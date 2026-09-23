@@ -79,6 +79,16 @@ _M6_ARM_FILES = {"baseline": "run_suite.py", "monolith": "run_suite.py",
                  "dloop": "m6_arms.py", "staged": "m6_arms.py"}
 
 
+MARKERS_ADAPTER = "8f65183a3d19"
+"""processor.adapter_fingerprint() under the marker protocol.
+
+Hardcoded rather than imported: it is a statement about what ROWS ALREADY ON
+DISK were produced under, so it must not drift when the live code does. If the
+marker protocol text is ever edited, this constant stays as it is -- it records
+history, not the present.
+"""
+
+
 ANY = "any"
 """Declaration-only. In a query it matches any recorded value; when a run is
 actually executed it resolves to the ambient default. Never appears in a Cell."""
@@ -235,6 +245,12 @@ def params_match(stored: str, query: dict) -> bool:
     # always carry the key explicitly. Without it the protocol becoming a
     # keyed param would orphan the entire existing corpus.
     have.setdefault("protocol", "markers")
+    # Same backfill, same justification, one layer down. Every legacy row ran
+    # the marker adapter, and its fingerprint is COMPUTABLE rather than
+    # guessed: the marker protocol text in roles.py is unchanged across every
+    # commit touching that file (verified by diff, 2026-09-23), so the value
+    # those rows would have carried is exactly today's markers fingerprint.
+    have.setdefault("adapter", MARKERS_ADAPTER)
     for k, want in query.items():
         if want == ANY:
             continue
