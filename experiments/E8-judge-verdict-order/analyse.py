@@ -109,6 +109,7 @@ ROOT = HERE.parent.parent
 sys.path.insert(0, str(ROOT / "evalkit"))
 
 from store import Store  # noqa: E402
+from scoring import score  # noqa: E402
 
 M7 = ROOT / "experiments" / "M7-static-workflow"
 ARMS = ("judge_anchored", "judge_bypass", "judge_caveat")
@@ -244,6 +245,7 @@ def attribute(index: dict, records: list[dict]):
 
 def collect(index, records):
     rej = collections.defaultdict(lambda: {"full": 0, "rej": 0, "reps": 0})
+    bytask = collections.defaultdict(dict)
     split = collections.defaultdict(
         lambda: {"n": 0, "not_met": 0, "unsound": 0})
     corr = collections.defaultdict(collections.Counter)
@@ -283,6 +285,12 @@ def collect(index, records):
             good = bool(row.get("objective_pass"))
             corr[k]["n"] += 1
             corr[k]["truth_good"] += good
+            # kept per task, because a rate over rows lets a ten-rep task
+            # outvote a one-rep task. See evalkit/scoring.py.
+            bytask[k].setdefault(row["task"], [0, 0])
+            bytask[k][row["task"]][1] += 1
+            bytask[k][row["task"]][0] += (good and v == "met") or (
+                not good and v == "not_met")
             if good and v == "met":
                 corr[k]["correct_accept"] += 1
             elif good:
@@ -291,7 +299,7 @@ def collect(index, records):
                 corr[k]["correct_reject"] += 1
             else:
                 corr[k]["FALSE_ACCEPT"] += 1
-    return rej, corr, split, how
+    return rej, corr, split, how, bytask
 
 
 def validate(index, records) -> bool:
@@ -369,25 +377,34 @@ def report_rejections(rej):
     delta("decision_first -> reason_first", rej, None, row)
 
 
-def report_correctness(corr):
+def report_correctness(corr, bytask):
     print("2. CORRECT CHOICE   (did the final verdict match what was delivered?)")
+    print("   correctness is TASK-weighted: each task contributes once, "
+          "whatever its reps")
     print()
     print("normal tasks -- truth is objective_pass: the gate AND every "
           "structural dimension")
     print(f"{'arm':16s} {'model':5s} {'format':15s} {'n':>4} {'good':>5} "
-          f"{'correct':>8} {'false rej':>10} {'false acc':>10} {'unparsed':>9}")
-    print("-" * 88)
+          f"{'correct':>8} {'false rej':>10} {'false acc':>10} {'unparsed':>9}"
+          f"  coverage")
+    print("-" * 104)
     for k in sorted(corr):
         c = corr[k]
         if c["n"] < MIN_REPS:
             continue
         n = c["n"]
-        ok = c["correct_accept"] + c["correct_reject"]
         tot = n + c["decline_n"] + c["unparseable"]
+        # task-weighted correctness: each task contributes its own rate once
+        bt = bytask.get(k, {})
+        rates = [h / r for h, r in bt.values() if r]
+        tw = 100 * sum(rates) / len(rates) if rates else 0.0
+        cov = collections.Counter(r for _, r in bt.values())
+        cov_s = (f"{len(bt)}x{next(iter(cov))}" if len(cov) == 1
+                 else "uneven " + ",".join(f"{t}x{n_}" for n_, t in sorted(cov.items())))
         print(f"{k[0]:16s} {k[1]:5s} {k[2]:15s} {n:4d} {c['truth_good']:5d} "
-              f"{100*ok/n:7.0f}% {100*c['FALSE_REJECT']/n:9.0f}% "
+              f"{tw:7.0f}% {100*c['FALSE_REJECT']/n:9.0f}% "
               f"{100*c['FALSE_ACCEPT']/n:9.0f}% "
-              f"{100*c['unparseable']/tot if tot else 0:8.0f}%")
+              f"{100*c['unparseable']/tot if tot else 0:8.0f}%  {cov_s}")
     print()
     print("false-premise tasks -- the right call is `unsound_request`")
     print(f"{'arm':16s} {'model':5s} {'format':15s} {'n':>4} {'right':>7}")
@@ -452,12 +469,12 @@ def main():
     if args.validate:
         return
 
-    rej, corr, split, how = collect(index, records)
+    rej, corr, split, how, bytask = collect(index, records)
     print("attribution: " + ", ".join(f"{k} {v}" for k, v in sorted(how.items())))
     print()
     report_rejections(rej)
     print("\n" + "=" * 88 + "\n")
-    report_correctness(corr)
+    report_correctness(corr, bytask)
     print("\n" + "=" * 88 + "\n")
     report_split(split)
 

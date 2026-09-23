@@ -43,15 +43,35 @@ def load(arm):
 
 
 def summarise(arm, rows):
+    """Per-arm figures, task-weighted.
+
+    `mean` was a mean over REP INDICES: for each i, how many tasks passed at
+    their i-th rep. That silently drops a task from index i once it has fewer
+    than i+1 reps, so a cell with uneven coverage reports later indices over a
+    shrinking task set. Row-weighting has the same disease in the other
+    direction -- a ten-rep task outvoting a one-rep task.
+
+    Both are replaced by the rule in `evalkit/scoring.py`: average within a
+    task, then over tasks, so every task counts once. `lo` and `hi` stay as the
+    per-rep-index spread, which is still the honest way to show run-to-run
+    variation, and `uneven` now says when the two disagree.
+    """
     by = defaultdict(list)
     for x in rows:
         by[x["task"]].append(x)
     reps = max(len(v) for v in by.values())
     per = [sum(1 for t in by if len(by[t]) > i and by[t][i]["objective_pass"])
            for i in range(reps)]
+    # task-weighted: each task's own pass rate, averaged over tasks, scaled to
+    # the same "tasks passed out of T" units the rest of this table uses.
+    tw = len(by) * sum(
+        sum(bool(x["objective_pass"]) for x in v) / len(v) for v in by.values()
+    ) / len(by)
     dec = [x for x in rows if x["decline_expected"]]
     fd = sum(1 for x in rows if x["terminal"] == "declined" and not x["decline_expected"])
-    return dict(n=len(rows), T=len(by), R=reps, mean=st.mean(per) if per else 0,
+    return dict(n=len(rows), T=len(by), R=reps, mean=tw,
+                rep_mean=st.mean(per) if per else 0,
+                uneven=len({len(v) for v in by.values()}) > 1,
                 lo=min(per) if per else 0, hi=max(per) if per else 0,
                 rg=sum(x["regressed"] for x in rows),
                 dok=sum(x["declined_correctly"] for x in dec), dn=len(dec),
@@ -89,11 +109,12 @@ def main():
         for k, rows in live:
             s = summarise(k, rows)
             sp = f"[{s['lo']}-{s['hi']}]" if s["hi"] != s["lo"] else ""
-            part = "*" if s["n"] < s["T"] * s["R"] else " "
+            part = "!" if s["uneven"] else ("*" if s["n"] < s["T"] * s["R"] else " ")
             print(f"{k:<17}{part}{s['n']:>4}{s['T']:>4}{s['R']:>3}  "
                   f"{s['mean']:>4.1f}/{s['T']:<3}{sp:<8}{s['rg']:>2}  "
                   f"{s['dok']}/{s['dn']:<4}{s['fd']:>2}  {s['wall']:>5.0f}")
-        print("* = partial")
+        print("* = partial   ! = uneven reps per task; the mean is task-weighted "
+              "so this is reported, not corrected")
 
     if want_j:
         print("\njudge               verdicts                       empty  n")
