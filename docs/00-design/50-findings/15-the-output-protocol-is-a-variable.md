@@ -57,13 +57,83 @@ Each checked rather than assumed:
   form, and `<<<FILE prices.py>>>` as correct when it omits `path=`. That
   figure was backwards.
 
-## Why it plausibly happens
+## Why it plausibly happens — and the claim unfolded
 
-Inside a fenced block the model is on distribution: it has seen an enormous
-number of them, and the newline structure of code inside a fence is
-overdetermined. Inside `<<<FILE path=...>>>` it is in a region it has never
-seen, and what collapses first is exactly the structure the fence would have
-supplied.
+The shorthand used when this was first written was *"a fenced code block is the
+nearest thing to a universal training base for emitting a file."* That is loose
+in a way worth taking apart, because the sharper version makes a different and
+checkable prediction.
+
+### What a fence is actually the nearest base FOR
+
+Ranked by how much text plausibly carries each, for the job of *handing over a
+changed file*:
+
+| format | where the training mass comes from | fit to this job |
+|---|---|---|
+| **unified diff** | every commit, every pull request, every patch mail | **best fit, and forbidden here** — the harness says *give the WHOLE file, never a diff* |
+| **tool call** — `write_file(path, content)` | instruct and agent tuning; this model advertises `tools` | structurally exact: path and content as named arguments. Costs escaping every newline into a JSON string |
+| **fenced code block** | markdown everywhere — READMEs, issues, answers, docs, chat logs | **partial.** Ubiquitous for *code*, weak for *whole files*, and it rarely carries a path |
+| path as a heading, then a fence | tutorials, blog posts | common, but a convention rather than a format |
+| **bespoke markers** — `<<<FILE path=...>>>` | this harness | none |
+
+**So the fence is not the most-trained way to emit a file. The diff is.** What
+the fence is nearest to is something narrower and, as it turns out, the thing
+that was failing:
+
+> A fence is the most ubiquitous wrapper for **code laid out as code**. Inside
+> one, indentation and line breaks are overdetermined — the model has seen an
+> enormous quantity of text where a fence opens and newline-structured source
+> follows.
+
+The observed failure was **lexical, not semantic**: newlines collapsing into
+spaces, producing syntactically destroyed Python. That is exactly the layer a
+fence constrains and `<<<FILE path=...>>>` does not. The marker says *a file
+follows*; it carries no prior about how source is shaped, because no such prior
+was ever formed for it.
+
+### The prediction this makes, which the measurement did not test
+
+If the fence works by supplying **layout** rather than by explaining the task,
+then swapping formats should:
+
+- **remove the degeneration** — measured, 2 of 4 to 0 of 4;
+- **improve protocol compliance** — measured, 3/4 to 4/4;
+- **and leave the correctness of the change roughly alone.**
+
+The third was **not measured.** `clean` means *not degenerate*, which is a
+property of the text and not of the work. A model can emit beautifully
+formatted code that fixes nothing. **If fencing lifts correctness too, this
+explanation is wrong or incomplete**, and the cause is something broader than
+layout.
+
+That is the sharper falsifier, and it is cheaper than the cross-model one: run
+the fenced variant through the real check on the real suite rather than
+eyeballing the text.
+
+### What the harness gave up
+
+Forbidding diffs is a deliberate choice — a whole file is unambiguous to apply
+and a diff can fail to apply, which on a fixture matters. The cost has not been
+stated anywhere: **the format with by far the most training mass behind it is
+excluded for harness convenience**, and every model is asked instead for whole
+files in a wrapper that has none.
+
+Whether that trade is worth it is now an open question rather than an
+assumption, and it is answerable — apply-failure rate against degeneration
+rate, both measurable.
+
+### What cannot be verified
+
+"Universal training base" is a claim about training data, and Nemotron's
+composition is not public in the detail this would need. What is defensible is
+narrower: **fenced code is ubiquitous in public text**, and whether it is
+ubiquitous in *this model's* corpus is an inference from that, not an
+observation.
+
+The measurement stands on its own either way — the swap changed the outcome.
+The explanation for why is where the assumption sits, and it is the part to
+attack.
 
 **This is a mechanism argument, not a measurement.** It is offered to be
 falsified, and the obvious falsifier is another model: if qwen degenerates at
@@ -106,9 +176,14 @@ an experiment, not a conclusion.
    the 4B is not, it is a property of the smaller model rather than of the
    protocol.
 2. **The same swap across the suite**, not one prompt, at n=5.
-3. **A third format** — the model's native tool-calling interface, which it
-   advertises as a capability and which is the closest thing it has to a
-   trained structured-output channel.
+3. **A third and fourth format.** The model's native tool-calling interface,
+   which it advertises as a capability and which is structurally exact for
+   path-plus-content. And a **unified diff**, which carries the most training
+   mass of any option and is currently forbidden by the harness rather than by
+   any measurement.
+4. **Correctness, not just cleanliness.** Every figure here is a property of
+   the text. Run the fenced variant through the real check: if it lifts
+   `objective_pass` as well, the layout explanation is incomplete.
 
 Until then the protocol stays as it is, because changing it mid-programme would
 put every existing row in a different regime from every new one — and unlike
