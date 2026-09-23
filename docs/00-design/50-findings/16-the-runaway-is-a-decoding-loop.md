@@ -142,3 +142,62 @@ The task×model table is conditioned on model and protocol but not on
 `num_predict`, and it conditions on outputs already 3000+ characters long — so
 it reports *given the model generated a lot, was it degenerate*, rather than an
 unconditional rate. A task whose answers are always short cannot appear in it.
+
+---
+
+## Addendum, 2026-09-24 — there are two degeneracy modes, and the protocol
+## decides which channel absorbs it
+
+The sheet above treats degeneracy as one phenomenon detected by one compression
+threshold. Asked directly whether qwen really loops, the flagged outputs were
+read rather than trusted, and they are not the same failure.
+
+Classified by whether the repeated span is copied from the prompt (a 60-char
+sliding window, >50% of the output matching the prompt) and by which channel
+carries it:
+
+| model / protocol | mode | share |
+|---|---|---|
+| qwen2.5-coder / markers | **echoes the PROMPT**, in output | 107/141 = 76% |
+| nemotron3-nano-4b / markers | repeats **its own** output text | 103/130 = 79% |
+| nemotron3-nano-4b / tools | repeats **its own reasoning**, in thinking | **17/17 = 100%** |
+
+Qwen's characteristic failure is copying the input back instead of generating.
+A sample, repeating to the cap:
+
+```
+```python
+# OBJECTIVE
+Modify the `staff_price` function to use the shared helper.
+OUTPUT FORMAT - follow it exactly.
+For every file you create or change, emit one block (give the WHOLE new file...)
+```python
+# OBJECTIVE
+Modify the `staff_price` function to use the shared helper.
+...
+```
+
+That is not deliberation failing to terminate. It is the model failing to leave
+the prompt. qwen2.5-coder has no thinking channel at all, so output is the only
+place it can degenerate.
+
+### The sharper claim
+
+**The protocol does not change whether degeneration happens. It changes which
+channel absorbs it.** The same 4B degenerates in its OUTPUT under markers and
+in its THINKING under tools, 17 of 17. Under the tool protocol the output is a
+structured call, so the only free-text channel left is the reasoning trace, and
+that is where the loop goes.
+
+This matters for anything that reads only one channel. A harness watching
+`content` sees a clean tool call and a healthy-looking response while the model
+burns its entire budget looping out of sight — which is precisely what happened
+here, and why the failure was read for a day as "cannot stop thinking" rather
+than as the same degeneration already recorded in `/15`.
+
+### What it costs the earlier table
+
+The task×model table above pools both modes. It is still a true statement about
+where degeneration occurs, but "susceptibility" is now two questions: which
+tasks make a model echo its prompt, and which make it circle its own text.
+Those may have different causes and the table cannot separate them.
