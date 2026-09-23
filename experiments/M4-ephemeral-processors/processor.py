@@ -19,6 +19,7 @@ from typing import Any
 
 from _bridge import CapabilitySet, Gate, submit_effect
 from context_assembly import ContextBundle
+import ollama_client as _oc
 from ollama_client import DEFAULT_MODEL, chat, generate
 from roles import PROTOCOL as PROTOCOL_MARKERS  # the marker text
 from roles import PROTOCOL_TOOLS, ROLE_GRANTS, TOOLS, prompt_for
@@ -131,7 +132,7 @@ def adapter_fingerprint() -> str:
     before and after. Cf. 50-findings/15, which closes on precisely this defect
     one layer up.
     """
-    parts = [f"protocol={PROTOCOL}"]
+    parts = [f"protocol={PROTOCOL}", f"nudge={_oc.NUDGE}"]
     if PROTOCOL == "tools":
         parts.append(PROTOCOL_TOOLS)
         parts.append(json.dumps(TOOLS, sort_keys=True))

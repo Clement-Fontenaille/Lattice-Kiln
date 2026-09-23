@@ -74,6 +74,52 @@ THINK = None if _THINK_ENV is None else _THINK_ENV not in ("0", "false", "False"
 # editing eight workflow files, and is a no-op for a model that stops earlier.
 MIN_PREDICT = int(os.environ.get("LATTICE_MIN_PREDICT", "0"))
 
+# LATTICE_NUDGE: text appended to EVERY prompt this client sends.
+#
+# It lives here, not in prompt_for, because "the whole pipeline" means every
+# model call in an arm -- the implementer, the pre-work audit, and the judge --
+# and the M7 judge stages call generate() directly rather than going through
+# the role library. Appending at the transport is the only point that catches
+# all three.
+#
+# It is model-visible text, so it is part of the ADAPTER and lands in
+# adapter_fingerprint(); a run with a nudge can never pool with one without.
+# That is the whole reason the adapter got its own hash: a wording change that
+# reaches the model and moves no key is the defect 50-findings/15 closes on.
+#
+# Empty by default. Nothing that has already run is affected.
+NUDGE = os.environ.get("LATTICE_NUDGE", "")
+
+
+def _nudged(prompt: str) -> str:
+    return f"{prompt}\n\n{NUDGE}" if NUDGE else prompt
+
+
+def _transcript_failure(prompt: str, payload: dict, num_predict: int) -> None:
+    """Record a call that is about to raise.
+
+    Truncation is the failure this project keeps mistaking for a capability
+    result -- an empty answer from a reasoning model that spent its whole
+    budget thinking. The guards below catch it loudly, but they used to raise
+    before the transcript sink ran, so the only call worth reading afterwards
+    was the only one not written down.
+
+    Built as a Generation so the record has the same shape as every other,
+    with `done_reason` and the thinking length carrying the diagnosis.
+    """
+    msg = payload.get("message") or {}
+    try:
+        _transcript(prompt, Generation(
+            text="",
+            model=payload.get("model", ""),
+            prompt_eval_count=payload.get("prompt_eval_count", 0),
+            eval_count=payload.get("eval_count", 0),
+            total_duration_s=payload.get("total_duration", 0) / 1e9,
+            load_duration_s=payload.get("load_duration", 0) / 1e9,
+            raw=payload))
+    except Exception:  # noqa: BLE001
+        pass  # a failed record must never mask the error it was recording
+
 # LATTICE_TEMPERATURE / LATTICE_TOP_P: override what the arms hardcode.
 #
 # Every call site passes temperature=0.2 and none passes top_p, so the sampling
@@ -316,6 +362,7 @@ def generate(prompt: str, *, model: str = DEFAULT_MODEL, base_url: str = DEFAULT
     prompt in the model's own tuned dialect, and its PARSER extracts any calls
     back out into a structured field. Neither runs on /api/generate.
     """
+    prompt = _nudged(prompt)
     if tools:
         if BACKEND == "llamacpp":
             raise OllamaError("tools= requires the ollama backend (/api/chat); "
@@ -370,6 +417,11 @@ def generate(prompt: str, *, model: str = DEFAULT_MODEL, base_url: str = DEFAULT
     # and never reached an answer. It must never be silent again -- an empty
     # response with done_reason "length" is truncation before any output.
     if not payload["response"] and payload.get("done_reason") == "length":
+        # Transcribe BEFORE raising. The guard used to raise straight out of
+        # here, so the one call that failed was the one call never recorded --
+        # the most diagnostic event in a run, discarded on the way past. A
+        # truncation is a result about the model, not an absence of one.
+        _transcript_failure(prompt, payload, num_predict)
         raise OllamaError(
             f"empty response, truncated at num_predict={num_predict} "
             f"(done_reason=length, {len(payload.get('thinking') or '')} chars of "
@@ -603,6 +655,18 @@ def chat(messages: list[dict[str, Any]], *, model: str = DEFAULT_MODEL,
             "num_predict": num_predict}
     if TOP_P is not None:
         opts["top_p"] = TOP_P
+    # The nudge attaches to the FIRST user turn and only there. chat() is
+    # re-entered once per turn of the tool loop with a growing history, so
+    # appending per call would stack one copy per turn; and appending to a
+    # tool-result turn would make the runtime nag, which is what the "then call
+    # conclude" line did before it was removed.
+    if NUDGE and messages:
+        messages = list(messages)
+        for i, m in enumerate(messages):
+            if m.get("role") == "user":
+                if not (m.get("content") or "").endswith(NUDGE):
+                    messages[i] = {**m, "content": _nudged(m.get("content", ""))}
+                break
     body = {"model": model, "messages": messages, "stream": False,
             "options": opts}
     if tools:
@@ -665,6 +729,8 @@ def chat(messages: list[dict[str, Any]], *, model: str = DEFAULT_MODEL,
     # empty content field is ALSO the normal shape of a pure tool-call reply --
     # so silence only counts as truncation when no call came back either.
     if not text and not calls and payload.get("done_reason") == "length":
+        _transcript_failure(messages[-1].get("content", "") if messages else "",
+                            payload, num_predict)
         raise OllamaError(
             f"empty response and no tool calls, truncated at "
             f"num_predict={num_predict} (done_reason=length, "
