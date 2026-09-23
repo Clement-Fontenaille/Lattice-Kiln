@@ -42,3 +42,7 @@ experiments/**/queue*.log
 
 # raw generation transcripts are large and regenerate per run
 evalkit_store/transcripts/
+
+# Worker run logs: transient per-run output, not artifacts.
+evalkit/*.log
+evalkit/*.err

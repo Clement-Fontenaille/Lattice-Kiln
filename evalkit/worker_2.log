@@ -1,2 +1,0 @@
-worker DESKTOP-J6EJPKF-3824 | pool C:\Users\Fontenaille\Desktop\Lattice-Kiln\evalkit_pool | {'pending': 1546, 'claimed': 8, 'done': 8}
-[DESKTOP-J6EJPKF-3824] 8 item(s)  judge_caveat/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
