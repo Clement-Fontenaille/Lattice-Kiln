@@ -106,6 +106,7 @@ rediscovered. Each was adopted after something went wrong.
 | **Borrow the task, author the check.** | A check that travels with a task has usually been seen alongside it. |
 | **Data is eligible only if its setup was recorded, never inferred.** | Recovering setup by joining on `wall_s` put one cell at +22.7 points where the answer was +4.3. |
 | **Report false rejection and false acceptance separately.** | `50-findings/14` found them moving in opposite directions under one variable. A combined correctness figure hides the entire effect. |
+| **A number earns its ground before it is interpreted.** | Operator, 2026-09-23, named as a methodology principle. Once a script exists, extracting a figure is free and interpreting it is the path of least resistance — it arrives formatted, comparable, and looking like evidence. What it cost to compute says nothing about what it measures. Seven figures were misread in one session and every correction came from reading the underlying artifact, never from a better statistic. **This is what the feedback loops depend on:** a number fed into a firing rule without earning its ground is how an assembly degrades itself, confidently. |
 | **Run the arm you expect to lose.** | The folder's motto, and the reason an ordering is a claim rather than a schedule. |
 
 ## Status, 2026-09-23
