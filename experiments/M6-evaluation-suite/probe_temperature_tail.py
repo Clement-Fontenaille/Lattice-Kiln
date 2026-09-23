@@ -44,7 +44,22 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "M4-ephemeral-processors"))
 from roles import TOOLS                      # noqa: E402
-from probe_implementer_tail import PROMPT_FILE, series  # noqa: E402
+from probe_implementer_tail import series  # noqa: E402
+
+# THE SECOND implementer call, not the first. Of 15 truncations in the
+# pipeline, ONE was on the first implementer call and 13 were on the second or
+# third: the collapse happens on the RETRY, after the judge has rejected the
+# work. probe_implementer_tail used the first call and saw 0/20 caps against a
+# pipeline rate of 8/26 -- it could not reproduce the failure at all, which its
+# calibration arms correctly exposed.
+#
+# The second call adds the check's failure output, the current source, and an
+# explicit hint ("Make self.calls reflect the number of attempts"). The test
+# source is in the prompt too. So the model has everything it needs and
+# collapses anyway, which is why this probe moves the sampler and not the
+# information.
+PROMPT_FILE = (HERE.parent.parent / "evalkit_store" / "probe_prompts"
+               / "impl_call2.txt")
 
 BASE = "http://localhost:11434"
 MODEL = "nemotron3-nano-4b:latest"
@@ -62,6 +77,12 @@ ARMS = [
     ("t0.2 (as shipped)", 0.2, None, None),
     ("t0.6 p0.95 (NVIDIA)", 0.6, 0.95, None),
     ("t1.0 p1.0 (Modelfile)", 1.0, 1.0, None),
+    # MEASURED HARMFUL, kept so the result is not rediscovered: on the
+    # first-call prompt where every other arm capped 0/20, this capped
+    # 6/18 and ran ~4x longer. A repetition penalty does not stop a loop,
+    # it stops TERMINATION -- ending a generation re-uses tokens it is
+    # suppressing. Left in as an arm because that is worth confirming on
+    # the prompt that actually loops.
     ("t0.2 + rep_pen 1.3", 0.2, None, 1.3),
 ]
 

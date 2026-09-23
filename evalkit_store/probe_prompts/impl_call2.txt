@@ -1,0 +1,165 @@
+You are an implementer. You are given an objective and some repository context.
+Make the smallest correct change that achieves the objective. Prefer editing
+existing files over adding new ones. If the objective looks wrong or rests on a
+false assumption, decline and explain rather than implementing it.
+
+# CONTEXT
+----- OBJECTIVE -----
+Add a retries parameter to Client.call(fn, retries=2): if fn() raises, retry up to `retries` more times; if every attempt fails, re-raise the LAST exception. retries=0 means a single attempt. Make test_task.py pass.
+
+Current state still fails:
+succeed on 2nd try: got ('ok', 1) want ('ok', 2)
+exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)
+Output the whole corrected file(s).
+Also: Make self.calls reflect the number of attempts
+
+----- README.md (capped) -----
+# wf2_retry
+
+Add a `retries` parameter to `Client.call`. Multi-phase: decide the retry
+semantics (how many attempts, which exception, re-raise which one), implement,
+then the edge cases (`retries=0`, re-raise the *last* failure) are where a
+one-shot tends to slip.
+
+**Discriminator subtests:** `retries=0 is one attempt` and `exhaust then re-raise last` — a one-shot loop or re-raising the first failure fails these edges.
+
+
+----- FILE TREE -----
+client.py  (321B)
+README.md  (425B)
+test_task.py  (1833B)
+
+----- FILE test_task.py -----
+"""Objective check for wf2_retry. Run: python test_task.py"""
+import sys
+
+from client import Client
+
+
+def flaky(n_fail):
+    """Returns a fn that raises RuntimeError n_fail times, then returns 'ok'."""
+    state = {"n": 0}
+
+    def fn():
+        if state["n"] < n_fail:
+            state["n"] += 1
+            raise RuntimeError(f"fail {state['n']}")
+        return "ok"
+
+    return fn
+
+
+def case_success_first():
+    c = Client()
+    r = c.call(flaky(0), retries=2)
+    return (r, c.calls)
+
+
+def case_succeed_on_second():
+    c = Client()
+    r = c.call(flaky(1), retries=2)
+    return (r, c.calls)
+
+
+def case_exhaust():
+    c = Client()
+    try:
+        c.call(flaky(9), retries=2)
+        return "no-raise"
+    except RuntimeError as e:
+        return (str(e), c.calls)
+
+
+def case_retries_zero():
+    c = Client()
+    try:
+        c.call(flaky(9), retries=0)
+        return "no-raise"
+    except RuntimeError:
+        return c.calls
+
+
+def case_returns_value():
+    c = Client()
+    return c.call(lambda: 42, retries=2)
+
+
+CASES = [
+    ("success first try", case_success_first, ("ok", 1)),
+    ("succeed on 2nd try", case_succeed_on_second, ("ok", 2)),
+    ("exhaust then re-raise last", case_exhaust, ("fail 3", 3)),
+    ("retries=0 is one attempt", case_retries_zero, 1),
+    ("returns fn value", case_returns_value, 42),
+]
+
+
+def main() -> None:
+    passed, fails = 0, []
+    for name, fn, want in CASES:
+        try:
+            got = fn()
+        except Exception as e:  # noqa: BLE001
+            fails.append(f"{name}: raised {e!r}")
+            continue
+        if got == want:
+            passed += 1
+        else:
+            fails.append(f"{name}: got {got!r} want {want!r}")
+    print(f"SUBTESTS {passed}/{len(CASES)}")
+    for f in fails:
+        print("  " + f)
+    sys.exit(0 if passed == len(CASES) else 1)
+
+
+main()
+
+
+----- FILE README.md -----
+# wf2_retry
+
+Add a `retries` parameter to `Client.call`. Multi-phase: decide the retry
+semantics (how many attempts, which exception, re-raise which one), implement,
+then the edge cases (`retries=0`, re-raise the *last* failure) are where a
+one-shot tends to slip.
+
+**Discriminator subtests:** `retries=0 is one attempt` and `exhaust then re-raise last` — a one-shot loop or re-raising the first failure fails these edges.
+
+
+----- FILE client.py -----
+class Client:
+    def __init__(self):
+        self.calls = 0
+
+    def call(self, fn, retries=0):
+        self.calls += 1
+        attempts = retries + 1
+        for _ in range(attempts):
+            try:
+                return fn()
+            except Exception as e:
+                last = e
+        raise last
+
+# OBJECTIVE
+Add a retries parameter to Client.call(fn, retries=2): if fn() raises, retry up to `retries` more times; if every attempt fails, re-raise the LAST exception. retries=0 means a single attempt. Make test_task.py pass.
+
+Current state still fails:
+succeed on 2nd try: got ('ok', 1) want ('ok', 2)
+exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)
+Output the whole corrected file(s).
+Also: Make self.calls reflect the number of attempts
+
+OUTPUT FORMAT - use the provided tools, not prose.
+
+For every file you create or change, call write_file with the path and the
+WHOLE new file content (never a diff).
+
+Then call conclude exactly once, as the last thing you do.
+
+Rules:
+- conclude is required on every turn, including when you write no files.
+- "verdict" is only for the reviewer role; other roles may omit it.
+- terminal_state = "declined" if the right answer is NOT to do the task (false
+  premise, wrong problem, already satisfied, needs investigation first) -
+  explain in "summary" and call write_file zero times.
+- You cannot execute anything yourself; the runtime runs permitted commands.
