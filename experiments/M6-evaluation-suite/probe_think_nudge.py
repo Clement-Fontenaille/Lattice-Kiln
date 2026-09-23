@@ -15,7 +15,38 @@ toy prompt tells us nothing.
 Every arm is reasoning-ON. What varies is only the instruction, so a difference
 is attributable to the wording and not to the mode.
 
-    python probe_think_nudge.py [model ...] [--reps N]
+RESULT, AND THE RETRACTION OF AN EARLIER ONE.
+
+A first n=5 run on nemotron-gpu gave, on the filled-diff case, control median
+2570 against 1098 for "act not deliberate" and 1143 for "word budget". That was
+written up as two nudges roughly halving the reasoning. **It does not
+replicate.** An identical second n=5 run put "act not deliberate" at 2006.
+
+    filled diff        run 1    run 2
+      control           2570     2546     <- reproduces
+      act not delib.    1098     2006     <- does not
+
+The control is stable across runs, so the instrument is fine; it is the
+treatment arms that swing. n=5 medians cannot separate them, and the first
+table was noise dressed up with enough reps to look safe. Same error as reading
+a ranking off n=1 earlier the same day, only harder to spot.
+
+"first pass only" exists to strip the framing off "act not deliberate" and test
+the bare directive. At n=5 it is indistinguishable from both the original and
+the control, which is the same non-result.
+
+SO: NO NUDGE EFFECT IS ESTABLISHED HERE. Nothing in this file has earned the
+right to be quoted as a reduction. Settling it needs n around 20 per arm, or a
+paired design over many judge cases rather than one -- and a design that varies
+the CORRECT verdict between cases, because every rep in every arm so far agrees,
+which means none of this tests whether brevity costs judgement quality.
+
+What IS established, and separately: 0 truncations in 90 calls. The runaway this
+probe was built to study never reproduced here, consistent with its real cause
+being the starved tool-result turn (see processor._tool_result) rather than
+prompt length or reasoning mode.
+
+    python probe_think_nudge.py [model ...] [--reps N] [--only name,name]
 """
 from __future__ import annotations
 
@@ -81,6 +112,13 @@ NUDGES = {
     "act not deliberate": (
         "\n\nYou are answering, not deliberating. Form a judgement on the "
         "first pass and write it. Do not second-guess yourself."),
+    # The same instruction with its framing stripped off. "act not deliberate"
+    # bundles three moves -- a role assertion ("you are answering, not
+    # deliberating"), the directive itself, and a prohibition ("do not
+    # second-guess yourself") -- so a result for it cannot say which one did
+    # the work. This is the bare directive, nothing else.
+    "first pass only": (
+        "\n\nForm a judgement on the first pass and write it."),
     "no re-verification": (
         "\n\nDo not verify your conclusion more than once. Repeating a check "
         "you have already made adds nothing -- once each condition has an "
@@ -123,6 +161,11 @@ def main(argv: list[str]) -> None:
         i = argv.index("--reps")
         reps = int(argv[i + 1])
         argv = argv[:i] + argv[i + 2:]
+    only = None
+    if "--only" in argv:
+        i = argv.index("--only")
+        only = [n.strip() for n in argv[i + 1].split(",")]
+        argv = argv[:i] + argv[i + 2:]
     models = argv or DEFAULT_MODELS
     cases = {"filled diff": judge_prompt(DIFF),
              "EMPTY diff": judge_prompt(EMPTY_DIFF)}
@@ -134,6 +177,8 @@ def main(argv: list[str]) -> None:
         print(f"  {'nudge':22} {'thinking med':>12} {'max':>7} "
               f"{'trunc':>6} {'verdicts':>9}")
         for name, extra in NUDGES.items():
+            if only and name not in only:
+                continue
             rs = [ask(model, prompt + extra) for _ in range(reps)]
             errs = [r for r in rs if "err" in r]
             ok = [r for r in rs if "err" not in r]
