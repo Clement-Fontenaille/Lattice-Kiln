@@ -16,6 +16,35 @@ Reported per setting: thinking characters produced, answer characters, and
 whether the request was refused outright. A knob that changes nothing is as
 useful to know about as one that works.
 
+MEASURED 2026-09-23, and the answer is: only true|false is real.
+
+    think: true|false     works, on both models
+    think: "low"|"high"   NOT honoured -- "high" produced LESS thinking than
+                          "low" and less than the default on the 9B, which is
+                          sampling noise rather than a control
+    /think, /no_think     WORSE than useless: both models returned an EMPTY
+                          answer, the reply landing in the thinking channel.
+                          Ollama's renderer replaces the model's chat template,
+                          so NVIDIA's documented in-prompt controls never reach
+                          the model at all -- the same cause as the tool format
+                          and the ignored Modelfile TEMPLATE.
+
+SO THERE IS NO THINKING BUDGET, ONLY ON/OFF -- and that matters more than it
+sounds, because these models do not reliably stop on their own.
+
+judge_anchored on the 9B produced 33,706 characters of thinking against an
+8192-token cap and never reached an answer. Raising the cap does not fix it:
+the operator independently observed Nemotron 70B under a 256k context, in
+cline, likewise failing to terminate. Two model sizes, two harnesses, contexts
+three orders of magnitude apart, same behaviour. Non-termination is a property
+of the family under reasoning, not a budget that has been set too low.
+
+The practical consequence for this harness: an arm with a hard generation cap
+and reasoning ON is not a viable configuration for Nemotron. Either run it with
+think=False, or expect truncation rather than a result -- and truncation is
+recorded as run_ok: false, never scored, which is the only reason the judge
+sweep did not quietly fill with zeros.
+
     python probe_think_knobs.py [model ...]
 """
 from __future__ import annotations
