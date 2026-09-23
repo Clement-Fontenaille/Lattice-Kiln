@@ -29,12 +29,23 @@ that never failed.
 
 RESULT, 2026-09-23, nemotron3-nano-4b and qwen2.5-coder 7B, 2 reps each:
 
-    A/A     deterministic on both -- so the test is readable
-    A/B/A   unchanged, output hash identical after an unrelated 574/366-token
-            generation in between
-    cold    identical after evicting the model, same prompt-token count
+    A/A        deterministic on both -- so the test is readable
+    A/B/A      unchanged, after an unrelated 574/366-token generation
+    A/Brel/A   unchanged, AND no planted marker, after a generation that was
+               handed the answer to A outright
+    cold       identical after evicting the model, same prompt-token count
 
-SEQUENTIAL ORDER DOES NOT CONTAMINATE. Context is genuinely reset per call.
+The related phase carried its own positive control and it PASSED:
+`echoed_marker=True` on every Brel run, meaning the model did reproduce
+`_zarquon_pattern` and `PLUGH-SENTINEL-7731` while they sat in its context. So
+the detector fires when there is something to detect. It never fired in the
+following A.
+
+That is the difference between "no difference observed" and "a detector known
+to work did not trigger", and only the second is worth anything.
+
+SEQUENTIAL ORDER DOES NOT CONTAMINATE. Context is genuinely reset per call,
+including when the immediately preceding request contained the answer.
 
 WHAT THIS DOES NOT COVER, AND IT IS THE CASE THAT MATTERS. This probe fires one
 request at a time. The existing corpus behind 50-findings/12 and /14 was
@@ -70,6 +81,32 @@ B = ("Explain, in about 200 words, why floating point addition is not "
      "reduces the error, and when it does not help.")
 
 
+# A SECOND, HARDER TEST: a RELATED prior generation.
+#
+# The first design put an unrelated prompt between the two A runs, which tests
+# cache pressure and nothing else. If anything leaks between requests it is far
+# likelier to leak when the prior turn is ABOUT THE SAME THING -- the prefix
+# overlaps, the topic overlaps, and any surviving state is relevant rather than
+# noise.
+#
+# So B_RELATED hands the model a complete slugify implementation and asks it to
+# explain it. That implementation carries a marker no model would produce on its
+# own: an identifier nobody writes, and a sentinel comment. If either appears in
+# a later answer to A, the leak is not inferred from a hash difference -- it is
+# named, and the token that carried it is visible.
+MARKER_ID = "_zarquon_pattern"
+MARKER_NOTE = "PLUGH-SENTINEL-7731"
+B_RELATED = f"""Explain what this function does, line by line.
+
+import re
+{MARKER_ID} = re.compile(r'[^a-z0-9]+')
+
+def slugify(title):
+    # {MARKER_NOTE}
+    return {MARKER_ID}.sub('-', title.lower()).strip('-')
+"""
+
+
 def once(model: str, prompt: str, num_predict: int = 400) -> dict:
     body = {"model": model, "messages": [{"role": "user", "content": prompt}],
             "stream": False,
@@ -83,6 +120,8 @@ def once(model: str, prompt: str, num_predict: int = 400) -> dict:
     txt = (p.get("message") or {}).get("content") or ""
     return {"sha": hashlib.sha256(txt.encode()).hexdigest()[:12],
             "chars": len(txt),
+            "marker": (MARKER_ID in txt) or (MARKER_NOTE in txt),
+            "text": txt,
             "ptok": p.get("prompt_eval_count"),
             "etok": p.get("eval_count")}
 
@@ -126,6 +165,17 @@ def main(argv: list[str]) -> None:
             same = a1["sha"] == a3["sha"]
             print(f"  rep{r} A/B/A {a1['sha']} -> [B {b['etok']}tok] -> "
                   f"{a3['sha']}  {'unchanged' if same else 'CHANGED'}")
+            # TREATMENT 2: a RELATED prior generation carrying planted
+            # markers. Stronger than B: overlapping topic, overlapping prefix,
+            # and a named token to look for rather than a hash to compare.
+            br = once(model, B_RELATED, num_predict=500)
+            a5 = once(model, A)
+            same_r = a1["sha"] == a5["sha"]
+            leak = a5["marker"]
+            print(f"  rep{r} A/Brel/A {a1['sha']} -> [Brel {br['etok']}tok, "
+                  f"echoed_marker={br['marker']}] -> {a5['sha']}  "
+                  f"{'unchanged' if same_r else 'CHANGED'}"
+                  f"{'  *** MARKER LEAKED INTO A ***' if leak else ''}")
             # COLD: evict the model and run A once more.
             unload(model)
             a4 = once(model, A)
