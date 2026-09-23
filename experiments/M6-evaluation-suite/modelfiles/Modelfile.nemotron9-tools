@@ -1,0 +1,70 @@
+# RULED OUT. KEPT SO NOBODY SPENDS THE AFTERNOON ON IT AGAIN.
+#
+# Two attempts to give Nemotron Nano 9B v2 its own documented tool-calling
+# format through a Modelfile. Both failed, for the same reason.
+#
+#   1. FROM the bartowski GGUF, which ships NVIDIA's real Jinja chat template
+#      with <AVAILABLE_TOOLS>/<TOOLCALL>/<TOOL_RESPONSE> implemented correctly.
+#      No effect.
+#   2. An explicit TEMPLATE transcribing that same format, below. No effect.
+#
+# The measurement that settles it -- prompt tokens for one identical message,
+# without and with a `tools` array:
+#
+#       nemotron-gpu      42 -> 619
+#       this file         42 -> 619
+#
+# Byte-identical. **Ollama renders from its architecture-assigned RENDERER, and
+# a Modelfile TEMPLATE does not displace it.** `/api/show` will happily report
+# the template below, which is what made this look like it had worked; only the
+# token count shows that nothing uses it.
+#
+# So the 9B keeps being shown the `nemotron-3-nano` format -- the 4B's, a
+# different generation -- and improvises `conclude` as XML when the dialect it
+# was given has no slot for it. Fixing that needs a change in Ollama or a
+# different server, not a Modelfile.
+#
+# What was done instead: _calls_from_xml in M4's ollama_client.py recovers the
+# shapes the model improvises, and every recovery is counted in `tool_recovered`
+# per row so the cost stays visible.
+#
+# NVIDIA's format, transcribed from the GGUF's Jinja template. Kept because it
+# is correct and will be needed if the renderer ever becomes selectable.
+FROM nemotron-nano-9b-v2-q4kl:latest
+
+TEMPLATE """<SPECIAL_10>System
+{{- if .System }}
+{{ .System }}
+{{- end }}
+{{- if .Tools }}
+You can use the following tools to assist the user if required:
+<AVAILABLE_TOOLS>[{{ range $i, $t := .Tools }}{{ if $i }}, {{ end }}{{ $t.Function }}{{ end }}]</AVAILABLE_TOOLS>
+
+If you decide to call any tool(s), use the following format:
+<TOOLCALL>[{"name": "tool_name1", "arguments": "tool_args1"}, {"name": "tool_name2", "arguments": "tool_args2"}]</TOOLCALL>
+
+The user will execute tool-calls and return responses from tool(s) in this format:
+<TOOL_RESPONSE>[{"tool_response1"}, {"tool_response2"}]</TOOL_RESPONSE>
+
+Based on the tool responses, you can call additional tools if needed, correct tool calls if any errors are found, or just respond to the user.
+{{- end }}
+{{ range .Messages }}
+{{- if eq .Role "user" }}<SPECIAL_11>User
+{{ .Content }}
+{{ else if eq .Role "tool" }}<SPECIAL_11>User
+<TOOL_RESPONSE>[{{ .Content }}]</TOOL_RESPONSE>
+{{ else if eq .Role "assistant" }}<SPECIAL_11>Assistant
+{{ .Content }}
+{{- if .ToolCalls }}
+<TOOLCALL>[{{ range $i, $c := .ToolCalls }}{{ if $i }}, {{ end }}{"name": "{{ $c.Function.Name }}", "arguments": {{ $c.Function.Arguments }}}{{ end }}]</TOOLCALL>
+{{- end }}
+<SPECIAL_12>
+{{ end }}
+{{- end }}<SPECIAL_11>Assistant
+<think>"""
+
+PARAMETER stop "<SPECIAL_12>"
+PARAMETER stop "<SPECIAL_11>"
+PARAMETER stop "<SPECIAL_10>"
+PARAMETER num_gpu 99
+PARAMETER num_ctx 8192

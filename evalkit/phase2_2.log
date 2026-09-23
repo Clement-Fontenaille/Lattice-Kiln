@@ -1,0 +1,27 @@
+worker DESKTOP-J6EJPKF-20068 | pool C:\Users\Fontenaille\Desktop\Lattice-Kiln\evalkit_pool | {'pending': 182, 'claimed': 8, 'done': 190}
+[DESKTOP-J6EJPKF-20068] 8 item(s)  judge_bypass/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 8 released 0 | {'pending': 174, 'claimed': 8, 'done': 198}
+[DESKTOP-J6EJPKF-20068] 8 item(s)  judge_bypass/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 16 released 0 | {'pending': 158, 'claimed': 8, 'done': 214}
+[DESKTOP-J6EJPKF-20068] 8 item(s)  judge_bypass/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 24 released 0 | {'pending': 142, 'claimed': 8, 'done': 230}
+[DESKTOP-J6EJPKF-20068] 8 item(s)  judge_bypass/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 32 released 0 | {'pending': 126, 'claimed': 8, 'done': 246}
+[DESKTOP-J6EJPKF-20068] 8 item(s)  judge_bypass/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 40 released 0 | {'pending': 110, 'claimed': 8, 'done': 262}
+[DESKTOP-J6EJPKF-20068] 8 item(s)  judge_bypass/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 48 released 0 | {'pending': 94, 'claimed': 8, 'done': 278}
+[DESKTOP-J6EJPKF-20068] 8 item(s)  judge_bypass/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 56 released 0 | {'pending': 78, 'claimed': 8, 'done': 294}
+[DESKTOP-J6EJPKF-20068] 8 item(s)  judge_bypass/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 64 released 0 | {'pending': 62, 'claimed': 8, 'done': 310}
+[DESKTOP-J6EJPKF-20068] 4 item(s)  judge_bypass/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 68 released 0 | {'pending': 54, 'claimed': 4, 'done': 322}
+[DESKTOP-J6EJPKF-20068] 8 item(s)  judge_caveat/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 76 released 0 | {'pending': 38, 'claimed': 8, 'done': 334}
+[DESKTOP-J6EJPKF-20068] 8 item(s)  judge_caveat/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 84 released 0 | {'pending': 22, 'claimed': 8, 'done': 350}
+[DESKTOP-J6EJPKF-20068] 8 item(s)  judge_caveat/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 92 released 0 | {'pending': 6, 'claimed': 8, 'done': 366}
+[DESKTOP-J6EJPKF-20068] 6 item(s)  judge_caveat/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 98 released 0 | {'pending': 0, 'claimed': 0, 'done': 380}

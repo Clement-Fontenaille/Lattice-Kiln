@@ -111,6 +111,8 @@ def main():
                     env["LATTICE_TOP_P"] = str(v)
                 elif k == "protocol":
                     env["LATTICE_PROTOCOL"] = str(v)
+                elif k == "num_ctx":
+                    env["LATTICE_NUM_CTX"] = str(v)
             made += len(pool.enqueue(cell, reps, env=env, held=held,
                                      requested_by=decl.get("name", "unnamed")))
         print(f"{decl.get('name','experiment')}\n")
@@ -165,6 +167,8 @@ def main():
                 env["LATTICE_TOP_P"] = str(v)
             elif k == "protocol":
                 env["LATTICE_PROTOCOL"] = str(v)
+            elif k == "num_ctx":
+                env["LATTICE_NUM_CTX"] = str(v)
 
         any_params = [k for k, v in (m.get("params") or {}).items() if v == ANY]
         cmd = [sys.executable, str(M6 / "run_suite.py"), "--arm", arm,

@@ -1,0 +1,52 @@
+worker DESKTOP-J6EJPKF-15520 | pool C:\Users\Fontenaille\Desktop\Lattice-Kiln\evalkit_pool | {'pending': 190, 'claimed': 0, 'done': 0}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_anchored/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 8 released 0 | {'pending': 182, 'claimed': 0, 'done': 8}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_anchored/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 16 released 0 | {'pending': 174, 'claimed': 0, 'done': 16}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_anchored/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 24 released 0 | {'pending': 166, 'claimed': 0, 'done': 24}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_anchored/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 32 released 0 | {'pending': 158, 'claimed': 0, 'done': 32}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_anchored/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 40 released 0 | {'pending': 150, 'claimed': 0, 'done': 40}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_anchored/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 48 released 0 | {'pending': 142, 'claimed': 0, 'done': 48}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_anchored/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 56 released 0 | {'pending': 134, 'claimed': 0, 'done': 56}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_anchored/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 64 released 0 | {'pending': 126, 'claimed': 0, 'done': 64}
+[DESKTOP-J6EJPKF-15520] 4 item(s)  judge_anchored/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 68 released 0 | {'pending': 122, 'claimed': 0, 'done': 68}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_bypass/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 76 released 0 | {'pending': 114, 'claimed': 0, 'done': 76}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_bypass/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 84 released 0 | {'pending': 106, 'claimed': 0, 'done': 84}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_bypass/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 92 released 0 | {'pending': 98, 'claimed': 0, 'done': 92}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_bypass/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 100 released 0 | {'pending': 90, 'claimed': 0, 'done': 100}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_bypass/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 108 released 0 | {'pending': 82, 'claimed': 0, 'done': 108}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_bypass/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 116 released 0 | {'pending': 74, 'claimed': 0, 'done': 116}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_bypass/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 124 released 0 | {'pending': 66, 'claimed': 0, 'done': 124}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_bypass/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 132 released 0 | {'pending': 58, 'claimed': 0, 'done': 132}
+[DESKTOP-J6EJPKF-15520] 4 item(s)  judge_bypass/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 136 released 0 | {'pending': 54, 'claimed': 0, 'done': 136}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_caveat/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 144 released 0 | {'pending': 46, 'claimed': 0, 'done': 144}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_caveat/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 152 released 0 | {'pending': 38, 'claimed': 0, 'done': 152}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_caveat/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 160 released 0 | {'pending': 30, 'claimed': 0, 'done': 160}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_caveat/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 168 released 0 | {'pending': 22, 'claimed': 0, 'done': 168}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_caveat/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 176 released 0 | {'pending': 14, 'claimed': 0, 'done': 176}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_caveat/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 184 released 0 | {'pending': 6, 'claimed': 0, 'done': 184}
+[DESKTOP-J6EJPKF-15520] 6 item(s)  judge_caveat/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 190 released 0 | {'pending': 0, 'claimed': 0, 'done': 190}
+[DESKTOP-J6EJPKF-15520] 8 item(s)  judge_anchored/qwen2.5-coder:7b-instruct-q4_K_M/reason_first

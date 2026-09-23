@@ -29,7 +29,19 @@ from dataclasses import dataclass, field
 from typing import Any
 
 DEFAULT_MODEL = os.environ.get("LATTICE_EVAL_MODEL", "qwen2.5-coder:7b-instruct-q4_K_M")
-DEFAULT_NUM_CTX = 8192
+# LATTICE_NUM_CTX: the context ceiling, settable because it now binds.
+#
+# It was hardcoded while it was slack -- observed usage sat around 900-950
+# tokens per call and nothing was ever seen to truncate. The tool protocol
+# changed that on both ends: the definitions cost ~600 prompt tokens before a
+# word is generated, and a reasoning model needs thousands of OUTPUT tokens
+# inside the same window. Measured 2026-09-23: judge_anchored on the 9B wanted
+# min_predict 8192 against num_ctx 8192, leaving nothing for the prompt, and
+# the server answered HTTP 500.
+#
+# It is recorded in _eval_meta, so raising it moves the cell and rows taken at
+# two ceilings never pool silently.
+DEFAULT_NUM_CTX = int(os.environ.get("LATTICE_NUM_CTX", "8192"))
 
 # LATTICE_BACKEND: "ollama" (default) or "llamacpp". Added 2026-09-15 for the
 # Nemotron 2x16k llama-server setup -- a llama-server instance shares one
@@ -144,7 +156,8 @@ class Generation:
 # from the text here. Without a per-row count, a cross-model comparison over
 # this protocol would silently score an Ollama template gap as a model
 # property -- the exact confusion 50-findings/15 is about.
-_TOOL_KEYS = {"tool_turns": 0, "tool_native": 0, "tool_recovered": 0}
+_TOOL_KEYS = {"tool_turns": 0, "tool_native": 0, "tool_recovered": 0,
+              "tool_malformed": 0, "tool_repaired": 0}
 _METER = {"calls": 0, "gen_tok": 0, "prompt_tok": 0, "gen_s": 0.0,
           "prompt_s": 0.0, **_TOOL_KEYS}
 
@@ -248,7 +261,16 @@ def _transcript(prompt: str, g: "Generation") -> None:
             "temperature": TEMPERATURE,
             "top_p": TOP_P,
             "text": g.text,
-            "thinking": g.raw.get("thinking") or "",
+            # On /api/chat the answer is NOT in `text`. Ollama's parser lifts
+            # the calls out into a structured field and leaves content empty,
+            # and `thinking` moves inside `message`. Recording only `text`
+            # there stored nothing at all: measured 2026-09-23, a 4B rep
+            # generated 1234 tokens and the transcript captured zero characters
+            # of them. That is precisely the loss this sink exists to prevent,
+            # reintroduced by the change of endpoint.
+            "thinking": (g.raw.get("thinking")
+                         or (g.raw.get("message") or {}).get("thinking") or ""),
+            "tool_calls": g.tool_calls,
         }) + "\n")
         _TSINK.flush()
     except Exception:  # noqa: BLE001
@@ -326,6 +348,16 @@ def generate(prompt: str, *, model: str = DEFAULT_MODEL, base_url: str = DEFAULT
     try:
         with urllib.request.urlopen(req, timeout=timeout_s) as resp:
             payload = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        # Read the body. Ollama puts the actual reason in it, and without this
+        # every server-side refusal arrived as a bare "HTTP Error 500", which
+        # says nothing about whether the fault is the prompt, the options or
+        # the message list.
+        try:
+            detail = e.read().decode("utf-8", "replace")[:500]
+        except Exception:  # noqa: BLE001
+            detail = "(body unreadable)"
+        raise OllamaError(f"request to {base_url} failed: HTTP {e.code}: {detail}") from e
     except urllib.error.URLError as e:
         raise OllamaError(f"request to {base_url} failed: {e}") from e
     except json.JSONDecodeError as e:
@@ -363,6 +395,94 @@ _TEXT_CALL = re.compile(
     r'\s*"(?:arguments|parameters)"\s*:\s*(?P<args>\{)', re.S)
 
 
+_CLOSERS = set(",:}]")
+
+
+def _repair_json(raw: str) -> str:
+    """Re-escape what a model left unescaped inside a JSON string.
+
+    Why this exists rather than rejecting the payload. qwen2.5-coder escapes
+    newlines correctly and does NOT escape quotes, so any Python file
+    containing a docstring breaks its own tool call:
+
+        "content": "def call(self):\\n        \"\"\"Invoke fn() ...
+                                    ^^^^^^ raw quotes, invalid JSON
+
+    Measured here 2026-09-23, and documented upstream as a Qwen family trait
+    rather than a local fault -- cline#10843 reports the same model on Ollama
+    looping on raw JSON, and llama.cpp#19382 and the Qwen3-Coder-Next thread
+    both report invalid tool JSON specifically when writing a file. Qwen's own
+    function-calling guide says the protocol is "not guaranteed" to be followed
+    and tells integrators to parse it themselves with "countermeasures or
+    rectifications in place". A published vLLM tool parser exists for this
+    model for the same reason. Repair is the normal integration layer here, not
+    a crutch invented for this harness.
+
+    The rule: inside a string, a quote CLOSES it only if the next non-space
+    character is one of , : } ] or the end of input. Otherwise it is content
+    and gets escaped. Raw control characters, also illegal in JSON strings, are
+    escaped the same way.
+
+    THIS CAN BE WRONG. Content that legitimately holds `"}` or `",` -- say
+    `print("}")` -- terminates the string early and the repair produces the
+    wrong file rather than no file. That is a worse failure than rejection
+    because it is silent, so every repair is counted in `tool_repaired` and the
+    result is only accepted if it parses. A rate that stops being small is the
+    signal to stop trusting this.
+    """
+    out, i, n, instr = [], 0, len(raw), False
+    while i < n:
+        ch = raw[i]
+        if not instr:
+            out.append(ch)
+            if ch == '"':
+                instr = True
+            i += 1
+            continue
+        if ch == chr(92) and i + 1 < n:          # keep valid escapes intact
+            out.append(raw[i:i + 2])
+            i += 2
+            continue
+        if ch == '"':
+            j = i + 1
+            while j < n and raw[j] in " \t\r\n":
+                j += 1
+            if j >= n or raw[j] in _CLOSERS:
+                out.append(ch)                   # a real terminator
+                instr = False
+            else:
+                out.append(chr(92) + '"')        # content, escape it
+            i += 1
+            continue
+        if ch in "\n\r\t":
+            out.append({"\n": chr(92) + "n", "\r": chr(92) + "r",
+                        "\t": chr(92) + "t"}[ch])
+            i += 1
+            continue
+        out.append(ch)
+        i += 1
+    return "".join(out)
+
+
+def _loads_or_repair(raw: str) -> dict | None:
+    """json.loads, then one repair attempt. None if both fail."""
+    try:
+        v = json.loads(raw)
+        return v if isinstance(v, dict) else None
+    except json.JSONDecodeError:
+        pass
+    try:
+        v = json.loads(_repair_json(raw))
+    except json.JSONDecodeError:
+        _METER["tool_malformed"] += 1
+        return None
+    if not isinstance(v, dict):
+        _METER["tool_malformed"] += 1
+        return None
+    _METER["tool_repaired"] += 1
+    return v
+
+
 def _calls_from_text(text: str) -> list[dict[str, Any]]:
     """Tool calls Ollama's PARSER did not lift out of the text.
 
@@ -395,12 +515,10 @@ def _calls_from_text(text: str) -> list[dict[str, Any]]:
             elif ch == "}":
                 depth -= 1
                 if depth == 0:
-                    try:
-                        args = json.loads(text[i:j + 1])
-                    except json.JSONDecodeError:
+                    args = _loads_or_repair(text[i:j + 1])
+                    if args is None:
                         break
-                    if isinstance(args, dict):
-                        out.append({"name": m.group("name"), "arguments": args})
+                    out.append({"name": m.group("name"), "arguments": args})
                     break
     return out
 
@@ -498,6 +616,16 @@ def chat(messages: list[dict[str, Any]], *, model: str = DEFAULT_MODEL,
     try:
         with urllib.request.urlopen(req, timeout=timeout_s) as resp:
             payload = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        # Read the body. Ollama puts the actual reason in it, and without this
+        # every server-side refusal arrived as a bare "HTTP Error 500", which
+        # says nothing about whether the fault is the prompt, the options or
+        # the message list.
+        try:
+            detail = e.read().decode("utf-8", "replace")[:500]
+        except Exception:  # noqa: BLE001
+            detail = "(body unreadable)"
+        raise OllamaError(f"request to {base_url} failed: HTTP {e.code}: {detail}") from e
     except urllib.error.URLError as e:
         raise OllamaError(f"request to {base_url} failed: {e}") from e
     except json.JSONDecodeError as e:
@@ -577,6 +705,16 @@ def _generate_llamacpp(prompt: str, *, base_url: str, model: str, temperature: f
     try:
         with urllib.request.urlopen(req, timeout=timeout_s) as resp:
             payload = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        # Read the body. Ollama puts the actual reason in it, and without this
+        # every server-side refusal arrived as a bare "HTTP Error 500", which
+        # says nothing about whether the fault is the prompt, the options or
+        # the message list.
+        try:
+            detail = e.read().decode("utf-8", "replace")[:500]
+        except Exception:  # noqa: BLE001
+            detail = "(body unreadable)"
+        raise OllamaError(f"request to {base_url} failed: HTTP {e.code}: {detail}") from e
     except urllib.error.URLError as e:
         raise OllamaError(f"request to {base_url} failed: {e}") from e
     except json.JSONDecodeError as e:

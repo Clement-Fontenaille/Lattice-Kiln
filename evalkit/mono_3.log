@@ -1,0 +1,97 @@
+worker DESKTOP-J6EJPKF-1796 | pool C:\Users\Fontenaille\Desktop\Lattice-Kiln\evalkit_pool | backend http://127.0.0.1:11434 | {'pending': 340, 'claimed': 16, 'done': 3511}
+[DESKTOP-J6EJPKF-1796] 8 item(s)  monolith/nemotron3-nano-4b/decision_first
+      exit 0 | done 8 released 0 | {'pending': 316, 'claimed': 16, 'done': 3535}
+[DESKTOP-J6EJPKF-1796] 8 item(s)  monolith/nemotron3-nano-4b/decision_first
+      exit 0 | done 16 released 0 | {'pending': 308, 'claimed': 16, 'done': 3543}
+[DESKTOP-J6EJPKF-1796] 8 item(s)  monolith/nemotron3-nano-4b/decision_first
+      exit 0 | done 24 released 0 | {'pending': 268, 'claimed': 16, 'done': 3583}
+[DESKTOP-J6EJPKF-1796] 8 item(s)  monolith/nemotron3-nano-4b/decision_first
+      exit 0 | done 32 released 0 | {'pending': 252, 'claimed': 16, 'done': 3599}
+[DESKTOP-J6EJPKF-1796] 8 item(s)  monolith/nemotron3-nano-4b/decision_first
+      exit 0 | done 40 released 0 | {'pending': 228, 'claimed': 16, 'done': 3623}
+[DESKTOP-J6EJPKF-1796] 8 item(s)  monolith/nemotron3-nano-4b/decision_first
+      exit 0 | done 48 released 0 | {'pending': 204, 'claimed': 16, 'done': 3647}
+[DESKTOP-J6EJPKF-1796] 8 item(s)  monolith/nemotron3-nano-4b/decision_first
+      exit 0 | done 56 released 0 | {'pending': 186, 'claimed': 10, 'done': 3671}
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: [] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] holding: ['nemotron3-nano-4b:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-1796] 8 item(s)  monolith/nemotron3-nano-4b/decision_first

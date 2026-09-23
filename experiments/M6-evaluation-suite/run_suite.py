@@ -304,6 +304,8 @@ def run_task(task, arm_name, rep, cmd, protected):
         "tool_turns": used["tool_turns"],
         "tool_native": used["tool_native"],
         "tool_recovered": used["tool_recovered"],
+        "tool_malformed": used["tool_malformed"],
+        "tool_repaired": used["tool_repaired"],
         "prompt_s": round(used.get("prompt_s", 0.0), 2),
         "runner": RUNNER,
         "t_start": round(t_start, 3),

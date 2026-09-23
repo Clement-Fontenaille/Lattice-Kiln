@@ -1,0 +1,6 @@
+worker DESKTOP-J6EJPKF-20220 | pool C:\Users\Fontenaille\Desktop\Lattice-Kiln\evalkit_pool | {'pending': 1554, 'claimed': 0, 'done': 8}
+[DESKTOP-J6EJPKF-20220] 8 item(s)  judge_bypass/qwen2.5-coder:7b-instruct-q4_K_M/decision_first
+      exit 0 | done 8 released 0 | {'pending': 1530, 'claimed': 8, 'done': 24}
+[DESKTOP-J6EJPKF-20220] 8 item(s)  judge_bypass/qwen2.5-coder:7b-instruct-q4_K_M/decision_first
+      exit 0 | done 16 released 0 | {'pending': 1522, 'claimed': 8, 'done': 32}
+[DESKTOP-J6EJPKF-20220] 8 item(s)  judge_bypass/qwen2.5-coder:7b-instruct-q4_K_M/decision_first

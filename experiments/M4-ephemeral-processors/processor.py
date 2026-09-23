@@ -101,6 +101,40 @@ def _extract(text: str) -> dict[str, Any] | None:
     return {"control": ctrl, "files": files}
 
 
+_LIST_FIELDS = ("run", "context_requests")
+
+
+def _clean_conclude(args: dict[str, Any]) -> dict[str, Any]:
+    """Normalise one conclude call's arguments.
+
+    Two things, both observed rather than anticipated:
+
+    Empty slots are dropped. The XML recovery path returns every parameter the
+    model listed, including ones it left blank, so `verdict` arrives as "" --
+    and "" is the absence of a verdict, not a bad one. Keeping it would let a
+    reviewer that declined to judge read as one that judged badly.
+
+    List fields arrive as JSON STRINGS. Measured 2026-09-23 on
+    nemotron3-nano-4b: `run` came back as the two characters `[]` rather than
+    an empty list, because the tool-call convention allows arguments to be a
+    JSON string and some renderers do not decode one level down. The caller
+    tests `isinstance(..., list)` before executing anything, so a model asking
+    to run its own tests would have been dropped in silence -- no error, no
+    record, just commands that never ran.
+    """
+    out: dict[str, Any] = {}
+    for k, v in args.items():
+        if isinstance(v, str) and k in _LIST_FIELDS:
+            try:
+                v = json.loads(v)
+            except json.JSONDecodeError:
+                v = [v] if v.strip() else []
+        if v in ("", [], None) or v == {}:
+            continue
+        out[k] = v
+    return out
+
+
 MAX_TOOL_TURNS = 6
 """Turns a tool-mode processor may take before it is called unparseable.
 
@@ -150,7 +184,7 @@ def _run_tools(prompt: str, *, model: str, num_predict: int = 1536
                 # valid verdict, it is the absence of one. Keeping it would let
                 # a reviewer that declined to judge read as a reviewer that
                 # judged badly.
-                ctrl = {k: v for k, v in args.items() if v not in ("", [], None)}
+                ctrl = _clean_conclude(args)
             msgs.append({"role": "tool", "tool_name": c.get("name", ""),
                          "content": "recorded"})
         if ctrl is not None:

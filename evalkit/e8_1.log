@@ -1,0 +1,193 @@
+worker DESKTOP-J6EJPKF-3728 | pool C:\Users\Fontenaille\Desktop\Lattice-Kiln\evalkit_pool | {'pending': 880, 'claimed': 0, 'done': 633}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_anchored/nemotron-gpu/decision_first
+      exit 0 | done 8 released 0 | {'pending': 856, 'claimed': 16, 'done': 641}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_anchored/nemotron-gpu/decision_first
+      exit 0 | done 16 released 0 | {'pending': 824, 'claimed': 16, 'done': 673}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_anchored/nemotron-gpu/decision_first
+      exit 0 | done 24 released 0 | {'pending': 800, 'claimed': 16, 'done': 697}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_anchored/nemotron-gpu/decision_first
+      exit 0 | done 32 released 0 | {'pending': 768, 'claimed': 16, 'done': 729}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_anchored/nemotron-gpu/decision_first
+      exit 0 | done 40 released 0 | {'pending': 752, 'claimed': 16, 'done': 745}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_anchored/nemotron-gpu/decision_first
+      exit 0 | done 48 released 0 | {'pending': 736, 'claimed': 16, 'done': 761}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_anchored/nemotron-gpu/decision_first
+      exit 0 | done 56 released 0 | {'pending': 712, 'claimed': 16, 'done': 785}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_anchored/nemotron-gpu/decision_first
+      exit 0 | done 64 released 0 | {'pending': 696, 'claimed': 16, 'done': 801}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_anchored/nemotron-gpu/decision_first
+      exit 0 | done 72 released 0 | {'pending': 672, 'claimed': 16, 'done': 825}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_anchored/nemotron-gpu/decision_first
+      exit 0 | done 80 released 0 | {'pending': 648, 'claimed': 16, 'done': 849}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_anchored/nemotron-gpu/decision_first
+      exit 0 | done 88 released 0 | {'pending': 616, 'claimed': 16, 'done': 881}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_anchored/nemotron-gpu/decision_first
+      exit 0 | done 96 released 0 | {'pending': 576, 'claimed': 16, 'done': 921}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_anchored/nemotron-gpu/decision_first
+      exit 0 | done 104 released 0 | {'pending': 544, 'claimed': 16, 'done': 953}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_anchored/nemotron-gpu/decision_first
+      exit 0 | done 112 released 0 | {'pending': 504, 'claimed': 16, 'done': 993}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_anchored/nemotron-gpu/decision_first
+      exit 0 | done 120 released 0 | {'pending': 488, 'claimed': 16, 'done': 1009}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_anchored/nemotron-gpu/decision_first
+      exit 0 | done 128 released 0 | {'pending': 472, 'claimed': 16, 'done': 1025}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_anchored/nemotron-gpu/decision_first
+      exit 0 | done 136 released 0 | {'pending': 456, 'claimed': 16, 'done': 1041}
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+released 8 item(s): ollama unreachable (timed out)
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_caveat/nemotron-gpu/decision_first
+      exit 0 | done 144 released 0 | {'pending': 422, 'claimed': 16, 'done': 1075}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_caveat/nemotron-gpu/decision_first
+      exit 0 | done 152 released 0 | {'pending': 390, 'claimed': 16, 'done': 1107}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_caveat/nemotron-gpu/decision_first
+      exit 0 | done 160 released 0 | {'pending': 372, 'claimed': 8, 'done': 1133}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_caveat/nemotron-gpu/decision_first
+      exit 0 | done 168 released 0 | {'pending': 332, 'claimed': 16, 'done': 1165}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_caveat/nemotron-gpu/decision_first
+      exit 0 | done 176 released 0 | {'pending': 308, 'claimed': 16, 'done': 1189}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_caveat/nemotron-gpu/decision_first
+      exit 0 | done 184 released 0 | {'pending': 276, 'claimed': 16, 'done': 1221}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_caveat/nemotron-gpu/decision_first
+      exit 0 | done 192 released 0 | {'pending': 252, 'claimed': 16, 'done': 1245}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_caveat/nemotron-gpu/decision_first
+      exit 0 | done 200 released 0 | {'pending': 244, 'claimed': 8, 'done': 1261}
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] holding: ['nemotron-gpu:latest'] resident and in use by another worker; nothing pending fits it
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_caveat/nemotron-gpu/reason_first
+      exit 0 | done 208 released 0 | {'pending': 188, 'claimed': 8, 'done': 1317}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_caveat/nemotron-gpu/reason_first
+      exit 0 | done 216 released 0 | {'pending': 156, 'claimed': 16, 'done': 1341}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_caveat/nemotron-gpu/reason_first
+      exit 0 | done 224 released 0 | {'pending': 148, 'claimed': 16, 'done': 1349}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_caveat/nemotron-gpu/reason_first
+      exit 0 | done 232 released 0 | {'pending': 124, 'claimed': 16, 'done': 1373}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_caveat/nemotron-gpu/reason_first
+      exit 0 | done 240 released 0 | {'pending': 108, 'claimed': 8, 'done': 1397}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_caveat/nemotron-gpu/reason_first
+      exit 0 | done 248 released 0 | {'pending': 84, 'claimed': 8, 'done': 1421}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_caveat/nemotron-gpu/reason_first
+      exit 0 | done 256 released 0 | {'pending': 76, 'claimed': 8, 'done': 1429}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_caveat/nemotron-gpu/reason_first
+      exit 0 | done 264 released 0 | {'pending': 52, 'claimed': 16, 'done': 1445}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_caveat/nemotron-gpu/reason_first
+      exit 0 | done 272 released 0 | {'pending': 26, 'claimed': 16, 'done': 1471}
+[DESKTOP-J6EJPKF-3728] 8 item(s)  judge_anchored/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 280 released 0 | {'pending': 6, 'claimed': 10, 'done': 1497}
+[DESKTOP-J6EJPKF-3728] 6 item(s)  judge_caveat/qwen2.5-coder:7b-instruct-q4_K_M/reason_first
+      exit 0 | done 286 released 0 | {'pending': 0, 'claimed': 0, 'done': 1513}
