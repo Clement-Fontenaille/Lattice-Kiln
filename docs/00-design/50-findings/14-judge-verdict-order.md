@@ -531,3 +531,79 @@ of reading rather than discoverable by someone asking why a control moved.
 
 This also bears on `E0`'s item analysis, which was run over the same rows.
 Whether its factor structure is sensitive to rep weighting is **not checked**.
+
+---
+
+## Addendum 5, 2026-09-23 — monolith localises the 4B's floor, and it is not the workflow
+
+`50-findings/14` addendum 3 left open whether nemotron3-nano-4b's floor was the
+model, the output contract, or the judge workflows mishandling its output.
+`monolith` separates them: same output protocol, no workflow stages, and it
+works for the other two subjects.
+
+**It was never run on the 4B.** E8's declaration excludes `baseline` and
+`monolith` from `arms` — correctly, since neither has a judge stage and neither
+can move with the format variable — and the 4B arrived after that declaration
+was written, so it inherited an exclusion that left it without a no-judge
+reference. 170 reps were run on 2026-09-23 to supply one.
+
+### The result
+
+Task-weighted, `run_ok` runs only:
+
+| arm | model | objective | gate | unchanged | coverage |
+|---|---|---|---|---|---|
+| `baseline` *(does nothing by construction)* | either | 17.6% [4.6, 30.7] | 23.5% | 100.0% | 34×2 |
+| **`monolith`** | **nemo3** | **17.6% [4.6, 30.7]** | **23.5%** | **100.0%** | **34×5** |
+| `monolith` | nemo9 | 58.8% [46.1, 71.6] | 61.8% | 55.9% | 34×2 |
+| `monolith` | qwen | 61.0% [46.3, 75.8] | 63.0% | 33.0% | uneven |
+
+**Indistinguishable from doing nothing — not approximately, identically**, on
+every figure, at uniform coverage. **The judge workflows are exonerated.**
+
+### What it is not
+
+Each of these was checked and ruled out rather than assumed:
+
+- **Not the gate.** The M2 event log records 65 proposed effects and 65
+  realized across recent monolith runs, all disposition `realized`. Nothing was
+  refused.
+- **Not the filename.** 95.5% of emitted `<<<FILE>>>` names appear in the
+  prompt. The 4.5% that do not are `path=ledger.py` — the literal template
+  `path=relative/name.py` copied through, a protocol slip rather than a guess.
+- **Not `restore_protected`.** Only `test_task.py` is protected; writes to the
+  module survive scoring.
+- **Not the output protocol alone.** 100% emit a `<<<FILE>>>` block and 61.4%
+  emit the `<<<CONTROL>>>` block, so a third fail the contract — but that
+  cannot produce 100.0% unchanged.
+
+### What it is
+
+**The model reproduces the file instead of editing it.** The emitted content is
+the original, with cosmetic damage: a stray `"""` prepended to the docstring,
+single spaces doubled, and an invented `<<<ENDFILE>>>` marker the harness does
+not strip. No logic changes.
+
+That accounts for every figure at once — 100% unchanged, 0% regressed,
+terminal `done`, and a score equal to baseline on all 34 tasks.
+
+**A measurement error of my own, recorded because it nearly reversed this.** An
+intermediate check reported 95.2% of emitted files as containing "a substantive
+change". Its normaliser stripped blank lines and end-markers but not intra-line
+whitespace, so doubled spaces and a stray quote counted as substance. Reading
+the diffs showed what the number had hidden. **A normaliser decides what
+counts as a change, and one that is too loose reports noise as signal.**
+
+### Consequence for E8
+
+The 1,020 judge-arm reps on this subject measured a judge assessing work that
+was never done. Addendum 3 said the comparison the parity run was built for is
+not answerable from this data; this localises why and rules out the explanation
+that would have made it a harness defect.
+
+**`arm_monolith` returning `"done"` unconditionally is worth noting
+separately.** It reports success without checking that anything landed, which
+is why 170 runs that changed nothing all carry terminal `done`. Harmless here
+because the score is computed independently — and it is the same shape as the
+defect `50-findings/12` records, where an untouched workspace was scored as a
+correct decline.
