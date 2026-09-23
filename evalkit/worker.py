@@ -197,8 +197,26 @@ def others_working(pool, who: str) -> bool:
     return False
 
 
+def base_name(model: str) -> str:
+    """A model name without its tag, so two spellings of one model compare equal.
+
+    `/api/ps` answers with the tag -- "nemotron3-nano-4b:latest" -- while a
+    queue item's env carries whatever the declaration wrote, usually
+    "nemotron3-nano-4b". Compared raw they never match.
+
+    That was silently costing worker utilisation rather than failing: the
+    resident-model rung never fired for any model referenced without an
+    explicit tag, so a worker fell through to the peer guard, found another
+    worker mid-item, and held. Two of three workers sat idle against 162
+    pending items of exactly the model they had resident. Only `fits` happened
+    to normalise, which is why one worker got through and the others did not.
+    """
+    return (model or "").split(":")[0]
+
+
 def wants_loaded(d: dict, loaded: set[str]) -> bool:
-    return d.get("env", {}).get("LATTICE_EVAL_MODEL") in loaded
+    want = base_name(d.get("env", {}).get("LATTICE_EVAL_MODEL"))
+    return bool(want) and want in {base_name(m) for m in loaded}
 
 
 def group_key(item) -> tuple:
@@ -382,7 +400,7 @@ def main():
                 return False
             if _b is None:
                 return True          # cannot measure: do not pretend to know
-            if any(m.split(":")[0] == model.split(":")[0] for m in _card):
+            if any(base_name(m) == base_name(model) for m in _card):
                 return True          # already on the card; using it adds nothing
             return _c + _s.get(model, 0) <= _b
 
@@ -398,11 +416,11 @@ def main():
         # when it is given, it decides, and `fits` stays as a backstop for the
         # case where it is not.
         if args.model:
-            want = set(args.model)
+            want = {base_name(m) for m in args.model}
             base = fits
 
             def fits(model, _w=want, _b=base):    # noqa: F811
-                return bool(model) and model.split(":")[0] in _w and _b(model)
+                return bool(model) and base_name(model) in _w and _b(model)
 
         first = pick(pool, who, sticky, loaded, card, fits)
         if first is HOLD:
