@@ -61,6 +61,28 @@ THINK = None if _THINK_ENV is None else _THINK_ENV not in ("0", "false", "False"
 # editing eight workflow files, and is a no-op for a model that stops earlier.
 MIN_PREDICT = int(os.environ.get("LATTICE_MIN_PREDICT", "0"))
 
+# LATTICE_TEMPERATURE / LATTICE_TOP_P: override what the arms hardcode.
+#
+# Every call site passes temperature=0.2 and none passes top_p, so the sampling
+# regime was fixed at a value nobody chose for any particular model and could
+# not be varied without editing eight workflow files.
+#
+# It is not a free parameter. NVIDIA's guidance for Nemotron Nano is
+# temperature 0.6 with top_p 0.95 when reasoning is ON, and temperature 0 with
+# greedy decoding when it is OFF. Measured here on one implementer prompt,
+# reasoning off, five samples each: temperature 0.0 degenerated 5 times out of
+# 5, 0.2 four times, 0.6 twice -- degenerate meaning newlines collapsed to
+# spaces and the generation running to its cap. That is the opposite direction
+# from the published recommendation and rests on one prompt, so it is a reason
+# to make the parameter settable rather than a reason to trust a value.
+#
+# Unset leaves each call site's own argument untouched, so nothing already
+# recorded changes meaning.
+_TEMP_ENV = os.environ.get("LATTICE_TEMPERATURE")
+TEMPERATURE = None if _TEMP_ENV is None else float(_TEMP_ENV)
+_TOPP_ENV = os.environ.get("LATTICE_TOP_P")
+TOP_P = None if _TOPP_ENV is None else float(_TOPP_ENV)
+
 
 class OllamaError(RuntimeError):
     pass
@@ -208,6 +230,8 @@ def _transcript(prompt: str, g: "Generation") -> None:
             "prompt_tok": g.prompt_eval_count,
             "eval_count": g.eval_count,
             "done_reason": g.raw.get("done_reason"),
+            "temperature": TEMPERATURE,
+            "top_p": TOP_P,
             "text": g.text,
             "thinking": g.raw.get("thinking") or "",
         }) + "\n")
@@ -252,12 +276,13 @@ def generate(prompt: str, *, model: str = DEFAULT_MODEL, base_url: str = DEFAULT
                                   temperature=temperature, num_predict=num_predict,
                                   timeout_s=timeout_s, system=system)
     num_predict = max(num_predict, MIN_PREDICT)
-    body = {
-        "model": model,
-        "prompt": prompt,
-        "stream": False,
-        "options": {"temperature": temperature, "num_ctx": num_ctx, "num_predict": num_predict},
-    }
+    if TEMPERATURE is not None:
+        temperature = TEMPERATURE
+    opts = {"temperature": temperature, "num_ctx": num_ctx,
+            "num_predict": num_predict}
+    if TOP_P is not None:
+        opts["top_p"] = TOP_P
+    body = {"model": model, "prompt": prompt, "stream": False, "options": opts}
     if THINK is not None:
         body["think"] = THINK
     if system:
@@ -308,7 +333,10 @@ def _generate_llamacpp(prompt: str, *, base_url: str, model: str, temperature: f
     caller into thinking it did something.
     """
     full_prompt = f"{system}\n\n{prompt}" if system else prompt
-    body = {"prompt": full_prompt, "n_predict": num_predict, "temperature": temperature}
+    body = {"prompt": full_prompt, "n_predict": num_predict,
+            "temperature": TEMPERATURE if TEMPERATURE is not None else temperature}
+    if TOP_P is not None:
+        body["top_p"] = TOP_P
     data = json.dumps(body).encode("utf-8")
     req = urllib.request.Request(f"{base_url}/completion", data=data,
                                  headers={"Content-Type": "application/json"})

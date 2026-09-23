@@ -105,6 +105,10 @@ def main():
                     env["LATTICE_THINK"] = "1" if v else "0"
                 elif k == "min_predict":
                     env["LATTICE_MIN_PREDICT"] = str(v)
+                elif k == "temperature":
+                    env["LATTICE_TEMPERATURE"] = str(v)
+                elif k == "top_p":
+                    env["LATTICE_TOP_P"] = str(v)
             made += len(pool.enqueue(cell, reps, env=env, held=held,
                                      requested_by=decl.get("name", "unnamed")))
         print(f"{decl.get('name','experiment')}\n")
@@ -153,6 +157,10 @@ def main():
                 env["LATTICE_THINK"] = "1" if v else "0"
             elif k == "min_predict":
                 env["LATTICE_MIN_PREDICT"] = str(v)
+            elif k == "temperature":
+                env["LATTICE_TEMPERATURE"] = str(v)
+            elif k == "top_p":
+                env["LATTICE_TOP_P"] = str(v)
 
         any_params = [k for k, v in (m.get("params") or {}).items() if v == ANY]
         cmd = [sys.executable, str(M6 / "run_suite.py"), "--arm", arm,
