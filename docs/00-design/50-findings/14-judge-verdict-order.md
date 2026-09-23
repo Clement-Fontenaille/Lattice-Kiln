@@ -469,3 +469,65 @@ protocol is the harness's choice, not the task's — and compare against this
 run. If the capability floor persists at 100% protocol compliance, the original
 reading was right for the wrong reason. If it lifts, the suite was measuring
 its own output format.
+
+---
+
+## Addendum 4, 2026-09-23 — every rate here is row-weighted, and baseline proved it
+
+The operator asked why the `baseline` arm scores differently between models.
+It should not be able to: `baseline` changes nothing in 100% of runs, so its
+score is a property of the fixtures alone and is deterministic per task.
+
+**It does not differ.** Checked per task across all 34, for both subjects:
+**zero tasks disagree**, and both cover the full suite.
+
+| | rows | reps per task | row-weighted | **task-weighted** |
+|---|---|---|---|---|
+| baseline / nemotron 9B | 68 | 34 tasks × 2, uniform | 17.6% | **17.6%** |
+| baseline / qwen 7B | 38 | **32 × 1, plus 2 × 3** | 15.8% | **17.6%** |
+
+`hf_csv` and `wf1_crossfile` carry three reps each for qwen and neither passes
+at baseline, so four extra failing rows pull the aggregate from 17.6% to 15.8%.
+**The models never differed. The denominators did.**
+
+### The general property, which is not confined to baseline
+
+> **Every rate reported in this project is weighted by rep count, not by task.**
+> Where per-task coverage is uneven, a cell's aggregate is a weighted average
+> in which the heavily-repped tasks count more — and two cells with different
+> coverage are not comparable, however many reps each has.
+
+This is invisible in the numbers themselves. A cell with 668 rows looks better
+powered than one with 374, and says nothing about how those rows are spread.
+
+### How much it moves the numbers already published
+
+Checked across all eighteen judge cells. The judge arms are close to uniform —
+every one covers all 34 tasks, most at 5 to 10 reps each — so the gap between
+row-weighted and task-weighted `objective_pass` is **at most 1.6 points**, and
+under 1.0 in fourteen of the eighteen.
+
+| cell | row | task | gap |
+|---|---|---|---|
+| `judge_bypass`/nemo3/`decision_first` | 19.9% | 18.2% | −1.6 |
+| `judge_anchored`/nemo3/`reason_first` | 19.7% | 18.2% | −1.4 |
+| `judge_bypass`/nemo9/`reason_first` | 61.7% | 62.9% | +1.2 |
+
+**Nothing in this sheet reverses**, and the effects it reports are 11 to 25
+points. The finding stands; the margin it stands on is 1.6 points narrower than
+stated.
+
+**Baseline was the case where it mattered** — 1.8 points on a 17.6% figure is a
+tenth of the quantity — and it mattered precisely because `baseline` is the
+cell nobody bothered to run evenly, being "only the floor".
+
+### What to do about it
+
+**Report task-weighted rates**, or report both and the gap. Row-weighting is
+defensible only when coverage is uniform, and uniformity is an assumption no
+current tool checks. The cheapest guard is to print the per-task rep
+distribution beside any aggregate, so uneven coverage is visible at the point
+of reading rather than discoverable by someone asking why a control moved.
+
+This also bears on `E0`'s item analysis, which was run over the same rows.
+Whether its factor structure is sensitive to rep weighting is **not checked**.
