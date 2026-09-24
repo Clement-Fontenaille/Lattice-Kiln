@@ -76,6 +76,7 @@ _M7_ARMS = {"m7", "m7b", "m7c", "m7e", "m7f", "judge_staged", "judge_anchored",
             "judge_caveat", "judge_bypass", "test_synth", "test_synth_retry",
             "judge_fullctx"}
 _M6_ARM_FILES = {"baseline": "run_suite.py", "monolith": "run_suite.py",
+                 "monolith_recovery": "run_suite.py",
                  "dloop": "m6_arms.py", "staged": "m6_arms.py"}
 
 

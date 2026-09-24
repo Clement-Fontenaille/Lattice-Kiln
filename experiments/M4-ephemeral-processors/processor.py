@@ -138,22 +138,13 @@ def adapter_fingerprint() -> str:
     before and after. Cf. 50-findings/15, which closes on precisely this defect
     one layer up.
     """
-    # WHETHER recovery is offered is a setup variable and belongs here: a run
-    # that may be rescued is not the same setup as one that may not, even on
-    # the reps where no rescue happened. WHAT help was given is an outcome and
-    # rides on the row instead. Conflating them would let a recovered row pool
-    # with a clean one -- verified by test: before this line, flipping
-    # LATTICE_RECOVERY left the fingerprint byte-identical.
-    parts = [f"protocol={PROTOCOL}", f"nudge={_oc.NUDGE}",
-             f"recovery={'on' if RECOVERY else 'off'}"]
-    if RECOVERY:
-        # The ladder's own text reaches the model, so a change to a steering
-        # sentence must move the key exactly as a protocol change does.
-        parts.append(f"max_recoveries={MAX_RECOVERIES}")
-        parts.append(json.dumps(
-            {mode: [r.describe() for r in rungs]
-             for mode, rungs in sorted(_recovery.LADDER.items())},
-            sort_keys=True))
+    # Recovery is deliberately NOT here. It is a processor strategy, so it is
+    # arm-dependent and its identity comes from `arm` and `arm_sha`, which are
+    # already part of the cell. Putting it in the model-facing hash would make
+    # every marker-protocol row move when a steering sentence changed, which is
+    # over-strict, and would re-conflate the two axes this hash exists to keep
+    # apart.
+    parts = [f"protocol={PROTOCOL}", f"nudge={_oc.NUDGE}"]
     if PROTOCOL == "tools":
         parts.append(PROTOCOL_TOOLS)
         parts.append(json.dumps(TOOLS, sort_keys=True))
@@ -168,6 +159,30 @@ def adapter_fingerprint() -> str:
     else:
         parts.append(PROTOCOL_MARKERS)
     return hashlib.sha256(chr(10).join(parts).encode("utf-8")).hexdigest()[:12]
+
+
+def recovery_fingerprint() -> str:
+    """Identity of the adapter's recovery hook, for arms that activate it.
+
+    Separate from adapter_fingerprint() because this is a capability MOST ARMS
+    DO NOT USE. Folding it into the adapter would move every marker-protocol
+    row when a steering sentence was reworded; leaving it out entirely would let
+    a reworded ladder change what recovery arms send with no key moving at all.
+    Both were tried, in that order, and both were wrong.
+
+    Hashes the text and settings the model would actually meet under recovery --
+    the steering sentences, the sampling overrides, the attempt ceiling -- not
+    the module that produces them.
+    """
+    payload = {
+        "max_recoveries": MAX_RECOVERIES,
+        "recovery_num_predict": _recovery.RECOVERY_NUM_PREDICT,
+        "ladder": {mode: [r.describe() for r in rungs]
+                   for mode, rungs in sorted(_recovery.LADDER.items())},
+        "menu": _recovery.MENU,
+    }
+    return hashlib.sha256(
+        json.dumps(payload, sort_keys=True).encode("utf-8")).hexdigest()[:12]
 
 
 def _tool_result(call: dict[str, Any], files: dict[str, str]) -> str:
@@ -217,16 +232,20 @@ def _tool_result(call: dict[str, Any], files: dict[str, str]) -> str:
 _LIST_FIELDS = ("run", "context_requests")
 
 
-#: LATTICE_RECOVERY: whether a collapsed call is diagnosed and retried, or
-#: simply fails. It is a SETUP variable and feeds adapter_fingerprint(), so a
-#: recovered run can never pool with one that was never offered help. What help
-#: was actually given is an OUTCOME and rides on the row instead -- two
-#: different things that would be one if both lived in the same place.
-RECOVERY = os.environ.get("LATTICE_RECOVERY", "0") not in ("0", "", "false", "False")
-
 #: Ceiling on interventions per processor call. The ladder bounds attempts for
 #: one diagnosis; this bounds the total, so a task that fails a new way each
 #: time cannot spend unboundedly.
+#:
+#: Recovery itself is NOT a switch here. It is a PROCESSOR STRATEGY, which makes
+#: it arm-dependent, not model-dependent -- an arm decides whether to use it in
+#: the same way `dloop` decides to loop and `staged` decides to stage. So it is
+#: a `recover=` argument to run_processor, and the comparison is `monolith`
+#: against `monolith_recovery`: two arms, two cells, no new key machinery,
+#: because `arm` is already part of cell identity.
+#:
+#: An earlier draft made it an env switch feeding adapter_fingerprint(). That
+#: put a workflow decision in the model-facing layer, which is the exact axis
+#: confusion the adapter hash was built to remove.
 MAX_RECOVERIES = 2
 
 
@@ -246,7 +265,8 @@ def _diagnose_attempt(gen, parsed, err: str = ""):
         wanted_conclude=True)
 
 
-def _tools_with_recovery(prompt: str, *, model: str, objective: str):
+def _tools_with_recovery(prompt: str, *, model: str, objective: str,
+                         recover: bool = False):
     """The tool loop, with a collapsed attempt diagnosed and retried.
 
     Replaces a fixed single retry that re-sent one hardcoded sentence whatever
@@ -273,7 +293,7 @@ def _tools_with_recovery(prompt: str, *, model: str, objective: str):
             gen, parsed, out = _run_tools(cur, model=model, options=options)
         except Truncated as t:
             gen, parsed, out, err = t.gen, None, "", str(t)
-        if parsed is not None or not RECOVERY or attempt >= MAX_RECOVERIES:
+        if parsed is not None or not recover or attempt >= MAX_RECOVERIES:
             return gen, parsed, out, journal
 
         thinking = ((gen.raw.get("message") or {}).get("thinking", "")
@@ -421,6 +441,7 @@ def run_processor(*, role: str, objective: str, context: ContextBundle,
                   intent_ref: str | None = None,
                   model: str = DEFAULT_MODEL,
                   prompt: str | None = None,
+                  recover: bool = False,
                   config_ref: str = "m4-baseline") -> ProcessorResult:
     ws = Path(workspace_root).resolve()
     actor = capability_set_for(role)
@@ -437,7 +458,7 @@ def run_processor(*, role: str, objective: str, context: ContextBundle,
                             protocol=PROTOCOL_TOOLS if use_tools else None)
     if use_tools:
         gen, parsed, out, journal = _tools_with_recovery(
-            prompt, model=model, objective=objective)
+            prompt, model=model, objective=objective, recover=recover)
     else:
         # The marker path keeps its single fixed retry. Recovery is not wired
         # here on purpose: the marker protocol is the one every historic row

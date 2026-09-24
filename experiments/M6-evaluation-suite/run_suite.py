@@ -114,7 +114,50 @@ def arm_monolith(objective, ws):
     return "done"
 
 
-ARMS = {"baseline": arm_baseline, "monolith": arm_monolith}
+def arm_monolith_recovery(objective, ws):
+    """monolith, plus recovery when the processor collapses.
+
+    A PROCESSOR STRATEGY, so it is an arm rather than a flag -- the same kind of
+    thing as `dloop` looping or `staged` staging. Pairing it with `monolith`
+    makes the question head-to-head: same context, same role, same one-shot
+    shape, differing only in whether a collapsed call is diagnosed and resumed.
+
+    Recovery is worth having only if it beats doing nothing on the same work, so
+    this exists to be compared against `monolith` and may well lose. The first
+    standalone test pointed that way: resuming produced usable output 2/10
+    against a plain restart's 6/10, on a probe too flawed to settle it.
+
+    Interventions ride on the result and are reported beside the score, never
+    folded into it -- "passed, with two interventions" is a different claim from
+    "passed", and a strategy that hides the difference is not raising a ceiling.
+    """
+    rec = RunRecorder(RUNS, intent_text=objective,
+                      meta={"arm": "monolith_recovery", "suite": "m6"})
+    root = rec.invocation(role="m6-monolith-recovery",
+                          model_identity={"name": "harness"},
+                          intent_ref="m6", config_ref="m6")
+    b = assemble(objective, ws, token_budget=8000)
+    res = run_processor(role="implementer", objective=objective, context=b,
+                        workspace_root=ws, recorder=rec, gate=Gate(),
+                        parent_invocation_id=root, intent_ref="m6",
+                        interaction_mode="oneshot", recover=True)
+    rec.close("completed")
+    _RECOVERY_LAST.clear()
+    _RECOVERY_LAST.update(res.recovery or {})
+    return "done"
+
+
+#: Arms that activate the adapter's recovery hook. Listed here rather than
+#: inferred from the name, so adding one is a deliberate act.
+RECOVERY_ARMS = {"monolith_recovery"}
+
+#: The last processor's recovery journal, read by run_task onto the row. A
+#: module global because the arm signature returns only a terminal string, and
+#: widening it would touch every arm for one arm's benefit.
+_RECOVERY_LAST: dict = {}
+
+ARMS = {"baseline": arm_baseline, "monolith": arm_monolith,
+        "monolith_recovery": arm_monolith_recovery}
 try:
     from m6_arms import ARMS_EXTRA
     ARMS.update(ARMS_EXTRA)          # dloop, staged
@@ -130,7 +173,7 @@ for _mod in ("m7_workflow", "m7b_workflow", "m7c_workflow", "m7e_workflow", "m7f
 
 # --------------------------------------------------------------- driver
 
-def _eval_params() -> dict:
+def _eval_params(arm_name: str = "") -> dict:
     """Generation settings that were EXPLICITLY SET, and only those.
 
     num_ctx is deliberately absent. It is a ceiling, not a setting: it moved
@@ -168,6 +211,15 @@ def _eval_params() -> dict:
     # two are independent. Every arm sends the same adapter; none of them owns
     # it. See processor.adapter_fingerprint.
     p["adapter"] = _proc.adapter_fingerprint()
+    # The recovery hook is a CAPABILITY OF THE ADAPTER that most arms never
+    # activate. Its identity has to be recorded -- a change to a steering
+    # sentence changes what the model sees -- but only where it is used, or
+    # every marker-protocol row would move when a rung is reworded.
+    #
+    # So it appears in params ONLY for arms that switch it on. Absent means the
+    # arm never had it, which is a fact about the arm, not a missing value.
+    if arm_name in RECOVERY_ARMS:
+        p["recovery"] = _proc.recovery_fingerprint()
     return p
 
 
@@ -185,7 +237,7 @@ def _cell_for(task_id: str, arm_name: str):
                      model=_oc.DEFAULT_MODEL,
                      judge_format=os.environ.get("LATTICE_JUDGE_FORMAT",
                                                  "decision_first"),
-                     params=_eval_params(), defaults=_eval_meta())
+                     params=_eval_params(arm_name), defaults=_eval_meta())
 
 
 def _setup_of(task_id: str, arm_name: str):
@@ -312,6 +364,8 @@ def run_task(task, arm_name, rep, cmd, protected):
         "tool_recovered": used["tool_recovered"],
         "tool_malformed": used["tool_malformed"],
         "tool_repaired": used["tool_repaired"],
+        # Beside the score, never folded into it.
+        "recovery": dict(_RECOVERY_LAST),
         "prompt_s": round(used.get("prompt_s", 0.0), 2),
         "runner": RUNNER,
         "t_start": round(t_start, 3),
