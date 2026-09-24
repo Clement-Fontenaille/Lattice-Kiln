@@ -744,3 +744,66 @@ composite.
   constraint it describes — archive in, artifacts out, no network in between —
   is a property of the host being separate and offline, not of how it was
   obtained, and this sheet assumes only the latter.
+
+---
+
+## Appendix — mechanisms observed rather than designed (2026-09-23/24)
+
+Everything above was written by reasoning about what a role must do. This
+appendix is the opposite: a day spent making the tool protocol work on three
+models produced a set of capabilities we watched models fail at, each already
+carrying a **detector** and a **fixture**. That is the expensive part of an E4
+entry, and it was paid for by debugging rather than by design.
+
+The shape of that day is worth naming, because it recurs: lay out the
+tooling and prompt format, follow the output down to token level, work out the
+failure mode, find the cause, attempt a fix, and only then decide whether the
+result is terminal. Each stage of that loop asked a capability question, and the
+questions are what belongs here.
+
+**Which layer an entry goes to** follows the existing split. A capability that
+is *general to fulfilling a processor role* is a mechanism and attaches to a
+role here. One that is *a more atomic aspect*, expected to transfer across
+roles and surfaces, is a skill and belongs in `E5` with a `draws on` link
+pointing back.
+
+### Atomic — candidates for E5
+
+| candidate | observed as | detector | fixture |
+|---|---|---|---|
+| **Termination** — produce a bounded output and stop | 45% of retry calls ran to the cap emitting one span verbatim; qwen echoed its prompt from token zero | compression ratio < 0.12, repeated-span onset | `evalkit_store/probe_prompts/runaway_thinking.txt` |
+| **Escaping inside a structured envelope** | qwen escapes newlines and not quotes, so any Python docstring breaks its own tool call | JSON parse, then repair-and-parse | any task whose answer contains a docstring |
+| **Unfamiliar delimiter convention** | `<<<FILE>>>` carries no trained state change; the 4B degenerated under it and not under fences | protocol compliance + degeneracy | `50-findings/15` |
+| **Low-salience context use** | the model looped deriving a semantic its prompt already stated outright | did the answer use the stated detail | `impl_call2.txt` — hint present, unused |
+| **Self-monitoring** — notice you are repeating | never observed to happen unaided; the model looped 126 times | does the output name its own repetition | same |
+
+### Role-general — candidates for E4
+
+**R1 Implementer, new mechanism: acting on a failing check.** The retry call is
+a different mechanism from the first attempt and fails at a different rate —
+13 of 15 collapses were on the second or third implementer call, 1 on the first.
+It is handed `got ('ok', 1) want ('ok', 2)` and must infer the requirement.
+Varied: whether the semantics are stated, implied, or only numeric. Read:
+convergence, and whether the change matches the requirement rather than the
+number. Null: if retry behaves like first attempt, the distinction is not real
+and R1.1 already covers it.
+
+**A role that is not in R1–R10: the recovery processor.** It reads another
+processor's context, its output, and why it failed, then chooses a remedy or
+escalates. `recovery.py` implements the decision; `probe_recovery_live.py` is
+the first execution. Whether this is a new role or belongs under **R6.2 firing
+decision** is open — it is close to R6.1 ceiling self-location pointed at
+another processor rather than at itself, which may be the more useful framing.
+
+### What makes these worth more than designed entries
+
+Two things, and both were the standing difficulty with this layer.
+
+They cannot be vacuous. Every one has a case where a model demonstrably fails,
+so a flat result means the entry is wrong rather than that the models are equal.
+
+And they come with **task×model interaction already measured**. Susceptibility
+is not a property of the item: `hf_retry_backoff` collapses 0/11 for qwen and
+33/40 for the 4B, while `hf_rename` and `hf_extract_fn` never collapse for
+either. An E4 entry built on these must vary the model, not just the item, or it
+will read an interaction as a difficulty. See `50-findings/16`.
