@@ -159,6 +159,21 @@ def main(argv: list[str]) -> None:
         list(ex.map(run, jobs))
     print(f"wall {(time.monotonic() - t0) / 60:.1f} min\n")
 
+    # PERSIST THE RAW VALUES. This probe printed only quantiles on its first
+    # run, so when a -22% median needed a significance test the values were
+    # gone and the answer cost another 74 minutes of GPU. A summary is a lossy
+    # encoding chosen before the question is known; the raw values answer
+    # questions nobody thought of yet, and cost nothing to keep.
+    out = (HERE.parent.parent / "evalkit_store" / "probe_runs" /
+           f"implementer_tail_t{TEMPERATURE}_p{TOP_P}_n{n}.json")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(
+        {"model": MODEL, "temperature": TEMPERATURE, "top_p": TOP_P,
+         "cap": CAP, "num_ctx": NUM_CTX, "n": n,
+         "prompt_chars": len(base_prompt), "prompt": str(PROMPT_FILE.name),
+         "nudges": NUDGES, "eval_counts": res}, indent=1), encoding="utf-8")
+    print(f"raw values -> {out.relative_to(HERE.parent.parent)}\n")
+
     # Five numbers and the truncation count, not the whole series: at n=20
     # across seven arms the series stops being readable. Truncations are counted
     # separately because no quantile can represent them -- a censored value is
