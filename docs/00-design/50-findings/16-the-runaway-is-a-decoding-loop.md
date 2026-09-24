@@ -201,3 +201,75 @@ The task×model table above pools both modes. It is still a true statement about
 where degeneration occurs, but "susceptibility" is now two questions: which
 tasks make a model echo its prompt, and which make it circle its own text.
 Those may have different causes and the table cannot separate them.
+
+---
+
+## Addendum 2, 2026-09-24 — SETTLED: it is the temperature, and the corpus was
+## gathered at the wrong one
+
+The sheet above names temperature as the leading suspect and says the cause is
+not established. It is now.
+
+Same verbatim prompt, same cap, no nudge, only the sampler moving. The prompt
+is the SECOND implementer call — the retry, after the judge has rejected the
+work — because that is where 13 of 15 pipeline truncations happen. Every value,
+sorted, n=20:
+
+```
+t0.2 (as shipped)      cap  9/20   1058 1115 1751 1807 2148 2782 2953 3605 4145
+                                   6151 6387 | 8192x9
+t0.6 p0.95 (NVIDIA)    cap  2/20   884 1008 1078 1124 1126 1306 1320 1616 1639
+                                   1666 1713 1894 1993 2181 3114 3575 4195 5326
+                                   | 8192x2
+t1.0 p1.0 (Modelfile)  cap  0/20   1469 1559 1578 1725 1731 1804 1839 1881 2024
+                                   2061 2174 2258 2303 2903 2980 3037 3329 3499
+                                   5053 6837
+t0.2 + rep_pen 1.3     cap  7/18   2795 5431 5639 5902 6206 6677 6742 6886 7356
+                                   7404 7935 | 8192x7
+```
+
+**45% → 10% → 0%.** At the temperature the model actually ships with, it does
+not loop at all in twenty attempts.
+
+The probe is calibrated: `t0.2` gives 9/20 against the pipeline's 8/26, the
+same regime. An earlier version of this probe used the FIRST implementer call
+and saw 0/20 — it could not reproduce the failure, and only the calibration arm
+revealed that. A probe without one would have reported "temperature makes no
+difference".
+
+### repeat_penalty is refuted twice
+
+7/18 on the failing prompt, and on a prompt where every other arm capped 0/20 it
+capped 6/18. Its convergent calls also start at 2795 where every other arm
+starts near 1000. **A repetition penalty does not stop a loop, it stops
+TERMINATION** — ending a generation re-uses tokens the penalty is suppressing.
+The obvious remedy for a repetition loop makes it worse, in both directions.
+
+### What this costs the existing corpus
+
+Every row was gathered at temperature 0.2 with reasoning ON, which is NVIDIA's
+reasoning-OFF pairing and five times below the model's own Modelfile default.
+On retry-shaped calls that is a **45% collapse rate**.
+
+So `50-findings/12` and `/14`, and every arm score in the store, are measured
+under a sampling regime that manufactures failures — unevenly, because the
+task×model table above shows the collapse lands on different items for
+different models. That is not a correction to apply afterwards. It is a reason
+to re-gather, and it should be settled before the H100 sweep rather than
+inherited by it.
+
+### What it does to the nudge programme
+
+The nudges were treating a symptom, and that is now measured rather than
+suspected. Their separate value stands and is unaffected: on convergent calls
+`answer_first` cut implementer decode ~13%, which is a real efficiency lever
+whatever causes the loops. But it was never going to fix this, and the marginal
+p=0.046 fought over earlier is a nudge slightly perturbing the odds of falling
+into a sampling artifact.
+
+### Still open
+
+Only the 4B, only one task's retry prompt, only Ollama. Whether 0.6 or 1.0 is
+the right setting is not answered here either: 1.0 never looped but ran longer
+(median ~2120 against 0.6's ~1690), so the cheaper and the safer setting are
+not the same one.
