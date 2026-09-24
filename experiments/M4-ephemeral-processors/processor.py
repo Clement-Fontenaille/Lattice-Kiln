@@ -20,7 +20,8 @@ from typing import Any
 from _bridge import CapabilitySet, Gate, submit_effect
 from context_assembly import ContextBundle
 import ollama_client as _oc
-from ollama_client import DEFAULT_MODEL, chat, generate
+import recovery as _recovery
+from ollama_client import DEFAULT_MODEL, Truncated, chat, generate
 from roles import PROTOCOL as PROTOCOL_MARKERS  # the marker text
 from roles import PROTOCOL_TOOLS, ROLE_GRANTS, TOOLS, prompt_for
 
@@ -67,6 +68,11 @@ class ProcessorResult:
     body_text: str = field(default="", repr=False)
     gen_tokens_per_s: float = 0.0
     raw_output: str = field(default="", repr=False)
+    #: What help this processor was given, if any. Reported BESIDE the score and
+    #: never folded into it: a result reads "passed, with two interventions"
+    #: rather than "passed". A processor that quietly retries until something
+    #: works is not raising a ceiling, it is hiding one.
+    recovery: dict[str, Any] = field(default_factory=dict, repr=False)
 
 
 def capability_set_for(role: str) -> CapabilitySet:
@@ -132,7 +138,22 @@ def adapter_fingerprint() -> str:
     before and after. Cf. 50-findings/15, which closes on precisely this defect
     one layer up.
     """
-    parts = [f"protocol={PROTOCOL}", f"nudge={_oc.NUDGE}"]
+    # WHETHER recovery is offered is a setup variable and belongs here: a run
+    # that may be rescued is not the same setup as one that may not, even on
+    # the reps where no rescue happened. WHAT help was given is an outcome and
+    # rides on the row instead. Conflating them would let a recovered row pool
+    # with a clean one -- verified by test: before this line, flipping
+    # LATTICE_RECOVERY left the fingerprint byte-identical.
+    parts = [f"protocol={PROTOCOL}", f"nudge={_oc.NUDGE}",
+             f"recovery={'on' if RECOVERY else 'off'}"]
+    if RECOVERY:
+        # The ladder's own text reaches the model, so a change to a steering
+        # sentence must move the key exactly as a protocol change does.
+        parts.append(f"max_recoveries={MAX_RECOVERIES}")
+        parts.append(json.dumps(
+            {mode: [r.describe() for r in rungs]
+             for mode, rungs in sorted(_recovery.LADDER.items())},
+            sort_keys=True))
     if PROTOCOL == "tools":
         parts.append(PROTOCOL_TOOLS)
         parts.append(json.dumps(TOOLS, sort_keys=True))
@@ -196,6 +217,91 @@ def _tool_result(call: dict[str, Any], files: dict[str, str]) -> str:
 _LIST_FIELDS = ("run", "context_requests")
 
 
+#: LATTICE_RECOVERY: whether a collapsed call is diagnosed and retried, or
+#: simply fails. It is a SETUP variable and feeds adapter_fingerprint(), so a
+#: recovered run can never pool with one that was never offered help. What help
+#: was actually given is an OUTCOME and rides on the row instead -- two
+#: different things that would be one if both lived in the same place.
+RECOVERY = os.environ.get("LATTICE_RECOVERY", "0") not in ("0", "", "false", "False")
+
+#: Ceiling on interventions per processor call. The ladder bounds attempts for
+#: one diagnosis; this bounds the total, so a task that fails a new way each
+#: time cannot spend unboundedly.
+MAX_RECOVERIES = 2
+
+
+def _diagnose_attempt(gen, parsed, err: str = ""):
+    """What went wrong with one tool-loop attempt, or None if nothing did."""
+    if parsed is not None:
+        return None
+    if gen is None:
+        return _recovery.Diagnosis("truncated_empty", err[:160] or "no generation")
+    return _recovery.diagnose(
+        text=gen.text,
+        thinking=(gen.raw.get("message") or {}).get("thinking", "")
+                 or gen.raw.get("thinking") or "",
+        tool_calls=gen.tool_calls,
+        done_reason=gen.raw.get("done_reason"),
+        error=err,
+        wanted_conclude=True)
+
+
+def _tools_with_recovery(prompt: str, *, model: str, objective: str):
+    """The tool loop, with a collapsed attempt diagnosed and retried.
+
+    Replaces a fixed single retry that re-sent one hardcoded sentence whatever
+    had gone wrong. A truncation, a malformed call and a missing conclude are
+    different failures wanting different responses, and the old path treated
+    them identically.
+
+    Truncation arrives as `Truncated`, a subclass carrying the generation, so
+    the collapse can be diagnosed instead of merely ending the run. Anything
+    else still propagates -- recovery is for failures it recognises, and
+    swallowing the rest would hide real breakage.
+    """
+    journal = _recovery.Journal()
+    prior_out = None
+    gen = parsed = None
+    out = ""
+    options: dict[str, Any] = {}
+    attempt = 0
+    cur = prompt
+
+    while True:
+        err = ""
+        try:
+            gen, parsed, out = _run_tools(cur, model=model, options=options)
+        except Truncated as t:
+            gen, parsed, out, err = t.gen, None, "", str(t)
+        if parsed is not None or not RECOVERY or attempt >= MAX_RECOVERIES:
+            return gen, parsed, out, journal
+
+        thinking = ((gen.raw.get("message") or {}).get("thinking", "")
+                    or gen.raw.get("thinking") or "") if gen else ""
+        diag = _diagnose_attempt(gen, parsed, err)
+        if diag is None:
+            return gen, parsed, out, journal
+        # A second attempt identical to the first is not an attempt.
+        whole = thinking + (gen.text if gen else "")
+        if prior_out is not None and whole == prior_out:
+            diag = _recovery.Diagnosis(diag.mode, diag.evidence, actionable=False)
+        prior_out = whole
+
+        remedy, why = _recovery.decide(
+            objective=objective, diag=diag, context_shown=prompt,
+            text=(gen.text if gen else ""), thinking=thinking, attempt=attempt)
+        journal.record(diag, remedy)
+        if remedy.escalate:
+            return gen, parsed, out, journal
+
+        cur = (_recovery.build_resume(original_prompt=prompt, thinking=thinking,
+                                      text=(gen.text if gen else ""),
+                                      steer=remedy.steer)
+               if remedy.resume and whole else f"{prompt}\n\n{remedy.steer}")
+        options = dict(remedy.options)
+        attempt += 1
+
+
 def _clean_conclude(args: dict[str, Any]) -> dict[str, Any]:
     """Normalise one conclude call's arguments.
 
@@ -236,7 +342,8 @@ runaway loop is a cost, not a result.
 """
 
 
-def _run_tools(prompt: str, *, model: str, num_predict: int = 1536
+def _run_tools(prompt: str, *, model: str, num_predict: int = 1536,
+               options: dict[str, Any] | None = None
                ) -> tuple[Any, dict[str, Any] | None, str]:
     """Drive the tool loop until `conclude` arrives. -> (gen, parsed, log).
 
@@ -260,13 +367,19 @@ def _run_tools(prompt: str, *, model: str, num_predict: int = 1536
     says "accepted", never "applied" -- the model is told its call was received
     and well-formed, never that it was permitted.
     """
+    # A remedy carries sampling overrides -- temperature, top_p and a LOWER
+    # num_predict -- and they have to reach chat() or a recovery attempt is
+    # indistinguishable from the attempt that already failed.
+    opts = dict(options or {})
+    num_predict = int(opts.pop("num_predict", num_predict))
     msgs: list[dict[str, Any]] = [{"role": "user", "content": prompt}]
     files: dict[str, str] = {}
     ctrl: dict[str, Any] | None = None
     log: list[str] = []
     gen = None
     for _ in range(MAX_TOOL_TURNS):
-        gen = chat(msgs, model=model, tools=TOOLS, num_predict=num_predict)
+        gen = chat(msgs, model=model, tools=TOOLS, num_predict=num_predict,
+                   **opts)
         log.append(gen.text)
         if not gen.tool_calls:
             break
@@ -323,12 +436,14 @@ def run_processor(*, role: str, objective: str, context: ContextBundle,
         prompt = prompt_for(role, context.render(), objective, extra=extra_input,
                             protocol=PROTOCOL_TOOLS if use_tools else None)
     if use_tools:
-        nudge = ("\n\nYou did not call conclude. Do the work, then call "
-                 "conclude exactly once.")
-        gen, parsed, out = _run_tools(prompt, model=model)
-        if parsed is None:
-            gen, parsed, out = _run_tools(prompt + nudge, model=model)
+        gen, parsed, out, journal = _tools_with_recovery(
+            prompt, model=model, objective=objective)
     else:
+        # The marker path keeps its single fixed retry. Recovery is not wired
+        # here on purpose: the marker protocol is the one every historic row
+        # used, and changing how it fails would move the meaning of the corpus
+        # it is kept around to reproduce.
+        journal = _recovery.Journal()
         nudge = ("\n\nYour previous reply had no valid <<<CONTROL>>> block. "
                  "Reply again following the OUTPUT FORMAT exactly: FILE blocks "
                  "then one <<<CONTROL>>> block with valid JSON.")
@@ -342,7 +457,9 @@ def run_processor(*, role: str, objective: str, context: ContextBundle,
 
     res = ProcessorResult(invocation_id=inv, role=role, terminal_state="blocked",
                           summary="", parse_ok=parsed is not None,
-                          gen_tokens_per_s=round(gen.tokens_per_s, 1), raw_output=out)
+                          gen_tokens_per_s=round(gen.tokens_per_s, 1) if gen else 0.0,
+                          raw_output=out,
+                          recovery=journal.summary() if journal.entries else {})
     if parsed is None:
         res.summary = ("model never called conclude" if use_tools
                    else "no valid control block in model output")
