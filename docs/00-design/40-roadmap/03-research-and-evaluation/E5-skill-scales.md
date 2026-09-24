@@ -22,10 +22,44 @@ when all four of these hold:
    says whether a family of this size is recoverable at all, and from how many
    items and subjects;
 4. **one demand ladder has been built end to end**, so the cost of a
-   ladder is a measured number rather than an estimate.
+   ladder is a measured number rather than an estimate;
+5. every candidate **names something it blocked** — a processor that did not
+   work until this capability was present — or is explicitly marked as not yet
+   observed to block anything.
 
-Until all four hold, entries here are provisional and may be demoted, merged or
+Until all five hold, entries here are provisional and may be demoted, merged or
 split.
+
+### Why criterion 5 was added, and what it indicts
+
+The first four criteria are all about instrument quality. None of them asks
+whether a candidate corresponds to anything that has ever stopped a processor
+from working, and this sheet was drafted by reasoning about what a processor
+*must* need rather than by building one and recording what it *did* need.
+
+**The omission that proves the point: none of S1–S8 is termination.** Every
+entry here presupposes the subject produces a bounded answer. That is exactly
+what failed — 45% of retry-shaped implementer calls ran to the cap emitting one
+sentence verbatim, and the same models echoed their prompt from the first token
+under a different protocol (`50-findings/16`). A taxonomy of what a processor
+needs, written from the armchair, left out the prerequisite to all of it.
+
+Nor is escaping content inside a structured envelope, nor tolerating an
+unfamiliar delimiter convention, nor noticing your own repetition. All three
+were watched failing within a day of making the tool protocol work, and all
+three have detectors and fixtures already (`E4` appendix).
+
+So the ordering this folder should follow is **build the processor, record what
+blocked it, and let that be the scale** — with designed candidates admitted but
+marked, and required to earn their place by eventually blocking something. A
+scale invented without that pass is hollow: it cannot distinguish a capability
+that matters from one that merely sounds necessary.
+
+The counter-argument, stated so it is not lost: derived-only scales cover only
+what we happened to hit, on this protocol, with these models. A capability that
+has not blocked us yet may still matter. That is an argument for keeping
+designed entries, marked as such — not for treating design and observation as
+equally grounded.
 
 ### The working rule, which is why this list is longer than is comfortable
 
