@@ -51,10 +51,13 @@ MODEL = "nemotron3-nano-4b:latest"
 CAP = 8192
 NUM_CTX = 16384
 
-PROMPT_FILE = Path(
-    r"C:\Users\FONTEN~1\AppData\Local\Temp\claude"
-    r"\c--Users-Fontenaille-Desktop-Lattice-Kiln"
-    r"\3aae8716-e522-45e4-9759-00cc7847dd6e\scratchpad\impl_prompt.txt")
+# The RETRY prompt (second implementer call), not the first. The first call is
+# where this probe originally pointed and it capped 0/20 against a pipeline rate
+# of 8/26 -- it could not reproduce the failure at all. 13 of 15 pipeline
+# truncations are on the second or third implementer call, after the judge has
+# rejected the work.
+PROMPT_FILE = (HERE.parent.parent / "evalkit_store" / "probe_prompts"
+               / "impl_call2.txt")
 
 NUDGES = {
     # already measured through the full pipeline -- these calibrate the probe
@@ -77,11 +80,20 @@ NUDGES = {
 _lock = threading.Lock()
 
 
+#: Sampling, settable so the nudge comparison can be run with the pathology
+#: REMOVED. At temperature 0.2 the loops dominate and a nudge comparison is
+#: partly a comparison of who fell into one; at 1.0 nothing capped in 20
+#: attempts, so what is left is decode cost alone.
+TEMPERATURE = 0.2
+TOP_P: float | None = None
+
+
 def one(prompt: str) -> int:
+    opts = {"temperature": TEMPERATURE, "num_ctx": NUM_CTX, "num_predict": CAP}
+    if TOP_P is not None:
+        opts["top_p"] = TOP_P
     body = {"model": MODEL, "messages": [{"role": "user", "content": prompt}],
-            "tools": TOOLS, "stream": False, "think": True,
-            "options": {"temperature": 0.2, "num_ctx": NUM_CTX,
-                        "num_predict": CAP}}
+            "tools": TOOLS, "stream": False, "think": True, "options": opts}
     req = urllib.request.Request(
         f"{BASE}/api/chat", data=json.dumps(body).encode("utf-8"),
         headers={"Content-Type": "application/json"})
@@ -107,15 +119,27 @@ def series(v: list[int]) -> str:
     return "  ".join(out)
 
 
+def q(v: list[int], p: float) -> int:
+    v = sorted(v)
+    i = (len(v) - 1) * p
+    lo, hi = int(i), min(int(i) + 1, len(v) - 1)
+    return round(v[lo] + (v[hi] - v[lo]) * (i - lo))
+
+
 def main(argv: list[str]) -> None:
+    global TEMPERATURE, TOP_P
     n, workers = 20, 3
     if "--n" in argv:
         n = int(argv[argv.index("--n") + 1])
     if "--workers" in argv:
         workers = int(argv[argv.index("--workers") + 1])
+    if "--temp" in argv:
+        TEMPERATURE = float(argv[argv.index("--temp") + 1])
+    if "--top-p" in argv:
+        TOP_P = float(argv[argv.index("--top-p") + 1])
     base_prompt = PROMPT_FILE.read_text(encoding="utf-8")
-    print(f"{MODEL} | implementer stage, verbatim prompt {len(base_prompt)} "
-          f"chars | n={n} | cap={CAP}")
+    print(f"{MODEL} | implementer RETRY prompt {len(base_prompt)} chars | "
+          f"temp={TEMPERATURE} top_p={TOP_P} | n={n} | cap={CAP}")
     print(f"{len(NUDGES)} nudges x {n} = {len(NUDGES) * n} calls, "
           f"{workers} concurrent\n")
 
@@ -135,16 +159,42 @@ def main(argv: list[str]) -> None:
         list(ex.map(run, jobs))
     print(f"wall {(time.monotonic() - t0) / 60:.1f} min\n")
 
+    # Five numbers and the truncation count, not the whole series: at n=20
+    # across seven arms the series stops being readable. Truncations are counted
+    # separately because no quantile can represent them -- a censored value is
+    # not a large value, it is an absent one.
+    print(f"  {'nudge':20}{'min':>7}{'25%':>7}{'50%':>7}{'75%':>7}{'max':>7}"
+          f"{'trunc':>8}")
+    base = None
     for name in NUDGES:
         v = [x for x in res[name] if x >= 0]
+        if not v:
+            print(f"  {name:20} all calls failed")
+            continue
         cap = sum(1 for x in v if x >= CAP - 8)
-        tag = "  <- calibration" if name in (
-            "control", "first_pass", "answer_first") else ""
-        print(f"{name:20} cap {cap:>2}/{len(v):<3}{tag}")
-        print(f"  {series(v)}")
-    print(f"\ncap = {CAP}, i.e. the call never terminated. The distribution is "
-          f"bimodal:\nconvergent calls finish well under ~3000, and anything "
-          f"that passes ~5000 runs to the cap.")
+        med = q(v, .5)
+        if base is None:
+            base = med
+        delta = f"{100 * (med - base) / base:+.0f}%" if base else ""
+        print(f"  {name:20}{min(v):>7}{q(v,.25):>7}{med:>7}{q(v,.75):>7}"
+              f"{max(v):>7}{cap:>5}/{len(v)}  {delta}")
+    print(f"\n  trunc = hit the {CAP}-token cap and never terminated. The %% "
+          f"column is the median\n  against the control's. Convergent-only "
+          f"figures follow.\n")
+    print(f"  {'nudge':20}{'min':>7}{'25%':>7}{'50%':>7}{'75%':>7}{'max':>7}"
+          f"{'n':>8}")
+    base = None
+    for name in NUDGES:
+        v = [x for x in res[name] if 0 <= x < CAP - 8]
+        if not v:
+            print(f"  {name:20} no convergent calls")
+            continue
+        med = q(v, .5)
+        if base is None:
+            base = med
+        delta = f"{100 * (med - base) / base:+.0f}%" if base else ""
+        print(f"  {name:20}{min(v):>7}{q(v,.25):>7}{med:>7}{q(v,.75):>7}"
+              f"{max(v):>7}{len(v):>8}  {delta}")
 
 
 if __name__ == "__main__":

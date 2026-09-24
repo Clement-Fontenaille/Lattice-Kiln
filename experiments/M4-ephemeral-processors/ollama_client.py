@@ -95,7 +95,7 @@ def _nudged(prompt: str) -> str:
     return f"{prompt}\n\n{NUDGE}" if NUDGE else prompt
 
 
-def _transcript_failure(prompt: str, payload: dict, num_predict: int) -> None:
+def _transcript_failure(prompt: str, payload: dict, num_predict: int) -> "Generation":
     """Record a call that is about to raise.
 
     Truncation is the failure this project keeps mistaking for a capability
@@ -107,18 +107,19 @@ def _transcript_failure(prompt: str, payload: dict, num_predict: int) -> None:
     Built as a Generation so the record has the same shape as every other,
     with `done_reason` and the thinking length carrying the diagnosis.
     """
-    msg = payload.get("message") or {}
+    g = Generation(
+        text="",
+        model=payload.get("model", ""),
+        prompt_eval_count=payload.get("prompt_eval_count", 0),
+        eval_count=payload.get("eval_count", 0),
+        total_duration_s=payload.get("total_duration", 0) / 1e9,
+        load_duration_s=payload.get("load_duration", 0) / 1e9,
+        raw=payload)
     try:
-        _transcript(prompt, Generation(
-            text="",
-            model=payload.get("model", ""),
-            prompt_eval_count=payload.get("prompt_eval_count", 0),
-            eval_count=payload.get("eval_count", 0),
-            total_duration_s=payload.get("total_duration", 0) / 1e9,
-            load_duration_s=payload.get("load_duration", 0) / 1e9,
-            raw=payload))
+        _transcript(prompt, g)
     except Exception:  # noqa: BLE001
         pass  # a failed record must never mask the error it was recording
+    return g
 
 # LATTICE_TEMPERATURE / LATTICE_TOP_P: override what the arms hardcode.
 #
@@ -145,6 +146,36 @@ TOP_P = None if _TOPP_ENV is None else float(_TOPP_ENV)
 
 class OllamaError(RuntimeError):
     pass
+
+
+class Truncated(OllamaError):
+    """A generation that hit the cap without producing an answer.
+
+    A SUBCLASS on purpose, and the reason matters. This condition used to be
+    returned silently: thirteen arms recorded `parsed: False, error: None` for
+    it and it was read as a model that judges badly -- 90 of judge_bypass's 102
+    rows were this, scored as results. Raising was the fix, and "never silent
+    again" is not up for renegotiation.
+
+    But raising a bare OllamaError also makes the condition UNRECOVERABLE. It
+    crosses the module boundary, `_run_tools` does not catch it, and it lands in
+    run_task as `run_ok: false` -- so the processor never gets to diagnose the
+    one failure recovery exists for, and the 25,141 characters of thinking that
+    say WHY exist only in the transcript on disk, not in anything the caller
+    holds.
+
+    Subclassing gives both. Every existing `except OllamaError` still catches
+    it, unchanged, so nothing can silently succeed. And a caller that wants to
+    recover catches `Truncated` and gets the whole generation to diagnose from.
+
+    `gen` carries the full payload: the thinking text, done_reason, the token
+    counts. That is what recovery.diagnose() reads.
+    """
+
+    def __init__(self, message: str, gen: "Generation", num_predict: int):
+        super().__init__(message)
+        self.gen = gen
+        self.num_predict = num_predict
 
 
 @dataclass
@@ -421,12 +452,13 @@ def generate(prompt: str, *, model: str = DEFAULT_MODEL, base_url: str = DEFAULT
         # here, so the one call that failed was the one call never recorded --
         # the most diagnostic event in a run, discarded on the way past. A
         # truncation is a result about the model, not an absence of one.
-        _transcript_failure(prompt, payload, num_predict)
-        raise OllamaError(
+        _g = _transcript_failure(prompt, payload, num_predict)
+        raise Truncated(
             f"empty response, truncated at num_predict={num_predict} "
             f"(done_reason=length, {len(payload.get('thinking') or '')} chars of "
             f"thinking, eval_count={payload.get('eval_count')}). The model did not "
-            f"reach an answer. Raise num_predict, or set LATTICE_THINK=0.")
+            f"reach an answer. Raise num_predict, or set LATTICE_THINK=0.",
+            _g, num_predict)
     return _meter(Generation(
         text=payload["response"],
         model=payload.get("model", model),
@@ -729,14 +761,16 @@ def chat(messages: list[dict[str, Any]], *, model: str = DEFAULT_MODEL,
     # empty content field is ALSO the normal shape of a pure tool-call reply --
     # so silence only counts as truncation when no call came back either.
     if not text and not calls and payload.get("done_reason") == "length":
-        _transcript_failure(messages[-1].get("content", "") if messages else "",
-                            payload, num_predict)
-        raise OllamaError(
+        _g = _transcript_failure(
+            messages[-1].get("content", "") if messages else "",
+            payload, num_predict)
+        raise Truncated(
             f"empty response and no tool calls, truncated at "
             f"num_predict={num_predict} (done_reason=length, "
             f"{len(msg.get('thinking') or '')} chars of thinking, "
             f"eval_count={payload.get('eval_count')}). Raise num_predict, "
-            f"or set LATTICE_THINK=0.")
+            f"or set LATTICE_THINK=0.",
+            _g, num_predict)
     return _meter(Generation(
         text=text,
         model=payload.get("model", model),
