@@ -144,7 +144,13 @@ def adapter_fingerprint() -> str:
     # every marker-protocol row move when a steering sentence changed, which is
     # over-strict, and would re-conflate the two axes this hash exists to keep
     # apart.
-    parts = [f"protocol={PROTOCOL}", f"nudge={_oc.NUDGE}"]
+    # `retry` names the GENERAL policy, which changed on 2026-09-24: a
+    # collapsed generation now gets one more draw, where before it raised
+    # and got none while a merely-unparseable reply got a retry. That is a
+    # behaviour change for every arm and every protocol, so rows from
+    # either side of it must not pool.
+    parts = [f"protocol={PROTOCOL}", f"nudge={_oc.NUDGE}",
+             "retry=parse+truncation"]
     if PROTOCOL == "tools":
         parts.append(PROTOCOL_TOOLS)
         parts.append(json.dumps(TOOLS, sort_keys=True))
@@ -162,17 +168,24 @@ def adapter_fingerprint() -> str:
 
 
 def recovery_fingerprint() -> str:
-    """Identity of the adapter's recovery hook, for arms that activate it.
+    """Identity of THIS PROCESSOR'S recovery implementation.
 
-    Separate from adapter_fingerprint() because this is a capability MOST ARMS
-    DO NOT USE. Folding it into the adapter would move every marker-protocol
-    row when a steering sentence was reworded; leaving it out entirely would let
-    a reworded ladder change what recovery arms send with no key moving at all.
-    Both were tried, in that order, and both were wrong.
+    Not the adapter's. The adapter's contribution to recovery is one thing and
+    it has no content: `Truncated` is catchable and carries its generation.
+    Catch it and the failure is recoverable; do not and it propagates. That is
+    the whole hook -- a place to intervene, not a policy.
 
-    Hashes the text and settings the model would actually meet under recovery --
-    the steering sentences, the sampling overrides, the attempt ceiling -- not
-    the module that produces them.
+    Everything with content is the PROCESSOR's: which failure modes it knows,
+    what it says to steer out of them, what it resamples at, how many attempts
+    it allows. A different processor could catch the same exception and do
+    something else entirely, and that difference is what this hashes.
+
+    Two wrong turns preceded this, in order. The switch went into
+    adapter_fingerprint, which would have moved every marker-protocol row when
+    a steering sentence was reworded. Then it came out entirely, which would
+    have let a reworded ladder change what recovery arms send with nothing
+    moving. It is neither: processor-owned, and recorded on the arms that use
+    it.
     """
     payload = {
         "max_recoveries": MAX_RECOVERIES,
@@ -232,6 +245,12 @@ def _tool_result(call: dict[str, Any], files: dict[str, str]) -> str:
 _LIST_FIELDS = ("run", "context_requests")
 
 
+#: The default response to a collapsed generation, for every arm: one more
+#: draw, same prompt, same sampling. It is the null intervention and the floor
+#: any recovery policy has to beat -- if simply asking again works, a diagnosis
+#: and a steering sentence are buying nothing.
+NAIVE_RETRY = _recovery.Remedy("naive retry", resume=False)
+
 #: Ceiling on interventions per processor call. The ladder bounds attempts for
 #: one diagnosis; this bounds the total, so a task that fails a new way each
 #: time cannot spend unboundedly.
@@ -247,6 +266,19 @@ _LIST_FIELDS = ("run", "context_requests")
 #: put a workflow decision in the model-facing layer, which is the exact axis
 #: confusion the adapter hash was built to remove.
 MAX_RECOVERIES = 2
+
+
+def _failed(journal):
+    """Mark the last intervention as not having worked.
+
+    Explicit False rather than a left-over None, so a reader counting rescues
+    never has to decide what an absent value meant. `worked` is the whole point
+    of the journal: it is what lets one sweep answer "did the retry help"
+    instead of needing a with/without pair.
+    """
+    if journal.entries and journal.entries[-1].get("worked") is None:
+        journal.entries[-1]["worked"] = False
+    return journal
 
 
 def _diagnose_attempt(gen, parsed, err: str = ""):
@@ -293,8 +325,42 @@ def _tools_with_recovery(prompt: str, *, model: str, objective: str,
             gen, parsed, out = _run_tools(cur, model=model, options=options)
         except Truncated as t:
             gen, parsed, out, err = t.gen, None, "", str(t)
-        if parsed is not None or not recover or attempt >= MAX_RECOVERIES:
+        if parsed is not None:
+            # Whether the last intervention actually rescued the call. Without
+            # this a journal says only that help was given, and the with/without
+            # comparison would need a second sweep to recover what this one
+            # already knows.
+            if journal.entries:
+                journal.entries[-1]["worked"] = True
             return gen, parsed, out, journal
+
+        # THE NAIVE RETRY IS GENERAL, and its absence was a fairness bug.
+        #
+        # A reply that fails to parse has always got a second attempt. A
+        # generation that COLLAPSED got none -- it raised, propagated past the
+        # retry, and landed as run_ok: false. Same processor, same run, two
+        # failures treated differently for no reason other than which code path
+        # they travelled. A model whose answer is unparseable is given another
+        # go; a model whose decode degenerated is not.
+        #
+        # So every arm gets one retry on a collapse, with the SAME prompt and
+        # the SAME sampling: the null intervention, another draw. That is also
+        # exactly the question "does a second attempt help", and because the
+        # journal records where it fired and whether it worked, one sweep
+        # answers it -- no with/without pair to run.
+        #
+        # An arm carrying a recovery processor substitutes its own policy for
+        # this default; it does not run in addition to it.
+        if not recover:
+            if attempt == 0 and err:
+                journal.record(
+                    _recovery.Diagnosis("truncated_empty", err[:160]),
+                    NAIVE_RETRY)
+                attempt = 1
+                continue          # same prompt, same options: another draw
+            return gen, parsed, out, _failed(journal)
+        if attempt >= MAX_RECOVERIES:
+            return gen, parsed, out, _failed(journal)
 
         thinking = ((gen.raw.get("message") or {}).get("thinking", "")
                     or gen.raw.get("thinking") or "") if gen else ""
@@ -468,9 +534,20 @@ def run_processor(*, role: str, objective: str, context: ContextBundle,
         nudge = ("\n\nYour previous reply had no valid <<<CONTROL>>> block. "
                  "Reply again following the OUTPUT FORMAT exactly: FILE blocks "
                  "then one <<<CONTROL>>> block with valid JSON.")
-        gen = generate(prompt, model=model)
-        out = gen.text
-        parsed = _extract(out)
+        # Same fairness rule as the tool path: a collapse gets one more draw,
+        # an unparseable reply gets the nudge retry it always had.
+        try:
+            gen = generate(prompt, model=model)
+            out = gen.text
+            parsed = _extract(out)
+        except Truncated as t:
+            journal.record(_recovery.Diagnosis("truncated_empty", str(t)[:160]),
+                           NAIVE_RETRY)
+            gen = generate(prompt, model=model)      # same prompt, another draw
+            out = gen.text
+            parsed = _extract(out)
+            if parsed is not None:
+                journal.entries[-1]["worked"] = True
         if parsed is None:
             gen = generate(prompt + nudge, model=model)
             out = gen.text
