@@ -9,6 +9,8 @@ File bodies are raw text (never JSON), so triple-quotes and newlines are fine.
 """
 from __future__ import annotations
 
+import os
+
 PROTOCOL = """\
 OUTPUT FORMAT - follow it exactly.
 
@@ -67,8 +69,9 @@ TOOLS = [
         }, "required": ["path", "content"]}}},
     {"type": "function", "function": {
         "name": "conclude",
-        "description": ("End your turn. Call this exactly once, after any "
-                        "write_file calls. Required on every turn."),
+        "description": ("Record the outcome and end the exchange. Call this "
+                        "once the task is finished, or once you have "
+                        "decided not to do it."),
         "parameters": {"type": "object", "properties": {
             "terminal_state": {"type": "string",
                                "enum": ["answered", "blocked", "declined"]},
@@ -83,7 +86,14 @@ TOOLS = [
         }, "required": ["terminal_state", "summary"]}}},
 ]
 
-PROTOCOL_TOOLS = """\
+# LATTICE_PROTOCOL_VARIANT selects the OUTPUT FORMAT text: v1 is the wording
+# every tool-protocol row before 2026-09-25 used, v2 the rework. Both are kept
+# because a probe on a synthetic task could not reproduce the failure the rework
+# was aimed at -- 4 prose conclusions in 100 runs against the suite's 29% -- so
+# the comparison has to happen at suite scale. The text feeds
+# adapter_fingerprint(), so the two variants key to different cells and cannot
+# pool.
+PROTOCOL_TOOLS_V1 = """\
 OUTPUT FORMAT - use the provided tools, not prose.
 
 For every file you create or change, call write_file with the path and the
@@ -99,6 +109,30 @@ Rules:
   explain in "summary" and call write_file zero times.
 - You cannot execute anything yourself; the runtime runs permitted commands.
 """
+
+PROTOCOL_TOOLS_V2 = """\
+OUTPUT FORMAT
+
+Do the work by calling the tools. Do not describe changes in prose.
+
+write_file takes the path and the WHOLE new file content, never a diff.
+
+Calling conclude ends the exchange. Call it when the task is finished or when
+you have decided not to do it -- not before. You may take as many turns as you
+need first.
+
+Rules:
+- "verdict" is only for the reviewer role; other roles may omit it.
+- terminal_state = "declined" if the right answer is NOT to do the task (false
+  premise, wrong problem, already satisfied, needs investigation first) -
+  explain in "summary" and call write_file zero times.
+- You cannot execute anything yourself; the runtime runs permitted commands.
+"""
+
+PROTOCOL_VARIANT = os.environ.get("LATTICE_PROTOCOL_VARIANT", "v2")
+PROTOCOL_TOOLS = (PROTOCOL_TOOLS_V1 if PROTOCOL_VARIANT == "v1"
+                  else PROTOCOL_TOOLS_V2)
+
 
 IMPLEMENTER = """\
 You are an implementer. You are given an objective and some repository context.
