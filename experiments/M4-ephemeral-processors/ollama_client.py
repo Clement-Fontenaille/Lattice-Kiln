@@ -608,58 +608,127 @@ def _calls_from_text(text: str) -> list[dict[str, Any]]:
 
 
 def _calls_from_xml(text: str, names: list[str]) -> list[dict[str, Any]]:
-    """Tool calls emitted as XML rather than JSON, which Ollama does not parse.
+    """Recover a tool call written in Ollama's format but missing its wrapper.
 
-    Nemotron Nano 9B v2 runs under Ollama's `nemotron-3-nano` RENDERER/PARSER,
-    assigned by architecture (`nemotron_h`). That pair belongs to a different
-    generation, and under it the 9B emits `write_file` as a real tool call and
-    `conclude` as tags the parser does not recognise -- so half the contract
-    arrives structured and half arrives as prose. Rebuilding the model from a
-    GGUF carrying its own Jinja chat template changed nothing, measured
-    2026-09-23: Ollama assigns the pair from the architecture regardless of the
-    source template, so this cannot be fixed in a Modelfile.
+    THE FORMAT IS NOT GUESSED. Read out of ollama/model/renderers/nemotron3nano.go
+    and ollama/model/parsers/qwen3coder.go -- the nemotron3nano parser delegates
+    to Qwen3CoderParser, so an NVIDIA model is told to emit Qwen3-Coder syntax
+    and parsed by Qwen3-Coder's parser:
 
-    Two shapes, both captured verbatim before this was written:
-
-        <conclude>
-        <terminal_state>answered</terminal_state>
-        <summary>...</summary>
-        </conclude>
-
-        conclude
-        <parameter=terminal_state>
-        answered
+        <tool_call>
+        <function=NAME>
+        <parameter=KEY>
+        value
         </parameter>
+        </function>
+        </tool_call>
 
-    `names` is required rather than inferred, so an arbitrary XML-looking span
-    in a file body cannot be mistaken for a call. Only tools we actually
-    offered are recognised.
+    `toolOpenTag = "<tool_call>"` is REQUIRED. Without it the parser is in
+    LookingForToolStart and the whole thing is content. Values have exactly one
+    leading and one trailing newline trimmed (strings.TrimPrefix / TrimSuffix),
+    which this mirrors -- trimming all whitespace would corrupt any parameter
+    whose value is deliberately indented.
 
-    NVIDIA describe their tool calling as XML-style deliberately, "to reduce
-    character escaping" -- so this is the model using its own dialect, not
-    malfunctioning. The mismatch is in which parser Ollama pairs with it.
+    WHAT THIS RECOVERS is the near miss actually observed: nemotron3-nano-4b
+    emits the correct inner <function=...> block and omits the <tool_call>
+    wrapper, on 11 of 34 monolith runs, always on the final `conclude` after
+    having made a natively-parsed write_file call in the same sequence. The
+    earlier version of this function matched `<NAME>` and `NAME` + newline + `<parameter=`,
+    shapes inferred from reading output rather than from the spec, and so missed
+    the one form the model actually produces.
     """
     out: list[dict[str, Any]] = []
-    for name in names:
-        n = re.escape(name)
-        # Shape 1: <name> ... </name>, arguments as <key>value</key>
-        for m in re.finditer(rf"<{n}>(.*?)</{n}>", text, re.S):
-            args = {k: v.strip() for k, v in
-                    re.findall(r"<([A-Za-z_][A-Za-z0-9_]*)>(.*?)</\1>",
-                               m.group(1), re.S)}
-            if args:
-                out.append({"name": name, "arguments": args})
-        # Shape 2: a bare name line, then <parameter=key>value</parameter>.
-        # A <parameter>key</parameter> with no `=` is an unfilled slot the
-        # model listed and left empty; it carries no value, so it is skipped.
-        pat = ("(?:^|[>" + SP + "]){n}[ " + TAB + "]*" + NL +
-               "((?:" + SP + "*<parameter[=>].*?</parameter>)+)")
-        for m in re.finditer(pat.replace("{n}", n), text, re.S):
-            args = {k: v.strip() for k, v in
-                    re.findall(r"<parameter=([A-Za-z_][A-Za-z0-9_]*)>(.*?)</parameter>",
-                               m.group(1), re.S)}
-            if args:
-                out.append({"name": name, "arguments": args})
+    allowed = {n for n in names if n}
+    # With or without the wrapper: the wrapper is what the parser requires and
+    # its absence is exactly the failure being recovered.
+    for m in re.finditer(r"<function=([A-Za-z_][A-Za-z0-9_]*)\s*>(.*?)"
+                         r"(?=</function>|<function=|\Z)", text, re.S):
+        name = m.group(1)
+        if allowed and name not in allowed:
+            continue
+        args: dict[str, Any] = {}
+        for pm in re.finditer(r"<parameter=([A-Za-z_][A-Za-z0-9_]*)\s*>"
+                              r"(.*?)(?=</parameter>|<parameter=|</function>|\Z)",
+                              m.group(2), re.S):
+            raw = pm.group(2)
+            if raw.startswith("\n"):
+                raw = raw[1:]
+            if raw.endswith("\n"):
+                raw = raw[:-1]
+            args[pm.group(1)] = raw
+        if args:
+            out.append({"name": name, "arguments": args})
+    return out
+
+
+def _calls_from_bare_args(text: str, tools: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Recover a call emitted as its ARGUMENTS OBJECT ALONE, with no envelope.
+
+    The commonest failure in the 2026-09-24 sweep: 9 of 34 monolith runs ended
+    by emitting
+
+        {"terminal_state": "answered", "summary": "...", "verdict": "approve",
+         "run": [], "context_requests": []}
+
+    every field name correct, every optional field filled, and no indication
+    that it is a call at all -- no <tool_call>, no <function=>, no "name".
+    Ollama's parser is in LookingForToolStart and treats it as content, so the
+    work already written by earlier native write_file calls is discarded.
+
+    IDENTIFIED BY SCHEMA, not by hardcoding a tool name. An object is read as a
+    call when it carries every REQUIRED parameter of exactly one offered tool
+    and no key outside that tool's properties. That makes it unambiguous by
+    construction: two tools with disjoint required sets cannot both match, and
+    an object that matches none is left alone. `conclude` qualifies because
+    `terminal_state` and `summary` belong to nothing else in the protocol.
+
+    Deliberately NOT a fallback for write_file: its required `content` is
+    free-form file text, so a file that happens to contain a JSON object could
+    match. Tools whose parameters are open-ended are skipped.
+    """
+    out: list[dict[str, Any]] = []
+    specs = []
+    for t in tools or []:
+        fn = (t or {}).get("function") or {}
+        params = fn.get("parameters") or {}
+        props = set((params.get("properties") or {}).keys())
+        req = set(params.get("required") or [])
+        # Only tools whose required set is fully enumerated and small enough to
+        # be distinctive. write_file's `content` is arbitrary text, so a file
+        # body could impersonate it; such tools are excluded.
+        if req and props and "content" not in req:
+            specs.append((fn.get("name", ""), props, req))
+    if not specs:
+        return out
+    for m in re.finditer(r"\{", text):
+        i, depth, esc, instr = m.start(), 0, False, False
+        for j in range(i, len(text)):
+            ch = text[j]
+            if instr:
+                if esc:
+                    esc = False
+                elif ch == chr(92):
+                    esc = True
+                elif ch == '"':
+                    instr = False
+                continue
+            if ch == '"':
+                instr = True
+            elif ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth == 0:
+                    obj = _loads_or_repair(text[i:j + 1])
+                    if isinstance(obj, dict) and "name" not in obj:
+                        keys = set(obj)
+                        hit = [n for n, props, req in specs
+                               if req <= keys <= props]
+                        if len(hit) == 1:
+                            out.append({"name": hit[0], "arguments": obj})
+                    break
+        if out:
+            break
     return out
 
 
@@ -751,7 +820,8 @@ def chat(messages: list[dict[str, Any]], *, model: str = DEFAULT_MODEL,
         names = [((t.get("function") or {}).get("name") or "")
                  for t in (tools or [])]
         extra = [c for c in (_calls_from_text(text)
-                             + _calls_from_xml(text, [n for n in names if n]))
+                             + _calls_from_xml(text, [n for n in names if n])
+                             + _calls_from_bare_args(text, tools or []))
                  if c["name"] not in seen]
         if extra:
             _METER["tool_recovered"] += len(extra)
