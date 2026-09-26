@@ -113,3 +113,46 @@ confounded with judging less — or it waits for a clean read.
 The first is better. A13's question is whether an authored brief helps the
 worker, and that does not need the judge to be the best one available; it needs
 the judge to be the *same* one as in its control.
+
+---
+
+## Addendum, same day — the contract change is keyed, and B9 was partly readable
+
+Prompted by the question "we did change the output contract on tests for all
+models recently, right?" — yes, twice: markers to tools, then v1 to v2. Two
+things follow, one confirming and one correcting.
+
+**Confirming: the ladder is a single population.** 726 store rows carry
+`protocol` and an adapter fingerprint; 6548 predate the params work and carry
+neither. But on the 4B every arm in the ladder holds exactly **34 rows at one
+adapter, `63b5b222daf4`** — baseline, monolith, monolith_recovery, dloop,
+staged, m7, test_synth and all four judges. The matrix re-ran every arm on the
+current contract. The B10 split above is not comparing across protocols.
+
+**Correcting: "no claim about any judge's accuracy is licensed" was too
+strong.** The gap is per-workflow, not systemic. `judge_caveat_workflow.py:690`
+and `:693` already record `model` and `results_subdir` on the stage record;
+`judge_fullctx_workflow.py` simply lacks those two lines, as do the `m7*` and
+`test_synth` workflows. So `judge_caveat` and `judge_bypass` each have 34
+cleanly attributable matrix records, and a single-model single-adapter read was
+available without A14:
+
+| arm | n | says met | check pass | vs CHECK | best constant | lift | vs WORKER |
+|---|---|---|---|---|---|---|---|
+| judge_caveat | 33 | 61% | 79% | 64% | 79% | **-15** | 70% |
+| judge_bypass | 29 | 66% | 76% | 62% | 76% | **-14** | 55% |
+
+**Both judges score below a constant predictor** on their own rows, and both say
+`met` less often than the check passes — they reject correct work. That is the
+failure mode `50-findings/14` names, with a clean number under it for the first
+time.
+
+n=33 on one model at n=1 per task settles nothing by itself. What it does is
+remove the excuse: the question was answerable, and the earlier conclusion that
+it was not came from reading the dirtiest available file instead of the store.
+
+**A14 narrows accordingly.** It is not "add cell ids to a broken pile". It is:
+bring `judge_fullctx`, `m7*` and `test_synth` up to what `judge_caveat` already
+does, and prefer `LATTICE_CELL` over `results_subdir` because it carries model,
+protocol and sampling in one value. The `judge_fullctx` question specifically
+stays blocked, because that arm records nothing to attribute its 286 records by.
