@@ -129,6 +129,72 @@ appears inconsequential.
 The real fix was reading Ollama's source, not rewriting the prompt. **v2 earns
 no claim.** Keeping it on clarity grounds is defensible; saying it helped is not.
 
+## B9 — Does `judge_fullctx` judge, or echo the worker?
+
+**Blocks A13**, which needs a judge chosen on evidence.
+
+`judge_fullctx` and `judge_caveat` both score 26/34 on the 4B, and that number
+is explicitly ruled out as the measurement by the arm's own docstring
+(`judge_fullctx_workflow.py:388-394`): agreement with the check is what every
+judge arm reports. The signature is **agreement with the worker's own
+self-report**. If handing the judge the worker's context makes it a second
+sample of the worker, it converges on the worker's verdict — and the diff-only
+judge does not.
+
+The self-report says `answered` 96% of the time, so a rubber stamp scores well
+while judging nothing. Score parity is consistent with both readings.
+
+**Needs no runs.** Worker self-report and judge verdict are both already on
+every row. Read it off the store.
+
+**Three outcomes, all informative**, per the docstring: tracks the worker, the
+`50-findings/11` ruling holds; tracks the check, the ruling is wrong and context
+volume was the limit; tracks neither, it is noise.
+
+## B10 — Re-read the ladder with gate probing as a column
+
+`dloop` 21/34 against `monolith` 14/34 sat in one ordering as though the arms
+differed in strategy. They also differ in **instrument**: `dloop`'s implementer
+is handed the failing subtest names every round (`m6_arms.py:102-106`), and
+`monolith`'s is not.
+
+That does not void the comparison, but it is not a strategy comparison, and
+nothing currently written says so. `staged` and the M7 family need checking the
+same way — the question is which arms reach the check at all, for each arm in
+the matrix, and the answer is in the source rather than the results.
+
+**Output:** a column on the arm table saying what each arm's worker could see of
+the gate. Then re-read the ladder.
+
+## B11 — Who should decide when to probe?
+
+`monolith_test` against `dloop` (needs A11): model-driven probing against
+harness-driven probing, same gate visibility, differing in who calls it and who
+pays the turns.
+
+**The interesting loss condition** is a model that never calls `run_tests`, or
+calls it once at the end as a formality. That is a finding about tool uptake and
+not about testing, and it should be read before the scores are.
+
+**Second question, free with the first:** `conclude` currently has no referent —
+the model decides it is finished by feel, which is the termination problem
+`50-findings/16` is about. With `run_tests`, "done" has one. Whether the
+degenerate-loop rate moves is visible in the same rows.
+
+## B12 — The stages that will never have a gate
+
+Test authoring, planning and prompt authoring have no mechanical check by
+nature, and will not acquire one: tests are not written against checkable tests.
+Most of what the judge arms exist for lives here.
+
+**The reflex to resist** is inventing a proxy gate for those stages. A proxy
+would be worse than reading them, because it would carry a number and the
+number would be believed.
+
+**Decide:** what the instrument is for an ungateable stage, and write it down
+before the arms that depend on it (A12, A13) are read. This is a question about
+method, and it is the reason this queue exists.
+
 ---
 
 ## Dependencies between the queues
@@ -138,7 +204,12 @@ no claim.** Keeping it on clarity grounds is defensible; saying it helped is not
 | B1 | A5 (partial tails), A6 (matrix reader), A7 (flip table) |
 | B2 | A7 |
 | B4 | A8 (counters in the report) |
+| B11 | A11 (`monolith_test`) |
+| B12 | nothing — answerable now, and A13 waits on it |
 | everything off this machine | A1, A2, A3 |
+
+B9 runs the other way: **A13 waits on B9**, because the judge it pairs with is
+chosen by that reading. B10 needs nothing and should be done before B1.
 
 A1–A3 are the hard blocker: the H100 has no Ollama, and `backends.py` is
 imported by nothing.

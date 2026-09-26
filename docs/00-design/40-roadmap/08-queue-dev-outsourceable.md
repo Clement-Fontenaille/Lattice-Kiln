@@ -145,6 +145,77 @@ untested. Append; do not edit the original claim.
 
 ---
 
+## A11 — `monolith_test`: the worker decides when to probe the gate
+
+**The variable is not "can the worker see tests".** `dloop` already answers
+that, and answers it maximally: `_dloop_core` scores the workspace every round
+and feeds the failing subtest **names** straight back into the prompt —
+`m6_arms.py:102-106`, `f"Current state still fails:\n{hint}"`. 184 rows were
+collected that way. The harness does the probing, every round, unasked.
+
+The open variable is **who decides when to probe**. `monolith_test` is
+`monolith` plus a `run_tests` tool the model calls at its own discretion. Paired
+against `dloop`, that is one variable: model-driven probing against
+harness-driven probing, with the model-driven side also paying turns for it.
+
+**Do:** add `run_tests` to a **per-arm tool set**, granted to this arm only.
+Report the gate — exit status and the subtest fraction. Withhold the structural
+dimensions, which `run_suite.py:314-316` already keeps separate from the gate
+and which `objective_pass` alone measures. Cap the number of invocations per
+task and record the count on the row beside the score, never folded into it.
+
+**Done when:** the arm runs a full suite; the row carries the invocation count;
+and — the part that is easy to get wrong — `processor.adapter_fingerprint()` for
+every **other** arm is byte-identical to its value before the change. Default
+`TOOLS` in `roles.py` is untouched. Check this by computing the fingerprint
+before and after and diffing, not by reading the diff.
+
+**Do not** put the arm in `run_suite.py` or `m6_arms.py`. `arm_source_path()`
+hashes the whole file, so a new arm in either one moves `arm_sha` for
+`baseline`/`monolith`/`monolith_recovery` or for `dloop`/`staged`, and silently
+detaches them from every row already collected. New file, new entry in
+`_M6_ARM_FILES`.
+
+**Do not** give `run_tests` the scoring command as-is. The worker would be
+iterating against the instrument that grades it, and `gate_pass` would stop
+measuring anything. `objective_pass` is what survives contamination here; that
+is why both readings are recorded side by side.
+
+## A12 — `author`: the audit yields or writes the worker's brief
+
+Stage 1 of the judge-anchored family already produces `expected` — 2 to 5
+observable conditions, written before any work exists — and `expected` reaches
+the judge in three arms and the implementer in **zero**. This arm turns that
+stage from a reporter into an author.
+
+**Do:** a new M7 workflow, `author_workflow.py`. Stage 1 produces one of three
+outcomes: yield for missing context, decline an unsound request, or write the
+worker's brief. Then the implementer runs against that brief. No judge.
+
+Note that this **grants the stage authority the current prompt explicitly
+denies it** — `judge_anchored_workflow.py:194-195` reads "You do NOT decide
+whether the task should be attempted." That sentence goes. It is a role change,
+not a config change, and the prompt is rewritten rather than patched.
+
+**Done when:** the arm registers, appears in `_M7_ARMS`, runs a full suite, and
+each run records which of the three outcomes stage 1 took.
+
+## A13 — `author_judge`: the same, with a judge
+
+A12 plus a judge, so the briefing effect is separable from the judging effect.
+
+**Which judge is not yet settled** and depends on B9. Do not start this item
+until B9 has been read; if it is picked up early, use `judge_caveat`, which
+keeps the judge on every task and so does not confound "briefing helps" with
+"judging less helps".
+
+**Done when:** as A12, plus the judge's verdict recorded per task.
+
+**The control for both** is the existing `judge_caveat`: same audit stage, same
+judge, differing only in whether the worker is briefed.
+
+---
+
 ## Explicitly not in this queue
 
 Choosing between temperature 0.6 and 1.0; deciding whether recovery earns its
