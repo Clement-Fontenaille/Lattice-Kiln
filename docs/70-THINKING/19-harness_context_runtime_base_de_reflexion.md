@@ -2739,12 +2739,18 @@ pourtant présentes à chaque appel, en première position, avant l'objectif. Le
 routage vers un rôle est donc déjà une décision de gestion de contexte. Le
 document liste dix sources (§0) ; celle-ci en est une onzième, non nommée.
 
-### Conséquence 2 --- le corpus existant est déjà une expérimentation de projection
+### Conséquence 2 --- le corpus existant porte déjà une dimension projection
 
-Les arms de M6/M7 sont étiquetés comme des variantes de *workflow*. Ils sont
-aussi, et peut-être surtout, des variantes de **projection** : la boucle est la
-même quatre-boîtes partout, ce qui change est ce que le modèle voit au tour
-suivant. Environ 4 000 lignes de résultats existent déjà sous cet angle.
+Les arms de M6/M7 couvrent **plusieurs dimensions à la fois**, et certaines sont
+explicitement des stratégies d'assemblage de contexte : `judge_fullctx`,
+`judge_anchored` et `judge_caveat` diffèrent par ce qui est montré au juge, pas
+par la forme de la boucle. Ce n'est pas un étiquetage erroné, c'est une
+conception multi-dimensionnelle assumée.
+
+Le point à retenir n'est donc pas "ces arms sont mal nommés" mais : **la
+dimension projection est déjà présente dans ~4 000 lignes de résultats, et
+l'analyse doit se garder de confondre les dimensions** quand elle les lit. Cette
+discipline relève de l'analyse, pas du design des arms.
 
 ### Formulation à conserver
 
