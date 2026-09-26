@@ -129,9 +129,19 @@ appears inconsequential.
 The real fix was reading Ollama's source, not rewriting the prompt. **v2 earns
 no claim.** Keeping it on clarity grounds is defensible; saying it helped is not.
 
-## B9 — Does `judge_fullctx` judge, or echo the worker?
+## B9 — Does `judge_fullctx` judge, or echo the worker? *(attempted 2026-09-27 — blocked)*
 
-**Blocks A13**, which needs a judge chosen on evidence.
+**Answered as: not answerable from what is on disk.** Written up in
+`50-findings/17`. `stage_influence_*.jsonl` pools every sweep ever run with no
+cell id and, for `judge_fullctx`, no model on any of its 286 records. Three
+join routes were tried; all three measure an artifact.
+
+**Now blocked on A14** (cell id on the stage record). Re-open then. The
+statement of the question below stands unchanged and is still the right one.
+
+**A13 no longer waits on this.** It proceeds with `judge_caveat`, because its
+question is whether an authored brief helps the worker, which needs the judge to
+be the *same* as in its control rather than the best available.
 
 `judge_fullctx` and `judge_caveat` both score 26/34 on the 4B, and that number
 is explicitly ruled out as the measurement by the arm's own docstring
@@ -151,7 +161,17 @@ every row. Read it off the store.
 `50-findings/11` ruling holds; tracks the check, the ruling is wrong and context
 volume was the limit; tracks neither, it is noise.
 
-## B10 — Re-read the ladder with gate probing as a column
+## B10 — Re-read the ladder with gate probing as a column *(done 2026-09-27)*
+
+**Answered in `50-findings/17`.** It is not only `dloop`: every arm from `dloop`
+upward embeds the same loop and feeds failing subtest **names** to the
+implementer. `baseline`, `monolith` and `monolith_recovery` are the only three
+that do not. The ladder splits at 18→21, no arm spans the boundary, and every
+comparison across it confounds design with access to the answer key.
+
+The original statement of the item follows.
+
+### original statement
 
 `dloop` 21/34 against `monolith` 14/34 sat in one ordering as though the arms
 differed in strategy. They also differ in **instrument**: `dloop`'s implementer

@@ -214,6 +214,27 @@ keeps the judge on every task and so does not confound "briefing helps" with
 **The control for both** is the existing `judge_caveat`: same audit stage, same
 judge, differing only in whether the worker is briefed.
 
+## A14 — Put the cell id on every stage record *(blocks B9)*
+
+`stage_influence_*.jsonl` is append-only across every sweep ever run and carries
+no cell id. `judge_caveat` holds 1446 records over 170 distinct `(task, rep)`
+keys — up to 13 per key — across three models, with 458 carrying no model at
+all. `judge_fullctx` carries a model on **zero** of its 286 records. Any join
+against `results/*.json`, which is one sweep, silently crosses models. See
+`50-findings/17`.
+
+**Do:** have every workflow write `LATTICE_CELL` and `LATTICE_REP` onto its
+stage record. `run_suite.run_task` already computes and exports both
+(`run_suite.py:255-258`); nothing needs deriving.
+
+**Done when:** a reader can group stage records by cell id and every group is
+single-model, single-protocol, single-sampling; and a join to the store on cell
+id returns the same n as the group size. Old records stay as they are — they are
+unrecoverable, and that is the finding.
+
+**Do not** backfill the existing pile by guessing. Records that predate the
+change are not attributable and must read as such.
+
 ---
 
 ## Explicitly not in this queue
