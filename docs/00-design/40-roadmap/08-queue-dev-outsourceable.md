@@ -214,7 +214,14 @@ keeps the judge on every task and so does not confound "briefing helps" with
 **The control for both** is the existing `judge_caveat`: same audit stage, same
 judge, differing only in whether the worker is briefed.
 
-## A14 — Put the cell id on every stage record *(blocks B9)*
+## A14 — Bring the untagged workflows up to `judge_caveat`
+
+**Narrowed by the addendum to `50-findings/17`.** This is not "add cell ids to a
+broken pile". `judge_caveat_workflow.py:690,693` already records `model` and
+`results_subdir`, and `judge_bypass` does too — each has 34 cleanly
+attributable matrix records, which is what made a clean judge read possible
+without this item. `judge_fullctx`, `m7*` and `test_synth` lack those two lines,
+and `judge_fullctx` therefore has nothing to attribute its 286 records by.
 
 `stage_influence_*.jsonl` is append-only across every sweep ever run and carries
 no cell id. `judge_caveat` holds 1446 records over 170 distinct `(task, rep)`

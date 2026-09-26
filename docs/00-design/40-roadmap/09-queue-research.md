@@ -136,8 +136,18 @@ no claim.** Keeping it on clarity grounds is defensible; saying it helped is not
 cell id and, for `judge_fullctx`, no model on any of its 286 records. Three
 join routes were tried; all three measure an artifact.
 
-**Now blocked on A14** (cell id on the stage record). Re-open then. The
-statement of the question below stands unchanged and is still the right one.
+**Partly answered after all** — see the addendum. `judge_caveat` and
+`judge_bypass` tag their own records, so a clean single-model single-adapter
+read was available: **both score below a constant predictor** (lift −15 and
+−14, n=33/29 on the 4B) and both say `met` less often than the check passes.
+
+**Still blocked for `judge_fullctx` specifically**, which records nothing to
+attribute its 286 records by — that is A14. The statement of the question below
+stands unchanged and is still the right one.
+
+**The open question is now larger than fullctx.** If no judge beats a constant,
+"which judge is best" is the wrong question and "does a judge earn its calls at
+all" is the right one. Needs n and a second model before it is claimed.
 
 **A13 no longer waits on this.** It proceeds with `judge_caveat`, because its
 question is whether an authored brief helps the worker, which needs the judge to
