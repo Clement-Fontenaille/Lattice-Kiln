@@ -1,6 +1,6 @@
 # Backlog
 
-_Updated: 2026-09-27 — structure and maintenance rules: [`README.md`](README.md)._
+_Updated: 2026-09-28 — structure and maintenance rules: [`README.md`](README.md)._
 
 > **Motto:** Every phase should make the next design decision easier.
 
@@ -10,52 +10,31 @@ _Updated: 2026-09-27 — structure and maintenance rules: [`README.md`](README.m
 document it concerns as an open contract, not parked here
 ([`README.md`](README.md) — what an item carries).
 
-**Nothing in this band blocks M7 any more.** The specification inventory is
-discharged, the handoff contract is closed, and decomposition turned out to need no
-specification of its own — creating a task is effect 4a, the formulation rides on it,
-and how a model expresses a split is a build decision. What is left below blocks later
-work, and the rows say which.
+- **The adapter has no owner.** The serialisation a model is asked to speak in — chat
+  template, role markers, thinking delimiters, tool-call syntax, tool-result wire
+  format — is a design surface with consequences, and no milestone holds it.
+  `26-arch-observability` and the runtime band both stop at "the model".
 
-**P0 was empty between 2026-09-14 and 2026-09-27.** Every row had closed, and the last
-two closed on assignment and on a cascade rather than on new design: the scope check
-and the scope writer got an owner — now
-[M17](01-MILESTONES/17-mandate-chain.md), split out of M11 on 2026-09-14 — and M9's
-stale self-citation is corrected against what `10-foundations/04` now holds.
+  **It is named in the code and nowhere in the design set.**
+  `processor.adapter_fingerprint()` hashes it, `params.adapter` keys it,
+  `ollama_client`'s four recovery layers repair what it mangles — and the string
+  `adapter` occurs **zero times** across `10-foundations/`, the `2*-arch-*` band and
+  `10-technical/`. Defining the term where the design set can see it is the owner's
+  first act.
 
-**One row reopened it on 2026-09-27**, on evidence rather than on reflection.
-
-- **The model-facing contract has no owner, and it is worth 39 points.** The
-  serialisation a model is asked to speak in — chat template, role markers, thinking
-  delimiters, tool-call syntax, tool-result wire format — is a design surface with
-  consequences, and no milestone holds it. `26-arch-observability` and the runtime
-  band both stop at "the model"; the Claude Code teardown in `70-THINKING/15` folds
-  it into "Backend" beside memory and MCP.
-
-  **The name already exists in the code and nowhere else.** `adapter_fingerprint()`
-  hashes it, `params.adapter` keys it, `ollama_client`'s four recovery layers repair
-  what it mangles — and the string `adapter` occurs **zero times** across
-  `10-foundations/`, the whole `2*-arch-*` band and `10-technical/`. The first act of
-  whoever owns this is to define the term where the design set can see it.
-
-  **What made this a P0 row rather than a note.** Nemotron Nano 9B v2 was swept under
-  the *4B's* chat template for eight arms, because `nemotron-gpu` was built from a raw
-  local GGUF and Ollama assigns a renderer by architecture in that case. Paired on the
-  31 tasks both runs scored, `monolith` goes 5/31 → 17/31 on nothing but the template:
-  twelve tasks flip to pass, none to fail. The 9B also overtakes the 4B, 55% to 42%,
-  having read as the weaker model on every arm for a week. `50-findings/12`, *two
-  models one suite*, rests on that misconfiguration.
-
-  A defect in this layer is indistinguishable from a model limit unless something
-  names the layer. This project has now made that mistake twice — once believing
-  Ollama was mangling Qwen's output when Qwen was emitting bare JSON, once believing
-  the 9B was weak.
+  **Why it blocks rather than waits.** A defect here is indistinguishable from a model
+  limit unless something names the layer, so the debt is paid in misattributed
+  results. Measured: Nemotron Nano 9B v2 scored 5/31 under another model's chat
+  template and 17/31 under its own, twelve tasks flipping to pass and none to fail,
+  and read as the weaker model for a week
+  (`experiments/M6-evaluation-suite/modelfiles/Modelfile.nemotron9-native`; owed a
+  findings entry). `50-findings/12` rests on that misconfiguration.
 
   **Blocks P1's last package.** M8 package 6 is the E6 corpus sweep on a rented H100,
-  where the chat template is ours to supply rather than inherit, and where Ollama does
-  not exist. `experiments/M4-ephemeral-processors/backends.py` exists and is verified
-  equivalent on the request and parse paths, but has never run against a live
-  non-Ollama server. The official templates and token tables for all three models are
-  on disk (`evalkit_store/model_contracts/`).
+  where the chat template is ours to supply and Ollama does not exist.
+  `M4-ephemeral-processors/backends.py` is verified on the request and parse paths and
+  has never run against a live non-Ollama server; the official templates for all three
+  models are in `evalkit_store/model_contracts/`.
 
   **Decide:** a new milestone or a package inside an existing one. Either way the
   owner also inherits the seam (`backends.py` against a live `llama-server --jinja`),
@@ -63,27 +42,11 @@ stale self-citation is corrected against what `10-foundations/04` now holds.
   because `params.adapter` today fingerprints *our* protocol text, which is identical
   across models, while the model-side renderer rides invisibly on the model tag.
 
-**Closed since the last revision of this band**, each in the document that owns it
-rather than here: the structured role-to-role handoff; the reversibility-class carrier,
-now a placeholder that every tool call is irreversible so every one gets the pre-effect
-check; five of the seven gaps the trajectory walk found; writing sub-objectives, which
-needed nothing specified; the duplicate task—artifact edge set, resolved by removing the
-work record's `attachments`; and G4's substrate precondition, which stopped being an
-unscheduled measurement when the **bootstrap occupancy test** became a requirement
-(`05-provisional-invariant-list.md`).
-
-**What emptied this band was mostly a question rather than work.** Asking *is this
-design or implementation?* of each row dissolved three of them: the scope check's
-remaining shape, writing sub-objectives, and the reversibility-class carrier were build
-decisions that existing contracts already covered. Worth keeping in view the next time
-an open contract looks blocking.
-
 ## P1 — Work in progress
 
-**[M7 — Static supervised workflow](01-MILESTONES/completed/07-static-supervised-workflow.md)
-— closed 2026-09-14.** All five steps done; findings-log entry 10. Back half only, as
-scoped; the front half stays an open contract in
-[`11-static-workflow.md`](../../10-technical/11-static-workflow.md) and is M9-gated.
+**M7's front half is still unwritten** — the back half is what closed. It stays an
+open contract in [`11-static-workflow.md`](../../10-technical/11-static-workflow.md)
+and is M9-gated.
 
 **[M8 — Persistent work and knowledge](01-MILESTONES/08-persistent-work-and-knowledge.md)
 is next.** Six work packages, named in that file. Packages 1–3 are the three
