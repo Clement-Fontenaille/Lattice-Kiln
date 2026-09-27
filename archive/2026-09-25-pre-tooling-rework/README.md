@@ -89,23 +89,3 @@ v1/v2 comparison B8 reads.
 the live fixture directory — the 34 task fixtures, `run_suite.py:36`. It is not
 results and does not move. `runs/` is the live RunRecorder output, written
 minutes ago. `modelfiles/` is configuration.
-
-## Second pass, same day
-
-| path | what | last written |
-|---|---|---|
-| `M6-sweep-logs/` | 69 sweep logs, every one predating 2026-09-25 | to 2026-09-24 |
-| `M6-plots/` | three plot outputs | 2026-09-14 |
-| `M6-probe_results/` | `reasoning_budget.json`, the old probe output location | 2026-09-18 |
-
-Probes now write to `evalkit_store/probe_runs/` (Queue A item A4), so the old
-location has no live writer.
-
-Three logs stay in place: `matrix_queue.log` because the matrix is still
-writing it, and `sweep_proto_v1.log` / `sweep_proto_v2.log` because they are the
-v1/v2 comparison B8 reads.
-
-**Checked and deliberately left:** `experiments/M6-evaluation-suite/suite/` is
-the live fixture directory -- the 34 task fixtures behind `run_suite.py:36`. It
-is not results and does not move. `runs/` is the live RunRecorder output,
-written minutes ago. `modelfiles/` is configuration.
