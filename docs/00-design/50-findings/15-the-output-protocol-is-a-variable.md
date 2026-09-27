@@ -579,3 +579,64 @@ trained" from "trained, but not in this arrangement, with these instructions".
 consistent framing"**. The ChatML finding beside it is unaffected: that is a
 positive observation (110 tokens, a real answer), not an inference from
 silence.
+
+---
+
+## Addendum 5, 2026-09-27 — the probed tokens are not the ones either model's template uses
+
+*Queue A10, second pass, now against the primary source:
+`evalkit_store/model_contracts/` (official templates and tokenizer configs,
+revisions in each `provenance.json`). Appended; nothing above is edited.*
+
+**What the official templates emit.** Quoted from the files, not summarised.
+
+`nemotron-nano-9b-v2/chat_template.jinja` (`nvidia/NVIDIA-Nemotron-Nano-9B-v2`
+@ `6533e8de`), lines 6, 9, 22:
+
+    <AVAILABLE_TOOLS>[' -}}{%- for tool in tools -%}...{{- ']</AVAILABLE_TOOLS>
+    '<TOOLCALL>[{{"name": "tool_name1", "arguments": "tool_args1"}}, ' ...
+    {{- '<TOOLCALL>[' -}}{%- for call in message.tool_calls -%}...{{- ']</TOOLCALL>' -}}
+
+and `<TOOL_RESPONSE>[...]</TOOL_RESPONSE>` for tool results (lines 12, 18).
+Angle-bracketed, spelled `TOOLCALL`.
+
+`nemotron3-nano-4b/chat_template.jinja` (`nvidia/NVIDIA-Nemotron-3-Nano-4B-BF16`
+@ `dfaf35de`), lines 52, 148, 156:
+
+    {{- "<tools>" }}
+    {{- '<tool_call>\n<function=' ~ tool_call.name ~ '>\n' -}}
+    {{- '</function>\n</tool_call>\n' -}}
+
+**What the token tables say.** In both models' `tokenizer_config.json`,
+`added_tokens_decoder` registers `[INST]` (3), `[/INST]` (4),
+`[AVAILABLE_TOOLS]` (5), `[/AVAILABLE_TOOLS]` (6), `[TOOL_RESULTS]` (7),
+`[/TOOL_RESULTS]` (8) and `[TOOL_CALLS]` (9), all `special: true`. The 4B's
+also registers `<think>` (12), `</think>` (13), `<tool_call>` (14) and
+`</tool_call>` (15). Neither registers `<AVAILABLE_TOOLS>`, `<TOOLCALL>` or
+`<TOOL_RESPONSE>`; the string `TOOLCALL` does not occur in the 9B's
+tokenizer config outside its chat template.
+
+**What that establishes, and only that.** The probe above was run on
+`nemotron3-nano-4b` and offered `[AVAILABLE_TOOLS]…[/AVAILABLE_TOOLS][INST]…[/INST]`.
+Those are registered special tokens in both models, and **neither model's
+official template emits any of them**:
+
+- the 4B's template frames tools as `<tools>` and calls as
+  `<tool_call>`/`<function=…>`, using its own registered tokens 14 and 15;
+- the 9B's template frames tools and calls as `<AVAILABLE_TOOLS>`,
+  `<TOOLCALL>` and `<TOOL_RESPONSE>` -- different spelling, different
+  brackets, and not registered tokens at all, so they reach that model as
+  ordinary text.
+
+So the probe tested tokens that are in the vocabulary but not in either
+model's documented format. **Its conclusion is not reversed by this.** Nothing
+here shows the model does respond to `[TOOL_CALLS]` under some framing. What
+is established is narrower: the probe could not have measured the model's own
+tool format, because it did not use it. Addendum 4's reading stands --
+unused by the renderer, untested under a consistent framing -- and gains a
+reason: the templates never use them either.
+
+The 9B's `<TOOLCALL>` format is the one `Modelfile.nemotron9-tools` records as
+unreachable through Ollama (its renderer is assigned by architecture). That is
+a fact about Ollama. On a backend where the template is ours (A2, A3) it is
+testable, and untested.
