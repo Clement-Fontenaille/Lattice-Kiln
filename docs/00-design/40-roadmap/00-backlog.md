@@ -140,11 +140,8 @@ underestimated.
 
 **Added 2026-09-27, from the model sweep.** Two queue documents ran this work for
 four days — one of outsourceable development, one of research — and are **deleted**,
-their open items merged here rather than kept as a parallel list. `50-findings/15`,
-`17` and `18` cite item numbers from them ("Queue A10", "Queue B items B9 and B10");
-findings are append-only so those citations stand, and the documents they name are
-recoverable at commit `0cc3d54c`, path `40-roadmap/0{8,9}-queue-*.md`. Nothing in
-them was load-bearing that is not below.
+their open items merged here rather than kept as a parallel list. Nothing in them was
+load-bearing that is not below.
 
 - **Re-read everything that leaned on the 9B.** Its whole column measured a model
   under the wrong chat template (P0 above). The rows stay valid as *this model under

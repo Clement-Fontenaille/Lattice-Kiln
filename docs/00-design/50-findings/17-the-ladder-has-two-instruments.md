@@ -189,3 +189,8 @@ the worker's own `terminal`, each over the same `(task, rep)` pairs.
 
 **Verdict:** the ladder claim is confounded — established. The judge-versus-worker
 question — not answerable from the files as they stood.
+
+**Where the cited queue is recoverable.** The working list this entry's header names
+was `40-roadmap/09-queue-research.md`, deleted 2026-09-27 with its open items merged
+into `40-roadmap/00-backlog.md`. It and its development counterpart
+`08-queue-dev-outsourceable.md` are recoverable at commit `0cc3d54c`.

@@ -640,3 +640,22 @@ The 9B's `<TOOLCALL>` format is the one `Modelfile.nemotron9-tools` records as
 unreachable through Ollama (its renderer is assigned by architecture). That is
 a fact about Ollama. On a backend where the template is ours (A2, A3) it is
 testable, and untested.
+
+---
+
+## Addendum — what "Queue A10" refers to
+
+Appended 2026-09-27. Three passages above cite **Queue A10**. That was an item on a
+working list of outsourceable development tasks, kept in `40-roadmap/` for four days
+and **deleted on 2026-09-27** once its open items were merged into the backlog. The
+citations are left as written, per this log's rule.
+
+To resolve one: the file was `40-roadmap/08-queue-dev-outsourceable.md`, and both it
+and its research counterpart `09-queue-research.md` are recoverable at commit
+`0cc3d54c`. Item A10 asked for exactly what addenda 4 and 5 above deliver — an
+annotation of the "dead in use" claim, appended rather than edited.
+
+**The citation should not have been made.** This log's README states that findings
+are not roadmap; a working list is roadmap, and a deleted one resolves to nothing.
+What an entry owes its reader is under **Artifacts** — the paths the evidence lives
+at — not the ticket that prompted the look.

@@ -147,3 +147,8 @@ passed. Per-verdict — `verdict == met` over the same rows. Attempts only:
 **Verdict:** the mechanism is established — `all(yes)` over n conditions, accept rate
 tracking p^n with no free parameter. The remedy is not: the false-accept column has
 n=7 and cannot referee a rule change.
+
+**Where the cited queue is recoverable.** The working list this entry's header names
+was `40-roadmap/09-queue-research.md`, deleted 2026-09-27 with its open items merged
+into `40-roadmap/00-backlog.md`. It and its development counterpart
+`08-queue-dev-outsourceable.md` are recoverable at commit `0cc3d54c`.
