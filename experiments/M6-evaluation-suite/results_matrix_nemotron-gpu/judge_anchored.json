@@ -964,5 +964,66 @@
     "runner": "DESKTOP-J6EJPKF-18028",
     "t_start": 1790467305.427,
     "t_end": 1790467519.236
+  },
+  {
+    "task": "hf_cache_nondeterministic",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "judge_anchored",
+    "terminal": "declined",
+    "baseline_sub": [
+      4,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "364dc47e23ee7307",
+      "task": "hf_cache_nondeterministic",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 74.9,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 2,
+    "gen_tok": 1310,
+    "prompt_tok": 1296,
+    "gen_s": 27.91,
+    "tool_turns": 0,
+    "tool_native": 0,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 3.21,
+    "runner": "DESKTOP-J6EJPKF-18028",
+    "t_start": 1790467520.078,
+    "t_end": 1790467594.941
   }
 ]
