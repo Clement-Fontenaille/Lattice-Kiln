@@ -34,6 +34,7 @@ from _m6bridge import (Gate, RunRecorder, assemble, health,  # noqa: E402
 # The report lives in its own file so changing it does not move arm_sha for
 # the arms defined here. See run_report.py.
 from run_report import summarise  # noqa: E402
+import row_extra  # noqa: E402  (arm-reported fields, beside the score)
 
 SUITE = HERE / "suite"
 # LATTICE_RESULTS_SUBDIR lets a run against a different model land in its own
@@ -165,6 +166,13 @@ try:
     ARMS.update(ARMS_EXTRA)          # dloop, staged
 except Exception as _e:  # noqa: BLE001
     print(f"(m6_arms unavailable: {_e!r})", file=sys.stderr)
+# One file per new M6 arm, never this one: arm_source_path() hashes the whole
+# file, so an arm defined here moves arm_sha for baseline/monolith/recovery.
+for _mod in ("monolith_test_arm",):
+    try:
+        ARMS.update(__import__(_mod).ARMS_EXTRA)
+    except Exception as _e:  # noqa: BLE001
+        print(f"({_mod} unavailable: {_e!r})", file=sys.stderr)
 sys.path.insert(0, str(HERE.parent / "M7-static-workflow"))
 for _mod in ("m7_workflow", "m7b_workflow", "m7c_workflow", "m7e_workflow", "m7f_workflow", "judge_staged_workflow", "judge_anchored_workflow", "judge_caveat_workflow", "judge_bypass_workflow", "test_synth_workflow", "test_synth_retry_workflow", "judge_fullctx_workflow"):     # M7's arms live in their own dir
     try:
@@ -212,7 +220,11 @@ def _eval_params(arm_name: str = "") -> dict:
     # when the EXPERIMENT changes, this moves when the ADAPTER does, and the
     # two are independent. Every arm sends the same adapter; none of them owns
     # it. See processor.adapter_fingerprint.
-    p["adapter"] = _proc.adapter_fingerprint()
+    #
+    # Per arm only for an arm that registered extra tools (processor.ARM_TOOLS,
+    # e.g. monolith_test's run_tests): for every other arm the value is exactly
+    # the argument-free one.
+    p["adapter"] = _proc.adapter_fingerprint(arm_name or None)
     # The processor's recovery implementation -- its failure modes, its steering
     # text, its sampling and attempt budget. Processor-owned, not adapter-owned:
     # the adapter only provides a catchable exception carrying its generation,
@@ -279,6 +291,7 @@ def run_task(task, arm_name, rep, cmd, protected):
     # repr alone ("'list' object has no attribute 'get'") cost a day of confusion
     # on 2026-09-17 -- 90 of judge_bypass's 102 rows were this, scored as results.
     run_ok, trace = True, None
+    row_extra.EXTRA.clear()
     try:
         terminal = ARMS[arm_name](task["objective"], ws)
     except Exception as e:  # noqa: BLE001
@@ -373,6 +386,10 @@ def run_task(task, arm_name, rep, cmd, protected):
         "t_start": round(t_start, 3),
         "t_end": round(t_end, 3),
     }
+    # Only when the arm reported something, so every other arm's row is
+    # exactly what it was.
+    if row_extra.EXTRA:
+        row["arm_extra"] = json.loads(json.dumps(row_extra.EXTRA, default=str))
     shutil.rmtree(ws, ignore_errors=True)
     return row
 

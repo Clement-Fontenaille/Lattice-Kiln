@@ -77,7 +77,10 @@ _M7_ARMS = {"m7", "m7b", "m7c", "m7e", "m7f", "judge_staged", "judge_anchored",
             "judge_fullctx"}
 _M6_ARM_FILES = {"baseline": "run_suite.py", "monolith": "run_suite.py",
                  "monolith_recovery": "run_suite.py",
-                 "dloop": "m6_arms.py", "staged": "m6_arms.py"}
+                 "dloop": "m6_arms.py", "staged": "m6_arms.py",
+                 # One file per arm from here on: a new arm in run_suite.py or
+                 # m6_arms.py would move arm_sha for every arm already there.
+                 "monolith_test": "monolith_test_arm.py"}
 
 
 MARKERS_ADAPTER = "8f65183a3d19"
