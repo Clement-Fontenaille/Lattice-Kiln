@@ -38,7 +38,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from setup_key import ANY, ROOT  # noqa: E402
+from setup_key import ANY, ROOT, load_waivers  # noqa: E402
 from store import Store  # noqa: E402
 from plan import resolve  # noqa: E402
 
@@ -70,13 +70,15 @@ def main():
     ap.add_argument("--enqueue", action="store_true",
                     help="put the deficit in the pool instead of running it")
     ap.add_argument("--pool", default=None)
+    ap.add_argument("--waivers", nargs="+", default=None, metavar="ID",
+                    help="also admit the waiver families recorded in "
+                         "evalkit/waivers.json under these ids. Ids only: the "
+                         "hashes and the evidence stay in the file")
     args = ap.parse_args()
 
     decl = json.loads(Path(args.declaration).read_text(encoding="utf-8"))
     store = Store()
-    wpath = HERE / "waivers.json"
-    waivers = (json.loads(wpath.read_text(encoding="utf-8"))["waivers"]
-               if wpath.is_file() else [])
+    waivers = load_waivers(args.waivers)
 
     if args.enqueue:
         from pool import Pool
@@ -173,6 +175,7 @@ def main():
         any_params = [k for k, v in (m.get("params") or {}).items() if v == ANY]
         cmd = [sys.executable, str(M6 / "run_suite.py"), "--arm", arm,
                "--reps", str(g["reps"]), "--resume", "--store-resume",
+               *(["--waivers", *args.waivers] if args.waivers else []),
                "--tasks", *sorted(g["tasks"])]
         if any_params:
             cmd += ["--params-any", *any_params]

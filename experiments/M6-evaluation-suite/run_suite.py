@@ -56,7 +56,7 @@ SUITE_VERSION = json.loads((HERE / "tasks.json").read_text(encoding="utf-8"))["s
 # transition that breaks every reader on day one is not a transition.
 sys.path.insert(0, str(HERE.parent.parent / "evalkit"))
 try:
-    from setup_key import Cell            # noqa: E402
+    from setup_key import Cell, load_waivers  # noqa: E402
     from store import Store               # noqa: E402
     _STORE = Store()
 except Exception as _e:                   # noqa: BLE001
@@ -417,6 +417,10 @@ def main():
                     help="param names to treat as `any` when asking the store "
                          "what it has, e.g. --params-any num_ctx. Affects "
                          "matching only; the run still records concrete values.")
+    ap.add_argument("--waivers", nargs="+", default=None, metavar="ID",
+                    help="also admit the waiver families recorded in "
+                         "evalkit/waivers.json under these ids. Ids only: the "
+                         "hashes and the evidence stay in the file")
     args = ap.parse_args()
     if args.arm not in ("baseline",) and not health():
         print("Ollama not reachable", file=sys.stderr)
@@ -440,9 +444,7 @@ def main():
     # so N reps held anywhere satisfy the first N of the target.
     held = {}
     if args.store_resume and _STORE is not None:
-        wpath = HERE.parent.parent / "evalkit" / "waivers.json"
-        wv = (json.loads(wpath.read_text(encoding="utf-8"))["waivers"]
-              if wpath.is_file() else [])
+        wv = load_waivers(args.waivers)
         for t in tasks:
             cell = _cell_for(t["id"], args.arm)
             q = dict(json.loads(cell.params))

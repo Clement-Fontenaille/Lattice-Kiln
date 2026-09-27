@@ -266,6 +266,38 @@ def params_match(stored: str, query: dict) -> bool:
     return True
 
 
+WAIVERS_PATH = Path(__file__).resolve().parent / "waivers.json"
+
+
+def load_waivers(ids: list[str] | None = None, path: Path | None = None) -> list[dict]:
+    """The waivers a caller admits. One loader, for run_suite, plan and run_plan.
+
+    Entries WITHOUT an "id" apply always, exactly as every entry did before ids
+    existed -- so with no ids given the result is the list those callers loaded
+    before this function existed, entry for entry.
+
+    Entries WITH an "id" apply only when a caller names that id. That is how a
+    queue chooses which recorded family to admit: by name. The evidence -- the
+    hashes, the reason, the diffstat -- stays in waivers.json. A caller never
+    passes a hash, because a waiver is a recorded artifact, not a flag.
+
+    Naming an id that no entry carries is an error, not an empty admission: a
+    typo must not silently turn a resumed sweep into a full re-run.
+    """
+    p = Path(path) if path else WAIVERS_PATH
+    entries = (json.loads(p.read_text(encoding="utf-8"))["waivers"]
+               if p.is_file() else [])
+    base = [w for w in entries if not w.get("id")]
+    if not ids:
+        return base
+    known = {w["id"] for w in entries if w.get("id")}
+    unknown = sorted(set(ids) - known)
+    if unknown:
+        raise ValueError(f"no waiver carries id(s) {unknown}; "
+                         f"recorded ids are {sorted(known)}")
+    return base + [w for w in entries if w.get("id") in set(ids)]
+
+
 def compatible(a: Cell, b: Cell, waivers: list[dict] | None = None) -> tuple[bool, str]:
     """Do these two cells describe the same setup?
 
@@ -284,9 +316,21 @@ def compatible(a: Cell, b: Cell, waivers: list[dict] | None = None) -> tuple[boo
 
 
 def _waived(field_name, x, y, waivers) -> bool:
+    """Is x ~ y on this one field, by some recorded waiver?
+
+    `equivalent` is a FAMILY: any two distinct members are equivalent. arm_sha
+    has moved many times; a lineage of n equivalent versions would otherwise
+    need n(n-1)/2 pairwise entries, and nobody writes those. A two-member
+    family behaves exactly as the old pair rule ({x, y} == family). A family
+    of fewer than two members admits nothing. The waiver still names ONE
+    field: compatible() requires every other field to match exactly.
+    """
+    if x == y:
+        return False                       # nothing to waive
     for w in (waivers or []):
         if w.get("field") != field_name:
             continue
-        if {x, y} == set(w.get("equivalent", [])):
+        fam = set(w.get("equivalent", []))
+        if len(fam) >= 2 and {x, y} <= fam:
             return True
     return False

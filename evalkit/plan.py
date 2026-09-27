@@ -27,7 +27,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from setup_key import Cell, M6, ROOT, suite_version  # noqa: E402
+from setup_key import Cell, M6, ROOT, load_waivers, suite_version  # noqa: E402
 from store import Store  # noqa: E402
 
 
@@ -111,15 +111,17 @@ def main():
                          "rather than recorded by the harness")
     ap.add_argument("--no-waivers", action="store_true",
                     help="ignore waivers.json and match on hashes alone")
+    ap.add_argument("--waivers", nargs="+", default=None, metavar="ID",
+                    help="also admit the waiver families recorded in "
+                         "evalkit/waivers.json under these ids. Ids only: the "
+                         "hashes and the evidence stay in the file")
     ap.add_argument("--explain", action="store_true",
                     help="for cells with no match, show near misses")
     args = ap.parse_args()
 
     decl = json.loads(Path(args.declaration).read_text(encoding="utf-8"))
     store = Store(Path(args.store) if args.store else None)
-    wpath = HERE / "waivers.json"
-    waivers = ([] if args.no_waivers or not wpath.is_file()
-               else json.loads(wpath.read_text(encoding="utf-8"))["waivers"])
+    waivers = [] if args.no_waivers else load_waivers(args.waivers)
     summary = store.summary()
     cells = resolve(decl)
 
