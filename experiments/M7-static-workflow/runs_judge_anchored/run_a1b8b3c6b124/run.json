@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_a1b8b3c6b124",
+  "started": "2026-09-22T15:46:36.536043+00:00",
+  "intent_text": "In billing.py, rename the public function calc to compute. Update its call sites. Do not rename recalc_all, do not change the LEDGER dict key \"calc\" (it is a wire format), and do not change the audit log text.",
+  "meta": {
+    "arm": "judge_anchored",
+    "suite": "m6"
+  },
+  "ended": "2026-09-22T15:49:35.019433+00:00",
+  "outcome": "completed",
+  "event_count": 25
+}

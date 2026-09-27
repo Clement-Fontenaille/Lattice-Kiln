@@ -1,0 +1,612 @@
+[
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 1,
+    "arm": "judge_anchored",
+    "terminal": "error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 32043 chars of t",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      3,
+      5
+    ],
+    "struct": {},
+    "gate_pass": null,
+    "objective_pass": null,
+    "run_ok": false,
+    "error_trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 229, in run_task\n    terminal = ARMS[arm_name](task[\"objective\"], ws)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M7-static-workflow\\judge_anchored_workflow.py\", line 597, in run_m7\n    best = _pass(t, ws, rec, root, best, calls, greenfield, deadline,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M7-static-workflow\\judge_anchored_workflow.py\", line 369, in _pass\n    _implement(step, ws, rec, root,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M7-static-workflow\\judge_anchored_workflow.py\", line 315, in _implement\n    return run_processor(role=\"implementer\", objective=objective, context=b,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 328, in run_processor\n    gen, parsed, out = _run_tools(prompt, model=model)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 269, in _run_tools\n    gen = chat(msgs, model=model, tools=TOOLS, num_predict=num_predict)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\ollama_client.py\", line 734, in chat\n    raise OllamaError(\nollama_client.OllamaError: empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 32043 chars of thinking, eval_count=8192). Raise num_predict, or set LATTICE_THINK=0.\n",
+    "regressed": null,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "31cda7090cc6e47d",
+      "task": "wf2_retry",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"ad18bb747de6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\"}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 213.0,
+    "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)",
+    "llm_calls": 4,
+    "gen_tok": 1536,
+    "prompt_tok": 7029,
+    "gen_s": 17.18,
+    "tool_turns": 3,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "prompt_s": 2.37,
+    "runner": "DESKTOP-J6EJPKF-26956",
+    "t_start": 1790195386.881,
+    "t_end": 1790195599.836
+  },
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 2,
+    "arm": "judge_anchored",
+    "terminal": "error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 26457 chars of t",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      3,
+      5
+    ],
+    "struct": {},
+    "gate_pass": null,
+    "objective_pass": null,
+    "run_ok": false,
+    "error_trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 229, in run_task\n    terminal = ARMS[arm_name](task[\"objective\"], ws)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M7-static-workflow\\judge_anchored_workflow.py\", line 597, in run_m7\n    best = _pass(t, ws, rec, root, best, calls, greenfield, deadline,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M7-static-workflow\\judge_anchored_workflow.py\", line 369, in _pass\n    _implement(step, ws, rec, root,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M7-static-workflow\\judge_anchored_workflow.py\", line 315, in _implement\n    return run_processor(role=\"implementer\", objective=objective, context=b,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 328, in run_processor\n    gen, parsed, out = _run_tools(prompt, model=model)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 269, in _run_tools\n    gen = chat(msgs, model=model, tools=TOOLS, num_predict=num_predict)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\ollama_client.py\", line 734, in chat\n    raise OllamaError(\nollama_client.OllamaError: empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 26457 chars of thinking, eval_count=8192). Raise num_predict, or set LATTICE_THINK=0.\n",
+    "regressed": null,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "31cda7090cc6e47d",
+      "task": "wf2_retry",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"ad18bb747de6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\"}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 393.9,
+    "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)",
+    "llm_calls": 4,
+    "gen_tok": 1566,
+    "prompt_tok": 6968,
+    "gen_s": 17.66,
+    "tool_turns": 3,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "prompt_s": 2.6,
+    "runner": "DESKTOP-J6EJPKF-26956",
+    "t_start": 1790195601.647,
+    "t_end": 1790195995.518
+  },
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 3,
+    "arm": "judge_anchored",
+    "terminal": "answered",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "31cda7090cc6e47d",
+      "task": "wf2_retry",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"ad18bb747de6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\"}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 284.7,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 8,
+    "gen_tok": 5632,
+    "prompt_tok": 14082,
+    "gen_s": 64.21,
+    "tool_turns": 4,
+    "tool_native": 4,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "prompt_s": 4.44,
+    "runner": "DESKTOP-J6EJPKF-26956",
+    "t_start": 1790195996.195,
+    "t_end": 1790196280.943
+  },
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 4,
+    "arm": "judge_anchored",
+    "terminal": "error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 26393 chars of t",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      3,
+      5
+    ],
+    "struct": {},
+    "gate_pass": null,
+    "objective_pass": null,
+    "run_ok": false,
+    "error_trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 229, in run_task\n    terminal = ARMS[arm_name](task[\"objective\"], ws)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M7-static-workflow\\judge_anchored_workflow.py\", line 597, in run_m7\n    best = _pass(t, ws, rec, root, best, calls, greenfield, deadline,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M7-static-workflow\\judge_anchored_workflow.py\", line 369, in _pass\n    _implement(step, ws, rec, root,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M7-static-workflow\\judge_anchored_workflow.py\", line 315, in _implement\n    return run_processor(role=\"implementer\", objective=objective, context=b,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 328, in run_processor\n    gen, parsed, out = _run_tools(prompt, model=model)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 269, in _run_tools\n    gen = chat(msgs, model=model, tools=TOOLS, num_predict=num_predict)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\ollama_client.py\", line 734, in chat\n    raise OllamaError(\nollama_client.OllamaError: empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 26393 chars of thinking, eval_count=8192). Raise num_predict, or set LATTICE_THINK=0.\n",
+    "regressed": null,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "31cda7090cc6e47d",
+      "task": "wf2_retry",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"ad18bb747de6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\"}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 700.9,
+    "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)",
+    "llm_calls": 8,
+    "gen_tok": 8362,
+    "prompt_tok": 15802,
+    "gen_s": 95.72,
+    "tool_turns": 6,
+    "tool_native": 5,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "prompt_s": 5.31,
+    "runner": "DESKTOP-J6EJPKF-26956",
+    "t_start": 1790196281.606,
+    "t_end": 1790196982.521
+  },
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 5,
+    "arm": "judge_anchored",
+    "terminal": "answered",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "31cda7090cc6e47d",
+      "task": "wf2_retry",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"ad18bb747de6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\"}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 645.7,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 16,
+    "gen_tok": 11826,
+    "prompt_tok": 28274,
+    "gen_s": 135.75,
+    "tool_turns": 8,
+    "tool_native": 8,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "prompt_s": 9.26,
+    "runner": "DESKTOP-J6EJPKF-26956",
+    "t_start": 1790196983.167,
+    "t_end": 1790197628.833
+  },
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 6,
+    "arm": "judge_anchored",
+    "terminal": "answered",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "31cda7090cc6e47d",
+      "task": "wf2_retry",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"ad18bb747de6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\"}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 445.6,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 16,
+    "gen_tok": 10970,
+    "prompt_tok": 27748,
+    "gen_s": 125.13,
+    "tool_turns": 8,
+    "tool_native": 8,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "prompt_s": 10.47,
+    "runner": "DESKTOP-J6EJPKF-26956",
+    "t_start": 1790197629.601,
+    "t_end": 1790198075.19
+  },
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 7,
+    "arm": "judge_anchored",
+    "terminal": "answered",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "31cda7090cc6e47d",
+      "task": "wf2_retry",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"ad18bb747de6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\"}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 230.2,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 8,
+    "gen_tok": 2948,
+    "prompt_tok": 14366,
+    "gen_s": 33.6,
+    "tool_turns": 4,
+    "tool_native": 4,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "prompt_s": 6.44,
+    "runner": "DESKTOP-J6EJPKF-26956",
+    "t_start": 1790198075.849,
+    "t_end": 1790198306.013
+  },
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 8,
+    "arm": "judge_anchored",
+    "terminal": "answered",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "31cda7090cc6e47d",
+      "task": "wf2_retry",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"ad18bb747de6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\"}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 289.5,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 8,
+    "gen_tok": 3390,
+    "prompt_tok": 14483,
+    "gen_s": 38.64,
+    "tool_turns": 4,
+    "tool_native": 4,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "prompt_s": 5.02,
+    "runner": "DESKTOP-J6EJPKF-26956",
+    "t_start": 1790198306.669,
+    "t_end": 1790198596.12
+  },
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 9,
+    "arm": "judge_anchored",
+    "terminal": "error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 25148 chars of t",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      3,
+      5
+    ],
+    "struct": {},
+    "gate_pass": null,
+    "objective_pass": null,
+    "run_ok": false,
+    "error_trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 229, in run_task\n    terminal = ARMS[arm_name](task[\"objective\"], ws)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M7-static-workflow\\judge_anchored_workflow.py\", line 597, in run_m7\n    best = _pass(t, ws, rec, root, best, calls, greenfield, deadline,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M7-static-workflow\\judge_anchored_workflow.py\", line 369, in _pass\n    _implement(step, ws, rec, root,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M7-static-workflow\\judge_anchored_workflow.py\", line 315, in _implement\n    return run_processor(role=\"implementer\", objective=objective, context=b,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 328, in run_processor\n    gen, parsed, out = _run_tools(prompt, model=model)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 269, in _run_tools\n    gen = chat(msgs, model=model, tools=TOOLS, num_predict=num_predict)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\ollama_client.py\", line 734, in chat\n    raise OllamaError(\nollama_client.OllamaError: empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 25148 chars of thinking, eval_count=8192). Raise num_predict, or set LATTICE_THINK=0.\n",
+    "regressed": null,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "31cda7090cc6e47d",
+      "task": "wf2_retry",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"ad18bb747de6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\"}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 125.1,
+    "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)",
+    "llm_calls": 4,
+    "gen_tok": 1256,
+    "prompt_tok": 6984,
+    "gen_s": 14.13,
+    "tool_turns": 3,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "prompt_s": 2.24,
+    "runner": "DESKTOP-J6EJPKF-26956",
+    "t_start": 1790198596.716,
+    "t_end": 1790198721.814
+  },
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 10,
+    "arm": "judge_anchored",
+    "terminal": "answered",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "31cda7090cc6e47d",
+      "task": "wf2_retry",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"ad18bb747de6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\"}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 40.4,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 5,
+    "gen_tok": 2290,
+    "prompt_tok": 8206,
+    "gen_s": 25.91,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "prompt_s": 2.04,
+    "runner": "DESKTOP-J6EJPKF-26956",
+    "t_start": 1790198722.427,
+    "t_end": 1790198762.78
+  }
+]

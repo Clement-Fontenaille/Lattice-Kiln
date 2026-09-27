@@ -1,0 +1,114 @@
+[
+  {
+    "task": "hf_json_field",
+    "shape": "feature",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 4,
+    "arm": "judge_anchored",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "6ce208c9362e80dd",
+      "task": "hf_json_field",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "b0a6545acca856af",
+      "backend": "ollama",
+      "model": "nemotron-gpu",
+      "judge_format": "reason_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 52.0,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 4,
+    "gen_tok": 638,
+    "prompt_tok": 3739,
+    "gen_s": 12.88,
+    "prompt_s": 2.42,
+    "runner": "DESKTOP-J6EJPKF-8832",
+    "t_start": 1790004406.668,
+    "t_end": 1790004458.629
+  },
+  {
+    "task": "hf_json_field",
+    "shape": "feature",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 5,
+    "arm": "judge_anchored",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "6ce208c9362e80dd",
+      "task": "hf_json_field",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "b0a6545acca856af",
+      "backend": "ollama",
+      "model": "nemotron-gpu",
+      "judge_format": "reason_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 71.6,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 4,
+    "gen_tok": 616,
+    "prompt_tok": 3699,
+    "gen_s": 12.79,
+    "prompt_s": 3.48,
+    "runner": "DESKTOP-J6EJPKF-8832",
+    "t_start": 1790004459.095,
+    "t_end": 1790004530.651
+  }
+]

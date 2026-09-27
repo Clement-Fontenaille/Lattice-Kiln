@@ -120,7 +120,7 @@ def main():
     (HERE / "probe_results").mkdir(exist_ok=True)
     (HERE / "probe_results" / "reasoning_budget.json").write_text(
         json.dumps(out, indent=2) + "\n", encoding="utf-8")
-    print("\nwrote results/reasoning_budget.json")
+    print("\nwrote probe_results/reasoning_budget.json")
 
 
 if __name__ == "__main__":

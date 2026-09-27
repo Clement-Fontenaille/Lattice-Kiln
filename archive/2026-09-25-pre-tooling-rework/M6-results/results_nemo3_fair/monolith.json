@@ -1,0 +1,2187 @@
+[
+  {
+    "task": "wf1_crossfile",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      0,
+      1
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": true,
+    "new_fails": [
+      "File \"C",
+      "^\nIndentationError",
+      "from orders import total\n  File \"C",
+      "from pricing import line_price\n  File \"C"
+    ],
+    "check_crashed": true,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "3f67afa1d72da5b8",
+      "task": "wf1_crossfile",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 27.3,
+    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_wf1_crossfile_7akrat63\\test_task.py\", line 4, in <module>\n    from orders import total\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_wf1_crossfile_7akrat63\\orders.py\", line 1, in <module>\n    from pricing import line_price\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_wf1_crossfile_7akrat63\\pricing.py\", line 3\n    return item[\"unit_price\"] * item[\"qty\"]\n                                           ^\nIndentationError: unindent does not match any outer indentation level",
+    "llm_calls": 2,
+    "gen_tok": 344,
+    "prompt_tok": 3966,
+    "gen_s": 4.23,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.84,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278292.326,
+    "t_end": 1790278319.624
+  },
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      0,
+      5
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "31cda7090cc6e47d",
+      "task": "wf2_retry",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 18.9,
+    "tail": "SUBTESTS 0/5\n  success first try: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  succeed on 2nd try: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  exhaust then re-raise last: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  retries=0 is one attempt: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  returns fn value: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")",
+    "llm_calls": 2,
+    "gen_tok": 1065,
+    "prompt_tok": 4781,
+    "gen_s": 12.51,
+    "tool_turns": 2,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.76,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278320.506,
+    "t_end": 1790278339.43
+  },
+  {
+    "task": "wf3_refactor",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "8eeb8d70aa6dd037",
+      "task": "wf3_refactor",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 12.3,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 2,
+    "gen_tok": 577,
+    "prompt_tok": 3914,
+    "gen_s": 6.34,
+    "tool_turns": 2,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.47,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278340.018,
+    "t_end": 1790278352.353
+  },
+  {
+    "task": "wf3_refactor_witnessed",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural",
+      "witness-pair"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        3,
+        3
+      ]
+    },
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "178b5b4883c51af5",
+      "task": "wf3_refactor_witnessed",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 14.4,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3",
+    "llm_calls": 2,
+    "gen_tok": 693,
+    "prompt_tok": 6404,
+    "gen_s": 7.71,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 2.03,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278353.032,
+    "t_end": 1790278367.408
+  },
+  {
+    "task": "wf3_refactor_blindview",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "truncated",
+    "stresses": [
+      "L2-structural",
+      "witness-pair"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        3,
+        3
+      ]
+    },
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "48755e0dcbfe027c",
+      "task": "wf3_refactor_blindview",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 14.6,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3",
+    "llm_calls": 2,
+    "gen_tok": 717,
+    "prompt_tok": 6518,
+    "gen_s": 8.03,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.8,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278368.157,
+    "t_end": 1790278382.727
+  },
+  {
+    "task": "wf4_assumption",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "4efb57b9acb8e244",
+      "task": "wf4_assumption",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 6.0,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 1,
+    "gen_tok": 207,
+    "prompt_tok": 1787,
+    "gen_s": 2.32,
+    "tool_turns": 1,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.07,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278383.553,
+    "t_end": 1790278389.507
+  },
+  {
+    "task": "wf5_partial",
+    "shape": "implement",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "kway-synth",
+      "partial-credit",
+      "greenfield-impl"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      0,
+      7
+    ],
+    "final_sub": [
+      0,
+      7
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "ecbcc85eee619332",
+      "task": "wf5_partial",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 21.0,
+    "tail": "SUBTESTS 0/7\n  minutes: raised NotImplementedError()\n  hours: raised NotImplementedError()\n  h+m: raised NotImplementedError()\n  seconds: raised NotImplementedError()\n  h+m+s: raised NotImplementedError()\n  empty is zero: raised NotImplementedError()\n  whitespace: raised NotImplementedError()",
+    "llm_calls": 2,
+    "gen_tok": 866,
+    "prompt_tok": 4094,
+    "gen_s": 9.78,
+    "tool_turns": 2,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.51,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278390.164,
+    "t_end": 1790278411.199
+  },
+  {
+    "task": "wf6_multi",
+    "shape": "migration",
+    "trap": "multi-concern",
+    "worker_view": "full",
+    "stresses": [
+      "concern-split",
+      "combined-score"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      2,
+      6
+    ],
+    "final_sub": [
+      2,
+      6
+    ],
+    "struct": {
+      "DOCSCORE": [
+        0,
+        4
+      ],
+      "TODOSCORE": [
+        0,
+        3
+      ]
+    },
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "d9d3dcb79ac7fa15",
+      "task": "wf6_multi",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 50.8,
+    "tail": "SUBTESTS 2/6\n  topo chain raised NotImplementedError()\n  topo diamond raised NotImplementedError()\n  topo cycle: still NotImplementedError\n  topo empty raised NotImplementedError()\nDOCSCORE 0/4\n  no module docstring\n  build_graph docstring missing Args/Returns\n  topo_sort docstring missing Args/Returns/Raises\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present",
+    "llm_calls": 3,
+    "gen_tok": 2278,
+    "prompt_tok": 11724,
+    "gen_s": 25.76,
+    "tool_turns": 3,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 2.33,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278412.008,
+    "t_end": 1790278462.799
+  },
+  {
+    "task": "hf_extract_fn",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      2,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        3,
+        3
+      ]
+    },
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": true,
+    "new_fails": [
+      "all-bad input",
+      "bad record is logged",
+      "skips bad record"
+    ],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "0fd974a58eea828c",
+      "task": "hf_extract_fn",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 43.4,
+    "tail": "SUBTESTS 2/5\n  skips bad record: raised KeyError('amount')\n  bad record is logged: raised KeyError('amount')\n  all-bad input: raised KeyError('amount')\nSTRUCTSCORE 3/3",
+    "llm_calls": 2,
+    "gen_tok": 3160,
+    "prompt_tok": 5752,
+    "gen_s": 35.76,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.62,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278463.668,
+    "t_end": 1790278507.044
+  },
+  {
+    "task": "hf_dict_dispatch",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      7,
+      7
+    ],
+    "final_sub": [
+      0,
+      1
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": true,
+    "new_fails": [
+      "\"add\"",
+      "File \"C",
+      "^\nSyntaxError",
+      "import router\n  File \"C"
+    ],
+    "check_crashed": true,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "dc5f3034ac3a30c0",
+      "task": "hf_dict_dispatch",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 25.0,
+    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_dict_dispatch_m4983g4q\\test_task.py\", line 10, in <module>\n    import router\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_dict_dispatch_m4983g4q\\router.py\", line 5\n    \"add\": lambda c: (c[\"items\"].append(c[\"arg\"]); f\"added {c['arg']}\"),\n                                                 ^\nSyntaxError: invalid syntax",
+    "llm_calls": 2,
+    "gen_tok": 1339,
+    "prompt_tok": 5524,
+    "gen_s": 15.43,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.59,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278507.926,
+    "t_end": 1790278532.892
+  },
+  {
+    "task": "hf_rename",
+    "shape": "compat",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "regression-guard",
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      4,
+      6
+    ],
+    "final_sub": [
+      4,
+      6
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        2,
+        3
+      ]
+    },
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "e8ae310ce920542a",
+      "task": "hf_rename",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 43.3,
+    "tail": "SUBTESTS 4/6\n  compute exists and works: raised AttributeError(\"module 'billing' has no attribute 'compute'\")\n  calc name is gone: got True want False\nSTRUCTSCORE 2/3",
+    "llm_calls": 2,
+    "gen_tok": 1333,
+    "prompt_tok": 5602,
+    "gen_s": 15.01,
+    "tool_turns": 2,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.63,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278533.901,
+    "t_end": 1790278577.172
+  },
+  {
+    "task": "hf_rec_to_iter",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      4,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        1,
+        1
+      ]
+    },
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "d2a55c52d02a5b3c",
+      "task": "hf_rec_to_iter",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 16.6,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/1",
+    "llm_calls": 2,
+    "gen_tok": 754,
+    "prompt_tok": 4804,
+    "gen_s": 8.48,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.43,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278578.145,
+    "t_end": 1790278594.755
+  },
+  {
+    "task": "hf_already_optimal",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit",
+      "cross-file"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      6,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "f94ad51459fba19b",
+      "task": "hf_already_optimal",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 76.0,
+    "tail": "SUBTESTS 6/6",
+    "llm_calls": 1,
+    "gen_tok": 237,
+    "prompt_tok": 2360,
+    "gen_s": 2.66,
+    "tool_turns": 1,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.04,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278595.794,
+    "t_end": 1790278671.807
+  },
+  {
+    "task": "hf_dead_code",
+    "shape": "cleanup",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      4,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "bc6f6422991621bb",
+      "task": "hf_dead_code",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 6.6,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 1,
+    "gen_tok": 219,
+    "prompt_tok": 2048,
+    "gen_s": 2.56,
+    "tool_turns": 1,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 0.92,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278672.513,
+    "t_end": 1790278679.16
+  },
+  {
+    "task": "hf_remove_validation",
+    "shape": "cleanup",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "53625004e2a2a391",
+      "task": "hf_remove_validation",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 10.7,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 1,
+    "gen_tok": 294,
+    "prompt_tok": 2243,
+    "gen_s": 3.8,
+    "tool_turns": 1,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.09,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278680.084,
+    "t_end": 1790278690.77
+  },
+  {
+    "task": "hf_cache_nondeterministic",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      4,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "364dc47e23ee7307",
+      "task": "hf_cache_nondeterministic",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 20.2,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 1,
+    "gen_tok": 153,
+    "prompt_tok": 2158,
+    "gen_s": 1.73,
+    "tool_turns": 1,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 0.96,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278691.501,
+    "t_end": 1790278711.672
+  },
+  {
+    "task": "hf_multi_recipient",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      0,
+      1
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": true,
+    "new_fails": [
+      "File \"C",
+      "from notify import notify\nImportError"
+    ],
+    "check_crashed": true,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "fae42555c9acfa36",
+      "task": "hf_multi_recipient",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 59.8,
+    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_multi_recipient_1svvw7x9\\test_task.py\", line 9, in <module>\n    from notify import notify\nImportError: cannot import name 'notify' from 'notify' (C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_multi_recipient_1svvw7x9\\notify.py)",
+    "llm_calls": 2,
+    "gen_tok": 700,
+    "prompt_tok": 4403,
+    "gen_s": 7.94,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.39,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278712.368,
+    "t_end": 1790278772.121
+  },
+  {
+    "task": "hf_return_shape",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      3,
+      5
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "9d074fc1b08631a7",
+      "task": "hf_return_shape",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 22.0,
+    "tail": "SUBTESTS 3/5\n  email attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'email'\")\n  name attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'name'\")",
+    "llm_calls": 1,
+    "gen_tok": 931,
+    "prompt_tok": 2163,
+    "gen_s": 10.53,
+    "tool_turns": 1,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 0.97,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278772.985,
+    "t_end": 1790278794.955
+  },
+  {
+    "task": "hf_deprecate",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      1,
+      4
+    ],
+    "final_sub": [
+      1,
+      4
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "687ec6d767a01410",
+      "task": "hf_deprecate",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 33.0,
+    "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: got False want True\n  old_parse matches new_parse: got False want True\n  old_parse strips like new_parse: got [' one '] want ['one']",
+    "llm_calls": 2,
+    "gen_tok": 751,
+    "prompt_tok": 4589,
+    "gen_s": 8.54,
+    "tool_turns": 2,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.5,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278795.654,
+    "t_end": 1790278828.674
+  },
+  {
+    "task": "hf_json_field",
+    "shape": "feature",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      0,
+      1
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": true,
+    "new_fails": [
+      "File \"C",
+      "from resp import build\nImportError"
+    ],
+    "check_crashed": true,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "6ce208c9362e80dd",
+      "task": "hf_json_field",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 33.0,
+    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_json_field_qnpc21vy\\test_task.py\", line 11, in <module>\n    from resp import build\nImportError: cannot import name 'build' from 'resp' (C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_json_field_qnpc21vy\\resp.py)",
+    "llm_calls": 2,
+    "gen_tok": 470,
+    "prompt_tok": 4137,
+    "gen_s": 5.32,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.33,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278829.552,
+    "t_end": 1790278862.601
+  },
+  {
+    "task": "hf_timeout_param",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      2,
+      6
+    ],
+    "final_sub": [
+      0,
+      1
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": true,
+    "new_fails": [
+      "File \"C",
+      "_ SLOW = {\"slow.example\"}\n      ^^^^\nSyntaxError",
+      "from fetch import fetch\n  File \"C"
+    ],
+    "check_crashed": true,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "6d24211d35628155",
+      "task": "hf_timeout_param",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 40.8,
+    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_timeout_param_cpvglzu6\\test_task.py\", line 8, in <module>\n    from fetch import fetch\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_timeout_param_cpvglzu6\\fetch.py\", line 3\n    _ SLOW = {\"slow.example\"}\n      ^^^^\nSyntaxError: invalid syntax",
+    "llm_calls": 2,
+    "gen_tok": 794,
+    "prompt_tok": 4593,
+    "gen_s": 9.23,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.47,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278863.528,
+    "t_end": 1790278904.292
+  },
+  {
+    "task": "hf_cache_decorator",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      0,
+      1
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": true,
+    "new_fails": [
+      "File \"C",
+      "from compute import config_for\nImportError"
+    ],
+    "check_crashed": true,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "d025d8722ff4f43c",
+      "task": "hf_cache_decorator",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 30.8,
+    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_cache_decorator_9oqjq4nx\\test_task.py\", line 13, in <module>\n    from compute import config_for\nImportError: cannot import name 'config_for' from 'compute' (C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_cache_decorator_9oqjq4nx\\compute.py)",
+    "llm_calls": 2,
+    "gen_tok": 1438,
+    "prompt_tok": 4676,
+    "gen_s": 17.06,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.54,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278905.263,
+    "t_end": 1790278936.076
+  },
+  {
+    "task": "hf_csv",
+    "shape": "data",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "kway-synth",
+      "partial-credit"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      3,
+      6
+    ],
+    "final_sub": [
+      0,
+      6
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": true,
+    "new_fails": [
+      "CRLF line endings",
+      "plain rows",
+      "trailing blank line"
+    ],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "92d201d4298b7670",
+      "task": "hf_csv",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 28.7,
+    "tail": "SUBTESTS 0/6\n  plain rows: raised TypeError(\"'_csv.reader' object is not subscriptable\")\n  quoted comma: raised TypeError(\"'_csv.reader' object is not subscriptable\")\n  quoted newline: raised TypeError(\"'_csv.reader' object is not subscriptable\")\n  leading BOM: raised TypeError(\"'_csv.reader' object is not subscriptable\")\n  CRLF line endings: raised TypeError(\"'_csv.reader' object is not subscriptable\")\n  trailing blank line: raised TypeError(\"'_csv.reader' object is not subscriptable\")",
+    "llm_calls": 2,
+    "gen_tok": 1506,
+    "prompt_tok": 4232,
+    "gen_s": 17.18,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.35,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278936.892,
+    "t_end": 1790278965.57
+  },
+  {
+    "task": "hf_path_sanitize",
+    "shape": "robustness",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "partial-credit"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      1,
+      8
+    ],
+    "final_sub": [
+      1,
+      8
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "f2037f5107c761c6",
+      "task": "hf_path_sanitize",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 27.3,
+    "tail": "SUBTESTS 1/8\n  parent traversal rejected: got False want True\n  nested traversal rejected: got False want True\n  absolute path rejected: got False want True\n  null byte rejected: got False want True\n  reserved name rejected: got False want True\n  trailing dot stripped: got 'report.' want 'report'\n  trailing space stripped: got 'data.csv  ' want 'data.csv'",
+    "llm_calls": 2,
+    "gen_tok": 866,
+    "prompt_tok": 4763,
+    "gen_s": 9.99,
+    "tool_turns": 2,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.73,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278966.695,
+    "t_end": 1790278994.005
+  },
+  {
+    "task": "hf_merge_config",
+    "shape": "data",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      3,
+      6
+    ],
+    "final_sub": [
+      4,
+      6
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "2f8fd76f7ab9131b",
+      "task": "hf_merge_config",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 36.0,
+    "tail": "SUBTESTS 4/6\n  None deletes the key: got {'a': 1, 'b': 2} want {'a': 1}\n  deep merge plus delete: got {'s': {'add': 3, 'keep': 1, 'drop': 2}} want {'s': {'keep': 1, 'add': 3}}",
+    "llm_calls": 2,
+    "gen_tok": 896,
+    "prompt_tok": 4520,
+    "gen_s": 10.1,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.58,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790278994.821,
+    "t_end": 1790279030.773
+  },
+  {
+    "task": "hf_misfiled_bug",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      3,
+      4
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "7e2020c817d39889",
+      "task": "hf_misfiled_bug",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 8.5,
+    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'",
+    "llm_calls": 1,
+    "gen_tok": 219,
+    "prompt_tok": 2046,
+    "gen_s": 2.48,
+    "tool_turns": 1,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 0.92,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790279031.577,
+    "t_end": 1790279040.095
+  },
+  {
+    "task": "hf_pagination",
+    "shape": "fix",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      1,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "3398602ee7b73801",
+      "task": "hf_pagination",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 23.8,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 2,
+    "gen_tok": 598,
+    "prompt_tok": 4299,
+    "gen_s": 6.74,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.34,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790279040.991,
+    "t_end": 1790279064.737
+  },
+  {
+    "task": "hf_suppress",
+    "shape": "robustness",
+    "trap": "silent-failure",
+    "worker_view": "full",
+    "stresses": [
+      "silent-failure",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "19fd367e9a65d4b1",
+      "task": "hf_suppress",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 18.0,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 2,
+    "gen_tok": 633,
+    "prompt_tok": 4295,
+    "gen_s": 7.18,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.37,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790279065.755,
+    "t_end": 1790279083.701
+  },
+  {
+    "task": "hf_validate_withdraw",
+    "shape": "robustness",
+    "trap": "silent-failure",
+    "worker_view": "full",
+    "stresses": [
+      "silent-failure",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      4,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "be1b4ea97970e21a",
+      "task": "hf_validate_withdraw",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 17.4,
+    "tail": "SUBTESTS 6/6",
+    "llm_calls": 2,
+    "gen_tok": 658,
+    "prompt_tok": 4412,
+    "gen_s": 7.55,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.49,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790279084.499,
+    "t_end": 1790279101.895
+  },
+  {
+    "task": "hf_retry_backoff",
+    "shape": "robustness",
+    "trap": "silent-failure",
+    "worker_view": "full",
+    "stresses": [
+      "silent-failure",
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      2,
+      4
+    ],
+    "final_sub": [
+      2,
+      4
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "b06984ae27db6097",
+      "task": "hf_retry_backoff",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 90.8,
+    "tail": "SUBTESTS 2/4\n  recovers after 2 transients: got ('transient', 1) want ('ok', 'ok', 3)\n  gives up after 4 attempts: got ('transient', 1) want ('transient', 4)",
+    "llm_calls": 3,
+    "gen_tok": 6020,
+    "prompt_tok": 8288,
+    "gen_s": 68.84,
+    "tool_turns": 3,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 2.02,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790279102.644,
+    "t_end": 1790279193.493
+  },
+  {
+    "task": "hf_json_serialize",
+    "shape": "feature",
+    "trap": "multi-concern",
+    "worker_view": "full",
+    "stresses": [
+      "concern-split",
+      "combined-score"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        2,
+        2
+      ]
+    },
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "6ddd76215cd51274",
+      "task": "hf_json_serialize",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 28.1,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 2/2",
+    "llm_calls": 2,
+    "gen_tok": 1162,
+    "prompt_tok": 5154,
+    "gen_s": 13.29,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.72,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790279194.472,
+    "t_end": 1790279222.538
+  },
+  {
+    "task": "hf_counter_race",
+    "shape": "concurrency",
+    "trap": "silent-failure",
+    "worker_view": "full",
+    "stresses": [
+      "silent-failure"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      2,
+      3
+    ],
+    "final_sub": [
+      2,
+      3
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "ec20c506cbb117e2",
+      "task": "hf_counter_race",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 23.6,
+    "tail": "SUBTESTS 2/3\n  concurrent increments do not lose updates: got 586 want 4000",
+    "llm_calls": 2,
+    "gen_tok": 703,
+    "prompt_tok": 4526,
+    "gen_s": 8.38,
+    "tool_turns": 2,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.4,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790279223.769,
+    "t_end": 1790279247.388
+  },
+  {
+    "task": "hf_audit_perf",
+    "shape": "perf",
+    "trap": "harmful-fix",
+    "worker_view": "full",
+    "stresses": [
+      "decline-taxonomy",
+      "keeper-set-rule",
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      2,
+      2
+    ],
+    "final_sub": [
+      2,
+      2
+    ],
+    "struct": {
+      "PERFSCORE": [
+        1,
+        1
+      ],
+      "AUDITSCORE": [
+        1,
+        1
+      ]
+    },
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "4f2073b15bb682df",
+      "task": "hf_audit_perf",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 18.3,
+    "tail": "SUBTESTS 2/2\nPERFSCORE 1/1\nAUDITSCORE 1/1",
+    "llm_calls": 2,
+    "gen_tok": 711,
+    "prompt_tok": 4690,
+    "gen_s": 8.19,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.45,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790279248.398,
+    "t_end": 1790279266.714
+  },
+  {
+    "task": "hf_wrong_spec",
+    "shape": "fix",
+    "trap": "faulty-check",
+    "worker_view": "full",
+    "stresses": [
+      "decline-taxonomy",
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      2,
+      3
+    ],
+    "final_sub": [
+      2,
+      3
+    ],
+    "struct": {
+      "SPECSCORE": [
+        4,
+        4
+      ]
+    },
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "b78e13715d216e03",
+      "task": "hf_wrong_spec",
+      "arm": "monolith",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"40f79035a4c6\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 7.4,
+    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4",
+    "llm_calls": 1,
+    "gen_tok": 246,
+    "prompt_tok": 1933,
+    "gen_s": 2.77,
+    "tool_turns": 1,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 0.89,
+    "runner": "DESKTOP-J6EJPKF-31704",
+    "t_start": 1790279267.553,
+    "t_end": 1790279274.943
+  }
+]

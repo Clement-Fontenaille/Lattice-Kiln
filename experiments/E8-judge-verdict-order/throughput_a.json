@@ -1,6 +1,6 @@
 {
   "name": "throughput - judge_anchored, qwen, reason_first",
-  "reps": 2,
+  "reps": 4,
   "arms": [
     "judge_anchored"
   ],

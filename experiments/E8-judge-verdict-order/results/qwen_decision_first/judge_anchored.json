@@ -1,0 +1,450 @@
+[
+  {
+    "task": "hf_retry_backoff",
+    "shape": "robustness",
+    "trap": "silent-failure",
+    "worker_view": "full",
+    "stresses": [
+      "silent-failure",
+      "edge-coverage"
+    ],
+    "rep": 3,
+    "arm": "judge_anchored",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "b06984ae27db6097",
+      "task": "hf_retry_backoff",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "judge_format": "decision_first",
+      "params": "{\"num_ctx\": 8192}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 74.2,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 10,
+    "gen_tok": 2426,
+    "prompt_tok": 10646,
+    "gen_s": 65.43,
+    "prompt_s": 4.86,
+    "runner": "DESKTOP-J6EJPKF-25912",
+    "t_start": 1790140653.616,
+    "t_end": 1790140727.779
+  },
+  {
+    "task": "hf_retry_backoff",
+    "shape": "robustness",
+    "trap": "silent-failure",
+    "worker_view": "full",
+    "stresses": [
+      "silent-failure",
+      "edge-coverage"
+    ],
+    "rep": 4,
+    "arm": "judge_anchored",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "b06984ae27db6097",
+      "task": "hf_retry_backoff",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "judge_format": "decision_first",
+      "params": "{\"num_ctx\": 8192}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 56.7,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 8,
+    "gen_tok": 1833,
+    "prompt_tok": 8372,
+    "gen_s": 51.59,
+    "prompt_s": 2.27,
+    "runner": "DESKTOP-J6EJPKF-25912",
+    "t_start": 1790140728.583,
+    "t_end": 1790140785.244
+  },
+  {
+    "task": "hf_retry_backoff",
+    "shape": "robustness",
+    "trap": "silent-failure",
+    "worker_view": "full",
+    "stresses": [
+      "silent-failure",
+      "edge-coverage"
+    ],
+    "rep": 5,
+    "arm": "judge_anchored",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "b06984ae27db6097",
+      "task": "hf_retry_backoff",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "judge_format": "decision_first",
+      "params": "{\"num_ctx\": 8192}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 146.5,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 14,
+    "gen_tok": 4833,
+    "prompt_tok": 16201,
+    "gen_s": 133.85,
+    "prompt_s": 5.97,
+    "runner": "DESKTOP-J6EJPKF-25912",
+    "t_start": 1790140786.133,
+    "t_end": 1790140932.625
+  },
+  {
+    "task": "hf_already_optimal",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit",
+      "cross-file"
+    ],
+    "rep": 1,
+    "arm": "judge_anchored",
+    "terminal": "declined",
+    "baseline_sub": [
+      6,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "f94ad51459fba19b",
+      "task": "hf_already_optimal",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "judge_format": "decision_first",
+      "params": "{\"num_ctx\": 8192}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 94.2,
+    "tail": "SUBTESTS 6/6",
+    "llm_calls": 15,
+    "gen_tok": 3008,
+    "prompt_tok": 16945,
+    "gen_s": 83.08,
+    "prompt_s": 6.29,
+    "runner": "DESKTOP-J6EJPKF-25912",
+    "t_start": 1790140933.2,
+    "t_end": 1790141027.431
+  },
+  {
+    "task": "hf_already_optimal",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit",
+      "cross-file"
+    ],
+    "rep": 2,
+    "arm": "judge_anchored",
+    "terminal": "declined",
+    "baseline_sub": [
+      6,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "f94ad51459fba19b",
+      "task": "hf_already_optimal",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "judge_format": "decision_first",
+      "params": "{\"num_ctx\": 8192}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 77.7,
+    "tail": "SUBTESTS 6/6",
+    "llm_calls": 15,
+    "gen_tok": 2439,
+    "prompt_tok": 16994,
+    "gen_s": 65.46,
+    "prompt_s": 7.15,
+    "runner": "DESKTOP-J6EJPKF-25912",
+    "t_start": 1790141028.113,
+    "t_end": 1790141105.815
+  },
+  {
+    "task": "hf_already_optimal",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit",
+      "cross-file"
+    ],
+    "rep": 3,
+    "arm": "judge_anchored",
+    "terminal": "declined",
+    "baseline_sub": [
+      6,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "f94ad51459fba19b",
+      "task": "hf_already_optimal",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "judge_format": "decision_first",
+      "params": "{\"num_ctx\": 8192}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 69.6,
+    "tail": "SUBTESTS 6/6",
+    "llm_calls": 14,
+    "gen_tok": 2363,
+    "prompt_tok": 15282,
+    "gen_s": 60.52,
+    "prompt_s": 4.41,
+    "runner": "DESKTOP-J6EJPKF-25912",
+    "t_start": 1790141106.432,
+    "t_end": 1790141176.015
+  },
+  {
+    "task": "hf_already_optimal",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit",
+      "cross-file"
+    ],
+    "rep": 4,
+    "arm": "judge_anchored",
+    "terminal": "declined",
+    "baseline_sub": [
+      6,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "f94ad51459fba19b",
+      "task": "hf_already_optimal",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "judge_format": "decision_first",
+      "params": "{\"num_ctx\": 8192}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 73.1,
+    "tail": "SUBTESTS 6/6",
+    "llm_calls": 14,
+    "gen_tok": 2651,
+    "prompt_tok": 15528,
+    "gen_s": 62.87,
+    "prompt_s": 4.39,
+    "runner": "DESKTOP-J6EJPKF-25912",
+    "t_start": 1790141176.55,
+    "t_end": 1790141249.657
+  },
+  {
+    "task": "hf_already_optimal",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit",
+      "cross-file"
+    ],
+    "rep": 5,
+    "arm": "judge_anchored",
+    "terminal": "declined",
+    "baseline_sub": [
+      6,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "f94ad51459fba19b",
+      "task": "hf_already_optimal",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "judge_format": "decision_first",
+      "params": "{\"num_ctx\": 8192}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 3.7,
+    "tail": "SUBTESTS 6/6",
+    "llm_calls": 2,
+    "gen_tok": 206,
+    "prompt_tok": 1272,
+    "gen_s": 3.2,
+    "prompt_s": 0.09,
+    "runner": "DESKTOP-J6EJPKF-25912",
+    "t_start": 1790141250.247,
+    "t_end": 1790141253.972
+  }
+]

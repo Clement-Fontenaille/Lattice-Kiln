@@ -211,13 +211,13 @@ def _eval_params(arm_name: str = "") -> dict:
     # two are independent. Every arm sends the same adapter; none of them owns
     # it. See processor.adapter_fingerprint.
     p["adapter"] = _proc.adapter_fingerprint()
-    # The recovery hook is a CAPABILITY OF THE ADAPTER that most arms never
-    # activate. Its identity has to be recorded -- a change to a steering
-    # sentence changes what the model sees -- but only where it is used, or
-    # every marker-protocol row would move when a rung is reworded.
+    # The processor's recovery implementation -- its failure modes, its steering
+    # text, its sampling and attempt budget. Processor-owned, not adapter-owned:
+    # the adapter only provides a catchable exception carrying its generation,
+    # and has no say in what is done about it.
     #
-    # So it appears in params ONLY for arms that switch it on. Absent means the
-    # arm never had it, which is a fact about the arm, not a missing value.
+    # Recorded ONLY for arms that use it. Absent means the arm never recovered,
+    # which is a fact about the arm rather than a missing value.
     if arm_name in RECOVERY_ARMS:
         p["recovery"] = _proc.recovery_fingerprint()
     return p

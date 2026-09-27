@@ -1,0 +1,470 @@
+[
+  {
+    "task": "hf_dict_dispatch",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural",
+      "regression-guard"
+    ],
+    "rep": 3,
+    "arm": "judge_caveat",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      7,
+      7
+    ],
+    "final_sub": [
+      7,
+      7
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        0,
+        3
+      ]
+    },
+    "gate_pass": true,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "dc5f3034ac3a30c0",
+      "task": "hf_dict_dispatch",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "56ec0d29e4f3dc7e",
+      "backend": "ollama",
+      "model": "nemotron-gpu",
+      "judge_format": "reason_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 215.4,
+    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain",
+    "llm_calls": 14,
+    "gen_tok": 2865,
+    "prompt_tok": 20347,
+    "gen_s": 57.85,
+    "prompt_s": 14.32,
+    "runner": "DESKTOP-J6EJPKF-9524",
+    "t_start": 1790024694.893,
+    "t_end": 1790024910.293
+  },
+  {
+    "task": "hf_dict_dispatch",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural",
+      "regression-guard"
+    ],
+    "rep": 4,
+    "arm": "judge_caveat",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      7,
+      7
+    ],
+    "final_sub": [
+      7,
+      7
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        0,
+        3
+      ]
+    },
+    "gate_pass": true,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "dc5f3034ac3a30c0",
+      "task": "hf_dict_dispatch",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "56ec0d29e4f3dc7e",
+      "backend": "ollama",
+      "model": "nemotron-gpu",
+      "judge_format": "reason_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 199.9,
+    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain",
+    "llm_calls": 14,
+    "gen_tok": 2957,
+    "prompt_tok": 20596,
+    "gen_s": 59.86,
+    "prompt_s": 14.37,
+    "runner": "DESKTOP-J6EJPKF-9524",
+    "t_start": 1790024910.975,
+    "t_end": 1790025110.84
+  },
+  {
+    "task": "hf_dict_dispatch",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural",
+      "regression-guard"
+    ],
+    "rep": 5,
+    "arm": "judge_caveat",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      7,
+      7
+    ],
+    "final_sub": [
+      7,
+      7
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        0,
+        3
+      ]
+    },
+    "gate_pass": true,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "dc5f3034ac3a30c0",
+      "task": "hf_dict_dispatch",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "56ec0d29e4f3dc7e",
+      "backend": "ollama",
+      "model": "nemotron-gpu",
+      "judge_format": "reason_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 149.1,
+    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain",
+    "llm_calls": 14,
+    "gen_tok": 2980,
+    "prompt_tok": 20822,
+    "gen_s": 60.32,
+    "prompt_s": 12.36,
+    "runner": "DESKTOP-J6EJPKF-9524",
+    "t_start": 1790025111.379,
+    "t_end": 1790025260.451
+  },
+  {
+    "task": "hf_csv",
+    "shape": "data",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "kway-synth",
+      "partial-credit"
+    ],
+    "rep": 1,
+    "arm": "judge_caveat",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      6
+    ],
+    "final_sub": [
+      3,
+      6
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "92d201d4298b7670",
+      "task": "hf_csv",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "56ec0d29e4f3dc7e",
+      "backend": "ollama",
+      "model": "nemotron-gpu",
+      "judge_format": "reason_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 175.5,
+    "tail": "SUBTESTS 3/6\n  quoted comma: got [['x', '\"a', 'b\"', 'y']] want [['x', 'a,b', 'y']]\n  quoted newline: got [['x', '\"l1'], ['l2\"', 'y']] want [['x', 'l1\\nl2', 'y']]\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]",
+    "llm_calls": 8,
+    "gen_tok": 1109,
+    "prompt_tok": 8737,
+    "gen_s": 22.37,
+    "prompt_s": 8.31,
+    "runner": "DESKTOP-J6EJPKF-9524",
+    "t_start": 1790025260.949,
+    "t_end": 1790025436.498
+  },
+  {
+    "task": "hf_csv",
+    "shape": "data",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "kway-synth",
+      "partial-credit"
+    ],
+    "rep": 2,
+    "arm": "judge_caveat",
+    "terminal": "blocked-partial",
+    "baseline_sub": [
+      3,
+      6
+    ],
+    "final_sub": [
+      4,
+      6
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "92d201d4298b7670",
+      "task": "hf_csv",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "56ec0d29e4f3dc7e",
+      "backend": "ollama",
+      "model": "nemotron-gpu",
+      "judge_format": "reason_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 247.1,
+    "tail": "SUBTESTS 4/6\n  quoted newline: got [['x', 'l1l2', 'y']] want [['x', 'l1\\nl2', 'y']]\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]",
+    "llm_calls": 14,
+    "gen_tok": 2540,
+    "prompt_tok": 17259,
+    "gen_s": 51.23,
+    "prompt_s": 15.0,
+    "runner": "DESKTOP-J6EJPKF-9524",
+    "t_start": 1790025436.919,
+    "t_end": 1790025684.054
+  },
+  {
+    "task": "hf_csv",
+    "shape": "data",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "kway-synth",
+      "partial-credit"
+    ],
+    "rep": 3,
+    "arm": "judge_caveat",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      6
+    ],
+    "final_sub": [
+      3,
+      6
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "92d201d4298b7670",
+      "task": "hf_csv",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "56ec0d29e4f3dc7e",
+      "backend": "ollama",
+      "model": "nemotron-gpu",
+      "judge_format": "reason_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 731.3,
+    "tail": "SUBTESTS 3/6\n  quoted comma: got [['x', '\"a', 'b\"', 'y']] want [['x', 'a,b', 'y']]\n  quoted newline: got [['x', '\"l1'], ['l2\"', 'y']] want [['x', 'l1\\nl2', 'y']]\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]",
+    "llm_calls": 12,
+    "gen_tok": 1769,
+    "prompt_tok": 13863,
+    "gen_s": 35.97,
+    "prompt_s": 18.26,
+    "runner": "DESKTOP-J6EJPKF-9524",
+    "t_start": 1790025684.471,
+    "t_end": 1790026415.761
+  },
+  {
+    "task": "hf_csv",
+    "shape": "data",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "kway-synth",
+      "partial-credit"
+    ],
+    "rep": 4,
+    "arm": "judge_caveat",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      6
+    ],
+    "final_sub": [
+      3,
+      6
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "92d201d4298b7670",
+      "task": "hf_csv",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "56ec0d29e4f3dc7e",
+      "backend": "ollama",
+      "model": "nemotron-gpu",
+      "judge_format": "reason_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 667.4,
+    "tail": "SUBTESTS 3/6\n  quoted comma: got [['x', '\"a', 'b\"', 'y']] want [['x', 'a,b', 'y']]\n  quoted newline: got [['x', '\"l1'], ['l2\"', 'y']] want [['x', 'l1\\nl2', 'y']]\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]",
+    "llm_calls": 10,
+    "gen_tok": 1520,
+    "prompt_tok": 11521,
+    "gen_s": 30.76,
+    "prompt_s": 15.21,
+    "runner": "DESKTOP-J6EJPKF-9524",
+    "t_start": 1790026416.163,
+    "t_end": 1790027083.563
+  },
+  {
+    "task": "hf_csv",
+    "shape": "data",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "kway-synth",
+      "partial-credit"
+    ],
+    "rep": 5,
+    "arm": "judge_caveat",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      6
+    ],
+    "final_sub": [
+      3,
+      6
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "92d201d4298b7670",
+      "task": "hf_csv",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "56ec0d29e4f3dc7e",
+      "backend": "ollama",
+      "model": "nemotron-gpu",
+      "judge_format": "reason_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 596.2,
+    "tail": "SUBTESTS 3/6\n  quoted comma: got [['x', '\"a', 'b\"', 'y']] want [['x', 'a,b', 'y']]\n  quoted newline: got [['x', '\"l1'], ['l2\"', 'y']] want [['x', 'l1\\nl2', 'y']]\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]",
+    "llm_calls": 8,
+    "gen_tok": 1073,
+    "prompt_tok": 8763,
+    "gen_s": 22.69,
+    "prompt_s": 11.96,
+    "runner": "DESKTOP-J6EJPKF-9524",
+    "t_start": 1790027084.007,
+    "t_end": 1790027680.214
+  }
+]

@@ -1,0 +1,31 @@
+tree results_nemotron_nothink, tasks hf_retry_backoff wf2_retry
+
+arm                     reps  rows to replace
+baseline                   1                2
+judge_anchored             1                2
+judge_bypass               1                2
+judge_caveat               1                2
+judge_fullctx              1                2
+judge_staged               1                1
+monolith                   1                2
+test_synth                 1                2
+
+8 arms, 15 rows
+[1/8] baseline reps=1 ...
+      -> exit 0, 2 rows, 0 min
+[2/8] judge_anchored reps=1 ...
+      -> exit 0, 2 rows, 9 min
+[3/8] judge_bypass reps=1 ...
+      -> exit 0, 2 rows, 10 min
+[4/8] judge_caveat reps=1 ...
+      -> exit 0, 2 rows, 14 min
+[5/8] judge_fullctx reps=1 ...
+      -> exit 0, 2 rows, 17 min
+[6/8] judge_staged reps=1 ...
+      -> exit 0, 2 rows, 22 min
+[7/8] monolith reps=1 ...
+      -> exit 0, 2 rows, 22 min
+[8/8] test_synth reps=1 ...
+      -> exit 0, 2 rows, 26 min
+
+DONE in 26 min

@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_6642b41832dd",
+  "started": "2026-09-23T01:29:46.277030+00:00",
+  "intent_text": "Add a retries parameter to Client.call(fn, retries=2): if fn() raises, retry up to `retries` more times; if every attempt fails, re-raise the LAST exception. retries=0 means a single attempt. Make test_task.py pass.",
+  "meta": {
+    "arm": "judge_anchored",
+    "suite": "m6"
+  },
+  "ended": "2026-09-23T01:37:29.434692+00:00",
+  "outcome": "completed",
+  "event_count": 43
+}

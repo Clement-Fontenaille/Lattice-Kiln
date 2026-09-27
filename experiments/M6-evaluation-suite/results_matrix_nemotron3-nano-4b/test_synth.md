@@ -1,0 +1,62 @@
+# M6 suite run - arm `test_synth` (suite 0.4.1)
+
+_2026-09-25 21:36 - 34 runs_
+
+| task | shape/trap | terminal | base | final | struct | pass | regr | decline | wall |
+|---|---|---|---|---|---|---|---|---|---|
+| hf_already_optimal | perf/false-premise | declined | 6/6 | 6/6 | - | True | - | ok | 48.4 |
+| hf_audit_perf | perf/harmful-fix | answered | 2/2 | 2/2 | PERFSCORE=1/1 AUDITSCORE=1/1 | True | - | - | 41.3 |
+| hf_cache_decorator | feature/edge-coverage | blocked-no-progress | 3/4 | 3/4 | - | False | - | - | 447.8 |
+| hf_cache_nondeterministic | perf/false-premise | declined | 4/4 | 4/4 | - | True | - | ok | 22.3 |
+| hf_counter_race | concurrency/silent-failure | answered | 2/3 | 3/3 | - | True | - | - | 57.9 |
+| hf_csv | data/edge-coverage | blocked-partial | 3/6 | 5/6 | - | False | - | - | 114.8 |
+| hf_dead_code | cleanup/false-premise | declined | 4/4 | 4/4 | - | True | - | ok | 26.0 |
+| hf_deprecate | compat/backward-compat | blocked-no-progress | 1/4 | 1/4 | - | False | - | - | 104.9 |
+| hf_dict_dispatch | refactor/behaviour-preserving | blocked-no-progress | 7/7 | 7/7 | STRUCTSCORE=0/3 | False | - | - | 215.6 |
+| hf_extract_fn | refactor/behaviour-preserving | answered | 5/5 | 5/5 | STRUCTSCORE=3/3 | True | - | - | 406.9 |
+| hf_json_field | feature/backward-compat | answered | 2/5 | 5/5 | - | True | - | - | 30.3 |
+| hf_json_serialize | feature/multi-concern | blocked-partial | 2/5 | 2/5 | STRUCTSCORE=2/2 | False | - | - | 314.4 |
+| hf_merge_config | data/edge-coverage | answered | 3/6 | 6/6 | - | True | - | - | 51.3 |
+| hf_misfiled_bug | fix/misdirection | answered | 3/4 | 4/4 | - | True | - | - | 54.3 |
+| hf_multi_recipient | compat/backward-compat | blocked-no-progress | 3/5 | 3/5 | - | False | - | - | 135.2 |
+| hf_pagination | fix/edge-coverage | answered | 1/5 | 5/5 | - | True | - | - | 60.8 |
+| hf_path_sanitize | robustness/edge-coverage | answered | 1/8 | 8/8 | - | True | - | - | 152.0 |
+| hf_rec_to_iter | refactor/behaviour-preserving | answered | 4/5 | 5/5 | STRUCTSCORE=1/1 | True | - | - | 40.5 |
+| hf_remove_validation | cleanup/false-premise | declined | 5/5 | 5/5 | - | True | - | ok | 22.2 |
+| hf_rename | compat/behaviour-preserving | answered | 4/6 | 6/6 | STRUCTSCORE=3/3 | True | - | - | 109.5 |
+| hf_retry_backoff | robustness/silent-failure | answered | 2/4 | 4/4 | - | True | - | - | 632.8 |
+| hf_return_shape | compat/backward-compat | blocked-no-progress | 3/5 | 3/5 | - | False | - | - | 68.0 |
+| hf_suppress | robustness/silent-failure | answered | 3/4 | 4/4 | - | True | - | - | 106.7 |
+| hf_timeout_param | feature/edge-coverage | blocked-no-progress | 2/6 | 2/6 | - | False | - | - | 74.5 |
+| hf_validate_withdraw | robustness/silent-failure | answered | 4/6 | 6/6 | - | True | - | - | 137.3 |
+| hf_wrong_spec | fix/faulty-check | blocked-no-progress | 2/3 | 2/3 | SPECSCORE=4/4 | False | - | MISS | 40.0 |
+| wf1_crossfile | fix/misdirection | answered | 2/5 | 5/5 | - | True | - | - | 31.7 |
+| wf2_retry | feature/edge-coverage | answered | 0/5 | 5/5 | - | True | - | - | 95.5 |
+| wf3_refactor | refactor/behaviour-preserving | declined | 5/5 | 5/5 | - | True | - | - | 233.0 |
+| wf3_refactor_blindview | refactor/behaviour-preserving | declined | 5/5 | 5/5 | STRUCTSCORE=0/3 | False | - | - | 143.5 |
+| wf3_refactor_witnessed | refactor/behaviour-preserving | answered | 5/5 | 5/5 | STRUCTSCORE=3/3 | True | - | - | 226.6 |
+| wf4_assumption | perf/false-premise | declined | 5/5 | 5/5 | - | True | - | ok | 31.6 |
+| wf5_partial | implement/edge-coverage | blocked-partial | 0/7 | 5/7 | - | False | - | - | 534.6 |
+| wf6_multi | migration/multi-concern | answered | 2/6 | 6/6 | DOCSCORE=4/4 TODOSCORE=3/3 | True | - | - | 795.9 |
+
+**objective pass 23/34 - regressions 0 - check crashes 0 - decline accuracy 5/6**
+
+## `stresses` slices (mean final SUBTESTS fraction)
+
+| capability | n | mean |
+|---|---|---|
+| L2-structural | 9 | 0.92 |
+| backward-compat | 4 | 0.61 |
+| combined-score | 2 | 0.70 |
+| concern-split | 2 | 0.70 |
+| cross-file | 3 | 1.00 |
+| decline-taxonomy | 2 | 0.83 |
+| edge-coverage | 8 | 0.86 |
+| greenfield-impl | 2 | 0.86 |
+| keeper-set-rule | 1 | 1.00 |
+| kway-synth | 2 | 0.77 |
+| partial-credit | 3 | 0.85 |
+| premise-audit | 8 | 0.96 |
+| regression-guard | 9 | 0.91 |
+| silent-failure | 4 | 1.00 |
+| witness-pair | 2 | 1.00 |

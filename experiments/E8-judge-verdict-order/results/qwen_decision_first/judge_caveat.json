@@ -1,0 +1,450 @@
+[
+  {
+    "task": "hf_multi_recipient",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "judge_caveat",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "fae42555c9acfa36",
+      "task": "hf_multi_recipient",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "judge_format": "decision_first",
+      "params": "{\"num_ctx\": 8192}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 101.9,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 14,
+    "gen_tok": 3200,
+    "prompt_tok": 15481,
+    "gen_s": 88.86,
+    "prompt_s": 5.71,
+    "runner": "DESKTOP-J6EJPKF-21816",
+    "t_start": 1790140077.309,
+    "t_end": 1790140179.208
+  },
+  {
+    "task": "hf_multi_recipient",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 2,
+    "arm": "judge_caveat",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "fae42555c9acfa36",
+      "task": "hf_multi_recipient",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "judge_format": "decision_first",
+      "params": "{\"num_ctx\": 8192}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 91.6,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 14,
+    "gen_tok": 2738,
+    "prompt_tok": 15375,
+    "gen_s": 80.0,
+    "prompt_s": 5.41,
+    "runner": "DESKTOP-J6EJPKF-21816",
+    "t_start": 1790140180.016,
+    "t_end": 1790140271.651
+  },
+  {
+    "task": "hf_multi_recipient",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 3,
+    "arm": "judge_caveat",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "fae42555c9acfa36",
+      "task": "hf_multi_recipient",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "judge_format": "decision_first",
+      "params": "{\"num_ctx\": 8192}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 93.4,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 14,
+    "gen_tok": 3219,
+    "prompt_tok": 15107,
+    "gen_s": 85.43,
+    "prompt_s": 3.17,
+    "runner": "DESKTOP-J6EJPKF-21816",
+    "t_start": 1790140272.208,
+    "t_end": 1790140365.596
+  },
+  {
+    "task": "hf_multi_recipient",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 4,
+    "arm": "judge_caveat",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "fae42555c9acfa36",
+      "task": "hf_multi_recipient",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "judge_format": "decision_first",
+      "params": "{\"num_ctx\": 8192}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 92.5,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 14,
+    "gen_tok": 2906,
+    "prompt_tok": 16205,
+    "gen_s": 81.41,
+    "prompt_s": 3.85,
+    "runner": "DESKTOP-J6EJPKF-21816",
+    "t_start": 1790140366.136,
+    "t_end": 1790140458.642
+  },
+  {
+    "task": "hf_multi_recipient",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 5,
+    "arm": "judge_caveat",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      3,
+      5
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "fae42555c9acfa36",
+      "task": "hf_multi_recipient",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "judge_format": "decision_first",
+      "params": "{\"num_ctx\": 8192}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 82.6,
+    "tail": "SUBTESTS 3/5\n  list of recipients fans out: got [(['a', 'b'], 'hi')] want [('a', 'hi'), ('b', 'hi')]\n  tuple of recipients fans out: got [(('x', 'y'), 'm')] want [('x', 'm'), ('y', 'm')]",
+    "llm_calls": 14,
+    "gen_tok": 2533,
+    "prompt_tok": 16171,
+    "gen_s": 69.8,
+    "prompt_s": 4.73,
+    "runner": "DESKTOP-J6EJPKF-21816",
+    "t_start": 1790140459.179,
+    "t_end": 1790140541.823
+  },
+  {
+    "task": "hf_misfiled_bug",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "judge_caveat",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      3,
+      4
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "7e2020c817d39889",
+      "task": "hf_misfiled_bug",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "judge_format": "decision_first",
+      "params": "{\"num_ctx\": 8192}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 34.0,
+    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'",
+    "llm_calls": 8,
+    "gen_tok": 1101,
+    "prompt_tok": 8395,
+    "gen_s": 29.15,
+    "prompt_s": 2.1,
+    "runner": "DESKTOP-J6EJPKF-21816",
+    "t_start": 1790140542.371,
+    "t_end": 1790140576.353
+  },
+  {
+    "task": "hf_misfiled_bug",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 2,
+    "arm": "judge_caveat",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      3,
+      4
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "7e2020c817d39889",
+      "task": "hf_misfiled_bug",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "judge_format": "decision_first",
+      "params": "{\"num_ctx\": 8192}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 37.4,
+    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'",
+    "llm_calls": 8,
+    "gen_tok": 1100,
+    "prompt_tok": 8338,
+    "gen_s": 33.08,
+    "prompt_s": 2.01,
+    "runner": "DESKTOP-J6EJPKF-21816",
+    "t_start": 1790140576.894,
+    "t_end": 1790140614.253
+  },
+  {
+    "task": "hf_misfiled_bug",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 3,
+    "arm": "judge_caveat",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      3,
+      4
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "7e2020c817d39889",
+      "task": "hf_misfiled_bug",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+      "judge_format": "decision_first",
+      "params": "{\"num_ctx\": 8192}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 36.2,
+    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'",
+    "llm_calls": 8,
+    "gen_tok": 1196,
+    "prompt_tok": 8416,
+    "gen_s": 32.74,
+    "prompt_s": 0.65,
+    "runner": "DESKTOP-J6EJPKF-21816",
+    "t_start": 1790140614.876,
+    "t_end": 1790140651.061
+  }
+]

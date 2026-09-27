@@ -1,0 +1,2164 @@
+[
+  {
+    "task": "wf1_crossfile",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "3f67afa1d72da5b8",
+      "task": "wf1_crossfile",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 105.5,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 15,
+    "gen_tok": 5256,
+    "prompt_tok": 19926,
+    "gen_s": 60.74,
+    "tool_turns": 7,
+    "tool_native": 7,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 7.02,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790339850.583,
+    "t_end": 1790339956.081
+  },
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "31cda7090cc6e47d",
+      "task": "wf2_retry",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 276.7,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 18,
+    "gen_tok": 19025,
+    "prompt_tok": 31659,
+    "gen_s": 217.33,
+    "tool_turns": 10,
+    "tool_native": 9,
+    "tool_recovered": 1,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 10.46,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790339956.734,
+    "t_end": 1790340233.402
+  },
+  {
+    "task": "wf3_refactor",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "declined",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "8eeb8d70aa6dd037",
+      "task": "wf3_refactor",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 250.1,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 19,
+    "gen_tok": 8348,
+    "prompt_tok": 29568,
+    "gen_s": 94.31,
+    "tool_turns": 12,
+    "tool_native": 12,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 11.73,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790340234.093,
+    "t_end": 1790340484.236
+  },
+  {
+    "task": "wf3_refactor_witnessed",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural",
+      "witness-pair"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        3,
+        3
+      ]
+    },
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "178b5b4883c51af5",
+      "task": "wf3_refactor_witnessed",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 155.5,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3",
+    "llm_calls": 18,
+    "gen_tok": 8841,
+    "prompt_tok": 38057,
+    "gen_s": 100.42,
+    "tool_turns": 10,
+    "tool_native": 10,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 10.76,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790340485.92,
+    "t_end": 1790340641.472
+  },
+  {
+    "task": "wf3_refactor_blindview",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "truncated",
+    "stresses": [
+      "L2-structural",
+      "witness-pair"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "declined",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        0,
+        3
+      ]
+    },
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "48755e0dcbfe027c",
+      "task": "wf3_refactor_blindview",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 14.7,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price",
+    "llm_calls": 2,
+    "gen_tok": 775,
+    "prompt_tok": 1234,
+    "gen_s": 8.68,
+    "tool_turns": 0,
+    "tool_native": 0,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 0.85,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790340642.241,
+    "t_end": 1790340656.924
+  },
+  {
+    "task": "wf4_assumption",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "declined",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "4efb57b9acb8e244",
+      "task": "wf4_assumption",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 8.0,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 1,
+    "gen_tok": 446,
+    "prompt_tok": 435,
+    "gen_s": 4.99,
+    "tool_turns": 0,
+    "tool_native": 0,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 0.36,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790340657.643,
+    "t_end": 1790340665.609
+  },
+  {
+    "task": "wf5_partial",
+    "shape": "implement",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "kway-synth",
+      "partial-credit",
+      "greenfield-impl"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      0,
+      7
+    ],
+    "final_sub": [
+      7,
+      7
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "ecbcc85eee619332",
+      "task": "wf5_partial",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 123.9,
+    "tail": "SUBTESTS 7/7",
+    "llm_calls": 9,
+    "gen_tok": 8386,
+    "prompt_tok": 15512,
+    "gen_s": 95.43,
+    "tool_turns": 5,
+    "tool_native": 4,
+    "tool_recovered": 1,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 6.19,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790340666.251,
+    "t_end": 1790340790.13
+  },
+  {
+    "task": "wf6_multi",
+    "shape": "migration",
+    "trap": "multi-concern",
+    "worker_view": "full",
+    "stresses": [
+      "concern-split",
+      "combined-score"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "blocked-partial",
+    "baseline_sub": [
+      2,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {
+      "DOCSCORE": [
+        4,
+        4
+      ],
+      "TODOSCORE": [
+        3,
+        3
+      ]
+    },
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "d9d3dcb79ac7fa15",
+      "task": "wf6_multi",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 331.1,
+    "tail": "SUBTESTS 6/6\nDOCSCORE 4/4\nTODOSCORE 3/3",
+    "llm_calls": 22,
+    "gen_tok": 21715,
+    "prompt_tok": 71750,
+    "gen_s": 250.2,
+    "tool_turns": 14,
+    "tool_native": 14,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 22.13,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790340790.898,
+    "t_end": 1790341121.971
+  },
+  {
+    "task": "hf_extract_fn",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        3,
+        3
+      ]
+    },
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "0fd974a58eea828c",
+      "task": "hf_extract_fn",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 390.0,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 3/3",
+    "llm_calls": 16,
+    "gen_tok": 12876,
+    "prompt_tok": 31103,
+    "gen_s": 151.49,
+    "tool_turns": 8,
+    "tool_native": 8,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 14.97,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790341125.216,
+    "t_end": 1790341515.207
+  },
+  {
+    "task": "hf_dict_dispatch",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      7,
+      7
+    ],
+    "final_sub": [
+      7,
+      7
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        0,
+        3
+      ]
+    },
+    "gate_pass": true,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "dc5f3034ac3a30c0",
+      "task": "hf_dict_dispatch",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 251.6,
+    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain",
+    "llm_calls": 20,
+    "gen_tok": 15688,
+    "prompt_tok": 42601,
+    "gen_s": 180.47,
+    "tool_turns": 12,
+    "tool_native": 12,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 16.42,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790341517.179,
+    "t_end": 1790341768.829
+  },
+  {
+    "task": "hf_rename",
+    "shape": "compat",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "regression-guard",
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      4,
+      6
+    ],
+    "final_sub": [
+      4,
+      6
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        2,
+        3
+      ]
+    },
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "e8ae310ce920542a",
+      "task": "hf_rename",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 222.6,
+    "tail": "SUBTESTS 4/6\n  compute exists and works: raised AttributeError(\"module 'billing' has no attribute 'compute'\")\n  calc name is gone: got True want False\nSTRUCTSCORE 2/3",
+    "llm_calls": 20,
+    "gen_tok": 13654,
+    "prompt_tok": 44491,
+    "gen_s": 154.75,
+    "tool_turns": 12,
+    "tool_native": 12,
+    "tool_recovered": 1,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 17.52,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790341769.644,
+    "t_end": 1790341992.212
+  },
+  {
+    "task": "hf_rec_to_iter",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      4,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        1,
+        1
+      ]
+    },
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "d2a55c52d02a5b3c",
+      "task": "hf_rec_to_iter",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 69.1,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/1",
+    "llm_calls": 9,
+    "gen_tok": 3472,
+    "prompt_tok": 16505,
+    "gen_s": 40.91,
+    "tool_turns": 5,
+    "tool_native": 5,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 5.18,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790341993.281,
+    "t_end": 1790342062.397
+  },
+  {
+    "task": "hf_already_optimal",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit",
+      "cross-file"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "declined",
+    "baseline_sub": [
+      6,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "f94ad51459fba19b",
+      "task": "hf_already_optimal",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 9.1,
+    "tail": "SUBTESTS 6/6",
+    "llm_calls": 1,
+    "gen_tok": 526,
+    "prompt_tok": 616,
+    "gen_s": 5.88,
+    "tool_turns": 0,
+    "tool_native": 0,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 0.47,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790342063.114,
+    "t_end": 1790342072.253
+  },
+  {
+    "task": "hf_dead_code",
+    "shape": "cleanup",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "declined",
+    "baseline_sub": [
+      4,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "bc6f6422991621bb",
+      "task": "hf_dead_code",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 7.5,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 1,
+    "gen_tok": 401,
+    "prompt_tok": 599,
+    "gen_s": 4.48,
+    "tool_turns": 0,
+    "tool_native": 0,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 0.47,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790342072.953,
+    "t_end": 1790342080.422
+  },
+  {
+    "task": "hf_remove_validation",
+    "shape": "cleanup",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "declined",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "53625004e2a2a391",
+      "task": "hf_remove_validation",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 7.4,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 1,
+    "gen_tok": 372,
+    "prompt_tok": 594,
+    "gen_s": 4.15,
+    "tool_turns": 0,
+    "tool_native": 0,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 0.51,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790342081.053,
+    "t_end": 1790342088.465
+  },
+  {
+    "task": "hf_cache_nondeterministic",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "declined",
+    "baseline_sub": [
+      4,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "364dc47e23ee7307",
+      "task": "hf_cache_nondeterministic",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 7.7,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 1,
+    "gen_tok": 419,
+    "prompt_tok": 599,
+    "gen_s": 4.73,
+    "tool_turns": 0,
+    "tool_native": 0,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 0.44,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790342089.118,
+    "t_end": 1790342096.853
+  },
+  {
+    "task": "hf_multi_recipient",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "fae42555c9acfa36",
+      "task": "hf_multi_recipient",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 129.7,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 13,
+    "gen_tok": 7686,
+    "prompt_tok": 21988,
+    "gen_s": 87.31,
+    "tool_turns": 7,
+    "tool_native": 6,
+    "tool_recovered": 1,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 9.7,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790342097.459,
+    "t_end": 1790342227.144
+  },
+  {
+    "task": "hf_return_shape",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "9d074fc1b08631a7",
+      "task": "hf_return_shape",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 57.0,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 7,
+    "gen_tok": 3091,
+    "prompt_tok": 10744,
+    "gen_s": 34.95,
+    "tool_turns": 3,
+    "tool_native": 3,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 4.63,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790342227.788,
+    "t_end": 1790342284.8
+  },
+  {
+    "task": "hf_deprecate",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      1,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "687ec6d767a01410",
+      "task": "hf_deprecate",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 142.5,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 16,
+    "gen_tok": 7992,
+    "prompt_tok": 26127,
+    "gen_s": 90.6,
+    "tool_turns": 8,
+    "tool_native": 8,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 11.26,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790342285.434,
+    "t_end": 1790342427.936
+  },
+  {
+    "task": "hf_json_field",
+    "shape": "feature",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "6ce208c9362e80dd",
+      "task": "hf_json_field",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 67.2,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 11,
+    "gen_tok": 2937,
+    "prompt_tok": 17683,
+    "gen_s": 33.19,
+    "tool_turns": 6,
+    "tool_native": 5,
+    "tool_recovered": 0,
+    "tool_malformed": 1,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 6.84,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790342428.546,
+    "t_end": 1790342495.74
+  },
+  {
+    "task": "hf_timeout_param",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "6d24211d35628155",
+      "task": "hf_timeout_param",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 184.0,
+    "tail": "SUBTESTS 6/6",
+    "llm_calls": 20,
+    "gen_tok": 10728,
+    "prompt_tok": 36990,
+    "gen_s": 121.4,
+    "tool_turns": 12,
+    "tool_native": 9,
+    "tool_recovered": 1,
+    "tool_malformed": 1,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 13.53,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790342496.454,
+    "t_end": 1790342680.5
+  },
+  {
+    "task": "hf_cache_decorator",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      3,
+      4
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "d025d8722ff4f43c",
+      "task": "hf_cache_decorator",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 176.9,
+    "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1",
+    "llm_calls": 13,
+    "gen_tok": 11837,
+    "prompt_tok": 25447,
+    "gen_s": 134.55,
+    "tool_turns": 8,
+    "tool_native": 8,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 9.67,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790342681.176,
+    "t_end": 1790342858.054
+  },
+  {
+    "task": "hf_csv",
+    "shape": "data",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "kway-synth",
+      "partial-credit"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "blocked-partial",
+    "baseline_sub": [
+      3,
+      6
+    ],
+    "final_sub": [
+      4,
+      6
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": true,
+    "new_fails": [
+      "CRLF line endings",
+      "plain rows"
+    ],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "92d201d4298b7670",
+      "task": "hf_csv",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 182.2,
+    "tail": "SUBTESTS 4/6\n  plain rows: raised Error('new-line character seen in unquoted field - do you need to open the file in universal-newline mode?')\n  CRLF line endings: raised Error('new-line character seen in unquoted field - do you need to open the file in universal-newline mode?')",
+    "llm_calls": 21,
+    "gen_tok": 10142,
+    "prompt_tok": 36311,
+    "gen_s": 114.86,
+    "tool_turns": 13,
+    "tool_native": 11,
+    "tool_recovered": 1,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 14.13,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790342858.788,
+    "t_end": 1790343040.956
+  },
+  {
+    "task": "hf_path_sanitize",
+    "shape": "robustness",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "partial-credit"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      1,
+      8
+    ],
+    "final_sub": [
+      8,
+      8
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "f2037f5107c761c6",
+      "task": "hf_path_sanitize",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 91.3,
+    "tail": "SUBTESTS 8/8",
+    "llm_calls": 8,
+    "gen_tok": 5704,
+    "prompt_tok": 14121,
+    "gen_s": 64.47,
+    "tool_turns": 4,
+    "tool_native": 3,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 5.8,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790343041.689,
+    "t_end": 1790343133.013
+  },
+  {
+    "task": "hf_merge_config",
+    "shape": "data",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "2f8fd76f7ab9131b",
+      "task": "hf_merge_config",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 144.2,
+    "tail": "SUBTESTS 6/6",
+    "llm_calls": 15,
+    "gen_tok": 8719,
+    "prompt_tok": 24840,
+    "gen_s": 98.95,
+    "tool_turns": 7,
+    "tool_native": 7,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 7.48,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790343133.639,
+    "t_end": 1790343277.865
+  },
+  {
+    "task": "hf_misfiled_bug",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "7e2020c817d39889",
+      "task": "hf_misfiled_bug",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 62.2,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 9,
+    "gen_tok": 3139,
+    "prompt_tok": 15202,
+    "gen_s": 35.52,
+    "tool_turns": 5,
+    "tool_native": 5,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 4.98,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790343278.602,
+    "t_end": 1790343340.769
+  },
+  {
+    "task": "hf_pagination",
+    "shape": "fix",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      1,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "3398602ee7b73801",
+      "task": "hf_pagination",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 74.4,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 8,
+    "gen_tok": 4437,
+    "prompt_tok": 13476,
+    "gen_s": 50.28,
+    "tool_turns": 4,
+    "tool_native": 4,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 4.63,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790343341.413,
+    "t_end": 1790343415.803
+  },
+  {
+    "task": "hf_suppress",
+    "shape": "robustness",
+    "trap": "silent-failure",
+    "worker_view": "full",
+    "stresses": [
+      "silent-failure",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "19fd367e9a65d4b1",
+      "task": "hf_suppress",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 136.5,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 13,
+    "gen_tok": 8402,
+    "prompt_tok": 21856,
+    "gen_s": 94.77,
+    "tool_turns": 7,
+    "tool_native": 7,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 9.78,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790343416.449,
+    "t_end": 1790343552.971
+  },
+  {
+    "task": "hf_validate_withdraw",
+    "shape": "robustness",
+    "trap": "silent-failure",
+    "worker_view": "full",
+    "stresses": [
+      "silent-failure",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      4,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "be1b4ea97970e21a",
+      "task": "hf_validate_withdraw",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 37.5,
+    "tail": "SUBTESTS 6/6",
+    "llm_calls": 5,
+    "gen_tok": 1961,
+    "prompt_tok": 7150,
+    "gen_s": 22.18,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 3.19,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790343553.631,
+    "t_end": 1790343591.122
+  },
+  {
+    "task": "hf_retry_backoff",
+    "shape": "robustness",
+    "trap": "silent-failure",
+    "worker_view": "full",
+    "stresses": [
+      "silent-failure",
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "b06984ae27db6097",
+      "task": "hf_retry_backoff",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 118.3,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 10,
+    "gen_tok": 7575,
+    "prompt_tok": 18995,
+    "gen_s": 85.91,
+    "tool_turns": 5,
+    "tool_native": 5,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 7.64,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790343591.756,
+    "t_end": 1790343710.11
+  },
+  {
+    "task": "hf_json_serialize",
+    "shape": "feature",
+    "trap": "multi-concern",
+    "worker_view": "full",
+    "stresses": [
+      "concern-split",
+      "combined-score"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "blocked-partial",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      2,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        2,
+        2
+      ]
+    },
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "6ddd76215cd51274",
+      "task": "hf_json_serialize",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 236.1,
+    "tail": "SUBTESTS 2/5\n  datetime to ISO: raised TypeError('Object of type datetime is not JSON serializable')\n  set to sorted list: raised TypeError('Object of type set is not JSON serializable')\n  Decimal to string: raised TypeError('Object of type Decimal is not JSON serializable')\nSTRUCTSCORE 2/2",
+    "llm_calls": 23,
+    "gen_tok": 14002,
+    "prompt_tok": 51933,
+    "gen_s": 159.31,
+    "tool_turns": 15,
+    "tool_native": 15,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 18.91,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790343711.174,
+    "t_end": 1790343947.232
+  },
+  {
+    "task": "hf_counter_race",
+    "shape": "concurrency",
+    "trap": "silent-failure",
+    "worker_view": "full",
+    "stresses": [
+      "silent-failure"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      3
+    ],
+    "final_sub": [
+      3,
+      3
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "ec20c506cbb117e2",
+      "task": "hf_counter_race",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 36.9,
+    "tail": "SUBTESTS 3/3",
+    "llm_calls": 5,
+    "gen_tok": 1805,
+    "prompt_tok": 7239,
+    "gen_s": 20.41,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 3.18,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790343948.318,
+    "t_end": 1790343985.206
+  },
+  {
+    "task": "hf_audit_perf",
+    "shape": "perf",
+    "trap": "harmful-fix",
+    "worker_view": "full",
+    "stresses": [
+      "decline-taxonomy",
+      "keeper-set-rule",
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "answered",
+    "baseline_sub": [
+      2,
+      2
+    ],
+    "final_sub": [
+      2,
+      2
+    ],
+    "struct": {
+      "PERFSCORE": [
+        1,
+        1
+      ],
+      "AUDITSCORE": [
+        1,
+        1
+      ]
+    },
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "4f2073b15bb682df",
+      "task": "hf_audit_perf",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 181.5,
+    "tail": "SUBTESTS 2/2\nPERFSCORE 1/1\nAUDITSCORE 1/1",
+    "llm_calls": 21,
+    "gen_tok": 9171,
+    "prompt_tok": 41194,
+    "gen_s": 104.61,
+    "tool_turns": 13,
+    "tool_native": 13,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 14.59,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790343986.301,
+    "t_end": 1790344167.74
+  },
+  {
+    "task": "hf_wrong_spec",
+    "shape": "fix",
+    "trap": "faulty-check",
+    "worker_view": "full",
+    "stresses": [
+      "decline-taxonomy",
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "judge_bypass",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      2,
+      3
+    ],
+    "final_sub": [
+      2,
+      3
+    ],
+    "struct": {
+      "SPECSCORE": [
+        4,
+        4
+      ]
+    },
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "b78e13715d216e03",
+      "task": "hf_wrong_spec",
+      "arm": "judge_bypass",
+      "arm_sha": "7346eaa50ecb37a9",
+      "prompt_sha": "61430f40634df723",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 65.5,
+    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4",
+    "llm_calls": 8,
+    "gen_tok": 2593,
+    "prompt_tok": 9655,
+    "gen_s": 30.04,
+    "tool_turns": 3,
+    "tool_native": 3,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 7.22,
+    "runner": "DESKTOP-J6EJPKF-34416",
+    "t_start": 1790344168.649,
+    "t_end": 1790344234.203
+  }
+]

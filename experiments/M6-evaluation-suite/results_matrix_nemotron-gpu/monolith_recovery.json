@@ -1,0 +1,3052 @@
+[
+  {
+    "task": "wf1_crossfile",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "error:TypeError(\"chat() got an unexpected keyword argument 'top_p'\")",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      2,
+      5
+    ],
+    "struct": {},
+    "gate_pass": null,
+    "objective_pass": null,
+    "run_ok": false,
+    "error_trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 281, in run_task\n    terminal = ARMS[arm_name](task[\"objective\"], ws)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 140, in arm_monolith_recovery\n    res = run_processor(role=\"implementer\", objective=objective, context=b,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 526, in run_processor\n    gen, parsed, out, journal = _tools_with_recovery(\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 325, in _tools_with_recovery\n    gen, parsed, out = _run_tools(cur, model=model, options=options)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 467, in _run_tools\n    gen = chat(msgs, model=model, tools=TOOLS, num_predict=num_predict,\nTypeError: chat() got an unexpected keyword argument 'top_p'\n",
+    "regressed": null,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "3f67afa1d72da5b8",
+      "task": "wf1_crossfile",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 193.3,
+    "tail": "SUBTESTS 2/5\n  total qty=3: got 5 want 15\n  total mixed: got 12 want 14\n  line_price direct: got 5 want 20",
+    "llm_calls": 2,
+    "gen_tok": 8636,
+    "prompt_tok": 3549,
+    "gen_s": 178.99,
+    "tool_turns": 2,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.22,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790451756.484,
+    "t_end": 1790451949.785
+  },
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      0,
+      5
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "31cda7090cc6e47d",
+      "task": "wf2_retry",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 143.0,
+    "tail": "SUBTESTS 0/5\n  success first try: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  succeed on 2nd try: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  exhaust then re-raise last: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  retries=0 is one attempt: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  returns fn value: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")",
+    "llm_calls": 3,
+    "gen_tok": 2562,
+    "prompt_tok": 6595,
+    "gen_s": 53.12,
+    "tool_turns": 3,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 2.4,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790451950.536,
+    "t_end": 1790452093.589
+  },
+  {
+    "task": "wf3_refactor",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "8eeb8d70aa6dd037",
+      "task": "wf3_refactor",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 60.0,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 3,
+    "gen_tok": 1456,
+    "prompt_tok": 5543,
+    "gen_s": 29.98,
+    "tool_turns": 3,
+    "tool_native": 0,
+    "tool_recovered": 1,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 2.05,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790452094.237,
+    "t_end": 1790452154.258
+  },
+  {
+    "task": "wf3_refactor_witnessed",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural",
+      "witness-pair"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        0,
+        3
+      ]
+    },
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "178b5b4883c51af5",
+      "task": "wf3_refactor_witnessed",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 67.5,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price",
+    "llm_calls": 3,
+    "gen_tok": 1632,
+    "prompt_tok": 8661,
+    "gen_s": 33.77,
+    "tool_turns": 3,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": false,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": true
+        }
+      ]
+    },
+    "prompt_s": 4.3,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790452155.095,
+    "t_end": 1790452222.581
+  },
+  {
+    "task": "wf3_refactor_blindview",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "truncated",
+    "stresses": [
+      "L2-structural",
+      "witness-pair"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        0,
+        3
+      ]
+    },
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "48755e0dcbfe027c",
+      "task": "wf3_refactor_blindview",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 70.1,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 0/3\n  the 20% computation is still written out in 2 places: clearance_price, staff_price",
+    "llm_calls": 3,
+    "gen_tok": 1491,
+    "prompt_tok": 9050,
+    "gen_s": 30.77,
+    "tool_turns": 3,
+    "tool_native": 0,
+    "tool_recovered": 1,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 4.39,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790452223.45,
+    "t_end": 1790452293.579
+  },
+  {
+    "task": "wf4_assumption",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "4efb57b9acb8e244",
+      "task": "wf4_assumption",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 30.1,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 2,
+    "gen_tok": 585,
+    "prompt_tok": 3573,
+    "gen_s": 12.05,
+    "tool_turns": 2,
+    "tool_native": 0,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 2.66,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790452294.339,
+    "t_end": 1790452324.416
+  },
+  {
+    "task": "wf5_partial",
+    "shape": "implement",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "kway-synth",
+      "partial-credit",
+      "greenfield-impl"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "error:TypeError(\"chat() got an unexpected keyword argument 'top_p'\")",
+    "baseline_sub": [
+      0,
+      7
+    ],
+    "final_sub": [
+      0,
+      7
+    ],
+    "struct": {},
+    "gate_pass": null,
+    "objective_pass": null,
+    "run_ok": false,
+    "error_trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 281, in run_task\n    terminal = ARMS[arm_name](task[\"objective\"], ws)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 140, in arm_monolith_recovery\n    res = run_processor(role=\"implementer\", objective=objective, context=b,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 526, in run_processor\n    gen, parsed, out, journal = _tools_with_recovery(\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 325, in _tools_with_recovery\n    gen, parsed, out = _run_tools(cur, model=model, options=options)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 467, in _run_tools\n    gen = chat(msgs, model=model, tools=TOOLS, num_predict=num_predict,\nTypeError: chat() got an unexpected keyword argument 'top_p'\n",
+    "regressed": null,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "ecbcc85eee619332",
+      "task": "wf5_partial",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 798.3,
+    "tail": "SUBTESTS 0/7\n  minutes: raised NotImplementedError()\n  hours: raised NotImplementedError()\n  h+m: raised NotImplementedError()\n  seconds: raised NotImplementedError()\n  h+m+s: raised NotImplementedError()\n  empty is zero: raised NotImplementedError()\n  whitespace: raised NotImplementedError()",
+    "llm_calls": 4,
+    "gen_tok": 11493,
+    "prompt_tok": 8213,
+    "gen_s": 511.61,
+    "tool_turns": 4,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 4.5,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790452325.361,
+    "t_end": 1790453123.68
+  },
+  {
+    "task": "wf6_multi",
+    "shape": "migration",
+    "trap": "multi-concern",
+    "worker_view": "full",
+    "stresses": [
+      "concern-split",
+      "combined-score"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      2,
+      6
+    ],
+    "final_sub": [
+      2,
+      6
+    ],
+    "struct": {
+      "DOCSCORE": [
+        0,
+        4
+      ],
+      "TODOSCORE": [
+        0,
+        3
+      ]
+    },
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "d9d3dcb79ac7fa15",
+      "task": "wf6_multi",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 373.2,
+    "tail": "SUBTESTS 2/6\n  topo chain raised NotImplementedError()\n  topo diamond raised NotImplementedError()\n  topo cycle: still NotImplementedError\n  topo empty raised NotImplementedError()\nDOCSCORE 0/4\n  no module docstring\n  build_graph docstring missing Args/Returns\n  topo_sort docstring missing Args/Returns/Raises\n  NOTES.md missing or no cycle-handling note\nTODOSCORE 0/3\n  implement topo_sort still present\n  2019 networkx todo still present\n  stale O(n^2) todo still present",
+    "llm_calls": 4,
+    "gen_tok": 4620,
+    "prompt_tok": 14399,
+    "gen_s": 94.85,
+    "tool_turns": 4,
+    "tool_native": 3,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 4.03,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790453132.856,
+    "t_end": 1790453506.02
+  },
+  {
+    "task": "hf_extract_fn",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        1,
+        3
+      ]
+    },
+    "gate_pass": true,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "0fd974a58eea828c",
+      "task": "hf_extract_fn",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 166.3,
+    "tail": "SUBTESTS 5/5\nSTRUCTSCORE 1/3\n  process not split (helpers: [])\n  process body still 15 lines",
+    "llm_calls": 3,
+    "gen_tok": 5537,
+    "prompt_tok": 7850,
+    "gen_s": 114.49,
+    "tool_turns": 3,
+    "tool_native": 0,
+    "tool_recovered": 1,
+    "tool_malformed": 3,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 2.43,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790453506.813,
+    "t_end": 1790453673.123
+  },
+  {
+    "task": "hf_dict_dispatch",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "error:TypeError(\"chat() got an unexpected keyword argument 'top_p'\")",
+    "baseline_sub": [
+      7,
+      7
+    ],
+    "final_sub": [
+      7,
+      7
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        0,
+        3
+      ]
+    },
+    "gate_pass": null,
+    "objective_pass": null,
+    "run_ok": false,
+    "error_trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 281, in run_task\n    terminal = ARMS[arm_name](task[\"objective\"], ws)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 140, in arm_monolith_recovery\n    res = run_processor(role=\"implementer\", objective=objective, context=b,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 526, in run_processor\n    gen, parsed, out, journal = _tools_with_recovery(\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 325, in _tools_with_recovery\n    gen, parsed, out = _run_tools(cur, model=model, options=options)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 467, in _run_tools\n    gen = chat(msgs, model=model, tools=TOOLS, num_predict=num_predict,\nTypeError: chat() got an unexpected keyword argument 'top_p'\n",
+    "regressed": null,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "dc5f3034ac3a30c0",
+      "task": "hf_dict_dispatch",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 343.5,
+    "tail": "SUBTESTS 7/7\nSTRUCTSCORE 0/3\n  still an if/elif chain",
+    "llm_calls": 0,
+    "gen_tok": 0,
+    "prompt_tok": 0,
+    "gen_s": 0.0,
+    "tool_turns": 1,
+    "tool_native": 0,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 0.0,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790453673.984,
+    "t_end": 1790454017.492
+  },
+  {
+    "task": "hf_rename",
+    "shape": "compat",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "regression-guard",
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      4,
+      6
+    ],
+    "final_sub": [
+      4,
+      6
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        2,
+        3
+      ]
+    },
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "e8ae310ce920542a",
+      "task": "hf_rename",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 100.9,
+    "tail": "SUBTESTS 4/6\n  compute exists and works: raised AttributeError(\"module 'billing' has no attribute 'compute'\")\n  calc name is gone: got True want False\nSTRUCTSCORE 2/3",
+    "llm_calls": 3,
+    "gen_tok": 1744,
+    "prompt_tok": 7772,
+    "gen_s": 36.03,
+    "tool_turns": 3,
+    "tool_native": 0,
+    "tool_recovered": 1,
+    "tool_malformed": 3,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 4.13,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790454018.276,
+    "t_end": 1790454119.183
+  },
+  {
+    "task": "hf_rec_to_iter",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      4,
+      5
+    ],
+    "final_sub": [
+      4,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        0,
+        1
+      ]
+    },
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "d2a55c52d02a5b3c",
+      "task": "hf_rec_to_iter",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 85.3,
+    "tail": "SUBTESTS 4/5\n  deep chain 5000: raised RecursionError('maximum recursion depth exceeded while calling a Python object')\nSTRUCTSCORE 0/1\n  count_nodes still calls itself",
+    "llm_calls": 3,
+    "gen_tok": 2694,
+    "prompt_tok": 6788,
+    "gen_s": 55.51,
+    "tool_turns": 3,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 2.59,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790454120.036,
+    "t_end": 1790454205.316
+  },
+  {
+    "task": "hf_already_optimal",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit",
+      "cross-file"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      6,
+      6
+    ],
+    "final_sub": [
+      6,
+      6
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "f94ad51459fba19b",
+      "task": "hf_already_optimal",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 32.2,
+    "tail": "SUBTESTS 6/6",
+    "llm_calls": 2,
+    "gen_tok": 549,
+    "prompt_tok": 4587,
+    "gen_s": 11.31,
+    "tool_turns": 2,
+    "tool_native": 0,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 1.67,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790454206.656,
+    "t_end": 1790454238.82
+  },
+  {
+    "task": "hf_dead_code",
+    "shape": "cleanup",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      4,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "bc6f6422991621bb",
+      "task": "hf_dead_code",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 67.2,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 2,
+    "gen_tok": 531,
+    "prompt_tok": 3881,
+    "gen_s": 10.88,
+    "tool_turns": 2,
+    "tool_native": 0,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 1.5,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790454239.569,
+    "t_end": 1790454306.808
+  },
+  {
+    "task": "hf_remove_validation",
+    "shape": "cleanup",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "error:OllamaError('request to http://localhost:11434 failed: HTTP 500: {\"error\":\"XML syntax error on line 5: element \\\\u",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": null,
+    "objective_pass": null,
+    "run_ok": false,
+    "error_trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\ollama_client.py\", line 782, in chat\n    with urllib.request.urlopen(req, timeout=timeout_s) as resp:\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\\lib\\urllib\\request.py\", line 216, in urlopen\n    return opener.open(url, data, timeout)\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\\lib\\urllib\\request.py\", line 525, in open\n    response = meth(req, response)\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\\lib\\urllib\\request.py\", line 634, in http_response\n    response = self.parent.error(\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\\lib\\urllib\\request.py\", line 563, in error\n    return self._call_chain(*args)\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\\lib\\urllib\\request.py\", line 496, in _call_chain\n    result = func(*args)\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\\lib\\urllib\\request.py\", line 643, in http_error_default\n    raise HTTPError(req.full_url, code, msg, hdrs, fp)\nurllib.error.HTTPError: HTTP Error 500: Internal Server Error\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 281, in run_task\n    terminal = ARMS[arm_name](task[\"objective\"], ws)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 140, in arm_monolith_recovery\n    res = run_processor(role=\"implementer\", objective=objective, context=b,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 526, in run_processor\n    gen, parsed, out, journal = _tools_with_recovery(\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 325, in _tools_with_recovery\n    gen, parsed, out = _run_tools(cur, model=model, options=options)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 467, in _run_tools\n    gen = chat(msgs, model=model, tools=TOOLS, num_predict=num_predict,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\ollama_client.py\", line 793, in chat\n    raise OllamaError(f\"request to {base_url} failed: HTTP {e.code}: {detail}\") from e\nollama_client.OllamaError: request to http://localhost:11434 failed: HTTP 500: {\"error\":\"XML syntax error on line 5: element \\u003cparameter\\u003e closed by \\u003c/function\\u003e\"}\n",
+    "regressed": null,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "53625004e2a2a391",
+      "task": "hf_remove_validation",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 19.2,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 0,
+    "gen_tok": 0,
+    "prompt_tok": 0,
+    "gen_s": 0.0,
+    "tool_turns": 0,
+    "tool_native": 0,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 0.0,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790454307.609,
+    "t_end": 1790454326.796
+  },
+  {
+    "task": "hf_cache_nondeterministic",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      4,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "364dc47e23ee7307",
+      "task": "hf_cache_nondeterministic",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 44.1,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 2,
+    "gen_tok": 558,
+    "prompt_tok": 4113,
+    "gen_s": 11.49,
+    "tool_turns": 2,
+    "tool_native": 0,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 1.5,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790454327.529,
+    "t_end": 1790454371.585
+  },
+  {
+    "task": "hf_multi_recipient",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      0,
+      1
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": true,
+    "new_fails": [
+      "File \"C",
+      "^\nSyntaxError",
+      "import notify as N\n  File \"C"
+    ],
+    "check_crashed": true,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "fae42555c9acfa36",
+      "task": "hf_multi_recipient",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 61.8,
+    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_multi_recipient_v9zs_ux1\\test_task.py\", line 8, in <module>\n    import notify as N\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_hf_multi_recipient_v9zs_ux1\\notify.py\", line 1\n    \"\"\"SENT = []          # one (recipient, msg) tuple per delivery\n    ^\nSyntaxError: unterminated triple-quoted string literal (detected at line 10)",
+    "llm_calls": 2,
+    "gen_tok": 1634,
+    "prompt_tok": 4003,
+    "gen_s": 33.69,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 1.48,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790454372.324,
+    "t_end": 1790454434.133
+  },
+  {
+    "task": "hf_return_shape",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      3,
+      5
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "9d074fc1b08631a7",
+      "task": "hf_return_shape",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 233.0,
+    "tail": "SUBTESTS 3/5\n  email attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'email'\")\n  name attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'name'\")",
+    "llm_calls": 3,
+    "gen_tok": 1441,
+    "prompt_tok": 6307,
+    "gen_s": 29.86,
+    "tool_turns": 3,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 2.34,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790454435.018,
+    "t_end": 1790454667.992
+  },
+  {
+    "task": "hf_deprecate",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      1,
+      4
+    ],
+    "final_sub": [
+      1,
+      4
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "687ec6d767a01410",
+      "task": "hf_deprecate",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 86.3,
+    "tail": "SUBTESTS 1/4\n  old_parse emits DeprecationWarning: got False want True\n  old_parse matches new_parse: got False want True\n  old_parse strips like new_parse: got [' one '] want ['one']",
+    "llm_calls": 3,
+    "gen_tok": 1484,
+    "prompt_tok": 6268,
+    "gen_s": 30.59,
+    "tool_turns": 3,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 3.63,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790454668.676,
+    "t_end": 1790454754.971
+  },
+  {
+    "task": "hf_json_field",
+    "shape": "feature",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      2,
+      5
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "6ce208c9362e80dd",
+      "task": "hf_json_field",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 231.2,
+    "tail": "SUBTESTS 2/5\n  tier from record: raised KeyError('tier')\n  old record defaults to free: raised KeyError('tier')\n  no extra keys: got {'id', 'name'} want {'id', 'tier', 'name'}",
+    "llm_calls": 3,
+    "gen_tok": 1260,
+    "prompt_tok": 5869,
+    "gen_s": 26.12,
+    "tool_turns": 3,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 3.58,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790454755.707,
+    "t_end": 1790454986.94
+  },
+  {
+    "task": "hf_timeout_param",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "error:TypeError(\"chat() got an unexpected keyword argument 'top_p'\")",
+    "baseline_sub": [
+      2,
+      6
+    ],
+    "final_sub": [
+      2,
+      6
+    ],
+    "struct": {},
+    "gate_pass": null,
+    "objective_pass": null,
+    "run_ok": false,
+    "error_trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 281, in run_task\n    terminal = ARMS[arm_name](task[\"objective\"], ws)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 140, in arm_monolith_recovery\n    res = run_processor(role=\"implementer\", objective=objective, context=b,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 526, in run_processor\n    gen, parsed, out, journal = _tools_with_recovery(\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 325, in _tools_with_recovery\n    gen, parsed, out = _run_tools(cur, model=model, options=options)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 467, in _run_tools\n    gen = chat(msgs, model=model, tools=TOOLS, num_predict=num_predict,\nTypeError: chat() got an unexpected keyword argument 'top_p'\n",
+    "regressed": null,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "6d24211d35628155",
+      "task": "hf_timeout_param",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 437.8,
+    "tail": "SUBTESTS 2/6\n  positive timeout, fast ok: raised TypeError(\"fetch() got an unexpected keyword argument 'timeout'\")\n  positive timeout, slow raises: got False want True\n  timeout=0 still times out: got False want True\n  timeout=0, fast still ok: raised TypeError(\"fetch() got an unexpected keyword argument 'timeout'\")",
+    "llm_calls": 3,
+    "gen_tok": 18404,
+    "prompt_tok": 13899,
+    "gen_s": 388.87,
+    "tool_turns": 3,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 9.24,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790454987.823,
+    "t_end": 1790455425.603
+  },
+  {
+    "task": "hf_cache_decorator",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "error:TypeError(\"chat() got an unexpected keyword argument 'top_p'\")",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      3,
+      4
+    ],
+    "struct": {},
+    "gate_pass": null,
+    "objective_pass": null,
+    "run_ok": false,
+    "error_trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 281, in run_task\n    terminal = ARMS[arm_name](task[\"objective\"], ws)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 140, in arm_monolith_recovery\n    res = run_processor(role=\"implementer\", objective=objective, context=b,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 526, in run_processor\n    gen, parsed, out, journal = _tools_with_recovery(\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 325, in _tools_with_recovery\n    gen, parsed, out = _run_tools(cur, model=model, options=options)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 467, in _run_tools\n    gen = chat(msgs, model=model, tools=TOOLS, num_predict=num_predict,\nTypeError: chat() got an unexpected keyword argument 'top_p'\n",
+    "regressed": null,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "d025d8722ff4f43c",
+      "task": "hf_cache_decorator",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 222.3,
+    "tail": "SUBTESTS 3/4\n  repeat call skips recompute: got 2 want 1",
+    "llm_calls": 0,
+    "gen_tok": 0,
+    "prompt_tok": 0,
+    "gen_s": 0.0,
+    "tool_turns": 1,
+    "tool_native": 0,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 0.0,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790455426.321,
+    "t_end": 1790455646.686
+  },
+  {
+    "task": "hf_csv",
+    "shape": "data",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "kway-synth",
+      "partial-credit"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      3,
+      6
+    ],
+    "final_sub": [
+      3,
+      6
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "92d201d4298b7670",
+      "task": "hf_csv",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 431.5,
+    "tail": "SUBTESTS 3/6\n  quoted comma: got [['x', '\"a', 'b\"', 'y']] want [['x', 'a,b', 'y']]\n  quoted newline: got [['x', '\"l1'], ['l2\"', 'y']] want [['x', 'l1\\nl2', 'y']]\n  leading BOM: got [['\\ufeffa', 'b']] want [['a', 'b']]",
+    "llm_calls": 3,
+    "gen_tok": 2347,
+    "prompt_tok": 6171,
+    "gen_s": 48.75,
+    "tool_turns": 3,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 3.44,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790455647.504,
+    "t_end": 1790456079.004
+  },
+  {
+    "task": "hf_path_sanitize",
+    "shape": "robustness",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "partial-credit"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      1,
+      8
+    ],
+    "final_sub": [
+      1,
+      8
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "f2037f5107c761c6",
+      "task": "hf_path_sanitize",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 114.1,
+    "tail": "SUBTESTS 1/8\n  parent traversal rejected: got False want True\n  nested traversal rejected: got False want True\n  absolute path rejected: got False want True\n  null byte rejected: got False want True\n  reserved name rejected: got False want True\n  trailing dot stripped: got 'report.' want 'report'\n  trailing space stripped: got 'data.csv  ' want 'data.csv'",
+    "llm_calls": 3,
+    "gen_tok": 3685,
+    "prompt_tok": 6489,
+    "gen_s": 76.47,
+    "tool_turns": 3,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 3.73,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790456079.944,
+    "t_end": 1790456194.005
+  },
+  {
+    "task": "hf_merge_config",
+    "shape": "data",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      3,
+      6
+    ],
+    "final_sub": [
+      3,
+      6
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "2f8fd76f7ab9131b",
+      "task": "hf_merge_config",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 427.7,
+    "tail": "SUBTESTS 3/6\n  nested dict merges: got {'x': {'q': 9}} want {'x': {'p': 1, 'q': 9}}\n  None deletes the key: got {'a': 1, 'b': None} want {'a': 1}\n  deep merge plus delete: got {'s': {'drop': None, 'add': 3}} want {'s': {'keep': 1, 'add': 3}}",
+    "llm_calls": 3,
+    "gen_tok": 2696,
+    "prompt_tok": 6295,
+    "gen_s": 55.98,
+    "tool_turns": 3,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 3.72,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790456194.873,
+    "t_end": 1790456622.536
+  },
+  {
+    "task": "hf_misfiled_bug",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      3,
+      4
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "7e2020c817d39889",
+      "task": "hf_misfiled_bug",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 57.0,
+    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'",
+    "llm_calls": 2,
+    "gen_tok": 847,
+    "prompt_tok": 3971,
+    "gen_s": 17.47,
+    "tool_turns": 2,
+    "tool_native": 0,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 1.59,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790456623.2,
+    "t_end": 1790456680.147
+  },
+  {
+    "task": "hf_pagination",
+    "shape": "fix",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "error:TypeError(\"chat() got an unexpected keyword argument 'top_p'\")",
+    "baseline_sub": [
+      1,
+      5
+    ],
+    "final_sub": [
+      1,
+      5
+    ],
+    "struct": {},
+    "gate_pass": null,
+    "objective_pass": null,
+    "run_ok": false,
+    "error_trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 281, in run_task\n    terminal = ARMS[arm_name](task[\"objective\"], ws)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 140, in arm_monolith_recovery\n    res = run_processor(role=\"implementer\", objective=objective, context=b,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 526, in run_processor\n    gen, parsed, out, journal = _tools_with_recovery(\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 325, in _tools_with_recovery\n    gen, parsed, out = _run_tools(cur, model=model, options=options)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 467, in _run_tools\n    gen = chat(msgs, model=model, tools=TOOLS, num_predict=num_predict,\nTypeError: chat() got an unexpected keyword argument 'top_p'\n",
+    "regressed": null,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "3398602ee7b73801",
+      "task": "hf_pagination",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 498.6,
+    "tail": "SUBTESTS 1/5\n  page 1 is the first items: got [3, 4, 5] want [0, 1, 2]\n  page 2: got [6, 7, 8] want [3, 4, 5]\n  last partial page: got [] want [9]\n  exact multiple last page: got [] want [8, 9]",
+    "llm_calls": 2,
+    "gen_tok": 8765,
+    "prompt_tok": 3891,
+    "gen_s": 180.81,
+    "tool_turns": 2,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 4.33,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790456680.947,
+    "t_end": 1790457179.572
+  },
+  {
+    "task": "hf_suppress",
+    "shape": "robustness",
+    "trap": "silent-failure",
+    "worker_view": "full",
+    "stresses": [
+      "silent-failure",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "error:OllamaError('request to http://localhost:11434 failed: HTTP 500: {\"error\":\"XML syntax error on line 21: element \\\\",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      3,
+      4
+    ],
+    "struct": {},
+    "gate_pass": null,
+    "objective_pass": null,
+    "run_ok": false,
+    "error_trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\ollama_client.py\", line 782, in chat\n    with urllib.request.urlopen(req, timeout=timeout_s) as resp:\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\\lib\\urllib\\request.py\", line 216, in urlopen\n    return opener.open(url, data, timeout)\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\\lib\\urllib\\request.py\", line 525, in open\n    response = meth(req, response)\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\\lib\\urllib\\request.py\", line 634, in http_response\n    response = self.parent.error(\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\\lib\\urllib\\request.py\", line 563, in error\n    return self._call_chain(*args)\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\\lib\\urllib\\request.py\", line 496, in _call_chain\n    result = func(*args)\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\\lib\\urllib\\request.py\", line 643, in http_error_default\n    raise HTTPError(req.full_url, code, msg, hdrs, fp)\nurllib.error.HTTPError: HTTP Error 500: Internal Server Error\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 281, in run_task\n    terminal = ARMS[arm_name](task[\"objective\"], ws)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 140, in arm_monolith_recovery\n    res = run_processor(role=\"implementer\", objective=objective, context=b,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 526, in run_processor\n    gen, parsed, out, journal = _tools_with_recovery(\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 325, in _tools_with_recovery\n    gen, parsed, out = _run_tools(cur, model=model, options=options)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 467, in _run_tools\n    gen = chat(msgs, model=model, tools=TOOLS, num_predict=num_predict,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\ollama_client.py\", line 793, in chat\n    raise OllamaError(f\"request to {base_url} failed: HTTP {e.code}: {detail}\") from e\nollama_client.OllamaError: request to http://localhost:11434 failed: HTTP 500: {\"error\":\"XML syntax error on line 21: element \\u003cparameter\\u003e closed by \\u003c/function\\u003e\"}\n",
+    "regressed": null,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "19fd367e9a65d4b1",
+      "task": "hf_suppress",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 26.2,
+    "tail": "SUBTESTS 3/4\n  non-numeric value is skipped, not fatal: raised ValueError(\"invalid literal for int() with base 10: 'x'\")",
+    "llm_calls": 0,
+    "gen_tok": 0,
+    "prompt_tok": 0,
+    "gen_s": 0.0,
+    "tool_turns": 0,
+    "tool_native": 0,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 0.0,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790457180.977,
+    "t_end": 1790457207.217
+  },
+  {
+    "task": "hf_validate_withdraw",
+    "shape": "robustness",
+    "trap": "silent-failure",
+    "worker_view": "full",
+    "stresses": [
+      "silent-failure",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      4,
+      6
+    ],
+    "final_sub": [
+      4,
+      6
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "be1b4ea97970e21a",
+      "task": "hf_validate_withdraw",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 186.0,
+    "tail": "SUBTESTS 4/6\n  negative amount rejected: got False want True\n  overdraw rejected: got False want True",
+    "llm_calls": 3,
+    "gen_tok": 2281,
+    "prompt_tok": 6462,
+    "gen_s": 47.05,
+    "tool_turns": 3,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 3.75,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790457208.103,
+    "t_end": 1790457394.144
+  },
+  {
+    "task": "hf_retry_backoff",
+    "shape": "robustness",
+    "trap": "silent-failure",
+    "worker_view": "full",
+    "stresses": [
+      "silent-failure",
+      "edge-coverage"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      2,
+      4
+    ],
+    "final_sub": [
+      2,
+      4
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "b06984ae27db6097",
+      "task": "hf_retry_backoff",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 146.6,
+    "tail": "SUBTESTS 2/4\n  recovers after 2 transients: got ('transient', 1) want ('ok', 'ok', 3)\n  gives up after 4 attempts: got ('transient', 1) want ('transient', 4)",
+    "llm_calls": 3,
+    "gen_tok": 4903,
+    "prompt_tok": 7530,
+    "gen_s": 101.78,
+    "tool_turns": 3,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 2.98,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790457394.805,
+    "t_end": 1790457541.394
+  },
+  {
+    "task": "hf_json_serialize",
+    "shape": "feature",
+    "trap": "multi-concern",
+    "worker_view": "full",
+    "stresses": [
+      "concern-split",
+      "combined-score"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "error:OllamaError('request to http://localhost:11434 failed: HTTP 500: {\"error\":\"XML syntax error on line 5: element \\\\u",
+    "baseline_sub": [
+      2,
+      5
+    ],
+    "final_sub": [
+      2,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        0,
+        2
+      ]
+    },
+    "gate_pass": null,
+    "objective_pass": null,
+    "run_ok": false,
+    "error_trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\ollama_client.py\", line 782, in chat\n    with urllib.request.urlopen(req, timeout=timeout_s) as resp:\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\\lib\\urllib\\request.py\", line 216, in urlopen\n    return opener.open(url, data, timeout)\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\\lib\\urllib\\request.py\", line 525, in open\n    response = meth(req, response)\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\\lib\\urllib\\request.py\", line 634, in http_response\n    response = self.parent.error(\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\\lib\\urllib\\request.py\", line 563, in error\n    return self._call_chain(*args)\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\\lib\\urllib\\request.py\", line 496, in _call_chain\n    result = func(*args)\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\\lib\\urllib\\request.py\", line 643, in http_error_default\n    raise HTTPError(req.full_url, code, msg, hdrs, fp)\nurllib.error.HTTPError: HTTP Error 500: Internal Server Error\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 281, in run_task\n    terminal = ARMS[arm_name](task[\"objective\"], ws)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 140, in arm_monolith_recovery\n    res = run_processor(role=\"implementer\", objective=objective, context=b,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 526, in run_processor\n    gen, parsed, out, journal = _tools_with_recovery(\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 325, in _tools_with_recovery\n    gen, parsed, out = _run_tools(cur, model=model, options=options)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 467, in _run_tools\n    gen = chat(msgs, model=model, tools=TOOLS, num_predict=num_predict,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\ollama_client.py\", line 793, in chat\n    raise OllamaError(f\"request to {base_url} failed: HTTP {e.code}: {detail}\") from e\nollama_client.OllamaError: request to http://localhost:11434 failed: HTTP 500: {\"error\":\"XML syntax error on line 5: element \\u003cparameter\\u003e closed by \\u003c/function\\u003e\"}\n",
+    "regressed": null,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "6ddd76215cd51274",
+      "task": "hf_json_serialize",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 304.7,
+    "tail": "SUBTESTS 2/5\n  datetime to ISO: raised TypeError('Object of type datetime is not JSON serializable')\n  set to sorted list: raised TypeError('Object of type set is not JSON serializable')\n  Decimal to string: raised TypeError('Object of type Decimal is not JSON serializable')\nSTRUCTSCORE 0/2",
+    "llm_calls": 2,
+    "gen_tok": 4512,
+    "prompt_tok": 4579,
+    "gen_s": 93.78,
+    "tool_turns": 2,
+    "tool_native": 0,
+    "tool_recovered": 1,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 1.56,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790457542.094,
+    "t_end": 1790457846.782
+  },
+  {
+    "task": "hf_counter_race",
+    "shape": "concurrency",
+    "trap": "silent-failure",
+    "worker_view": "full",
+    "stresses": [
+      "silent-failure"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      2,
+      3
+    ],
+    "final_sub": [
+      2,
+      3
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "ec20c506cbb117e2",
+      "task": "hf_counter_race",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 64.1,
+    "tail": "SUBTESTS 2/3\n  concurrent increments do not lose updates: got 629 want 4000",
+    "llm_calls": 3,
+    "gen_tok": 1693,
+    "prompt_tok": 6526,
+    "gen_s": 34.94,
+    "tool_turns": 3,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 2.66,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790457847.684,
+    "t_end": 1790457911.753
+  },
+  {
+    "task": "hf_audit_perf",
+    "shape": "perf",
+    "trap": "harmful-fix",
+    "worker_view": "full",
+    "stresses": [
+      "decline-taxonomy",
+      "keeper-set-rule",
+      "L2-structural"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "error:TypeError(\"chat() got an unexpected keyword argument 'top_p'\")",
+    "baseline_sub": [
+      2,
+      2
+    ],
+    "final_sub": [
+      2,
+      2
+    ],
+    "struct": {
+      "PERFSCORE": [
+        0,
+        1
+      ],
+      "AUDITSCORE": [
+        1,
+        1
+      ]
+    },
+    "gate_pass": null,
+    "objective_pass": null,
+    "run_ok": false,
+    "error_trace": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 281, in run_task\n    terminal = ARMS[arm_name](task[\"objective\"], ws)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M6-evaluation-suite\\run_suite.py\", line 140, in arm_monolith_recovery\n    res = run_processor(role=\"implementer\", objective=objective, context=b,\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 526, in run_processor\n    gen, parsed, out, journal = _tools_with_recovery(\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 325, in _tools_with_recovery\n    gen, parsed, out = _run_tools(cur, model=model, options=options)\n  File \"C:\\Users\\Fontenaille\\Desktop\\Lattice-Kiln\\experiments\\M4-ephemeral-processors\\processor.py\", line 467, in _run_tools\n    gen = chat(msgs, model=model, tools=TOOLS, num_predict=num_predict,\nTypeError: chat() got an unexpected keyword argument 'top_p'\n",
+    "regressed": null,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "4f2073b15bb682df",
+      "task": "hf_audit_perf",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 377.3,
+    "tail": "SUBTESTS 2/2\nPERFSCORE 0/1\n  the audit line is still built one character at a time\nAUDITSCORE 1/1",
+    "llm_calls": 2,
+    "gen_tok": 8972,
+    "prompt_tok": 4221,
+    "gen_s": 187.46,
+    "tool_turns": 2,
+    "tool_native": 1,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 2.55,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790457912.63,
+    "t_end": 1790458289.957
+  },
+  {
+    "task": "hf_wrong_spec",
+    "shape": "fix",
+    "trap": "faulty-check",
+    "worker_view": "full",
+    "stresses": [
+      "decline-taxonomy",
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      2,
+      3
+    ],
+    "final_sub": [
+      2,
+      3
+    ],
+    "struct": {
+      "SPECSCORE": [
+        4,
+        4
+      ]
+    },
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "b78e13715d216e03",
+      "task": "hf_wrong_spec",
+      "arm": "monolith_recovery",
+      "arm_sha": "9e629f1d8f8ecfef",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron-gpu:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"63b5b222daf4\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\", \"recovery\": \"3bbbcb748239\", \"temperature\": 0.6, \"top_p\": 0.95}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 214.4,
+    "tail": "SUBTESTS 2/3\n  half rounds to even: got 3 want 2\nSPECSCORE 4/4",
+    "llm_calls": 2,
+    "gen_tok": 682,
+    "prompt_tok": 3872,
+    "gen_s": 14.17,
+    "tool_turns": 2,
+    "tool_native": 0,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {
+      "interventions": 1,
+      "modes": [
+        "no_conclude"
+      ],
+      "escalated": true,
+      "detail": [
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "ask for the closing call",
+          "options": {
+            "num_predict": 2048
+          },
+          "nudged": true,
+          "escalated": false,
+          "worked": null
+        },
+        {
+          "mode": "no_conclude",
+          "evidence": "loop ended with 0 call(s), no conclude",
+          "remedy": "escalate",
+          "options": {},
+          "nudged": false,
+          "escalated": true,
+          "worked": null
+        }
+      ]
+    },
+    "prompt_s": 1.76,
+    "runner": "DESKTOP-J6EJPKF-2468",
+    "t_start": 1790458290.866,
+    "t_end": 1790458505.28
+  }
+]

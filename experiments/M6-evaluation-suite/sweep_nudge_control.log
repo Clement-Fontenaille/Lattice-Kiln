@@ -1,0 +1,51 @@
+[1/10] wf2_retry rep1 (judge_anchored) ...
+      error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 25141 chars of t base=[0, 5] final=[3, 5] pass=None regr=None crash=False
+[2/10] wf2_retry rep2 (judge_anchored) ...
+      error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 24857 chars of t base=[0, 5] final=[3, 5] pass=None regr=None crash=False
+[3/10] wf2_retry rep3 (judge_anchored) ...
+      error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 25806 chars of t base=[0, 5] final=[3, 5] pass=None regr=None crash=False
+[4/10] wf2_retry rep4 (judge_anchored) ...
+      error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 27369 chars of t base=[0, 5] final=[3, 5] pass=None regr=None crash=False
+[5/10] wf2_retry rep5 (judge_anchored) ...
+      answered base=[0, 5] final=[5, 5] pass=True regr=False crash=False
+[6/10] wf2_retry rep6 (judge_anchored) ...
+      error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 24938 chars of t base=[0, 5] final=[2, 5] pass=None regr=None crash=False
+[7/10] wf2_retry rep7 (judge_anchored) ...
+      answered base=[0, 5] final=[5, 5] pass=True regr=False crash=False
+[8/10] wf2_retry rep8 (judge_anchored) ...
+      error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 27532 chars of t base=[0, 5] final=[0, 5] pass=None regr=None crash=False
+[9/10] wf2_retry rep9 (judge_anchored) ...
+      error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 23477 chars of t base=[0, 5] final=[3, 5] pass=None regr=None crash=False
+[10/10] wf2_retry rep10 (judge_anchored) ...
+      error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 29672 chars of t base=[0, 5] final=[0, 5] pass=None regr=None crash=False
+
+53.0 min
+
+# M6 suite run - arm `judge_anchored` (suite 0.4.1)
+
+_2026-09-23 23:22 - 10 runs_
+
+| task | shape/trap | terminal | base | final | struct | pass | regr | decline | wall |
+|---|---|---|---|---|---|---|---|---|---|
+| wf2_retry | feature/edge-coverage | error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 25141 chars of t | 0/5 | 3/5 | - | None | - | - | 492.3 |
+| wf2_retry | feature/edge-coverage | error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 24857 chars of t | 0/5 | 3/5 | - | None | - | - | 571.8 |
+| wf2_retry | feature/edge-coverage | error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 25806 chars of t | 0/5 | 3/5 | - | None | - | - | 335.9 |
+| wf2_retry | feature/edge-coverage | error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 27369 chars of t | 0/5 | 3/5 | - | None | - | - | 415.4 |
+| wf2_retry | feature/edge-coverage | answered | 0/5 | 5/5 | - | True | - | - | 445.5 |
+| wf2_retry | feature/edge-coverage | error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 24938 chars of t | 0/5 | 2/5 | - | None | - | - | 277.1 |
+| wf2_retry | feature/edge-coverage | answered | 0/5 | 5/5 | - | True | - | - | 169.8 |
+| wf2_retry | feature/edge-coverage | error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 27532 chars of t | 0/5 | 0/5 | - | None | - | - | 122.6 |
+| wf2_retry | feature/edge-coverage | error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 23477 chars of t | 0/5 | 3/5 | - | None | - | - | 180.2 |
+| wf2_retry | feature/edge-coverage | error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 29672 chars of t | 0/5 | 0/5 | - | None | - | - | 164.7 |
+
+**objective pass 2/2 - regressions 0 - check crashes 0 - decline accuracy 0/0**
+
+> **8 of 10 runs did not execute** (the arm raised; `run_ok: false`). They are excluded from every figure above. See `error_trace` in the JSON.
+
+## `stresses` slices (mean final SUBTESTS fraction)
+
+| capability | n | mean |
+|---|---|---|
+| edge-coverage | 2 | 1.00 |
+| greenfield-impl | 2 | 1.00 |
+

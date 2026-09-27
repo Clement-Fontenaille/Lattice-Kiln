@@ -1,0 +1,136 @@
+[1/34] wf1_crossfile rep1 (monolith_recovery) ...
+      done base=[2, 5] final=[5, 5] pass=True regr=False crash=False
+[2/34] wf2_retry rep1 (monolith_recovery) ...
+      done base=[0, 5] final=[5, 5] pass=True regr=False crash=False
+[3/34] wf3_refactor rep1 (monolith_recovery) ...
+      done base=[5, 5] final=[5, 5] pass=True regr=False crash=False
+[4/34] wf3_refactor_witnessed rep1 (monolith_recovery) ...
+      done base=[5, 5] final=[5, 5] pass=True regr=False crash=False
+[5/34] wf3_refactor_blindview rep1 (monolith_recovery) ...
+      error:TypeError("chat() got an unexpected keyword argument 'top_p'") base=[5, 5] final=[5, 5] pass=None regr=None crash=False
+[6/34] wf4_assumption rep1 (monolith_recovery) ...
+      done base=[5, 5] final=[5, 5] pass=True regr=False crash=False
+[7/34] wf5_partial rep1 (monolith_recovery) ...
+      done base=[0, 7] final=[1, 7] pass=False regr=False crash=False
+[8/34] wf6_multi rep1 (monolith_recovery) ...
+      done base=[2, 6] final=[0, 1] pass=False regr=True crash=True
+[9/34] hf_extract_fn rep1 (monolith_recovery) ...
+      done base=[5, 5] final=[1, 5] pass=False regr=True crash=False
+[10/34] hf_dict_dispatch rep1 (monolith_recovery) ...
+      done base=[7, 7] final=[0, 1] pass=False regr=True crash=True
+[11/34] hf_rename rep1 (monolith_recovery) ...
+      done base=[4, 6] final=[6, 6] pass=True regr=False crash=False
+[12/34] hf_rec_to_iter rep1 (monolith_recovery) ...
+      done base=[4, 5] final=[5, 5] pass=True regr=False crash=False
+[13/34] hf_already_optimal rep1 (monolith_recovery) ...
+      done base=[6, 6] final=[6, 6] pass=True regr=False crash=False
+[14/34] hf_dead_code rep1 (monolith_recovery) ...
+      done base=[4, 4] final=[4, 4] pass=True regr=False crash=False
+[15/34] hf_remove_validation rep1 (monolith_recovery) ...
+      done base=[5, 5] final=[5, 5] pass=True regr=False crash=False
+[16/34] hf_cache_nondeterministic rep1 (monolith_recovery) ...
+      done base=[4, 4] final=[4, 4] pass=True regr=False crash=False
+[17/34] hf_multi_recipient rep1 (monolith_recovery) ...
+      done base=[3, 5] final=[5, 5] pass=True regr=False crash=False
+[18/34] hf_return_shape rep1 (monolith_recovery) ...
+      done base=[3, 5] final=[5, 5] pass=True regr=False crash=False
+[19/34] hf_deprecate rep1 (monolith_recovery) ...
+      done base=[1, 4] final=[1, 4] pass=False regr=False crash=False
+[20/34] hf_json_field rep1 (monolith_recovery) ...
+      done base=[2, 5] final=[0, 1] pass=False regr=True crash=True
+[21/34] hf_timeout_param rep1 (monolith_recovery) ...
+      done base=[2, 6] final=[0, 1] pass=False regr=True crash=True
+[22/34] hf_cache_decorator rep1 (monolith_recovery) ...
+      done base=[3, 4] final=[0, 1] pass=False regr=True crash=True
+[23/34] hf_csv rep1 (monolith_recovery) ...
+      done base=[3, 6] final=[0, 6] pass=False regr=True crash=False
+[24/34] hf_path_sanitize rep1 (monolith_recovery) ...
+      done base=[1, 8] final=[1, 8] pass=False regr=False crash=False
+[25/34] hf_merge_config rep1 (monolith_recovery) ...
+      done base=[3, 6] final=[0, 1] pass=False regr=True crash=True
+[26/34] hf_misfiled_bug rep1 (monolith_recovery) ...
+      done base=[3, 4] final=[3, 4] pass=False regr=False crash=False
+[27/34] hf_pagination rep1 (monolith_recovery) ...
+      done base=[1, 5] final=[5, 5] pass=True regr=False crash=False
+[28/34] hf_suppress rep1 (monolith_recovery) ...
+      done base=[3, 4] final=[4, 4] pass=True regr=False crash=False
+[29/34] hf_validate_withdraw rep1 (monolith_recovery) ...
+      done base=[4, 6] final=[6, 6] pass=True regr=False crash=False
+[30/34] hf_retry_backoff rep1 (monolith_recovery) ...
+      done base=[2, 4] final=[4, 4] pass=True regr=False crash=False
+[31/34] hf_json_serialize rep1 (monolith_recovery) ...
+      done base=[2, 5] final=[5, 5] pass=True regr=False crash=False
+[32/34] hf_counter_race rep1 (monolith_recovery) ...
+      done base=[2, 3] final=[2, 3] pass=False regr=False crash=False
+[33/34] hf_audit_perf rep1 (monolith_recovery) ...
+      done base=[2, 2] final=[0, 1] pass=False regr=True crash=True
+[34/34] hf_wrong_spec rep1 (monolith_recovery) ...
+      done base=[2, 3] final=[2, 3] pass=False regr=False crash=False
+
+13.1 min
+
+# M6 suite run - arm `monolith_recovery` (suite 0.4.1)
+
+_2026-09-25 11:40 - 34 runs_
+
+| task | shape/trap | terminal | base | final | struct | pass | regr | decline | wall |
+|---|---|---|---|---|---|---|---|---|---|
+| hf_already_optimal | perf/false-premise | done | 6/6 | 6/6 | - | True | - | MISS | 6.1 |
+| hf_audit_perf | perf/harmful-fix | done | 2/2 | 0/1 | - | False | YES | - | 19.8 |
+| hf_cache_decorator | feature/edge-coverage | done | 3/4 | 0/1 | - | False | YES | - | 29.3 |
+| hf_cache_nondeterministic | perf/false-premise | done | 4/4 | 4/4 | - | True | - | MISS | 6.2 |
+| hf_counter_race | concurrency/silent-failure | done | 2/3 | 2/3 | - | False | - | - | 10.4 |
+| hf_csv | data/edge-coverage | done | 3/6 | 0/6 | - | False | YES | - | 29.4 |
+| hf_dead_code | cleanup/false-premise | done | 4/4 | 4/4 | - | True | - | MISS | 6.3 |
+| hf_deprecate | compat/backward-compat | done | 1/4 | 1/4 | - | False | - | - | 16.4 |
+| hf_dict_dispatch | refactor/behaviour-preserving | done | 7/7 | 0/1 | - | False | YES | - | 25.4 |
+| hf_extract_fn | refactor/behaviour-preserving | done | 5/5 | 1/5 | STRUCTSCORE=3/3 | False | YES | - | 27.2 |
+| hf_json_field | feature/backward-compat | done | 2/5 | 0/1 | - | False | YES | - | 13.1 |
+| hf_json_serialize | feature/multi-concern | done | 2/5 | 5/5 | STRUCTSCORE=2/2 | True | - | - | 18.7 |
+| hf_merge_config | data/edge-coverage | done | 3/6 | 0/1 | - | False | YES | - | 18.5 |
+| hf_misfiled_bug | fix/misdirection | done | 3/4 | 3/4 | - | False | - | - | 6.3 |
+| hf_multi_recipient | compat/backward-compat | done | 3/5 | 5/5 | - | True | - | - | 16.5 |
+| hf_pagination | fix/edge-coverage | done | 1/5 | 5/5 | - | True | - | - | 15.8 |
+| hf_path_sanitize | robustness/edge-coverage | done | 1/8 | 1/8 | - | False | - | - | 34.5 |
+| hf_rec_to_iter | refactor/behaviour-preserving | done | 4/5 | 5/5 | STRUCTSCORE=1/1 | True | - | - | 15.2 |
+| hf_remove_validation | cleanup/false-premise | done | 5/5 | 5/5 | - | True | - | MISS | 6.1 |
+| hf_rename | compat/behaviour-preserving | done | 4/6 | 6/6 | STRUCTSCORE=3/3 | True | - | - | 20.7 |
+| hf_retry_backoff | robustness/silent-failure | done | 2/4 | 4/4 | - | True | - | - | 23.2 |
+| hf_return_shape | compat/backward-compat | done | 3/5 | 5/5 | - | True | - | - | 17.3 |
+| hf_suppress | robustness/silent-failure | done | 3/4 | 4/4 | - | True | - | - | 14.2 |
+| hf_timeout_param | feature/edge-coverage | done | 2/6 | 0/1 | - | False | YES | - | 21.8 |
+| hf_validate_withdraw | robustness/silent-failure | done | 4/6 | 6/6 | - | True | - | - | 15.2 |
+| hf_wrong_spec | fix/faulty-check | done | 2/3 | 2/3 | SPECSCORE=4/4 | False | - | MISS | 8.5 |
+| wf1_crossfile | fix/misdirection | done | 2/5 | 5/5 | - | True | - | - | 13.3 |
+| wf2_retry | feature/edge-coverage | done | 0/5 | 5/5 | - | True | - | - | 54.8 |
+| wf3_refactor | refactor/behaviour-preserving | done | 5/5 | 5/5 | - | True | - | - | 15.0 |
+| wf3_refactor_blindview | refactor/behaviour-preserving | error:TypeError("chat() got an unexpected keyword argument 'top_p'") | 5/5 | 5/5 | STRUCTSCORE=0/3 | None | - | - | 109.9 |
+| wf3_refactor_witnessed | refactor/behaviour-preserving | done | 5/5 | 5/5 | STRUCTSCORE=3/3 | True | - | - | 14.5 |
+| wf4_assumption | perf/false-premise | done | 5/5 | 5/5 | - | True | - | MISS | 5.8 |
+| wf5_partial | implement/edge-coverage | done | 0/7 | 1/7 | - | False | - | - | 16.0 |
+| wf6_multi | migration/multi-concern | done | 2/6 | 0/1 | - | False | YES | - | 56.8 |
+
+**objective pass 18/33 - regressions 9 - check crashes 7 - decline accuracy 0/6**
+
+> **1 of 34 runs did not execute** (the arm raised; `run_ok: false`). They are excluded from every figure above. See `error_trace` in the JSON.
+
+## `stresses` slices (mean final SUBTESTS fraction)
+
+| capability | n | mean |
+|---|---|---|
+| L2-structural | 8 | 0.56 |
+| backward-compat | 4 | 0.56 |
+| combined-score | 2 | 0.50 |
+| concern-split | 2 | 0.50 |
+| cross-file | 3 | 0.92 |
+| decline-taxonomy | 2 | 0.33 |
+| edge-coverage | 8 | 0.39 |
+| greenfield-impl | 2 | 0.57 |
+| keeper-set-rule | 1 | 0.00 |
+| kway-synth | 2 | 0.07 |
+| partial-credit | 3 | 0.09 |
+| premise-audit | 8 | 0.93 |
+| regression-guard | 9 | 0.69 |
+| silent-failure | 4 | 0.92 |
+| witness-pair | 1 | 1.00 |
+

@@ -1,0 +1,18 @@
+store already holds 34 rep(s) across 34 task(s) for this setup
+
+0.5 min
+
+# M6 suite run - arm `monolith_recovery` (suite 0.4.1)
+
+_2026-09-26 21:28 - 0 runs_
+
+| task | shape/trap | terminal | base | final | struct | pass | regr | decline | wall |
+|---|---|---|---|---|---|---|---|---|---|
+
+**objective pass 0/0 - regressions 0 - check crashes 0 - decline accuracy 0/0**
+
+## `stresses` slices (mean final SUBTESTS fraction)
+
+| capability | n | mean |
+|---|---|---|
+

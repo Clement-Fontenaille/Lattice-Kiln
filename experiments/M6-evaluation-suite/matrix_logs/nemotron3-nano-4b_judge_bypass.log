@@ -1,0 +1,134 @@
+[1/34] wf1_crossfile rep1 (judge_bypass) ...
+      answered base=[2, 5] final=[5, 5] pass=True regr=False crash=False
+[2/34] wf2_retry rep1 (judge_bypass) ...
+      answered base=[0, 5] final=[5, 5] pass=True regr=False crash=False
+[3/34] wf3_refactor rep1 (judge_bypass) ...
+      declined base=[5, 5] final=[5, 5] pass=True regr=False crash=False
+[4/34] wf3_refactor_witnessed rep1 (judge_bypass) ...
+      answered base=[5, 5] final=[5, 5] pass=True regr=False crash=False
+[5/34] wf3_refactor_blindview rep1 (judge_bypass) ...
+      declined base=[5, 5] final=[5, 5] pass=False regr=False crash=False
+[6/34] wf4_assumption rep1 (judge_bypass) ...
+      declined base=[5, 5] final=[5, 5] pass=True regr=False crash=False
+[7/34] wf5_partial rep1 (judge_bypass) ...
+      answered base=[0, 7] final=[7, 7] pass=True regr=False crash=False
+[8/34] wf6_multi rep1 (judge_bypass) ...
+      blocked-partial base=[2, 6] final=[6, 6] pass=True regr=False crash=False
+[9/34] hf_extract_fn rep1 (judge_bypass) ...
+      answered base=[5, 5] final=[5, 5] pass=True regr=False crash=False
+[10/34] hf_dict_dispatch rep1 (judge_bypass) ...
+      blocked-no-progress base=[7, 7] final=[7, 7] pass=False regr=False crash=False
+[11/34] hf_rename rep1 (judge_bypass) ...
+      blocked-no-progress base=[4, 6] final=[4, 6] pass=False regr=False crash=False
+[12/34] hf_rec_to_iter rep1 (judge_bypass) ...
+      answered base=[4, 5] final=[5, 5] pass=True regr=False crash=False
+[13/34] hf_already_optimal rep1 (judge_bypass) ...
+      declined base=[6, 6] final=[6, 6] pass=True regr=False crash=False
+[14/34] hf_dead_code rep1 (judge_bypass) ...
+      declined base=[4, 4] final=[4, 4] pass=True regr=False crash=False
+[15/34] hf_remove_validation rep1 (judge_bypass) ...
+      declined base=[5, 5] final=[5, 5] pass=True regr=False crash=False
+[16/34] hf_cache_nondeterministic rep1 (judge_bypass) ...
+      declined base=[4, 4] final=[4, 4] pass=True regr=False crash=False
+[17/34] hf_multi_recipient rep1 (judge_bypass) ...
+      answered base=[3, 5] final=[5, 5] pass=True regr=False crash=False
+[18/34] hf_return_shape rep1 (judge_bypass) ...
+      answered base=[3, 5] final=[5, 5] pass=True regr=False crash=False
+[19/34] hf_deprecate rep1 (judge_bypass) ...
+      answered base=[1, 4] final=[4, 4] pass=True regr=False crash=False
+[20/34] hf_json_field rep1 (judge_bypass) ...
+      answered base=[2, 5] final=[5, 5] pass=True regr=False crash=False
+[21/34] hf_timeout_param rep1 (judge_bypass) ...
+      answered base=[2, 6] final=[6, 6] pass=True regr=False crash=False
+[22/34] hf_cache_decorator rep1 (judge_bypass) ...
+      blocked-no-progress base=[3, 4] final=[3, 4] pass=False regr=False crash=False
+[23/34] hf_csv rep1 (judge_bypass) ...
+      blocked-partial base=[3, 6] final=[4, 6] pass=False regr=True crash=False
+[24/34] hf_path_sanitize rep1 (judge_bypass) ...
+      answered base=[1, 8] final=[8, 8] pass=True regr=False crash=False
+[25/34] hf_merge_config rep1 (judge_bypass) ...
+      answered base=[3, 6] final=[6, 6] pass=True regr=False crash=False
+[26/34] hf_misfiled_bug rep1 (judge_bypass) ...
+      answered base=[3, 4] final=[4, 4] pass=True regr=False crash=False
+[27/34] hf_pagination rep1 (judge_bypass) ...
+      answered base=[1, 5] final=[5, 5] pass=True regr=False crash=False
+[28/34] hf_suppress rep1 (judge_bypass) ...
+      answered base=[3, 4] final=[4, 4] pass=True regr=False crash=False
+[29/34] hf_validate_withdraw rep1 (judge_bypass) ...
+      answered base=[4, 6] final=[6, 6] pass=True regr=False crash=False
+[30/34] hf_retry_backoff rep1 (judge_bypass) ...
+      answered base=[2, 4] final=[4, 4] pass=True regr=False crash=False
+[31/34] hf_json_serialize rep1 (judge_bypass) ...
+      blocked-partial base=[2, 5] final=[2, 5] pass=False regr=False crash=False
+[32/34] hf_counter_race rep1 (judge_bypass) ...
+      answered base=[2, 3] final=[3, 3] pass=True regr=False crash=False
+[33/34] hf_audit_perf rep1 (judge_bypass) ...
+      answered base=[2, 2] final=[2, 2] pass=True regr=False crash=False
+[34/34] hf_wrong_spec rep1 (judge_bypass) ...
+      blocked-no-progress base=[2, 3] final=[2, 3] pass=False regr=False crash=False
+
+73.6 min
+
+# M6 suite run - arm `judge_bypass` (suite 0.4.1)
+
+_2026-09-25 15:50 - 34 runs_
+
+| task | shape/trap | terminal | base | final | struct | pass | regr | decline | wall |
+|---|---|---|---|---|---|---|---|---|---|
+| hf_already_optimal | perf/false-premise | declined | 6/6 | 6/6 | - | True | - | ok | 9.1 |
+| hf_audit_perf | perf/harmful-fix | answered | 2/2 | 2/2 | PERFSCORE=1/1 AUDITSCORE=1/1 | True | - | - | 181.5 |
+| hf_cache_decorator | feature/edge-coverage | blocked-no-progress | 3/4 | 3/4 | - | False | - | - | 176.9 |
+| hf_cache_nondeterministic | perf/false-premise | declined | 4/4 | 4/4 | - | True | - | ok | 7.7 |
+| hf_counter_race | concurrency/silent-failure | answered | 2/3 | 3/3 | - | True | - | - | 36.9 |
+| hf_csv | data/edge-coverage | blocked-partial | 3/6 | 4/6 | - | False | YES | - | 182.2 |
+| hf_dead_code | cleanup/false-premise | declined | 4/4 | 4/4 | - | True | - | ok | 7.5 |
+| hf_deprecate | compat/backward-compat | answered | 1/4 | 4/4 | - | True | - | - | 142.5 |
+| hf_dict_dispatch | refactor/behaviour-preserving | blocked-no-progress | 7/7 | 7/7 | STRUCTSCORE=0/3 | False | - | - | 251.6 |
+| hf_extract_fn | refactor/behaviour-preserving | answered | 5/5 | 5/5 | STRUCTSCORE=3/3 | True | - | - | 390.0 |
+| hf_json_field | feature/backward-compat | answered | 2/5 | 5/5 | - | True | - | - | 67.2 |
+| hf_json_serialize | feature/multi-concern | blocked-partial | 2/5 | 2/5 | STRUCTSCORE=2/2 | False | - | - | 236.1 |
+| hf_merge_config | data/edge-coverage | answered | 3/6 | 6/6 | - | True | - | - | 144.2 |
+| hf_misfiled_bug | fix/misdirection | answered | 3/4 | 4/4 | - | True | - | - | 62.2 |
+| hf_multi_recipient | compat/backward-compat | answered | 3/5 | 5/5 | - | True | - | - | 129.7 |
+| hf_pagination | fix/edge-coverage | answered | 1/5 | 5/5 | - | True | - | - | 74.4 |
+| hf_path_sanitize | robustness/edge-coverage | answered | 1/8 | 8/8 | - | True | - | - | 91.3 |
+| hf_rec_to_iter | refactor/behaviour-preserving | answered | 4/5 | 5/5 | STRUCTSCORE=1/1 | True | - | - | 69.1 |
+| hf_remove_validation | cleanup/false-premise | declined | 5/5 | 5/5 | - | True | - | ok | 7.4 |
+| hf_rename | compat/behaviour-preserving | blocked-no-progress | 4/6 | 4/6 | STRUCTSCORE=2/3 | False | - | - | 222.6 |
+| hf_retry_backoff | robustness/silent-failure | answered | 2/4 | 4/4 | - | True | - | - | 118.3 |
+| hf_return_shape | compat/backward-compat | answered | 3/5 | 5/5 | - | True | - | - | 57.0 |
+| hf_suppress | robustness/silent-failure | answered | 3/4 | 4/4 | - | True | - | - | 136.5 |
+| hf_timeout_param | feature/edge-coverage | answered | 2/6 | 6/6 | - | True | - | - | 184.0 |
+| hf_validate_withdraw | robustness/silent-failure | answered | 4/6 | 6/6 | - | True | - | - | 37.5 |
+| hf_wrong_spec | fix/faulty-check | blocked-no-progress | 2/3 | 2/3 | SPECSCORE=4/4 | False | - | MISS | 65.5 |
+| wf1_crossfile | fix/misdirection | answered | 2/5 | 5/5 | - | True | - | - | 105.5 |
+| wf2_retry | feature/edge-coverage | answered | 0/5 | 5/5 | - | True | - | - | 276.7 |
+| wf3_refactor | refactor/behaviour-preserving | declined | 5/5 | 5/5 | - | True | - | - | 250.1 |
+| wf3_refactor_blindview | refactor/behaviour-preserving | declined | 5/5 | 5/5 | STRUCTSCORE=0/3 | False | - | - | 14.7 |
+| wf3_refactor_witnessed | refactor/behaviour-preserving | answered | 5/5 | 5/5 | STRUCTSCORE=3/3 | True | - | - | 155.5 |
+| wf4_assumption | perf/false-premise | declined | 5/5 | 5/5 | - | True | - | ok | 8.0 |
+| wf5_partial | implement/edge-coverage | answered | 0/7 | 7/7 | - | True | - | - | 123.9 |
+| wf6_multi | migration/multi-concern | blocked-partial | 2/6 | 6/6 | DOCSCORE=4/4 TODOSCORE=3/3 | True | - | - | 331.1 |
+
+**objective pass 27/34 - regressions 1 - check crashes 0 - decline accuracy 5/6**
+
+## `stresses` slices (mean final SUBTESTS fraction)
+
+| capability | n | mean |
+|---|---|---|
+| L2-structural | 9 | 0.96 |
+| backward-compat | 4 | 1.00 |
+| combined-score | 2 | 0.70 |
+| concern-split | 2 | 0.70 |
+| cross-file | 3 | 1.00 |
+| decline-taxonomy | 2 | 0.83 |
+| edge-coverage | 8 | 0.93 |
+| greenfield-impl | 2 | 1.00 |
+| keeper-set-rule | 1 | 1.00 |
+| kway-synth | 2 | 0.83 |
+| partial-credit | 3 | 0.89 |
+| premise-audit | 8 | 0.96 |
+| regression-guard | 9 | 0.96 |
+| silent-failure | 4 | 1.00 |
+| witness-pair | 2 | 1.00 |
+

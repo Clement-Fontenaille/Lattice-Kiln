@@ -1,0 +1,131 @@
+[
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 1,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      0,
+      1
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": true,
+    "new_fails": [
+      "File \"C",
+      "^\nIndentationError",
+      "for attempt in range(retries + 1)",
+      "from client import Client\n  File \"C"
+    ],
+    "check_crashed": true,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "31cda7090cc6e47d",
+      "task": "wf2_retry",
+      "arm": "monolith_recovery",
+      "arm_sha": "d48eea1d26ac2e26",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"680a5b0b443e\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\"}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 53.8,
+    "tail": "Traceback (most recent call last):\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_wf2_retry__4byf7hk\\test_task.py\", line 4, in <module>\n    from client import Client\n  File \"C:\\Users\\Fontenaille\\AppData\\Local\\Temp\\m6_wf2_retry__4byf7hk\\client.py\", line 11\n    for attempt in range(retries + 1):\n                                      ^\nIndentationError: unindent does not match any outer indentation level",
+    "llm_calls": 2,
+    "gen_tok": 1855,
+    "prompt_tok": 4777,
+    "gen_s": 21.12,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 2.31,
+    "runner": "DESKTOP-J6EJPKF-26096",
+    "t_start": 1790272065.481,
+    "t_end": 1790272119.291
+  },
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 2,
+    "arm": "monolith_recovery",
+    "terminal": "done",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      2,
+      5
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "31cda7090cc6e47d",
+      "task": "wf2_retry",
+      "arm": "monolith_recovery",
+      "arm_sha": "d48eea1d26ac2e26",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"adapter\": \"680a5b0b443e\", \"min_predict\": 8192, \"num_ctx\": 16384, \"protocol\": \"tools\"}"
+    },
+    "setup_meta": {
+      "num_ctx": 16384
+    },
+    "wall_s": 16.7,
+    "tail": "SUBTESTS 2/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: got ('fail 3', 0) want ('fail 3', 3)\n  retries=0 is one attempt: got 0 want 1",
+    "llm_calls": 2,
+    "gen_tok": 1026,
+    "prompt_tok": 4805,
+    "gen_s": 11.54,
+    "tool_turns": 2,
+    "tool_native": 2,
+    "tool_recovered": 0,
+    "tool_malformed": 0,
+    "tool_repaired": 0,
+    "recovery": {},
+    "prompt_s": 0.8,
+    "runner": "DESKTOP-J6EJPKF-26096",
+    "t_start": 1790272120.209,
+    "t_end": 1790272136.858
+  }
+]

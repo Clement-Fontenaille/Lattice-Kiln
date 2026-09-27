@@ -1,0 +1,200 @@
+resuming: 140 rows already recorded
+[1/10] wf2_retry rep1 (m7) ...
+      answered base=[0, 5] final=[5, 5] pass=True regr=False crash=False
+[2/10] wf2_retry rep2 (m7) ...
+      answered base=[0, 5] final=[5, 5] pass=True regr=False crash=False
+[3/10] wf2_retry rep3 (m7) ...
+      answered base=[0, 5] final=[5, 5] pass=True regr=False crash=False
+[4/10] wf2_retry rep4 (m7) ...
+      answered base=[0, 5] final=[5, 5] pass=True regr=False crash=False
+[5/10] wf2_retry rep5 (m7) ...
+      answered base=[0, 5] final=[5, 5] pass=True regr=False crash=False
+[6/10] hf_retry_backoff rep1 (m7) ...
+      answered base=[2, 4] final=[4, 4] pass=True regr=False crash=False
+[7/10] hf_retry_backoff rep2 (m7) ...
+      answered base=[2, 4] final=[4, 4] pass=True regr=False crash=False
+[8/10] hf_retry_backoff rep3 (m7) ...
+      answered base=[2, 4] final=[4, 4] pass=True regr=False crash=False
+[9/10] hf_retry_backoff rep4 (m7) ...
+      answered base=[2, 4] final=[4, 4] pass=True regr=False crash=False
+[10/10] hf_retry_backoff rep5 (m7) ...
+      answered base=[2, 4] final=[4, 4] pass=True regr=False crash=False
+
+5.9 min
+
+# M6 suite run - arm `m7` (suite 0.4.1)
+
+_2026-09-19 21:29 - 150 runs_
+
+| task | shape/trap | terminal | base | final | struct | pass | regr | decline | wall |
+|---|---|---|---|---|---|---|---|---|---|
+| hf_already_optimal | perf/false-premise | declined | 6/6 | 6/6 | - | True | - | ok | 3.2 |
+| hf_already_optimal | perf/false-premise | declined | 6/6 | 6/6 | - | True | - | ok | 2.8 |
+| hf_already_optimal | perf/false-premise | declined | 6/6 | 6/6 | - | True | - | ok | 2.8 |
+| hf_already_optimal | perf/false-premise | declined | 6/6 | 6/6 | - | True | - | ok | 2.8 |
+| hf_already_optimal | perf/false-premise | declined | 6/6 | 6/6 | - | True | - | ok | 3.0 |
+| hf_cache_decorator | feature/edge-coverage | blocked | 3/4 | 3/4 | - | False | - | - | 21.9 |
+| hf_cache_decorator | feature/edge-coverage | blocked | 3/4 | 3/4 | - | False | - | - | 21.0 |
+| hf_cache_decorator | feature/edge-coverage | blocked | 3/4 | 3/4 | - | False | - | - | 20.6 |
+| hf_cache_decorator | feature/edge-coverage | blocked | 3/4 | 3/4 | - | False | - | - | 208.2 |
+| hf_cache_decorator | feature/edge-coverage | blocked | 3/4 | 3/4 | - | False | - | - | 26.6 |
+| hf_cache_nondeterministic | perf/false-premise | declined | 4/4 | 4/4 | - | True | - | ok | 3.5 |
+| hf_cache_nondeterministic | perf/false-premise | declined | 4/4 | 4/4 | - | True | - | ok | 3.2 |
+| hf_cache_nondeterministic | perf/false-premise | declined | 4/4 | 4/4 | - | True | - | ok | 3.3 |
+| hf_cache_nondeterministic | perf/false-premise | declined | 4/4 | 4/4 | - | True | - | ok | 3.3 |
+| hf_cache_nondeterministic | perf/false-premise | declined | 4/4 | 4/4 | - | True | - | ok | 3.5 |
+| hf_counter_race | concurrency/silent-failure | answered | 2/3 | 3/3 | - | True | - | - | 10.1 |
+| hf_counter_race | concurrency/silent-failure | answered | 2/3 | 3/3 | - | True | - | - | 9.1 |
+| hf_counter_race | concurrency/silent-failure | answered | 2/3 | 3/3 | - | True | - | - | 9.1 |
+| hf_counter_race | concurrency/silent-failure | answered | 2/3 | 3/3 | - | True | - | - | 9.1 |
+| hf_counter_race | concurrency/silent-failure | answered | 2/3 | 3/3 | - | True | - | - | 9.9 |
+| hf_csv | data/edge-coverage | answered | 3/6 | 6/6 | - | True | - | - | 18.8 |
+| hf_csv | data/edge-coverage | answered | 3/6 | 6/6 | - | True | - | - | 13.7 |
+| hf_csv | data/edge-coverage | answered | 3/6 | 6/6 | - | True | - | - | 11.0 |
+| hf_csv | data/edge-coverage | answered | 3/6 | 6/6 | - | True | - | - | 11.0 |
+| hf_csv | data/edge-coverage | answered | 3/6 | 6/6 | - | True | - | - | 11.2 |
+| hf_dead_code | cleanup/false-premise | declined | 4/4 | 4/4 | - | True | - | ok | 3.1 |
+| hf_dead_code | cleanup/false-premise | declined | 4/4 | 4/4 | - | True | - | ok | 2.8 |
+| hf_dead_code | cleanup/false-premise | declined | 4/4 | 4/4 | - | True | - | ok | 2.8 |
+| hf_dead_code | cleanup/false-premise | declined | 4/4 | 4/4 | - | True | - | ok | 2.9 |
+| hf_dead_code | cleanup/false-premise | declined | 4/4 | 4/4 | - | True | - | ok | 2.8 |
+| hf_deprecate | compat/backward-compat | answered | 1/4 | 4/4 | - | True | - | - | 15.3 |
+| hf_deprecate | compat/backward-compat | answered | 1/4 | 4/4 | - | True | - | - | 8.5 |
+| hf_deprecate | compat/backward-compat | answered | 1/4 | 4/4 | - | True | - | - | 8.5 |
+| hf_deprecate | compat/backward-compat | answered | 1/4 | 4/4 | - | True | - | - | 14.5 |
+| hf_deprecate | compat/backward-compat | answered | 1/4 | 4/4 | - | True | - | - | 8.5 |
+| hf_dict_dispatch | refactor/behaviour-preserving | blocked | 7/7 | 7/7 | STRUCTSCORE=0/3 | False | - | - | 23.8 |
+| hf_dict_dispatch | refactor/behaviour-preserving | blocked | 7/7 | 7/7 | STRUCTSCORE=0/3 | False | - | - | 22.0 |
+| hf_dict_dispatch | refactor/behaviour-preserving | blocked | 7/7 | 7/7 | STRUCTSCORE=0/3 | False | - | - | 23.3 |
+| hf_dict_dispatch | refactor/behaviour-preserving | blocked | 7/7 | 7/7 | STRUCTSCORE=0/3 | False | - | - | 23.5 |
+| hf_dict_dispatch | refactor/behaviour-preserving | blocked | 7/7 | 7/7 | STRUCTSCORE=0/3 | False | - | - | 22.7 |
+| hf_extract_fn | refactor/behaviour-preserving | blocked | 5/5 | 5/5 | STRUCTSCORE=1/3 | False | - | - | 26.0 |
+| hf_extract_fn | refactor/behaviour-preserving | blocked | 5/5 | 5/5 | STRUCTSCORE=1/3 | False | - | - | 24.8 |
+| hf_extract_fn | refactor/behaviour-preserving | blocked | 5/5 | 5/5 | STRUCTSCORE=1/3 | False | - | - | 24.6 |
+| hf_extract_fn | refactor/behaviour-preserving | blocked | 5/5 | 5/5 | STRUCTSCORE=1/3 | False | - | - | 24.4 |
+| hf_extract_fn | refactor/behaviour-preserving | blocked | 5/5 | 5/5 | STRUCTSCORE=1/3 | False | - | - | 24.8 |
+| hf_json_field | feature/backward-compat | answered | 2/5 | 5/5 | - | True | - | - | 8.8 |
+| hf_json_field | feature/backward-compat | answered | 2/5 | 5/5 | - | True | - | - | 9.1 |
+| hf_json_field | feature/backward-compat | answered | 2/5 | 5/5 | - | True | - | - | 9.4 |
+| hf_json_field | feature/backward-compat | answered | 2/5 | 5/5 | - | True | - | - | 8.2 |
+| hf_json_field | feature/backward-compat | answered | 2/5 | 5/5 | - | True | - | - | 9.0 |
+| hf_json_serialize | feature/multi-concern | blocked | 2/5 | 5/5 | STRUCTSCORE=1/2 | False | - | - | 100.0 |
+| hf_json_serialize | feature/multi-concern | answered | 2/5 | 5/5 | STRUCTSCORE=2/2 | True | - | - | 99.0 |
+| hf_json_serialize | feature/multi-concern | answered | 2/5 | 5/5 | STRUCTSCORE=2/2 | True | - | - | 110.9 |
+| hf_json_serialize | feature/multi-concern | answered | 2/5 | 5/5 | STRUCTSCORE=2/2 | True | - | - | 68.1 |
+| hf_json_serialize | feature/multi-concern | answered | 2/5 | 5/5 | STRUCTSCORE=2/2 | True | - | - | 91.0 |
+| hf_merge_config | data/edge-coverage | answered | 3/6 | 6/6 | - | True | - | - | 10.8 |
+| hf_merge_config | data/edge-coverage | answered | 3/6 | 6/6 | - | True | - | - | 9.2 |
+| hf_merge_config | data/edge-coverage | answered | 3/6 | 6/6 | - | True | - | - | 9.0 |
+| hf_merge_config | data/edge-coverage | answered | 3/6 | 6/6 | - | True | - | - | 9.3 |
+| hf_merge_config | data/edge-coverage | answered | 3/6 | 6/6 | - | True | - | - | 9.5 |
+| hf_misfiled_bug | fix/misdirection | blocked | 3/4 | 3/4 | - | False | - | - | 23.0 |
+| hf_misfiled_bug | fix/misdirection | blocked | 3/4 | 3/4 | - | False | - | - | 22.5 |
+| hf_misfiled_bug | fix/misdirection | blocked | 3/4 | 3/4 | - | False | - | - | 24.3 |
+| hf_misfiled_bug | fix/misdirection | blocked | 3/4 | 3/4 | - | False | - | - | 20.4 |
+| hf_misfiled_bug | fix/misdirection | blocked | 3/4 | 3/4 | - | False | - | - | 20.8 |
+| hf_multi_recipient | compat/backward-compat | answered | 3/5 | 5/5 | - | True | - | - | 16.5 |
+| hf_multi_recipient | compat/backward-compat | answered | 3/5 | 5/5 | - | True | - | - | 8.2 |
+| hf_multi_recipient | compat/backward-compat | answered | 3/5 | 5/5 | - | True | - | - | 8.5 |
+| hf_multi_recipient | compat/backward-compat | answered | 3/5 | 5/5 | - | True | - | - | 24.2 |
+| hf_multi_recipient | compat/backward-compat | answered | 3/5 | 5/5 | - | True | - | - | 8.8 |
+| hf_pagination | fix/edge-coverage | answered | 1/5 | 5/5 | - | True | - | - | 9.0 |
+| hf_pagination | fix/edge-coverage | answered | 1/5 | 5/5 | - | True | - | - | 8.0 |
+| hf_pagination | fix/edge-coverage | answered | 1/5 | 5/5 | - | True | - | - | 8.5 |
+| hf_pagination | fix/edge-coverage | answered | 1/5 | 5/5 | - | True | - | - | 8.3 |
+| hf_pagination | fix/edge-coverage | answered | 1/5 | 5/5 | - | True | - | - | 8.1 |
+| hf_path_sanitize | robustness/edge-coverage | answered | 1/8 | 8/8 | - | True | - | - | 12.2 |
+| hf_path_sanitize | robustness/edge-coverage | answered | 1/8 | 8/8 | - | True | - | - | 10.1 |
+| hf_path_sanitize | robustness/edge-coverage | answered | 1/8 | 8/8 | - | True | - | - | 9.7 |
+| hf_path_sanitize | robustness/edge-coverage | answered | 1/8 | 8/8 | - | True | - | - | 10.2 |
+| hf_path_sanitize | robustness/edge-coverage | answered | 1/8 | 8/8 | - | True | - | - | 9.8 |
+| hf_rec_to_iter | refactor/behaviour-preserving | blocked | 4/5 | 4/5 | STRUCTSCORE=0/1 | False | - | - | 29.7 |
+| hf_rec_to_iter | refactor/behaviour-preserving | blocked | 4/5 | 4/5 | STRUCTSCORE=0/1 | False | - | - | 26.9 |
+| hf_rec_to_iter | refactor/behaviour-preserving | blocked | 4/5 | 4/5 | STRUCTSCORE=0/1 | False | - | - | 26.5 |
+| hf_rec_to_iter | refactor/behaviour-preserving | blocked | 4/5 | 4/5 | STRUCTSCORE=0/1 | False | - | - | 26.5 |
+| hf_rec_to_iter | refactor/behaviour-preserving | answered | 4/5 | 5/5 | STRUCTSCORE=1/1 | True | - | - | 16.5 |
+| hf_remove_validation | cleanup/false-premise | declined | 5/5 | 5/5 | - | True | - | ok | 3.7 |
+| hf_remove_validation | cleanup/false-premise | declined | 5/5 | 5/5 | - | True | - | ok | 3.8 |
+| hf_remove_validation | cleanup/false-premise | declined | 5/5 | 5/5 | - | True | - | ok | 3.4 |
+| hf_remove_validation | cleanup/false-premise | declined | 5/5 | 5/5 | - | True | - | ok | 3.5 |
+| hf_remove_validation | cleanup/false-premise | declined | 5/5 | 5/5 | - | True | - | ok | 3.5 |
+| hf_rename | compat/behaviour-preserving | answered | 4/6 | 6/6 | STRUCTSCORE=3/3 | True | - | - | 12.5 |
+| hf_rename | compat/behaviour-preserving | answered | 4/6 | 6/6 | STRUCTSCORE=3/3 | True | - | - | 10.4 |
+| hf_rename | compat/behaviour-preserving | answered | 4/6 | 6/6 | STRUCTSCORE=3/3 | True | - | - | 10.2 |
+| hf_rename | compat/behaviour-preserving | answered | 4/6 | 6/6 | STRUCTSCORE=3/3 | True | - | - | 9.9 |
+| hf_rename | compat/behaviour-preserving | answered | 4/6 | 6/6 | STRUCTSCORE=3/3 | True | - | - | 10.1 |
+| hf_retry_backoff | robustness/silent-failure | answered | 2/4 | 4/4 | - | True | - | - | 15.5 |
+| hf_retry_backoff | robustness/silent-failure | answered | 2/4 | 4/4 | - | True | - | - | 12.0 |
+| hf_retry_backoff | robustness/silent-failure | answered | 2/4 | 4/4 | - | True | - | - | 18.3 |
+| hf_retry_backoff | robustness/silent-failure | answered | 2/4 | 4/4 | - | True | - | - | 16.6 |
+| hf_retry_backoff | robustness/silent-failure | answered | 2/4 | 4/4 | - | True | - | - | 14.7 |
+| hf_return_shape | compat/backward-compat | answered | 3/5 | 5/5 | - | True | - | - | 9.5 |
+| hf_return_shape | compat/backward-compat | answered | 3/5 | 5/5 | - | True | - | - | 8.9 |
+| hf_return_shape | compat/backward-compat | answered | 3/5 | 5/5 | - | True | - | - | 8.9 |
+| hf_return_shape | compat/backward-compat | answered | 3/5 | 5/5 | - | True | - | - | 8.8 |
+| hf_return_shape | compat/backward-compat | answered | 3/5 | 5/5 | - | True | - | - | 8.9 |
+| hf_suppress | robustness/silent-failure | answered | 3/4 | 4/4 | - | True | - | - | 9.9 |
+| hf_suppress | robustness/silent-failure | answered | 3/4 | 4/4 | - | True | - | - | 8.6 |
+| hf_suppress | robustness/silent-failure | answered | 3/4 | 4/4 | - | True | - | - | 8.3 |
+| hf_suppress | robustness/silent-failure | answered | 3/4 | 4/4 | - | True | - | - | 8.3 |
+| hf_suppress | robustness/silent-failure | answered | 3/4 | 4/4 | - | True | - | - | 8.6 |
+| hf_timeout_param | feature/edge-coverage | blocked | 2/6 | 5/6 | - | False | - | - | 36.8 |
+| hf_timeout_param | feature/edge-coverage | blocked | 2/6 | 5/6 | - | False | - | - | 31.7 |
+| hf_timeout_param | feature/edge-coverage | blocked | 2/6 | 5/6 | - | False | - | - | 37.8 |
+| hf_timeout_param | feature/edge-coverage | blocked | 2/6 | 5/6 | - | False | - | - | 35.3 |
+| hf_timeout_param | feature/edge-coverage | blocked | 2/6 | 2/6 | - | False | - | - | 30.3 |
+| hf_validate_withdraw | robustness/silent-failure | answered | 4/6 | 6/6 | - | True | - | - | 10.1 |
+| hf_validate_withdraw | robustness/silent-failure | answered | 4/6 | 6/6 | - | True | - | - | 9.5 |
+| hf_validate_withdraw | robustness/silent-failure | answered | 4/6 | 6/6 | - | True | - | - | 9.1 |
+| hf_validate_withdraw | robustness/silent-failure | answered | 4/6 | 6/6 | - | True | - | - | 9.1 |
+| hf_validate_withdraw | robustness/silent-failure | answered | 4/6 | 6/6 | - | True | - | - | 8.7 |
+| wf1_crossfile | fix/misdirection | answered | 2/5 | 5/5 | - | True | - | - | 7.9 |
+| wf1_crossfile | fix/misdirection | answered | 2/5 | 5/5 | - | True | - | - | 7.6 |
+| wf1_crossfile | fix/misdirection | answered | 2/5 | 5/5 | - | True | - | - | 7.7 |
+| wf1_crossfile | fix/misdirection | answered | 2/5 | 5/5 | - | True | - | - | 7.4 |
+| wf1_crossfile | fix/misdirection | answered | 2/5 | 5/5 | - | True | - | - | 7.9 |
+| wf2_retry | feature/edge-coverage | answered | 0/5 | 5/5 | - | True | - | - | 17.9 |
+| wf2_retry | feature/edge-coverage | answered | 0/5 | 5/5 | - | True | - | - | 16.6 |
+| wf2_retry | feature/edge-coverage | answered | 0/5 | 5/5 | - | True | - | - | 9.3 |
+| wf2_retry | feature/edge-coverage | answered | 0/5 | 5/5 | - | True | - | - | 201.9 |
+| wf2_retry | feature/edge-coverage | answered | 0/5 | 5/5 | - | True | - | - | 29.8 |
+| wf3_refactor | refactor/behaviour-preserving | declined | 5/5 | 5/5 | - | True | - | - | 3.0 |
+| wf3_refactor | refactor/behaviour-preserving | declined | 5/5 | 5/5 | - | True | - | - | 2.8 |
+| wf3_refactor | refactor/behaviour-preserving | declined | 5/5 | 5/5 | - | True | - | - | 2.9 |
+| wf3_refactor | refactor/behaviour-preserving | declined | 5/5 | 5/5 | - | True | - | - | 2.8 |
+| wf3_refactor | refactor/behaviour-preserving | declined | 5/5 | 5/5 | - | True | - | - | 2.8 |
+| wf4_assumption | perf/false-premise | declined | 5/5 | 5/5 | - | True | - | ok | 2.9 |
+| wf4_assumption | perf/false-premise | declined | 5/5 | 5/5 | - | True | - | ok | 3.2 |
+| wf4_assumption | perf/false-premise | declined | 5/5 | 5/5 | - | True | - | ok | 3.0 |
+| wf4_assumption | perf/false-premise | declined | 5/5 | 5/5 | - | True | - | ok | 2.9 |
+| wf4_assumption | perf/false-premise | declined | 5/5 | 5/5 | - | True | - | ok | 2.7 |
+| wf5_partial | implement/edge-coverage | blocked | 0/7 | 5/7 | - | False | - | - | 36.8 |
+| wf5_partial | implement/edge-coverage | blocked | 0/7 | 5/7 | - | False | - | - | 39.2 |
+| wf5_partial | implement/edge-coverage | blocked | 0/7 | 3/7 | - | False | - | - | 51.3 |
+| wf5_partial | implement/edge-coverage | blocked | 0/7 | 6/7 | - | False | - | - | 41.2 |
+| wf5_partial | implement/edge-coverage | blocked | 0/7 | 5/7 | - | False | - | - | 39.4 |
+| wf6_multi | migration/multi-concern | blocked | 2/6 | 2/6 | DOCSCORE=0/4 TODOSCORE=0/3 | False | - | - | 297.1 |
+| wf6_multi | migration/multi-concern | blocked | 2/6 | 6/6 | DOCSCORE=0/4 TODOSCORE=0/3 | False | - | - | 473.8 |
+| wf6_multi | migration/multi-concern | blocked | 2/6 | 2/6 | DOCSCORE=0/4 TODOSCORE=0/3 | False | - | - | 301.0 |
+| wf6_multi | migration/multi-concern | blocked | 2/6 | 6/6 | DOCSCORE=0/4 TODOSCORE=3/3 | False | - | - | 369.6 |
+| wf6_multi | migration/multi-concern | blocked | 2/6 | 2/6 | DOCSCORE=0/4 TODOSCORE=0/3 | False | - | - | 306.2 |
+
+**objective pass 110/150 - regressions 0 - check crashes 0 - decline accuracy 25/25**
+
+## `stresses` slices (mean final SUBTESTS fraction)
+
+| capability | n | mean |
+|---|---|---|
+| L2-structural | 30 | 0.97 |
+| backward-compat | 20 | 1.00 |
+| combined-score | 10 | 0.80 |
+| concern-split | 10 | 0.80 |
+| cross-file | 15 | 0.92 |
+| edge-coverage | 40 | 0.94 |
+| greenfield-impl | 10 | 0.84 |
+| kway-synth | 10 | 0.84 |
+| partial-credit | 15 | 0.90 |
+| premise-audit | 35 | 0.96 |
+| regression-guard | 45 | 1.00 |
+| silent-failure | 20 | 1.00 |
+

@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_776eb9fbe85b",
+  "started": "2026-09-22T22:53:32.024083+00:00",
+  "intent_text": "count_nodes(node) in tree.py is recursive and raises RecursionError on a deep (chain-shaped) tree. Rewrite it to be iterative with an explicit stack, keeping the same results and the None->0 and leaf->1 base cases.",
+  "meta": {
+    "arm": "judge_caveat",
+    "suite": "m6"
+  },
+  "ended": "2026-09-22T22:55:09.991705+00:00",
+  "outcome": "completed",
+  "event_count": 37
+}

@@ -1,0 +1,24 @@
+{
+  "cell": {
+    "fixture_sha": "364dc47e23ee7307",
+    "task": "hf_cache_nondeterministic",
+    "arm": "judge_bypass",
+    "arm_sha": "88430ef0d722cd05",
+    "prompt_sha": "b0a6545acca856af",
+    "backend": "ollama",
+    "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+    "judge_format": "reason_first",
+    "params": "{\"num_ctx\": 8192}"
+  },
+  "cell_id": "eed274b506c46875",
+  "rep": 3,
+  "env": {
+    "LATTICE_BACKEND": "ollama",
+    "LATTICE_EVAL_MODEL": "qwen2.5-coder:7b-instruct-q4_K_M",
+    "LATTICE_JUDGE_FORMAT": "reason_first",
+    "LATTICE_RESULTS_SUBDIR": "../E8-judge-verdict-order/results/qwen_reason_first"
+  },
+  "requested_by": "E8 - does the judge decide before it reasons?",
+  "requested_at": 1789902062.063647,
+  "meta": {}
+}

@@ -1,0 +1,97 @@
+=== nothink (again: the first pass predated the suite_version field) ===
+tree results_nemotron_nothink, tasks hf_retry_backoff wf2_retry
+
+arm                     reps  rows to replace
+baseline                   1                2
+judge_anchored             1                2
+judge_bypass               1                2
+judge_caveat               1                2
+judge_fullctx              1                2
+judge_staged               1                2
+monolith                   1                2
+test_synth                 1                2
+
+8 arms, 16 rows
+[1/8] baseline reps=1 ...
+      -> exit 0, 2 rows, 0 min
+[2/8] judge_anchored reps=1 ...
+      -> exit 0, 2 rows, 3 min
+[3/8] judge_bypass reps=1 ...
+      -> exit 0, 2 rows, 6 min
+[4/8] judge_caveat reps=1 ...
+      -> exit 0, 2 rows, 9 min
+[5/8] judge_fullctx reps=1 ...
+      -> exit 0, 2 rows, 12 min
+[6/8] judge_staged reps=1 ...
+      -> exit 0, 2 rows, 20 min
+[7/8] monolith reps=1 ...
+      -> exit 0, 2 rows, 20 min
+[8/8] test_synth reps=1 ...
+      -> exit 0, 2 rows, 24 min
+
+DONE in 24 min
+
+=== qwen ===
+tree results, tasks hf_retry_backoff wf2_retry
+
+arm                     reps  rows to replace
+baseline                   1                2
+dloop                      5               10
+judge_anchored             5               10
+judge_bypass               3                6
+judge_caveat               3                6
+judge_fullctx              5               10
+judge_staged               3                6
+m7                         5               10
+m7b                        5                6
+m7c                        1                2
+m7e                        3                6
+m7f                        5               10
+monolith                   3                6
+n5_dloop                   5               10
+n5_m7                      5               10
+staged                     3                6
+test_synth                 5               10
+test_synth_retry           5                8
+
+18 arms, 134 rows
+[1/18] baseline reps=1 ...
+      -> exit 0, 2 rows, 0 min
+[2/18] dloop reps=5 ...
+      -> exit 0, 10 rows, 2 min
+[3/18] judge_anchored reps=5 ...
+      -> exit 0, 10 rows, 14 min
+[4/18] judge_bypass reps=3 ...
+      -> exit 0, 6 rows, 21 min
+[5/18] judge_caveat reps=3 ...
+      -> exit 0, 6 rows, 29 min
+[6/18] judge_fullctx reps=5 ...
+      -> exit 0, 10 rows, 45 min
+[7/18] judge_staged reps=3 ...
+      -> exit 0, 6 rows, 54 min
+[8/18] m7 reps=5 ...
+      -> exit 0, 10 rows, 60 min
+[9/18] m7b reps=5 ...
+      -> exit 0, 10 rows, 76 min
+[10/18] m7c reps=1 ...
+      -> exit 0, 2 rows, 78 min
+[11/18] m7e reps=3 ...
+      -> exit 0, 6 rows, 86 min
+[12/18] m7f reps=5 ...
+      -> exit 0, 10 rows, 98 min
+[13/18] monolith reps=3 ...
+      -> exit 0, 6 rows, 99 min
+[14/18] n5_dloop reps=5 ...
+      -> exit 2, 0 rows, 99 min
+[15/18] n5_m7 reps=5 ...
+      -> exit 2, 0 rows, 99 min
+[16/18] staged reps=3 ...
+      -> exit 0, 6 rows, 101 min
+[17/18] test_synth reps=5 ...
+      -> exit 0, 10 rows, 123 min
+[18/18] test_synth_retry reps=5 ...
+      -> exit 0, 10 rows, 141 min
+
+DONE in 141 min
+
+ALL FIXTURE RERUNS DONE

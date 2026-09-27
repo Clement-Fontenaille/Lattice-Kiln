@@ -1,0 +1,290 @@
+[
+  {
+    "task": "hf_misfiled_bug",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 1,
+    "arm": "judge_anchored",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      3,
+      4
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "7e2020c817d39889",
+      "task": "hf_misfiled_bug",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "b0a6545acca856af",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b",
+      "judge_format": "reason_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 545.6,
+    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'",
+    "llm_calls": 14,
+    "gen_tok": 1615,
+    "prompt_tok": 16267,
+    "gen_s": 37.72,
+    "prompt_s": 19.83,
+    "runner": "DESKTOP-J6EJPKF-10136",
+    "t_start": 1790095423.905,
+    "t_end": 1790095969.54
+  },
+  {
+    "task": "hf_misfiled_bug",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 3,
+    "arm": "judge_anchored",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      3,
+      4
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "7e2020c817d39889",
+      "task": "hf_misfiled_bug",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "b0a6545acca856af",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b",
+      "judge_format": "reason_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 146.3,
+    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'",
+    "llm_calls": 15,
+    "gen_tok": 2014,
+    "prompt_tok": 18260,
+    "gen_s": 32.31,
+    "prompt_s": 11.99,
+    "runner": "DESKTOP-J6EJPKF-10136",
+    "t_start": 1790095971.054,
+    "t_end": 1790096117.318
+  },
+  {
+    "task": "hf_misfiled_bug",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 5,
+    "arm": "judge_anchored",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      3,
+      4
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "7e2020c817d39889",
+      "task": "hf_misfiled_bug",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "b0a6545acca856af",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b",
+      "judge_format": "reason_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 620.2,
+    "tail": "SUBTESTS 3/4\n  triangle describe is fixed: got 'triangle area 20' want 'triangle area 10.0'",
+    "llm_calls": 10,
+    "gen_tok": 1177,
+    "prompt_tok": 11344,
+    "gen_s": 26.24,
+    "prompt_s": 19.56,
+    "runner": "DESKTOP-J6EJPKF-10136",
+    "t_start": 1790096119.217,
+    "t_end": 1790096739.409
+  },
+  {
+    "task": "hf_rec_to_iter",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural"
+    ],
+    "rep": 2,
+    "arm": "judge_anchored",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      4,
+      5
+    ],
+    "final_sub": [
+      4,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        0,
+        1
+      ]
+    },
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "d2a55c52d02a5b3c",
+      "task": "hf_rec_to_iter",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "b0a6545acca856af",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b",
+      "judge_format": "reason_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 159.0,
+    "tail": "SUBTESTS 4/5\n  deep chain 5000: raised RecursionError('maximum recursion depth exceeded while calling a Python object')\nSTRUCTSCORE 0/1\n  count_nodes still calls itself",
+    "llm_calls": 14,
+    "gen_tok": 1767,
+    "prompt_tok": 17589,
+    "gen_s": 32.6,
+    "prompt_s": 8.81,
+    "runner": "DESKTOP-J6EJPKF-10136",
+    "t_start": 1790096741.268,
+    "t_end": 1790096900.28
+  },
+  {
+    "task": "hf_rec_to_iter",
+    "shape": "refactor",
+    "trap": "behaviour-preserving",
+    "worker_view": "full",
+    "stresses": [
+      "L2-structural"
+    ],
+    "rep": 4,
+    "arm": "judge_anchored",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      4,
+      5
+    ],
+    "final_sub": [
+      4,
+      5
+    ],
+    "struct": {
+      "STRUCTSCORE": [
+        0,
+        1
+      ]
+    },
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "d2a55c52d02a5b3c",
+      "task": "hf_rec_to_iter",
+      "arm": "judge_anchored",
+      "arm_sha": "43ec4bfe17db4fd2",
+      "prompt_sha": "b0a6545acca856af",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b",
+      "judge_format": "reason_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 154.1,
+    "tail": "SUBTESTS 4/5\n  deep chain 5000: raised RecursionError('maximum recursion depth exceeded while calling a Python object')\nSTRUCTSCORE 0/1\n  count_nodes still calls itself",
+    "llm_calls": 14,
+    "gen_tok": 1890,
+    "prompt_tok": 17482,
+    "gen_s": 34.49,
+    "prompt_s": 9.27,
+    "runner": "DESKTOP-J6EJPKF-10136",
+    "t_start": 1790096902.305,
+    "t_end": 1790097056.356
+  }
+]

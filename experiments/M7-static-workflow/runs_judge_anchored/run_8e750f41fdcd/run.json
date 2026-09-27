@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_8e750f41fdcd",
+  "started": "2026-09-23T05:11:57.633678+00:00",
+  "intent_text": "report.describe() reports the wrong area for triangles. The bug is in shapes.rect_area - fix it.",
+  "meta": {
+    "arm": "judge_anchored",
+    "suite": "m6"
+  },
+  "ended": "2026-09-23T05:12:27.820096+00:00",
+  "outcome": "completed",
+  "event_count": 22
+}

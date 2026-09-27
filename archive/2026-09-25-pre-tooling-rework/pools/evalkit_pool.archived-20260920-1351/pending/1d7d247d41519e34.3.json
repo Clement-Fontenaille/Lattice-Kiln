@@ -1,0 +1,26 @@
+{
+  "cell": {
+    "fixture_sha": "364dc47e23ee7307",
+    "task": "hf_cache_nondeterministic",
+    "arm": "judge_anchored",
+    "arm_sha": "58f75764c9b811de",
+    "prompt_sha": "b0a6545acca856af",
+    "backend": "ollama",
+    "model": "nemotron-gpu",
+    "judge_format": "reason_first",
+    "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+  },
+  "cell_id": "1d7d247d41519e34",
+  "rep": 3,
+  "env": {
+    "LATTICE_BACKEND": "ollama",
+    "LATTICE_EVAL_MODEL": "nemotron-gpu",
+    "LATTICE_JUDGE_FORMAT": "reason_first",
+    "LATTICE_RESULTS_SUBDIR": "../E8-judge-verdict-order/results/nemo_reason_first",
+    "LATTICE_THINK": "0",
+    "LATTICE_MIN_PREDICT": "400"
+  },
+  "requested_by": "E8 - does the judge decide before it reasons?",
+  "requested_at": 1789902040.57626,
+  "meta": {}
+}

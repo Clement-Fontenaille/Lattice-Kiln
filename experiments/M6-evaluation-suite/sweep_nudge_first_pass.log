@@ -1,0 +1,61 @@
+[1/10] wf2_retry rep1 (judge_anchored) ...
+      !! rep 1 already held for this cell, stored as rep 2 -- concurrent run?
+      error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 30761 chars of t base=[0, 5] final=[3, 5] pass=None regr=None crash=False
+[2/10] wf2_retry rep2 (judge_anchored) ...
+      !! rep 2 already held for this cell, stored as rep 3 -- concurrent run?
+      error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 28669 chars of t base=[0, 5] final=[3, 5] pass=None regr=None crash=False
+[3/10] wf2_retry rep3 (judge_anchored) ...
+      !! rep 3 already held for this cell, stored as rep 4 -- concurrent run?
+      error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 39393 chars of t base=[0, 5] final=[3, 5] pass=None regr=None crash=False
+[4/10] wf2_retry rep4 (judge_anchored) ...
+      !! rep 4 already held for this cell, stored as rep 5 -- concurrent run?
+      error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 35848 chars of t base=[0, 5] final=[3, 5] pass=None regr=None crash=False
+[5/10] wf2_retry rep5 (judge_anchored) ...
+      !! rep 5 already held for this cell, stored as rep 6 -- concurrent run?
+      answered base=[0, 5] final=[5, 5] pass=True regr=False crash=False
+[6/10] wf2_retry rep6 (judge_anchored) ...
+      !! rep 6 already held for this cell, stored as rep 7 -- concurrent run?
+      error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 27639 chars of t base=[0, 5] final=[0, 5] pass=None regr=None crash=False
+[7/10] wf2_retry rep7 (judge_anchored) ...
+      !! rep 7 already held for this cell, stored as rep 8 -- concurrent run?
+      answered base=[0, 5] final=[5, 5] pass=True regr=False crash=False
+[8/10] wf2_retry rep8 (judge_anchored) ...
+      !! rep 8 already held for this cell, stored as rep 9 -- concurrent run?
+      answered base=[0, 5] final=[5, 5] pass=True regr=False crash=False
+[9/10] wf2_retry rep9 (judge_anchored) ...
+      !! rep 9 already held for this cell, stored as rep 10 -- concurrent run?
+      answered base=[0, 5] final=[5, 5] pass=True regr=False crash=False
+[10/10] wf2_retry rep10 (judge_anchored) ...
+      !! rep 10 already held for this cell, stored as rep 11 -- concurrent run?
+      answered base=[0, 5] final=[5, 5] pass=True regr=False crash=False
+
+50.4 min
+
+# M6 suite run - arm `judge_anchored` (suite 0.4.1)
+
+_2026-09-23 23:20 - 10 runs_
+
+| task | shape/trap | terminal | base | final | struct | pass | regr | decline | wall |
+|---|---|---|---|---|---|---|---|---|---|
+| wf2_retry | feature/edge-coverage | error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 30761 chars of t | 0/5 | 3/5 | - | None | - | - | 372.8 |
+| wf2_retry | feature/edge-coverage | error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 28669 chars of t | 0/5 | 3/5 | - | None | - | - | 375.9 |
+| wf2_retry | feature/edge-coverage | error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 39393 chars of t | 0/5 | 3/5 | - | None | - | - | 411.0 |
+| wf2_retry | feature/edge-coverage | error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 35848 chars of t | 0/5 | 3/5 | - | None | - | - | 337.0 |
+| wf2_retry | feature/edge-coverage | answered | 0/5 | 5/5 | - | True | - | - | 327.0 |
+| wf2_retry | feature/edge-coverage | error:OllamaError('empty response and no tool calls, truncated at num_predict=8192 (done_reason=length, 27639 chars of t | 0/5 | 0/5 | - | None | - | - | 208.5 |
+| wf2_retry | feature/edge-coverage | answered | 0/5 | 5/5 | - | True | - | - | 214.5 |
+| wf2_retry | feature/edge-coverage | answered | 0/5 | 5/5 | - | True | - | - | 188.5 |
+| wf2_retry | feature/edge-coverage | answered | 0/5 | 5/5 | - | True | - | - | 258.6 |
+| wf2_retry | feature/edge-coverage | answered | 0/5 | 5/5 | - | True | - | - | 321.1 |
+
+**objective pass 5/5 - regressions 0 - check crashes 0 - decline accuracy 0/0**
+
+> **5 of 10 runs did not execute** (the arm raised; `run_ok: false`). They are excluded from every figure above. See `error_trace` in the JSON.
+
+## `stresses` slices (mean final SUBTESTS fraction)
+
+| capability | n | mean |
+|---|---|---|
+| edge-coverage | 5 | 1.00 |
+| greenfield-impl | 5 | 1.00 |
+

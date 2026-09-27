@@ -1,0 +1,446 @@
+[
+  {
+    "task": "hf_cache_nondeterministic",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 2,
+    "arm": "judge_caveat",
+    "terminal": "declined",
+    "baseline_sub": [
+      4,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "364dc47e23ee7307",
+      "task": "hf_cache_nondeterministic",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "nemotron-gpu",
+      "judge_format": "decision_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 23.8,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 2,
+    "gen_tok": 329,
+    "prompt_tok": 1529,
+    "gen_s": 6.63,
+    "prompt_s": 1.53,
+    "runner": "DESKTOP-J6EJPKF-8740",
+    "t_start": 1790011348.086,
+    "t_end": 1790011371.919
+  },
+  {
+    "task": "hf_cache_nondeterministic",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 3,
+    "arm": "judge_caveat",
+    "terminal": "declined",
+    "baseline_sub": [
+      4,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "364dc47e23ee7307",
+      "task": "hf_cache_nondeterministic",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "nemotron-gpu",
+      "judge_format": "decision_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 25.8,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 2,
+    "gen_tok": 326,
+    "prompt_tok": 1511,
+    "gen_s": 6.59,
+    "prompt_s": 1.51,
+    "runner": "DESKTOP-J6EJPKF-8740",
+    "t_start": 1790011372.423,
+    "t_end": 1790011398.234
+  },
+  {
+    "task": "hf_cache_nondeterministic",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 4,
+    "arm": "judge_caveat",
+    "terminal": "declined",
+    "baseline_sub": [
+      4,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "364dc47e23ee7307",
+      "task": "hf_cache_nondeterministic",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "nemotron-gpu",
+      "judge_format": "decision_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 23.8,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 2,
+    "gen_tok": 313,
+    "prompt_tok": 1546,
+    "gen_s": 6.34,
+    "prompt_s": 1.07,
+    "runner": "DESKTOP-J6EJPKF-8740",
+    "t_start": 1790011398.63,
+    "t_end": 1790011422.39
+  },
+  {
+    "task": "hf_cache_nondeterministic",
+    "shape": "perf",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit"
+    ],
+    "rep": 5,
+    "arm": "judge_caveat",
+    "terminal": "declined",
+    "baseline_sub": [
+      4,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "364dc47e23ee7307",
+      "task": "hf_cache_nondeterministic",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "nemotron-gpu",
+      "judge_format": "decision_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 24.4,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 2,
+    "gen_tok": 285,
+    "prompt_tok": 1507,
+    "gen_s": 5.73,
+    "prompt_s": 1.54,
+    "runner": "DESKTOP-J6EJPKF-8740",
+    "t_start": 1790011422.771,
+    "t_end": 1790011447.134
+  },
+  {
+    "task": "hf_misfiled_bug",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 2,
+    "arm": "judge_caveat",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "7e2020c817d39889",
+      "task": "hf_misfiled_bug",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "nemotron-gpu",
+      "judge_format": "decision_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 205.2,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 10,
+    "gen_tok": 1609,
+    "prompt_tok": 11143,
+    "gen_s": 33.36,
+    "prompt_s": 10.02,
+    "runner": "DESKTOP-J6EJPKF-8740",
+    "t_start": 1790011447.889,
+    "t_end": 1790011653.122
+  },
+  {
+    "task": "hf_misfiled_bug",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 3,
+    "arm": "judge_caveat",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "7e2020c817d39889",
+      "task": "hf_misfiled_bug",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "nemotron-gpu",
+      "judge_format": "decision_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 179.8,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 10,
+    "gen_tok": 1614,
+    "prompt_tok": 11192,
+    "gen_s": 33.06,
+    "prompt_s": 7.94,
+    "runner": "DESKTOP-J6EJPKF-8740",
+    "t_start": 1790011653.648,
+    "t_end": 1790011833.496
+  },
+  {
+    "task": "hf_misfiled_bug",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 4,
+    "arm": "judge_caveat",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "7e2020c817d39889",
+      "task": "hf_misfiled_bug",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "nemotron-gpu",
+      "judge_format": "decision_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 203.8,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 10,
+    "gen_tok": 1553,
+    "prompt_tok": 11510,
+    "gen_s": 31.92,
+    "prompt_s": 10.68,
+    "runner": "DESKTOP-J6EJPKF-8740",
+    "t_start": 1790011833.929,
+    "t_end": 1790012037.772
+  },
+  {
+    "task": "hf_misfiled_bug",
+    "shape": "fix",
+    "trap": "misdirection",
+    "worker_view": "full",
+    "stresses": [
+      "cross-file",
+      "premise-audit"
+    ],
+    "rep": 5,
+    "arm": "judge_caveat",
+    "terminal": "answered",
+    "baseline_sub": [
+      3,
+      4
+    ],
+    "final_sub": [
+      4,
+      4
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "7e2020c817d39889",
+      "task": "hf_misfiled_bug",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "nemotron-gpu",
+      "judge_format": "decision_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 198.5,
+    "tail": "SUBTESTS 4/4",
+    "llm_calls": 10,
+    "gen_tok": 1930,
+    "prompt_tok": 11888,
+    "gen_s": 40.23,
+    "prompt_s": 9.92,
+    "runner": "DESKTOP-J6EJPKF-8740",
+    "t_start": 1790012038.517,
+    "t_end": 1790012237.013
+  }
+]

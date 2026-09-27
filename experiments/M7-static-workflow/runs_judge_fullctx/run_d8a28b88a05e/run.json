@@ -1,0 +1,13 @@
+{
+  "schema": "m2-run/0",
+  "run_id": "run_d8a28b88a05e",
+  "started": "2026-09-25T14:29:33.417738+00:00",
+  "intent_text": "Memoize compute.config_for(env) so repeated calls with the same env skip the recompute. A caller that mutates a returned dict must not corrupt the cached value.",
+  "meta": {
+    "arm": "judge_fullctx",
+    "suite": "m6"
+  },
+  "ended": "2026-09-25T14:37:28.682337+00:00",
+  "outcome": "completed",
+  "event_count": 29
+}

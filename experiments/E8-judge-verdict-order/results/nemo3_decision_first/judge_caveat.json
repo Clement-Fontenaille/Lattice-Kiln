@@ -1,0 +1,450 @@
+[
+  {
+    "task": "hf_return_shape",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "judge_caveat",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      3,
+      5
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "9d074fc1b08631a7",
+      "task": "hf_return_shape",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b",
+      "judge_format": "decision_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 223.9,
+    "tail": "SUBTESTS 3/5\n  email attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'email'\")\n  name attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'name'\")",
+    "llm_calls": 14,
+    "gen_tok": 1535,
+    "prompt_tok": 18526,
+    "gen_s": 28.5,
+    "prompt_s": 24.59,
+    "runner": "DESKTOP-J6EJPKF-10408",
+    "t_start": 1790086455.914,
+    "t_end": 1790086679.773
+  },
+  {
+    "task": "hf_return_shape",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 2,
+    "arm": "judge_caveat",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      3,
+      5
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "9d074fc1b08631a7",
+      "task": "hf_return_shape",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b",
+      "judge_format": "decision_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 200.4,
+    "tail": "SUBTESTS 3/5\n  email attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'email'\")\n  name attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'name'\")",
+    "llm_calls": 15,
+    "gen_tok": 3087,
+    "prompt_tok": 20128,
+    "gen_s": 53.85,
+    "prompt_s": 28.57,
+    "runner": "DESKTOP-J6EJPKF-10408",
+    "t_start": 1790086680.838,
+    "t_end": 1790086881.25
+  },
+  {
+    "task": "hf_return_shape",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 3,
+    "arm": "judge_caveat",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      3,
+      5
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "9d074fc1b08631a7",
+      "task": "hf_return_shape",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b",
+      "judge_format": "decision_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 174.7,
+    "tail": "SUBTESTS 3/5\n  email attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'email'\")\n  name attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'name'\")",
+    "llm_calls": 14,
+    "gen_tok": 1495,
+    "prompt_tok": 17941,
+    "gen_s": 30.33,
+    "prompt_s": 11.91,
+    "runner": "DESKTOP-J6EJPKF-10408",
+    "t_start": 1790086882.289,
+    "t_end": 1790087056.983
+  },
+  {
+    "task": "hf_return_shape",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 4,
+    "arm": "judge_caveat",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      3,
+      5
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "9d074fc1b08631a7",
+      "task": "hf_return_shape",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b",
+      "judge_format": "decision_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 117.0,
+    "tail": "SUBTESTS 3/5\n  email attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'email'\")\n  name attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'name'\")",
+    "llm_calls": 8,
+    "gen_tok": 1066,
+    "prompt_tok": 10281,
+    "gen_s": 17.76,
+    "prompt_s": 5.28,
+    "runner": "DESKTOP-J6EJPKF-10408",
+    "t_start": 1790087058.009,
+    "t_end": 1790087174.951
+  },
+  {
+    "task": "hf_return_shape",
+    "shape": "compat",
+    "trap": "backward-compat",
+    "worker_view": "full",
+    "stresses": [
+      "backward-compat",
+      "regression-guard"
+    ],
+    "rep": 5,
+    "arm": "judge_caveat",
+    "terminal": "blocked-no-progress",
+    "baseline_sub": [
+      3,
+      5
+    ],
+    "final_sub": [
+      3,
+      5
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "9d074fc1b08631a7",
+      "task": "hf_return_shape",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b",
+      "judge_format": "decision_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 134.2,
+    "tail": "SUBTESTS 3/5\n  email attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'email'\")\n  name attribute exposed: raised AttributeError(\"'tuple' object has no attribute 'name'\")",
+    "llm_calls": 14,
+    "gen_tok": 1565,
+    "prompt_tok": 17872,
+    "gen_s": 28.99,
+    "prompt_s": 16.49,
+    "runner": "DESKTOP-J6EJPKF-10408",
+    "t_start": 1790087176.281,
+    "t_end": 1790087310.521
+  },
+  {
+    "task": "hf_remove_validation",
+    "shape": "cleanup",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit",
+      "regression-guard"
+    ],
+    "rep": 1,
+    "arm": "judge_caveat",
+    "terminal": "declined",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "53625004e2a2a391",
+      "task": "hf_remove_validation",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b",
+      "judge_format": "decision_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 122.5,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 14,
+    "gen_tok": 1176,
+    "prompt_tok": 17694,
+    "gen_s": 23.15,
+    "prompt_s": 19.9,
+    "runner": "DESKTOP-J6EJPKF-10408",
+    "t_start": 1790087312.697,
+    "t_end": 1790087435.213
+  },
+  {
+    "task": "hf_remove_validation",
+    "shape": "cleanup",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit",
+      "regression-guard"
+    ],
+    "rep": 2,
+    "arm": "judge_caveat",
+    "terminal": "declined",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "53625004e2a2a391",
+      "task": "hf_remove_validation",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b",
+      "judge_format": "decision_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 4.9,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 2,
+    "gen_tok": 147,
+    "prompt_tok": 1554,
+    "gen_s": 2.29,
+    "prompt_s": 0.84,
+    "runner": "DESKTOP-J6EJPKF-10408",
+    "t_start": 1790087435.964,
+    "t_end": 1790087440.894
+  },
+  {
+    "task": "hf_remove_validation",
+    "shape": "cleanup",
+    "trap": "false-premise",
+    "worker_view": "full",
+    "stresses": [
+      "premise-audit",
+      "regression-guard"
+    ],
+    "rep": 3,
+    "arm": "judge_caveat",
+    "terminal": "declined",
+    "baseline_sub": [
+      5,
+      5
+    ],
+    "final_sub": [
+      5,
+      5
+    ],
+    "struct": {},
+    "gate_pass": true,
+    "objective_pass": true,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": true,
+    "declined_correctly": true,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "53625004e2a2a391",
+      "task": "hf_remove_validation",
+      "arm": "judge_caveat",
+      "arm_sha": "976db1ff0e424157",
+      "prompt_sha": "c6f1de548d34c7d6",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b",
+      "judge_format": "decision_first",
+      "params": "{\"min_predict\": 400, \"num_ctx\": 8192, \"think\": false}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 4.4,
+    "tail": "SUBTESTS 5/5",
+    "llm_calls": 2,
+    "gen_tok": 145,
+    "prompt_tok": 1531,
+    "gen_s": 2.21,
+    "prompt_s": 0.8,
+    "runner": "DESKTOP-J6EJPKF-10408",
+    "t_start": 1790087441.431,
+    "t_end": 1790087445.792
+  }
+]

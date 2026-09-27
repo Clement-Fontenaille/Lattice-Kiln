@@ -1,0 +1,61 @@
+[
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 1,
+    "arm": "monolith",
+    "terminal": "done",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      3,
+      5
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "31cda7090cc6e47d",
+      "task": "wf2_retry",
+      "arm": "monolith",
+      "arm_sha": "d60fccacdcaffe85",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"min_predict\": 2048, \"num_ctx\": 8192, \"protocol\": \"tools\"}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 59.4,
+    "tail": "SUBTESTS 3/5\n  succeed on 2nd try: got ('ok', 1) want ('ok', 2)\n  exhaust then re-raise last: got ('fail 3', 1) want ('fail 3', 3)",
+    "llm_calls": 4,
+    "gen_tok": 2485,
+    "prompt_tok": 9452,
+    "gen_s": 28.03,
+    "tool_turns": 4,
+    "tool_native": 3,
+    "tool_recovered": 0,
+    "prompt_s": 3.13,
+    "runner": "DESKTOP-J6EJPKF-20888",
+    "t_start": 1790187440.152,
+    "t_end": 1790187499.559
+  }
+]

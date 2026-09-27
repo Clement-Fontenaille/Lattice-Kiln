@@ -1,0 +1,58 @@
+[
+  {
+    "task": "wf2_retry",
+    "shape": "feature",
+    "trap": "edge-coverage",
+    "worker_view": "full",
+    "stresses": [
+      "edge-coverage",
+      "greenfield-impl"
+    ],
+    "rep": 1,
+    "arm": "baseline",
+    "terminal": "done",
+    "baseline_sub": [
+      0,
+      5
+    ],
+    "final_sub": [
+      0,
+      5
+    ],
+    "struct": {},
+    "gate_pass": false,
+    "objective_pass": false,
+    "run_ok": true,
+    "error_trace": null,
+    "regressed": false,
+    "new_fails": [],
+    "check_crashed": false,
+    "decline_expected": false,
+    "declined_correctly": false,
+    "suite_version": "0.4.1",
+    "setup": {
+      "fixture_sha": "31cda7090cc6e47d",
+      "task": "wf2_retry",
+      "arm": "baseline",
+      "arm_sha": "31da911da9467400",
+      "prompt_sha": "none",
+      "backend": "ollama",
+      "model": "nemotron3-nano-4b:latest",
+      "judge_format": "decision_first",
+      "params": "{\"num_ctx\": 8192, \"protocol\": \"tools\"}"
+    },
+    "setup_meta": {
+      "num_ctx": 8192
+    },
+    "wall_s": 0.0,
+    "tail": "SUBTESTS 0/5\n  success first try: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  succeed on 2nd try: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  exhaust then re-raise last: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  retries=0 is one attempt: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")\n  returns fn value: raised TypeError(\"Client.call() got an unexpected keyword argument 'retries'\")",
+    "llm_calls": 0,
+    "gen_tok": 0,
+    "prompt_tok": 0,
+    "gen_s": 0.0,
+    "prompt_s": 0.0,
+    "runner": "DESKTOP-J6EJPKF-22740",
+    "t_start": 1790168530.872,
+    "t_end": 1790168530.872
+  }
+]
