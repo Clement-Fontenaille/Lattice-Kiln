@@ -40,9 +40,7 @@ MODELS = [
 # rest.
 ARMS = [
     # The arms that actually carry the corpus, by row count in the store, plus
-    # monolith_recovery which is new and deliberate. m7c (32 rows), m7e (102)
-    # and the rest of the m7 family were barely exercised and are left out --
-    # sweeping them would spend the night on cells nothing reads.
+    # monolith_recovery which is new and deliberate.
     "baseline",           # 109 rows: the reference every arm is read against
     "monolith",           # 573
     "monolith_recovery",  # new, paired against monolith
@@ -54,7 +52,36 @@ ARMS = [
     "staged",             # 136
     "m7",                 # 184
     "test_synth",         # 238
+
+    # ---- the missing judges, added 2026-09-27 ----
+    # They were left out on row count: "barely exercised ... sweeping them
+    # would spend the night on cells nothing reads". `50-findings/18` retires
+    # that reasoning. It shows the judges divide by AGGREGATION SHAPE, not by
+    # the lineage they were built in:
+    #
+    #   verdict = all(yes) over 2-5 conditions  judge_anchored/caveat/bypass
+    #   one concern, one verdict, no conjunction  judge_fullctx + these four
+    #
+    # The first group fails by compounding 11% per-condition noise into 33%
+    # verdict noise, at a rate set by how many conditions the auditor wrote.
+    # The second cannot fail that way. Four of the five arms on the side that
+    # survives the finding have never been swept, and each isolates one
+    # variable: an independent judge at all (m7c), instruction vs critique
+    # (m7e), orientation about what produced its inputs (m7f), and ordering
+    # put in the reasoning rather than the output (judge_staged).
+    #
+    # Verified 2026-09-27: none of the four contains `checked`, `n_conditions`
+    # or `expected`; all take (objective, concern, before, after).
+    "judge_staged",       # 144
+    "m7f",                # 204
+    "m7e",                # 102
+    "m7c",                # 32
 ]
+
+# NOT queued yet, deliberately: monolith_test, author, author_judge. They came
+# in with Queue A and have never executed. A 30-hour queue is the wrong place
+# to discover that an arm raises on task 1 -- smoke-test each on a single task
+# first, then add them.
 
 ENV = {
     "LATTICE_PROTOCOL": "tools",
