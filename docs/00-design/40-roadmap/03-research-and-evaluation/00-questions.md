@@ -83,6 +83,15 @@ a lineage and transfer is a separate measurement
 (`00-design/23-arch-context-management/02-context-as-experimental-surface.md`).
 *Missing: two lineages to compare, which needs generations, which is M13.*
 
+**How is a stage graded when no mechanical check exists?** Test authoring, planning
+and prompt authoring have no gate by nature — a test is not written against a
+checkable test — and most of what the judge arms exist for lives there. This is not a
+hole to be engineered shut: the position, stated 2026-09-27, is that **inventing a
+proxy gate is worse than reading the output**, because a proxy carries a number and
+the number gets believed. *Missing: the instrument. Reading is the fallback and
+nobody has said what a reading records, who performs it, or what makes two readings
+comparable.* Gates the **reading** of `author` and `author_judge`, not their running.
+
 ## What would make the whole plan wrong
 
 - **E0 says the suite is incoherent.** Most of this loses its instrument and reorders

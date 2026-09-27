@@ -125,7 +125,10 @@ load-bearing that is not below.
 - **Three arms written and never executed:** `monolith_test`, `author`,
   `author_judge`. Each needs a single-task smoke test before it joins a sweep. The
   `author` pair also grants the audit stage authority its own prompt currently denies
-  it, which is a role change and not a flag.
+  it, which is a role change and not a flag. **Their reading is gated** on an
+  instrument for stages with no mechanical check, which does not exist —
+  `03-research-and-evaluation/00-questions.md`, *How is a stage graded when no
+  mechanical check exists?*
 - **Settings never settled.** Sampling is `0.6 / 0.95` for all three models because
   both Nemotron cards document it for tool calling; qwen inherited it for
   comparability and its own documentation has never been read. The v1→v2 protocol
@@ -138,11 +141,6 @@ load-bearing that is not below.
   `top_p` while the recovery path passes sampling overrides including it, so a remedy
   carrying one raises `TypeError` — killing precisely the attempts the arm exists to
   evaluate, 8 times on the 9B.
-- **Stages that will never have a gate.** Test authoring, planning and prompt
-  authoring have no mechanical check by nature — tests are not written against
-  checkable tests. Most of what the judge arms exist for lives there. The reflex to
-  resist is inventing a proxy gate, which would be worse than reading them because it
-  would carry a number and the number would be believed.
 - **`E5`'s fifth convergence criterion, never audited.** Every candidate skill must
   name something it blocked or be marked as not yet observed to block anything. None
   of S1–S8 is **termination**, though it is the prerequisite to all of them and is
