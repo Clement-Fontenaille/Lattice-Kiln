@@ -31,6 +31,12 @@ stale self-citation is corrected against what `10-foundations/04` now holds.
   band both stop at "the model"; the Claude Code teardown in `70-THINKING/15` folds
   it into "Backend" beside memory and MCP.
 
+  **The name already exists in the code and nowhere else.** `adapter_fingerprint()`
+  hashes it, `params.adapter` keys it, `ollama_client`'s four recovery layers repair
+  what it mangles — and the string `adapter` occurs **zero times** across
+  `10-foundations/`, the whole `2*-arch-*` band and `10-technical/`. The first act of
+  whoever owns this is to define the term where the design set can see it.
+
   **What made this a P0 row rather than a note.** Nemotron Nano 9B v2 was swept under
   the *4B's* chat template for eight arms, because `nemotron-gpu` was built from a raw
   local GGUF and Ollama assigns a renderer by architecture in that case. Paired on the
