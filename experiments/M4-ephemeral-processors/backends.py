@@ -51,7 +51,20 @@ from typing import Any
 
 
 class BackendError(RuntimeError):
-    pass
+    """A transport failure. `kind` says which, so a caller can word it its own way:
+
+        http   the server answered with an error status; `code`, `detail`
+        url    no answer at all (refused, unreachable, timed out)
+        json   an answer that was not JSON
+        None   anything else raised here (a reply missing its field, ...)
+
+    The original exception is the __cause__, as it always was.
+    """
+
+    def __init__(self, message: str, *, kind: str | None = None,
+                 code: int | None = None, detail: str | None = None):
+        super().__init__(message)
+        self.kind, self.code, self.detail = kind, code, detail
 
 
 @dataclass
@@ -91,11 +104,12 @@ def _post(url: str, body: dict, timeout_s: float) -> dict:
             detail = e.read().decode("utf-8", "replace")[:500]
         except Exception:  # noqa: BLE001
             detail = "(body unreadable)"
-        raise BackendError(f"{url} -> HTTP {e.code}: {detail}") from e
+        raise BackendError(f"{url} -> HTTP {e.code}: {detail}", kind="http",
+                           code=e.code, detail=detail) from e
     except urllib.error.URLError as e:
-        raise BackendError(f"{url} -> {e}") from e
+        raise BackendError(f"{url} -> {e}", kind="url") from e
     except json.JSONDecodeError as e:
-        raise BackendError(f"{url} -> malformed JSON: {e}") from e
+        raise BackendError(f"{url} -> malformed JSON: {e}", kind="json") from e
 
 
 def _norm_calls(raw: list | None) -> list[dict[str, Any]]:
@@ -135,15 +149,38 @@ class Ollama:
     # prompt cannot be reconstructed from anything we hold.
     template_ref = "server-chosen:opaque"
 
-    def chat(self, messages, *, base_url, model, tools=None, options=None,
-             think=None, timeout_s=600.0) -> Reply:
+    # The *_raw methods are the seam ollama_client uses: build the request, send
+    # it, return the reply as the server gave it. Validation and parsing stay
+    # with the caller, which is where the model-specific recovery lives. Key
+    # ORDER in these bodies is part of the contract -- it is what the bytes on
+    # the wire are, and seam_capture.py holds them byte for byte.
+    def chat_raw(self, messages, *, base_url, model, tools=None, options=None,
+                 think=None, timeout_s=600.0) -> dict:
         body = {"model": model, "messages": messages, "stream": False,
                 "options": options or {}}
         if tools:
             body["tools"] = tools
         if think is not None:
             body["think"] = think
-        p = _post(f"{base_url}/api/chat", body, timeout_s)
+        return _post(f"{base_url}/api/chat", body, timeout_s)
+
+    def complete_raw(self, prompt, *, base_url, model, options=None, system=None,
+                     think=None, timeout_s=600.0) -> dict:
+        body = {"model": model, "prompt": prompt, "stream": False,
+                "options": options or {}}
+        # think BEFORE system: the order ollama_client always sent. This method
+        # first had them swapped (as the old complete() did), and seam_capture's
+        # generate_system_think golden caught it byte for byte.
+        if think is not None:
+            body["think"] = think
+        if system:
+            body["system"] = system
+        return _post(f"{base_url}/api/generate", body, timeout_s)
+
+    def chat(self, messages, *, base_url, model, tools=None, options=None,
+             think=None, timeout_s=600.0) -> Reply:
+        p = self.chat_raw(messages, base_url=base_url, model=model, tools=tools,
+                          options=options, think=think, timeout_s=timeout_s)
         msg = p.get("message")
         if not isinstance(msg, dict):
             raise BackendError(f"no 'message' in reply: {p!r}")
@@ -153,13 +190,9 @@ class Ollama:
 
     def complete(self, prompt, *, base_url, model, options=None, system=None,
                  think=None, timeout_s=600.0) -> Reply:
-        body = {"model": model, "prompt": prompt, "stream": False,
-                "options": options or {}}
-        if system:
-            body["system"] = system
-        if think is not None:
-            body["think"] = think
-        p = _post(f"{base_url}/api/generate", body, timeout_s)
+        p = self.complete_raw(prompt, base_url=base_url, model=model,
+                              options=options, system=system, think=think,
+                              timeout_s=timeout_s)
         if "response" not in p:
             raise BackendError(f"no 'response' in reply: {p!r}")
         return self._reply(p, p["response"], p.get("thinking") or "", [])
@@ -286,15 +319,21 @@ class LlamaCppRaw:
             "llamacpp /completion has no chat or tool channel. Use the openai "
             "backend against llama-server --jinja, which does.")
 
-    def complete(self, prompt, *, base_url, model=None, options=None,
-                 system=None, think=None, timeout_s=600.0) -> Reply:
+    def complete_raw(self, prompt, *, base_url, model=None, options=None,
+                     system=None, think=None, timeout_s=600.0) -> dict:
         o = dict(options or {})
         body = {"prompt": (f"{system}\n\n{prompt}" if system else prompt),
                 "n_predict": o.get("num_predict", 1536),
                 "temperature": o.get("temperature", 0.2)}
         if "top_p" in o:
             body["top_p"] = o["top_p"]
-        p = _post(f"{base_url}/completion", body, timeout_s)
+        return _post(f"{base_url}/completion", body, timeout_s)
+
+    def complete(self, prompt, *, base_url, model=None, options=None,
+                 system=None, think=None, timeout_s=600.0) -> Reply:
+        p = self.complete_raw(prompt, base_url=base_url, model=model,
+                              options=options, system=system, think=think,
+                              timeout_s=timeout_s)
         t = p.get("timings") or {}
         return Reply(
             text=p.get("content") or "",
