@@ -44,6 +44,7 @@ sys.path.insert(0, str(HERE.parent / "M4-ephemeral-processors"))
 
 from ollama_client import _calls_from_text  # noqa: E402
 from roles import PROTOCOL_TOOLS, TOOLS     # noqa: E402
+from probe_record import persist            # noqa: E402
 
 BASE = "http://localhost:11434"
 DEFAULT_MODELS = ["nemotron3-nano-4b:latest",
@@ -94,6 +95,7 @@ def loop(model: str, max_turns: int = 6) -> dict:
     """Drive the real protocol and report how each call arrived."""
     msgs = [{"role": "user", "content": PROMPT}]
     turns, native, recovered, files, ctrl = [], 0, 0, {}, None
+    per_turn = []                 # raw, per request: persisted, not summarised
     for _ in range(max_turns):
         p = _post("/api/chat", {"model": model, "messages": msgs,
                                 "tools": TOOLS, "stream": False,
@@ -113,6 +115,11 @@ def loop(model: str, max_turns: int = 6) -> dict:
             recovered += len(calls)
             how = "recovered" if calls else "none"
         turns.append(how)
+        per_turn.append({"how": how, "n_calls": len(calls),
+                         "prompt_eval_count": p.get("prompt_eval_count"),
+                         "eval_count": p.get("eval_count"),
+                         "done_reason": p.get("done_reason"),
+                         "content": text, "tool_calls": raw})
         if not calls:
             break
         msgs.append({"role": "assistant", "content": text, "tool_calls": raw})
@@ -127,7 +134,7 @@ def loop(model: str, max_turns: int = 6) -> dict:
         if ctrl is not None:
             break
     return {"turns": turns, "native": native, "recovered": recovered,
-            "files": files, "control": ctrl}
+            "files": files, "control": ctrl, "per_turn": per_turn}
 
 
 def _verdict(dec: dict, cost: tuple[int, int], r: dict) -> str:
@@ -150,10 +157,25 @@ def _verdict(dec: dict, cost: tuple[int, int], r: dict) -> str:
 
 
 def main(models: list[str]) -> None:
+    records = []
+    try:
+        _main(models, records)
+    finally:
+        persist("tool_channel", {"models": models, "prompt": PROMPT,
+                                 "loop_options": {"temperature": 0.2,
+                                                  "num_ctx": 8192,
+                                                  "num_predict": 1024}},
+                records)
+
+
+def _main(models: list[str], records: list) -> None:
     for m in models:
+        rec = {"model": m}
+        records.append(rec)
         print("=" * 70)
         print(m)
         dec = declared(m)
+        rec["declared"] = dec
         if "error" in dec:
             print("  /api/show failed:", dec["error"])
             continue
@@ -165,13 +187,16 @@ def main(models: list[str]) -> None:
         except Exception as e:                                 # noqa: BLE001
             print("  render   : FAILED", repr(e)[:80])
             a = b = 0
+        rec["render_prompt_tokens"] = [a, b]
         print(f"  render   : prompt tokens {a} -> {b} with tools "
               f"(+{b - a}){'  <-- NOTHING INJECTED' if b <= a else ''}")
         try:
             r = loop(m)
         except Exception as e:                                 # noqa: BLE001
             print("  loop     : FAILED", repr(e)[:120])
+            rec["loop_error"] = repr(e)
             continue
+        rec["loop"] = r
         print(f"  parse    : {' '.join(r['turns'])}  "
               f"(native={r['native']} recovered={r['recovered']})")
         for p, c in r["files"].items():
@@ -179,7 +204,8 @@ def main(models: list[str]) -> None:
             for line in c.splitlines()[:4]:
                 print("             |", line)
         print(f"  conclude : {r['control']}")
-        print(f"  VERDICT  : {_verdict(dec, (a, b), r)}")
+        rec["verdict"] = _verdict(dec, (a, b), r)
+        print(f"  VERDICT  : {rec['verdict']}")
 
 
 if __name__ == "__main__":

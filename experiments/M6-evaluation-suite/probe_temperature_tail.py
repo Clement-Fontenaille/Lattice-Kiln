@@ -45,6 +45,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "M4-ephemeral-processors"))
 from roles import TOOLS                      # noqa: E402
 from probe_implementer_tail import series  # noqa: E402
+from probe_record import persist           # noqa: E402
 
 # THE SECOND implementer call, not the first. Of 15 truncations in the
 # pipeline, ONE was on the first implementer call and 13 were on the second or
@@ -89,7 +90,8 @@ ARMS = [
 _lock = threading.Lock()
 
 
-def one(prompt: str, temp: float, top_p, rep) -> int:
+def one(prompt: str, temp: float, top_p, rep) -> dict:
+    """One call. `eval_count` is -1 when the request itself failed."""
     opts = {"temperature": temp, "num_ctx": NUM_CTX, "num_predict": CAP}
     if top_p is not None:
         opts["top_p"] = top_p
@@ -103,9 +105,15 @@ def one(prompt: str, temp: float, top_p, rep) -> int:
     try:
         with urllib.request.urlopen(req, timeout=1800) as r:
             p = json.loads(r.read().decode("utf-8"))
-    except urllib.error.URLError:
-        return -1
-    return p.get("eval_count") or 0
+    except urllib.error.URLError as e:
+        return {"eval_count": -1, "error": repr(e)[:120]}
+    return {"eval_count": p.get("eval_count") or 0,
+            "prompt_eval_count": p.get("prompt_eval_count"),
+            "done_reason": p.get("done_reason"),
+            "eval_duration_ns": p.get("eval_duration"),
+            "thinking_chars": len((p.get("message") or {}).get("thinking") or ""),
+            "content_chars": len((p.get("message") or {}).get("content") or ""),
+            "n_tool_calls": len((p.get("message") or {}).get("tool_calls") or [])}
 
 
 def main(argv: list[str]) -> None:
@@ -121,17 +129,27 @@ def main(argv: list[str]) -> None:
           f"{workers} concurrent\n")
 
     res: dict[str, list[int]] = {a[0]: [] for a in ARMS}
+    calls: list[dict] = []
     jobs = [a for a in ARMS for _ in range(n)]
 
     def run(a):
         label, temp, top_p, rep = a
-        v = one(prompt, temp, top_p, rep)
+        c = one(prompt, temp, top_p, rep)
         with _lock:
-            res[label].append(v)
+            res[label].append(c["eval_count"])
+            calls.append({"arm": label, "temperature": temp, "top_p": top_p,
+                          "repeat_penalty": rep, **c})
 
     t0 = time.monotonic()
-    with ThreadPoolExecutor(max_workers=workers) as ex:
-        list(ex.map(run, jobs))
+    try:
+        with ThreadPoolExecutor(max_workers=workers) as ex:
+            list(ex.map(run, jobs))
+    finally:
+        persist("temperature_tail", {"model": MODEL, "cap": CAP, "num_ctx": NUM_CTX,
+                                     "n": n, "think": True,
+                                     "prompt": PROMPT_FILE.name,
+                                     "prompt_chars": len(prompt),
+                                     "arms": ARMS}, calls)
     print(f"wall {(time.monotonic() - t0) / 60:.1f} min\n")
 
     for label, *_ in ARMS:

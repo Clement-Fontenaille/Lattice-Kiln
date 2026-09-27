@@ -63,6 +63,7 @@ from probe_run_order import A, B_RELATED, MARKER_ID, MARKER_NOTE  # noqa: E402
 # is the mechanism the real harness leans on, every rep of a cell sending an
 # identical preamble and differing only in its tail.
 import probe_shared_prefix as _sp  # noqa: E402
+from probe_record import persist  # noqa: E402
 
 BASE = "http://localhost:11434"
 _lock = threading.Lock()
@@ -87,7 +88,10 @@ def call(model: str, prompt: str, tag: str, num_predict: int) -> dict:
     return {"tag": tag,
             "sha": hashlib.sha256(txt.encode()).hexdigest()[:12],
             "marker": (MARKER_ID in txt) or (MARKER_NOTE in txt),
-            "etok": p.get("eval_count"), "text": txt}
+            "etok": p.get("eval_count"), "text": txt,
+            "prompt_eval_count": p.get("prompt_eval_count"),
+            "done_reason": p.get("done_reason"),
+            "t0": t0, "t1": t1}
 
 
 def max_in_flight() -> int:
@@ -161,6 +165,10 @@ def main(argv: list[str]) -> None:
     wall = time.monotonic() - t0
 
     peak = max_in_flight()
+    persist("slot_bleed", {"model": model, "n": n, "workers": workers,
+                           "mode": mode, "wall_s": wall, "peak_concurrency": peak,
+                           "baseline": base},
+            res)
     a = [r for r in res if r["tag"].startswith("A")]
     b = [r for r in res if r["tag"].startswith("B")]
     bad_sha = [r for r in a if r["sha"] != base["sha"]]

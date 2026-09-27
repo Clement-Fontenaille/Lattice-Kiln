@@ -48,6 +48,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "M4-ephemeral-processors"))
 from roles import PROTOCOL_TOOLS, TOOLS, prompt_for  # noqa: E402
+from probe_record import persist                      # noqa: E402
 
 BASE = "http://localhost:11434"
 MODEL = "nemotron3-nano-4b:latest"
@@ -119,6 +120,7 @@ def run_loop(user: str, system: str | None, max_turns: int = 4) -> dict:
     wrote = concluded = False
     turns = 0
     prose_conclude = False
+    per_turn = []                 # raw, per request: persisted, not summarised
     for _ in range(max_turns):
         body = {"model": MODEL, "messages": msgs, "tools": TOOLS, "stream": False,
                 "think": True,
@@ -137,6 +139,12 @@ def run_loop(user: str, system: str | None, max_turns: int = 4) -> dict:
         calls = [(c.get("function") or {}).get("name")
                  for c in (m.get("tool_calls") or [])]
         text = m.get("content") or ""
+        per_turn.append({"calls": calls,
+                         "prompt_eval_count": p.get("prompt_eval_count"),
+                         "eval_count": p.get("eval_count"),
+                         "done_reason": p.get("done_reason"),
+                         "thinking_chars": len(m.get("thinking") or ""),
+                         "content": text})
         if not calls:
             # the failure being counted: a conclusion written as prose
             if '"terminal_state"' in text or "<function=conclude" in text:
@@ -154,7 +162,7 @@ def run_loop(user: str, system: str | None, max_turns: int = 4) -> dict:
         if concluded:
             break
     return {"wrote": wrote, "concluded": concluded, "turns": turns,
-            "prose_conclude": prose_conclude}
+            "prose_conclude": prose_conclude, "per_turn": per_turn}
 
 
 def main(argv: list[str]) -> None:
@@ -196,10 +204,12 @@ def main(argv: list[str]) -> None:
     print("\n  concluded = conclude arrived as a PARSED call. prose-concl = the "
           "model wrote its\n  conclusion as text instead, which is the case that "
           "discards the work.")
-    out = HERE.parent.parent / "evalkit_store" / "probe_runs" / "action_nudge.json"
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(res, indent=1), encoding="utf-8")
-    print(f"  raw -> {out.name}")
+    # Timestamped now, where it used to overwrite a fixed action_nudge.json.
+    persist("action_nudge", {"model": MODEL, "cap": CAP, "num_ctx": NUM_CTX,
+                             "temperature": 0.6, "top_p": 0.95, "think": True,
+                             "n": n, "variants": {k: {"user": u, "system": s}
+                                                  for k, (u, s) in vs.items()}},
+            [{"arm": k, **r} for k in vs for r in res[k]])
 
 
 if __name__ == "__main__":

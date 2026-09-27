@@ -35,6 +35,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "M4-ephemeral-processors"))
 import recovery as R                      # noqa: E402
 from roles import TOOLS                   # noqa: E402
+from probe_record import persist          # noqa: E402
 
 BASE = "http://localhost:11434"
 STORE = HERE.parent.parent / "evalkit_store"
@@ -62,6 +63,7 @@ def call(prompt: str, *, model: str, options: dict) -> dict:
     think = m.get("thinking") or ""
     looped, _ = R.is_degenerate(think + text)
     return {"eval": p.get("eval_count") or 0,
+            "prompt_eval_count": p.get("prompt_eval_count"),
             "done": p.get("done_reason"),
             "calls": calls,
             "wrote": "write_file" in calls,
@@ -129,8 +131,17 @@ def main(argv: list[str]) -> None:
             res[k].append(r)
 
     t0 = time.monotonic()
-    with ThreadPoolExecutor(max_workers=workers) as ex:
-        list(ex.map(run, jobs))
+    try:
+        with ThreadPoolExecutor(max_workers=workers) as ex:
+            list(ex.map(run, jobs))
+    finally:
+        persist("recovery_live", {"model": model, "n": n, "cap": cap,
+                                  "diagnosis": {"mode": diag.mode,
+                                                "evidence": diag.evidence},
+                                  "remedy": remedy.describe(), "via": why,
+                                  "options": {**remedy.options, "num_predict": cap},
+                                  "prompt_chars": {k: len(p) for k, p in arms.items()}},
+                [{"arm": k, **r} for k in arms for r in res[k]])
     print(f"wall {(time.monotonic() - t0) / 60:.1f} min\n")
     print(f"  {'arm':26}{'min':>7}{'25%':>7}{'50%':>7}{'75%':>7}{'max':>7}"
           f"{'cap':>6}{'loop':>6}{'wrote':>6}{'concl':>6}")
