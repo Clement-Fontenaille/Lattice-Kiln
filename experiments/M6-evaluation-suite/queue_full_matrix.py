@@ -29,10 +29,39 @@ HERE = Path(__file__).resolve().parent
 LOGS = HERE / "matrix_logs"
 
 MODELS = [
+    # The 9B FIRST, and as the PULLED model rather than `nemotron-gpu`.
+    #
+    # `nemotron-gpu` descends from a raw local GGUF, and Ollama assigns a
+    # RENDERER by architecture in that case: it picked `nemotron-3-nano`, the
+    # 4B's, a different generation. So every 9B row before 2026-09-27 was
+    # produced with the wrong chat scaffold -- wrong role markers, wrong
+    # thinking delimiters, wrong tool syntax. Paired on the 31 tasks both runs
+    # scored, `monolith` goes 5/31 -> 17/31 on nothing but this, 12 tasks
+    # flipping to pass and none to fail.
+    #
+    # Only the PULLED model keeps NVIDIA's own template. `ollama create ...
+    # FROM` it re-assigns the renderer, so it must stay unbuilt -- which is why
+    # layer placement is LATTICE_NUM_GPU below and not a Modelfile PARAMETER.
+    # See modelfiles/Modelfile.nemotron9-native for the whole dead end.
+    "hf.co/bartowski/nvidia_NVIDIA-Nemotron-Nano-9B-v2-GGUF:Q4_K_M",
     "nemotron3-nano-4b:latest",
-    "nemotron-gpu:latest",
     "qwen2.5-coder:7b-instruct-q4_K_M",
 ]
+
+#: Filesystem-safe short name per model, for log files and results subdirs.
+#: Needed because the pulled 9B's tag carries slashes and dots, and the old
+#: `model.split(':')[0]` would have written to a path that does not exist.
+#: A model absent here falls back to that old derivation, so nothing that ran
+#: before changes name.
+SHORT = {
+    "hf.co/bartowski/nvidia_NVIDIA-Nemotron-Nano-9B-v2-GGUF:Q4_K_M": "nemotron9-native",
+    "nemotron3-nano-4b:latest": "nemotron3-nano-4b",
+    "qwen2.5-coder:7b-instruct-q4_K_M": "qwen25-coder",
+}
+
+
+def short(model: str) -> str:
+    return SHORT.get(model) or model.split(":")[0].replace(".", "")
 
 # Ordered by what each answers, not alphabetically. baseline first because it
 # is the reference every other arm is read against and costs almost nothing;
@@ -90,6 +119,11 @@ ENV = {
     "LATTICE_TOP_P": "0.95",
     "LATTICE_MIN_PREDICT": "8192",
     "LATTICE_NUM_CTX": "16384",
+    # Layer placement as an API option. The 9B must run UNBUILT to keep its own
+    # chat template, so there is no Modelfile to carry num_gpu. Not part of the
+    # setup key: placement changes where the arithmetic happens, never its
+    # result. Ollama clamps to what fits -- check `ollama ps`.
+    "LATTICE_NUM_GPU": "99",
 }
 
 
@@ -120,14 +154,14 @@ def main(argv: list[str]) -> None:
         return
     t0 = time.monotonic()
     for i, (model, arm) in enumerate(jobs, 1):
-        tag = f"{model.split(':')[0].replace('.', '')}_{arm}"
+        tag = f"{short(model)}_{arm}"
         log = LOGS / f"{tag}.log"
         if log.exists() and "objective pass" in log.read_text(encoding="utf-8", errors="replace"):
             print(f"[{i}/{len(jobs)}] {tag} already complete, skipping")
             continue
         env = {**os.environ, **ENV,
                "LATTICE_EVAL_MODEL": model,
-               "LATTICE_RESULTS_SUBDIR": f"results_matrix_{model.split(':')[0].replace('.', '')}"}
+               "LATTICE_RESULTS_SUBDIR": f"results_matrix_{short(model)}"}
         print(f"[{i}/{len(jobs)}] {tag} ...", flush=True)
         with open(log, "w", encoding="utf-8") as fh:
             subprocess.run([sys.executable, "-u", "run_suite.py", "--arm", arm,
