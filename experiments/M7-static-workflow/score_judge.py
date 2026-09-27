@@ -19,6 +19,9 @@ import sys
 from collections import Counter
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "evalkit"))
+from jsonl_read import load_jsonl  # noqa: E402  (tolerates a partial tail)
+
 HERE = Path(__file__).resolve().parent
 RES = HERE.parent / "M6-evaluation-suite" / "results"
 SUITE = HERE.parent / "M6-evaluation-suite"
@@ -29,7 +32,7 @@ def main():
     stage = HERE / f"stage_influence_{arm}.jsonl"
     if not stage.is_file():
         raise SystemExit(f"no stage log for {arm}")
-    recs = [json.loads(x) for x in stage.read_text(encoding="utf-8").splitlines() if x]
+    recs = load_jsonl(stage)
     rows = {r["task"]: r for r in json.loads((RES / f"{arm}.json").read_text(encoding="utf-8"))}
     tasks = {t["id"]: t for t in json.loads((SUITE / "tasks.json").read_text(encoding="utf-8"))["tasks"]}
     obj2id = {" ".join(t["objective"].split())[:200]: i for i, t in tasks.items()}

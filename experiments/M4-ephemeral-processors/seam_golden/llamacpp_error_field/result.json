@@ -1,0 +1,27 @@
+{
+ "meter": {
+  "calls": 0,
+  "gen_s": 0.0,
+  "gen_tok": 0,
+  "prompt_s": 0.0,
+  "prompt_tok": 0,
+  "tool_malformed": 0,
+  "tool_native": 0,
+  "tool_recovered": 0,
+  "tool_repaired": 0,
+  "tool_turns": 0
+ },
+ "raised": {
+  "cause": null,
+  "has_gen": false,
+  "message": "llama-server error: {'code': 500, 'message': 'slot unavailable'}",
+  "mro": [
+   "OllamaError",
+   "RuntimeError",
+   "Exception",
+   "BaseException"
+  ],
+  "num_predict": null,
+  "type": "OllamaError"
+ }
+}

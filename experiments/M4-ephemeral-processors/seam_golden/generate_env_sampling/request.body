@@ -1,0 +1,1 @@
+{"model": "qwen2.5-coder:7b-instruct-q4_K_M", "prompt": "Fix client.py so every subtest passes.\n\n----- client.py -----\ndef call(self, fn):\n\t\"\"\"Invoke fn() once.\"\"\"\n    return fn()  # \u00e9 \u2713\npath = \"C:\\\\tmp\\\\x\"\n\n\nBe brief.", "stream": false, "options": {"temperature": 0.6, "num_ctx": 8192, "num_predict": 2048, "top_p": 0.95}}

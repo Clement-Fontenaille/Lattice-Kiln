@@ -28,6 +28,8 @@ import urllib.request
 from dataclasses import dataclass, field
 from typing import Any
 
+import backends as _backends
+
 DEFAULT_MODEL = os.environ.get("LATTICE_EVAL_MODEL", "qwen2.5-coder:7b-instruct-q4_K_M")
 # LATTICE_NUM_CTX: the context ceiling, settable because it now binds.
 #
@@ -146,6 +148,38 @@ TOP_P = None if _TOPP_ENV is None else float(_TOPP_ENV)
 
 class OllamaError(RuntimeError):
     pass
+
+
+# --------------------------------------------------------------- transport
+#
+# A1: the wire is backends.py's business, chosen by LATTICE_BACKEND. What stays
+# HERE is everything that is a property of the MODEL or of the experiment: the
+# meter, the transcript sink, the truncation guard, and the recovery layers
+# (_calls_from_text, _calls_from_xml, _calls_from_bare_args, _repair_json),
+# which travel with the weights and not with the server.
+#
+# Requests are byte-identical to what this module sent before the seam, and
+# error messages word for word: seam_capture.py holds both as golden files.
+
+def _transport():
+    try:
+        return _backends.get(BACKEND)
+    except _backends.BackendError as e:
+        raise OllamaError(str(e)) from None
+
+
+def _transport_error(e: "_backends.BackendError", base_url: str,
+                     server: str) -> OllamaError:
+    """The message this module has always raised, for the same failure."""
+    if e.kind == "http":
+        msg = f"request to {base_url} failed: HTTP {e.code}: {e.detail}"
+    elif e.kind == "url":
+        msg = f"request to {base_url} failed: {e.__cause__}"
+    elif e.kind == "json":
+        msg = f"bad JSON from {server}: {e.__cause__}"
+    else:
+        msg = str(e)
+    return OllamaError(msg)
 
 
 class Truncated(OllamaError):
@@ -394,8 +428,9 @@ def generate(prompt: str, *, model: str = DEFAULT_MODEL, base_url: str = DEFAULT
     back out into a structured field. Neither runs on /api/generate.
     """
     prompt = _nudged(prompt)
+    tr = _transport()
     if tools:
-        if BACKEND == "llamacpp":
+        if not tr.supports_tools:
             raise OllamaError("tools= requires the ollama backend (/api/chat); "
                               "llama-server's /completion has no tool channel")
         msgs = ([{"role": "system", "content": system}] if system else [])
@@ -403,10 +438,13 @@ def generate(prompt: str, *, model: str = DEFAULT_MODEL, base_url: str = DEFAULT
         return chat(msgs, base_url=base_url, model=model, num_ctx=num_ctx,
                     temperature=temperature, num_predict=num_predict,
                     timeout_s=timeout_s, tools=tools)
-    if BACKEND == "llamacpp":
+    if tr.name == "llamacpp":
         return _generate_llamacpp(prompt, base_url=base_url, model=model,
                                   temperature=temperature, num_predict=num_predict,
                                   timeout_s=timeout_s, system=system)
+    if not hasattr(tr, "complete_raw"):
+        raise OllamaError(f"backend {tr.name!r} has no raw-completion endpoint; "
+                          "generate() without tools= cannot run on it")
     num_predict = max(num_predict, MIN_PREDICT)
     if TEMPERATURE is not None:
         temperature = TEMPERATURE
@@ -414,32 +452,13 @@ def generate(prompt: str, *, model: str = DEFAULT_MODEL, base_url: str = DEFAULT
             "num_predict": num_predict}
     if TOP_P is not None:
         opts["top_p"] = TOP_P
-    body = {"model": model, "prompt": prompt, "stream": False, "options": opts}
-    if THINK is not None:
-        body["think"] = THINK
-    if system:
-        body["system"] = system
-    data = json.dumps(body).encode("utf-8")
-    req = urllib.request.Request(f"{base_url}/api/generate", data=data,
-                                 headers={"Content-Type": "application/json"})
     t0 = time.monotonic()
     try:
-        with urllib.request.urlopen(req, timeout=timeout_s) as resp:
-            payload = json.loads(resp.read().decode("utf-8"))
-    except urllib.error.HTTPError as e:
-        # Read the body. Ollama puts the actual reason in it, and without this
-        # every server-side refusal arrived as a bare "HTTP Error 500", which
-        # says nothing about whether the fault is the prompt, the options or
-        # the message list.
-        try:
-            detail = e.read().decode("utf-8", "replace")[:500]
-        except Exception:  # noqa: BLE001
-            detail = "(body unreadable)"
-        raise OllamaError(f"request to {base_url} failed: HTTP {e.code}: {detail}") from e
-    except urllib.error.URLError as e:
-        raise OllamaError(f"request to {base_url} failed: {e}") from e
-    except json.JSONDecodeError as e:
-        raise OllamaError(f"bad JSON from Ollama: {e}") from e
+        payload = tr.complete_raw(prompt, base_url=base_url, model=model,
+                                  options=opts, system=system, think=THINK,
+                                  timeout_s=timeout_s)
+    except _backends.BackendError as e:
+        raise _transport_error(e, base_url, "Ollama") from e.__cause__
     if "response" not in payload:
         raise OllamaError(f"no 'response' field in Ollama reply: {payload!r}")
     # The key is present and empty. This is what thirteen arms recorded as
@@ -768,33 +787,20 @@ def chat(messages: list[dict[str, Any]], *, model: str = DEFAULT_MODEL,
                 if not (m.get("content") or "").endswith(NUDGE):
                     messages[i] = {**m, "content": _nudged(m.get("content", ""))}
                 break
-    body = {"model": model, "messages": messages, "stream": False,
-            "options": opts}
-    if tools:
-        body["tools"] = tools
-    if THINK is not None:
-        body["think"] = THINK
-    data = json.dumps(body).encode("utf-8")
-    req = urllib.request.Request(f"{base_url}/api/chat", data=data,
-                                 headers={"Content-Type": "application/json"})
+    tr = _transport()
+    if not tr.supports_tools:
+        # Unchanged from before the seam: chat() always spoke Ollama's
+        # /api/chat, whatever LATTICE_BACKEND said, so under llamacpp it posts
+        # there and the server refuses. Kept byte-identical rather than turned
+        # into a local error here; the openai backend (A2) is the real fix.
+        tr = _backends.get("ollama")
     t0 = time.monotonic()
     try:
-        with urllib.request.urlopen(req, timeout=timeout_s) as resp:
-            payload = json.loads(resp.read().decode("utf-8"))
-    except urllib.error.HTTPError as e:
-        # Read the body. Ollama puts the actual reason in it, and without this
-        # every server-side refusal arrived as a bare "HTTP Error 500", which
-        # says nothing about whether the fault is the prompt, the options or
-        # the message list.
-        try:
-            detail = e.read().decode("utf-8", "replace")[:500]
-        except Exception:  # noqa: BLE001
-            detail = "(body unreadable)"
-        raise OllamaError(f"request to {base_url} failed: HTTP {e.code}: {detail}") from e
-    except urllib.error.URLError as e:
-        raise OllamaError(f"request to {base_url} failed: {e}") from e
-    except json.JSONDecodeError as e:
-        raise OllamaError(f"bad JSON from Ollama: {e}") from e
+        payload = tr.chat_raw(messages, base_url=base_url, model=model,
+                              tools=tools, options=opts, think=THINK,
+                              timeout_s=timeout_s)
+    except _backends.BackendError as e:
+        raise _transport_error(e, base_url, "Ollama") from e.__cause__
     msg = payload.get("message")
     if not isinstance(msg, dict):
         raise OllamaError(f"no 'message' field in Ollama reply: {payload!r}")
@@ -863,32 +869,17 @@ def _generate_llamacpp(prompt: str, *, base_url: str, model: str, temperature: f
     request -- passing a per-call ctx would be a silent no-op that misleads a
     caller into thinking it did something.
     """
-    full_prompt = f"{system}\n\n{prompt}" if system else prompt
-    body = {"prompt": full_prompt, "n_predict": num_predict,
+    opts = {"num_predict": num_predict,
             "temperature": TEMPERATURE if TEMPERATURE is not None else temperature}
     if TOP_P is not None:
-        body["top_p"] = TOP_P
-    data = json.dumps(body).encode("utf-8")
-    req = urllib.request.Request(f"{base_url}/completion", data=data,
-                                 headers={"Content-Type": "application/json"})
+        opts["top_p"] = TOP_P
     t0 = time.monotonic()
     try:
-        with urllib.request.urlopen(req, timeout=timeout_s) as resp:
-            payload = json.loads(resp.read().decode("utf-8"))
-    except urllib.error.HTTPError as e:
-        # Read the body. Ollama puts the actual reason in it, and without this
-        # every server-side refusal arrived as a bare "HTTP Error 500", which
-        # says nothing about whether the fault is the prompt, the options or
-        # the message list.
-        try:
-            detail = e.read().decode("utf-8", "replace")[:500]
-        except Exception:  # noqa: BLE001
-            detail = "(body unreadable)"
-        raise OllamaError(f"request to {base_url} failed: HTTP {e.code}: {detail}") from e
-    except urllib.error.URLError as e:
-        raise OllamaError(f"request to {base_url} failed: {e}") from e
-    except json.JSONDecodeError as e:
-        raise OllamaError(f"bad JSON from llama-server: {e}") from e
+        payload = _backends.get("llamacpp").complete_raw(
+            prompt, base_url=base_url, model=model, options=opts, system=system,
+            timeout_s=timeout_s)
+    except _backends.BackendError as e:
+        raise _transport_error(e, base_url, "llama-server") from e.__cause__
     if "error" in payload:
         raise OllamaError(f"llama-server error: {payload['error']!r}")
     if "content" not in payload:

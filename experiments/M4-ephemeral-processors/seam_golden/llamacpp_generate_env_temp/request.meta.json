@@ -1,0 +1,12 @@
+{
+ "extra_kwargs": [],
+ "headers": [
+  [
+   "Content-type",
+   "application/json"
+  ]
+ ],
+ "method": "POST",
+ "timeout": 600.0,
+ "url": "http://localhost:8090/completion"
+}

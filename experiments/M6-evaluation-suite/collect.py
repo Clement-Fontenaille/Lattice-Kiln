@@ -23,6 +23,9 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "evalkit"))
+from jsonl_read import load_jsonl  # noqa: E402  (tolerates a partial tail)
+
 HERE = Path(__file__).resolve().parent
 RES = HERE / "results"
 STAGES = HERE.parent / "M7-static-workflow"
@@ -80,9 +83,7 @@ def summarise(arm, rows):
 
 def stage_recs(arm):
     p = STAGES / f"stage_influence_{arm}.jsonl"
-    if not p.is_file():
-        return []
-    return [json.loads(x) for x in p.read_text(encoding="utf-8").splitlines() if x]
+    return load_jsonl(p)
 
 
 def main():

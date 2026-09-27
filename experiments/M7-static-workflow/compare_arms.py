@@ -13,6 +13,9 @@ import json
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "evalkit"))
+from jsonl_read import load_jsonl  # noqa: E402  (tolerates a partial tail)
+
 RES = Path(__file__).resolve().parent.parent / "M6-evaluation-suite" / "results"
 STAGE = Path(__file__).resolve().parent / "stage_influence.jsonl"
 ORDER = ["monolith", "dloop", "staged", "m7"]
@@ -74,7 +77,7 @@ def main():
                   f"Net {len(gained) - len(lost):+d}.\n")
 
     if STAGE.is_file() and "m7" in arms:
-        recs = [json.loads(x) for x in STAGE.read_text(encoding="utf-8").splitlines() if x]
+        recs = load_jsonl(STAGE)
         recs = recs[-len(arms["m7"]):]          # last full run only
         fired = sum(r["s2_concern_split"]["fired"] for r in recs)
         agreed = sum(r["s2_concern_split"]["agreed"] for r in recs)

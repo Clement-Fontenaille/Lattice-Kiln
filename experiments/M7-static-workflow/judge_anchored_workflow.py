@@ -95,6 +95,7 @@ HERE = Path(__file__).resolve().parent
 M6 = HERE.parent / "M6-evaluation-suite"
 sys.path.insert(0, str(M6))
 from _m6bridge import Gate, RunRecorder, assemble, generate, run_processor  # noqa: E402
+from stage_tags import setup_tags  # noqa: E402
 
 import judge_format as _judge_format
 
@@ -659,13 +660,7 @@ def run_m7(objective: str, ws: Path) -> str:
         # measure. `t_end` additionally lets a record be joined to its
         # store row where the stamps are absent, as they are on
         # everything written before 2026-09-21.
-        stage.update({
-            "model": os.environ.get("LATTICE_EVAL_MODEL"),
-            "judge_format": os.environ.get("LATTICE_JUDGE_FORMAT",
-                                           "decision_first"),
-            "results_subdir": os.environ.get("LATTICE_RESULTS_SUBDIR"),
-            "t_end": time.time(),
-        })
+        stage.update(setup_tags())      # + cell_id, cell_rep (A14)
         STAGE_LOG.parent.mkdir(parents=True, exist_ok=True)
         with STAGE_LOG.open("a", encoding="utf-8") as fh:
             fh.write(json.dumps(stage) + "\n")

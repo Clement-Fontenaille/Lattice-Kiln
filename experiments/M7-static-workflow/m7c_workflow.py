@@ -45,6 +45,7 @@ HERE = Path(__file__).resolve().parent
 M6 = HERE.parent / "M6-evaluation-suite"
 sys.path.insert(0, str(M6))
 from _m6bridge import Gate, RunRecorder, assemble, generate, run_processor  # noqa: E402
+from stage_tags import setup_tags  # noqa: E402
 
 RUNS = HERE / "runs_m7c"
 STAGE_LOG = HERE / "stage_influence_m7c.jsonl"
@@ -522,6 +523,9 @@ def run_m7(objective: str, ws: Path) -> str:
                       "check_dims": fin["dims"], "escalation_payload": payload})
         return terminal
     finally:
+        # Which setup produced this record: the cell id run_suite exported,
+        # which is the store row's cell id. See stage_tags.py (A14).
+        stage.update(setup_tags())
         STAGE_LOG.parent.mkdir(parents=True, exist_ok=True)
         with STAGE_LOG.open("a", encoding="utf-8") as fh:
             fh.write(json.dumps(stage) + "\n")

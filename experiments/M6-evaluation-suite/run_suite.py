@@ -22,7 +22,6 @@ import tempfile
 import time
 import traceback
 import socket
-from collections import defaultdict
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -32,6 +31,10 @@ RUNNER = f"{socket.gethostname()}-{os.getpid()}"
 from _m6bridge import (Gate, RunRecorder, assemble, health,  # noqa: E402
                        meter_read, meter_reset, run_processor,
                        transcript_close)
+# The report lives in its own file so changing it does not move arm_sha for
+# the arms defined here. See run_report.py.
+from run_report import summarise  # noqa: E402
+import row_extra  # noqa: E402  (arm-reported fields, beside the score)
 
 SUITE = HERE / "suite"
 # LATTICE_RESULTS_SUBDIR lets a run against a different model land in its own
@@ -53,7 +56,7 @@ SUITE_VERSION = json.loads((HERE / "tasks.json").read_text(encoding="utf-8"))["s
 # transition that breaks every reader on day one is not a transition.
 sys.path.insert(0, str(HERE.parent.parent / "evalkit"))
 try:
-    from setup_key import Cell            # noqa: E402
+    from setup_key import Cell, load_waivers  # noqa: E402
     from store import Store               # noqa: E402
     _STORE = Store()
 except Exception as _e:                   # noqa: BLE001
@@ -163,8 +166,15 @@ try:
     ARMS.update(ARMS_EXTRA)          # dloop, staged
 except Exception as _e:  # noqa: BLE001
     print(f"(m6_arms unavailable: {_e!r})", file=sys.stderr)
+# One file per new M6 arm, never this one: arm_source_path() hashes the whole
+# file, so an arm defined here moves arm_sha for baseline/monolith/recovery.
+for _mod in ("monolith_test_arm",):
+    try:
+        ARMS.update(__import__(_mod).ARMS_EXTRA)
+    except Exception as _e:  # noqa: BLE001
+        print(f"({_mod} unavailable: {_e!r})", file=sys.stderr)
 sys.path.insert(0, str(HERE.parent / "M7-static-workflow"))
-for _mod in ("m7_workflow", "m7b_workflow", "m7c_workflow", "m7e_workflow", "m7f_workflow", "judge_staged_workflow", "judge_anchored_workflow", "judge_caveat_workflow", "judge_bypass_workflow", "test_synth_workflow", "test_synth_retry_workflow", "judge_fullctx_workflow"):     # M7's arms live in their own dir
+for _mod in ("m7_workflow", "m7b_workflow", "m7c_workflow", "m7e_workflow", "m7f_workflow", "judge_staged_workflow", "judge_anchored_workflow", "judge_caveat_workflow", "judge_bypass_workflow", "test_synth_workflow", "test_synth_retry_workflow", "judge_fullctx_workflow", "author_workflow", "author_judge_workflow"):     # M7's arms live in their own dir
     try:
         ARMS.update(__import__(_mod).ARMS_EXTRA)
     except Exception as _e:  # noqa: BLE001
@@ -210,7 +220,11 @@ def _eval_params(arm_name: str = "") -> dict:
     # when the EXPERIMENT changes, this moves when the ADAPTER does, and the
     # two are independent. Every arm sends the same adapter; none of them owns
     # it. See processor.adapter_fingerprint.
-    p["adapter"] = _proc.adapter_fingerprint()
+    #
+    # Per arm only for an arm that registered extra tools (processor.ARM_TOOLS,
+    # e.g. monolith_test's run_tests): for every other arm the value is exactly
+    # the argument-free one.
+    p["adapter"] = _proc.adapter_fingerprint(arm_name or None)
     # The processor's recovery implementation -- its failure modes, its steering
     # text, its sampling and attempt budget. Processor-owned, not adapter-owned:
     # the adapter only provides a catchable exception carrying its generation,
@@ -277,6 +291,7 @@ def run_task(task, arm_name, rep, cmd, protected):
     # repr alone ("'list' object has no attribute 'get'") cost a day of confusion
     # on 2026-09-17 -- 90 of judge_bypass's 102 rows were this, scored as results.
     run_ok, trace = True, None
+    row_extra.EXTRA.clear()
     try:
         terminal = ARMS[arm_name](task["objective"], ws)
     except Exception as e:  # noqa: BLE001
@@ -371,53 +386,12 @@ def run_task(task, arm_name, rep, cmd, protected):
         "t_start": round(t_start, 3),
         "t_end": round(t_end, 3),
     }
+    # Only when the arm reported something, so every other arm's row is
+    # exactly what it was.
+    if row_extra.EXTRA:
+        row["arm_extra"] = json.loads(json.dumps(row_extra.EXTRA, default=str))
     shutil.rmtree(ws, ignore_errors=True)
     return row
-
-
-def summarise(rows, arm, suite_version):
-    L = [f"# M6 suite run - arm `{arm}` (suite {suite_version})", "",
-         f"_{time.strftime('%Y-%m-%d %H:%M')} - {len(rows)} runs_", "",
-         "| task | shape/trap | terminal | base | final | struct | pass | regr | decline | wall |",
-         "|---|---|---|---|---|---|---|---|---|---|"]
-    for r in sorted(rows, key=lambda r: (r["task"], r["rep"])):
-        st = " ".join(f"{k}={v[0]}/{v[1]}" for k, v in r["struct"].items()) or "-"
-        dec = ("ok" if r["declined_correctly"] else "MISS") if r["decline_expected"] else "-"
-        L.append(f"| {r['task']} | {r['shape']}/{r['trap']} | {r['terminal']} | "
-                 f"{r['baseline_sub'][0]}/{r['baseline_sub'][1]} | "
-                 f"{r['final_sub'][0]}/{r['final_sub'][1]} | {st} | {r['objective_pass']} | "
-                 f"{'YES' if r['regressed'] else '-'} | {dec} | {r['wall_s']} |")
-
-    # aggregate. Rows whose arm raised produced no attempt, so they are counted
-    # separately and excluded from every rate -- a denominator that includes them
-    # reports the fixture, not the model.
-    ok_rows = [r for r in rows if r.get("run_ok", True)]
-    nfail = len(rows) - len(ok_rows)
-    npass = sum(r["objective_pass"] for r in ok_rows)
-    nreg = sum(r["regressed"] for r in ok_rows)
-    ncrash = sum(r["check_crashed"] for r in ok_rows)
-    dec_rows = [r for r in ok_rows if r["decline_expected"]]
-    dec_ok = sum(r["declined_correctly"] for r in dec_rows)
-    L += ["", f"**objective pass {npass}/{len(ok_rows)} - regressions {nreg} - "
-              f"check crashes {ncrash} - decline accuracy {dec_ok}/{len(dec_rows)}**", ""]
-    if nfail:
-        L += [f"> **{nfail} of {len(rows)} runs did not execute** (the arm raised; "
-              f"`run_ok: false`). They are excluded from every figure above. See "
-              f"`error_trace` in the JSON.", ""]
-
-    # stresses slices - mean final subtest fraction per capability tag.
-    # ok_rows, not rows: a run that never executed scores the untouched fixture,
-    # which would drag every tag it carries toward the baseline.
-    by_tag = defaultdict(list)
-    for r in ok_rows:
-        f = r["final_sub"][0] / max(1, r["final_sub"][1])
-        for tag in r["stresses"]:
-            by_tag[tag].append(f)
-    L += ["## `stresses` slices (mean final SUBTESTS fraction)", "",
-          "| capability | n | mean |", "|---|---|---|"]
-    for tag, xs in sorted(by_tag.items()):
-        L.append(f"| {tag} | {len(xs)} | {sum(xs)/len(xs):.2f} |")
-    return "\n".join(L) + "\n"
 
 
 def main():
@@ -443,6 +417,10 @@ def main():
                     help="param names to treat as `any` when asking the store "
                          "what it has, e.g. --params-any num_ctx. Affects "
                          "matching only; the run still records concrete values.")
+    ap.add_argument("--waivers", nargs="+", default=None, metavar="ID",
+                    help="also admit the waiver families recorded in "
+                         "evalkit/waivers.json under these ids. Ids only: the "
+                         "hashes and the evidence stay in the file")
     args = ap.parse_args()
     if args.arm not in ("baseline",) and not health():
         print("Ollama not reachable", file=sys.stderr)
@@ -466,9 +444,7 @@ def main():
     # so N reps held anywhere satisfy the first N of the target.
     held = {}
     if args.store_resume and _STORE is not None:
-        wpath = HERE.parent.parent / "evalkit" / "waivers.json"
-        wv = (json.loads(wpath.read_text(encoding="utf-8"))["waivers"]
-              if wpath.is_file() else [])
+        wv = load_waivers(args.waivers)
         for t in tasks:
             cell = _cell_for(t["id"], args.arm)
             q = dict(json.loads(cell.params))

@@ -33,6 +33,9 @@ import json
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "evalkit"))
+from jsonl_read import load_jsonl  # noqa: E402  (tolerates a partial tail)
+
 HERE = Path(__file__).resolve().parent
 SUITE = HERE.parent / "M6-evaluation-suite"
 RES = SUITE / "results"
@@ -56,10 +59,7 @@ def load(arm: str):
             continue
         rows[(r["task"], str(r["rep"]))] = bool(r["objective_pass"])
     out = []
-    for line in stage.read_text(encoding="utf-8").splitlines():
-        if not line.strip():
-            continue
-        rec = json.loads(line)
+    for rec in load_jsonl(stage):
         key = (rec.get("task"), str(rec.get("rep")))
         if key not in rows:
             continue

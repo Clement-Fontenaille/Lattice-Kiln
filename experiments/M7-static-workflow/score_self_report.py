@@ -22,8 +22,12 @@ from __future__ import annotations
 
 import glob
 import json
+import sys
 from collections import Counter, defaultdict
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "evalkit"))
+from jsonl_read import load_jsonl  # noqa: E402  (tolerates a partial tail)
 
 HERE = Path(__file__).resolve().parent
 RES = HERE.parent / "M6-evaluation-suite" / "results"
@@ -55,8 +59,7 @@ def self_reports(runs_dir):
         if not ev.is_file():
             continue
         last = None
-        for line in ev.read_text(encoding="utf-8").splitlines():
-            e = json.loads(line)
+        for e in load_jsonl(ev):
             if e.get("kind") == "realized_effect" and e.get("effect_type") == 4:
                 ts = (e.get("envelope") or {}).get("terminal_state")
                 if ts:

@@ -14,7 +14,7 @@ never pools with a different one.
 PROTOCOL v2 throughout, so the matrix is internally consistent. The v1/v2
 comparison is a separate pair of monolith sweeps.
 
-    python queue_full_matrix.py [--dry] [--models a,b] [--arms x,y]
+    python queue_full_matrix.py [--dry] [--models a,b] [--arms x,y] [--waivers id,id]
 """
 from __future__ import annotations
 
@@ -74,6 +74,11 @@ def main(argv: list[str]) -> None:
         models = argv[argv.index("--models") + 1].split(",")
     if "--arms" in argv:
         arms = argv[argv.index("--arms") + 1].split(",")
+    # Waiver families to admit when resuming, BY ID (evalkit/waivers.json).
+    # Ids only; the hashes and their evidence stay in the file.
+    waivers = []
+    if "--waivers" in argv:
+        waivers = ["--waivers", *argv[argv.index("--waivers") + 1].split(",")]
     LOGS.mkdir(exist_ok=True)
     avail = json.loads(
         subprocess.run([sys.executable, "-c",
@@ -99,7 +104,7 @@ def main(argv: list[str]) -> None:
         print(f"[{i}/{len(jobs)}] {tag} ...", flush=True)
         with open(log, "w", encoding="utf-8") as fh:
             subprocess.run([sys.executable, "-u", "run_suite.py", "--arm", arm,
-                            "--reps", "1", "--store-resume"],
+                            "--reps", "1", "--store-resume", *waivers],
                            cwd=str(HERE), env=env, stdout=fh,
                            stderr=subprocess.STDOUT)
         print(f"        done, {(time.monotonic() - t0) / 60:.0f} min elapsed", flush=True)

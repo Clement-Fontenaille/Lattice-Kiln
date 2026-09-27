@@ -110,8 +110,22 @@ def _extract(text: str) -> dict[str, Any] | None:
     return {"control": ctrl, "files": files}
 
 
-def adapter_fingerprint() -> str:
+#: Tools granted to ONE arm on top of the default TOOLS, keyed by arm name:
+#: {arm: {"tools": [schema, ...], "result_samples": [str, ...]}}. An arm module
+#: registers itself at import. Empty for every arm that existed before
+#: 2026-09-27, so their adapter fingerprint is untouched (A11). The samples are
+#: representative tool results, so rewording what the tool SAYS moves the hash
+#: just as rewording its schema does.
+ARM_TOOLS: dict[str, dict[str, Any]] = {}
+
+
+def adapter_fingerprint(arm: str | None = None) -> str:
     """Hash of the MODEL-FACING surface, as distinct from the arm's.
+
+    `arm` matters only for an arm registered in ARM_TOOLS: its extra tool
+    schemas and result wording are model-facing and are appended here. For any
+    other arm, and for None, the value is exactly what it was before the
+    parameter existed.
 
     Two different things were being conflated under one absent key.
 
@@ -162,6 +176,10 @@ def adapter_fingerprint() -> str:
                      {"name": "conclude", "arguments": {}},
                      {"name": "_unknown", "arguments": {}}):
             parts.append(_tool_result(call, sample))
+        extra = ARM_TOOLS.get(arm or "")
+        if extra:
+            parts.append(json.dumps(extra["tools"], sort_keys=True))
+            parts.extend(extra.get("result_samples", []))
     else:
         parts.append(PROTOCOL_MARKERS)
     return hashlib.sha256(chr(10).join(parts).encode("utf-8")).hexdigest()[:12]
@@ -298,7 +316,7 @@ def _diagnose_attempt(gen, parsed, err: str = ""):
 
 
 def _tools_with_recovery(prompt: str, *, model: str, objective: str,
-                         recover: bool = False):
+                         recover: bool = False, **tool_kw):
     """The tool loop, with a collapsed attempt diagnosed and retried.
 
     Replaces a fixed single retry that re-sent one hardcoded sentence whatever
@@ -322,7 +340,8 @@ def _tools_with_recovery(prompt: str, *, model: str, objective: str,
     while True:
         err = ""
         try:
-            gen, parsed, out = _run_tools(cur, model=model, options=options)
+            gen, parsed, out = _run_tools(cur, model=model, options=options,
+                                          **tool_kw)
         except Truncated as t:
             gen, parsed, out, err = t.gen, None, "", str(t)
         if parsed is not None:
@@ -429,7 +448,10 @@ runaway loop is a cost, not a result.
 
 
 def _run_tools(prompt: str, *, model: str, num_predict: int = 1536,
-               options: dict[str, Any] | None = None
+               options: dict[str, Any] | None = None,
+               extra_tools: list[dict[str, Any]] | None = None,
+               tool_handlers: dict[str, Any] | None = None,
+               max_turns: int | None = None,
                ) -> tuple[Any, dict[str, Any] | None, str]:
     """Drive the tool loop until `conclude` arrives. -> (gen, parsed, log).
 
@@ -463,8 +485,13 @@ def _run_tools(prompt: str, *, model: str, num_predict: int = 1536,
     ctrl: dict[str, Any] | None = None
     log: list[str] = []
     gen = None
-    for _ in range(MAX_TOOL_TURNS):
-        gen = chat(msgs, model=model, tools=TOOLS, num_predict=num_predict,
+    # Per-arm tools (A11). With none given this is TOOLS itself, the same
+    # object every arm before it sent. A handler receives (call, files so far)
+    # and returns the tool-result text; the default tools keep _tool_result.
+    tools = TOOLS + list(extra_tools) if extra_tools else TOOLS
+    handlers = tool_handlers or {}
+    for _ in range(max_turns or MAX_TOOL_TURNS):
+        gen = chat(msgs, model=model, tools=tools, num_predict=num_predict,
                    **opts)
         log.append(gen.text)
         if not gen.tool_calls:
@@ -487,8 +514,9 @@ def _run_tools(prompt: str, *, model: str, num_predict: int = 1536,
                 # a reviewer that declined to judge read as a reviewer that
                 # judged badly.
                 ctrl = _clean_conclude(args)
+            h = handlers.get(c.get("name", ""))
             msgs.append({"role": "tool", "tool_name": c.get("name", ""),
-                         "content": _tool_result(c, files)})
+                         "content": h(c, files) if h else _tool_result(c, files)})
         if ctrl is not None:
             break
     parsed = None if ctrl is None else {"control": ctrl, "files": files}
@@ -508,7 +536,10 @@ def run_processor(*, role: str, objective: str, context: ContextBundle,
                   model: str = DEFAULT_MODEL,
                   prompt: str | None = None,
                   recover: bool = False,
-                  config_ref: str = "m4-baseline") -> ProcessorResult:
+                  config_ref: str = "m4-baseline",
+                  extra_tools: list[dict[str, Any]] | None = None,
+                  tool_handlers: dict[str, Any] | None = None,
+                  max_tool_turns: int | None = None) -> ProcessorResult:
     ws = Path(workspace_root).resolve()
     actor = capability_set_for(role)
 
@@ -524,7 +555,9 @@ def run_processor(*, role: str, objective: str, context: ContextBundle,
                             protocol=PROTOCOL_TOOLS if use_tools else None)
     if use_tools:
         gen, parsed, out, journal = _tools_with_recovery(
-            prompt, model=model, objective=objective, recover=recover)
+            prompt, model=model, objective=objective, recover=recover,
+            extra_tools=extra_tools, tool_handlers=tool_handlers,
+            max_turns=max_tool_turns)
     else:
         # The marker path keeps its single fixed retry. Recovery is not wired
         # here on purpose: the marker protocol is the one every historic row
