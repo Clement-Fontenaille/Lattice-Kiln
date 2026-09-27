@@ -24,6 +24,15 @@ The architecture space is split by concern rather than held in one folder, since
 
 The `27-arch-adaptation-and-evolution` space describes the feedback, evaluation, experimentation, generation, and bootstrap concepts.
 
+**Paths before 2026-09-11.** The architecture band was one folder,
+`20-cognitive-architecture/`, and adaptation sat at `30-adaptation-and-evolution`.
+Everything in `00-design/`, `10-technical/` and `70-THINKING/` was updated to the
+layout above; `50-findings/` and `50-PROGRESS/archives/` were **not**, because they
+are append-only and a citation records what was true when written. A reader following
+one of those to `20-cognitive-architecture/…` should look for the concern in `21`–`28`
+above, and `30-adaptation-and-evolution` is now `27-arch-adaptation-and-evolution`.
+The gap left at `30` is deliberate.
+
 The `40-roadmap` space describes sequencing, milestones, and the questions that must be answered empirically. Milestones live one per file in `01-MILESTONES/`, where a milestone's number is a **stable identifier rather than a position in a queue**. What order they are worked in — and what has been changed upstream but not yet carried downstream — lives in `00-backlog.md`, in four priority bands. `40-roadmap/README.md` describes how that space is maintained.
 
 The `50-findings` space is the append-only empirical record: one entry per completed milestone, stating what its evidence question answered. Entries are cited by number and are never rewritten.

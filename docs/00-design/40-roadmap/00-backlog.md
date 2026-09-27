@@ -56,13 +56,6 @@ underestimated.
 
 ## P2 — Short term work to address next
 
-- **E0 — suite construct validation. Promoted by findings-log entry 10.**
-  [`03-research-and-evaluation/`](03-research-and-evaluation/) → E0. M7 and `dloop`
-  both scored 24/30 while **four tasks flipped between them**, none touched by the
-  stages M7 added — so a four-task churn is available from variance alone at N=1. The
-  suite discriminates designs that differ in kind and not designs that differ by a
-  task, and nothing had measured that before. Possibly answerable from runs already
-  recorded.
 - **Repetition is no longer optional for small-effect comparisons.** Same source. Any
   arm comparison whose expected effect is one or two tasks needs N > 1 before it means
   anything. This does not apply retroactively to M4/M5/M6's large effects.
@@ -184,44 +177,15 @@ into each as it is decomposed.*
 
 ### Unscheduled
 
-- **Deliberation between agents — parked deliberately, 2026-09-14.** The operator's
-  decision: dueling advocates belong with the deliberation mechanisms as a body of
-  work, not as one more arm bolted onto M7, and it is a large piece. No milestone
-  holds it yet; it takes the next free identifier when it gets one.
-
-  **The judge investigation is what it inherits** (`50-findings/11`), and four results
-  there constrain any deliberation design before it is drawn:
-
-  **A reader's value is the difference between its context and the others', not the
-  size of its context.** Two instances of one model over one context share their blind
-  spots, so their agreement and their disagreement are both sampling variance. Any
-  design putting N agents on the same material is running one measurement N times.
-
-  **The unit of independence is the task, not the exchange.** A model that decides
-  about a task repeats itself across every turn about that task — in the M7 run one
-  judge said `unsound_request` on all six candidates of a task without changing its
-  mind. A deliberation of six turns is not six observations, and a design that reads
-  convergence as agreement will read stubbornness as consensus.
-
-  **Verdicts do not work at 7B and executable claims might.** The judge scored below a
-  constant on the population that required judgement, and its two failure modes —
-  matching a change's topic instead of verifying it, and misreading code outright —
-  are both comprehension rather than framing. The dueling-advocates shape avoids this
-  by construction: the readers emit **falsifiable input/output claims** and the
-  *interpreter* adjudicates, so the model supplies material and the machine decides.
-  That is the same move `test_synth` makes and the same one `10-technical/11`'s keeper
-  makes.
-
-  **And a judge does earn its place in one situation**, which is the only positive
-  result the investigation produced: where the check is satisfied, nothing improved,
-  and the premise was not doubted. There the check has said *fine* and the open
-  question is whether it asked the right thing — no mechanical instrument can answer
-  that, and a reader is the only one left. A deliberation design should be built for
-  that case rather than for the general one.
-
-  Prior material: `40-roadmap/01-MILESTONES/completed/07-…`, Strategies still to
-  explore; `M15`'s reviewer-independence question, which asks the same thing of two
-  *different* models and is gated on the second GPU.
+- **Deliberation between agents — parked, 2026-09-14.** Dueling advocates belong with
+  the deliberation mechanisms as a body of work, not as one more arm bolted onto M7.
+  No milestone holds it; it takes the next free identifier. **Four results in
+  `50-findings/11` constrain the design before it is drawn** — read them first; the
+  load-bearing one is that verdicts do not work at 7B while falsifiable input/output
+  claims might, which is the same move `test_synth` and the keeper already make.
+  Prior material: `01-MILESTONES/completed/07-…` (Strategies still to explore), and
+  M15's reviewer-independence question, which asks the same of two *different* models
+  and is gated on the second GPU.
 
 - **Experiments packaged as artifacts, air-gapped hosts included
   (2026-09-15).** An experiment's preparation should assume the repo travels as
@@ -249,13 +213,11 @@ into each as it is decomposed.*
   host-specific numbers. Owner: the bootstrapper design, at the latest M16.
 - **Editor-agent frontend choice.** Owner: the bootstrapper design.
 - **Experiments E0–E7.** One sheet each in
-  [`03-research-and-evaluation/`](03-research-and-evaluation/). **Reorganised
-  2026-09-22:** E3, E4 and E5 no longer carry a theme each, they carry a
-  *layer* each — functional, mechanism, skill — and the comparisons between
-  them are where the result lives. E0 is answered and gates E4's
-  interpretation. `E3-first-ladder` and `E5-population-spread` were dissolved
-  into the new structure rather than deleted; see that folder's README for
-  where each went.
+  [`03-research-and-evaluation/`](03-research-and-evaluation/); that folder's README
+  holds the current structure. **E0 is answered (2026-09-17) and its result is not
+  yet carried:** the suite is *not* unidimensional — parallel analysis retains two
+  factors — and folding the structural dimensions into the gate **changes arm
+  ordering**. E4's interpretation has to account for that and does not.
 - **An operator population, and with it the system+user ceiling
   (2026-09-22).** `70-THINKING/02` names four ceilings and the fourth — the
   grain an operator-plus-system pair reaches together — has never been
@@ -302,28 +264,3 @@ into each as it is decomposed.*
   it has not taken. Both currently operate on human judgment, which holds while a
   human runs every session and does not hold at
   [M12](01-MILESTONES/12-system-level-candidate-tuning.md).
-- **Architecture folder reorg (2026-09-11).** `20-cognitive-architecture` split by
-  concern, since only its actors (task representation, processors, orchestrator,
-  decomposition) are reasoning/coordinating — the rest were resources or
-  constraints, not actors. New layout: `20-arch-runtime.md` (single file, entry
-  point), `21-arch-knowledge-model`, `22-arch-cognition`, `23-arch-context-management`,
-  `24-arch-permission-layer`, `25-arch-invariant-layer`, `26-arch-observability`.
-  `30-adaptation-and-evolution` renumbered into the same band as
-  `27-arch-adaptation-and-evolution`, leaving a deliberate gap at `30`. Every
-  cross-reference in `00-design/`, `10-technical/`, and `70-THINKING/` was updated
-  to match. **Exception, by design:** `50-findings/*.md` and
-  `50-PROGRESS/archives/*.md` are append-only and still cite the pre-reorg paths
-  (e.g. `20-cognitive-architecture/06-observability.md`) — a reader following one of
-  those citations needs this mapping, since the target moved but the citation,
-  correctly, did not.
-- **`28-arch-work-record` added (2026-09-11).** The consolidation pass after the
-  reorg found that work-record mutation (`10-technical/01` type 4) had a schema, a
-  capability policy, and exercised M3 runs behind it, while no actor in the band
-  held the record it mutates: `22-arch-cognition/01` defines intent and work items
-  without storing them, and `21-arch-knowledge-model` holds claims, which work
-  items are not. Given its own folder rather than folded into `21` because a work
-  item is not a claim, and because its current state must be readable directly on every
-  orchestrator loop step rather than by walking a provenance graph. *(The original
-  reason — a claim is append-only while a work item is mutable — no longer holds: a
-  work item's formulation and scope are fixed at creation too.)* Its number sits above
-  `27`'s only because the lower ones were taken.
