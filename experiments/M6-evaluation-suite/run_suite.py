@@ -22,7 +22,6 @@ import tempfile
 import time
 import traceback
 import socket
-from collections import defaultdict
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -32,6 +31,9 @@ RUNNER = f"{socket.gethostname()}-{os.getpid()}"
 from _m6bridge import (Gate, RunRecorder, assemble, health,  # noqa: E402
                        meter_read, meter_reset, run_processor,
                        transcript_close)
+# The report lives in its own file so changing it does not move arm_sha for
+# the arms defined here. See run_report.py.
+from run_report import summarise  # noqa: E402
 
 SUITE = HERE / "suite"
 # LATTICE_RESULTS_SUBDIR lets a run against a different model land in its own
@@ -373,51 +375,6 @@ def run_task(task, arm_name, rep, cmd, protected):
     }
     shutil.rmtree(ws, ignore_errors=True)
     return row
-
-
-def summarise(rows, arm, suite_version):
-    L = [f"# M6 suite run - arm `{arm}` (suite {suite_version})", "",
-         f"_{time.strftime('%Y-%m-%d %H:%M')} - {len(rows)} runs_", "",
-         "| task | shape/trap | terminal | base | final | struct | pass | regr | decline | wall |",
-         "|---|---|---|---|---|---|---|---|---|---|"]
-    for r in sorted(rows, key=lambda r: (r["task"], r["rep"])):
-        st = " ".join(f"{k}={v[0]}/{v[1]}" for k, v in r["struct"].items()) or "-"
-        dec = ("ok" if r["declined_correctly"] else "MISS") if r["decline_expected"] else "-"
-        L.append(f"| {r['task']} | {r['shape']}/{r['trap']} | {r['terminal']} | "
-                 f"{r['baseline_sub'][0]}/{r['baseline_sub'][1]} | "
-                 f"{r['final_sub'][0]}/{r['final_sub'][1]} | {st} | {r['objective_pass']} | "
-                 f"{'YES' if r['regressed'] else '-'} | {dec} | {r['wall_s']} |")
-
-    # aggregate. Rows whose arm raised produced no attempt, so they are counted
-    # separately and excluded from every rate -- a denominator that includes them
-    # reports the fixture, not the model.
-    ok_rows = [r for r in rows if r.get("run_ok", True)]
-    nfail = len(rows) - len(ok_rows)
-    npass = sum(r["objective_pass"] for r in ok_rows)
-    nreg = sum(r["regressed"] for r in ok_rows)
-    ncrash = sum(r["check_crashed"] for r in ok_rows)
-    dec_rows = [r for r in ok_rows if r["decline_expected"]]
-    dec_ok = sum(r["declined_correctly"] for r in dec_rows)
-    L += ["", f"**objective pass {npass}/{len(ok_rows)} - regressions {nreg} - "
-              f"check crashes {ncrash} - decline accuracy {dec_ok}/{len(dec_rows)}**", ""]
-    if nfail:
-        L += [f"> **{nfail} of {len(rows)} runs did not execute** (the arm raised; "
-              f"`run_ok: false`). They are excluded from every figure above. See "
-              f"`error_trace` in the JSON.", ""]
-
-    # stresses slices - mean final subtest fraction per capability tag.
-    # ok_rows, not rows: a run that never executed scores the untouched fixture,
-    # which would drag every tag it carries toward the baseline.
-    by_tag = defaultdict(list)
-    for r in ok_rows:
-        f = r["final_sub"][0] / max(1, r["final_sub"][1])
-        for tag in r["stresses"]:
-            by_tag[tag].append(f)
-    L += ["## `stresses` slices (mean final SUBTESTS fraction)", "",
-          "| capability | n | mean |", "|---|---|---|"]
-    for tag, xs in sorted(by_tag.items()):
-        L.append(f"| {tag} | {len(xs)} | {sum(xs)/len(xs):.2f} |")
-    return "\n".join(L) + "\n"
 
 
 def main():
