@@ -98,3 +98,21 @@ per-condition effect with a per-verdict shadow, and it is measurable in
 returning verdicts without reasoning. It is a schema difference — this arm's
 record carries `checked`, `n_conditions`, `instruction` and `scope`, while
 `judge_fullctx` carries `why` and `code_bytes`. Nothing was wrong.
+
+---
+
+## Addendum, same day — one judge is structurally immune
+
+`judge_fullctx` uses **no conditions**: no `expected`, no `checked`, no
+`n_conditions`. `judge_change(objective, pristine, after)` makes one call and
+returns one verdict with a `why`. The `p^n` mechanism above cannot apply to it,
+because there is no conjunction to compound.
+
+That makes it the judge for the `author_judge` arm (A13), chosen on structure
+rather than on a score — the scores in `50-findings/17` were the ones this
+finding disqualifies.
+
+It does not make it a *good* judge. Its accuracy is unmeasured and unmeasurable
+retrospectively, for the reason `50-findings/17` gives: it records nothing to
+attribute its 286 stage records by. The claim here is narrower — it cannot fail
+in the specific way the checklist judges demonstrably do.

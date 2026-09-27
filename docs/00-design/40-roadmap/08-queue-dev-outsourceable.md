@@ -204,10 +204,26 @@ each run records which of the three outcomes stage 1 took.
 
 A12 plus a judge, so the briefing effect is separable from the judging effect.
 
-**Which judge is not yet settled** and depends on B9. Do not start this item
-until B9 has been read; if it is picked up early, use `judge_caveat`, which
-keeps the judge on every task and so does not confound "briefing helps" with
-"judging less helps".
+**Use `judge_fullctx`.** Operator decision 2026-09-27, and it has a structural
+reason rather than a score behind it: `judge_fullctx` uses **no conditions at
+all** -- no `expected`, no `checked`, no `n_conditions`, one call producing one
+verdict. `50-findings/18` shows the condition-checklist judges fail by
+compounding 11% per-condition noise through an `all(yes)` rule into 33% verdict
+noise, at a rate set by how many conditions the auditor wrote. `judge_fullctx`
+cannot fail that way, because there is no conjunction to compound.
+
+**This promotes A14 to a hard prerequisite for this item.**
+`judge_fullctx_workflow.py` records neither `model` nor `results_subdir`, which
+is exactly why B9 could not be read for it. An arm built from that workflow
+inherits the gap and will be as unreadable as its parent. Fix the tagging
+first, or this arm produces another unattributable pile.
+
+**Name the thing that changes underneath it.** `judge_fullctx` is defined as a
+judge "holding the same material the worker held". In this arm that material
+now includes the authored brief, so the judge checks the work against the same
+brief that produced it. That is a coherent design -- it asks whether the worker
+did what it was told -- but it is no longer the independence test the arm was
+built for, and the run record should say which of the two is being run.
 
 **Done when:** as A12, plus the judge's verdict recorded per task.
 
