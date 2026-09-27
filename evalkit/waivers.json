@@ -142,6 +142,78 @@
       "date": "2026-09-27",
       "reason": "test_synth_workflow.py between 361e8ea9 and d9498c1f (A14). What changed: `from stage_tags import setup_tags` added, and one call, stage.update(setup_tags()), inserted in the finally block immediately before the stage record is written, adding model, judge_format, results_subdir, t_end, cell_id and cell_rep to that record. Why behaviour is identical: the change is confined to the stage record written to stage_influence_test_synth.jsonl after the arm has finished; no prompt, model call, keeper rule or terminal is touched. prompt_sha is 'none' at both revisions; adapter_fingerprint() is unchanged because processor.ARM_TOOLS is empty for test_synth; the workflow never writes row_extra.EXTRA, so it is empty and the store row is unchanged. Verified by diffing the file against 361e8ea9: the only hunks are the import and the one call. tools/fingerprint_check.py --baseline 361e8ea9 -> PASS. Both hashes computed from the git blobs; the old one equals the arm_sha on this arm's recorded matrix rows.",
       "diffstat": "1 file changed, 4 insertions(+) (test_synth_workflow.py, 361e8ea9..d9498c1f)"
+    },
+    {
+      "id": "queue-a-2026-09-27",
+      "field": "arm_sha",
+      "equivalent": [
+        "e30db23c412b5be8",
+        "d2ff1a5474c937e7"
+      ],
+      "arm": "judge_staged",
+      "date": "2026-09-27",
+      "reason": "judge_staged_workflow.py between 361e8ea9 and d9498c1f (A14). What changed: `from stage_tags import setup_tags` added, and one call, stage.update(setup_tags()), inserted in the finally block immediately before the stage record is written, adding model, judge_format, results_subdir, t_end, cell_id and cell_rep to that record. Why behaviour is identical: the change is confined to the stage record written to stage_influence_judge_staged.jsonl after the arm has finished; no prompt, model call, keeper rule or terminal is touched. prompt_sha is 'none' at both revisions; adapter_fingerprint() is unchanged because processor.ARM_TOOLS is empty for judge_staged; the workflow never writes row_extra.EXTRA, so it is empty and the store row is unchanged. Verified by diffing the file against 361e8ea9: the only hunks are the import and the one call. tools/fingerprint_check.py --baseline 361e8ea9 -> PASS. Both hashes computed from the git blobs; the old one equals the arm_sha on this arm's 144 rows in the store index as committed at 361e8ea9.",
+      "diffstat": "1 file changed, 4 insertions(+) (judge_staged_workflow.py, 361e8ea9..d9498c1f)"
+    },
+    {
+      "id": "queue-a-2026-09-27",
+      "field": "arm_sha",
+      "equivalent": [
+        "c4dc4e7283d10ac2",
+        "3fe025e73711e345"
+      ],
+      "arm": "m7b",
+      "date": "2026-09-27",
+      "reason": "m7b_workflow.py between 361e8ea9 and d9498c1f (A14). What changed: `from stage_tags import setup_tags` added, and one call, stage.update(setup_tags()), inserted in the finally block immediately before the stage record is written, adding model, judge_format, results_subdir, t_end, cell_id and cell_rep to that record. Why behaviour is identical: the change is confined to the stage record written to stage_influence_m7b.jsonl after the arm has finished; no prompt, model call, keeper rule or terminal is touched. prompt_sha is 'none' at both revisions; adapter_fingerprint() is unchanged because processor.ARM_TOOLS is empty for m7b; the workflow never writes row_extra.EXTRA, so it is empty and the store row is unchanged. Verified by diffing the file against 361e8ea9: the only hunks are the import and the one call. tools/fingerprint_check.py --baseline 361e8ea9 -> PASS. Both hashes computed from the git blobs; the old one equals the arm_sha on this arm's 142 rows in the store index as committed at 361e8ea9.",
+      "diffstat": "1 file changed, 4 insertions(+) (m7b_workflow.py, 361e8ea9..d9498c1f)"
+    },
+    {
+      "id": "queue-a-2026-09-27",
+      "field": "arm_sha",
+      "equivalent": [
+        "482ec364b9483535",
+        "c7fd707a2a8bd58e"
+      ],
+      "arm": "m7c",
+      "date": "2026-09-27",
+      "reason": "m7c_workflow.py between 361e8ea9 and d9498c1f (A14). What changed: `from stage_tags import setup_tags` added, and one call, stage.update(setup_tags()), inserted in the finally block immediately before the stage record is written, adding model, judge_format, results_subdir, t_end, cell_id and cell_rep to that record. Why behaviour is identical: the change is confined to the stage record written to stage_influence_m7c.jsonl after the arm has finished; no prompt, model call, keeper rule or terminal is touched. prompt_sha is 86d4df9ba689cdbe at both revisions; adapter_fingerprint() is unchanged because processor.ARM_TOOLS is empty for m7c; the workflow never writes row_extra.EXTRA, so it is empty and the store row is unchanged. Verified by diffing the file against 361e8ea9: the only hunks are the import and the one call. tools/fingerprint_check.py --baseline 361e8ea9 -> PASS. Both hashes computed from the git blobs; the old one equals the arm_sha on this arm's 32 rows in the store index as committed at 361e8ea9.",
+      "diffstat": "1 file changed, 4 insertions(+) (m7c_workflow.py, 361e8ea9..d9498c1f)"
+    },
+    {
+      "id": "queue-a-2026-09-27",
+      "field": "arm_sha",
+      "equivalent": [
+        "714a3dd64ed0635f",
+        "989bb01e7c1989dc"
+      ],
+      "arm": "m7e",
+      "date": "2026-09-27",
+      "reason": "m7e_workflow.py between 361e8ea9 and d9498c1f (A14). What changed: `from stage_tags import setup_tags` added, and one call, stage.update(setup_tags()), inserted in the finally block immediately before the stage record is written, adding model, judge_format, results_subdir, t_end, cell_id and cell_rep to that record. Why behaviour is identical: the change is confined to the stage record written to stage_influence_m7e.jsonl after the arm has finished; no prompt, model call, keeper rule or terminal is touched. prompt_sha is 038c86333e3d7906 at both revisions; adapter_fingerprint() is unchanged because processor.ARM_TOOLS is empty for m7e; the workflow never writes row_extra.EXTRA, so it is empty and the store row is unchanged. Verified by diffing the file against 361e8ea9: the only hunks are the import and the one call. tools/fingerprint_check.py --baseline 361e8ea9 -> PASS. Both hashes computed from the git blobs; the old one equals the arm_sha on this arm's 102 rows in the store index as committed at 361e8ea9.",
+      "diffstat": "1 file changed, 4 insertions(+) (m7e_workflow.py, 361e8ea9..d9498c1f)"
+    },
+    {
+      "id": "queue-a-2026-09-27",
+      "field": "arm_sha",
+      "equivalent": [
+        "c754f2d751f52be2",
+        "e881665ac0344a1a"
+      ],
+      "arm": "m7f",
+      "date": "2026-09-27",
+      "reason": "m7f_workflow.py between 361e8ea9 and d9498c1f (A14). What changed: `from stage_tags import setup_tags` added, and one call, stage.update(setup_tags()), inserted in the finally block immediately before the stage record is written, adding model, judge_format, results_subdir, t_end, cell_id and cell_rep to that record. Why behaviour is identical: the change is confined to the stage record written to stage_influence_m7f.jsonl after the arm has finished; no prompt, model call, keeper rule or terminal is touched. prompt_sha is ba8e53460457c598 at both revisions; adapter_fingerprint() is unchanged because processor.ARM_TOOLS is empty for m7f; the workflow never writes row_extra.EXTRA, so it is empty and the store row is unchanged. Verified by diffing the file against 361e8ea9: the only hunks are the import and the one call. tools/fingerprint_check.py --baseline 361e8ea9 -> PASS. Both hashes computed from the git blobs; the old one equals the arm_sha on this arm's 204 rows in the store index as committed at 361e8ea9.",
+      "diffstat": "1 file changed, 4 insertions(+) (m7f_workflow.py, 361e8ea9..d9498c1f)"
+    },
+    {
+      "id": "queue-a-2026-09-27",
+      "field": "arm_sha",
+      "equivalent": [
+        "1200d2398f8317c9",
+        "45f4ddab8f2cab59"
+      ],
+      "arm": "test_synth_retry",
+      "date": "2026-09-27",
+      "reason": "test_synth_retry_workflow.py between 361e8ea9 and d9498c1f (A14). What changed: `from stage_tags import setup_tags` added, and one call, stage.update(setup_tags()), inserted in the finally block immediately before the stage record is written, adding model, judge_format, results_subdir, t_end, cell_id and cell_rep to that record. Why behaviour is identical: the change is confined to the stage record written to stage_influence_test_synth_retry.jsonl after the arm has finished; no prompt, model call, keeper rule or terminal is touched. prompt_sha is 'none' at both revisions; adapter_fingerprint() is unchanged because processor.ARM_TOOLS is empty for test_synth_retry; the workflow never writes row_extra.EXTRA, so it is empty and the store row is unchanged. Verified by diffing the file against 361e8ea9: the only hunks are the import and the one call. tools/fingerprint_check.py --baseline 361e8ea9 -> PASS. Both hashes computed from the git blobs; the old one equals the arm_sha on this arm's 126 rows in the store index as committed at 361e8ea9.",
+      "diffstat": "1 file changed, 4 insertions(+) (test_synth_retry_workflow.py, 361e8ea9..d9498c1f)"
     }
   ]
 }
