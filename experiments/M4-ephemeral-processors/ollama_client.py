@@ -145,6 +145,26 @@ TEMPERATURE = None if _TEMP_ENV is None else float(_TEMP_ENV)
 _TOPP_ENV = os.environ.get("LATTICE_TOP_P")
 TOP_P = None if _TOPP_ENV is None else float(_TOPP_ENV)
 
+# LATTICE_NUM_GPU: how many layers to offload, as an API option rather than a
+# Modelfile PARAMETER.
+#
+# It exists because placement and PROTOCOL turned out to be coupled through
+# `ollama create`. The 9B's GPU-forced build descends from a raw local GGUF, and
+# Ollama assigns a RENDERER by architecture in that case -- it picked
+# `nemotron-3-nano`, the 4B's, a different generation. So the 9B was shown
+# Qwen3-Coder style <tool_call><function=...> while trained on
+# <TOOLCALL>[{json}]. The model PULLED from Hugging Face keeps NVIDIA's own
+# template (15/234 prompt tokens against the built model's 42/320, measured
+# 2026-09-27), but `ollama create ... FROM` it re-assigns the renderer and the
+# difference vanishes. So the correct template survives only if we do not build
+# at all -- which leaves nowhere to put num_gpu except here.
+#
+# NOT recorded in params: layer placement changes where the arithmetic happens,
+# never its result. It belongs with throughput, not with the setup key. Ollama
+# clamps to what fits, so this is a request -- check `ollama ps`.
+_NGPU_ENV = os.environ.get("LATTICE_NUM_GPU")
+NUM_GPU = None if _NGPU_ENV is None else int(_NGPU_ENV)
+
 
 class OllamaError(RuntimeError):
     pass
@@ -452,6 +472,8 @@ def generate(prompt: str, *, model: str = DEFAULT_MODEL, base_url: str = DEFAULT
             "num_predict": num_predict}
     if TOP_P is not None:
         opts["top_p"] = TOP_P
+    if NUM_GPU is not None:
+        opts["num_gpu"] = NUM_GPU
     t0 = time.monotonic()
     try:
         payload = tr.complete_raw(prompt, base_url=base_url, model=model,
@@ -775,6 +797,8 @@ def chat(messages: list[dict[str, Any]], *, model: str = DEFAULT_MODEL,
             "num_predict": num_predict}
     if TOP_P is not None:
         opts["top_p"] = TOP_P
+    if NUM_GPU is not None:
+        opts["num_gpu"] = NUM_GPU
     # The nudge attaches to the FIRST user turn and only there. chat() is
     # re-entered once per turn of the tool loop with a growing history, so
     # appending per call would stack one copy per turn; and appending to a
@@ -873,6 +897,8 @@ def _generate_llamacpp(prompt: str, *, base_url: str, model: str, temperature: f
             "temperature": TEMPERATURE if TEMPERATURE is not None else temperature}
     if TOP_P is not None:
         opts["top_p"] = TOP_P
+    if NUM_GPU is not None:
+        opts["num_gpu"] = NUM_GPU
     t0 = time.monotonic()
     try:
         payload = _backends.get("llamacpp").complete_raw(

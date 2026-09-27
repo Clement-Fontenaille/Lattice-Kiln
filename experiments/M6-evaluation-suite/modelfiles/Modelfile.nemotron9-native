@@ -1,0 +1,58 @@
+# Nemotron Nano 9B v2 with ITS OWN tool-calling protocol, GPU-forced.
+#
+# The chain that produced `nemotron-gpu` starts at a RAW LOCAL GGUF
+# (Modelfile.nemotron-nano-9b-v2, `FROM E:\models\...gguf`). Ollama assigns a
+# RENDERER by architecture in that case, and picked `nemotron-3-nano` -- the
+# 4B's, a different generation. The 9B was therefore shown Qwen3-Coder style
+# <tool_call><function=...><parameter=...> when it was trained on
+# <TOOLCALL>[{json}]</TOOLCALL>. See Modelfile.nemotron9-tools.
+#
+# That file rules out fixing it with a TEMPLATE override, and is right: a
+# Modelfile TEMPLATE does not displace an assigned renderer. What it did not
+# test is the model PULLED FROM HUGGING FACE, which carries NVIDIA's real
+# template in its manifest and has NO renderer assigned -- nothing to displace.
+#
+# Measured 2026-09-27, one identical message, num_predict 1, temperature 0:
+#
+#                                no tools   with tools(1)
+#   nemotron-gpu:latest               42           320
+#   hf.co/bartowski/...:Q4_K_M        15           234
+#
+# Different with NO tools at all, so the difference is the template itself and
+# not the tool serialisation. The pulled model renders from NVIDIA's template,
+# whose 4070 bytes are byte-identical to the chat_template in
+# nvidia/NVIDIA-Nemotron-Nano-9B-v2 (sha b7a3a520a4bc1bea, see
+# evalkit_store/model_contracts/).
+#
+# So: FROM the pulled model, add only layer placement. Nothing else.
+# num_gpu 99 is a request, not a guarantee -- Ollama clamps to what fits, so
+# check `ollama ps` for size_vram against size (M0 findings 1, addendum 3).
+FROM hf.co/bartowski/nvidia_NVIDIA-Nemotron-Nano-9B-v2-GGUF:Q4_K_M
+
+PARAMETER num_gpu 99
+
+# ---------------------------------------------------------------------------
+# OUTCOME, measured 2026-09-27, minutes after the above was written: THIS FILE
+# DOES NOT WORK EITHER. Building it is what breaks it.
+#
+#   ollama create nemotron9-native -f Modelfile.nemotron9-native
+#   -> RENDERER: nemotron-3-nano   PARSER: nemotron-3-nano
+#   -> template collapses from 4070 chars to 165
+#   -> prompt tokens 42 / 320, identical to nemotron-gpu
+#
+# So `ollama create` re-assigns the renderer by architecture even when FROM a
+# pulled model that had none. Modelfile.nemotron9-tools was right about the
+# mechanism and understated it: it is not only that a TEMPLATE cannot displace
+# an assigned renderer, it is that CREATING A MODEL AT ALL assigns one.
+#
+# The correct template therefore survives only in the pulled model itself,
+# which we must use unbuilt:
+#
+#   LATTICE_EVAL_MODEL=hf.co/bartowski/nvidia_NVIDIA-Nemotron-Nano-9B-v2-GGUF:Q4_K_M
+#
+# Layer placement then has nowhere to live in a Modelfile, which is why
+# LATTICE_NUM_GPU was added to ollama_client.py and goes in the API options.
+#
+# This file is kept as the record of the attempt. Do not build it. The ollama
+# model it produced was deleted, because a model named "native" that is not
+# native is a trap.
