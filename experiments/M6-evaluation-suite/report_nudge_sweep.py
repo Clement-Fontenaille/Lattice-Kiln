@@ -27,6 +27,9 @@ import subprocess
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "evalkit"))
+from jsonl_read import load_jsonl  # noqa: E402  (tolerates a partial tail)
+
 ROOT = Path(__file__).resolve().parents[2]
 STORE = ROOT / "evalkit_store"
 M4 = ROOT / "experiments" / "M4-ephemeral-processors"
@@ -58,8 +61,7 @@ def fingerprint_for(nudge: str) -> str:
 
 
 def load(task: str, arm: str) -> list[dict]:
-    idx = [json.loads(l) for l in
-           (STORE / "index.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
+    idx = load_jsonl(STORE / "index.jsonl")
     out, seen = [], set()
     for r in idx:
         if r.get("arm") != arm or r.get("task") != task:
@@ -72,10 +74,7 @@ def load(task: str, arm: str) -> list[dict]:
         f = STORE / "rows" / f"{r['cell_id']}.jsonl"
         if not f.exists():
             continue
-        for line in f.read_text(encoding="utf-8").splitlines():
-            if not line.strip():
-                continue
-            d = json.loads(line)
+        for d in load_jsonl(f):
             key = (r["cell_id"], d.get("rep"))
             if key in seen:
                 continue

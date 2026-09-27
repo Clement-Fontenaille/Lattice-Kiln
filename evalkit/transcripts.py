@@ -54,9 +54,11 @@ import argparse
 import gzip
 import json
 import os
-import shutil
 import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from jsonl_read import read_jsonl  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 DIR = ROOT / "evalkit_store" / "transcripts"
@@ -73,20 +75,9 @@ def archive_for(cell_id: str) -> Path:
 
 
 def _read_gz(p: Path) -> tuple[list[dict], str | None]:
-    out, note = [], None
-    try:
-        with gzip.open(p, "rt", encoding="utf-8") as fh:
-            for line in fh:
-                line = line.strip()
-                if not line:
-                    continue
-                try:
-                    out.append(json.loads(line))
-                except json.JSONDecodeError:
-                    note = "last line incomplete"
-    except (EOFError, gzip.BadGzipFile, OSError) as e:
-        note = f"{type(e).__name__} after {len(out)} record(s)"
-    return out, note
+    # Shared with every other reader of a file a sweep may still be writing.
+    # Not strict: this reader has always stepped over a bad line and said so.
+    return read_jsonl(p, strict=False)
 
 
 def read(cell_id: str) -> tuple[list[dict], list[str]]:

@@ -28,26 +28,16 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "evalkit"))
+from jsonl_read import load_jsonl  # noqa: E402  (tolerates a partial tail)
+
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 
 
-def _jsonl(path: Path):
-    """Tolerates a partial final line: a sweep may be appending."""
-    if not path.is_file():
-        return
-    for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
-        if not line.strip():
-            continue
-        try:
-            yield json.loads(line)
-        except json.JSONDecodeError:
-            continue
-
-
 def check(store: Path, stage_dir: Path, arms: list[str] | None = None) -> int:
     index = defaultdict(list)
-    for e in _jsonl(store / "index.jsonl"):
+    for e in load_jsonl(store / "index.jsonl"):
         index[e["cell_id"]].append(e)
 
     files = sorted(stage_dir.glob("stage_influence*.jsonl"))
@@ -57,7 +47,7 @@ def check(store: Path, stage_dir: Path, arms: list[str] | None = None) -> int:
     print(f"{'stage file':44} {'records':>7} {'untagged':>8} {'cells':>5} "
           f"{'single-setup':>12} {'n==store':>8}")
     for f in files:
-        recs = list(_jsonl(f))
+        recs = list(load_jsonl(f))
         groups = defaultdict(list)
         untagged = 0
         for r in recs:

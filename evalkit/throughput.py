@@ -41,6 +41,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
 from store import Store  # noqa: E402
+from jsonl_read import load_jsonl  # noqa: E402  (tolerates a partial tail)
 
 
 def _when(text: str) -> float:
@@ -55,10 +56,8 @@ def _when(text: str) -> float:
 def load(store: Store, want: dict) -> tuple[list[dict], int]:
     """Timed rows matching `want`, plus how many matched but predate the meter."""
     idx = defaultdict(list)
-    with (store.path / "index.jsonl").open(encoding="utf-8") as fh:
-        for line in fh:
-            e = json.loads(line)
-            idx[e["cell_id"]].append(e)
+    for e in load_jsonl(store.path / "index.jsonl"):
+        idx[e["cell_id"]].append(e)
 
     out, untimed = [], 0
     for cell_id, entries in idx.items():
@@ -68,10 +67,7 @@ def load(store: Store, want: dict) -> tuple[list[dict], int]:
         p = store.rows_dir / f"{cell_id}.jsonl"
         if not p.is_file():
             continue
-        for line in p.read_text(encoding="utf-8").splitlines():
-            if not line.strip():
-                continue
-            r = json.loads(line)
+        for r in load_jsonl(p):
             if r.get("gen_tok") is None or r.get("t_start") is None:
                 untimed += 1
                 continue

@@ -22,7 +22,11 @@ from __future__ import annotations
 
 import glob
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "evalkit"))
+from jsonl_read import load_jsonl  # noqa: E402  (tolerates a partial tail)
 
 HERE = Path(__file__).resolve().parent
 STAGE = HERE / "stage_influence_m7c.jsonl"
@@ -33,8 +37,7 @@ def implementer_calls(runs_glob: str):
     out = []
     for f in sorted(glob.glob(runs_glob)):
         cur, seen = None, 0
-        for line in open(f, encoding="utf-8"):
-            e = json.loads(line)
+        for e in load_jsonl(f):
             if e.get("kind") == "invocation":
                 if cur == "implementer":
                     out.append(seen)
@@ -49,7 +52,7 @@ def implementer_calls(runs_glob: str):
 def main():
     if not STAGE.is_file():
         raise SystemExit("m7c has not produced a stage log yet")
-    recs = [json.loads(x) for x in STAGE.read_text(encoding="utf-8").splitlines() if x]
+    recs = load_jsonl(STAGE)
 
     # Rebuild which rounds carried an objection: round N did iff round N-1 said not_met.
     with_obj, without_obj = 0, 0

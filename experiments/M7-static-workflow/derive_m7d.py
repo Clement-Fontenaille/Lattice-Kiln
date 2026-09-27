@@ -22,8 +22,12 @@ m7c never collected and cannot without running.
 from __future__ import annotations
 
 import json
+import sys
 from collections import Counter
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "evalkit"))
+from jsonl_read import load_jsonl  # noqa: E402  (tolerates a partial tail)
 
 HERE = Path(__file__).resolve().parent
 STAGE = HERE / "stage_influence_m7c.jsonl"
@@ -33,7 +37,7 @@ RES = HERE.parent / "M6-evaluation-suite" / "results"
 def load():
     if not STAGE.is_file():
         raise SystemExit("m7c has not run yet -- nothing to derive from")
-    recs = [json.loads(x) for x in STAGE.read_text(encoding="utf-8").splitlines() if x]
+    recs = load_jsonl(STAGE)
     rows = {r["task"]: r for r in json.loads((RES / "m7c.json").read_text(encoding="utf-8"))}
     return recs, rows
 

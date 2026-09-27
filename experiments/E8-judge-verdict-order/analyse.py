@@ -109,6 +109,7 @@ ROOT = HERE.parent.parent
 sys.path.insert(0, str(ROOT / "evalkit"))
 
 from store import Store  # noqa: E402
+from jsonl_read import load_jsonl  # noqa: E402  (tolerates a partial tail)
 from scoring import score  # noqa: E402
 
 M7 = ROOT / "experiments" / "M7-static-workflow"
@@ -168,20 +169,15 @@ def store_index() -> dict:
     """(arm, task, rep, terminal) -> candidate store rows, tagged with setup."""
     s = Store()
     cells = {}
-    with (s.path / "index.jsonl").open(encoding="utf-8") as fh:
-        for line in fh:
-            e = json.loads(line)
-            cells.setdefault(e["cell_id"], e)
+    for e in load_jsonl(s.path / "index.jsonl"):
+        cells.setdefault(e["cell_id"], e)
 
     out = collections.defaultdict(list)
     for cid, e in cells.items():
         p = s.rows_dir / f"{cid}.jsonl"
         if not p.is_file():
             continue
-        for line in p.read_text(encoding="utf-8").splitlines():
-            if not line.strip():
-                continue
-            r = json.loads(line)
+        for r in load_jsonl(p):
             r["_model"], r["_fmt"] = e["model"], e["judge_format"]
             out[(e["arm"], r["task"], int(r["rep"]), r.get("terminal"))].append(r)
     return out
@@ -193,10 +189,7 @@ def stage_records() -> list[dict]:
         p = M7 / f"stage_influence_{arm}.jsonl"
         if not p.is_file():
             continue
-        for line in p.read_text(encoding="utf-8").splitlines():
-            if not line.strip():
-                continue
-            d = json.loads(line)
+        for d in load_jsonl(p):
             d["_arm"] = arm
             out.append(d)
     return out
