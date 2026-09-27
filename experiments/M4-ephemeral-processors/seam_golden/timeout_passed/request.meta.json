@@ -1,0 +1,12 @@
+{
+ "extra_kwargs": [],
+ "headers": [
+  [
+   "Content-type",
+   "application/json"
+  ]
+ ],
+ "method": "POST",
+ "timeout": 42.0,
+ "url": "http://localhost:11434/api/chat"
+}

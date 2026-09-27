@@ -1,0 +1,39 @@
+{
+ "meter": {
+  "calls": 1,
+  "gen_s": 0.002,
+  "gen_tok": 2,
+  "prompt_s": 0.001,
+  "prompt_tok": 11,
+  "tool_malformed": 0,
+  "tool_native": 0,
+  "tool_recovered": 0,
+  "tool_repaired": 0,
+  "tool_turns": 1
+ },
+ "returned": {
+  "eval_count": 2,
+  "load_duration_s": 0.0,
+  "model": "m",
+  "prompt_eval_count": 11,
+  "raw": {
+   "done": true,
+   "done_reason": "stop",
+   "eval_count": 2,
+   "eval_duration": 2000000,
+   "load_duration": 0,
+   "message": {
+    "content": "ok",
+    "role": "assistant"
+   },
+   "model": "m",
+   "prompt_eval_count": 11,
+   "prompt_eval_duration": 1000000,
+   "total_duration": 5000000
+  },
+  "text": "ok",
+  "tokens_per_s": 1000.0,
+  "tool_calls": [],
+  "total_duration_s": 0.005
+ }
+}

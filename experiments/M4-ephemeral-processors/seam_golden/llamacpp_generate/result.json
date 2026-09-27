@@ -1,0 +1,35 @@
+{
+ "meter": {
+  "calls": 1,
+  "gen_s": 0.002,
+  "gen_tok": 2,
+  "prompt_s": 0.001,
+  "prompt_tok": 11,
+  "tool_malformed": 0,
+  "tool_native": 0,
+  "tool_recovered": 0,
+  "tool_repaired": 0,
+  "tool_turns": 0
+ },
+ "returned": {
+  "eval_count": 2,
+  "load_duration_s": 0.0,
+  "model": "m",
+  "prompt_eval_count": 11,
+  "raw": {
+   "content": "ok",
+   "model": "m",
+   "stopped_limit": false,
+   "timings": {
+    "predicted_ms": 2.0,
+    "predicted_n": 2,
+    "prompt_ms": 1.0,
+    "prompt_n": 11
+   }
+  },
+  "text": "ok",
+  "tokens_per_s": 1000.0,
+  "tool_calls": [],
+  "total_duration_s": 0.003
+ }
+}
