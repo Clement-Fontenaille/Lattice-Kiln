@@ -1,5 +1,11 @@
 # Queue B — result unpacking and research steps
 
+> **DISCHARGED 2026-09-27.** B9 and B10 are answered in `50-findings/17`, and B10's
+> answer produced `50-findings/18`. Everything still open moved into
+> [`00-backlog.md`](00-backlog.md), merged into its existing bands rather than kept
+> as a second list. **This file is the record of how the questions were framed, not
+> a live list.** Do not add to it; add to the backlog.
+
 **What belongs here:** work whose output is a judgement about what a number
 means. Not outsourceable, because the failure mode is a plausible-looking
 conclusion rather than a failing test.

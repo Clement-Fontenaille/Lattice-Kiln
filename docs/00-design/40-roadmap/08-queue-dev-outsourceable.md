@@ -1,5 +1,11 @@
 # Queue A — outsourceable development
 
+> **DISCHARGED 2026-09-27.** A1a, A3's fetch, A4–A8, A10–A15 are merged and on
+> `main`; A11–A13 exist as code that has never executed. What is still open moved
+> into [`00-backlog.md`](00-backlog.md) — P0 for the model-facing contract, which
+> inherits A1b and A2, and P2 for the rest. **This file is the record of how the
+> queue was framed, not a live list.** Do not add to it; add to the backlog.
+
 **What belongs here:** work whose acceptance is a test, not a judgement. An
 agent picking this up cold should be able to finish an item and *know* it is
 finished, without reading results or deciding what a number means.

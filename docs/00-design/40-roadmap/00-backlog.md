@@ -1,6 +1,6 @@
 # Backlog
 
-_Updated: 2026-09-15 — structure and maintenance rules: [`README.md`](README.md)._
+_Updated: 2026-09-27 — structure and maintenance rules: [`README.md`](README.md)._
 
 > **Motto:** Every phase should make the next design decision easier.
 
@@ -16,10 +16,46 @@ specification of its own — creating a task is effect 4a, the formulation rides
 and how a model expresses a split is a build decision. What is left below blocks later
 work, and the rows say which.
 
-**P0 is empty.** Every row has closed, and the last two closed on assignment and on a
-cascade rather than on new design: the scope check and the scope writer got an owner —
-now [M17](01-MILESTONES/17-mandate-chain.md), split out of M11 on 2026-09-14 — and
-M9's stale self-citation is corrected against what `10-foundations/04` now holds.
+**P0 was empty between 2026-09-14 and 2026-09-27.** Every row had closed, and the last
+two closed on assignment and on a cascade rather than on new design: the scope check
+and the scope writer got an owner — now
+[M17](01-MILESTONES/17-mandate-chain.md), split out of M11 on 2026-09-14 — and M9's
+stale self-citation is corrected against what `10-foundations/04` now holds.
+
+**One row reopened it on 2026-09-27**, on evidence rather than on reflection.
+
+- **The model-facing contract has no owner, and it is worth 39 points.** The
+  serialisation a model is asked to speak in — chat template, role markers, thinking
+  delimiters, tool-call syntax, tool-result wire format — is a design surface with
+  consequences, and no milestone holds it. `26-arch-observability` and the runtime
+  band both stop at "the model"; the Claude Code teardown in `70-THINKING/15` folds
+  it into "Backend" beside memory and MCP.
+
+  **What made this a P0 row rather than a note.** Nemotron Nano 9B v2 was swept under
+  the *4B's* chat template for eight arms, because `nemotron-gpu` was built from a raw
+  local GGUF and Ollama assigns a renderer by architecture in that case. Paired on the
+  31 tasks both runs scored, `monolith` goes 5/31 → 17/31 on nothing but the template:
+  twelve tasks flip to pass, none to fail. The 9B also overtakes the 4B, 55% to 42%,
+  having read as the weaker model on every arm for a week. `50-findings/12`, *two
+  models one suite*, rests on that misconfiguration.
+
+  A defect in this layer is indistinguishable from a model limit unless something
+  names the layer. This project has now made that mistake twice — once believing
+  Ollama was mangling Qwen's output when Qwen was emitting bare JSON, once believing
+  the 9B was weak.
+
+  **Blocks P1's last package.** M8 package 6 is the E6 corpus sweep on a rented H100,
+  where the chat template is ours to supply rather than inherit, and where Ollama does
+  not exist. `experiments/M4-ephemeral-processors/backends.py` exists and is verified
+  equivalent on the request and parse paths, but has never run against a live
+  non-Ollama server. The official templates and token tables for all three models are
+  on disk (`evalkit_store/model_contracts/`).
+
+  **Decide:** a new milestone or a package inside an existing one. Either way the
+  owner also inherits the seam (`backends.py` against a live `llama-server --jinja`),
+  the per-model template choice, and the question of what belongs in the setup key —
+  because `params.adapter` today fingerprints *our* protocol text, which is identical
+  across models, while the model-side renderer rides invisibly on the model tag.
 
 **Closed since the last revision of this band**, each in the document that owns it
 rather than here: the structured role-to-role handoff; the reversibility-class carrier,
@@ -95,6 +131,56 @@ underestimated.
   Resolution before precision.
 - **M4/M5 re-test at larger N.** Depends on M8 (durable work records) and M9
   (non-naive assembler). Not a milestone; a task inside whichever lands.
+
+**Added 2026-09-27, from the model sweep.** The development queue that produced these
+is discharged; what follows is what it left open, merged here rather than kept in a
+parallel list.
+
+- **Re-read everything that leaned on the 9B.** Its whole column measured a model
+  under the wrong chat template (P0 above). The rows stay valid as *this model under
+  this harness* and are worthless as capability. `50-findings/12` needs an addendum,
+  and the "609–2635 tokens to escape the thinking block" figure was measured under a
+  template that is not the one opening `<think>`.
+- **The suite's ladder is two instruments, not one** (`50-findings/17`). Every arm
+  from `dloop` upward feeds the implementer the failing subtest **names**; only
+  `baseline`, `monolith` and `monolith_recovery` do not. The 6/34 → 27/34 figure
+  spans that boundary and no arm crosses it. `monolith_test` — written, never run —
+  is the arm that would separate model-chosen probing from harness-driven.
+- **The judge fails at aggregation, not at judging** (`50-findings/18`). 89% right per
+  condition, 67% per verdict, because the rule is `all(yes)` and the audit stage
+  chooses how many conditions to write. The remedy is unjustified from current data:
+  relaxing to "at most one no" cuts false rejects 33% → 9%, but the false-accept
+  column has n=7. **What would settle it is enough failing attempts**, which no
+  current arm produces in quantity.
+- **Three arms written and never executed:** `monolith_test`, `author`,
+  `author_judge`. Each needs a single-task smoke test before it joins a sweep. The
+  `author` pair also grants the audit stage authority its own prompt currently denies
+  it, which is a role change and not a flag.
+- **Settings never settled.** Sampling is `0.6 / 0.95` for all three models because
+  both Nemotron cards document it for tool calling; qwen inherited it for
+  comparability and its own documentation has never been read. The v1→v2 protocol
+  rework produced 16/34 both ways and earns no claim — keeping it on clarity grounds
+  is defensible, saying it helped is not.
+- **Does recovery earn its place, and one defect in the way.** `monolith_recovery`
+  beat `monolith` on the 4B and lost on the 9B, both at n=1. The floor it must beat is
+  the naive retry, which is now general and journalled, so the comparison is available
+  from rows already collected. **Blocked by a live bug first:** `chat()` takes no
+  `top_p` while the recovery path passes sampling overrides including it, so a remedy
+  carrying one raises `TypeError` — killing precisely the attempts the arm exists to
+  evaluate, 8 times on the 9B.
+- **Stages that will never have a gate.** Test authoring, planning and prompt
+  authoring have no mechanical check by nature — tests are not written against
+  checkable tests. Most of what the judge arms exist for lives there. The reflex to
+  resist is inventing a proxy gate, which would be worse than reading them because it
+  would carry a number and the number would be believed.
+- **`E5`'s fifth convergence criterion, never audited.** Every candidate skill must
+  name something it blocked or be marked as not yet observed to block anything. None
+  of S1–S8 is **termination**, though it is the prerequisite to all of them and is
+  exactly what failed.
+- **About twenty analysis scripts resolve a path ending `results/`,** which moved to
+  `archive/2026-09-25-pre-tooling-rework/` on 2026-09-27. Mostly correct rather than
+  broken — they read the pre-rework corpus, which moved with them — but each needs
+  repointing at the archive or at `results_matrix_*`, and saying which.
 
 ## P3 — Unscheduled / Notes
 
@@ -182,6 +268,14 @@ into each as it is decomposed.*
   M8/`08-persistent-work-and-knowledge.md` package 6) — the operator's own
   framing, 2026-09-15: pipeline consolidation is a prerequisite for that sweep,
   not a parallel concern. No owner yet.
+- **Concurrent dispatch, unowned and unused (2026-09-27).** `OLLAMA_NUM_PARALLEL=3`
+  is set and `evalkit_pool` exists with a claim protocol, but every sweep runs one
+  `run_suite` at a time and `run_suite` walks its tasks sequentially. On this host it
+  would buy little — a 9B at 16k leaves 811 MiB of 8192 free, so the slots are
+  unusable for the model that needs them most — but on the H100 the memory ceiling
+  disappears and serial dispatch becomes the binding constraint on every sweep.
+  Turning it on means two writers on the store, whose rep-collision guard currently
+  only warns. Belongs with the owner of the model-facing contract, P0.
 - **Hardware as a variable.** A replayable re-bootstrap and envelope
   re-characterisation, plus a statement of what in the design set depends on
   host-specific numbers. Owner: the bootstrapper design, at the latest M16.

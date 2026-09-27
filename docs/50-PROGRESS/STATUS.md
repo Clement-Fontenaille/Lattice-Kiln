@@ -1,6 +1,6 @@
 # Status
 
-_Updated: 2026-09-13_
+_Updated: 2026-09-27_
 
 > **Claude's working memory across sessions**, maintained by Claude and restructured
 > freely. Written for a cold start: dense, pointer-heavy, not an introduction.
@@ -262,6 +262,20 @@ every tool call, every arm pays what no earlier arm paid.
 
 ## Where we are
 
+**As of 2026-09-27 the work in flight is the model sweep, not a milestone.** Three
+models × fifteen arms at n=1, running unattended; `evalkit/matrix.py` reads it from
+the store, and job logs under-report because `--store-resume` skips cells. The
+sweep is not a milestone deliverable — it is what M8's package 6 and every arm
+comparison will be read against, and it has produced four findings of its own
+(`50-findings/15`–`18`).
+
+**Read those four before trusting any number from this period.** In order of how
+much they invalidate: the 9B ran eight arms under the *4B's* chat template and is
+not the weaker model (P0 in the backlog); the arm ladder spans two instruments,
+since every arm above `dloop` hands the implementer the failing subtest names; the
+judge is 89% right per condition and 67% per verdict because the rule is `all(yes)`;
+and the output protocol is itself a variable that was unkeyed until 2026-09-23.
+
 **MVP slice M0–M6 complete, and M7 closed 2026-09-14.** Findings entries 1–10.
 
 **Current milestone: M8 — Persistent work and knowledge.** Six work packages named in
@@ -387,6 +401,17 @@ hardware.
 None on execution. M2 recorder, M3 floor, M4 runtime, M5 orchestrator are built and
 exercised on real runs; Ollama and llama.cpp in place.
 
+**One reopened P0, 2026-09-27: the model-facing contract has no owner.** Chat
+template, role markers, thinking delimiters, tool syntax — a design surface no
+milestone holds, and a defect in it is indistinguishable from a model limit unless
+something names the layer. Measured cost on one arm: 39 points. It blocks M8's
+package 6, where the H100 has no Ollama and the template becomes ours to choose.
+Detail and evidence in `40-roadmap/00-backlog.md`.
+
+**One live defect:** `chat()` takes no `top_p`, the recovery path passes one, and the
+`TypeError` kills exactly the recovery attempts `monolith_recovery` exists to
+evaluate. Eight occurrences on the 9B.
+
 Standing external dependency: a **second judgment source** — a stronger or independent
 reviewer model, needing the planned second GPU. Gates M12 onward.
 
@@ -400,7 +425,22 @@ reviewer model, needing the planned second GPU. Gates M12 onward.
   contexts, each large enough to work in — is verifiable at startup and has never
   been measured on the reference host. It is M0-shaped and cheap. Nothing is
   scheduled to run it, and it gates whether a scope check is providable at all.
+- **Who owns the model-facing contract**, and whether it is a new milestone or a
+  package inside an existing one. Reopened P0 on 2026-09-27. The owner inherits the
+  backend seam, the per-model chat template, and what belongs in the setup key —
+  `params.adapter` today fingerprints *our* protocol text, identical across models,
+  while the model-side renderer rides invisibly on the model tag.
+- **Sweep order after the 9B.** qwen's fifteen arms are untouched by the renderer
+  bug and can run at any time; the 4B's four newly queued judges are cheap. Neither
+  is scheduled against the other.
 
 ## Repository
 
-Under version control. `main`, not pushed to `origin` as of this writing.
+Under version control on `main`, pushed to `origin`
+(github.com/Clement-Fontenaille/Lattice-Kiln, public).
+
+**`archive/2026-09-25-pre-tooling-rework/`** holds the corpus from before the
+markers→tools→v2 rework: 36 MB of results, stage logs, run directories and two
+work pools. Nothing was deleted. Its README states the boundary and warns that
+about twenty analysis scripts still resolve a path ending `results/`, which moved
+there.

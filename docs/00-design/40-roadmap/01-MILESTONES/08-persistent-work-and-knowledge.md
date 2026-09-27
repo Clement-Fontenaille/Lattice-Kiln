@@ -89,6 +89,17 @@ Packages 1–3 are independent of each other and can be built in any order. Pack
 depends on all three. Package 5 gates package 6: a corpus sweep that fails tells you
 nothing about which of ingestion, retention or retrieval failed.
 
+**Package 6 gained a second gate on 2026-09-27**, from outside this milestone. It is
+the rented-H100 run, where there is no Ollama and the chat template stops being
+inherited and becomes a choice. **The model-facing contract has no owner** — reopened
+P0 in [`../00-backlog.md`](../00-backlog.md) — and the sweep that exposed it showed
+what the layer is worth: Nemotron Nano 9B v2 scored 5/31 under another model's chat
+template and 17/31 under its own, twelve tasks flipping to pass and none to fail,
+with no other change. Package 6 cannot be planned against a substrate whose
+model-facing surface nobody owns. The seam (`backends.py`) and the official templates
+(`evalkit_store/model_contracts/`) both exist; neither has run against a live
+non-Ollama server.
+
 ## What this milestone does for M3
 
 **[M3](03-invariant-floor.md)'s evidence question gets its first real data here**, and
