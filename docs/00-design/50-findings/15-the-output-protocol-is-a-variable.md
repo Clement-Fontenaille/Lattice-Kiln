@@ -541,3 +541,41 @@ That does not make it worse than the markers. It makes it **differently
 biased**, and the bias is now measurable — `tool_native` against
 `tool_recovered`, per row — where the marker protocol's bias was invisible.
 Which was the original complaint.
+
+---
+
+## Addendum 4, 2026-09-27 — `[INST]`, `[AVAILABLE_TOOLS]`, `[TOOL_CALLS]` are unused, not shown dead
+
+*Queue A10. Appended; the claim above is left as written.*
+
+The section *What the fine-tuning format actually is* calls `[INST]`,
+`[AVAILABLE_TOOLS]`, `[TOOL_RESULTS]` and `[TOOL_CALLS]` "inherited tokenizer
+slots the model was not tuned on — in the table, dead in use". That is more
+than the evidence under it supports.
+
+**What the evidence is.** The single `raw: true` probe in the table above, on
+`nemotron3-nano-4b`: wire format `[AVAILABLE_TOOLS]…[/AVAILABLE_TOOLS][INST]…[/INST]`,
+returning 2 empty tokens. It was probed once, under Mistral-style framing that
+contradicted the model's in-context instructions (as recorded in Queue A10). A
+reserved token that produced nothing in one contradictory context has not been
+shown to be dead. The probe cannot separate "never
+trained" from "trained, but not in this arrangement, with these instructions".
+
+**What is actually supported:**
+
+1. **Ollama's renderer does not use those tokens.** `nemotron-3-nano`'s
+   `Render()` and `renderTools()`, transcribed in
+   `experiments/M6-evaluation-suite/reconstruct_ollama_prompt.py`, emit
+   `<|im_start|>` / `<|im_end|>` turns, `<think>` / `</think>`, `<tools>`, and
+   `<tool_call>` with `<function=…>` / `<parameter=…>`. None of `[INST]`,
+   `[/INST]`, `[AVAILABLE_TOOLS]`, `[TOOL_RESULTS]` or `[TOOL_CALLS]` appears in
+   it. So no run in this repository has put them in front of the model,
+   except the one probe above.
+2. **Their status under a consistent framing is untested.** No probe has
+   offered them with instructions that agree with them. Whether the model
+   responds to them is unknown.
+
+"Dead in use" should read **"unused by the renderer; untested under a
+consistent framing"**. The ChatML finding beside it is unaffected: that is a
+positive observation (110 tokens, a real answer), not an inference from
+silence.
