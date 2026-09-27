@@ -156,3 +156,36 @@ bring `judge_fullctx`, `m7*` and `test_synth` up to what `judge_caveat` already
 does, and prefer `LATTICE_CELL` over `results_subdir` because it carries model,
 protocol and sampling in one value. The `judge_fullctx` question specifically
 stays blocked, because that arm records nothing to attribute its 286 records by.
+
+---
+
+## Addendum — the provenance block this entry should have opened with
+
+Appended 2026-09-27. The header of this entry cites "Queue B items B9 and B10",
+which were bullets on a four-day working list, now deleted. **A finding does not
+cite a todo list.** This log's own README says findings are not roadmap, and entries
+13, 14 and 16 all open with the block below. This entry dropped it, and the queue
+reference filled the hole where `Artifacts` belonged. The text above stands as
+written; this supplies what was missing.
+
+**Subject:** `nemotron3-nano-4b:latest`, the matrix sweep at `params.adapter`
+`63b5b222daf4`, protocol `tools` v2, temperature 0.6 / top_p 0.95, `num_ctx` 16384,
+n=1 per task. Plus a source reading over every arm in M6 and M7, which has no model.
+
+**Recorded:** 2026-09-27.
+
+**Artifacts:**
+- *the two instruments* — `experiments/M6-evaluation-suite/m6_arms.py` and
+  `experiments/M7-static-workflow/*_workflow.py`, grep `Current state still fails`;
+  the arms that do NOT match are `baseline`, `monolith`, `monolith_recovery`.
+- *the failed join* — `evalkit_store/index.jsonl`,
+  `experiments/M7-static-workflow/stage_influence_*.jsonl`,
+  `experiments/M6-evaluation-suite/results_matrix_nemotron3-nano-4b/`.
+- *the corrected reader* — `experiments/M7-static-workflow/score_correlation_paired.py`,
+  written here and superseding `score_correlation.py` for this question.
+
+**Metric:** `objective_pass` per row; judge agreement against the check and against
+the worker's own `terminal`, each over the same `(task, rep)` pairs.
+
+**Verdict:** the ladder claim is confounded — established. The judge-versus-worker
+question — not answerable from the files as they stood.

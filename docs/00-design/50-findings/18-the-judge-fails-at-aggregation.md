@@ -116,3 +116,34 @@ It does not make it a *good* judge. Its accuracy is unmeasured and unmeasurable
 retrospectively, for the reason `50-findings/17` gives: it records nothing to
 attribute its 286 stage records by. The claim here is narrower — it cannot fail
 in the specific way the checklist judges demonstrably do.
+
+---
+
+## Addendum — the provenance block this entry should have opened with
+
+Appended 2026-09-27, for the reason given in `50-findings/17`'s addendum: this
+entry's header cites "Queue B", a working list that no longer exists, in the slot
+where `Artifacts` belongs. Entries 13, 14 and 16 carry the block below; this one
+did not.
+
+**Subject:** `nemotron3-nano-4b:latest`, the matrix sweep at `params.adapter`
+`63b5b222daf4`, protocol `tools` v2, temperature 0.6 / top_p 0.95, `num_ctx` 16384,
+n=1 per task. Arms `judge_anchored`, `judge_caveat`, `judge_bypass` — the three whose
+workflows tag their stage records with `model` and `results_subdir`, which is why
+these three and no others.
+
+**Recorded:** 2026-09-27.
+
+**Artifacts:** `experiments/M6-evaluation-suite/results_matrix_nemotron3-nano-4b/`
+(the check outcome per `(task, rep)`), and
+`experiments/M7-static-workflow/stage_influence_judge_{anchored,caveat,bypass}.jsonl`
+filtered to `results_subdir == results_matrix_nemotron3-nano-4b` (the judge's
+`checked` array, `n_conditions`, `verdict`, `diff_empty`).
+
+**Metric:** per-condition — entries of `checked` equal to `yes`, over work the check
+passed. Per-verdict — `verdict == met` over the same rows. Attempts only:
+`diff_empty` false, which excludes 30–41% of rows.
+
+**Verdict:** the mechanism is established — `all(yes)` over n conditions, accept rate
+tracking p^n with no free parameter. The remedy is not: the false-accept column has
+n=7 and cannot referee a rule change.
