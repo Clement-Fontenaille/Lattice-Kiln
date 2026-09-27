@@ -1,0 +1,8 @@
+{
+ "hf_repo": "nvidia/NVIDIA-Nemotron-3-Nano-4B-BF16",
+ "hf_revision": "dfaf35de3e30f1867dd8dbc38a7fc9fb52d3914f",
+ "template_source": "chat_template.jinja",
+ "ollama_model": "nemotron3-nano-4b:latest",
+ "fetched_utc": "2026-09-27T17:35:22+00:00",
+ "queue_item": "A3"
+}

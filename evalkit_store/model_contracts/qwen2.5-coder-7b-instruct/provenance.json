@@ -1,0 +1,8 @@
+{
+ "hf_repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+ "hf_revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+ "template_source": "tokenizer_config.json:chat_template",
+ "ollama_model": "qwen2.5-coder:7b-instruct-q4_K_M",
+ "fetched_utc": "2026-09-27T17:35:24+00:00",
+ "queue_item": "A3"
+}
