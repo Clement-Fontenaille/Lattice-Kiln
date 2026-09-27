@@ -1,0 +1,45 @@
+{
+ "meter": {
+  "calls": 0,
+  "gen_s": 0.0,
+  "gen_tok": 0,
+  "prompt_s": 0.0,
+  "prompt_tok": 0,
+  "tool_malformed": 0,
+  "tool_native": 0,
+  "tool_recovered": 0,
+  "tool_repaired": 0,
+  "tool_turns": 1
+ },
+ "raised": {
+  "cause": null,
+  "has_gen": true,
+  "message": "empty response and no tool calls, truncated at num_predict=1536 (done_reason=length, 35666 chars of thinking, eval_count=8192). Raise num_predict, or set LATTICE_THINK=0.",
+  "mro": [
+   "Truncated",
+   "OllamaError",
+   "RuntimeError",
+   "Exception"
+  ],
+  "num_predict": 1536,
+  "type": "Truncated"
+ },
+ "recovery_calls_and_hits": {
+  "_calls_from_bare_args": [
+   0,
+   0
+  ],
+  "_calls_from_text": [
+   0,
+   0
+  ],
+  "_calls_from_xml": [
+   0,
+   0
+  ],
+  "_repair_json": [
+   0,
+   0
+  ]
+ }
+}

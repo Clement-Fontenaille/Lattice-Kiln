@@ -4,6 +4,7 @@
     python seam_capture.py --write          # (re)write the goldens -- see below
     python seam_capture.py --cassette DIR   # add cases from recorded transcripts
     python seam_capture.py --only chat_tools
+    python seam_capture.py --client-dir <other checkout>/experiments/M4-ephemeral-processors
 
 THE RISK A1 CARRIES is not that generation changes. It is that the outgoing
 REQUEST changes: a different body is a different prompt, and a different
@@ -56,6 +57,9 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 GOLDEN = HERE / "seam_golden"
 RUNAWAY = ROOT / "evalkit_store" / "probe_prompts" / "runaway_thinking.txt"
+FIXTURES = ROOT / "evalkit_store" / "parse_fixtures" / "ollama_responses.json"
+RECOVERY_FNS = ("_calls_from_text", "_calls_from_xml", "_calls_from_bare_args",
+                "_repair_json")
 
 # Model-shaped text for the REQUEST side only: what we send, not what a model
 # said. Quotes, backslashes, newlines, tabs and non-ASCII, because those are
@@ -177,6 +181,29 @@ def _runaway_cases():
     }
 
 
+def _fixture_cases() -> dict:
+    """evalkit_store/parse_fixtures: 19 real /api/chat replies from the store's
+    transcripts, each replayed through chat() with the tools that were offered.
+
+    Bodies are reassembled from recorded fields, not wire bytes (see that
+    directory's README), so these test the PARSE path only. They carry no
+    total_duration, so the client falls back to its wall clock for
+    total_duration_s; that one field is dropped from these results and nothing
+    else. Each result also counts, per recovery function, how many calls it got
+    and how many returned something -- so the goldens show which fixture drove
+    which path, and a refactor that bypassed one would show.
+    """
+    if not FIXTURES.is_file():
+        return {}
+    out = {}
+    for c in json.loads(FIXTURES.read_text(encoding="utf-8")):
+        out[f"fixture_{c['case']}_{c['id']}"] = (
+            {"SEAM_FIXTURE": "1"},
+            "oc.chat([{'role': 'user', 'content': FIXTURE_PROMPT}], tools=TOOLS)",
+            {"__fixture_prompt__": c["request_prompt"], **c["response_body"]})
+    return out
+
+
 def _cassette_cases(path: Path) -> dict:
     """Cases from recorded transcripts: every record replayed as a chat reply.
 
@@ -256,12 +283,33 @@ def _child(case_json: str) -> None:
             return _Resp(reply[1].encode("latin-1"))
         return _Resp(json.dumps(reply).encode("utf-8"))
 
+    fixture = os.environ.get("SEAM_FIXTURE") == "1"
+    fixture_prompt = None
+    if fixture:
+        reply = dict(reply)
+        fixture_prompt = reply.pop("__fixture_prompt__")
+
     urllib.request.urlopen = fake_urlopen
+    # SEAM_CLIENT_DIR loads ollama_client (and roles) from another checkout, so
+    # goldens can be written by the code BEFORE a change and compared AFTER.
     sys.path.insert(0, str(HERE))
+    sys.path.insert(0, os.environ.get("SEAM_CLIENT_DIR") or str(HERE))
     import ollama_client as oc
     from roles import TOOLS
+    hits = {}
+    if fixture:
+        for fn in RECOVERY_FNS:
+            orig = getattr(oc, fn)
+            hits[fn] = [0, 0]
+
+            def wrapped(*a, _orig=orig, _fn=fn, **k):
+                r = _orig(*a, **k)
+                hits[_fn][0] += 1
+                hits[_fn][1] += bool(r)
+                return r
+            setattr(oc, fn, wrapped)
     ns = {"oc": oc, "TOOLS": TOOLS, "PROMPT": PROMPT, "SYSTEM": SYSTEM,
-          "_history": _history}
+          "_history": _history, "FIXTURE_PROMPT": fixture_prompt}
     oc.meter_reset()
     try:
         g = eval(call, ns)                                   # noqa: S307
@@ -271,6 +319,8 @@ def _child(case_json: str) -> None:
             "total_duration_s": g.total_duration_s, "load_duration_s": g.load_duration_s,
             "tool_calls": g.tool_calls, "tokens_per_s": g.tokens_per_s,
             "raw": g.raw}}
+        if fixture:
+            result["returned"].pop("total_duration_s")      # wall-clock fallback
     except Exception as e:  # noqa: BLE001
         result = {"raised": {"type": type(e).__name__,
                              "mro": [c.__name__ for c in type(e).__mro__[:4]],
@@ -279,10 +329,15 @@ def _child(case_json: str) -> None:
                              "has_gen": hasattr(e, "gen"),
                              "num_predict": getattr(e, "num_predict", None)}}
     result["meter"] = oc.meter_read()
+    if fixture:
+        result["recovery_calls_and_hits"] = hits
     print("@@CAPTURE@@" + json.dumps({"sent": sent, "result": result}))
 
 
 # --------------------------------------------------------------- the parent
+
+CLIENT_DIR: Path | None = None
+
 
 def _run(name: str, case) -> dict:
     env, call, reply = case
@@ -291,6 +346,8 @@ def _run(name: str, case) -> dict:
                              for x in reply[1:]]]
     child_env = {k: v for k, v in os.environ.items() if not k.startswith("LATTICE_")}
     child_env.update({"LATTICE_TRANSCRIPT": "0", **env})
+    if CLIENT_DIR:
+        child_env["SEAM_CLIENT_DIR"] = str(CLIENT_DIR)
     cp = subprocess.run([sys.executable, __file__, "--child",
                          json.dumps([env, call, reply])],
                         env=child_env, capture_output=True, text=True, cwd=HERE)
@@ -325,11 +382,16 @@ def main(argv=None) -> int:
     ap.add_argument("--cassette", type=Path)
     ap.add_argument("--golden", type=Path, default=GOLDEN)
     ap.add_argument("--child")
+    ap.add_argument("--client-dir", type=Path,
+                    help="import ollama_client from this directory instead, "
+                         "e.g. an M4 dir in a worktree of the pre-change commit")
     a = ap.parse_args(argv)
+    global CLIENT_DIR
+    CLIENT_DIR = a.client_dir.resolve() if a.client_dir else None
     if a.child:
         _child(a.child)
         return 0
-    cases = {**CASES, **_runaway_cases()}
+    cases = {**CASES, **_runaway_cases(), **_fixture_cases()}
     if a.cassette:
         cases.update(_cassette_cases(a.cassette))
     if a.only:
