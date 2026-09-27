@@ -34,6 +34,114 @@
       "date": "2026-09-19",
       "reason": "654ac97 added `import judge_format` and one line applying it. Under LATTICE_JUDGE_FORMAT=decision_first, judge_format.apply() returns the prompt unchanged, so behaviour is identical. Verified by diffing the file against 654ac97~1: the only hunks are the import and the hook. Rows under reason_first are NOT admitted by this waiver -- prompt_sha differs there and still blocks.",
       "diffstat": "1 file changed, 8 insertions(+)"
+    },
+    {
+      "id": "queue-a-2026-09-27",
+      "field": "arm_sha",
+      "equivalent": [
+        "9e629f1d8f8ecfef",
+        "b0b1f7e193144c82"
+      ],
+      "arm": "baseline",
+      "date": "2026-09-27",
+      "reason": "run_suite.py between 361e8ea9 and d9498c1f (Queue A, A8/A11/A12/A13/A15). What changed: summarise() moved to run_report.py and imported back, gaining the recovery/tool-counter columns there (A8; it formats the markdown report and never reads or writes a row's fields beyond displaying them); `import row_extra`, EXTRA cleared before each arm call and copied onto the row as `arm_extra` only when non-empty (A11); monolith_test_arm, author_workflow and author_judge_workflow added to the arm registration loops (A11-A13; they register new arm names and leave existing entries in ARMS as they were); _eval_params calls processor.adapter_fingerprint(arm_name) instead of adapter_fingerprint() (A11); the inline waivers.json read replaced by setup_key.load_waivers() and a --waivers ID option (A15); an unused `defaultdict` import removed. Why behaviour is identical for baseline: adapter_fingerprint(arm) differs from adapter_fingerprint() only for an arm registered in processor.ARM_TOOLS, and ARM_TOOLS is empty for baseline, so the keyed adapter is unchanged; nothing baseline runs writes row_extra.EXTRA, so it is empty and the row is unchanged; run_task, score() and the arm function itself are untouched. Verified: tools/fingerprint_check.py --baseline 361e8ea9 -> PASS, adapter/recovery/_eval_params identical under tools and markers; prompt_sha 'none' at both revisions. Both hashes computed from the git blobs of the two file versions; the old one equals the arm_sha on this arm's recorded matrix rows. Does NOT cover a model or transport change: ollama_client's transport refactor (A1a) is not in arm_sha and is attested separately by seam_capture.py (48/48 byte-identical).",
+      "diffstat": "1 file changed, 28 insertions(+), 52 deletions(-) (run_suite.py, 361e8ea9..d9498c1f)"
+    },
+    {
+      "id": "queue-a-2026-09-27",
+      "field": "arm_sha",
+      "equivalent": [
+        "9e629f1d8f8ecfef",
+        "b0b1f7e193144c82"
+      ],
+      "arm": "monolith",
+      "date": "2026-09-27",
+      "reason": "run_suite.py between 361e8ea9 and d9498c1f (Queue A, A8/A11/A12/A13/A15). What changed: summarise() moved to run_report.py and imported back, gaining the recovery/tool-counter columns there (A8; it formats the markdown report and never reads or writes a row's fields beyond displaying them); `import row_extra`, EXTRA cleared before each arm call and copied onto the row as `arm_extra` only when non-empty (A11); monolith_test_arm, author_workflow and author_judge_workflow added to the arm registration loops (A11-A13; they register new arm names and leave existing entries in ARMS as they were); _eval_params calls processor.adapter_fingerprint(arm_name) instead of adapter_fingerprint() (A11); the inline waivers.json read replaced by setup_key.load_waivers() and a --waivers ID option (A15); an unused `defaultdict` import removed. Why behaviour is identical for monolith: adapter_fingerprint(arm) differs from adapter_fingerprint() only for an arm registered in processor.ARM_TOOLS, and ARM_TOOLS is empty for monolith, so the keyed adapter is unchanged; nothing monolith runs writes row_extra.EXTRA, so it is empty and the row is unchanged; run_task, score() and the arm function itself are untouched. Verified: tools/fingerprint_check.py --baseline 361e8ea9 -> PASS, adapter/recovery/_eval_params identical under tools and markers; prompt_sha 'none' at both revisions. Both hashes computed from the git blobs of the two file versions; the old one equals the arm_sha on this arm's recorded matrix rows. Does NOT cover a model or transport change: ollama_client's transport refactor (A1a) is not in arm_sha and is attested separately by seam_capture.py (48/48 byte-identical).",
+      "diffstat": "1 file changed, 28 insertions(+), 52 deletions(-) (run_suite.py, 361e8ea9..d9498c1f)"
+    },
+    {
+      "id": "queue-a-2026-09-27",
+      "field": "arm_sha",
+      "equivalent": [
+        "9e629f1d8f8ecfef",
+        "b0b1f7e193144c82"
+      ],
+      "arm": "monolith_recovery",
+      "date": "2026-09-27",
+      "reason": "run_suite.py between 361e8ea9 and d9498c1f (Queue A, A8/A11/A12/A13/A15). What changed: summarise() moved to run_report.py and imported back, gaining the recovery/tool-counter columns there (A8; it formats the markdown report and never reads or writes a row's fields beyond displaying them); `import row_extra`, EXTRA cleared before each arm call and copied onto the row as `arm_extra` only when non-empty (A11); monolith_test_arm, author_workflow and author_judge_workflow added to the arm registration loops (A11-A13; they register new arm names and leave existing entries in ARMS as they were); _eval_params calls processor.adapter_fingerprint(arm_name) instead of adapter_fingerprint() (A11); the inline waivers.json read replaced by setup_key.load_waivers() and a --waivers ID option (A15); an unused `defaultdict` import removed. Why behaviour is identical for monolith_recovery: adapter_fingerprint(arm) differs from adapter_fingerprint() only for an arm registered in processor.ARM_TOOLS, and ARM_TOOLS is empty for monolith_recovery, so the keyed adapter is unchanged; nothing monolith_recovery runs writes row_extra.EXTRA, so it is empty and the row is unchanged; run_task, score() and the arm function itself are untouched. Verified: tools/fingerprint_check.py --baseline 361e8ea9 -> PASS, adapter/recovery/_eval_params identical under tools and markers; prompt_sha 'none' at both revisions. Both hashes computed from the git blobs of the two file versions; the old one equals the arm_sha on this arm's recorded matrix rows. Does NOT cover a model or transport change: ollama_client's transport refactor (A1a) is not in arm_sha and is attested separately by seam_capture.py (48/48 byte-identical).",
+      "diffstat": "1 file changed, 28 insertions(+), 52 deletions(-) (run_suite.py, 361e8ea9..d9498c1f)"
+    },
+    {
+      "id": "queue-a-2026-09-27",
+      "field": "arm_sha",
+      "equivalent": [
+        "43ec4bfe17db4fd2",
+        "c819fe36f8540a06"
+      ],
+      "arm": "judge_anchored",
+      "date": "2026-09-27",
+      "reason": "judge_anchored_workflow.py between 361e8ea9 and d9498c1f (A14). What changed: `from stage_tags import setup_tags` added, and the inline stage.update({model, judge_format, results_subdir, t_end}) in the finally block that writes the stage record replaced by stage.update(setup_tags()), which writes the same four fields from the same environment variables plus cell_id and cell_rep (LATTICE_CELL / LATTICE_REP, exported by run_task). Why behaviour is identical: the change is confined to the stage record written to stage_influence_judge_anchored.jsonl after the arm has finished; no prompt, model call, keeper rule or terminal is touched. prompt_sha is 61430f40634df723 at both revisions (AUDIT and JUDGE unchanged); adapter_fingerprint() is unchanged because processor.ARM_TOOLS is empty for judge_anchored; the workflow never writes row_extra.EXTRA, so it is empty and the store row is unchanged. Verified by diffing the file against 361e8ea9: the only hunks are the import and the finally-block update. tools/fingerprint_check.py --baseline 361e8ea9 -> PASS. Both hashes computed from the git blobs; the old one equals the arm_sha on this arm's recorded matrix rows.",
+      "diffstat": "1 file changed, 2 insertions(+), 7 deletions(-) (judge_anchored_workflow.py, 361e8ea9..d9498c1f)"
+    },
+    {
+      "id": "queue-a-2026-09-27",
+      "field": "arm_sha",
+      "equivalent": [
+        "976db1ff0e424157",
+        "8371912ebf65e0d2"
+      ],
+      "arm": "judge_caveat",
+      "date": "2026-09-27",
+      "reason": "judge_caveat_workflow.py between 361e8ea9 and d9498c1f (A14). What changed: `from stage_tags import setup_tags` added, and the inline stage.update({model, judge_format, results_subdir, t_end}) in the finally block that writes the stage record replaced by stage.update(setup_tags()), which writes the same four fields from the same environment variables plus cell_id and cell_rep (LATTICE_CELL / LATTICE_REP, exported by run_task). Why behaviour is identical: the change is confined to the stage record written to stage_influence_judge_caveat.jsonl after the arm has finished; no prompt, model call, keeper rule or terminal is touched. prompt_sha is c6f1de548d34c7d6 at both revisions (AUDIT and JUDGE unchanged); adapter_fingerprint() is unchanged because processor.ARM_TOOLS is empty for judge_caveat; the workflow never writes row_extra.EXTRA, so it is empty and the store row is unchanged. Verified by diffing the file against 361e8ea9: the only hunks are the import and the finally-block update. tools/fingerprint_check.py --baseline 361e8ea9 -> PASS. Both hashes computed from the git blobs; the old one equals the arm_sha on this arm's recorded matrix rows.",
+      "diffstat": "1 file changed, 2 insertions(+), 7 deletions(-) (judge_caveat_workflow.py, 361e8ea9..d9498c1f)"
+    },
+    {
+      "id": "queue-a-2026-09-27",
+      "field": "arm_sha",
+      "equivalent": [
+        "7346eaa50ecb37a9",
+        "fe45af7009a889c1"
+      ],
+      "arm": "judge_bypass",
+      "date": "2026-09-27",
+      "reason": "judge_bypass_workflow.py between 361e8ea9 and d9498c1f (A14). What changed: `from stage_tags import setup_tags` added, and the inline stage.update({model, judge_format, results_subdir, t_end}) in the finally block that writes the stage record replaced by stage.update(setup_tags()), which writes the same four fields from the same environment variables plus cell_id and cell_rep (LATTICE_CELL / LATTICE_REP, exported by run_task). Why behaviour is identical: the change is confined to the stage record written to stage_influence_judge_bypass.jsonl after the arm has finished; no prompt, model call, keeper rule or terminal is touched. prompt_sha is 61430f40634df723 at both revisions (AUDIT and JUDGE unchanged); adapter_fingerprint() is unchanged because processor.ARM_TOOLS is empty for judge_bypass; the workflow never writes row_extra.EXTRA, so it is empty and the store row is unchanged. Verified by diffing the file against 361e8ea9: the only hunks are the import and the finally-block update. tools/fingerprint_check.py --baseline 361e8ea9 -> PASS. Both hashes computed from the git blobs; the old one equals the arm_sha on this arm's recorded matrix rows.",
+      "diffstat": "1 file changed, 2 insertions(+), 7 deletions(-) (judge_bypass_workflow.py, 361e8ea9..d9498c1f)"
+    },
+    {
+      "id": "queue-a-2026-09-27",
+      "field": "arm_sha",
+      "equivalent": [
+        "b54cd36c300c371c",
+        "29d3e4ca04437bcf"
+      ],
+      "arm": "judge_fullctx",
+      "date": "2026-09-27",
+      "reason": "judge_fullctx_workflow.py between 361e8ea9 and d9498c1f (A14). What changed: `from stage_tags import setup_tags` added, and one call, stage.update(setup_tags()), inserted in the finally block immediately before the stage record is written, adding model, judge_format, results_subdir, t_end, cell_id and cell_rep to that record. Why behaviour is identical: the change is confined to the stage record written to stage_influence_judge_fullctx.jsonl after the arm has finished; no prompt, model call, keeper rule or terminal is touched. prompt_sha is 4a46835abfcc17e2 at both revisions; adapter_fingerprint() is unchanged because processor.ARM_TOOLS is empty for judge_fullctx; the workflow never writes row_extra.EXTRA, so it is empty and the store row is unchanged. Verified by diffing the file against 361e8ea9: the only hunks are the import and the one call. tools/fingerprint_check.py --baseline 361e8ea9 -> PASS. Both hashes computed from the git blobs; the old one equals the arm_sha on this arm's recorded matrix rows.",
+      "diffstat": "1 file changed, 4 insertions(+) (judge_fullctx_workflow.py, 361e8ea9..d9498c1f)"
+    },
+    {
+      "id": "queue-a-2026-09-27",
+      "field": "arm_sha",
+      "equivalent": [
+        "4b6b51f50e2ca3a6",
+        "ef0842ae67655523"
+      ],
+      "arm": "m7",
+      "date": "2026-09-27",
+      "reason": "m7_workflow.py between 361e8ea9 and d9498c1f (A14). What changed: `from stage_tags import setup_tags` added, and one call, stage.update(setup_tags()), inserted in the finally block immediately before the stage record is written, adding model, judge_format, results_subdir, t_end, cell_id and cell_rep to that record. Why behaviour is identical: the change is confined to the stage record written to stage_influence.jsonl after the arm has finished; no prompt, model call, keeper rule or terminal is touched. prompt_sha is 'none' at both revisions; adapter_fingerprint() is unchanged because processor.ARM_TOOLS is empty for m7; the workflow never writes row_extra.EXTRA, so it is empty and the store row is unchanged. Verified by diffing the file against 361e8ea9: the only hunks are the import and the one call. tools/fingerprint_check.py --baseline 361e8ea9 -> PASS. Both hashes computed from the git blobs; the old one equals the arm_sha on this arm's recorded matrix rows.",
+      "diffstat": "1 file changed, 4 insertions(+) (m7_workflow.py, 361e8ea9..d9498c1f)"
+    },
+    {
+      "id": "queue-a-2026-09-27",
+      "field": "arm_sha",
+      "equivalent": [
+        "b410caed3bc7f642",
+        "13cd5e577ad1bea4"
+      ],
+      "arm": "test_synth",
+      "date": "2026-09-27",
+      "reason": "test_synth_workflow.py between 361e8ea9 and d9498c1f (A14). What changed: `from stage_tags import setup_tags` added, and one call, stage.update(setup_tags()), inserted in the finally block immediately before the stage record is written, adding model, judge_format, results_subdir, t_end, cell_id and cell_rep to that record. Why behaviour is identical: the change is confined to the stage record written to stage_influence_test_synth.jsonl after the arm has finished; no prompt, model call, keeper rule or terminal is touched. prompt_sha is 'none' at both revisions; adapter_fingerprint() is unchanged because processor.ARM_TOOLS is empty for test_synth; the workflow never writes row_extra.EXTRA, so it is empty and the store row is unchanged. Verified by diffing the file against 361e8ea9: the only hunks are the import and the one call. tools/fingerprint_check.py --baseline 361e8ea9 -> PASS. Both hashes computed from the git blobs; the old one equals the arm_sha on this arm's recorded matrix rows.",
+      "diffstat": "1 file changed, 4 insertions(+) (test_synth_workflow.py, 361e8ea9..d9498c1f)"
     }
   ]
 }
